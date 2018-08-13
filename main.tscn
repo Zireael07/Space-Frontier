@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://player_ship.tscn" type="PackedScene" id=1]
+
+[node name="Control" type="Control" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="player" parent="." index="0" groups=[
+"player",
+] instance=ExtResource( 1 )]
+
+position = Vector2( -200, 1000 )
+z_index = 5
+_sections_unfolded = [ "Transform", "Z", "Z Index" ]
+
+
