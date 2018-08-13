@@ -12,6 +12,12 @@ var pos = Vector2()
 var vel = Vector2()
 var acc = Vector2()
 
+# bullets
+export(PackedScene) var bullet
+onready var bullet_container = $"bullet_container"
+#onready var bullet = preload("res://bullet.tscn")
+onready var gun_timer = $"gun_timer"
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -21,6 +27,11 @@ func _ready():
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
+
+	# shoot
+	if Input.is_action_pressed("ui_select"):
+		if gun_timer.get_time_left() == 0:
+			shoot()
 
 	# rotations
 	if Input.is_action_pressed("ui_left"):
@@ -41,3 +52,9 @@ func _process(delta):
 	set_position(pos)
 	# rotation
 	set_rotation(rot)
+
+func shoot():
+	gun_timer.start()
+	var b = bullet.instance()
+	bullet_container.add_child(b)
+	b.start_at(get_rotation(), $"muzzle".get_global_position())
