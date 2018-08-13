@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://star system.gd" type="Script" id=1]
+[ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=2]
+[ext_resource path="res://assets/bodies/Planet14.png" type="Texture" id=3]
+[ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=4]
+[ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=5]
+
+[node name="star" type="Node2D" index="0" groups=[
+"star",
+]]
+
+position = Vector2( 500, 500 )
+script = ExtResource( 1 )
+rotation_rate = 0.15
+orbit_rate = 0.02
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+texture = ExtResource( 2 )
+
+[node name="planet_holder" type="Node2D" parent="." index="1"]
+
+[node name="planet" type="Node2D" parent="planet_holder" index="0" groups=[
+"planets",
+]]
+
+position = Vector2( 800, 800 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="planet_holder/planet" index="0"]
+
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+
+[node name="planet2" type="Node2D" parent="planet_holder" index="1" groups=[
+"planets",
+]]
+
+position = Vector2( -800, 200 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="planet_holder/planet2" index="0"]
+
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+
+[node name="planet3" type="Node2D" parent="planet_holder" index="2" groups=[
+"planets",
+]]
+
+position = Vector2( 800, -300 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="planet_holder/planet3" index="0"]
+
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 5 )
+
+
