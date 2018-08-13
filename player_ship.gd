@@ -17,6 +17,7 @@ export(PackedScene) var bullet
 onready var bullet_container = $"bullet_container"
 #onready var bullet = preload("res://bullet.tscn")
 onready var gun_timer = $"gun_timer"
+onready var explosion = preload("res://explosion.tscn")
 
 func _ready():
 	# Called every time the node is added to the scene.

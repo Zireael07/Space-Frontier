@@ -27,5 +27,13 @@ func _on_bullet_area_entered( area ):
 		queue_free()
 		print(area.get_parent().get_name())
 		
+		var pos = area.get_global_position()
+		
 		# kill the AI
 		area.get_parent().queue_free()
+		
+		# explosion
+		var expl = get_parent().get_parent().explosion.instance()
+		get_parent().get_parent().add_child(expl)
+		expl.set_global_position(pos)
+		expl.play()
