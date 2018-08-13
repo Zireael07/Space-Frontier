@@ -20,7 +20,12 @@ onready var bullet_container = $"bullet_container"
 onready var gun_timer = $"gun_timer"
 
 var target = Vector2()
+# debug
 var rel_pos = Vector2()
+var steer = Vector2(0,0)
+var desired = Vector2(0,0)
+
+
 
 func _ready():
 	add_to_group("enemy")
@@ -33,12 +38,19 @@ func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 	
-	#target
-	target = Vector2(-50,700)
+	#target 
+	#planet #1
+	target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
 	
 
 	rel_pos = get_global_transform().xform_inv(target)
 	#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
+	
+	# steering behavior
+	var steer = get_steering_arrive(target)
+	# normal case
+	vel += steer
+	
 	
 	var a = fix_atan(vel.x,vel.y)
 	
@@ -56,7 +68,7 @@ func _process(delta):
 	set_position(pos)
 	
 	# rotation
-	#set_rotation(-a)
+	set_rotation(-a)
 
 func shoot():
 	gun_timer.start()
@@ -78,3 +90,34 @@ func fix_atan(x,y):
 		ret= at + PI
 	
 	return ret
+	
+# AI - steering behaviors
+# seek
+func get_steering_seek(target):
+	var steering = Vector2(0,0)
+	desired = target - get_global_position()
+	
+	# do nothing if very close to target
+	#if desired.length() < 50:
+	#	return Vector2(0,0)
+	
+	desired = desired.normalized() * max_speed
+	steering = (desired - vel).clamped(max_vel/4)
+	return steering
+	
+	
+# arrive
+func get_steering_arrive(target):
+	var steering = Vector2(0,0)
+	desired = target - get_global_position()
+	
+	var dist = desired.length()
+	desired = desired.normalized()
+	if dist < 100:
+		var m = range_lerp(dist, 0, 100, 0, max_speed) # 100 is our max speed?
+		desired = desired * m
+	else:
+		desired = desired * max_speed
+		
+	steering = (desired - vel).clamped(max_vel/4)
+	return steering
