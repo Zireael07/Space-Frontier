@@ -42,8 +42,10 @@ func _process(delta):
 	# thrust
 	if Input.is_action_pressed("ui_up"):
 		acc = Vector2(0, -thrust).rotated(rot)
+		$"engine_flare".set_emitting(true)
 	else:
 		acc = Vector2(0,0)
+		$"engine_flare".set_emitting(false)
 	
 	
 	# movement happens!

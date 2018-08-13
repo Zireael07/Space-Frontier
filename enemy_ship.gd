@@ -42,6 +42,13 @@ func _process(delta):
 	
 	var a = fix_atan(vel.x,vel.y)
 	
+	# effects
+	if vel.length() > 40:
+		$"engine_flare".set_emitting(true)
+	else:
+		$"engine_flare".set_emitting(false)
+	
+	
 	# movement happens!
 	#acc += vel * -friction
 	#vel += acc *delta
