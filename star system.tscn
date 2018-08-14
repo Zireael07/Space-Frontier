@@ -25,7 +25,7 @@ texture = ExtResource( 2 )
 "planets",
 ]]
 
-position = Vector2( 800, 800 )
+position = Vector2( 1600, 1600 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="planet_holder/planet" index="0"]
@@ -37,7 +37,7 @@ texture = ExtResource( 3 )
 "planets",
 ]]
 
-position = Vector2( -800, 200 )
+position = Vector2( -1600, 400 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="planet_holder/planet2" index="0"]
@@ -49,7 +49,7 @@ texture = ExtResource( 4 )
 "planets",
 ]]
 
-position = Vector2( 800, -300 )
+position = Vector2( 1600, -600 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Sprite" type="Sprite" parent="planet_holder/planet3" index="0"]
