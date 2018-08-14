@@ -25,6 +25,7 @@ var rel_pos = Vector2()
 var steer = Vector2(0,0)
 var desired = Vector2(0,0)
 
+var targetted = false
 
 
 func _ready():
@@ -121,3 +122,18 @@ func get_steering_arrive(target):
 		
 	steering = (desired - vel).clamped(max_vel/4)
 	return steering
+
+# draw a red rectangle around the target
+func _draw():
+	if targetted:
+		var rect = Rect2(Vector2(-28, -25),	Vector2(97*0.6, 84*0.6)) 
+		
+		draw_rect(rect, Color(1,0,0), false)
+
+# click to target functionality
+func _on_Area2D_input_event(viewport, event, shape_idx):
+	# any mouse click
+	if event is InputEventMouseButton:
+		targetted = true
+		# redraw 
+		update()

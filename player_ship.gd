@@ -19,6 +19,8 @@ onready var bullet_container = $"bullet_container"
 onready var gun_timer = $"gun_timer"
 onready var explosion = preload("res://explosion.tscn")
 
+var target = null
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -61,3 +63,18 @@ func shoot():
 	var b = bullet.instance()
 	bullet_container.add_child(b)
 	b.start_at(get_rotation(), $"muzzle".get_global_position())
+
+# draw a red rectangle around the target
+func _draw():
+	if target == self:
+		var rect = Rect2(Vector2(-35, -25),	Vector2(112*0.6, 75*0.6)) 
+		
+		draw_rect(rect, Color(1,0,0), false)
+
+# click to target functionality
+func _on_Area2D_input_event(viewport, event, shape_idx):
+	# any mouse click
+	if event is InputEventMouseButton:
+		target = self
+		# redraw 
+		update()

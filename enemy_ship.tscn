@@ -75,6 +75,7 @@ bullet = ExtResource( 2 )
 rotation = 3.14159
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="1"]
 
@@ -120,5 +121,7 @@ _sections_unfolded = [ "Process Material", "Transform" ]
 [node name="vis" type="Node2D" parent="Area2D" index="6"]
 
 script = ExtResource( 5 )
+
+[connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 
 

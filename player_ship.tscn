@@ -73,7 +73,7 @@ bullet = ExtResource( 2 )
 
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="1"]
 
@@ -141,5 +141,7 @@ normal_map = null
 h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Process Material", "Transform" ]
+
+[connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 
 
