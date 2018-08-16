@@ -26,6 +26,7 @@ var steer = Vector2(0,0)
 var desired = Vector2(0,0)
 
 var targetted = false
+signal AI_targeted
 
 
 func _ready():
@@ -135,5 +136,6 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 	# any mouse click
 	if event is InputEventMouseButton:
 		targetted = true
+		emit_signal("AI_targeted")
 		# redraw 
 		update()

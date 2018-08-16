@@ -1,8 +1,56 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://minimap_container.gd" type="Script" id=2]
 [ext_resource path="res://assets/hud/arrow.png" type="Texture" id=3]
+[ext_resource path="res://assets/hud/green_panel.png" type="Texture" id=4]
+[ext_resource path="res://assets/HUD ship outline.tres" type="Material" id=5]
+[ext_resource path="res://assets/ships/playerShip2_blue.png" type="Texture" id=6]
+[ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=7]
+
+[sub_resource type="StyleBoxTexture" id=1]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 100, 100 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+_sections_unfolded = [ "Axis Stretch" ]
+
+[sub_resource type="StyleBoxTexture" id=2]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 100, 100 )
+margin_left = 0.0
+margin_right = 0.0
+margin_top = 0.0
+margin_bottom = 0.0
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+modulate_color = Color( 1, 1, 1, 1 )
+draw_center = true
+_sections_unfolded = [ "Axis Stretch" ]
 
 [node name="Control" type="Control" index="0"]
 
@@ -24,6 +72,7 @@ _sections_unfolded = [ "Pause" ]
 
 [node name="minimap" type="Control" parent="." index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -61,7 +110,107 @@ texture = ExtResource( 3 )
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
 
-[node name="pause_panel" type="Panel" parent="." index="1"]
+[node name="Control" type="Control" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 525.0
+margin_right = 40.0
+margin_bottom = 565.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Panel" type="Panel" parent="Control" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 435.0
+margin_bottom = 149.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panelf = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
+_sections_unfolded = [ "Rect", "custom_styles" ]
+
+[node name="player_outline" type="TextureRect" parent="Control/Panel" index="0"]
+
+material = ExtResource( 5 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -2.0
+margin_top = 26.0
+margin_right = 110.0
+margin_bottom = 126.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 6 )
+stretch_mode = 4
+_sections_unfolded = [ "Material", "Rect" ]
+
+[node name="Panel2" type="Panel" parent="Control" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 215.0
+margin_right = 650.0
+margin_bottom = 149.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panelf = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
+_sections_unfolded = [ "Rect", "custom_styles" ]
+
+[node name="target_outline" type="TextureRect" parent="Control/Panel2" index="0"]
+
+visible = false
+material = ExtResource( 5 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 426.0
+margin_top = 118.0
+margin_right = 523.0
+margin_bottom = 202.0
+rect_rotation = 180.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 7 )
+stretch_mode = 4
+_sections_unfolded = [ "Material", "Rect" ]
+
+[node name="pause_panel" type="Panel" parent="." index="2"]
 
 editor/display_folded = true
 visible = false

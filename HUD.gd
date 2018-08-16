@@ -5,6 +5,10 @@ var paused = false
 
 
 func _ready():
+	# connect the signal
+	for e in get_tree().get_nodes_in_group("enemy"):
+		e.connect("AI_targeted", self, "_on_AI_targeted")
+	
 	# Called every time the node is added to the scene.
 	# Initialization here
 	pass
@@ -19,3 +23,6 @@ func _input(event):
 			$"pause_panel".show() #(not paused)
 		else:
 			$"pause_panel".hide()
+
+func _on_AI_targeted():
+	$"Control/Panel2/target_outline".show()
