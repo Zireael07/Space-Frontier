@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://ParallaxBackground.tscn" type="PackedScene" id=1]
 [ext_resource path="res://star system.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player_ship.tscn" type="PackedScene" id=3]
 [ext_resource path="res://enemy_ship.tscn" type="PackedScene" id=4]
-[ext_resource path="res://HUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://enemy_starbase.tscn" type="PackedScene" id=5]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=6]
 
 [node name="Control" type="Control" index="0"]
 
@@ -40,7 +41,11 @@ _sections_unfolded = [ "Transform", "Z", "Z Index" ]
 position = Vector2( -100, 1000 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]
+[node name="enemy_base" parent="." index="4" instance=ExtResource( 5 )]
+
+position = Vector2( -800, 700 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="5"]
 
 layer = 1
 offset = Vector2( 0, 0 )
@@ -48,6 +53,6 @@ rotation = 0.0
 scale = Vector2( 1, 1 )
 transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 
-[node name="Control" parent="CanvasLayer" index="0" instance=ExtResource( 5 )]
+[node name="Control" parent="CanvasLayer" index="0" instance=ExtResource( 6 )]
 
 
