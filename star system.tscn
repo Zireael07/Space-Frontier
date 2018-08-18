@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://star system.gd" type="Script" id=1]
 [ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=2]
 [ext_resource path="res://assets/bodies/Planet14.png" type="Texture" id=3]
 [ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=4]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=5]
+[ext_resource path="res://colony.tscn" type="PackedScene" id=6]
 
 [node name="star" type="Node2D" index="0" groups=[
 "star",
@@ -56,5 +57,7 @@ _sections_unfolded = [ "Transform" ]
 
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 5 )
+
+[node name="colony" parent="planet_holder/planet3" index="1" instance=ExtResource( 6 )]
 
 
