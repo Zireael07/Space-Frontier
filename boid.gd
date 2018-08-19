@@ -35,7 +35,7 @@ func fix_atan(x,y):
 	
 # AI - steering behaviors
 # seek
-func get_steering_seek(target):
+func get_steering_seek(target, cap=max_vel/4):
 	var steering = Vector2(0,0)
 	desired = target - get_global_position()
 	
@@ -44,7 +44,7 @@ func get_steering_seek(target):
 	#	return Vector2(0,0)
 	
 	desired = desired.normalized() * max_speed
-	steering = (desired - vel).clamped(max_vel/4)
+	steering = (desired - vel).clamped(cap)
 	return steering
 	
 	

@@ -20,6 +20,7 @@ onready var gun_timer = $"gun_timer"
 onready var explosion = preload("res://explosion.tscn")
 
 var target = null
+var tractor = null
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -35,6 +36,20 @@ func _process(delta):
 	if Input.is_action_pressed("ui_select"):
 		if gun_timer.get_time_left() == 0:
 			shoot()
+
+	# tractor
+	if tractor:
+		var dist = get_global_position().distance_to(tractor.get_child(0).get_global_position())
+		
+		# too far away, deactivate
+		if dist > 100:
+			tractor.get_child(0).tractor = null
+			tractor = null
+			print("Deactivating tractor")
+			
+		else:
+			#print("Tractor active on: " + str(tractor.get_name()) + " " + str(dist))
+			tractor.get_child(0).tractor = self
 
 	# rotations
 	if Input.is_action_pressed("ui_left"):
@@ -57,6 +72,17 @@ func _process(delta):
 	set_position(pos)
 	# rotation
 	set_rotation(rot)
+
+func _input(event):
+	if Input.is_action_pressed("tractor"):
+		# toggle
+		if not tractor:
+		#tractor = true
+			# TODO: closest colony
+			tractor = get_tree().get_nodes_in_group("colony")[0]
+		else:
+			tractor = null
+
 
 func shoot():
 	gun_timer.start()

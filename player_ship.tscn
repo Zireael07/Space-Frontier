@@ -142,6 +142,11 @@ h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Process Material", "Transform" ]
 
+[node name="dock" type="Position2D" parent="Area2D" index="7"]
+
+position = Vector2( 0, 23 )
+_sections_unfolded = [ "Transform" ]
+
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 
 

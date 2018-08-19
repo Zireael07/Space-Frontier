@@ -21,6 +21,11 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
+rot_speed = 2.6
+thrust = 500
+max_vel = 400
+friction = 0.65
+max_speed = 100
 bullet = null
 
 [node name="blue_colony" type="Sprite" parent="Area2D" index="0"]
