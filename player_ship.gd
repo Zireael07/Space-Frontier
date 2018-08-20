@@ -83,6 +83,27 @@ func _input(event):
 		else:
 			tractor = null
 
+	if Input.is_action_pressed("undock_tractor"):
+		print("Undock pressed")
+		
+		tractor = null
+		
+		# we normally have 7 children nodes
+		# TODO: is there a way to check if any child is in group and return the first?
+		if get_child(8).is_in_group("colony"):
+			var col = get_child(8)
+			print("We have a colony in dock")
+			
+			# undock
+			remove_child(col)
+			get_parent().get_parent().add_child(col)
+			
+			# restore original z
+			get_parent().set_z_index(7)
+			
+			col.set_global_position(get_node("dock").get_global_position() + Vector2(0, 20))
+			
+			print("Undocked")
 
 func shoot():
 	gun_timer.start()

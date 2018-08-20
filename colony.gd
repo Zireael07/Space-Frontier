@@ -60,6 +60,8 @@ func _process(delta):
 			print("Adding colony as tractoring ship's child")
 			# switch off tractor
 			tractor = null
+			get_parent().get_parent().tractor = null
+			
 		
 	#pass
 
@@ -91,7 +93,10 @@ func _draw():
 		var rect = Rect2(Vector2(-26, -26),	Vector2(91*0.6, 91*0.6))
 
 		draw_rect(rect, Color(1,0,0), false)
-		
+	else:
+		pass
+	
+	
 	if tractor:
 		var tr = get_child(0)
 		var rc_h = tr.get_texture().get_height() * tr.get_scale().x
@@ -99,12 +104,19 @@ func _draw():
 		var rect = Rect2(Vector2(-rc_w/2, -rc_h/2), Vector2(rc_w, rc_h))
 		
 		draw_rect(rect, Color(1,1,0), false)
-
+	else:
+		pass
+	
+	
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	# any mouse click
 	if event is InputEventMouseButton:
+		#if targetted:
 		targetted = true
 		emit_signal("AI_targeted")
+		#else:
+		#	targetted = false
+			
 		# redraw
 		update()
