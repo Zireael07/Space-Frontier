@@ -68,12 +68,18 @@ func _draw():
 		var rect = Rect2(Vector2(-28, -25),	Vector2(97*0.6, 84*0.6)) 
 		
 		draw_rect(rect, Color(1,0,0), false)
+	else:
+		pass
 
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	# any mouse click
 	if event is InputEventMouseButton:
+		#if not targetted:
 		targetted = true
 		emit_signal("AI_targeted")
+		#else:
+		#	targetted = false
+		
 		# redraw 
 		update()
