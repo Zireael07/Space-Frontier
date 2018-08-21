@@ -2,9 +2,12 @@ extends Control
 
 # class member variables go here, for example:
 var paused = false
-
+var player = null
 
 func _ready():
+	
+	player = get_tree().get_nodes_in_group("player")[0].get_child(0)
+	
 	# connect the signal
 	for e in get_tree().get_nodes_in_group("enemy"):
 		e.connect("AI_targeted", self, "_on_AI_targeted")
@@ -12,6 +15,13 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	pass
+
+func _process(delta):
+	var format = "%0.2f" % player.spd
+	get_node("Control/Panel/Label").set_text(format + " c")
+	
+	#pass
+
 
 
 func _input(event):
