@@ -1,16 +1,22 @@
 extends Area2D
 
 # class member variables go here, for example:
+const LIGHT_SPEED = 400 # original Stellar Frontier seems to have used 200 px/s
+
 export var rot_speed = 2.6 #radians
-export var thrust = 500
-export var max_vel = 400
-export var friction = 0.65
+export var thrust = 0.25 * LIGHT_SPEED
+export var max_vel = 0.5 * LIGHT_SPEED
+export var friction = 0.25
 
 # motion
 var rot = 0
 var pos = Vector2()
 var vel = Vector2()
 var acc = Vector2()
+
+var spd = 0
+
+
 
 # bullets
 export(PackedScene) var bullet
@@ -31,6 +37,8 @@ func _ready():
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
+
+	spd = vel.length() / LIGHT_SPEED
 
 	# shoot
 	if Input.is_action_pressed("ui_select"):
@@ -66,8 +74,11 @@ func _process(delta):
 	
 	
 	# movement happens!
+	# modify acc by friction dependent on vel
 	acc += vel * -friction
 	vel += acc *delta
+	# prevent exceeding max speed
+	vel = vel.clamped(max_vel)
 	pos += vel * delta
 	set_position(pos)
 	# rotation

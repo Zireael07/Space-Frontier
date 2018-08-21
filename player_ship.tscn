@@ -64,9 +64,9 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
 rot_speed = 2.6
-thrust = 500
-max_vel = 400
-friction = 0.65
+thrust = 100.0
+max_vel = 200.0
+friction = 0.25
 bullet = ExtResource( 2 )
 
 [node name="playerShip2_blue" type="Sprite" parent="Area2D" index="0"]
