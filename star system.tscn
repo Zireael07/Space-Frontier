@@ -113,9 +113,15 @@ shape = SubResource( 1 )
 
 [node name="colony" parent="planet_holder/planet3" index="2" instance=ExtResource( 7 )]
 
+[connection signal="area_entered" from="planet_holder/planet/Area2D" to="planet_holder/planet" method="_on_Area2D_area_entered"]
+
 [connection signal="input_event" from="planet_holder/planet/Area2D" to="planet_holder/planet" method="_on_Area2D_input_event"]
 
+[connection signal="area_entered" from="planet_holder/planet2/Area2D2" to="planet_holder/planet2" method="_on_Area2D_area_entered"]
+
 [connection signal="input_event" from="planet_holder/planet2/Area2D2" to="planet_holder/planet2" method="_on_Area2D_input_event"]
+
+[connection signal="area_entered" from="planet_holder/planet3/Area2D3" to="planet_holder/planet3" method="_on_Area2D_area_entered"]
 
 [connection signal="input_event" from="planet_holder/planet3/Area2D3" to="planet_holder/planet3" method="_on_Area2D_input_event"]
 

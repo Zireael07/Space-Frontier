@@ -44,3 +44,34 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 			
 		# redraw
 		update()
+
+func reparent(area):
+	area.get_parent().get_parent().remove_child(area.get_parent())
+	add_child(area.get_parent())
+
+func reposition(area):
+	area.get_parent().set_position(Vector2(0,0))
+
+func _on_Area2D_area_entered(area):
+	if area.get_parent().is_in_group("colony"):
+		print("Colony entered planet space")
+		# prevents looping (area collisions don't exclude children!)
+		if not self == area.get_parent().get_parent():
+			print("Colony isn't parented to us")
+			if area.get_parent().get_parent().get_parent().is_in_group("player"):
+				print("Colony being hauled by player")
+			else:
+				print("Colony released")
+				if not has_node("colony"):
+					print("Adding colony to planet")
+					# add colony to planet
+					# prevent crash
+					call_deferred("reparent", area)
+					# must happen after reparenting
+					call_deferred("reposition", area)
+				else:
+					print("We already have a colony")
+		else:
+			print("Colony is already ours")
+	
+	pass # replace with function body
