@@ -25,6 +25,7 @@ orbit_rate = 0.02
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
+rotation = 9.92185
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="." index="1"]
@@ -57,9 +58,10 @@ _sections_unfolded = [ "Transform" ]
 "planets",
 ]]
 
-position = Vector2( 1600, 1600 )
+position = Vector2( 1852.92, 1297.43 )
 script = ExtResource( 3 )
 _sections_unfolded = [ "Transform" ]
+data = null
 
 [node name="Sprite" type="Sprite" parent="planet_holder/planet" index="0"]
 
@@ -106,9 +108,10 @@ shape = SubResource( 1 )
 "planets",
 ]]
 
-position = Vector2( -1600, 400 )
+position = Vector2( -1593.78, 427.052 )
 script = ExtResource( 3 )
 _sections_unfolded = [ "Transform" ]
+data = null
 
 [node name="Sprite" type="Sprite" parent="planet_holder/planet2" index="0"]
 
@@ -156,9 +159,10 @@ shape = SubResource( 1 )
 "planets",
 ]]
 
-position = Vector2( 1600, -600 )
+position = Vector2( 1693.53, -148.165 )
 script = ExtResource( 3 )
 _sections_unfolded = [ "Transform" ]
+data = null
 
 [node name="Sprite" type="Sprite" parent="planet_holder/planet3" index="0"]
 

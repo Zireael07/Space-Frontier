@@ -1,13 +1,64 @@
+tool
 extends Node2D
 
 # class member variables go here, for example:
+#export(int) var angle = 0 setget setAngle #, getAngle
+#export(int) var dist = 100 setget setDist #, getDist
+
+export(Vector2) var data setget setData
+	
+	
 var targetted = false
 signal planet_targeted
 
 func _ready():
+	var dist = get_position().length()
+	print("Dist to parent star" + str(dist))
+	
+	
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
-	pass
+	#pass
+
+func setData(val):
+	if Engine.is_editor_hint() and val != null:
+		print("Data: " + str(val))
+		place(val[0], val[1])
+
+
+func place(angle,dist):
+	print("Place : a " + str(angle) + " d: " + str(dist))
+	var pos = Vector2(0, dist).rotated(deg2rad(angle))
+	print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(angle)))
+	print("Position is " + str(pos))
+	#get_parent().get_global_position() + 
+	
+	set_position(pos)
+
+#func setAngle(val):
+#	print("Set angle to : " + str(val))
+#	var pos = Vector2(0, dist).rotated(deg2rad(val))
+#	print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(val)))
+#	print("Position is " + str(pos))
+#
+#	#place(val, getDist())
+#
+#func setDist(val):
+#	print("Set dist to: " + str(val))
+#	var pos = Vector2(0, val).rotated(deg2rad(angle))
+#	print("vec: 0, " + str(val) + " rot: " + str(deg2rad(angle)))
+#
+#
+#	print("Position is " + str(pos))
+#
+#	#place(getAngle(), val)
+#
+#func getAngle():
+#	return angle
+#
+#func getDist():
+#	return dist
+
 
 func _process(delta):
 	
@@ -22,19 +73,27 @@ func _process(delta):
 #	# Update game logic here.
 #	pass
 
-# draw a red rectangle around the target
-func _draw():
-	if targetted:
-		var tr = get_child(0)
-		var rc_h = tr.get_texture().get_height() * tr.get_scale().x
-		var rc_w = tr.get_texture().get_height() * tr.get_scale().y
-		var rect = Rect2(Vector2(-rc_w/2, -rc_h/2), Vector2(rc_w, rc_h))
-		
-		#var rect = Rect2(Vector2(-26, -26),	Vector2(91*0.6, 91*0.6))
 
-		draw_rect(rect, Color(1,0,0), false)
+func _draw():
+	# debugging
+	if Engine.is_editor_hint():
+	#	draw_line(Vector2(0,0), Vector2(-get_position()), Color(1,0,0))
+		pass	
+	
+	
 	else:
-		pass
+		# draw a red rectangle around the target
+		if targetted:
+			var tr = get_child(0)
+			var rc_h = tr.get_texture().get_height() * tr.get_scale().x
+			var rc_w = tr.get_texture().get_height() * tr.get_scale().y
+			var rect = Rect2(Vector2(-rc_w/2, -rc_h/2), Vector2(rc_w, rc_h))
+			
+			#var rect = Rect2(Vector2(-26, -26),	Vector2(91*0.6, 91*0.6))
+	
+			draw_rect(rect, Color(1,0,0), false)
+		else:
+			pass
 
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):
