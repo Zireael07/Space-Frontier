@@ -9,10 +9,14 @@ func _ready():
 	# Initialization here
 	pass
 
-#func _process(delta):
+func _process(delta):
 	
 	# redraw
 	#update()
+
+	# straighten out labels
+	$"Label".set_rotation(-get_parent().get_rotation())
+	
 	
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
