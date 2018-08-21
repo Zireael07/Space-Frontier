@@ -1,11 +1,13 @@
 extends Area2D
 
 # class member variables go here, for example:
+const LIGHT_SPEED = 400 # original Stellar Frontier seems to have used 200 px/s	
+
 export var rot_speed = 2.6 #radians
 export var thrust = 500
-export var max_vel = 400
+export var max_vel = 0.5 * LIGHT_SPEED
 export var friction = 0.65
-export var max_speed = 100
+export var max_speed = 0.5 * LIGHT_SPEED
 
 # motion
 var rot = 0
