@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://enemy_base.gd" type="Script" id=1]
-[ext_resource path="res://assets/ships/ufoRed.png" type="Texture" id=2]
-[ext_resource path="res://movement_visualizer.gd" type="Script" id=3]
+[ext_resource path="res://bullet_enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ships/ufoRed.png" type="Texture" id=3]
+[ext_resource path="res://movement_visualizer.gd" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -15,6 +16,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Area2D" type="Area2D" parent="." index="0"]
 
+position = Vector2( 0, 1 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -26,14 +28,14 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 rot_speed = 2.6
 thrust = 500
-max_vel = 400
+max_vel = 200.0
 friction = 0.65
-max_speed = 100
-bullet = null
+max_speed = 200.0
+bullet = ExtResource( 2 )
 
 [node name="enemy_base" type="Sprite" parent="Area2D" index="0"]
 
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="1"]
@@ -55,7 +57,7 @@ autostart = false
 
 [node name="vis" type="Node2D" parent="Area2D" index="5"]
 
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 
