@@ -35,9 +35,7 @@ position = Vector2( -200, 1000 )
 z_index = 5
 _sections_unfolded = [ "Transform", "Z", "Z Index" ]
 
-[node name="enemy" parent="." index="3" groups=[
-"enemy",
-] instance=ExtResource( 4 )]
+[node name="enemy" parent="." index="3" instance=ExtResource( 4 )]
 
 position = Vector2( -100, 1000 )
 _sections_unfolded = [ "Transform" ]

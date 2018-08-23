@@ -85,6 +85,10 @@ func _process(delta):
 	set_rotation(rot)
 
 func _input(event):
+	if Input.is_action_pressed("closest_target"):
+		get_closest_target()
+	
+	
 	if Input.is_action_pressed("tractor"):
 		# toggle
 		if not tractor:
@@ -116,11 +120,37 @@ func _input(event):
 			
 			print("Undocked")
 
+
 func shoot():
 	gun_timer.start()
 	var b = bullet.instance()
 	bullet_container.add_child(b)
 	b.start_at(get_rotation(), $"muzzle".get_global_position())
+
+func get_closest_target():
+	var nodes = get_tree().get_nodes_in_group("enemy")
+	
+	var dists = []
+	var targs = []
+	
+	for t in nodes:
+		var dist = t.get_global_position().distance_to(get_global_position())
+		dists.append(dist)
+		targs.append([dist, t])
+
+	dists.sort()
+	#print("Dists sorted: " + str(dists))
+	
+	for t in targs:
+		if t[0] == dists[0]:
+			print("Target is : " + t[1].get_parent().get_name())
+			t[1].targetted = true
+			t[1].emit_signal("AI_targeted")
+			# redraw 
+			t[1].update()
+			
+			#return t[1]
+			
 
 # draw a red rectangle around the target
 func _draw():
