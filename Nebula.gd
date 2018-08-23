@@ -8,9 +8,16 @@ func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
 	
-	#randomize()
+	randomize()
+	#seede = randi()
 	
-	pass
+	var s = randi()
+	set_seed(s)
+	
+	seede = s
+	print("Seed" + str(seede))
+	
+	#pass
 
 func set_seed(value):
 	rand_seed(value)
