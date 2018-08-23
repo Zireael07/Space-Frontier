@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://2d_test_nebula.tres" type="Shader" id=1]
+[ext_resource path="res://Nebula.gd" type="Script" id=2]
+
+[sub_resource type="ShaderMaterial" id=3]
+
+render_priority = 0
+shader = ExtResource( 1 )
+shader_param/offset = [ 41.4631, 49.3503 ]
+shader_param/scale = 0.00354176
+shader_param/density = 0.124206
+shader_param/falloff = 4.15213
+shader_param/color = Vector3( 0.915835, 0.918656, 0.125086 )
+_sections_unfolded = [ "shader_param" ]
+
+[sub_resource type="ImageTexture" id=2]
+
+flags = 7
+storage = 0
+lossy_quality = 0.7
+flags = 7
+size = Vector2( 1100, 600 )
+
+[node name="Node2D" type="Node2D" index="0"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+material = SubResource( 3 )
+texture = SubResource( 2 )
+centered = false
+script = ExtResource( 2 )
+_sections_unfolded = [ "Material", "Offset", "Region" ]
+seede = 1234567
+
+
