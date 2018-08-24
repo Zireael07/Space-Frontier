@@ -35,4 +35,7 @@ func _input(event):
 			$"pause_panel".hide()
 
 func _on_AI_targeted():
-	$"Control/Panel2/target_outline".show()
+	for n in $"Control/Panel2".get_children():
+		n.show()
+	
+	#$"Control/Panel2/target_outline".show()
