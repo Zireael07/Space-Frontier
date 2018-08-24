@@ -83,6 +83,10 @@ func _process(delta):
 	set_position(pos)
 	# rotation
 	set_rotation(rot)
+	
+	# fix jitter due to camera updating one frame late
+	get_node("Camera2D").align()
+	
 
 func _input(event):
 	if Input.is_action_pressed("closest_target"):
