@@ -4,10 +4,10 @@
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=2]
 [ext_resource path="res://assets/hud/grey_panel.png" type="Texture" id=3]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=4]
-[ext_resource path="res://minimap_container.gd" type="Script" id=5]
-[ext_resource path="res://assets/hud/arrow.png" type="Texture" id=6]
-[ext_resource path="res://assets/HUD ship outline.tres" type="Material" id=7]
-[ext_resource path="res://assets/ships/playerShip2_blue.png" type="Texture" id=8]
+[ext_resource path="res://assets/ships/playerShip2_blue.png" type="Texture" id=5]
+[ext_resource path="res://minimap_container.gd" type="Script" id=6]
+[ext_resource path="res://assets/hud/arrow.png" type="Texture" id=7]
+[ext_resource path="res://assets/HUD ship outline.tres" type="Material" id=8]
 [ext_resource path="res://assets/hud/HUD_panel_green.tres" type="StyleBox" id=9]
 [ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=10]
 
@@ -106,6 +106,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="0"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -179,6 +180,78 @@ texture = ExtResource( 4 )
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
 
+[node name="ShipInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 193.0
+margin_bottom = 185.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = false
+bbcode_text = "Scout
+
+Power: 1
+Engine: 1
+Shields: 1
+"
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Scout
+
+Power: 1
+Engine: 1
+Shields: 1
+"
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
+
+[node name="TextureRect2" type="TextureRect" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 80.0
+margin_top = 1.0
+margin_right = 192.0
+margin_bottom = 76.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 5 )
+stretch_mode = 0
+_sections_unfolded = [ "Rect" ]
+
 [node name="minimap" type="Control" parent="Control2/Panel_rightHUD" index="1"]
 
 anchor_left = 0.0
@@ -195,7 +268,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 _sections_unfolded = [ "Rect" ]
 
 [node name="Panel" type="Panel" parent="Control2/Panel_rightHUD/minimap" index="0"]
@@ -231,7 +304,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
 
@@ -274,7 +347,7 @@ _sections_unfolded = [ "custom_styles" ]
 
 [node name="player_outline" type="TextureRect" parent="Control/Panel" index="0"]
 
-material = ExtResource( 7 )
+material = ExtResource( 8 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -289,7 +362,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 8 )
+texture = ExtResource( 5 )
 stretch_mode = 4
 _sections_unfolded = [ "Material", "Rect" ]
 
@@ -493,7 +566,7 @@ _sections_unfolded = [ "custom_styles" ]
 [node name="target_outline" type="TextureRect" parent="Control/Panel2" index="0"]
 
 visible = false
-material = ExtResource( 7 )
+material = ExtResource( 8 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
