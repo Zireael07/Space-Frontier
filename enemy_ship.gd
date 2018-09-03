@@ -1,6 +1,9 @@
 extends "boid.gd"
 
 # class member variables go here, for example:
+var shields = 100
+signal shield_changed
+
 
 # bullets
 export(PackedScene) var bullet

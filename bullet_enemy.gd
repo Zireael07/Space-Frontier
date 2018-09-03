@@ -29,15 +29,20 @@ func _on_bullet_area_entered( area ):
 
 		var pos = area.get_global_position()
 
-		# kill the player
-		# reenable when it doesn't destroy the game
-		#area.get_parent().queue_free()
-
-		# explosion
-		var expl = get_parent().get_parent().explosion.instance()
-		get_parent().get_parent().add_child(expl)
-		expl.set_global_position(pos)
-		expl.play()
+		area.shields -= 10
+		# emit signal
+		area.emit_signal("shield_changed", area.shields)
 		
-		# bugfix
-		#get_parent().get_parent().shoot_target = null
+		if area.shields <= 0:
+			# kill the player
+			# reenable when it doesn't destroy the game
+			#area.get_parent().queue_free()
+	
+			# explosion
+			var expl = get_parent().get_parent().explosion.instance()
+			get_parent().get_parent().add_child(expl)
+			expl.set_global_position(pos)
+			expl.play()
+			
+			# bugfix
+			#get_parent().get_parent().shoot_target = null

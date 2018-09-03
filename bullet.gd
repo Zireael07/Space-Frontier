@@ -29,11 +29,16 @@ func _on_bullet_area_entered( area ):
 		
 		var pos = area.get_global_position()
 		
-		# kill the AI
-		area.get_parent().queue_free()
+		area.shields -= 10
+		# emit signal
+		area.emit_signal("shield_changed", area.shields)
 		
-		# explosion
-		var expl = get_parent().get_parent().explosion.instance()
-		get_parent().get_parent().add_child(expl)
-		expl.set_global_position(pos)
-		expl.play()
+		if area.shields <= 0:
+			# kill the AI
+			area.get_parent().queue_free()
+			
+			# explosion
+			var expl = get_parent().get_parent().explosion.instance()
+			get_parent().get_parent().add_child(expl)
+			expl.set_global_position(pos)
+			expl.play()

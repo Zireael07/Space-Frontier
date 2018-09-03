@@ -16,7 +16,9 @@ var acc = Vector2()
 
 var spd = 0
 
-
+# shields
+var shields = 100
+signal shield_changed
 
 # bullets
 export(PackedScene) var bullet

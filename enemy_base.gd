@@ -9,6 +9,9 @@ onready var bullet_container = $"bullet_container"
 onready var gun_timer = $"gun_timer"
 onready var explosion = preload("res://explosion.tscn")
 
+var shields = 150
+signal shield_changed
+
 var targetted = false
 signal AI_targeted
 
