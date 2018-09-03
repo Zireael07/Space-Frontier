@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=2]
@@ -8,8 +8,9 @@
 [ext_resource path="res://minimap_container.gd" type="Script" id=6]
 [ext_resource path="res://assets/hud/arrow.png" type="Texture" id=7]
 [ext_resource path="res://assets/HUD ship outline.tres" type="Material" id=8]
-[ext_resource path="res://assets/hud/HUD_panel_green.tres" type="StyleBox" id=9]
-[ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=10]
+[ext_resource path="res://assets/bottom_bar_style.tres" type="StyleBox" id=9]
+[ext_resource path="res://assets/hud/HUD_panel_green.tres" type="StyleBox" id=10]
+[ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=11]
 
 [sub_resource type="StyleBoxTexture" id=1]
 
@@ -53,6 +54,7 @@ _sections_unfolded = [ "Pause" ]
 
 [node name="Control2" type="Control" parent="." index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -327,7 +329,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="Panel" type="Panel" parent="Control" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -431,15 +432,16 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
+custom_styles/fg = ExtResource( 9 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
 page = 0.0
-value = 0.0
+value = 100.0
 exp_edit = false
 rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect" ]
+_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
 [node name="Label_sh" type="Label" parent="Control/Panel" index="4"]
 
@@ -482,15 +484,16 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
+custom_styles/fg = ExtResource( 9 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
 page = 0.0
-value = 0.0
+value = 100.0
 exp_edit = false
 rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect" ]
+_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
 [node name="Label_en" type="Label" parent="Control/Panel" index="6"]
 
@@ -533,18 +536,20 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
+custom_styles/fg = ExtResource( 9 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
 page = 0.0
-value = 0.0
+value = 100.0
 exp_edit = false
 rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect" ]
+_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
 [node name="Panel2" type="Panel" parent="Control" index="1"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -559,7 +564,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panelf = ExtResource( 9 )
+custom_styles/panelf = ExtResource( 10 )
 custom_styles/panel = ExtResource( 2 )
 _sections_unfolded = [ "custom_styles" ]
 
@@ -582,7 +587,7 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 stretch_mode = 4
 _sections_unfolded = [ "Material", "Rect" ]
 

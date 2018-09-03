@@ -12,9 +12,12 @@ func _ready():
 	for e in get_tree().get_nodes_in_group("enemy"):
 		e.connect("AI_targeted", self, "_on_AI_targeted")
 	
+	player.connect("shield_changed", self, "_on_shield_changed")
+	
+	
 	# Called every time the node is added to the scene.
 	# Initialization here
-	pass
+	#pass
 
 func _process(delta):
 	var format = "%0.2f" % player.spd
@@ -33,6 +36,25 @@ func _input(event):
 			$"pause_panel".show() #(not paused)
 		else:
 			$"pause_panel".hide()
+
+
+
+func _on_shield_changed(shield):
+	#print("Shields from signal is " + str(shield))
+	
+	# original max is 100
+	# avoid truncation
+	var maxx = 100.0
+	var perc = shield/maxx * 100
+	
+	#print("Perc: " + str(perc))
+	
+	if perc >= 0:
+		$"Control/Panel/ProgressBar_sh".value = perc
+	else:
+		$"Control/Panel/ProgressBar_sh".value = 0
+	
+	
 
 func _on_AI_targeted():
 	for n in $"Control/Panel2".get_children():
