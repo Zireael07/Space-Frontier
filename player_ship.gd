@@ -26,6 +26,7 @@ onready var bullet_container = $"bullet_container"
 #onready var bullet = preload("res://bullet.tscn")
 onready var gun_timer = $"gun_timer"
 onready var explosion = preload("res://explosion.tscn")
+onready var debris = preload("res://debris_enemy.tscn")
 
 var target = null
 var tractor = null

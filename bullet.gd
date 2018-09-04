@@ -42,3 +42,8 @@ func _on_bullet_area_entered( area ):
 			get_parent().get_parent().add_child(expl)
 			expl.set_global_position(pos)
 			expl.play()
+			
+			# debris
+			var deb = get_parent().get_parent().debris.instance()
+			get_parent().get_parent().get_parent().add_child(deb)
+			deb.set_global_position(pos)
