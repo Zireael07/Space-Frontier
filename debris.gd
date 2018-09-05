@@ -1,7 +1,9 @@
 extends Area2D
 
 # class member variables go here, for example:
-var module = "shields"
+export var module = 1
+
+enum modules {shields, engine, power}
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -19,9 +21,15 @@ func _on_debris_area_entered(area):
 		print("debris entered by " + area.get_parent().get_name())
 		
 		# upgrade
-		if module == "shields":
+		if module == modules.shields:
 			print("Upgrading shields")
 			area.shields = 150
+		elif module == modules.engine:
+			print("Wants to upgrade engine")
+		elif module == modules.power:
+			print("Wants to upgrade power")
+		else:
+			print("Not supported")
 		
 		
 		queue_free()
