@@ -13,6 +13,7 @@ func _ready():
 		e.connect("AI_targeted", self, "_on_AI_targeted")
 	
 	player.connect("shield_changed", self, "_on_shield_changed")
+	player.connect("module_level_changed", self, "_on_module_level_changed")
 	
 	
 	# Called every time the node is added to the scene.
@@ -54,7 +55,14 @@ func _on_shield_changed(shield):
 	else:
 		$"Control/Panel/ProgressBar_sh".value = 0
 	
+func _on_module_level_changed(module, level):
+	var info = $"Control2/Panel_rightHUD/PanelInfo/ShipInfo/"
+
 	
+	print("Changed level of module " + str(module) + " " + str(level))
+	if module == "engine":
+		info.get_node("Engine").set_text("Engine: " + str(level))
+		#$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".set_text("Engine: " + str(level))
 
 func _on_AI_targeted():
 	for n in $"Control/Panel2".get_children():

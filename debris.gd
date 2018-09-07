@@ -24,10 +24,16 @@ func _on_debris_area_entered(area):
 		if module == modules.shields:
 			print("Upgrading shields")
 			area.shields = 150
+			area.shield_level = 2
+			area.emit_signal("module_level_changed", "shields", 2)
 		elif module == modules.engine:
 			print("Wants to upgrade engine")
+			area.engine_level = 2
+			area.emit_signal("module_level_changed", "engine", 2)
 		elif module == modules.power:
 			print("Wants to upgrade power")
+			area.power_level = 2
+			area.emit_signal("module_level_changed", "power", 2)
 		else:
 			print("Not supported")
 		

@@ -19,6 +19,11 @@ var spd = 0
 # shields
 var shields = 100
 signal shield_changed
+var shield_level = 1
+var engine_level = 1
+var power_level = 1
+signal module_level_changed
+
 
 # bullets
 export(PackedScene) var bullet
