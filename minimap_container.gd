@@ -4,11 +4,15 @@ extends Control
 onready var star = preload("res://assets/hud/yellow_circle.png")
 onready var planet = preload("res://assets/hud/red_circle.png")
 
+onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
+
 var stars
 var planets
 
 var star_sprites = []
 var planet_sprites = []
+
+var star_arrow
 
 #var center = Vector2(get_size().x/2-5, get_size().y/2-5)
 var center = Vector2()
@@ -32,6 +36,13 @@ func _ready():
 		star_sprites.append(star_sprite)
 		add_child(star_sprite)
 		
+		star_arrow = TextureRect.new()
+		star_arrow.set_texture(arrow_star)
+		add_child(star_arrow)
+		# center it
+		star_arrow.set_pivot_offset(star_arrow.get_size()/2)
+		star_arrow.set_visible(false)
+		
 	for p in planets:
 		var planet_sprite = TextureRect.new()
 		planet_sprite.set_texture(planet)
@@ -39,7 +50,7 @@ func _ready():
 		add_child(planet_sprite)
 	
 	# make sure player is the last child (to be drawn last)
-	move_child($"player", stars.size()+planets.size())
+	move_child($"player", stars.size()+planets.size()+1)
 	center = Vector2($"player".get_position().x, $"player".get_position().y)
 	set_clip_contents(true)
 	
@@ -54,6 +65,26 @@ func _process(delta):
 		#var rel_loc = player.get_global_transform().xform_inv(stars[i].get_global_transform().origin)
 		#star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale))
 		star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+		
+		var dist = Vector2(rel_loc.x, rel_loc.y).length()
+		#print ("Px to star: " + str(dist))
+		
+		if dist > 1200:
+			# indicate distant stars
+			#print("Star out of minimap area")
+			star_arrow.set_visible(true)
+			var pos = Vector2(rel_loc.x, rel_loc.y).clamped(1200-4)
+			var a = atan2(rel_loc.x, rel_loc.y)
+			
+			#print("Pos: " + str(pos) + " for rel_pos" + str(rel_loc))
+			star_arrow.set_position(Vector2(pos.x/zoom_scale+center.x, pos.y/zoom_scale+center.y))
+			
+			# add 180 deg because we want the arrow to point at the star, not away
+			star_arrow.set_rotation((-a+3.141593))
+			
+		else:
+			star_arrow.set_visible(false)
+		
 
 	for i in range(planets.size()):
 		# the minimap doesn't rotate

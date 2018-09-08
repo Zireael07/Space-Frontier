@@ -89,6 +89,7 @@ _sections_unfolded = [ "custom_styles" ]
 
 [node name="PanelInfo" type="Panel" parent="Control2/Panel_rightHUD" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -342,10 +343,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 3.0
-margin_top = 397.0
-margin_right = 203.0
-margin_bottom = 597.0
+margin_left = 2.0
+margin_top = 400.0
+margin_right = 202.0
+margin_bottom = 600.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -361,9 +362,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 7.0
-margin_right = 192.0
-margin_bottom = 199.0
+margin_right = 200.0
+margin_bottom = 200.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -378,11 +378,11 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 100.0
-margin_top = 100.0
-margin_right = 118.0
-margin_bottom = 118.0
-rect_pivot_offset = Vector2( 0, 0 )
+margin_left = 92.0
+margin_top = 91.0
+margin_right = 110.0
+margin_bottom = 109.0
+rect_pivot_offset = Vector2( 8, 9 )
 rect_clip_content = false
 mouse_filter = 1
 mouse_default_cursor_shape = 0
@@ -411,6 +411,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="Panel" type="Panel" parent="Control" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
