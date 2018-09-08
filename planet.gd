@@ -6,14 +6,18 @@ extends Node2D
 #export(int) var dist = 100 setget setDist #, getDist
 
 export(Vector2) var data setget setData
-	
+
+const LIGHT_SEC = 400	# must match LIGHT_SPEED to make sense
 	
 var targetted = false
 signal planet_targeted
 
 func _ready():
 	var dist = get_position().length()
-	print("Dist to parent star" + str(dist))
+	
+	var ls = dist/LIGHT_SEC
+	
+	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls")
 	
 	
 	# Called when the node is added to the scene for the first time.
