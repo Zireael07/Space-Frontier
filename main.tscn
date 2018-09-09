@@ -31,13 +31,13 @@ size_flags_vertical = 1
 "player",
 ] instance=ExtResource( 3 )]
 
-position = Vector2( -200, 1000 )
+position = Vector2( 2014, 676 )
 z_index = 5
 _sections_unfolded = [ "Transform", "Z", "Z Index" ]
 
 [node name="enemy" parent="." index="3" instance=ExtResource( 4 )]
 
-position = Vector2( -100, 1000 )
+position = Vector2( 2120, 930 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="enemy_base" parent="." index="4" instance=ExtResource( 5 )]
