@@ -16,6 +16,10 @@ var acc = Vector2()
 
 var spd = 0
 
+var orbit_rate = 0.04
+var orbit_rot = 0
+var orbiting = false
+
 # shields
 var shields = 100
 signal shield_changed
@@ -67,6 +71,12 @@ func _process(delta):
 			#print("Tractor active on: " + str(tractor.get_name()) + " " + str(dist))
 			tractor.get_child(0).tractor = self
 
+	if orbiting:		
+		#print("Orbiting... " + str(orbiting))
+		orbit_rot += orbit_rate * delta
+		orbiting.set_rotation(orbit_rot)
+		#print("Gl pos " + str(get_global_position()) + "parent" + str(get_parent().get_global_position()))
+
 	# rotations
 	if Input.is_action_pressed("ui_left"):
 		rot -= rot_speed*delta
@@ -74,21 +84,43 @@ func _process(delta):
 		rot += rot_speed*delta
 	# thrust
 	if Input.is_action_pressed("ui_up"):
-		acc = Vector2(0, -thrust).rotated(rot)
-		$"engine_flare".set_emitting(true)
+		# deorbit
+		if orbiting:
+			var rel_pos = get_global_transform().xform_inv(orbiting.get_parent().get_global_position())
+			print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
+			orbiting = null
+			
+			print("Deorbiting, " + str(get_global_position()) + str(get_parent().get_global_position()))
+			
+			# reparent
+			var root = get_node("/root/Control")
+			var gl = get_global_position()
+			
+			get_parent().get_parent().remove_child(get_parent())
+			root.add_child(get_parent())
+			
+			get_parent().set_global_position(gl)
+			set_position(Vector2(0,0))
+			pos = Vector2(0,0)
+			
+			set_global_rotation(get_global_rotation())
+		else:
+			acc = Vector2(0, -thrust).rotated(rot)
+			$"engine_flare".set_emitting(true)
 	else:
 		acc = Vector2(0,0)
 		$"engine_flare".set_emitting(false)
 	
-	
-	# movement happens!
-	# modify acc by friction dependent on vel
-	acc += vel * -friction
-	vel += acc *delta
-	# prevent exceeding max speed
-	vel = vel.clamped(max_vel)
-	pos += vel * delta
-	set_position(pos)
+	if not orbiting:
+		# movement happens!
+		# modify acc by friction dependent on vel
+		acc += vel * -friction
+		vel += acc *delta
+		# prevent exceeding max speed
+		vel = vel.clamped(max_vel)
+		pos += vel * delta
+		set_position(pos)
+		#print("Setting position" + str(pos))
 	# rotation
 	set_rotation(rot)
 	
@@ -100,6 +132,48 @@ func _input(event):
 	if Input.is_action_pressed("closest_target"):
 		get_closest_target()
 	
+	if Input.is_action_pressed("orbit"):
+		#print("Try to orbit")
+		var pl = get_closest_planet()
+		# values are eyeballed for current planets
+		if pl[0] > 300:
+			print("Too far away to orbit")
+		elif pl[0] < 200:
+			print("Too close to orbit")
+		else:
+			print("Can orbit")
+			if pl[1].has_node("orbit_holder"):
+				
+				pl[1].get_node("orbit_holder").set_rotation(0)
+				orbit_rot = 0
+				# nuke any velocity left
+				vel = Vector2(0,0)
+				acc = Vector2(0,0)
+				
+				var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
+				var dist = pl[1].get_global_position().distance_to(get_global_position())
+				print("Dist: " + str(dist))
+				print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
+				
+				if dist > pl[0] + 20: #fudge factor
+					print("Mismatch in perceived distances!")
+					return
+				
+				# reparent
+				get_parent().get_parent().remove_child(get_parent())
+				pl[1].get_node("orbit_holder").add_child(get_parent())
+				print("Reparented")
+			
+				get_parent().set_position(Vector2(0,0))
+				#set_position(Vector2(0,0))
+				set_position(rel_pos)
+				var a = atan2(rel_pos.x, rel_pos.y)
+				#var a = fix_atan(rel_pos.x, rel_pos.y)
+				print("Initial angle " + str(a))
+				
+				orbiting = pl[1].get_node("orbit_holder")
+				orbiting.set_rotation(a)
+				orbit_rot = a
 	
 	if Input.is_action_pressed("tractor"):
 		# toggle
@@ -138,6 +212,24 @@ func shoot():
 	var b = bullet.instance()
 	bullet_container.add_child(b)
 	b.start_at(get_rotation(), $"muzzle".get_global_position())
+
+func get_closest_planet():
+	var planets = get_tree().get_nodes_in_group("planets")
+	
+	var dists = []
+	var targs = [] # otherwise we have no way of knowing which planet the dist refers to
+	
+	for p in planets:
+		var dist = p.get_global_position().distance_to(get_global_position())
+		dists.append(dist)
+		targs.append([dist, p])
+		
+	dists.sort()
+	
+	for t in targs:
+		if t[0] == dists[0]:
+			print("Closest planet is: " + t[1].get_name() + " at " + str(t[0]))
+			return t
 
 func get_closest_target():
 	var nodes = get_tree().get_nodes_in_group("enemy")
@@ -178,3 +270,16 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 		target = self
 		# redraw 
 		update()
+
+# atan2(0,-1) returns 180 degrees in 3.0, we want 0
+# this counts in radians
+func fix_atan(x,y):
+	var ret = 0
+	var at = atan2(x,y)
+
+	if at > 0:
+		ret = at - PI
+	else:
+		ret= at + PI
+	
+	return ret
