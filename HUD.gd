@@ -15,6 +15,9 @@ func _ready():
 	player.connect("shield_changed", self, "_on_shield_changed")
 	player.connect("module_level_changed", self, "_on_module_level_changed")
 	
+	player.HUD = self
+	
+	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
 	
 	# Called every time the node is added to the scene.
 	# Initialization here

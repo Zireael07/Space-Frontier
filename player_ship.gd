@@ -39,11 +39,17 @@ onready var debris = preload("res://debris_enemy.tscn")
 
 var target = null
 var tractor = null
+var heading = null
+var warp_target = null
+
+var HUD = null
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	
 	pass
+
 
 # using this because we don't need physics
 func _process(delta):
@@ -53,7 +59,7 @@ func _process(delta):
 	spd = vel.length() / LIGHT_SPEED
 
 	# shoot
-	if Input.is_action_pressed("ui_select"):
+	if Input.is_action_pressed("shoot"):
 		if gun_timer.get_time_left() == 0:
 			shoot()
 
@@ -105,8 +111,9 @@ func _process(delta):
 			
 			set_global_rotation(get_global_rotation())
 		else:
-			acc = Vector2(0, -thrust).rotated(rot)
-			$"engine_flare".set_emitting(true)
+			if warp_target == null:
+				acc = Vector2(0, -thrust).rotated(rot)
+				$"engine_flare".set_emitting(true)
 	else:
 		acc = Vector2(0,0)
 		$"engine_flare".set_emitting(false)
@@ -121,7 +128,40 @@ func _process(delta):
 		pos += vel * delta
 		set_position(pos)
 		#print("Setting position" + str(pos))
+	
+	# warp drive!
+	if not heading and warp_target != null:
+		var desired = warp_target - get_global_position()
+		var dist = desired.length()
+		
+		if dist > LIGHT_SPEED:
+			vel = Vector2(0, -LIGHT_SPEED).rotated(rot)
+			pos += vel* delta
+			# prevent accumulating
+			vel = vel.clamped(LIGHT_SPEED)
+			set_position(pos)
+		else:
+			# we've arrived, return to normal space
+			warp_target = null
+		
 	# rotation
+	# handling the warp-drive heading
+	if heading:
+		var rel_pos = get_global_transform().xform_inv(warp_target)
+		
+		var a = atan2(rel_pos.x, rel_pos.y)
+		
+		# we've turned to face the target
+		if abs(rad2deg(a)) > 179:
+			heading = null
+		
+		if a < 0:
+			rot -= rot_speed*delta
+		else:
+			rot += rot_speed*delta
+			
+			
+		
 	set_rotation(rot)
 	
 	# fix jitter due to camera updating one frame late
@@ -270,6 +310,14 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 		target = self
 		# redraw 
 		update()
+
+func _on_goto_pressed():
+	print("Want to go to planet")
+	warp_target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
+	heading = true
+	
+
+
 
 # atan2(0,-1) returns 180 degrees in 3.0, we want 0
 # this counts in radians
