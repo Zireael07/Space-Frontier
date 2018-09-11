@@ -48,6 +48,8 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	
+	connect("shield_changed", self, "_on_shield_changed")
+	
 	pass
 
 
@@ -302,6 +304,14 @@ func _draw():
 		var rect = Rect2(Vector2(-35, -25),	Vector2(112*0.6, 75*0.6)) 
 		
 		draw_rect(rect, Color(1,0,0), false)
+
+func _on_shield_changed(shields):
+	if shields < 0.2 * 100:
+		$"shield_indicator".set_modulate(Color(0.35, 0.0, 0.0)) #dark red
+	elif shields < 0.5 * 100:
+		$"shield_indicator".set_modulate(Color(1.0, 0.0, 0.0))
+	elif shields < 0.7* 100: #current max
+		$"shield_indicator".set_modulate(Color(1.0, 1.0, 0.0))
 
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):
