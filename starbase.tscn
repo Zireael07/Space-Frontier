@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://enemy_base.gd" type="Script" id=1]
-[ext_resource path="res://bullet_enemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ships/ufoRed.png" type="Texture" id=3]
+[ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ships/ufoBlue.png" type="Texture" id=3]
 [ext_resource path="res://movement_visualizer.gd" type="Script" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -14,9 +14,7 @@ radius = 47.0
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="Area2D" type="Area2D" parent="." index="0" groups=[
-"enemy",
-]]
+[node name="Area2D" type="Area2D" parent="." index="0"]
 
 position = Vector2( 0, 1 )
 input_pickable = true
@@ -35,7 +33,7 @@ friction = 0.65
 max_speed = 200.0
 bullet = ExtResource( 2 )
 
-[node name="enemy_base" type="Sprite" parent="Area2D" index="0"]
+[node name="star_base" type="Sprite" parent="Area2D" index="0"]
 
 texture = ExtResource( 3 )
 _sections_unfolded = [ "Transform" ]

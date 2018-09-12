@@ -19,12 +19,14 @@ var shoot_target = null
 var shoot_rel_pos = Vector2()
 
 func _ready():
-	add_to_group("enemy")
+	#add_to_group("enemy")
 	
 	#target
 	# it's static so we don't need to do it in process()
 	target = get_parent().get_position() + Vector2(200, -200)
-	shoot_target = get_tree().get_nodes_in_group("player")[0].get_child(0)
+	
+	if is_in_group("enemy"):
+		shoot_target = get_tree().get_nodes_in_group("player")[0].get_child(0)
 	
 	# Called every time the node is added to the scene.
 	# Initialization here
