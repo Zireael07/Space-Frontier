@@ -42,6 +42,9 @@ var tractor = null
 var heading = null
 var warp_target = null
 
+var tractored = false
+var refit_target = false
+
 var HUD = null
 
 func _ready():
@@ -57,6 +60,9 @@ func _ready():
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
+
+	# redraw 
+	update()
 
 	spd = vel.length() / LIGHT_SPEED
 
@@ -145,22 +151,56 @@ func _process(delta):
 		else:
 			# we've arrived, return to normal space
 			warp_target = null
+			
+	# refit
+	if not heading and refit_target:
+		var desired = refit_target.get_global_position() - get_global_position()
+		var dist = desired.length()
+		
+		desired = desired.normalized()
+		if dist < 100:
+			var m = range_lerp(dist, 0, 100, 0, max_vel) 
+			desired = desired * m
+		else:
+			desired = desired * max_vel
+			tractored = false
+			
+		vel = desired.clamped(max_vel)
+		pos += vel*delta
+		set_position(pos)
+		
+		if dist < 50:
+			# reparent			
+			get_parent().get_parent().remove_child(get_parent())
+			# refit target needs to be a node because here
+			refit_target.add_child(get_parent())
+			# set better z so that we don't overlap parent ship
+			get_parent().set_z_index(-1)
+			
+			# nuke any velocity left
+			vel = Vector2(0,0)
+			acc = Vector2(0,0)
+			
+			# all local positions relative to the immediate parent
+			get_parent().set_position(Vector2(0,50))
+			set_position(Vector2(0,0))
+			pos = Vector2(0,0)
+			
+			print("Adding player as tractoring ship's child")
+			
+			# arrived
+			refit_target = null
+			print("No refit target anymore")
+			# disable tractor
+			tractored = false
+		elif dist < 60:
+			tractored = true
+			#print("We're being tractored in")
 		
 	# rotation
-	# handling the warp-drive heading
+	# handling heading (usually the warp-drive)
 	if heading:
-		var rel_pos = get_global_transform().xform_inv(warp_target)
-		
-		var a = atan2(rel_pos.x, rel_pos.y)
-		
-		# we've turned to face the target
-		if abs(rad2deg(a)) > 179:
-			heading = null
-		
-		if a < 0:
-			rot -= rot_speed*delta
-		else:
-			rot += rot_speed*delta
+		player_heading(heading, delta)
 			
 			
 		
@@ -168,6 +208,21 @@ func _process(delta):
 	
 	# fix jitter due to camera updating one frame late
 	get_node("Camera2D").align()
+
+
+func player_heading(target, delta):
+	var rel_pos = get_global_transform().xform_inv(target)
+	
+	var a = atan2(rel_pos.x, rel_pos.y)
+	
+	# we've turned to face the target
+	if abs(rad2deg(a)) > 179:
+		heading = null
+	
+	if a < 0:
+		rot -= rot_speed*delta
+	else:
+		rot += rot_speed*delta
 	
 
 func _input(event):
@@ -217,6 +272,13 @@ func _input(event):
 				orbiting.set_rotation(a)
 				orbit_rot = a
 	
+	if Input.is_action_pressed("refit"):
+		print("Want to refit")
+		var base = get_tree().get_nodes_in_group("starbase")[0]
+		heading = base.get_global_position()
+		refit_target = base
+	
+	# tractor
 	if Input.is_action_pressed("tractor"):
 		# toggle
 		if not tractor:
@@ -304,6 +366,18 @@ func _draw():
 		var rect = Rect2(Vector2(-35, -25),	Vector2(112*0.6, 75*0.6)) 
 		
 		draw_rect(rect, Color(1,0,0), false)
+	else:
+		pass
+	
+	if tractored:
+		var tr = get_child(0)
+		var rc_h = tr.get_texture().get_height() * tr.get_scale().x
+		var rc_w = tr.get_texture().get_height() * tr.get_scale().y
+		var rect = Rect2(Vector2(-rc_w/2, -rc_h/2), Vector2(rc_w, rc_h))
+		
+		draw_rect(rect, Color(1,1,0), false)
+	else:
+		pass
 
 func _on_shield_changed(shields):
 	if shields < 0.2 * 100:
@@ -324,7 +398,7 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 func _on_goto_pressed():
 	print("Want to go to planet")
 	warp_target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
-	heading = true
+	heading = warp_target
 	
 
 

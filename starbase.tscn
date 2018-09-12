@@ -14,7 +14,9 @@ radius = 47.0
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="Area2D" type="Area2D" parent="." index="0"]
+[node name="Area2D" type="Area2D" parent="." index="0" groups=[
+"starbase",
+]]
 
 position = Vector2( 0, 1 )
 input_pickable = true
