@@ -1,17 +1,130 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://star system.gd" type="Script" id=1]
 [ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=2]
 [ext_resource path="res://planet.gd" type="Script" id=3]
 [ext_resource path="res://assets/bodies/Planet14.png" type="Texture" id=4]
 [ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=5]
-[ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=6]
-[ext_resource path="res://colony.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/aura shader.tres" type="Material" id=6]
+[ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=7]
+[ext_resource path="res://colony.tscn" type="PackedScene" id=8]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="StyleBoxFlat" id=1]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0.6, 0.6, 0.6, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+
+[sub_resource type="StyleBoxFlat" id=2]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0.6, 0.6, 0.6, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+
+[sub_resource type="CircleShape2D" id=3]
 
 custom_solver_bias = 0.0
 radius = 150.0
+
+[sub_resource type="StyleBoxFlat" id=4]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0.6, 0.6, 0.6, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+
+[sub_resource type="StyleBoxFlat" id=5]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0.6, 0.6, 0.6, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
 
 [node name="star" type="Node2D" index="0" groups=[
 "star",
@@ -36,19 +149,21 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = -400.0
 margin_top = 350.0
-margin_right = -338.0
-margin_bottom = 390.0
+margin_right = -328.0
+margin_bottom = 366.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
+custom_styles/normal = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Kepler-99"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
 
 [node name="planet_holder" type="Node2D" parent="." index="2"]
 
@@ -84,11 +199,13 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
+custom_styles/normal = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Emerald"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "custom_colors", "custom_styles" ]
 
 [node name="Area2D" type="Area2D" parent="planet_holder/planet" index="2"]
 
@@ -102,7 +219,7 @@ audio_bus_name = "Master"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="planet_holder/planet/Area2D" index="0"]
 
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="planet2" type="Node2D" parent="planet_holder" index="1" groups=[
 "planets",
@@ -134,11 +251,13 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
+custom_styles/normal = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Inferno"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Rect", "custom_colors", "custom_fonts", "custom_styles" ]
 
 [node name="Area2D2" type="Area2D" parent="planet_holder/planet2" index="2"]
 
@@ -153,7 +272,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="planet_holder/planet2/Area2D2" index="0"]
 
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="planet3" type="Node2D" parent="planet_holder" index="2" groups=[
 "planets",
@@ -166,8 +285,10 @@ data = null
 
 [node name="Sprite" type="Sprite" parent="planet_holder/planet3" index="0"]
 
+material = ExtResource( 6 )
 scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
+_sections_unfolded = [ "Material" ]
 
 [node name="Label" type="Label" parent="planet_holder/planet3" index="1"]
 
@@ -185,14 +306,17 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
+custom_styles/normal = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Paradise"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Rect", "Theme", "custom_colors", "custom_styles" ]
 
 [node name="Area2D3" type="Area2D" parent="planet_holder/planet3" index="2"]
 
+visible = false
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -204,9 +328,9 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="planet_holder/planet3/Area2D3" index="0"]
 
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
-[node name="colony" parent="planet_holder/planet3" index="3" instance=ExtResource( 7 )]
+[node name="colony" parent="planet_holder/planet3" index="3" instance=ExtResource( 8 )]
 
 [node name="orbit_holder" type="Node2D" parent="planet_holder/planet3" index="4"]
 
