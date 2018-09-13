@@ -102,9 +102,15 @@ func _draw():
 		var tr = get_child(0)
 		var rc_h = tr.get_texture().get_height() * tr.get_scale().x
 		var rc_w = tr.get_texture().get_height() * tr.get_scale().y
-		var rect = Rect2(Vector2(-rc_w/2, -rc_h/2), Vector2(rc_w, rc_h))
+		#var rect = Rect2(Vector2(-rc_w/2, -rc_h/2), Vector2(rc_w, rc_h))
+		#draw_rect(rect, Color(1,1,0), false)
 		
-		draw_rect(rect, Color(1,1,0), false)
+		# better looking effect
+		draw_line(rel_pos, Vector2(-rc_w/2, -rc_h/2), Color(1,1,0))
+		draw_line(rel_pos, Vector2(rc_w/2, rc_h/2), Color(1,1,0))
+		draw_line(rel_pos, Vector2(rc_w/2, -rc_h/2), Color(1,1,0))
+		draw_line(rel_pos, Vector2(-rc_w/2, rc_h/2), Color(1,1,0))
+		
 	else:
 		pass
 	

@@ -194,7 +194,7 @@ func _process(delta):
 			print("No refit target anymore")
 			# disable tractor
 			tractored = false
-		elif dist < 60:
+		elif dist < 80:
 			tractored = true
 			#print("We're being tractored in")
 		
@@ -309,7 +309,7 @@ func _input(event):
 		if not tractor:
 		#tractor = true
 			# TODO: closest colony
-			tractor = get_tree().get_nodes_in_group("colony")[0]
+			tractor = get_tree().get_nodes_in_group("colony")[1]
 		else:
 			tractor = null
 
@@ -398,9 +398,16 @@ func _draw():
 		var tr = get_child(0)
 		var rc_h = tr.get_texture().get_height() * tr.get_scale().x
 		var rc_w = tr.get_texture().get_height() * tr.get_scale().y
-		var rect = Rect2(Vector2(-rc_w/2, -rc_h/2), Vector2(rc_w, rc_h))
+		#var rect = Rect2(Vector2(-rc_w/2, -rc_h/2), Vector2(rc_w, rc_h))
+		#draw_rect(rect, Color(1,1,0), false)
 		
-		draw_rect(rect, Color(1,1,0), false)
+		# better looking effect
+		var rel_pos = get_global_transform().xform_inv(refit_target.get_global_position())
+		draw_line(rel_pos, Vector2(-rc_w/2, -rc_h/2), Color(1,1,0))
+		draw_line(rel_pos, Vector2(rc_w/2, rc_h/2), Color(1,1,0))
+		draw_line(rel_pos, Vector2(rc_w/2, -rc_h/2), Color(1,1,0))
+		draw_line(rel_pos, Vector2(-rc_w/2, rc_h/2), Color(1,1,0))
+		
 	else:
 		pass
 
