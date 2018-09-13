@@ -8,6 +8,8 @@ extends Node2D
 export(Vector2) var data setget setData
 
 const LIGHT_SEC = 400	# must match LIGHT_SPEED to make sense
+
+var population = 100000
 	
 var targetted = false
 signal planet_targeted

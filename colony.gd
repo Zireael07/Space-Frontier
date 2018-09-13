@@ -14,6 +14,7 @@ signal AI_targeted
 
 
 func _ready():
+	get_parent().add_to_group("colony")
 
 	# Called every time the node is added to the scene.
 	# Initialization here

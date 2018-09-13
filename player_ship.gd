@@ -36,6 +36,7 @@ onready var bullet_container = $"bullet_container"
 onready var gun_timer = $"gun_timer"
 onready var explosion = preload("res://explosion.tscn")
 onready var debris = preload("res://debris_enemy.tscn")
+onready var colony = preload("res://colony.tscn")
 
 var target = null
 var tractor = null
@@ -228,6 +229,30 @@ func player_heading(target, delta):
 func _input(event):
 	if Input.is_action_pressed("closest_target"):
 		get_closest_target()
+	
+	if Input.is_action_pressed("join"):
+		if not orbiting:
+			print("Not orbiting")
+		else:
+			var pl = orbiting.get_parent()
+			print("Orbiting planet: " + pl.get_name())
+			# decrease planet pop
+			if pl.population > 50000:
+				pl.population -= 50000
+				
+				print("Creating colony...")
+				# create colony
+				var co = colony.instance()
+				add_child(co)
+				co.set_position(get_node("dock").get_position())
+				# don't overlap
+				co.set_z_index(-1)
+			
+				#co.set_global_position(get_node("dock").get_global_position() + Vector2(0, 20))
+				
+			else:
+				print("Planet has too little pop to create colony")
+			
 	
 	if Input.is_action_pressed("orbit"):
 		#print("Try to orbit")
