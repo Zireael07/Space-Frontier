@@ -15,6 +15,9 @@ func _ready():
 	player.connect("shield_changed", self, "_on_shield_changed")
 	player.connect("module_level_changed", self, "_on_module_level_changed")
 	
+	player.connect("officer_message", self, "_on_officer_messaged")
+	
+	
 	player.HUD = self
 	
 	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
@@ -66,6 +69,10 @@ func _on_module_level_changed(module, level):
 	if module == "engine":
 		info.get_node("Engine").set_text("Engine: " + str(level))
 		#$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".set_text("Engine: " + str(level))
+
+func _on_officer_messaged(message):
+	$"Control3/Officer".set_text("1st Officer>: " + str(message))
+
 
 func _on_AI_targeted():
 	for n in $"Control/Panel2".get_children():

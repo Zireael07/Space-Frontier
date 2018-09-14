@@ -49,6 +49,7 @@ var tractored = false
 var refit_target = false
 
 var HUD = null
+signal officer_message
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -257,7 +258,7 @@ func _input(event):
 				# don't overlap
 				co.set_z_index(-1)
 			
-				#co.set_global_position(get_node("dock").get_global_position() + Vector2(0, 20))
+				emit_signal("officer_message", "We have picked up a colony. Transport it to a planet and press / to drop it.")
 				
 			else:
 				print("Planet has too little pop to create colony")
@@ -305,6 +306,8 @@ func _input(event):
 				orbiting = pl[1].get_node("orbit_holder")
 				orbiting.set_rotation(a)
 				orbit_rot = a
+				
+				emit_signal("officer_message", "Orbit established. Press J to request a colony")
 	
 	if Input.is_action_pressed("refit"):
 		print("Want to refit")
