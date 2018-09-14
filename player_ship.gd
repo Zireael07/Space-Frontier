@@ -35,6 +35,7 @@ onready var bullet_container = $"bullet_container"
 #onready var bullet = preload("res://bullet.tscn")
 onready var gun_timer = $"gun_timer"
 onready var explosion = preload("res://explosion.tscn")
+onready var warp_effect = preload("res://warp_effect.tscn")
 onready var debris = preload("res://debris_enemy.tscn")
 onready var colony = preload("res://colony.tscn")
 
@@ -42,6 +43,7 @@ var target = null
 var tractor = null
 var heading = null
 var warp_target = null
+var warping = false
 
 var tractored = false
 var refit_target = false
@@ -140,18 +142,20 @@ func _process(delta):
 	
 	# warp drive!
 	if not heading and warp_target != null:
-		var desired = warp_target - get_global_position()
-		var dist = desired.length()
-		
-		if dist > LIGHT_SPEED:
-			vel = Vector2(0, -LIGHT_SPEED).rotated(rot)
-			pos += vel* delta
-			# prevent accumulating
-			vel = vel.clamped(LIGHT_SPEED)
-			set_position(pos)
-		else:
-			# we've arrived, return to normal space
-			warp_target = null
+		if warping:
+			var desired = warp_target - get_global_position()
+			var dist = desired.length()
+			
+			if dist > LIGHT_SPEED:
+				vel = Vector2(0, -LIGHT_SPEED).rotated(rot)
+				pos += vel* delta
+				# prevent accumulating
+				vel = vel.clamped(LIGHT_SPEED)
+				set_position(pos)
+			else:
+				# we've arrived, return to normal space
+				warp_target = null
+				warping = false
 			
 	# refit
 	if not heading and refit_target:
@@ -218,7 +222,12 @@ func player_heading(target, delta):
 	
 	# we've turned to face the target
 	if abs(rad2deg(a)) > 179:
+		# emit signal
+		if heading == warp_target:
+			on_warping()
+		
 		heading = null
+		
 	
 	if a < 0:
 		rot -= rot_speed*delta
@@ -432,7 +441,12 @@ func _on_goto_pressed():
 	warp_target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
 	heading = warp_target
 	
-
+func on_warping():
+	# effect
+	var warp = warp_effect.instance()
+	add_child(warp)
+	warp.set_position(Vector2(0,0))
+	warp.play()
 
 
 # atan2(0,-1) returns 180 degrees in 3.0, we want 0
