@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://assets/aura shader edited.shader" type="Shader" id=1]
+
+[resource]
+
+render_priority = 0
+shader = ExtResource( 1 )
+shader_param/aura_width = 0.0
+shader_param/aura_color = Color( 0.037384, 0.84926, 0.957031, 1 )
+_sections_unfolded = [ "shader_param" ]
+
