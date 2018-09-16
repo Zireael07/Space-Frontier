@@ -332,7 +332,7 @@ func _input(event):
 		
 		# we normally have 8 children nodes
 		# TODO: is there a way to check if any child is in group and return the first?
-		if get_child_count() > 8 and get_child(9).is_in_group("colony"):
+		if get_child_count() > 9 and get_child(9).is_in_group("colony"):
 			var col = get_child(9)
 			print("We have a colony in dock")
 			
@@ -347,6 +347,9 @@ func _input(event):
 			
 			print("Undocked")
 
+	if Input.is_action_pressed("landing"):
+		print("Landing...")
+		get_parent().get_node("AnimationPlayer").play("landing")
 
 func shoot():
 	gun_timer.start()
