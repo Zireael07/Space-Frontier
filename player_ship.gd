@@ -348,8 +348,15 @@ func _input(event):
 			print("Undocked")
 
 	if Input.is_action_pressed("landing"):
-		print("Landing...")
-		get_parent().get_node("AnimationPlayer").play("landing")
+		var pl = get_closest_planet()
+		# values are eyeballed for current planets
+		if pl[0] < 200:
+			#print("Can land")
+			print("Landing...")
+			get_parent().get_node("AnimationPlayer").play("landing")
+		else:
+			print("Too far away to land")
+		
 
 func shoot():
 	gun_timer.start()
