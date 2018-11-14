@@ -54,10 +54,12 @@ signal officer_message
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	game.player = self
+	
 	
 	connect("shield_changed", self, "_on_shield_changed")
 	
-	pass
+#	pass
 
 
 # using this because we don't need physics
@@ -444,8 +446,8 @@ func _on_shield_changed(shields):
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	# any mouse click
-	if event is InputEventMouseButton:
-		target = self
+	if event is InputEventMouseButton and event.pressed:
+		#target = self
 		# redraw 
 		update()
 

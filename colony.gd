@@ -90,7 +90,8 @@ func fix_atan(x,y):
 
 # draw a red rectangle around the target
 func _draw():
-	if targetted:
+	if game.player.HUD.target == self:
+	#if targetted:
 		var rect = Rect2(Vector2(-26, -26),	Vector2(91*0.6, 91*0.6))
 
 		draw_rect(rect, Color(1,0,0), false)
@@ -118,10 +119,10 @@ func _draw():
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	# any mouse click
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and event.pressed:
 		#if targetted:
-		targetted = true
-		emit_signal("AI_targeted")
+		#targetted = true
+		emit_signal("AI_targeted", self)
 		#else:
 		#	targetted = false
 			

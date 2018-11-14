@@ -90,7 +90,8 @@ func shoot():
 
 # draw a red rectangle around the target
 func _draw():
-	if targetted:
+	if game.player.HUD.target == self:
+	#if targetted:
 		var rect = Rect2(Vector2(-45, -45),	Vector2(91, 91))
 
 		draw_rect(rect, Color(1,0,0), false)
@@ -104,7 +105,7 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 	# any mouse click
 	if event is InputEventMouseButton:
 		#if not targetted:
-		targetted = true
+		#targetted = true
 		emit_signal("AI_targeted")
 		#else:
 		#	targetted = false

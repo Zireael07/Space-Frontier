@@ -3,14 +3,25 @@ extends Control
 # class member variables go here, for example:
 var paused = false
 var player = null
+var target = null
+
 
 func _ready():
 	
 	player = get_tree().get_nodes_in_group("player")[0].get_child(0)
 	
 	# connect the signal
+	
+	# targeting signals
 	for e in get_tree().get_nodes_in_group("enemy"):
 		e.connect("AI_targeted", self, "_on_AI_targeted")
+		
+	for p in get_tree().get_nodes_in_group("planets"):
+		p.connect("planet_targeted", self, "_on_planet_targeted")
+		
+	for c in get_tree().get_nodes_in_group("colony"):
+		# "colony" is a group of the parent of colony itself
+		c.get_child(0).connect("AI_targeted", self, "_on_AI_targeted")	
 	
 	player.connect("shield_changed", self, "_on_shield_changed")
 	player.connect("module_level_changed", self, "_on_module_level_changed")
@@ -27,8 +38,9 @@ func _ready():
 	#pass
 
 func _process(delta):
-	var format = "%0.2f" % player.spd
-	get_node("Control/Panel/Label").set_text(format + " c")
+	if player != null and player.is_inside_tree():
+		var format = "%0.2f" % player.spd
+		get_node("Control/Panel/Label").set_text(format + " c")
 	
 	#pass
 
@@ -74,8 +86,35 @@ func _on_officer_messaged(message):
 	$"Control3/Officer".set_text("1st Officer>: " + str(message))
 
 
-func _on_AI_targeted():
+func _on_AI_targeted(AI):
+	var prev_target = null
+	if target != null:
+		prev_target = target
+		
+	# draw the red outline	
+	target = AI
+
+	if prev_target:
+		prev_target.update()
+	
+	
 	for n in $"Control/Panel2".get_children():
 		n.show()
 	
 	#$"Control/Panel2/target_outline".show()
+	
+func _on_planet_targeted(planet):
+	var prev_target = null
+	if target != null:
+		prev_target = target
+	# draw the red outline		
+	target = planet
+
+	if prev_target:
+		prev_target.update()
+		
+	# hide panel info if any
+	for n in $"Control/Panel2".get_children():
+		n.hide()	
+	
+		

@@ -89,7 +89,8 @@ func _draw():
 	
 	else:
 		# draw a red rectangle around the target
-		if targetted:
+		if game.player.HUD.target == self:
+		#if targetted:
 			var tr = get_child(0)
 			var rc_h = tr.get_texture().get_height() * tr.get_scale().x
 			var rc_w = tr.get_texture().get_height() * tr.get_scale().y
@@ -104,10 +105,10 @@ func _draw():
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	# any mouse click
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and event.pressed:
 		#if not targetted:
-		targetted = true
-		emit_signal("planet_targeted")
+		#targetted = true
+		emit_signal("planet_targeted", self)
 		#else:
 		#	targetted = false
 			
@@ -142,5 +143,3 @@ func _on_Area2D_area_entered(area):
 					print("We already have a colony")
 		else:
 			print("Colony is already ours")
-	
-	pass # replace with function body
