@@ -10,7 +10,7 @@ onready var gun_timer = $"gun_timer"
 
 var targetted = false
 var tractor = false
-signal AI_targeted
+signal colony_targeted
 
 
 func _ready():
@@ -122,7 +122,7 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		#if targetted:
 		#targetted = true
-		emit_signal("AI_targeted", self)
+		emit_signal("colony_targeted", self)
 		#else:
 		#	targetted = false
 			

@@ -7,8 +7,8 @@ var target = null
 
 
 func _ready():
-	
-	player = get_tree().get_nodes_in_group("player")[0].get_child(0)
+	player = game.player
+	#player = get_tree().get_nodes_in_group("player")[0].get_child(0)
 	
 	# connect the signal
 	
@@ -21,7 +21,8 @@ func _ready():
 		
 	for c in get_tree().get_nodes_in_group("colony"):
 		# "colony" is a group of the parent of colony itself
-		c.get_child(0).connect("AI_targeted", self, "_on_AI_targeted")	
+		# because colonies don't have HUD info yet
+		c.get_child(0).connect("colony_targeted", self, "_on_planet_targeted")	
 	
 	player.connect("shield_changed", self, "_on_shield_changed")
 	player.connect("module_level_changed", self, "_on_module_level_changed")
