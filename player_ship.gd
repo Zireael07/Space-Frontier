@@ -401,8 +401,8 @@ func get_closest_target():
 	for t in targs:
 		if t[0] == dists[0]:
 			print("Target is : " + t[1].get_parent().get_name())
-			t[1].targetted = true
-			t[1].emit_signal("AI_targeted")
+			#t[1].targetted = true
+			t[1].emit_signal("AI_targeted", t[1])
 			# redraw 
 			t[1].update()
 			

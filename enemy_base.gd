@@ -103,10 +103,10 @@ func _draw():
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	# any mouse click
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and event.pressed:
 		#if not targetted:
 		#targetted = true
-		emit_signal("AI_targeted")
+		emit_signal("AI_targeted", self)
 		#else:
 		#	targetted = false
 			
