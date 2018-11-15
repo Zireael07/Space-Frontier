@@ -96,6 +96,8 @@ func _on_AI_targeted(AI):
 	target = AI
 
 	if prev_target:
+		if 'targetted' in prev_target:
+			prev_target.targetted = false
 		prev_target.update()
 	
 	
@@ -109,6 +111,7 @@ func _on_planet_targeted(planet):
 	if target != null:
 		prev_target = target
 	# draw the red outline		
+	planet.targetted = true
 	target = planet
 
 	if prev_target:

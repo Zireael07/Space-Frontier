@@ -72,10 +72,12 @@ func _process(delta):
 	#update()
 
 	# straighten out labels
-	$"Label".set_rotation(-get_parent().get_rotation())
+	if get_parent().is_class("Node2D"):
+		#print("Parent is a Node2D")
+		$"Label".set_rotation(-get_parent().get_rotation())
 	
-	if has_node("Sprite_shadow"):
-		$"Sprite_shadow".set_rotation(-get_parent().get_rotation())
+		if has_node("Sprite_shadow"):
+			$"Sprite_shadow".set_rotation(-get_parent().get_rotation())
 	
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
@@ -91,8 +93,9 @@ func _draw():
 	
 	else:
 		# draw a red rectangle around the target
-		if game.player.HUD.target == self:
-		#if targetted:
+		#if game.player.HUD.target == self:
+		# because we're a tool script and tool scripts can't use autoloads
+		if targetted:
 			var tr = get_child(0)
 			var rc_h = tr.get_texture().get_height() * tr.get_scale().x
 			var rc_w = tr.get_texture().get_height() * tr.get_scale().y
