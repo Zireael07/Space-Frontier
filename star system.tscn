@@ -119,7 +119,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="planet4" parent="planet_holder" index="3" instance=ExtResource( 8 )]
 
-position = Vector2( 1468.92, 493.43 )
+position = Vector2( -6.85395e-005, 1568 )
 
 [node name="Label" parent="planet_holder/planet4" index="2"]
 

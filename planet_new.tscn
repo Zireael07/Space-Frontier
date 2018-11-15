@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/Planet-only.png" type="Texture" id=3]
 [ext_resource path="res://assets/Planet-shadow_only.png" type="Texture" id=4]
 
-[sub_resource type="Shader" id=3]
+[sub_resource type="Shader" id=1]
 
 code = "shader_type canvas_item;
 
@@ -26,14 +26,14 @@ void fragment()
 	//COLOR.rgb = vec3(1,0,0);
 }"
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=2]
 
 render_priority = 0
-shader = SubResource( 3 )
+shader = SubResource( 1 )
 shader_param/aura_color = Color( 1, 0.706604, 0.0117188, 1 )
 _sections_unfolded = [ "shader_param" ]
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=3]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -61,7 +61,7 @@ shadow_size = 0
 anti_aliasing = true
 anti_aliasing_size = 1
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=4]
 
 custom_solver_bias = 0.0
 radius = 150.0
@@ -73,6 +73,7 @@ radius = 150.0
 position = Vector2( 1852.92, 1297.43 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
+data = null
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
@@ -83,7 +84,7 @@ _sections_unfolded = [ "Material", "Transform" ]
 
 [node name="Sprite_shadow" type="Sprite" parent="." index="1"]
 
-material = SubResource( 4 )
+material = SubResource( 2 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 4 )
 _sections_unfolded = [ "Material", "Transform" ]
@@ -104,7 +105,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_styles/normal = SubResource( 1 )
+custom_styles/normal = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Emerald"
 percent_visible = 1.0
@@ -114,7 +115,6 @@ _sections_unfolded = [ "custom_colors", "custom_styles" ]
 
 [node name="Area2D" type="Area2D" parent="." index="3"]
 
-visible = false
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -125,7 +125,7 @@ audio_bus_name = "Master"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 
