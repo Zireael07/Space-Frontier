@@ -74,6 +74,8 @@ func _process(delta):
 	# straighten out labels
 	$"Label".set_rotation(-get_parent().get_rotation())
 	
+	if has_node("Sprite_shadow"):
+		$"Sprite_shadow".set_rotation(-get_parent().get_rotation())
 	
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
