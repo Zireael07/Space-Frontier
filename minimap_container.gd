@@ -3,14 +3,17 @@ extends Control
 # class member variables go here, for example:
 onready var star = preload("res://assets/hud/yellow_circle.png")
 onready var planet = preload("res://assets/hud/red_circle.png")
+onready var asteroid = preload("res://assets/hud/grey_circle.png")
 
 onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
 
 var stars
 var planets
+var asteroids
 
 var star_sprites = []
 var planet_sprites = []
+var asteroid_sprites = []
 
 var star_arrow
 
@@ -27,6 +30,7 @@ func _ready():
 	
 	stars = get_tree().get_nodes_in_group("star")
 	planets = get_tree().get_nodes_in_group("planets")
+	asteroids = get_tree().get_nodes_in_group("asteroid")
 	
 	player = get_tree().get_nodes_in_group("player")[0]
 	
@@ -49,8 +53,17 @@ func _ready():
 		planet_sprites.append(planet_sprite)
 		add_child(planet_sprite)
 	
+	for a in asteroids:
+		var asteroid_sprite = TextureRect.new()
+		asteroid_sprite.set_texture(asteroid)
+		asteroid_sprite.set_scale(Vector2(0.5, 0.5))
+		asteroid_sprites.append(asteroid_sprite)
+		add_child(asteroid_sprite)
+	
+	
+	
 	# make sure player is the last child (to be drawn last)
-	move_child($"player", stars.size()+planets.size()+1)
+	move_child($"player", stars.size()+planets.size()+asteroids.size()+2)
 	center = Vector2($"player".get_position().x, $"player".get_position().y)
 	set_clip_contents(true)
 	
@@ -92,5 +105,11 @@ func _process(delta):
 		#var rel_loc = player.get_global_transform().xform_inv(planets[i].get_global_transform().origin)
 		#planet_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale))
 		planet_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+
+	for i in range(asteroids.size()):
+		# the minimap doesn't rotate
+		var rel_loc = asteroids[i].get_global_position() - player.get_child(0).get_global_position()
+		asteroid_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+		
 
 #	pass
