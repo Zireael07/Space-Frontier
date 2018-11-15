@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://star system.gd" type="Script" id=1]
 [ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=2]
@@ -7,8 +7,9 @@
 [ext_resource path="res://assets/aura shader.tres" type="Material" id=5]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=6]
 [ext_resource path="res://colony.tscn" type="PackedScene" id=7]
+[ext_resource path="res://planet_new.tscn" type="PackedScene" id=8]
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=1]
 
 content_margin_left = -1.0
 content_margin_right = -1.0
@@ -67,7 +68,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_styles/normal = SubResource( 6 )
+custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Kepler-99"
 percent_visible = 1.0
@@ -116,6 +117,15 @@ _sections_unfolded = [ "Transform" ]
 
 _sections_unfolded = [ "Transform" ]
 
+[node name="planet4" parent="planet_holder" index="3" instance=ExtResource( 8 )]
+
+position = Vector2( 1468.92, 493.43 )
+
+[node name="Label" parent="planet_holder/planet4" index="2"]
+
+text = "Jungle"
+
 
 [editable path="planet_holder/planet2"]
 [editable path="planet_holder/planet3"]
+[editable path="planet_holder/planet4"]
