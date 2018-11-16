@@ -313,7 +313,8 @@ func _input(event):
 	
 	if Input.is_action_pressed("refit"):
 		print("Want to refit")
-		var base = get_tree().get_nodes_in_group("starbase")[0]
+		
+		var base = get_friendly_base()
 		heading = base.get_global_position()
 		refit_target = base
 	
@@ -383,6 +384,16 @@ func get_closest_planet():
 		if t[0] == dists[0]:
 			print("Closest planet is: " + t[1].get_name() + " at " + str(t[0]))
 			return t
+
+func get_friendly_base():
+	var bases = get_tree().get_nodes_in_group("starbase")
+	print(str(bases))
+	for b in bases:
+		print(b.get_name())
+		if not b.is_in_group("enemy"):
+			print(b.get_name() + " is not enemy")
+			return b
+
 
 func get_closest_target():
 	var nodes = get_tree().get_nodes_in_group("enemy")

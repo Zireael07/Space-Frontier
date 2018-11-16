@@ -16,6 +16,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Area2D" type="Area2D" parent="." index="0" groups=[
 "enemy",
+"starbase",
 ]]
 
 position = Vector2( 0, 1 )
