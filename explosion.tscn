@@ -21,9 +21,11 @@ animations = [ {
 
 [node name="explosion" type="AnimatedSprite" index="0"]
 
+z_index = 10
 frames = SubResource( 1 )
 animation = "default"
 script = ExtResource( 9 )
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
 
 [connection signal="animation_finished" from="." to="." method="_on_explosion_animation_finished"]
 

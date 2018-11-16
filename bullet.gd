@@ -34,6 +34,7 @@ func _on_bullet_area_entered( area ):
 		area.emit_signal("shield_changed", area.shields)
 		
 		if area.shields <= 0:
+			var sb = area.is_in_group("starbase")
 			# kill the AI
 			area.get_parent().queue_free()
 			
@@ -44,8 +45,13 @@ func _on_bullet_area_entered( area ):
 			
 			# explosion
 			var expl = get_parent().get_parent().explosion.instance()
+			print(get_parent().get_parent().get_parent().get_name())
 			get_parent().get_parent().get_parent().add_child(expl)
 			expl.set_global_position(pos)
+			if sb:
+				expl.set_scale(Vector2(2,2))
+			else:
+				expl.set_scale(Vector2(1,1))
 			expl.play()
 	
 	if area.get_parent().get_groups().has("asteroid"):
@@ -58,6 +64,8 @@ func _on_bullet_area_entered( area ):
 		# explosion
 		var expl = get_parent().get_parent().explosion.instance()
 		get_parent().get_parent().get_parent().add_child(expl)
+		#print(get_parent().get_parent().get_parent().get_name())
 		expl.set_global_position(pos)
+		expl.set_scale(Vector2(0.5, 0.5))
 		expl.play()
 		
