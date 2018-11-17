@@ -72,6 +72,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="Panel_rightHUD" type="Panel" parent="Control2" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -436,7 +437,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="Panel" type="Panel" parent="Control" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -657,7 +657,6 @@ _sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
 [node name="Panel2" type="Panel" parent="Control" index="1"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -742,6 +741,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
+custom_styles/fg = ExtResource( 9 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
@@ -750,7 +750,7 @@ value = 0.0
 exp_edit = false
 rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect" ]
+_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
 [node name="Label_sh2" type="Label" parent="Control/Panel2" index="3"]
 
@@ -795,6 +795,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
+custom_styles/fg = ExtResource( 9 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
@@ -803,7 +804,7 @@ value = 0.0
 exp_edit = false
 rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect" ]
+_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
 [node name="Label_en2" type="Label" parent="Control/Panel2" index="5"]
 
@@ -848,6 +849,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
+custom_styles/fg = ExtResource( 9 )
 min_value = 0.0
 max_value = 100.0
 step = 1.0
@@ -856,7 +858,7 @@ value = 0.0
 exp_edit = false
 rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect" ]
+_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
 [node name="Control3" type="Control" parent="." index="2"]
 

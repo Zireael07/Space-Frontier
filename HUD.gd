@@ -99,12 +99,14 @@ func _on_AI_targeted(AI):
 		if 'targetted' in prev_target:
 			prev_target.targetted = false
 		prev_target.update()
-	
+		prev_target.disconnect("shield_changed", self, "_on_target_shield_changed")
 	
 	for n in $"Control/Panel2".get_children():
 		n.show()
 	
-	#$"Control/Panel2/target_outline".show()
+		
+	target.connect("shield_changed", self, "_on_target_shield_changed")
+
 	
 func _on_planet_targeted(planet):
 	var prev_target = null
@@ -121,4 +123,17 @@ func _on_planet_targeted(planet):
 	for n in $"Control/Panel2".get_children():
 		n.hide()	
 	
-		
+func _on_target_shield_changed(shield):
+	#print("Shields from signal is " + str(shield))
+	
+	# original max is 100
+	# avoid truncation
+	var maxx = 100.0
+	var perc = shield/maxx * 100
+	
+	#print("Perc: " + str(perc))
+	
+	if perc >= 0:
+		$"Control/Panel2/ProgressBar_sh2".value = perc
+	else:
+		$"Control/Panel2/ProgressBar_sh2".value = 0
