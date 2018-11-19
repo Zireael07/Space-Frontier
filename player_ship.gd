@@ -59,8 +59,15 @@ func _ready():
 	
 	connect("shield_changed", self, "_on_shield_changed")
 	
-#	pass
-
+	# spawn somewhere interesting
+	var planet = get_tree().get_nodes_in_group("planets")[2]
+	print("Location of planet " + str(planet) + " : " + str(planet.get_global_position()))
+	
+	# fudge
+	var offset = Vector2(0,0) #Vector2(50,50)
+	get_parent().set_global_position(planet.get_global_position() + offset)
+	set_position(Vector2(0,0))
+	
 
 # using this because we don't need physics
 func _process(delta):
