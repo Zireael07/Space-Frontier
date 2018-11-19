@@ -3,7 +3,7 @@ extends Node2D
 
 # class member variables go here, for example:
 export var rotation_rate = 0.15
-export var orbit_rate = 0.02
+export var orbit_rate = 0.00002
 
 var rot = 0
 var orbit_rot = 0

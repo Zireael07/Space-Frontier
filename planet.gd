@@ -8,6 +8,8 @@ extends Node2D
 export(Vector2) var data setget setData
 
 const LIGHT_SEC = 400	# must match LIGHT_SPEED to make sense
+const LS_TO_AU = 500
+const AU = LS_TO_AU*LIGHT_SEC
 
 var population = 100000
 	
@@ -19,7 +21,7 @@ func _ready():
 	
 	var ls = dist/LIGHT_SEC
 	
-	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls")
+	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls, " + str(LS_TO_AU/ls) + " AU")
 	
 	
 	# Called when the node is added to the scene for the first time.
