@@ -427,8 +427,13 @@ func get_closest_target():
 			#return t[1]
 			
 
-# draw a red rectangle around the target
+
 func _draw():
+	# distance indicator at a distance of 100 from the nosetip
+	draw_line(Vector2(10, -100), Vector2(-10, -100), Color(1,1,0), 4.0, true)
+	
+	
+	# draw a red rectangle around the target
 	if target == self:
 		var rect = Rect2(Vector2(-35, -25),	Vector2(112*0.6, 75*0.6)) 
 		
@@ -454,12 +459,21 @@ func _draw():
 		pass
 
 func _on_shield_changed(shields):
+	# generic effect
+	$"shield_effect".show()
+	$"shield_timer".start()
+	
+	# player-specific indicator
 	if shields < 0.2 * 100:
 		$"shield_indicator".set_modulate(Color(0.35, 0.0, 0.0)) #dark red
 	elif shields < 0.5 * 100:
 		$"shield_indicator".set_modulate(Color(1.0, 0.0, 0.0))
 	elif shields < 0.7* 100: #current max
 		$"shield_indicator".set_modulate(Color(1.0, 1.0, 0.0))
+
+
+func _on_shield_timer_timeout():
+	$"shield_effect".hide()
 
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):

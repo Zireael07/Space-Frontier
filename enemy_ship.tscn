@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://enemy_ship.gd" type="Script" id=1]
 [ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=3]
 [ext_resource path="res://assets/fire11.png" type="Texture" id=4]
-[ext_resource path="res://movement_visualizer.gd" type="Script" id=5]
+[ext_resource path="res://assets/shield_Edit.png" type="Texture" id=5]
+[ext_resource path="res://movement_visualizer.gd" type="Script" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -65,9 +66,9 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 rot_speed = 2.6
 thrust = 500
-max_vel = 400
+max_vel = 200.0
 friction = 0.65
-max_speed = 100
+max_speed = 200.0
 bullet = ExtResource( 2 )
 
 [node name="enemyRed5" type="Sprite" parent="Area2D" index="0"]
@@ -118,10 +119,26 @@ h_frames = 1
 v_frames = 1
 _sections_unfolded = [ "Process Material", "Transform" ]
 
-[node name="vis" type="Node2D" parent="Area2D" index="6"]
+[node name="shield_effect" type="Sprite" parent="Area2D" index="6"]
 
-script = ExtResource( 5 )
+visible = false
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="shield_timer" type="Timer" parent="Area2D" index="7"]
+
+process_mode = 1
+wait_time = 0.5
+one_shot = false
+autostart = false
+
+[node name="vis" type="Node2D" parent="Area2D" index="8"]
+
+script = ExtResource( 6 )
 
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
+
+[connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
 
 

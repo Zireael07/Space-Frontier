@@ -19,7 +19,10 @@ func _ready():
 	add_to_group("enemy")
 	# Called every time the node is added to the scene.
 	# Initialization here
-	pass
+	
+	connect("shield_changed", self, "_on_shield_changed")
+	
+	#pass
 
 # using this because we don't need physics
 func _process(delta):
@@ -87,3 +90,11 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 		
 		# redraw 
 		update()
+
+func _on_shield_changed(shield):
+	$"shield_effect".show()
+	$"shield_timer".start()
+
+func _on_shield_timer_timeout():
+	$"shield_effect".hide()
+	#pass # replace with function body

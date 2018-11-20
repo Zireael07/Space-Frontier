@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://player_ship.gd" type="Script" id=1]
 [ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ships/playerShip2_blue.png" type="Texture" id=3]
 [ext_resource path="res://assets/fire11.png" type="Texture" id=4]
-[ext_resource path="res://assets/crosshair123.png" type="Texture" id=5]
+[ext_resource path="res://assets/shieldGreen_Edit.png" type="Texture" id=5]
+[ext_resource path="res://assets/crosshair123.png" type="Texture" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -240,10 +241,24 @@ _sections_unfolded = [ "Process Material", "Transform" ]
 position = Vector2( 0, 23 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="shield_indicator" type="Sprite" parent="Area2D" index="8"]
+[node name="shield_effect" type="Sprite" parent="Area2D" index="8"]
+
+visible = false
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="shield_timer" type="Timer" parent="Area2D" index="9"]
+
+process_mode = 1
+wait_time = 0.5
+one_shot = false
+autostart = false
+
+[node name="shield_indicator" type="Sprite" parent="Area2D" index="10"]
 
 modulate = Color( 0, 1, 0, 1 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 _sections_unfolded = [ "Material", "Transform" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
@@ -257,5 +272,7 @@ anims/landing = SubResource( 3 )
 blend_times = [  ]
 
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
+
+[connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
 
 
