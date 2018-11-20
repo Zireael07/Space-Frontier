@@ -21,7 +21,7 @@ func _ready():
 	
 	var ls = dist/LIGHT_SEC
 	
-	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls, " + str(LS_TO_AU/ls) + " AU")
+	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls, " + str(ls/LS_TO_AU) + " AU")
 	
 	
 	# Called when the node is added to the scene for the first time.
