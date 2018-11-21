@@ -61,10 +61,16 @@ func _on_bullet_area_entered( area ):
 		
 		var pos = area.get_global_position()
 		
+		# debris
+		var deb = area.get_parent().resource_debris.instance()
+		get_parent().get_parent().get_parent().add_child(deb)
+		#print(get_parent().get_parent().get_parent().get_name())
+		deb.set_global_position(pos)
+		deb.set_scale(Vector2(0.5, 0.5))
+		
 		# explosion
 		var expl = get_parent().get_parent().explosion.instance()
 		get_parent().get_parent().get_parent().add_child(expl)
-		#print(get_parent().get_parent().get_parent().get_name())
 		expl.set_global_position(pos)
 		expl.set_scale(Vector2(0.5, 0.5))
 		expl.play()
