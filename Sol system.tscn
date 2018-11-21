@@ -82,11 +82,11 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="planet" parent="planet_holder" index="0" instance=ExtResource( 3 )]
 
-position = Vector2( 98994.9, 98994.9 )
+position = Vector2( -0.000236041, 5400 )
 
 [node name="planet2" parent="planet_holder" index="1" instance=ExtResource( 3 )]
 
-position = Vector2( 26146.7, -298858 )
+position = Vector2( -0.000786805, 18000 )
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 
@@ -98,8 +98,7 @@ text = "Mars"
 
 [node name="planet3" parent="planet_holder" index="2" instance=ExtResource( 3 )]
 
-editor/display_folded = true
-position = Vector2( -0.00874228, 200000 )
+position = Vector2( -0.000524537, 12000 )
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
 
@@ -121,7 +120,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="planet4" parent="planet_holder" index="3" instance=ExtResource( 8 )]
 
-position = Vector2( 289778, 77645.7 )
+position = Vector2( -0.000367176, 8400 )
 
 
 [editable path="planet_holder/planet2"]
