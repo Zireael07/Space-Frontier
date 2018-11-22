@@ -151,6 +151,30 @@ text = "Ship"
 flat = false
 align = 1
 
+[node name="ButtonRefit" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 99.0
+margin_right = 140.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Refit"
+flat = false
+align = 1
+
 [node name="PanelInfo" type="Panel" parent="Control2/Panel_rightHUD" index="1"]
 
 anchor_left = 0.0
@@ -171,7 +195,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -268,6 +291,7 @@ group = null
 text = "Go to"
 flat = false
 align = 1
+_sections_unfolded = [ "Rect" ]
 
 [node name="ShipInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="1"]
 
@@ -426,8 +450,203 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
+[node name="RefitInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="2"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="ShipName" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Scout"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Label" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 15.0
+margin_right = 154.0
+margin_bottom = 29.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Select system to upgrade"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Power" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 30.0
+margin_right = 65.0
+margin_bottom = 44.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Power: 1"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Engine" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 45.0
+margin_right = 68.0
+margin_bottom = 59.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Engine: 1"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Shields" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 60.0
+margin_right = 72.0
+margin_bottom = 74.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Shields: 1"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Cursor" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 30.0
+margin_right = 40.0
+margin_bottom = 44.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = ">"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="ButtonUp" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 187.0
+margin_right = 42.0
+margin_bottom = 207.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "< Up"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="ButtonDown" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 45.0
+margin_top = 187.0
+margin_right = 105.0
+margin_bottom = 207.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "> Down"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
 [node name="minimap" type="Control" parent="Control2/Panel_rightHUD" index="2"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -1000,5 +1219,11 @@ max_lines_visible = -1
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonPlanet" to="." method="_on_ButtonPlanet_pressed"]
 
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonShip" to="." method="_on_ButtonShip_pressed"]
+
+[connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonRefit" to="." method="_on_ButtonRefit_pressed"]
+
+[connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUp" to="." method="_on_ButtonUp_pressed"]
+
+[connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonDown" to="." method="_on_ButtonDown_pressed"]
 
 

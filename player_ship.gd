@@ -208,6 +208,9 @@ func _process(delta):
 			print("No refit target anymore")
 			# disable tractor
 			tractored = false
+			# show refit screen
+			self.HUD.switch_to_refit()
+			
 		elif dist < 80:
 			tractored = true
 			#print("We're being tractored in")

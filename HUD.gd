@@ -138,11 +138,36 @@ func _on_target_shield_changed(shield):
 	else:
 		$"Control/Panel2/ProgressBar_sh2".value = 0
 
+# operate the right HUD
 func _on_ButtonPlanet_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 
 
 func _on_ButtonShip_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".show()
+
+func switch_to_refit():
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".show()
+
+
+func _on_ButtonRefit_pressed():
+	switch_to_refit()
+
+func _on_ButtonDown_pressed():
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Cursor"
+	if cursor.get_position().y < 60:
+		# down a line
+		cursor.set_position(cursor.get_position() + Vector2(0, 15))
+
+
+func _on_ButtonUp_pressed():
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Cursor"
+	if cursor.get_position().y > 30:
+		# up a line
+		cursor.set_position(cursor.get_position() - Vector2(0, 15))
