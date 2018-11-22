@@ -137,3 +137,12 @@ func _on_target_shield_changed(shield):
 		$"Control/Panel2/ProgressBar_sh2".value = perc
 	else:
 		$"Control/Panel2/ProgressBar_sh2".value = 0
+
+func _on_ButtonPlanet_pressed():
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
+
+
+func _on_ButtonShip_pressed():
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".show()
