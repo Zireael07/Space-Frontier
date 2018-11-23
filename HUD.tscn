@@ -175,6 +175,30 @@ text = "Refit"
 flat = false
 align = 1
 
+[node name="ButtonCargo" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 144.0
+margin_right = 191.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Cargo"
+flat = false
+align = 1
+
 [node name="PanelInfo" type="Panel" parent="Control2/Panel_rightHUD" index="1"]
 
 anchor_left = 0.0
@@ -195,6 +219,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -452,6 +477,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="RefitInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="2"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -643,6 +669,49 @@ text = "> Down"
 flat = false
 align = 1
 _sections_unfolded = [ "Rect" ]
+
+[node name="CargoInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="3"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 192.0
+margin_bottom = 186.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = false
+bbcode_text = "Cargo"
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Cargo"
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
 
 [node name="minimap" type="Control" parent="Control2/Panel_rightHUD" index="2"]
 
@@ -1221,6 +1290,8 @@ max_lines_visible = -1
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonShip" to="." method="_on_ButtonShip_pressed"]
 
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonRefit" to="." method="_on_ButtonRefit_pressed"]
+
+[connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonCargo" to="." method="_on_ButtonCargo_pressed"]
 
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUp" to="." method="_on_ButtonUp_pressed"]
 

@@ -142,18 +142,30 @@ func _on_target_shield_changed(shield):
 func _on_ButtonPlanet_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 
 
 func _on_ButtonShip_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".show()
 
 func switch_to_refit():
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".show()
+
+func _on_ButtonCargo_pressed():
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".show()
+
+func set_cargo_listing(text):
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".set_text(text)
 
 
 func _on_ButtonRefit_pressed():

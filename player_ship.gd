@@ -51,6 +51,8 @@ var refit_target = false
 var HUD = null
 signal officer_message
 
+var cargo = {}
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here

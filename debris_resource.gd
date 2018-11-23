@@ -20,7 +20,16 @@ func _on_debris_area_entered(area):
 	if area.get_parent().get_groups().has("player"):
 		print("debris entered by " + area.get_parent().get_name())
 		
-		print("Picked up 1 unit of " + str(elements.keys()[resource]))
+		var res_id = elements.keys()[resource]
+		#print("Picked up 1 unit of " + str(res_id))
+		
+		if not area.cargo.has(elements.keys()[resource]):
+			# we don't have Dictionary.append, so just create
+			area.cargo[res_id] = 1
+		else:
+			area.cargo[res_id] += 1
+		
+		area.HUD.set_cargo_listing(str(area.cargo).replace("(", "").replace(")", ""))
 		
 		
 		queue_free()
