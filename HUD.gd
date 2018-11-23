@@ -183,3 +183,6 @@ func _on_ButtonUp_pressed():
 	if cursor.get_position().y > 30:
 		# up a line
 		cursor.set_position(cursor.get_position() - Vector2(0, 15))
+
+func _on_ButtonSell_pressed():
+	player.sell_cargo(0)

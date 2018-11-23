@@ -52,6 +52,7 @@ var HUD = null
 signal officer_message
 
 var cargo = {}
+var credits = 0
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -500,6 +501,17 @@ func on_warping():
 	warp.set_position(Vector2(0,0))
 	warp.play()
 
+func sell_cargo(id):
+	if not cargo.keys().size() > 0:
+		return
+	
+	
+	if cargo[cargo.keys()[0]] > 0:
+		cargo[cargo.keys()[0]] -= 1
+		# update listing
+		HUD.set_cargo_listing(str(cargo).replace("(", "").replace(")", ""))
+		credits += 50
+		
 
 # atan2(0,-1) returns 180 degrees in 3.0, we want 0
 # this counts in radians
