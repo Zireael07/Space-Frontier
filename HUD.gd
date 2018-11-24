@@ -77,8 +77,8 @@ func _on_shield_changed(shield):
 func _on_module_level_changed(module, level):
 	var info = $"Control2/Panel_rightHUD/PanelInfo/ShipInfo/"
 
-	
-	print("Changed level of module " + str(module) + " " + str(level))
+	player.emit_signal("officer_message", "Our " + str(module) + " system has been upgraded to level " + str(level))
+
 	if module == "engine":
 		info.get_node("Engine").set_text("Engine: " + str(level))
 		#$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".set_text("Engine: " + str(level))
@@ -186,3 +186,23 @@ func _on_ButtonUp_pressed():
 
 func _on_ButtonSell_pressed():
 	player.sell_cargo(0)
+
+
+func _on_ButtonUpgrade_pressed():
+	if player.docked:
+		var cursor = $"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Cursor"
+		var select_id = ((cursor.get_position().y-30) / 15)
+		
+		if player.credits < 50:
+			player.emit_signal("officer_message", "We need " + str(50-player.credits) + " more credits to afford an upgrade")
+			return
+			
+		if select_id == 0:
+			player.power_level += 1
+			player.credits -= 50
+		if select_id == 1:
+			player.engine_level += 1
+			player.credits -= 50
+		if select_id == 2:
+			player.shield_level += 1
+			player.credits -= 50
