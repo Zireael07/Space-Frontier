@@ -47,6 +47,7 @@ var warping = false
 
 var tractored = false
 var refit_target = false
+var docked = false
 
 var HUD = null
 signal officer_message
@@ -115,6 +116,10 @@ func _process(delta):
 		rot += rot_speed*delta
 	# thrust
 	if Input.is_action_pressed("ui_up"):
+		# undock
+		if docked:
+			docked = false
+		
 		# deorbit
 		if orbiting:
 			var rel_pos = get_global_transform().xform_inv(orbiting.get_parent().get_global_position())
@@ -212,6 +217,7 @@ func _process(delta):
 			print("No refit target anymore")
 			# disable tractor
 			tractored = false
+			docked = true
 			# show refit screen
 			self.HUD.switch_to_refit()
 			
@@ -517,6 +523,10 @@ func on_warping():
 	warp.play()
 
 func sell_cargo(id):
+	if not docked:
+		print("We cannot sell if we're not docked")
+		return
+	
 	if not cargo.keys().size() > 0:
 		return
 	
