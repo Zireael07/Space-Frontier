@@ -275,4 +275,6 @@ blend_times = [  ]
 
 [connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
 
+[connection signal="animation_finished" from="AnimationPlayer" to="Area2D" method="_on_AnimationPlayer_animation_finished"]
+
 

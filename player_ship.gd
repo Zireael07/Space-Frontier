@@ -53,6 +53,7 @@ signal officer_message
 
 var cargo = {}
 var credits = 0
+var landed = false
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -364,15 +365,29 @@ func _input(event):
 			print("Undocked")
 
 	if Input.is_action_pressed("landing"):
-		var pl = get_closest_planet()
-		# values are eyeballed for current planets
-		if pl[0] < 200:
-			#print("Can land")
-			print("Landing...")
-			get_parent().get_node("AnimationPlayer").play("landing")
+		if not landed:
+			var pl = get_closest_planet()
+			# values are eyeballed for current planets
+			if pl[0] < 200:
+				#print("Can land")
+				print("Landing...")
+				$"shield_indicator".hide()
+				get_parent().get_node("AnimationPlayer").play("landing")
+				landed = true
+			else:
+				print("Too far away to land")
 		else:
-			print("Too far away to land")
+			get_parent().get_node("AnimationPlayer").play_backwards("landing")
+			$"shield_indicator".show()
+			landed = false
 		
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	print("Animation finished")
+#	#var hide = not $"shield_indicator".is_visible()
+#	if not $"shield_indicator".is_visible():
+#		$"shield_indicator".show()
 
 func shoot():
 	gun_timer.start()
@@ -525,3 +540,5 @@ func fix_atan(x,y):
 		ret= at + PI
 	
 	return ret
+
+
