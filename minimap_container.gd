@@ -86,7 +86,7 @@ func _process(delta):
 			# indicate distant stars
 			#print("Star out of minimap area")
 			star_arrow.set_visible(true)
-			var pos = Vector2(rel_loc.x, rel_loc.y).clamped(1200-4)
+			var pos = Vector2(rel_loc.x, rel_loc.y).clamped(1200-50)
 			var a = atan2(rel_loc.x, rel_loc.y)
 			
 			#print("Pos: " + str(pos) + " for rel_pos" + str(rel_loc))

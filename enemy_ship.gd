@@ -31,7 +31,10 @@ func _process(delta):
 	
 	#target 
 	#planet #1
-	target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
+	if get_tree().get_nodes_in_group("asteroid").size() > 3:
+		target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+	else:
+		target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
 	
 
 	rel_pos = get_global_transform().xform_inv(target)
