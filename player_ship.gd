@@ -175,6 +175,8 @@ func _process(delta):
 				# we've arrived, return to normal space
 				warp_target = null
 				warping = false
+				# remove tint
+				set_modulate(Color(1,1,1))
 			
 	# refit
 	if not heading and refit_target:
@@ -521,6 +523,9 @@ func on_warping():
 	add_child(warp)
 	warp.set_position(Vector2(0,0))
 	warp.play()
+	
+	# tint a matching orange color
+	set_modulate(Color(1, 0.73, 0))
 
 func sell_cargo(id):
 	if not docked:
