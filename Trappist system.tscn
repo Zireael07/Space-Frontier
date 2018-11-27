@@ -164,10 +164,6 @@ _sections_unfolded = [ "Transform" ]
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="orbit_holder2" type="Node2D" parent="planet_holder/planet3" index="4"]
-
-_sections_unfolded = [ "Transform" ]
-
 [node name="planet4" parent="planet_holder" index="3" instance=ExtResource( 8 )]
 
 position = Vector2( -1.53427e-005, 351 )

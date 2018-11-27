@@ -43,6 +43,7 @@ radius = 150.0
 position = Vector2( 1852.92, 1297.43 )
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
+planet_rad_factor = 1.0
 data = null
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
@@ -87,6 +88,8 @@ audio_bus_name = "Master"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 
 shape = SubResource( 2 )
+
+[node name="orbit_holder" type="Node2D" parent="." index="3"]
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 
