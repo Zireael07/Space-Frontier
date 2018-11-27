@@ -81,7 +81,12 @@ func _process(delta):
 		$"Label".set_rotation(-get_parent().get_rotation())
 	
 		if has_node("Sprite_shadow"):
-			$"Sprite_shadow".set_rotation(-get_parent().get_rotation())
+			#var angle_to_star = atan2(self.get_position().x, self.get_position().y)
+			# we have to use this because there are rotations to consider
+			var angle_to_star = get_tree().get_nodes_in_group("star")[0].get_global_position().angle_to(get_global_position())
+			#print("Angle to star: "+ str(angle_to_star))
+			$"Sprite_shadow".set_rotation(angle_to_star)
+			
 	
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
