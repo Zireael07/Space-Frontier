@@ -1,0 +1,193 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://star system.gd" type="Script" id=1]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
+[ext_resource path="res://planet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=4]
+[ext_resource path="res://assets/aura shader.tres" type="Material" id=5]
+[ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=6]
+[ext_resource path="res://colony.tscn" type="PackedScene" id=7]
+[ext_resource path="res://planet_new.tscn" type="PackedScene" id=8]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+content_margin_left = -1.0
+content_margin_right = -1.0
+content_margin_top = -1.0
+content_margin_bottom = -1.0
+bg_color = Color( 0.6, 0.6, 0.6, 1 )
+draw_center = true
+border_width_left = 0
+border_width_top = 0
+border_width_right = 0
+border_width_bottom = 0
+border_color = Color( 0.8, 0.8, 0.8, 1 )
+border_blend = false
+corner_radius_top_left = 0
+corner_radius_top_right = 0
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
+corner_detail = 8
+expand_margin_left = 0.0
+expand_margin_right = 0.0
+expand_margin_top = 0.0
+expand_margin_bottom = 0.0
+shadow_color = Color( 0, 0, 0, 0.6 )
+shadow_size = 0
+anti_aliasing = true
+anti_aliasing_size = 1
+
+[node name="star" type="Node2D" index="0" groups=[
+"star",
+]]
+
+position = Vector2( 500, 500 )
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+rotation_rate = 0.15
+orbit_rate = 0.1
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+rotation = 9.92185
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Label" type="Label" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 100.0
+margin_right = 72.0
+margin_bottom = 116.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_styles/normal = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "TRAPPIST-1"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
+
+[node name="planet_holder" type="Node2D" parent="." index="2"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="planet" parent="planet_holder" index="0" instance=ExtResource( 3 )]
+
+position = Vector2( -6.07588e-006, 139 )
+
+[node name="Sprite" parent="planet_holder/planet" index="0"]
+
+scale = Vector2( 0.1, 0.1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Label" parent="planet_holder/planet" index="1"]
+
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 82.0
+margin_bottom = 44.0
+text = "I"
+_sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
+
+[node name="Area2D" parent="planet_holder/planet" index="2"]
+
+scale = Vector2( 0.2, 0.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="planet2" parent="planet_holder" index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 2.26573e-006, -190 )
+
+[node name="Sprite" parent="planet_holder/planet2" index="0"]
+
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Label" parent="planet_holder/planet2" index="1"]
+
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 82.0
+margin_bottom = 44.0
+text = "II"
+_sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
+
+[node name="CollisionShape2D" parent="planet_holder/planet2/Area2D" index="0"]
+
+scale = Vector2( 0.2, 0.2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="planet3" parent="planet_holder" index="2" instance=ExtResource( 3 )]
+
+position = Vector2( -188.798, 188.798 )
+
+[node name="Sprite" parent="planet_holder/planet3" index="0"]
+
+material = ExtResource( 5 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 6 )
+_sections_unfolded = [ "Material", "Transform" ]
+
+[node name="Label" parent="planet_holder/planet3" index="1"]
+
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 92.0
+margin_bottom = 54.0
+text = "III"
+_sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
+
+[node name="CollisionShape2D" parent="planet_holder/planet3/Area2D" index="0"]
+
+scale = Vector2( 0.3, 0.3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="colony2" parent="planet_holder/planet3" index="3" instance=ExtResource( 7 )]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="orbit_holder2" type="Node2D" parent="planet_holder/planet3" index="4"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="planet4" parent="planet_holder" index="3" instance=ExtResource( 8 )]
+
+position = Vector2( -1.53427e-005, 351 )
+
+[node name="Sprite" parent="planet_holder/planet4" index="0"]
+
+scale = Vector2( 0.1, 0.1 )
+
+[node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
+
+scale = Vector2( 0.1, 0.1 )
+
+[node name="Label" parent="planet_holder/planet4" index="2"]
+
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 82.0
+margin_bottom = 44.0
+_sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
+
+[node name="CollisionShape2D" parent="planet_holder/planet4/Area2D" index="0"]
+
+scale = Vector2( 0.2, 0.2 )
+_sections_unfolded = [ "Transform" ]
+
+
+[editable path="planet_holder/planet"]
+[editable path="planet_holder/planet2"]
+[editable path="planet_holder/planet3"]
+[editable path="planet_holder/planet4"]
