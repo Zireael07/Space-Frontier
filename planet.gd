@@ -2,6 +2,8 @@ tool
 extends Node2D
 
 # class member variables go here, for example:
+export(float) var planet_rad_factor = 1.0
+
 #export(int) var angle = 0 setget setAngle #, getAngle
 #export(int) var dist = 100 setget setDist #, getDist
 

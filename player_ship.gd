@@ -291,10 +291,10 @@ func _input(event):
 	if Input.is_action_pressed("orbit"):
 		#print("Try to orbit")
 		var pl = get_closest_planet()
-		# values are eyeballed for current planets
-		if pl[0] > 300:
+		# values are eyeballed for current planets (scale 1, sprite 720*0.5=360 px)
+		if pl[0] > 300*pl[1].planet_rad_factor:
 			print("Too far away to orbit")
-		elif pl[0] < 200:
+		elif pl[0] < 200*pl[1].planet_rad_factor:
 			print("Too close to orbit")
 		else:
 			print("Can orbit")

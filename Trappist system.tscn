@@ -84,6 +84,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="planet" parent="planet_holder" index="0" instance=ExtResource( 3 )]
 
 position = Vector2( -6.07588e-006, 139 )
+planet_rad_factor = 0.2
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
 
@@ -107,6 +108,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="planet2" parent="planet_holder" index="1" instance=ExtResource( 3 )]
 
 position = Vector2( 2.26573e-006, -190 )
+planet_rad_factor = 0.2
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 
@@ -131,6 +133,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="planet3" parent="planet_holder" index="2" instance=ExtResource( 3 )]
 
 position = Vector2( -188.798, 188.798 )
+planet_rad_factor = 0.3
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
 
@@ -148,6 +151,10 @@ margin_bottom = 54.0
 text = "III"
 _sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
 
+[node name="Area2D" parent="planet_holder/planet3" index="2"]
+
+_sections_unfolded = [ "Transform" ]
+
 [node name="CollisionShape2D" parent="planet_holder/planet3/Area2D" index="0"]
 
 scale = Vector2( 0.3, 0.3 )
@@ -164,6 +171,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="planet4" parent="planet_holder" index="3" instance=ExtResource( 8 )]
 
 position = Vector2( -1.53427e-005, 351 )
+planet_rad_factor = 0.2
 
 [node name="Sprite" parent="planet_holder/planet4" index="0"]
 
