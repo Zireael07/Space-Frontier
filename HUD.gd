@@ -26,6 +26,7 @@ func _ready():
 	
 	player.connect("shield_changed", self, "_on_shield_changed")
 	player.connect("module_level_changed", self, "_on_module_level_changed")
+	player.connect("power_changed", self, "_on_power_changed")
 	
 	player.connect("officer_message", self, "_on_officer_messaged")
 	
@@ -73,6 +74,20 @@ func _on_shield_changed(shield):
 		$"Control/Panel/ProgressBar_sh".value = perc
 	else:
 		$"Control/Panel/ProgressBar_sh".value = 0
+
+func _on_power_changed(power):
+	# original max is 100
+	# avoid truncation
+	var maxx = 100.0
+	var perc = power/maxx * 100
+	
+	#print("Perc: " + str(perc))
+	
+	if perc >= 0:
+		$"Control/Panel/ProgressBar_po".value = perc
+	else:
+		$"Control/Panel/ProgressBar_po".value = 0
+
 	
 func _on_module_level_changed(module, level):
 	var info = $"Control2/Panel_rightHUD/PanelInfo/ShipInfo/"

@@ -28,6 +28,11 @@ var engine_level = 1
 var power_level = 1
 signal module_level_changed
 
+var power = 100
+var shoot_power_draw = 10
+var warp_power_draw = 50
+var power_recharge = 1
+signal power_changed
 
 # bullets
 export(PackedScene) var bullet
@@ -83,6 +88,12 @@ func _process(delta):
 	update()
 
 	spd = vel.length() / LIGHT_SPEED
+
+	# recharge
+	if power < 100:
+		power += power_recharge
+		emit_signal("power_changed", power)
+
 
 	# shoot
 	if Input.is_action_pressed("shoot"):
@@ -398,6 +409,12 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 #		$"shield_indicator".show()
 
 func shoot():
+	if power <= shoot_power_draw:
+		return
+		
+	power -= shoot_power_draw
+	emit_signal("power_changed", power)
+	
 	gun_timer.start()
 	var b = bullet.instance()
 	bullet_container.add_child(b)
@@ -518,6 +535,12 @@ func _on_goto_pressed():
 	heading = warp_target
 	
 func on_warping():
+	if power < warp_power_draw:
+		return
+		
+	power -= warp_power_draw
+	emit_signal("power_changed", power)
+	
 	# effect
 	var warp = warp_effect.instance()
 	add_child(warp)
