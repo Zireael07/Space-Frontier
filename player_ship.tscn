@@ -261,6 +261,13 @@ modulate = Color( 0, 1, 0, 1 )
 texture = ExtResource( 6 )
 _sections_unfolded = [ "Material", "Transform" ]
 
+[node name="recharge_timer" type="Timer" parent="Area2D" index="11"]
+
+process_mode = 0
+wait_time = 1.0
+one_shot = false
+autostart = false
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 
 root_node = NodePath("..")
@@ -274,6 +281,8 @@ blend_times = [  ]
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 
 [connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
+
+[connection signal="timeout" from="Area2D/recharge_timer" to="Area2D" method="_on_recharge_timer_timeout"]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="Area2D" method="_on_AnimationPlayer_animation_finished"]
 

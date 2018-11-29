@@ -31,7 +31,7 @@ signal module_level_changed
 var power = 100
 var shoot_power_draw = 10
 var warp_power_draw = 50
-var power_recharge = 1
+var power_recharge = 5
 signal power_changed
 
 # bullets
@@ -43,6 +43,8 @@ onready var explosion = preload("res://explosion.tscn")
 onready var warp_effect = preload("res://warp_effect.tscn")
 onready var debris = preload("res://debris_enemy.tscn")
 onready var colony = preload("res://colony.tscn")
+
+onready var recharge_timer = $"recharge_timer"
 
 var target = null
 var tractor = null
@@ -88,12 +90,6 @@ func _process(delta):
 	update()
 
 	spd = vel.length() / LIGHT_SPEED
-
-	# recharge
-	if power < 100:
-		power += power_recharge
-		emit_signal("power_changed", power)
-
 
 	# shoot
 	if Input.is_action_pressed("shoot"):
@@ -414,6 +410,7 @@ func shoot():
 		
 	power -= shoot_power_draw
 	emit_signal("power_changed", power)
+	recharge_timer.start()
 	
 	gun_timer.start()
 	var b = bullet.instance()
@@ -550,6 +547,13 @@ func on_warping():
 	# tint a matching orange color
 	set_modulate(Color(1, 0.73, 0))
 
+
+func _on_recharge_timer_timeout():
+	# recharge
+	if power < 100:
+		power += power_recharge
+		emit_signal("power_changed", power)
+
 func sell_cargo(id):
 	if not docked:
 		print("We cannot sell if we're not docked")
@@ -578,5 +582,3 @@ func fix_atan(x,y):
 		ret= at + PI
 	
 	return ret
-
-
