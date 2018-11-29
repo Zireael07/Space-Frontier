@@ -46,6 +46,7 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 rotation_rate = 0.15
 orbit_rate = 0.1
+star_radius_factor = 0.25
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 

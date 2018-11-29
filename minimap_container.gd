@@ -37,6 +37,7 @@ func _ready():
 	for s in stars:
 		var star_sprite = TextureRect.new()
 		star_sprite.set_texture(star)
+		star_sprite.set_scale(Vector2(s.star_radius_factor*1.5, s.star_radius_factor*1.5))
 		star_sprites.append(star_sprite)
 		add_child(star_sprite)
 		
@@ -50,6 +51,7 @@ func _ready():
 	for p in planets:
 		var planet_sprite = TextureRect.new()
 		planet_sprite.set_texture(planet)
+		planet_sprite.set_scale(Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2))
 		planet_sprites.append(planet_sprite)
 		add_child(planet_sprite)
 	
