@@ -35,9 +35,15 @@ func _ready():
 	
 	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
 	
-	# Called every time the node is added to the scene.
-	# Initialization here
-	#pass
+	# populate nav menu
+	var y = 0
+	for p in get_tree().get_nodes_in_group("planets"):
+		var label = Label.new()
+		label.set_text(p.get_node("Label").get_text())
+		label.set_position(Vector2(10,y))
+		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
+		y += 15
+	
 
 func _process(delta):
 	if player != null and player.is_inside_tree():
@@ -158,23 +164,23 @@ func _on_ButtonPlanet_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
-	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
+	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".show()
 
 
 func _on_ButtonShip_pressed():
-	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".show()
 
 func switch_to_refit():
-	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".show()
 
 func _on_ButtonCargo_pressed():
-	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".show()
@@ -221,3 +227,26 @@ func _on_ButtonUpgrade_pressed():
 		if select_id == 2:
 			player.shield_level += 1
 			player.credits -= 50
+
+
+func _on_ButtonView_pressed():
+	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
+
+
+
+func _on_ButtonUp2_pressed():
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
+	if cursor.get_position().y > 0:
+		# up a line
+		cursor.set_position(cursor.get_position() - Vector2(0, 15))
+
+
+func _on_ButtonDown2_pressed():
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
+	var num_list = get_tree().get_nodes_in_group("planets").size()-1
+	var max_y = 15*num_list
+	#print("num list" + str(num_list) + " max y: " + str(max_y))
+	if cursor.get_position().y < max_y:
+		# down a line
+		cursor.set_position(cursor.get_position() + Vector2(0, 15))

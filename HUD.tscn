@@ -110,7 +110,7 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 52.0
+margin_right = 59.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -123,7 +123,7 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Planet"
+text = "Planets"
 flat = false
 align = 1
 
@@ -133,8 +133,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 56.0
-margin_right = 95.0
+margin_left = 63.0
+margin_right = 102.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -157,8 +157,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 99.0
-margin_right = 140.0
+margin_left = 106.0
+margin_right = 147.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -181,8 +181,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 144.0
-margin_right = 191.0
+margin_left = 151.0
+margin_right = 198.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -220,6 +220,7 @@ _sections_unfolded = [ "Rect" ]
 [node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="0"]
 
 editor/display_folded = true
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -509,6 +510,7 @@ text = "Scout"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
 
 [node name="Label" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="1"]
 
@@ -697,6 +699,7 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="CargoInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="3"]
 
+editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -759,6 +762,118 @@ enabled_focus_mode = 2
 shortcut = null
 group = null
 text = "Sell"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="NavInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Cursor2" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = ">"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="ButtonUp2" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 187.0
+margin_right = 42.0
+margin_bottom = 207.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "< Up"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="ButtonView" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 45.0
+margin_top = 187.0
+margin_right = 110.0
+margin_bottom = 207.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "View"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="ButtonDown2" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 110.0
+margin_top = 187.0
+margin_right = 170.0
+margin_bottom = 207.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "> Down"
 flat = false
 align = 1
 _sections_unfolded = [ "Rect" ]
@@ -1350,5 +1465,11 @@ max_lines_visible = -1
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonDown" to="." method="_on_ButtonDown_pressed"]
 
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/CargoInfo/ButtonSell" to="." method="_on_ButtonSell_pressed"]
+
+[connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/NavInfo/ButtonUp2" to="." method="_on_ButtonUp2_pressed"]
+
+[connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/NavInfo/ButtonView" to="." method="_on_ButtonView_pressed"]
+
+[connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/NavInfo/ButtonDown2" to="." method="_on_ButtonDown2_pressed"]
 
 
