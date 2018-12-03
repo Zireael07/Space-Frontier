@@ -164,6 +164,7 @@ func _on_ButtonPlanet_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".show()
 
 
@@ -171,12 +172,14 @@ func _on_ButtonShip_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".show()
 
 func switch_to_refit():
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".show()
 
 func _on_ButtonCargo_pressed():
@@ -230,9 +233,13 @@ func _on_ButtonUpgrade_pressed():
 
 
 func _on_ButtonView_pressed():
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
+	var select_id = (cursor.get_position().y) / 15
+	var planet = get_tree().get_nodes_in_group("planets")[select_id]
+	
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
-
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
 
 
 func _on_ButtonUp2_pressed():
