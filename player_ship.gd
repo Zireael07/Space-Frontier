@@ -533,10 +533,21 @@ func _on_goto_pressed(id):
 	
 func on_warping():
 	if power < warp_power_draw:
+		emit_signal("officer_message", "Insufficient power for Q-drive")
 		return
+		
+	# are we far enough away?
+	var desired = warp_target - get_global_position()
+	var dist = desired.length()
+			
+	if dist < LIGHT_SPEED:
+		emit_signal("officer_message", "Too close to target to engage Q-drive")
+		return
+		
 		
 	power -= warp_power_draw
 	emit_signal("power_changed", power)
+	recharge_timer.start()
 	
 	# effect
 	var warp = warp_effect.instance()
