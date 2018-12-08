@@ -526,9 +526,9 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 		# redraw 
 		update()
 
-func _on_goto_pressed():
-	print("Want to go to planet")
-	warp_target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
+func _on_goto_pressed(id):
+	print("Want to go to planet " + str(id))
+	warp_target = get_tree().get_nodes_in_group("planets")[id].get_global_position()
 	heading = warp_target
 	
 func on_warping():

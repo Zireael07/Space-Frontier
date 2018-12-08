@@ -30,10 +30,10 @@ func _ready():
 	
 	player.connect("officer_message", self, "_on_officer_messaged")
 	
+#	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
+	
 	
 	player.HUD = self
-	
-	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
 	
 	# populate nav menu
 	var y = 0
@@ -240,6 +240,11 @@ func _on_ButtonView_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
+	
+	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".is_connected("pressed", player, "_on_goto_pressed"):
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".disconnect("pressed", player, "_on_goto_pressed")
+		
+	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed", [select_id])
 
 
 func _on_ButtonUp2_pressed():
