@@ -57,6 +57,9 @@ func _on_bullet_area_entered( area ):
 			else:
 				expl.set_scale(Vector2(1,1))
 			expl.play()
+			
+			# prevent hitting an asteroid in the same shot
+			return
 	
 	if area.get_parent().get_groups().has("asteroid"):
 		queue_free()
