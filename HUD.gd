@@ -116,17 +116,26 @@ func _on_AI_targeted(AI):
 	# draw the red outline	
 	target = AI
 
-	if prev_target:
+	if prev_target != null:
 		if 'targetted' in prev_target:
 			prev_target.targetted = false
 		prev_target.update()
 		prev_target.disconnect("shield_changed", self, "_on_target_shield_changed")
+	
+	# assume sprite is always the first child of the ship
+	$"Control/Panel2/target_outline".set_texture(AI.get_child(0).get_texture())
+	
 	
 	for n in $"Control/Panel2".get_children():
 		n.show()
 	
 		
 	target.connect("shield_changed", self, "_on_target_shield_changed")
+
+func hide_target_panel():
+	# hide panel info if any
+	for n in $"Control/Panel2".get_children():
+		n.hide()
 
 	
 func _on_planet_targeted(planet):
