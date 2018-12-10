@@ -37,6 +37,10 @@ func _on_bullet_area_entered( area ):
 			var sb = area.is_in_group("starbase")
 			# kill the AI
 			area.get_parent().queue_free()
+			# untarget it
+			game.player.HUD.target = null
+			# hide the target panel HUD
+			game.player.HUD.hide_target_panel()
 			
 			# debris
 			var deb = get_parent().get_parent().debris.instance()
