@@ -1,7 +1,7 @@
 extends Area2D
 
 # class member variables go here, for example:
-export var resource = 1
+export(int) var resource = 1
 
 enum elements {CARBON, IRON, MAGNESIUM, SILICON}
 
@@ -33,5 +33,3 @@ func _on_debris_area_entered(area):
 		
 		
 		queue_free()
-		
-	#pass # replace with function body

@@ -70,6 +70,8 @@ func _on_bullet_area_entered( area ):
 		
 		# debris
 		var deb = area.get_parent().resource_debris.instance()
+		# randomize the resource
+		deb.get_child(0).resource = area.get_parent().select_random()
 		get_parent().get_parent().get_parent().add_child(deb)
 		#print(get_parent().get_parent().get_parent().get_name())
 		deb.set_global_position(pos)
