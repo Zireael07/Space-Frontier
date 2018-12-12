@@ -29,7 +29,9 @@ func _on_debris_area_entered(area):
 		else:
 			area.cargo[res_id] += 1
 		
-		area.HUD.set_cargo_listing(str(area.cargo).replace("(", "").replace(")", ""))
+		# listing
+#		print(str(area.cargo))
+		area.HUD.set_cargo_listing(str(area.cargo).replace("(", "").replace(")", "").replace(", ", "\n"))
 		
 		
 		queue_free()
