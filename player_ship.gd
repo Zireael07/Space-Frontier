@@ -577,7 +577,7 @@ func sell_cargo(id):
 	if cargo[cargo.keys()[0]] > 0:
 		cargo[cargo.keys()[0]] -= 1
 		# update listing
-		HUD.set_cargo_listing(str(cargo).replace("(", "").replace(")", ""))
+		HUD.set_cargo_listing(str(cargo).replace("(", "").replace(")", "").replace(", ", "\n"))
 		credits += 50
 		
 

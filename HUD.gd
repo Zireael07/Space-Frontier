@@ -217,10 +217,6 @@ func _on_ButtonUp_pressed():
 		# up a line
 		cursor.set_position(cursor.get_position() - Vector2(0, 15))
 
-func _on_ButtonSell_pressed():
-	player.sell_cargo(0)
-
-
 func _on_ButtonUpgrade_pressed():
 	if player.docked:
 		var cursor = $"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Cursor"
@@ -271,3 +267,27 @@ func _on_ButtonDown2_pressed():
 	if cursor.get_position().y < max_y:
 		# down a line
 		cursor.set_position(cursor.get_position() + Vector2(0, 15))
+
+func _on_ButtonSell_pressed():
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
+	var select_id = (cursor.get_position().y / 15)
+
+	
+	player.sell_cargo(select_id)
+
+
+func _on_ButtonUp3_pressed():
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
+	if cursor.get_position().y > 0:
+		# up a line
+		cursor.set_position(cursor.get_position() - Vector2(0,15))
+
+
+func _on_ButtonDown3_pressed():
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
+	var num_list = player.cargo.size()-1
+	var max_y = 15*num_list
+	if cursor.get_position().y < max_y:
+		# down a line
+		cursor.set_position(cursor.get_position() + Vector2(0,15))
+
