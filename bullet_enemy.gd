@@ -31,7 +31,7 @@ func _on_bullet_area_entered( area ):
 
 		area.shields -= 10
 		# emit signal
-		area.emit_signal("shield_changed", area.shields)
+		area.emit_signal("shield_changed", [area.shields])
 		
 		if area.shields <= 0:
 			# kill the player

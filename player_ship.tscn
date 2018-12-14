@@ -268,6 +268,13 @@ wait_time = 1.0
 one_shot = false
 autostart = false
 
+[node name="heat_timer" type="Timer" parent="Area2D" index="12"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 
 root_node = NodePath("..")

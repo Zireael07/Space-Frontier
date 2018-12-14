@@ -245,6 +245,14 @@ func _process(delta):
 	
 	# fix jitter due to camera updating one frame late
 	get_node("Camera2D").align()
+	
+	# overheat damage
+	var star = get_tree().get_nodes_in_group("star")[0]
+	var dist = star.get_global_position().distance_to(get_global_position())
+	if dist < 550:
+		print("distance to star: " + str(dist))
+		if get_node("heat_timer").get_time_left() == 0:
+			heat_damage()
 
 
 func player_heading(target, delta):
@@ -501,10 +509,16 @@ func _draw():
 	else:
 		pass
 
-func _on_shield_changed(shields):
-	# generic effect
-	$"shield_effect".show()
-	$"shield_timer".start()
+func _on_shield_changed(data):
+	var effect
+	if data.size() > 1:
+		effect = data[1]
+	else:
+		effect = true
+	if effect:
+		# generic effect
+		$"shield_effect".show()
+		$"shield_timer".start()
 	
 	# player-specific indicator
 	if shields < 0.2 * 100:
@@ -517,6 +531,14 @@ func _on_shield_changed(shields):
 
 func _on_shield_timer_timeout():
 	$"shield_effect".hide()
+
+
+
+func heat_damage():
+	shields = shields - 5
+	emit_signal("shield_changed", [shields, false])
+	get_node("heat_timer").start()
+
 
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):

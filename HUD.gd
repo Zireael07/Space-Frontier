@@ -66,7 +66,8 @@ func _input(event):
 
 
 
-func _on_shield_changed(shield):
+func _on_shield_changed(data):
+	var shield = data[0]
 	#print("Shields from signal is " + str(shield))
 	
 	# original max is 100
