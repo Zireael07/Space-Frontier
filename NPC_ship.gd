@@ -14,9 +14,17 @@ onready var gun_timer = $"gun_timer"
 var targetted = false
 signal AI_targeted
 
+export(int) var kind_id = 0
+
+enum kind { enemy, friendly}
 
 func _ready():
-	add_to_group("enemy")
+	if kind_id == kind.enemy:
+		add_to_group("enemy")
+	elif kind_id == kind.friendly:
+		add_to_group("friendly")
+		
+	print("Groups: " + str(get_groups()))
 	# Called every time the node is added to the scene.
 	# Initialization here
 	

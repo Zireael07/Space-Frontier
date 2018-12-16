@@ -2,10 +2,11 @@
 
 [ext_resource path="res://NPC_ship.gd" type="Script" id=1]
 [ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=3]
+[ext_resource path="res://assets/ships/playerShip2_blue.png" type="Texture" id=3]
 [ext_resource path="res://assets/fire11.png" type="Texture" id=4]
 [ext_resource path="res://assets/shield_Edit.png" type="Texture" id=5]
 [ext_resource path="res://movement_visualizer.gd" type="Script" id=6]
+
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -70,14 +71,13 @@ max_vel = 200.0
 friction = 0.65
 max_speed = 200.0
 bullet = ExtResource( 2 )
-kind_id = 0
+kind_id = 1
 
-[node name="enemyRed5" type="Sprite" parent="Area2D" index="0"]
+[node name="playerShip2_blue" type="Sprite" parent="Area2D" index="0"]
 
-rotation = 3.14159
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="1"]
 
