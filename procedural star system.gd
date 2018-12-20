@@ -31,6 +31,21 @@ func _ready():
 		$Sprite.set_scale(Vector2(star_scale, star_scale))
 		star_radius_factor = star_scale
 	
+	# names
+	# sufficiently big number
+	var num = 1000 + randi() % 1000
+	var star_name = "Kepler " + str(num)
+	
+	$"Label".set_text(star_name)
+	
+	# modern naming, from b onwards (instead of Roman numerals)
+	var numerals = {0:"b", 1:"c", 2:"d", 3:"e"}
+	
+	# planets
+	var planets = get_tree().get_nodes_in_group("planets")
+	for i in planets.size():
+		var p = planets[i]
+		p.get_node("Label").set_text(star_name + str(numerals[i]))
 
 func get_star_type(sel):
 	# swap the dictionary around
