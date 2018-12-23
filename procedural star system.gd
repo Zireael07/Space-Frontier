@@ -2,8 +2,9 @@ tool
 extends "star system.gd"
 
 # class member variables go here, for example:
-var star_type = { RED_DWARF = 0, YELLOW = 1}
+var star_types = { RED_DWARF = 0, YELLOW = 1}
 var star_chances = []
+var star_type
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -12,19 +13,19 @@ func _ready():
 	var yellow = preload("res://assets/bodies/star_yellow04.png")
 	var red = preload("res://assets/bodies/star_red01.png")
 	
-	star_chances.append([star_type.RED_DWARF, 70])
-	star_chances.append([star_type.YELLOW, 30])
+	star_chances.append([star_types.RED_DWARF, 70])
+	star_chances.append([star_types.YELLOW, 30])
 	
 	# select star type
-	var selected = select_random()
+	star_type = select_random()
 #	print("Selected: " + str(selected))
 	# human-readable
-	var rev = get_star_type(selected)
+	var rev = get_star_type(star_type)
 	print(str(rev))
 	
-	if selected == star_type.YELLOW:
+	if star_type == star_types.YELLOW:
 		$Sprite.set_texture(yellow)
-	elif selected == star_type.RED_DWARF:
+	elif star_type == star_types.RED_DWARF:
 		$Sprite.set_texture(red)
 		# red dwarf is smaller
 		var star_scale = rand_range(0.25, 0.5) # M0V can go up to 60% Sun's radius but let's ignore them for now
@@ -51,10 +52,10 @@ func get_star_type(sel):
 	# swap the dictionary around
 	var reverse = {}
 	
-	for i in range(star_type.keys().size()):
+	for i in range(star_types.keys().size()):
 #		print(str(i))
 #		print(str(star_type.keys()[i]))
-		reverse[i] = star_type.keys()[i]
+		reverse[i] = star_types.keys()[i]
 	
 	print(str(reverse))
 

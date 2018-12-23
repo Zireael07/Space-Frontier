@@ -36,9 +36,22 @@ func _ready():
 	player.HUD = self
 	
 	# populate nav menu
-	var y = 0
+	# star
+	var s = get_tree().get_nodes_in_group("star")[0]
+	var label = Label.new()
+	var s_type = ""
+	if "star_type" in s:
+		s_type = str(s.get_star_type(s.star_type))
+	label.set_text(s.get_node("Label").get_text() + " " + s_type)
+	label.set_position(Vector2(10,0))
+	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
+	# tint gray
+	label.set_self_modulate(Color(0.5,0.5, 0.5))
+	
+	# planets
+	var y = 15
 	for p in get_tree().get_nodes_in_group("planets"):
-		var label = Label.new()
+		label = Label.new()
 		label.set_text(p.get_node("Label").get_text())
 		label.set_position(Vector2(10,y))
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
@@ -240,7 +253,10 @@ func _on_ButtonUpgrade_pressed():
 
 func _on_ButtonView_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
-	var select_id = (cursor.get_position().y) / 15
+	# if we are pointing at first entry (a star), return
+	if cursor.get_position().y < 15:
+		return
+	var select_id = (cursor.get_position().y - 15) / 15
 	var planet = get_tree().get_nodes_in_group("planets")[select_id]
 	
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
@@ -263,7 +279,7 @@ func _on_ButtonUp2_pressed():
 func _on_ButtonDown2_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
 	var num_list = get_tree().get_nodes_in_group("planets").size()-1
-	var max_y = 15*num_list
+	var max_y = 15*num_list+1 #because of star
 	#print("num list" + str(num_list) + " max y: " + str(max_y))
 	if cursor.get_position().y < max_y:
 		# down a line
