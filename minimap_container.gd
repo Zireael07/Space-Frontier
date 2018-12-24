@@ -51,7 +51,10 @@ func _ready():
 	for p in planets:
 		var planet_sprite = TextureRect.new()
 		planet_sprite.set_texture(planet)
-		planet_sprite.set_scale(Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2))
+		if p.planet_rad_factor < 0.5:
+			planet_sprite.set_scale(Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2))
+		else:
+			planet_sprite.set_scale(Vector2(p.planet_rad_factor, p.planet_rad_factor))
 		planet_sprites.append(planet_sprite)
 		add_child(planet_sprite)
 	
