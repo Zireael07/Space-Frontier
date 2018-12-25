@@ -262,6 +262,7 @@ meta_underlined = true
 tab_size = 4
 text = "Planet:
 
+Mass: 
 Pressure:
 Gravity:
 Temperature:

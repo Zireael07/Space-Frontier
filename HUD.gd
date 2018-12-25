@@ -263,6 +263,15 @@ func _on_ButtonView_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
 	
+	# set text
+	var text = "Planet: " + str(planet.get_node("Label").get_text()) + "\n" + \
+	"Mass: " + str(planet.mass) + "\n" + \
+	"Pressure: " + "\n" + "Gravity:" + "\n" + "Temperature" + "\n" + "Hydro:"
+
+	
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
+	
+	
 	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".is_connected("pressed", player, "_on_goto_pressed"):
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".disconnect("pressed", player, "_on_goto_pressed")
 		
