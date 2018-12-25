@@ -183,12 +183,15 @@ func _on_target_shield_changed(shield):
 		$"Control/Panel2/ProgressBar_sh2".value = 0
 
 # operate the right HUD
-func _on_ButtonPlanet_pressed():
+func switch_to_navi():
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
-	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".show()
+	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".show()	
+
+func _on_ButtonPlanet_pressed():
+	switch_to_navi()
 
 
 func _on_ButtonShip_pressed():

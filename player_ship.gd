@@ -386,6 +386,9 @@ func _input(event):
 			col.set_global_position(get_node("dock").get_global_position() + Vector2(0, 20))
 			
 			print("Undocked")
+			
+	if Input.is_action_pressed("nav"):
+		self.HUD.switch_to_navi()
 
 	if Input.is_action_pressed("landing"):
 		if not landed:
