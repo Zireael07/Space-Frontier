@@ -9,6 +9,8 @@ export(float) var planet_rad_factor = 1.0
 
 export(Vector2) var data setget setData
 
+export(float) var mass = 1 # in Earth masses
+
 const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
 const LS_TO_AU = 30 #500 realistic value
 const AU = LS_TO_AU*LIGHT_SEC

@@ -6,8 +6,8 @@
 [ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=4]
 [ext_resource path="res://assets/aura shader.tres" type="Material" id=5]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=6]
-[ext_resource path="res://colony.tscn" type="PackedScene" id=7]
-[ext_resource path="res://planet_new.tscn" type="PackedScene" id=8]
+[ext_resource path="res://planet_new.tscn" type="PackedScene" id=7]
+[ext_resource path="res://colony.tscn" type="PackedScene" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -86,6 +86,7 @@ _sections_unfolded = [ "Transform" ]
 
 position = Vector2( -6.07588e-006, 139 )
 planet_rad_factor = 0.2
+mass = 1
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
 
@@ -98,7 +99,7 @@ margin_left = 30.0
 margin_top = 30.0
 margin_right = 82.0
 margin_bottom = 44.0
-text = "I"
+text = "TRAPPIST 1b"
 _sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
 
 [node name="Area2D" parent="planet_holder/planet" index="2"]
@@ -110,6 +111,7 @@ _sections_unfolded = [ "Transform" ]
 
 position = Vector2( 2.26573e-006, -190 )
 planet_rad_factor = 0.2
+mass = 1.15
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 
@@ -123,7 +125,7 @@ margin_left = 30.0
 margin_top = 30.0
 margin_right = 82.0
 margin_bottom = 44.0
-text = "II"
+text = "TRAPPIST 1c"
 _sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
 
 [node name="CollisionShape2D" parent="planet_holder/planet2/Area2D" index="0"]
@@ -134,22 +136,23 @@ _sections_unfolded = [ "Transform" ]
 [node name="planet3" parent="planet_holder" index="2" instance=ExtResource( 3 )]
 
 position = Vector2( -188.798, 188.798 )
-planet_rad_factor = 0.3
+planet_rad_factor = 0.2
+mass = 0.2
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
 
 material = ExtResource( 5 )
-scale = Vector2( 0.15, 0.15 )
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 6 )
 _sections_unfolded = [ "Material", "Transform" ]
 
 [node name="Label" parent="planet_holder/planet3" index="1"]
 
-margin_left = 40.0
-margin_top = 40.0
-margin_right = 92.0
-margin_bottom = 54.0
-text = "III"
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 109.0
+margin_bottom = 44.0
+text = "TRAPPIST 1d"
 _sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
 
 [node name="Area2D" parent="planet_holder/planet3" index="2"]
@@ -158,37 +161,40 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" parent="planet_holder/planet3/Area2D" index="0"]
 
-scale = Vector2( 0.3, 0.3 )
+scale = Vector2( 0.2, 0.2 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="colony2" parent="planet_holder/planet3" index="3" instance=ExtResource( 7 )]
-
-_sections_unfolded = [ "Transform" ]
-
-[node name="planet4" parent="planet_holder" index="3" instance=ExtResource( 8 )]
+[node name="planet4" parent="planet_holder" index="3" instance=ExtResource( 7 )]
 
 position = Vector2( -1.53427e-005, 351 )
-planet_rad_factor = 0.2
+planet_rad_factor = 0.3
+mass = 0.77
 
 [node name="Sprite" parent="planet_holder/planet4" index="0"]
 
-scale = Vector2( 0.1, 0.1 )
+scale = Vector2( 0.15, 0.15 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
 
-scale = Vector2( 0.1, 0.1 )
+rotation = 0.254188
+scale = Vector2( 0.15, 0.15 )
 
 [node name="Label" parent="planet_holder/planet4" index="2"]
 
-margin_left = 30.0
-margin_top = 30.0
-margin_right = 82.0
-margin_bottom = 44.0
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 119.0
+margin_bottom = 54.0
+text = "TRAPPIST 1e"
 _sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
 
 [node name="CollisionShape2D" parent="planet_holder/planet4/Area2D" index="0"]
 
-scale = Vector2( 0.2, 0.2 )
+scale = Vector2( 0.3, 0.3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="colony2" parent="planet_holder/planet4" index="4" instance=ExtResource( 8 )]
+
 _sections_unfolded = [ "Transform" ]
 
 
