@@ -45,12 +45,12 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 rotation_rate = 0.15
 orbit_rate = 0.02
-star_radius_factor = 0.315609
+star_radius_factor = 0.334893
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 rotation = 9.92185
-scale = Vector2( 0.315609, 0.315609 )
+scale = Vector2( 0.334893, 0.334893 )
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="." index="1"]
@@ -71,7 +71,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Kepler-99"
+text = "Kepler 1087"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -89,7 +89,7 @@ rotation = -0.133051
 
 [node name="Label" parent="planet_holder/planet" index="2"]
 
-text = "Jungle"
+text = "Kepler 1087b"
 
 [node name="planet2" parent="planet_holder" index="1" instance=ExtResource( 3 )]
 
@@ -105,7 +105,7 @@ rotation = 1.65324
 
 [node name="Label" parent="planet_holder/planet2" index="2"]
 
-text = "Inferno"
+text = "Kepler 1087c"
 
 [node name="planet3" parent="planet_holder" index="2" instance=ExtResource( 3 )]
 
@@ -121,7 +121,7 @@ rotation = -0.626209
 
 [node name="Label" parent="planet_holder/planet3" index="2"]
 
-text = "Paradise"
+text = "Kepler 1087d"
 
 [node name="colony2" parent="planet_holder/planet3" index="5" instance=ExtResource( 6 )]
 

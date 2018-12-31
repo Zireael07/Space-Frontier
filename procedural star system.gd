@@ -47,6 +47,9 @@ func _ready():
 	for i in planets.size():
 		var p = planets[i]
 		p.get_node("Label").set_text(star_name + str(numerals[i]))
+		# random mass
+		var m = rand_range(0.5,5) # upper bound of super-Earth is 10 Earth masses, but we don't have art yet
+		p.mass = m
 
 func get_star_type(sel):
 	# swap the dictionary around
