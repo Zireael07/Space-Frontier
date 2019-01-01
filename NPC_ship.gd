@@ -19,18 +19,25 @@ export(int) var kind_id = 0
 enum kind { enemy, friendly}
 
 func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
 	if kind_id == kind.enemy:
 		add_to_group("enemy")
 	elif kind_id == kind.friendly:
 		add_to_group("friendly")
 		
-	print("Groups: " + str(get_groups()))
-	# Called every time the node is added to the scene.
-	# Initialization here
+#	print("Groups: " + str(get_groups()))
 	
 	connect("shield_changed", self, "_on_shield_changed")
 	
 	#pass
+
+func get_colonized_planet():
+	var ps = get_tree().get_nodes_in_group("planets")
+	for p in ps:
+		# is the last child a colony?
+		if p.get_child(p.get_child_count()-1).is_in_group("colony"):
+			return p
 
 # using this because we don't need physics
 func _process(delta):
@@ -40,9 +47,15 @@ func _process(delta):
 	#target 
 	#planet #1
 	if get_tree().get_nodes_in_group("asteroid").size() > 3:
-		target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+		if kind_id == kind.friendly:
+			target = get_colonized_planet().get_global_position()
+		else:
+			target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 	else:
-		target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
+		if kind_id == kind.friendly:
+			target = get_colonized_planet().get_global_position()
+		else:
+			target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
 	
 
 	rel_pos = get_global_transform().xform_inv(target)
