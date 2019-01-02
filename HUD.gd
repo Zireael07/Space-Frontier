@@ -55,6 +55,10 @@ func _ready():
 		label.set_text(p.get_node("Label").get_text())
 		label.set_position(Vector2(10,y))
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
+		# is the last child a colony?
+		if p.get_child(p.get_child_count()-1).is_in_group("colony"):
+			# tint cyan
+			label.set_self_modulate(Color(0, 1, 1))
 		y += 15
 	
 
