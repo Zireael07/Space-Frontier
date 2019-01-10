@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://procedural star system.gd" type="Script" id=1]
 [ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
 [ext_resource path="res://planet_new.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=4]
-[ext_resource path="res://assets/bodies/Planet-only1.png" type="Texture" id=5]
-[ext_resource path="res://colony.tscn" type="PackedScene" id=6]
-[ext_resource path="res://asteroid.tscn" type="PackedScene" id=7]
+[ext_resource path="res://colony_enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/bodies/Planet-only1.png" type="Texture" id=6]
+[ext_resource path="res://colony.tscn" type="PackedScene" id=7]
+[ext_resource path="res://asteroid.tscn" type="PackedScene" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -45,12 +46,12 @@ script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 rotation_rate = 0.15
 orbit_rate = 0.02
-star_radius_factor = 0.334893
+star_radius_factor = 0.432023
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 rotation = 9.92185
-scale = Vector2( 0.334893, 0.334893 )
+scale = Vector2( 0.432023, 0.432023 )
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="." index="1"]
@@ -71,7 +72,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Kepler 1087"
+text = "Kepler 1863"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -83,17 +84,20 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="planet" parent="planet_holder" index="0" instance=ExtResource( 3 )]
 
+mass = 3.75641
+
 [node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
 
 rotation = -0.133051
 
 [node name="Label" parent="planet_holder/planet" index="2"]
 
-text = "Kepler 1087b"
+text = "Kepler 1863b"
 
 [node name="planet2" parent="planet_holder" index="1" instance=ExtResource( 3 )]
 
 position = Vector2( -1594, 427 )
+mass = 3.64054
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 
@@ -105,15 +109,18 @@ rotation = 1.65324
 
 [node name="Label" parent="planet_holder/planet2" index="2"]
 
-text = "Kepler 1087c"
+text = "Kepler 1863c"
+
+[node name="colony2" parent="planet_holder/planet2" index="5" instance=ExtResource( 5 )]
 
 [node name="planet3" parent="planet_holder" index="2" instance=ExtResource( 3 )]
 
 position = Vector2( 1692.5, -148 )
+mass = 2.68968
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
 
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
 
@@ -121,9 +128,9 @@ rotation = -0.626209
 
 [node name="Label" parent="planet_holder/planet3" index="2"]
 
-text = "Kepler 1087d"
+text = "Kepler 1863d"
 
-[node name="colony2" parent="planet_holder/planet3" index="5" instance=ExtResource( 6 )]
+[node name="colony2" parent="planet_holder/planet3" index="5" instance=ExtResource( 7 )]
 
 position = Vector2( 0.0300293, -0.0780029 )
 _sections_unfolded = [ "Transform" ]
@@ -131,20 +138,21 @@ _sections_unfolded = [ "Transform" ]
 [node name="planet4" parent="planet_holder" index="3" instance=ExtResource( 3 )]
 
 position = Vector2( -6.85395e-005, 1568 )
+mass = 4.5493
 
-[node name="asteroid" parent="planet_holder" index="4" instance=ExtResource( 7 )]
+[node name="asteroid" parent="planet_holder" index="4" instance=ExtResource( 8 )]
 
 position = Vector2( 580, 764 )
 
-[node name="asteroid2" parent="planet_holder" index="5" instance=ExtResource( 7 )]
+[node name="asteroid2" parent="planet_holder" index="5" instance=ExtResource( 8 )]
 
 position = Vector2( 644, 660 )
 
-[node name="asteroid3" parent="planet_holder" index="6" instance=ExtResource( 7 )]
+[node name="asteroid3" parent="planet_holder" index="6" instance=ExtResource( 8 )]
 
 position = Vector2( 696, 524 )
 
-[node name="asteroid4" parent="planet_holder" index="7" instance=ExtResource( 7 )]
+[node name="asteroid4" parent="planet_holder" index="7" instance=ExtResource( 8 )]
 
 position = Vector2( 736, 388 )
 

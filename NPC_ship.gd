@@ -36,7 +36,8 @@ func get_colonized_planet():
 	var ps = get_tree().get_nodes_in_group("planets")
 	for p in ps:
 		# is the last child a colony?
-		if p.get_child(p.get_child_count()-1).is_in_group("colony"):
+		var last = p.get_child(p.get_child_count()-1)
+		if last.is_in_group("colony") and not last.is_in_group("enemy_col"):
 			return p
 
 # using this because we don't need physics

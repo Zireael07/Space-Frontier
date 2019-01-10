@@ -8,7 +8,9 @@
 custom_solver_bias = 0.0
 radius = 23.0021
 
-[node name="Node2D" type="Node2D" index="0"]
+[node name="Node2D" type="Node2D" index="0" groups=[
+"enemy_col",
+]]
 
 [node name="Area2D" type="Area2D" parent="." index="0"]
 
