@@ -56,9 +56,13 @@ func _ready():
 		label.set_position(Vector2(10,y))
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
 		# is the last child a colony?
-		if p.get_child(p.get_child_count()-1).is_in_group("colony"):
+		var last = p.get_child(p.get_child_count()-1)
+		if last.is_in_group("colony") and not last.is_in_group("enemy_col"):
 			# tint cyan
 			label.set_self_modulate(Color(0, 1, 1))
+		elif last.is_in_group("enemy_col"):
+			# tint red
+			label.set_self_modulate(Color(1, 0, 0))
 		y += 15
 	
 
