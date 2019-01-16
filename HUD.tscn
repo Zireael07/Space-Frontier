@@ -219,7 +219,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="0"]
 
-editor/display_folded = true
 visible = false
 anchor_left = 0.0
 anchor_top = 0.0
@@ -295,14 +294,40 @@ texture = ExtResource( 4 )
 stretch_mode = 0
 _sections_unfolded = [ "Rect" ]
 
-[node name="GoToButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo" index="2"]
+[node name="BackButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 187.0
-margin_right = 12.0
+margin_right = 42.0
+margin_bottom = 207.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Back"
+flat = false
+align = 1
+_sections_unfolded = [ "Rect" ]
+
+[node name="GoToButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 45.0
+margin_top = 187.0
+margin_right = 92.0
 margin_bottom = 207.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -1533,6 +1558,8 @@ max_lines_visible = -1
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonRefit" to="." method="_on_ButtonRefit_pressed"]
 
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonCargo" to="." method="_on_ButtonCargo_pressed"]
+
+[connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/PlanetInfo/BackButton" to="." method="_on_BackButton_pressed"]
 
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUp" to="." method="_on_ButtonUp_pressed"]
 

@@ -328,3 +328,7 @@ func _on_ButtonDown3_pressed():
 		# down a line
 		cursor.set_position(cursor.get_position() + Vector2(0,15))
 
+
+
+func _on_BackButton_pressed():
+	switch_to_navi()
