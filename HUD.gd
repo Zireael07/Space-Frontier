@@ -274,9 +274,26 @@ func _on_ButtonView_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
 	
+	# set label
+	var txt = "Planet: " + str(planet.get_node("Label").get_text())
+	var label = $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/LabelName"
+	
+	label.set_text(txt)
+	
+	# is the last child a colony?
+	var last = planet.get_child(planet.get_child_count()-1)
+	if last.is_in_group("colony") and not last.is_in_group("enemy_col"):
+		# tint cyan
+		label.set_self_modulate(Color(0, 1, 1))
+	elif last.is_in_group("enemy_col"):
+		# tint red
+		label.set_self_modulate(Color(1, 0, 0))
+	else:
+		label.set_self_modulate(Color(1,1,1))
+	
+	
 	# set text
-	var text = "Planet: " + str(planet.get_node("Label").get_text()) + "\n" + \
-	"Mass: " + str(planet.mass) + "\n" + \
+	var text = "Mass: " + str(planet.mass) + "\n" + \
 	"Pressure: " + "\n" + "Gravity:" + "\n" + "Temperature" + "\n" + "Hydro:"
 
 	
