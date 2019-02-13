@@ -129,7 +129,8 @@ func _process(delta):
 		
 		# deorbit
 		if orbiting:
-			var rel_pos = get_global_transform().xform_inv(orbiting.get_parent().get_global_position())
+			var rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
+			#var rel_pos = get_global_transform().xform_inv(orbiting.get_parent().get_global_position())
 			print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
 			orbiting = null
 			
@@ -321,7 +322,8 @@ func _input(event):
 				vel = Vector2(0,0)
 				acc = Vector2(0,0)
 				
-				var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
+				#var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
+				var rel_pos = pl[1].get_global_transform().xform_inv(get_global_position())
 				var dist = pl[1].get_global_position().distance_to(get_global_position())
 				print("Dist: " + str(dist))
 				print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
@@ -330,21 +332,16 @@ func _input(event):
 					print("Mismatch in perceived distances!")
 					return
 				
+				pl[1].emit_signal("planet_orbited", self)
+				
 				# reparent
 				get_parent().get_parent().remove_child(get_parent())
 				pl[1].get_node("orbit_holder").add_child(get_parent())
 				print("Reparented")
 			
-				get_parent().set_position(Vector2(0,0))
-				#set_position(Vector2(0,0))
-				set_position(rel_pos)
-				var a = atan2(rel_pos.x, rel_pos.y)
-				#var a = fix_atan(rel_pos.x, rel_pos.y)
-				print("Initial angle " + str(a))
-				
 				orbiting = pl[1].get_node("orbit_holder")
-				orbiting.set_rotation(a)
-				orbit_rot = a
+			
+				# placement is handled by the planet in the signal
 				
 				emit_signal("officer_message", "Orbit established. Press J to request a colony")
 	

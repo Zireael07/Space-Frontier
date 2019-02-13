@@ -19,8 +19,13 @@ var population = 100000
 	
 var targetted = false
 signal planet_targeted
+signal planet_orbited
+var orbiter = null
 
 func _ready():
+	connect("planet_orbited", self, "_on_planet_orbited")
+	
+	
 	var dist = get_position().length()
 	
 	var ls = dist/LIGHT_SEC
@@ -118,6 +123,14 @@ func _draw():
 		else:
 			pass
 
+		# test
+		if orbiter:
+			var tg = get_global_transform().xform_inv(orbiter.get_global_position())
+			draw_line(Vector2(0,0), tg, Color(1,0,0), 6.0, true)
+		else:
+			pass
+
+
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	# any mouse click
@@ -159,3 +172,29 @@ func _on_Area2D_area_entered(area):
 					print("We already have a colony")
 		else:
 			print("Colony is already ours")
+
+func _on_planet_orbited(player):
+	orbiter = player
+	print("Planet orbited " + str(get_name()) + " orbiter " + str(orbiter.get_name()))
+
+	var rel_pos = get_global_transform().xform_inv(orbiter.get_global_position())
+	
+	
+	orbiter.get_parent().set_position(Vector2(0,0))
+	orbiter.set_position(Vector2(0,0))
+	orbiter.pos = Vector2(0,0)
+
+	print("Rel pos: " + str(rel_pos))
+	orbiter.set_position(rel_pos)
+	
+	var a = atan2(rel_pos.x, rel_pos.y)
+#	var a = atan2(200,0)
+
+	print("Initial angle " + str(a))
+				
+	#get_node("orbit_holder").set_rotation(a)
+	#orbiter.orbit_rot = a
+	orbiter.orbit_rot = 0
+	
+	# redraw
+	update()
