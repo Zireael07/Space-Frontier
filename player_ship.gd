@@ -129,25 +129,7 @@ func _process(delta):
 		
 		# deorbit
 		if orbiting:
-			var rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
-			#var rel_pos = get_global_transform().xform_inv(orbiting.get_parent().get_global_position())
-			print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
-			orbiting = null
-			
-			print("Deorbiting, " + str(get_global_position()) + str(get_parent().get_global_position()))
-			
-			# reparent
-			var root = get_node("/root/Control")
-			var gl = get_global_position()
-			
-			get_parent().get_parent().remove_child(get_parent())
-			root.add_child(get_parent())
-			
-			get_parent().set_global_position(gl)
-			set_position(Vector2(0,0))
-			pos = Vector2(0,0)
-			
-			set_global_rotation(get_global_rotation())
+			deorbit()
 		else:
 			if warp_target == null:
 				acc = Vector2(0, -thrust).rotated(rot)
@@ -315,33 +297,7 @@ func _input(event):
 		else:
 			print("Can orbit")
 			if pl[1].has_node("orbit_holder"):
-				
-				pl[1].get_node("orbit_holder").set_rotation(0)
-				orbit_rot = 0
-				# nuke any velocity left
-				vel = Vector2(0,0)
-				acc = Vector2(0,0)
-				
-				#var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
-				var rel_pos = pl[1].get_global_transform().xform_inv(get_global_position())
-				var dist = pl[1].get_global_position().distance_to(get_global_position())
-				print("Dist: " + str(dist))
-				print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
-				
-				if dist > pl[0] + 20: #fudge factor
-					print("Mismatch in perceived distances!")
-					return
-				
-				pl[1].emit_signal("planet_orbited", self)
-				
-				# reparent
-				get_parent().get_parent().remove_child(get_parent())
-				pl[1].get_node("orbit_holder").add_child(get_parent())
-				print("Reparented")
-			
-				orbiting = pl[1].get_node("orbit_holder")
-			
-				# placement is handled by the planet in the signal
+				orbit_planet(pl[1])
 				
 				emit_signal("officer_message", "Orbit established. Press J to request a colony")
 	
@@ -424,6 +380,55 @@ func shoot():
 	var b = bullet.instance()
 	bullet_container.add_child(b)
 	b.start_at(get_rotation(), $"muzzle".get_global_position())
+	
+func orbit_planet(planet):
+	planet.get_node("orbit_holder").set_rotation(0)
+	orbit_rot = 0
+	# nuke any velocity left
+	vel = Vector2(0,0)
+	acc = Vector2(0,0)
+				
+	#var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
+	var rel_pos = planet.get_global_transform().xform_inv(get_global_position())
+	var dist = planet.get_global_position().distance_to(get_global_position())
+	print("Dist: " + str(dist))
+	print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
+				
+	#	if dist > pl[0] + 20: #fudge factor
+	#		print("Mismatch in perceived distances!")
+	#		return
+				
+	planet.emit_signal("planet_orbited", self)
+				
+	# reparent
+	get_parent().get_parent().remove_child(get_parent())
+	planet.get_node("orbit_holder").add_child(get_parent())
+	print("Reparented")
+			
+	orbiting = planet.get_node("orbit_holder")
+			
+	# placement is handled by the planet in the signal
+	
+func deorbit():
+	var rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
+	#var rel_pos = get_global_transform().xform_inv(orbiting.get_parent().get_global_position())
+	print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
+	orbiting = null
+			
+	print("Deorbiting, " + str(get_global_position()) + str(get_parent().get_global_position()))
+			
+	# reparent
+	var root = get_node("/root/Control")
+	var gl = get_global_position()
+			
+	get_parent().get_parent().remove_child(get_parent())
+	root.add_child(get_parent())
+			
+	get_parent().set_global_position(gl)
+	set_position(Vector2(0,0))
+	pos = Vector2(0,0)
+			
+	set_global_rotation(get_global_rotation())
 
 func get_closest_planet():
 	var planets = get_tree().get_nodes_in_group("planets")
