@@ -65,3 +65,16 @@ func get_steering_arrive(target):
 		
 	steering = (desired - vel).clamped(max_vel/4)
 	return steering
+	
+
+func set_heading(target):
+	var steering = Vector2(0,0)
+	desired = target - get_global_position()
+	
+	# slow down to almost zero
+	desired = desired.normalized() * 0.01
+
+	return desired
+	#steering = (desired - vel)
+
+	#return steering

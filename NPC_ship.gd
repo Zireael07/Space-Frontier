@@ -11,6 +11,11 @@ onready var bullet_container = $"bullet_container"
 #onready var bullet = preload("res://bullet.tscn")
 onready var gun_timer = $"gun_timer"
 
+var orbit_rate = 0.04
+var orbit_rot = 0
+var orbiting = false
+
+
 var targetted = false
 signal AI_targeted
 
@@ -62,10 +67,26 @@ func _process(delta):
 	rel_pos = get_global_transform().xform_inv(target)
 	#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
 	
+	if orbiting:		
+		#print("Orbiting... " + str(orbiting))
+		orbit_rot += orbit_rate * delta
+		orbiting.set_rotation(orbit_rot)
+	
+	
 	# steering behavior
-	var steer = get_steering_arrive(target)
-	# normal case
-	vel += steer
+	if kind_id == kind.friendly:
+		if (target - get_global_position()).length() < 300 and not orbiting:
+			##orbit
+			print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
+			orbit_planet(get_colonized_planet())
+		elif not orbiting:
+			var steer = get_steering_arrive(target)
+			# normal case
+			vel += steer
+	else:
+		var steer = get_steering_arrive(target)	
+		# normal case
+		vel += steer
 	
 	
 	var a = fix_atan(vel.x,vel.y)
@@ -76,12 +97,12 @@ func _process(delta):
 	else:
 		$"engine_flare".set_emitting(false)
 	
-	
-	# movement happens!
-	#acc += vel * -friction
-	#vel += acc *delta
-	pos += vel * delta
-	set_position(pos)
+	if not orbiting:
+		# movement happens!
+		#acc += vel * -friction
+		#vel += acc *delta
+		pos += vel * delta
+		set_position(pos)
 	
 	# rotation
 	set_rotation(-a)
@@ -91,7 +112,34 @@ func shoot():
 	var b = bullet.instance()
 	bullet_container.add_child(b)
 	b.start_at(get_rotation(), $"muzzle".get_global_position())
+
+# copied from player
+func orbit_planet(planet):
+	planet.get_node("orbit_holder").set_rotation(0)
+	orbit_rot = 0
+	# nuke any velocity left
+	vel = Vector2(0,0)
+	acc = Vector2(0,0)
+				
+	#var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
+	var rel_pos = planet.get_global_transform().xform_inv(get_global_position())
+	var dist = planet.get_global_position().distance_to(get_global_position())
+	print("AI Dist: " + str(dist))
+	print("AI Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
+				
+	planet.emit_signal("planet_orbited", self)
+				
+	# reparent
+	get_parent().get_parent().remove_child(get_parent())
+	planet.get_node("orbit_holder").add_child(get_parent())
+	print("Reparented")
+			
+	orbiting = planet.get_node("orbit_holder")
+			
+	# placement is handled by the planet in the signal
 	
+	# AI specific
+	vel = set_heading(target)
 
 # draw a red rectangle around the target
 func _draw():

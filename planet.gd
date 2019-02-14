@@ -175,7 +175,7 @@ func _on_Area2D_area_entered(area):
 
 func _on_planet_orbited(player):
 	orbiter = player
-	print("Planet orbited " + str(get_name()) + " orbiter " + str(orbiter.get_name()))
+	print("Planet orbited " + str(get_name()) + " orbiter " + str(orbiter.get_parent().get_name()))
 
 	var rel_pos = get_global_transform().xform_inv(orbiter.get_global_position())
 	
