@@ -16,8 +16,6 @@ var acc = Vector2()
 
 var spd = 0
 
-var orbit_rate = 0.04
-var orbit_rot = 0
 var orbiting = false
 
 # shields
@@ -110,10 +108,10 @@ func _process(delta):
 			#print("Tractor active on: " + str(tractor.get_name()) + " " + str(dist))
 			tractor.get_child(0).tractor = self
 
-	if orbiting:		
+#	if orbiting:		
 		#print("Orbiting... " + str(orbiting))
-		orbit_rot += orbit_rate * delta
-		orbiting.set_rotation(orbit_rot)
+#		orbit_rot += orbit_rate * delta
+#		orbiting.set_rotation(orbit_rot)
 		#print("Gl pos " + str(get_global_position()) + "parent" + str(get_parent().get_global_position()))
 
 	# rotations
@@ -382,8 +380,8 @@ func shoot():
 	b.start_at(get_rotation(), $"muzzle".get_global_position())
 	
 func orbit_planet(planet):
-	planet.get_node("orbit_holder").set_rotation(0)
-	orbit_rot = 0
+	#planet.get_node("orbit_holder").set_rotation(0)
+	#orbit_rot = 0
 	# nuke any velocity left
 	vel = Vector2(0,0)
 	acc = Vector2(0,0)
@@ -393,10 +391,6 @@ func orbit_planet(planet):
 	var dist = planet.get_global_position().distance_to(get_global_position())
 	print("Dist: " + str(dist))
 	print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
-				
-	#	if dist > pl[0] + 20: #fudge factor
-	#		print("Mismatch in perceived distances!")
-	#		return
 				
 	planet.emit_signal("planet_orbited", self)
 				
@@ -411,8 +405,11 @@ func orbit_planet(planet):
 	
 func deorbit():
 	var rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
-	#var rel_pos = get_global_transform().xform_inv(orbiting.get_parent().get_global_position())
 	print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
+	
+	# remove from list of planet orbiters
+	orbiting.get_parent().remove_orbiter(self)
+	
 	orbiting = null
 			
 	print("Deorbiting, " + str(get_global_position()) + str(get_parent().get_global_position()))

@@ -11,8 +11,6 @@ onready var bullet_container = $"bullet_container"
 #onready var bullet = preload("res://bullet.tscn")
 onready var gun_timer = $"gun_timer"
 
-var orbit_rate = 0.04
-var orbit_rot = 0
 var orbiting = false
 
 
@@ -67,11 +65,6 @@ func _process(delta):
 	rel_pos = get_global_transform().xform_inv(target)
 	#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
 	
-	if orbiting:		
-		#print("Orbiting... " + str(orbiting))
-		orbit_rot += orbit_rate * delta
-		orbiting.set_rotation(orbit_rot)
-	
 	
 	# steering behavior
 	if kind_id == kind.friendly:
@@ -116,12 +109,11 @@ func shoot():
 # copied from player
 func orbit_planet(planet):
 	planet.get_node("orbit_holder").set_rotation(0)
-	orbit_rot = 0
+
 	# nuke any velocity left
 	vel = Vector2(0,0)
 	acc = Vector2(0,0)
-				
-	#var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
+	
 	var rel_pos = planet.get_global_transform().xform_inv(get_global_position())
 	var dist = planet.get_global_position().distance_to(get_global_position())
 	print("AI Dist: " + str(dist))

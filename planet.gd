@@ -19,8 +19,12 @@ var population = 100000
 	
 var targetted = false
 signal planet_targeted
+
 signal planet_orbited
-var orbiter = null
+var orbiters = []
+var orbiter
+var orbit_rot = 0
+var orbit_rate = 0.04
 
 func _ready():
 	connect("planet_orbited", self, "_on_planet_orbited")
@@ -93,7 +97,13 @@ func _process(delta):
 			var angle_to_star = get_tree().get_nodes_in_group("star")[0].get_global_position().angle_to(get_global_position())
 			#print("Angle to star: "+ str(angle_to_star))
 			$"Sprite_shadow".set_rotation(angle_to_star)
-			
+	
+	# planets handle orbiting now	
+	if has_node("orbit_holder"):
+		if orbiters.size() > 0:
+			orbit_rot += orbit_rate * delta
+			get_node("orbit_holder").set_rotation(orbit_rot)
+	
 	
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
@@ -173,8 +183,9 @@ func _on_Area2D_area_entered(area):
 		else:
 			print("Colony is already ours")
 
-func _on_planet_orbited(player):
-	orbiter = player
+func _on_planet_orbited(ship):
+	orbiter = ship
+	orbiters.append(orbiter)
 	print("Planet orbited " + str(get_name()) + " orbiter " + str(orbiter.get_parent().get_name()))
 
 	var rel_pos = get_global_transform().xform_inv(orbiter.get_global_position())
@@ -191,10 +202,9 @@ func _on_planet_orbited(player):
 #	var a = atan2(200,0)
 
 	print("Initial angle " + str(a))
-				
-	#get_node("orbit_holder").set_rotation(a)
-	#orbiter.orbit_rot = a
-	orbiter.orbit_rot = 0
 	
-	# redraw
+	# redraw (debugging)
 	update()
+
+func remove_orbiter(ship):
+	orbiters.remove(orbiters.find(ship))
