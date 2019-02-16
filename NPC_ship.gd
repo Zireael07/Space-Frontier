@@ -12,7 +12,8 @@ onready var bullet_container = $"bullet_container"
 onready var gun_timer = $"gun_timer"
 
 var orbiting = false
-
+onready var task_timer = $"task_timer"
+var target_type = null
 
 var targetted = false
 signal AI_targeted
@@ -43,23 +44,32 @@ func get_colonized_planet():
 		if last.is_in_group("colony") and not last.is_in_group("enemy_col"):
 			return p
 
-# using this because we don't need physics
-func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-	
+
+func select_target():
 	#target 
 	#planet #1
 	if get_tree().get_nodes_in_group("asteroid").size() > 3:
 		if kind_id == kind.friendly:
 			target = get_colonized_planet().get_global_position()
+			target_type = "COLONY_PLANET"
 		else:
 			target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+			target_type = "ASTEROID"
 	else:
 		if kind_id == kind.friendly:
 			target = get_colonized_planet().get_global_position()
+			target_type = "COLONY_PLANET"
 		else:
 			target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
+			target_type = "ASTEROID"
+
+# using this because we don't need physics
+func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+	
+	if not target:
+		select_target()
 	
 
 	rel_pos = get_global_transform().xform_inv(target)
@@ -68,12 +78,17 @@ func _process(delta):
 	
 	# steering behavior
 	if kind_id == kind.friendly:
-		if (target - get_global_position()).length() < 300 and not orbiting:
-			##orbit
-			print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
-			orbit_planet(get_colonized_planet())
-		elif not orbiting:
-			var steer = get_steering_arrive(target)
+		if target_type == "COLONY_PLANET":
+			if (target - get_global_position()).length() < 300 and not orbiting:
+				##orbit
+				print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
+				orbit_planet(get_colonized_planet())
+			elif not orbiting:
+				var steer = get_steering_arrive(target)
+				# normal case
+				vel += steer
+		else:
+			var steer = get_steering_arrive(target)	
 			# normal case
 			vel += steer
 	else:
@@ -114,15 +129,15 @@ func orbit_planet(planet):
 	
 	var rel_pos = planet.get_node("orbit_holder").get_global_transform().xform_inv(get_global_position())
 	var dist = planet.get_global_position().distance_to(get_global_position())
-	print("AI Dist: " + str(dist))
-	print("AI Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
+#	print("AI Dist: " + str(dist))
+#	print("AI Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
 
 	planet.emit_signal("planet_orbited", self)
 				
 	# reparent
 	get_parent().get_parent().remove_child(get_parent())
 	planet.get_node("orbit_holder").add_child(get_parent())
-	print("Reparented")
+#	print("Reparented")
 			
 	orbiting = planet.get_node("orbit_holder")
 			
@@ -131,6 +146,36 @@ func orbit_planet(planet):
 	
 	# AI specific
 	vel = set_heading(target)
+	task_timer.start()
+
+func deorbit():
+	var rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
+	print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
+	
+	# remove from list of planet orbiters
+	orbiting.get_parent().remove_orbiter(self)
+	
+	orbiting = null
+			
+	print("Deorbiting, " + str(get_global_position()) + str(get_parent().get_global_position()))
+			
+	# reparent
+	var root = get_node("/root/Control")
+	var gl = get_global_position()
+			
+	get_parent().get_parent().remove_child(get_parent())
+	root.add_child(get_parent())
+			
+	get_parent().set_global_position(gl)
+	set_position(Vector2(0,0))
+	pos = Vector2(0,0)
+			
+	set_global_rotation(get_global_rotation())
+
+	# AI switch to other target
+	if get_tree().get_nodes_in_group("asteroid").size() > 3:
+		target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+		target_type = "ASTEROID"
 
 # draw a red rectangle around the target
 func _draw():
@@ -162,3 +207,10 @@ func _on_shield_changed(shield):
 func _on_shield_timer_timeout():
 	$"shield_effect".hide()
 	#pass # replace with function body
+
+
+func _on_task_timer_timeout():
+	print("Task timer timeout")
+	if orbiting:
+		# deorbit
+		deorbit()

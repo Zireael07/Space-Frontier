@@ -7,7 +7,6 @@
 [ext_resource path="res://assets/shield_Edit.png" type="Texture" id=5]
 [ext_resource path="res://movement_visualizer.gd" type="Script" id=6]
 
-
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
@@ -138,8 +137,17 @@ autostart = false
 
 script = ExtResource( 6 )
 
+[node name="task_timer" type="Timer" parent="Area2D" index="9"]
+
+process_mode = 1
+wait_time = 2.0
+one_shot = false
+autostart = false
+
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 
 [connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
+
+[connection signal="timeout" from="Area2D/task_timer" to="Area2D" method="_on_task_timer_timeout"]
 
 

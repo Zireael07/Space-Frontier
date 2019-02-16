@@ -382,14 +382,14 @@ func orbit_planet(planet):
 	#var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
 	var rel_pos = planet.get_node("orbit_holder").get_global_transform().xform_inv(get_global_position())
 	var dist = planet.get_global_position().distance_to(get_global_position())
-	print("Dist: " + str(dist))
+#	print("Dist: " + str(dist))
 #	print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
 	
 	planet.emit_signal("planet_orbited", self)			
 	# reparent
 	get_parent().get_parent().remove_child(get_parent())
 	planet.get_node("orbit_holder").add_child(get_parent())
-	print("Reparented")
+#	print("Reparented")
 			
 	orbiting = planet.get_node("orbit_holder")
 			
