@@ -108,11 +108,6 @@ func _process(delta):
 			#print("Tractor active on: " + str(tractor.get_name()) + " " + str(dist))
 			tractor.get_child(0).tractor = self
 
-#	if orbiting:		
-		#print("Orbiting... " + str(orbiting))
-#		orbit_rot += orbit_rate * delta
-#		orbiting.set_rotation(orbit_rot)
-		#print("Gl pos " + str(get_global_position()) + "parent" + str(get_parent().get_global_position()))
 
 	# rotations
 	if Input.is_action_pressed("ui_left"):
@@ -380,20 +375,17 @@ func shoot():
 	b.start_at(get_rotation(), $"muzzle".get_global_position())
 	
 func orbit_planet(planet):
-	#planet.get_node("orbit_holder").set_rotation(0)
-	#orbit_rot = 0
 	# nuke any velocity left
 	vel = Vector2(0,0)
 	acc = Vector2(0,0)
 				
 	#var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
-	var rel_pos = planet.get_global_transform().xform_inv(get_global_position())
+	var rel_pos = planet.get_node("orbit_holder").get_global_transform().xform_inv(get_global_position())
 	var dist = planet.get_global_position().distance_to(get_global_position())
 	print("Dist: " + str(dist))
-	print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
-				
-	planet.emit_signal("planet_orbited", self)
-				
+#	print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
+	
+	planet.emit_signal("planet_orbited", self)			
 	# reparent
 	get_parent().get_parent().remove_child(get_parent())
 	planet.get_node("orbit_holder").add_child(get_parent())

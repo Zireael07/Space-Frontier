@@ -108,17 +108,15 @@ func shoot():
 
 # copied from player
 func orbit_planet(planet):
-	planet.get_node("orbit_holder").set_rotation(0)
-
 	# nuke any velocity left
 	vel = Vector2(0,0)
 	acc = Vector2(0,0)
 	
-	var rel_pos = planet.get_global_transform().xform_inv(get_global_position())
+	var rel_pos = planet.get_node("orbit_holder").get_global_transform().xform_inv(get_global_position())
 	var dist = planet.get_global_position().distance_to(get_global_position())
 	print("AI Dist: " + str(dist))
 	print("AI Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
-				
+
 	planet.emit_signal("planet_orbited", self)
 				
 	# reparent
@@ -129,6 +127,7 @@ func orbit_planet(planet):
 	orbiting = planet.get_node("orbit_holder")
 			
 	# placement is handled by the planet in the signal
+
 	
 	# AI specific
 	vel = set_heading(target)

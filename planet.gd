@@ -84,7 +84,7 @@ func place(angle,dist):
 func _process(delta):
 	
 	# redraw
-	#update()
+	update()
 
 	# straighten out labels
 	if get_parent().is_class("Node2D"):
@@ -134,9 +134,10 @@ func _draw():
 			pass
 
 		# test
-		if orbiter:
-			var tg = get_global_transform().xform_inv(orbiter.get_global_position())
-			draw_line(Vector2(0,0), tg, Color(1,0,0), 6.0, true)
+		if orbiters.size() > 0:
+			for o in orbiters:
+				var tg = get_global_transform().xform_inv(o.get_global_position())
+				draw_line(Vector2(0,0), tg, Color(1,0,0), 6.0, true)
 		else:
 			pass
 
@@ -188,7 +189,7 @@ func _on_planet_orbited(ship):
 	orbiters.append(orbiter)
 	print("Planet orbited " + str(get_name()) + " orbiter " + str(orbiter.get_parent().get_name()))
 
-	var rel_pos = get_global_transform().xform_inv(orbiter.get_global_position())
+	var rel_pos = get_node("orbit_holder").get_global_transform().xform_inv(orbiter.get_global_position())
 	
 	
 	orbiter.get_parent().set_position(Vector2(0,0))
