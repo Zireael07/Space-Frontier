@@ -279,7 +279,9 @@ visible_characters = -1
 percent_visible = 1.0
 meta_underlined = true
 tab_size = 4
-text = "Pressure:
+text = "Planet:
+
+Pressure:
 Gravity:
 Temperature:
 Hydro:
@@ -998,7 +1000,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="minimap" type="Control" parent="Control2/Panel_rightHUD" index="2"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0

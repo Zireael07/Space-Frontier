@@ -7,13 +7,22 @@ onready var asteroid = preload("res://assets/hud/grey_circle.png")
 
 onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
 
+onready var friendly = preload("res://assets/hud/arrow.png")
+onready var hostile = preload("res://assets/hud/red_arrow.png")
+
 var stars
 var planets
 var asteroids
 
+var friendlies
+var hostiles
+
 var star_sprites = []
 var planet_sprites = []
 var asteroid_sprites = []
+
+var friendly_sprites = []
+var hostile_sprites = []
 
 var star_arrow
 
@@ -33,6 +42,9 @@ func _ready():
 	asteroids = get_tree().get_nodes_in_group("asteroid")
 	
 	player = get_tree().get_nodes_in_group("player")[0]
+	friendlies = get_tree().get_nodes_in_group("friendly")
+	hostiles = get_tree().get_nodes_in_group("enemy")
+	
 	
 	for s in stars:
 		var star_sprite = TextureRect.new()
@@ -66,9 +78,21 @@ func _ready():
 		add_child(asteroid_sprite)
 	
 	
+	for f in friendlies:
+		var friendly_sprite = TextureRect.new()
+		friendly_sprite.set_texture(friendly)
+		friendly_sprites.append(friendly_sprite)
+		add_child(friendly_sprite)
+	
+	for h in hostiles:
+		var hostile_sprite = TextureRect.new()
+		hostile_sprite.set_texture(hostile)
+		hostile_sprites.append(hostile_sprite)
+		add_child(hostile_sprite)
+	
 	
 	# make sure player is the last child (to be drawn last)
-	move_child($"player", stars.size()+planets.size()+asteroids.size()+2)
+	move_child($"player", stars.size()+planets.size()+asteroids.size()+friendlies.size()+hostiles.size()+2)
 	center = Vector2($"player".get_position().x, $"player".get_position().y)
 	set_clip_contents(true)
 	
@@ -117,4 +141,12 @@ func _process(delta):
 		asteroid_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 		
 
-#	pass
+	for i in range(friendlies.size()):
+		# the minimap doesn't rotate
+		var rel_loc = friendlies[i].get_global_position() - player.get_child(0).get_global_position()
+		friendly_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+
+	for i in range(hostiles.size()):
+		# the minimap doesn't rotate
+		var rel_loc = hostiles[i].get_global_position() - player.get_child(0).get_global_position()
+		hostile_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
