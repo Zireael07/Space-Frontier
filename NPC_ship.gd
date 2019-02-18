@@ -1,6 +1,18 @@
 extends "boid.gd"
 
 # class member variables go here, for example:
+	
+# FSM
+onready var state = InitialState.new(self)
+var prev_state
+
+const STATE_INITIAL = 0
+const STATE_IDLE   = 1
+const STATE_ORBIT  = 2
+
+signal state_changed	
+
+# -------------	
 var shields = 100
 signal shield_changed
 
@@ -33,8 +45,33 @@ func _ready():
 #	print("Groups: " + str(get_groups()))
 	
 	connect("shield_changed", self, "_on_shield_changed")
+
+# fsm
+func set_state(new_state):
+	# if we need to clean up
+	#state.exit()
+	prev_state = get_state()
 	
-	#pass
+	if new_state == STATE_INITIAL:
+		state = InitialState.new(self)
+	elif new_state == STATE_IDLE:
+		state = IdleState.new(self)
+	elif new_state == STATE_ORBIT:
+		state = OrbitState.new(self)
+	
+	emit_signal("state_changed", self)
+	
+#	print(get_name() + " setting state to " + str(new_state))
+
+func get_state():
+	if state is InitialState:
+		return STATE_INITIAL
+	elif state is IdleState:
+		return STATE_IDLE
+	elif state is OrbitState:
+		return STATE_ORBIT
+		
+#--------------------------------		
 
 func get_colonized_planet():
 	var ps = get_tree().get_nodes_in_group("planets")
@@ -51,52 +88,31 @@ func select_target():
 	if get_tree().get_nodes_in_group("asteroid").size() > 3:
 		if kind_id == kind.friendly:
 			target = get_colonized_planet().get_global_position()
-			target_type = "COLONY_PLANET"
+			set_state(STATE_ORBIT)
+			#target_type = "COLONY_PLANET"
 		else:
 			target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-			target_type = "ASTEROID"
+			set_state(STATE_IDLE)
 	else:
 		if kind_id == kind.friendly:
 			target = get_colonized_planet().get_global_position()
-			target_type = "COLONY_PLANET"
+			set_state(STATE_ORBIT)
 		else:
 			target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
-			target_type = "ASTEROID"
+			set_state(STATE_IDLE)
 
 # using this because we don't need physics
+# generic
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
-	
-	if not target:
-		select_target()
-	
 
-	rel_pos = get_global_transform().xform_inv(target)
-	#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
-	
-	
-	# steering behavior
-	if kind_id == kind.friendly:
-		if target_type == "COLONY_PLANET":
-			if (target - get_global_position()).length() < 300 and not orbiting:
-				##orbit
-				print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
-				orbit_planet(get_colonized_planet())
-			elif not orbiting:
-				var steer = get_steering_arrive(target)
-				# normal case
-				vel += steer
-		else:
-			var steer = get_steering_arrive(target)	
-			# normal case
-			vel += steer
-	else:
-		var steer = get_steering_arrive(target)	
-		# normal case
-		vel += steer
-	
-	
+	# use states
+	state.update(delta)
+
+# --------------------
+
+func move_AI(vel, delta):
 	var a = fix_atan(vel.x,vel.y)
 	
 	# effects
@@ -113,7 +129,7 @@ func _process(delta):
 		set_position(pos)
 	
 	# rotation
-	set_rotation(-a)
+	set_rotation(-a)	
 
 func shoot():
 	gun_timer.start()
@@ -146,6 +162,8 @@ func orbit_planet(planet):
 	
 	# AI specific
 	vel = set_heading(target)
+	
+	# task timer allows the AI to deorbit after some time passed
 	task_timer.start()
 
 func deorbit():
@@ -175,7 +193,33 @@ func deorbit():
 	# AI switch to other target
 	if get_tree().get_nodes_in_group("asteroid").size() > 3:
 		target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-		target_type = "ASTEROID"
+		set_state(STATE_IDLE)
+		
+func move_generic(delta):
+	# steering behavior
+	var steer = get_steering_arrive(target)	
+	# normal case
+	vel += steer
+	
+	move_AI(vel, delta)		
+
+func move_orbit(delta):
+	# orbiting temporarily limited to friendlies
+	if kind_id == kind.friendly:
+		if (target - get_global_position()).length() < 300 and not orbiting:
+			##orbit
+			print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
+			orbit_planet(get_colonized_planet())
+		elif not orbiting:
+			var steer = get_steering_arrive(target)
+			# normal case
+			vel += steer
+	else:
+		var steer = get_steering_arrive(target)	
+		# normal case
+		vel += steer
+	
+	move_AI(vel, delta)	
 
 # draw a red rectangle around the target
 func _draw():
@@ -214,3 +258,41 @@ func _on_task_timer_timeout():
 	if orbiting:
 		# deorbit
 		deorbit()
+
+# -----------------------------
+# states
+class InitialState:
+	var ship
+	
+	func _init(shp):
+		ship = shp
+		
+	func update(delta):
+		if not ship.target:
+			ship.select_target()
+	
+
+		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
+		#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))	
+		
+		#ship.set_state(STATE_IDLE)
+		
+		
+class IdleState:
+	var ship
+	
+	func _init(shp):
+		ship = shp
+		
+	func update(delta):
+		ship.move_generic(delta)
+
+class OrbitState:
+	var ship
+	
+	func _init(shp):
+		ship = shp
+		
+	func update(delta):
+		ship.move_orbit(delta)
+		
