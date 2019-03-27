@@ -50,7 +50,7 @@ func draw_vector(vector, offset, _color):
 	draw_circle(offset, 6, _color)
 
 
-func draw_triangle_equilateral(center=Vector2(), direction=Vector2(), radius=50, _color=WHITE):
+func draw_triangle_equilateral(center=Vector2(), direction=Vector2(), radius=50, _color=colors.WHITE):
 	var point_1 = center + direction * radius
 	var point_2 = center + direction.rotated(2*PI/3) * radius
 	var point_3 = center + direction.rotated(4*PI/3) * radius
