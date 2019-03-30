@@ -147,6 +147,7 @@ func _process(delta):
 		friendly_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 
 	for i in range(hostiles.size()):
-		# the minimap doesn't rotate
-		var rel_loc = hostiles[i].get_global_position() - player.get_child(0).get_global_position()
-		hostile_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+		if is_instance_valid(hostiles[i]):
+			# the minimap doesn't rotate
+			var rel_loc = hostiles[i].get_global_position() - player.get_child(0).get_global_position()
+			hostile_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
