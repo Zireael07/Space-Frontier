@@ -151,3 +151,11 @@ func _process(delta):
 			# the minimap doesn't rotate
 			var rel_loc = hostiles[i].get_global_position() - player.get_child(0).get_global_position()
 			hostile_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+		else:
+			#print("Removing i: " + str(i))
+			# remove all references to the killed ship and its minimap icon
+			remove_child(hostile_sprites[i])
+			hostiles.remove(i)
+			hostile_sprites.remove(i)
+			# to prevent errors with subsequent indices not found
+			break
