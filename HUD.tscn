@@ -13,261 +13,77 @@
 [ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=11]
 
 [sub_resource type="StyleBoxTexture" id=1]
-
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 100, 100 )
-margin_left = 0.0
-margin_right = 0.0
-margin_top = 0.0
-margin_bottom = 0.0
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
-modulate_color = Color( 1, 1, 1, 1 )
-draw_center = true
-_sections_unfolded = [ "Axis Stretch" ]
 
-[node name="Control" type="Control" index="0"]
-
+[node name="Control" type="Control"]
 pause_mode = 2
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 40.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 script = ExtResource( 1 )
-_sections_unfolded = [ "Pause" ]
 
-[node name="Control2" type="Control" parent="." index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Control2" type="Control" parent="."]
+editor/display_folded = true
 margin_left = 825.0
 margin_right = 865.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Panel_rightHUD" type="Panel" parent="Control2" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Panel_rightHUD" type="Panel" parent="Control2"]
 margin_right = 202.0
 margin_bottom = 598.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 custom_styles/panelf = ExtResource( 2 )
 custom_styles/panel = SubResource( 1 )
-_sections_unfolded = [ "custom_styles" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control2/Panel_rightHUD" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Control2/Panel_rightHUD"]
 margin_right = 40.0
 margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 3
-size_flags_vertical = 1
-alignment = 0
-_sections_unfolded = [ "Rect" ]
 
-[node name="ButtonPlanet" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonPlanet" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
 margin_right = 59.0
 margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Planets"
-flat = false
-align = 1
 
-[node name="ButtonShip" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonShip" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
 margin_left = 63.0
 margin_right = 102.0
 margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Ship"
-flat = false
-align = 1
 
-[node name="ButtonRefit" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonRefit" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
 margin_left = 106.0
 margin_right = 147.0
 margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Refit"
-flat = false
-align = 1
 
-[node name="ButtonCargo" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonCargo" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
 margin_left = 151.0
 margin_right = 198.0
 margin_bottom = 20.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Cargo"
-flat = false
-align = 1
 
-[node name="PanelInfo" type="Panel" parent="Control2/Panel_rightHUD" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="PanelInfo" type="Panel" parent="Control2/Panel_rightHUD"]
 margin_left = 4.0
 margin_top = 20.0
 margin_right = 197.0
 margin_bottom = 206.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="0"]
-
+[node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 40.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="LabelName" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="LabelName" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
 margin_right = 44.0
 margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Planet:"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
 margin_top = 20.0
 margin_right = 192.0
 margin_bottom = 208.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-bbcode_enabled = false
 bbcode_text = "Planet:
 
 Pressure:
@@ -275,10 +91,6 @@ Gravity:
 Temperature:
 Hydro:
 "
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
 text = "Planet:
 
 Pressure:
@@ -286,1315 +98,445 @@ Gravity:
 Temperature:
 Hydro:
 "
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode", "Rect" ]
 
-[node name="TextureRect" type="TextureRect" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TextureRect" type="TextureRect" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
 margin_left = 83.0
 margin_top = 1.0
 margin_right = 803.0
 margin_bottom = 721.0
 rect_scale = Vector2( 0.15, 0.15 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 4 )
-stretch_mode = 0
-_sections_unfolded = [ "Rect" ]
 
-[node name="BackButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="BackButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
 margin_top = 187.0
 margin_right = 42.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Back"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="GoToButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="GoToButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
 margin_left = 45.0
 margin_top = 187.0
 margin_right = 92.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Go to"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ShipInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="1"]
-
+[node name="ShipInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 editor/display_folded = true
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 40.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo" index="0"]
-
+[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 193.0
 margin_bottom = 185.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-bbcode_enabled = false
 bbcode_text = "Scout
 
 Power: 1
 Engine: 1
 Shields: 1
 "
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
 text = "Scout
 
 Power: 1
 Engine: 1
 Shields: 1
 "
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode" ]
 
-[node name="TextureRect2" type="TextureRect" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="TextureRect2" type="TextureRect" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
 margin_left = 80.0
 margin_top = 1.0
 margin_right = 192.0
 margin_bottom = 76.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 5 )
-stretch_mode = 0
-_sections_unfolded = [ "Rect" ]
 
-[node name="ShipName" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ShipName" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
 margin_right = 40.0
 margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Scout"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="Power" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Power" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
 margin_top = 30.0
 margin_right = 40.0
 margin_bottom = 44.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Power: 1"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Engine" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Engine" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
 margin_top = 45.0
 margin_right = 58.0
 margin_bottom = 59.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Engine: 1"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Shields" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo" index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Shields" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
 margin_top = 60.0
 margin_right = 40.0
 margin_bottom = 74.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Shields: 1"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="RefitInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="2"]
-
+[node name="RefitInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 editor/display_folded = true
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 40.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="ShipName" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ShipName" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_right = 40.0
 margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Scout"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Label" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_top = 15.0
 margin_right = 154.0
 margin_bottom = 29.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Select system to upgrade"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Power" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Power" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_left = 10.0
 margin_top = 30.0
 margin_right = 65.0
 margin_bottom = 44.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Power: 1"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Engine" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Engine" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_left = 10.0
 margin_top = 45.0
 margin_right = 68.0
 margin_bottom = 59.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Engine: 1"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Shields" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Shields" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_left = 10.0
 margin_top = 60.0
 margin_right = 72.0
 margin_bottom = 74.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Shields: 1"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Cursor" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Cursor" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_top = 30.0
 margin_right = 40.0
 margin_bottom = 44.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = ">"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ButtonUp" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonUp" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_top = 187.0
 margin_right = 42.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "< Up"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ButtonUpgrade" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonUpgrade" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_left = 45.0
 margin_top = 187.0
 margin_right = 110.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Upgrade"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ButtonDown" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo" index="8"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonDown" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_left = 110.0
 margin_top = 187.0
 margin_right = 170.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "> Down"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="CargoInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="3"]
-
+[node name="CargoInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 editor/display_folded = true
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 40.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
 margin_left = 10.0
 margin_right = 192.0
 margin_bottom = 186.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-bbcode_enabled = false
 bbcode_text = "Cargo"
-visible_characters = -1
-percent_visible = 1.0
-meta_underlined = true
-tab_size = 4
 text = "Cargo"
-scroll_active = true
-scroll_following = false
-selection_enabled = false
-override_selected_font_color = false
-_sections_unfolded = [ "BBCode", "Rect" ]
 
-[node name="Cursor3" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Cursor3" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
 margin_right = 40.0
 margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = ">"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ButtonUp3" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonUp3" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
 margin_top = 187.0
 margin_right = 42.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "< Up"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ButtonSell" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonSell" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
 margin_left = 45.0
 margin_top = 187.0
 margin_right = 80.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Sell"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ButtonDown3" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonDown3" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
 margin_left = 110.0
 margin_top = 187.0
 margin_right = 170.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "> Down"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="NavInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo" index="4"]
-
+[node name="NavInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 40.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="Cursor2" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Cursor2" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
 margin_right = 40.0
 margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = ">"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ButtonUp2" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonUp2" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
 margin_top = 187.0
 margin_right = 42.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "< Up"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ButtonView" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonView" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
 margin_left = 45.0
 margin_top = 187.0
 margin_right = 110.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "View"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="ButtonDown2" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ButtonDown2" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
 margin_left = 110.0
 margin_top = 187.0
 margin_right = 170.0
 margin_bottom = 207.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "> Down"
-flat = false
-align = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="minimap" type="Control" parent="Control2/Panel_rightHUD" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="minimap" type="Control" parent="Control2/Panel_rightHUD"]
 margin_left = 2.0
 margin_top = 400.0
 margin_right = 202.0
 margin_bottom = 600.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 script = ExtResource( 6 )
-_sections_unfolded = [ "Rect" ]
 
-[node name="Panel" type="Panel" parent="Control2/Panel_rightHUD/minimap" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Panel" type="Panel" parent="Control2/Panel_rightHUD/minimap"]
 margin_right = 200.0
 margin_bottom = 200.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="player" type="TextureRect" parent="Control2/Panel_rightHUD/minimap" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="player" type="TextureRect" parent="Control2/Panel_rightHUD/minimap"]
 margin_left = 92.0
 margin_top = 91.0
 margin_right = 110.0
 margin_bottom = 109.0
 rect_pivot_offset = Vector2( 8, 9 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 7 )
-stretch_mode = 0
-_sections_unfolded = [ "Rect" ]
 
-[node name="Control" type="Control" parent="." index="1"]
-
+[node name="Control" type="Control" parent="."]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_top = 525.0
 margin_right = 40.0
 margin_bottom = 565.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="Panel" type="Panel" parent="Control" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Panel" type="Panel" parent="Control"]
 margin_right = 435.0
 margin_bottom = 149.0
 rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 custom_styles/panelf = ExtResource( 2 )
 custom_styles/panel = ExtResource( 2 )
-_sections_unfolded = [ "custom_styles" ]
 
-[node name="player_outline" type="TextureRect" parent="Control/Panel" index="0"]
-
+[node name="player_outline" type="TextureRect" parent="Control/Panel"]
 material = ExtResource( 8 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = -2.0
 margin_top = 26.0
 margin_right = 110.0
 margin_bottom = 126.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 5 )
 stretch_mode = 4
-_sections_unfolded = [ "Material", "Rect" ]
 
-[node name="Label" type="Label" parent="Control/Panel" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="Control/Panel"]
 margin_left = 32.0
 margin_top = 120.0
 margin_right = 73.0
 margin_bottom = 134.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.127319, 0.582031, 0, 1 )
 text = "Spd: c"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_colors", "custom_constants", "custom_fonts" ]
 
-[node name="Label_po" type="Label" parent="Control/Panel" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label_po" type="Label" parent="Control/Panel"]
 margin_left = 112.0
 margin_top = 40.0
 margin_right = 152.0
 margin_bottom = 54.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Pow"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_colors" ]
 
-[node name="ProgressBar_po" type="ProgressBar" parent="Control/Panel" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ProgressBar_po" type="ProgressBar" parent="Control/Panel"]
 margin_left = 157.0
 margin_top = 38.0
 margin_right = 264.0
 margin_bottom = 54.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
 custom_styles/fg = ExtResource( 9 )
-min_value = 0.0
-max_value = 100.0
 step = 1.0
-page = 0.0
 value = 100.0
-exp_edit = false
-rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
-[node name="Label_sh" type="Label" parent="Control/Panel" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label_sh" type="Label" parent="Control/Panel"]
 margin_left = 112.0
 margin_top = 65.0
 margin_right = 152.0
 margin_bottom = 79.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Shd"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_colors" ]
 
-[node name="ProgressBar_sh" type="ProgressBar" parent="Control/Panel" index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ProgressBar_sh" type="ProgressBar" parent="Control/Panel"]
 margin_left = 157.0
 margin_top = 61.0
 margin_right = 264.0
 margin_bottom = 77.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
 custom_styles/fg = ExtResource( 9 )
-min_value = 0.0
-max_value = 100.0
 step = 1.0
-page = 0.0
 value = 100.0
-exp_edit = false
-rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
-[node name="Label_en" type="Label" parent="Control/Panel" index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label_en" type="Label" parent="Control/Panel"]
 margin_left = 114.0
 margin_top = 89.0
 margin_right = 154.0
 margin_bottom = 103.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Eng"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_colors" ]
 
-[node name="ProgressBar_en" type="ProgressBar" parent="Control/Panel" index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ProgressBar_en" type="ProgressBar" parent="Control/Panel"]
 margin_left = 158.0
 margin_top = 85.0
 margin_right = 265.0
 margin_bottom = 101.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
 custom_styles/fg = ExtResource( 9 )
-min_value = 0.0
-max_value = 100.0
 step = 1.0
-page = 0.0
 value = 100.0
-exp_edit = false
-rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
-[node name="Panel2" type="Panel" parent="Control" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Panel2" type="Panel" parent="Control"]
 margin_left = 215.0
 margin_right = 650.0
 margin_bottom = 149.0
 rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
 size_flags_horizontal = 2
 size_flags_vertical = 2
 custom_styles/panelf = ExtResource( 10 )
 custom_styles/panel = ExtResource( 2 )
-_sections_unfolded = [ "custom_styles" ]
 
-[node name="target_outline" type="TextureRect" parent="Control/Panel2" index="0"]
-
+[node name="target_outline" type="TextureRect" parent="Control/Panel2"]
 visible = false
 material = ExtResource( 8 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 426.0
 margin_top = 118.0
 margin_right = 523.0
 margin_bottom = 202.0
 rect_rotation = 180.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 1
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 texture = ExtResource( 11 )
 stretch_mode = 4
-_sections_unfolded = [ "Material", "Rect" ]
 
-[node name="Label_po2" type="Label" parent="Control/Panel2" index="1"]
-
+[node name="Label_po2" type="Label" parent="Control/Panel2"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 115.0
 margin_top = 41.0
 margin_right = 155.0
 margin_bottom = 55.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Pow"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_colors" ]
 
-[node name="ProgressBar_po2" type="ProgressBar" parent="Control/Panel2" index="2"]
-
+[node name="ProgressBar_po2" type="ProgressBar" parent="Control/Panel2"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 160.0
 margin_top = 39.0
 margin_right = 267.0
 margin_bottom = 55.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
 custom_styles/fg = ExtResource( 9 )
-min_value = 0.0
-max_value = 100.0
 step = 1.0
-page = 0.0
 value = 100.0
-exp_edit = false
-rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
-[node name="Label_sh2" type="Label" parent="Control/Panel2" index="3"]
-
+[node name="Label_sh2" type="Label" parent="Control/Panel2"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 115.0
 margin_top = 66.0
 margin_right = 155.0
 margin_bottom = 80.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Shd"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_colors" ]
 
-[node name="ProgressBar_sh2" type="ProgressBar" parent="Control/Panel2" index="4"]
-
+[node name="ProgressBar_sh2" type="ProgressBar" parent="Control/Panel2"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 160.0
 margin_top = 62.0
 margin_right = 267.0
 margin_bottom = 78.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
 custom_styles/fg = ExtResource( 9 )
-min_value = 0.0
-max_value = 100.0
 step = 1.0
-page = 0.0
 value = 100.0
-exp_edit = false
-rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
-[node name="Label_en2" type="Label" parent="Control/Panel2" index="5"]
-
+[node name="Label_en2" type="Label" parent="Control/Panel2"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 117.0
 margin_top = 90.0
 margin_right = 157.0
 margin_bottom = 104.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Eng"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_colors" ]
 
-[node name="ProgressBar_en2" type="ProgressBar" parent="Control/Panel2" index="6"]
-
+[node name="ProgressBar_en2" type="ProgressBar" parent="Control/Panel2"]
 visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 161.0
 margin_top = 86.0
 margin_right = 268.0
 margin_bottom = 102.0
 rect_scale = Vector2( 1.5, 1.5 )
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
 custom_styles/fg = ExtResource( 9 )
-min_value = 0.0
-max_value = 100.0
 step = 1.0
-page = 0.0
 value = 100.0
-exp_edit = false
-rounded = false
 percent_visible = false
-_sections_unfolded = [ "Percent", "Rect", "custom_styles" ]
 
-[node name="Control3" type="Control" parent="." index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Control3" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 
-[node name="Officer" type="Label" parent="Control3" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Officer" type="Label" parent="Control3"]
 margin_right = 40.0
 margin_bottom = 14.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="pause_panel" type="Panel" parent="." index="3"]
-
+[node name="pause_panel" type="Panel" parent="."]
 editor/display_folded = true
 visible = false
 modulate = Color( 1, 1, 1, 0.624314 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_right = 1024.0
 margin_bottom = 602.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Material", "Pause" ]
 
-[node name="Label" type="Label" parent="pause_panel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="pause_panel"]
 margin_left = 416.0
 margin_top = 249.0
 margin_right = 456.0
 margin_bottom = 263.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "PAUSED"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonPlanet" to="." method="_on_ButtonPlanet_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonShip" to="." method="_on_ButtonShip_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonRefit" to="." method="_on_ButtonRefit_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonCargo" to="." method="_on_ButtonCargo_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/PlanetInfo/BackButton" to="." method="_on_BackButton_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUp" to="." method="_on_ButtonUp_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUpgrade" to="." method="_on_ButtonUpgrade_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonDown" to="." method="_on_ButtonDown_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/CargoInfo/ButtonUp3" to="." method="_on_ButtonUp3_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/CargoInfo/ButtonSell" to="." method="_on_ButtonSell_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/CargoInfo/ButtonDown3" to="." method="_on_ButtonDown3_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/NavInfo/ButtonUp2" to="." method="_on_ButtonUp2_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/NavInfo/ButtonView" to="." method="_on_ButtonView_pressed"]
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/NavInfo/ButtonDown2" to="." method="_on_ButtonDown2_pressed"]
-
-

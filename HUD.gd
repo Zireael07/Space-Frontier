@@ -4,11 +4,16 @@ extends Control
 var paused = false
 var player = null
 var target = null
-
+# for direction indicators
+var dir_labels = []
+var planets = null
+var center = Vector2(450,450)
 
 func _ready():
 	player = game.player
 	#player = get_tree().get_nodes_in_group("player")[0].get_child(0)
+	
+	planets = get_tree().get_nodes_in_group("planets")
 	
 	# connect the signal
 	
@@ -16,7 +21,7 @@ func _ready():
 	for e in get_tree().get_nodes_in_group("enemy"):
 		e.connect("AI_targeted", self, "_on_AI_targeted")
 		
-	for p in get_tree().get_nodes_in_group("planets"):
+	for p in planets:
 		p.connect("planet_targeted", self, "_on_planet_targeted")
 		
 	for c in get_tree().get_nodes_in_group("colony"):
@@ -49,8 +54,11 @@ func _ready():
 	label.set_self_modulate(Color(0.5,0.5, 0.5))
 	
 	# planets
+	var dir_label
 	var y = 15
-	for p in get_tree().get_nodes_in_group("planets"):
+	for i in range (planets.size()):
+		var p = planets[i]
+		# labels for right panel
 		label = Label.new()
 		label.set_text(p.get_node("Label").get_text())
 		label.set_position(Vector2(10,y))
@@ -65,12 +73,51 @@ func _ready():
 			# tint red
 			label.set_self_modulate(Color(1, 0, 0))
 		y += 15
+		
+		# direction labels
+		dir_label = Label.new()
+		dir_label.set_text(p.get_node("Label").get_text())
+		dir_label.set_position(Vector2(20, 100))
+		$"Control3".add_child(dir_label)
+		dir_labels.append(dir_label)
 	
 
 func _process(delta):
 	if player != null and player.is_inside_tree():
 		var format = "%0.2f" % player.spd
 		get_node("Control/Panel/Label").set_text(format + " c")
+	
+	# move direction labels to proper places
+	for i in range(planets.size()):
+		var planet = planets[i]
+		var rel_loc = planet.get_global_position() - player.get_child(0).get_global_position()
+		#print(rel_loc)
+		
+		# show labels if planets are offscreen
+		# numbers hardcoded for 1024x600 screen
+		if abs(rel_loc.x) > 400 or abs(rel_loc.y) > 375:
+			
+			# calculate clamped positions that "stick" labels to screen edges
+			var clamp_x = rel_loc.x
+			var clamp_y = 575
+			if abs(rel_loc.x) > 400:
+				clamp_x = clamp(rel_loc.x, 0, 300)
+				if rel_loc.x < 0:
+					clamp_x = clamp(rel_loc.x, -400, 0)
+		
+			if abs(rel_loc.y) > 375:
+				clamp_y = clamp(rel_loc.y, 0, 575)
+				if rel_loc.y < 0:
+					clamp_y = 0
+		
+			var clamped = Vector2(center.x+clamp_x, clamp_y)
+			
+			dir_labels[i].set_position(clamped)
+			if not dir_labels[i].is_visible():
+				dir_labels[i].show()
+		else:
+			dir_labels[i].hide()
+	
 	
 	#pass
 
