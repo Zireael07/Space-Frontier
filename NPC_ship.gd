@@ -74,19 +74,25 @@ func get_state():
 #--------------------------------		
 
 func get_colonized_planet():
+	var ret
 	var ps = get_tree().get_nodes_in_group("planets")
 	for p in ps:
-		# is the last child a colony?
-		var last = p.get_child(p.get_child_count()-1)
-		if last.is_in_group("colony") and not last.is_in_group("enemy_col"):
-			return p
+		# is it colonized?
+		var col = p.has_colony()
+		if col and col == "colony":
+			ret = p
 
+	if ret != null:
+		return ret
+	else:
+		print("No colonized planet found")
+		return null
 
 func select_target():
 	#target 
 	#planet #1
 	if get_tree().get_nodes_in_group("asteroid").size() > 3:
-		if kind_id == kind.friendly:
+		if kind_id == kind.friendly and get_colonized_planet() != null:
 			target = get_colonized_planet().get_global_position()
 			set_state(STATE_ORBIT)
 			#target_type = "COLONY_PLANET"
