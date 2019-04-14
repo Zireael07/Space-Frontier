@@ -172,7 +172,7 @@ func _on_Area2D_area_entered(area):
 				print("Colony being hauled by player")
 			else:
 				print("Colony released")
-				if not has_node("colony"):
+				if not has_node("colony") or not has_colony():
 					print("Adding colony to planet")
 					# add colony to planet
 					# prevent crash
@@ -209,3 +209,19 @@ func _on_planet_orbited(ship):
 
 func remove_orbiter(ship):
 	orbiters.remove(orbiters.find(ship))
+
+func has_colony():
+	var ret = false
+	for c in get_children():
+		if c.is_in_group("colony") or c.is_in_group("enemy_col"):
+			ret = c.get_groups()[0]
+
+	return ret
+
+func _on_pop_timer_timeout():
+	if has_colony():
+		print("Pop increase")
+		population += 1000
+	else:
+		print("No colony?")
+	#pass # Replace with function body.

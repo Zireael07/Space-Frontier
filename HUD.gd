@@ -55,12 +55,13 @@ func _ready():
 		label.set_text(p.get_node("Label").get_text())
 		label.set_position(Vector2(10,y))
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
-		# is the last child a colony?
-		var last = p.get_child(p.get_child_count()-1)
-		if last.is_in_group("colony") and not last.is_in_group("enemy_col"):
+		# is it a colonized planet?
+		#var last = p.get_child(p.get_child_count()-1)
+		var col = p.has_colony()
+		if col and col == "colony":
 			# tint cyan
 			label.set_self_modulate(Color(0, 1, 1))
-		elif last.is_in_group("enemy_col"):
+		elif col and col == "enemy_col":
 			# tint red
 			label.set_self_modulate(Color(1, 0, 0))
 		y += 15
