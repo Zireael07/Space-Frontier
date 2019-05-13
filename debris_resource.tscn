@@ -4,36 +4,20 @@
 [ext_resource path="res://assets/things_silver.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-
-custom_solver_bias = 0.0
 extents = Vector2( 14, 14 )
 
-[node name="Node2D" type="Node2D" index="0"]
-
+[node name="Node2D" type="Node2D"]
 scale = Vector2( 0.5, 0.5 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="debris" type="Area2D" parent="." index="0"]
-
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
+[node name="debris" type="Area2D" parent="." groups=[
+"resource",
+]]
 script = ExtResource( 1 )
-resource = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="debris" index="0"]
-
+[node name="CollisionShape2D" type="CollisionShape2D" parent="debris"]
 shape = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="debris" index="1"]
-
+[node name="Sprite" type="Sprite" parent="debris"]
 texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
 
 [connection signal="area_entered" from="debris" to="debris" method="_on_debris_area_entered"]
-
-

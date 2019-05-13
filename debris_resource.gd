@@ -29,9 +29,17 @@ func _on_debris_area_entered(area):
 		else:
 			area.cargo[res_id] += 1
 		
-		# listing
+		# listing (player-only)
 #		print(str(area.cargo))
 		area.HUD.set_cargo_listing(str(area.cargo).replace("(", "").replace(")", "").replace(", ", "\n"))
 		
+		
+		queue_free()
+		
+	if area.get_groups().has("friendly"):
+		print("debris entered by " + area.get_parent().get_name())
+		
+		var res_id = elements.keys()[resource]
+		print("1 unit of " + str(res_id))
 		
 		queue_free()

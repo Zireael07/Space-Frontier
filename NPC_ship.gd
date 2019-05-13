@@ -9,6 +9,7 @@ var prev_state
 const STATE_INITIAL = 0
 const STATE_IDLE   = 1
 const STATE_ORBIT  = 2
+const STATE_MINE = 3 # not in original Stellar Frontier
 
 signal state_changed	
 
@@ -22,6 +23,7 @@ export(PackedScene) var bullet
 onready var bullet_container = $"bullet_container"
 #onready var bullet = preload("res://bullet.tscn")
 onready var gun_timer = $"gun_timer"
+onready var explosion = preload("res://explosion.tscn")
 
 var orbiting = false
 onready var task_timer = $"task_timer"
@@ -58,6 +60,8 @@ func set_state(new_state):
 		state = IdleState.new(self)
 	elif new_state == STATE_ORBIT:
 		state = OrbitState.new(self)
+	elif new_state == STATE_MINE:
+		state = MineState.new(self)
 	
 	emit_signal("state_changed", self)
 	
@@ -199,7 +203,7 @@ func deorbit():
 	# AI switch to other target
 	if get_tree().get_nodes_in_group("asteroid").size() > 3:
 		target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-		set_state(STATE_IDLE)
+		set_state(STATE_MINE)
 		
 func move_generic(delta):
 	# steering behavior
@@ -292,6 +296,7 @@ class IdleState:
 		
 	func update(delta):
 		ship.move_generic(delta)
+		
 
 class OrbitState:
 	var ship
@@ -302,3 +307,22 @@ class OrbitState:
 	func update(delta):
 		ship.move_orbit(delta)
 		
+class MineState:
+	var ship
+	var shot = false
+	
+	func _init(shp):
+		ship = shp
+		
+	func update(delta):
+		ship.move_generic(delta)
+		
+		# if close to target, shoot it
+		if ship.get_global_position().distance_to(ship.target) < 10 and not shot:
+			print("Close to target")
+			ship.shoot()
+			
+			var ress = ship.get_tree().get_nodes_in_group("resource")
+			if ress.size() > 0:
+				shot = true
+				ship.target = ress[0].get_global_position()
