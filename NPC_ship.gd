@@ -9,7 +9,8 @@ var prev_state
 const STATE_INITIAL = 0
 const STATE_IDLE   = 1
 const STATE_ORBIT  = 2
-const STATE_MINE = 3 # not in original Stellar Frontier
+const STATE_ATTACK = 3
+const STATE_MINE = 4 # not in original Stellar Frontier
 
 signal state_changed	
 
@@ -24,6 +25,7 @@ onready var bullet_container = $"bullet_container"
 #onready var bullet = preload("res://bullet.tscn")
 onready var gun_timer = $"gun_timer"
 onready var explosion = preload("res://explosion.tscn")
+onready var debris = preload("res://debris_enemy.tscn")
 
 var orbiting = false
 onready var task_timer = $"task_timer"
@@ -49,7 +51,7 @@ func _ready():
 	connect("shield_changed", self, "_on_shield_changed")
 
 # fsm
-func set_state(new_state):
+func set_state(new_state, param=null):
 	# if we need to clean up
 	#state.exit()
 	prev_state = get_state()
@@ -62,6 +64,8 @@ func set_state(new_state):
 		state = OrbitState.new(self)
 	elif new_state == STATE_MINE:
 		state = MineState.new(self)
+	elif new_state == STATE_ATTACK:
+		state = AttackState.new(self, param)
 	
 	emit_signal("state_changed", self)
 	
@@ -74,6 +78,10 @@ func get_state():
 		return STATE_IDLE
 	elif state is OrbitState:
 		return STATE_ORBIT
+	elif state is MineState:
+		return STATE_MINE
+	elif state is AttackState:
+		return STATE_ATTACK
 		
 #--------------------------------		
 
@@ -204,6 +212,27 @@ func deorbit():
 	if get_tree().get_nodes_in_group("asteroid").size() > 3:
 		target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 		set_state(STATE_MINE)
+
+func get_closest_enemy():
+	var nodes = get_tree().get_nodes_in_group("enemy")
+	
+	var dists = []
+	var targs = []
+	
+	for t in nodes:
+		var dist = t.get_global_position().distance_to(get_global_position())
+		dists.append(dist)
+		targs.append([dist, t])
+
+	dists.sort()
+	#print("Dists sorted: " + str(dists))
+	
+	for t in targs:
+		if t[0] == dists[0]:
+			#print("Target is : " + t[1].get_parent().get_name())
+			
+			return t[1]
+
 		
 func move_generic(delta):
 	# steering behavior
@@ -306,6 +335,28 @@ class OrbitState:
 		
 	func update(delta):
 		ship.move_orbit(delta)
+
+class AttackState:
+	var ship
+	var target
+	
+	func _init(shp, tg):
+		ship = shp
+		target = tg
+	
+	func update(delta):
+		# steering behavior
+		var steer = ship.set_heading(ship.target)	
+		# normal case
+		ship.vel += steer
+	
+		ship.move_AI(ship.vel, delta)
+		
+		var enemy = ship.get_closest_enemy()
+		if enemy != null and enemy == target:
+			ship.shoot()
+		else:
+			ship.set_state(ship.prev_state)
 		
 class MineState:
 	var ship
@@ -316,6 +367,16 @@ class MineState:
 		
 	func update(delta):
 		ship.move_generic(delta)
+		
+		var enemy = ship.get_closest_enemy()
+		if enemy:
+			var dist = ship.get_global_position().distance_to(enemy.get_global_position())
+			#print(str(dist))
+			if dist < 100:
+				print("We are close to an enemy, switching")
+				#ship.target = enemy.get_global_position()
+				ship.set_state(STATE_ATTACK, enemy)
+
 		
 		# if close to target, shoot it
 		if ship.get_global_position().distance_to(ship.target) < 10 and not shot:

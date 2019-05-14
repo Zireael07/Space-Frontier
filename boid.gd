@@ -74,7 +74,7 @@ func set_heading(target):
 	# slow down to almost zero
 	desired = desired.normalized() * 0.01
 
-	return desired
-	#steering = (desired - vel)
+	#return desired
+	steering = (desired - vel).clamped(max_vel/4)
 
-	#return steering
+	return steering
