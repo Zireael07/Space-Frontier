@@ -42,4 +42,6 @@ func _on_debris_area_entered(area):
 		var res_id = elements.keys()[resource]
 		print("1 unit of " + str(res_id))
 		
+		# trigger AI routines
+		area.resource_picked()
 		queue_free()

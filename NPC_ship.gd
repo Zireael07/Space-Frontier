@@ -10,7 +10,8 @@ const STATE_INITIAL = 0
 const STATE_IDLE   = 1
 const STATE_ORBIT  = 2
 const STATE_ATTACK = 3
-const STATE_MINE = 4 # not in original Stellar Frontier
+const STATE_REFIT = 4
+const STATE_MINE = 5 # not in original Stellar Frontier
 
 signal state_changed	
 
@@ -28,6 +29,10 @@ onready var explosion = preload("res://explosion.tscn")
 onready var debris = preload("res://debris_enemy.tscn")
 
 var orbiting = false
+
+var docked = false
+
+# AI specific stuff
 onready var task_timer = $"task_timer"
 var target_type = null
 
@@ -66,6 +71,8 @@ func set_state(new_state, param=null):
 		state = MineState.new(self)
 	elif new_state == STATE_ATTACK:
 		state = AttackState.new(self, param)
+	elif new_state == STATE_REFIT:
+		state = RefitState.new(self, param)
 	
 	emit_signal("state_changed", self)
 	
@@ -82,6 +89,8 @@ func get_state():
 		return STATE_MINE
 	elif state is AttackState:
 		return STATE_ATTACK
+	elif state is RefitState:
+		return STATE_REFIT
 		
 #--------------------------------		
 
@@ -155,6 +164,8 @@ func shoot():
 	bullet_container.add_child(b)
 	b.start_at(get_rotation(), $"muzzle".get_global_position())
 
+#------------------------------
+# TODO: we really need to refactor this somehow, it accounts for 200+ lines
 # copied from player
 func orbit_planet(planet):
 	# nuke any velocity left
@@ -232,6 +243,25 @@ func get_closest_enemy():
 			#print("Target is : " + t[1].get_parent().get_name())
 			
 			return t[1]
+			
+func get_friendly_base():
+	var bases = get_tree().get_nodes_in_group("starbase")
+	print(str(bases))
+	for b in bases:
+		print(b.get_name())
+		if not b.is_in_group("enemy"):
+			print(b.get_name() + " is not enemy")
+			return b
+
+func resource_picked():
+	# refit
+
+	# get the base
+	var base = get_friendly_base()
+	if base != null:
+		print("Resource picked, refit")
+		target = base.get_global_position()
+		set_state(STATE_REFIT, base)
 
 		
 func move_generic(delta):
@@ -259,6 +289,28 @@ func move_orbit(delta):
 		vel += steer
 	
 	move_AI(vel, delta)	
+
+func refit_tractor(refit_target):
+	# reparent			
+	get_parent().get_parent().remove_child(get_parent())
+	# refit target needs to be a node because here
+	refit_target.add_child(get_parent())
+	# set better z so that we don't overlap parent ship
+	get_parent().set_z_index(-1)
+	
+	# nuke any velocity left
+	vel = Vector2(0,0)
+	acc = Vector2(0,0)
+	
+	# all local positions relative to the immediate parent
+	get_parent().set_position(Vector2(0,50))
+	set_position(Vector2(0,0))
+	pos = Vector2(0,0)
+	
+	print("Adding ship as tractoring ship's child")
+
+	docked = true
+
 
 # draw a red rectangle around the target
 func _draw():
@@ -357,7 +409,26 @@ class AttackState:
 			ship.shoot()
 		else:
 			ship.set_state(ship.prev_state)
+			
+class RefitState:
+	var ship
+	var base
+	
+	func _init(shp, sb):
+		ship = shp
+		base = sb
+	
+	func update(delta):
+		ship.move_generic(delta)
 		
+		# if close, do tractor effect
+		if ship.get_global_position().distance_to(ship.target) < 50 and not ship.docked:
+			print("Should be tractoring")
+			ship.refit_tractor(base)
+			# dummy
+			ship.target = ship.get_global_position()
+
+# completely original	
 class MineState:
 	var ship
 	var shot = false
@@ -387,3 +458,5 @@ class MineState:
 			if ress.size() > 0:
 				shot = true
 				ship.target = ress[0].get_global_position()
+				
+				

@@ -63,7 +63,6 @@ script = ExtResource( 6 )
 
 [node name="task_timer" type="Timer" parent="Area2D"]
 wait_time = 2.0
-
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D/task_timer" to="Area2D" method="_on_task_timer_timeout"]
