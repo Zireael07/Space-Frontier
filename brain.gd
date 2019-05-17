@@ -152,7 +152,7 @@ class AttackState:
 		
 		var enemy = ship.ship.get_closest_enemy()
 		if enemy != null and enemy == target:
-			ship.ship.shoot()
+			ship.ship.shoot_wrapper()
 		else:
 			ship.set_state(ship.prev_state)
 			
@@ -198,7 +198,7 @@ class MineState:
 		# if close to target, shoot it
 		if ship.get_global_position().distance_to(ship.target) < 10 and not shot:
 			print("Close to target")
-			ship.ship.shoot()
+			ship.ship.shoot_wrapper()
 			
 			var ress = ship.get_tree().get_nodes_in_group("resource")
 			if ress.size() > 0:

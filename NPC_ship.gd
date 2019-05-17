@@ -72,6 +72,10 @@ func move_AI(vel, delta):
 	# rotation
 	set_rotation(-a)	
 
+func shoot_wrapper():
+	if gun_timer.get_time_left() == 0:
+		shoot()
+
 func shoot():
 	gun_timer.start()
 	var b = bullet.instance()
