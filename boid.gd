@@ -1,4 +1,4 @@
-extends Area2D
+extends Node2D
 
 # class member variables go here, for example:
 const LIGHT_SPEED = 400 # original Stellar Frontier seems to have used 200 px/s	

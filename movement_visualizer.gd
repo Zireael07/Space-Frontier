@@ -18,7 +18,10 @@ var source = null
 
 func _ready():
 	parent = get_parent()
-	source = parent #.get_node("Area2D")
+	#print(parent.get_name())
+
+	source = parent
+		
 	set_physics_process(true)
 	update()
 

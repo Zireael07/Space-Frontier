@@ -7,56 +7,19 @@
 [ext_resource path="res://assets/shieldGreen_Edit.png" type="Texture" id=5]
 [ext_resource path="res://assets/crosshair123.png" type="Texture" id=6]
 
-[sub_resource type="CircleShape2D" id=1]
-
-custom_solver_bias = 0.0
+[sub_resource type="CircleShape2D" id=3]
 radius = 23.0021
 
 [sub_resource type="ParticlesMaterial" id=2]
-
-render_priority = 0
-trail_divisor = 1
-emission_shape = 0
-flag_align_y = false
-flag_rotate_y = false
 flag_disable_z = true
-spread = 45.0
-flatness = 0.0
 gravity = Vector3( 0, 98, 0 )
 initial_velocity = 0.13
-initial_velocity_random = 0.0
-angular_velocity = 0.0
-angular_velocity_random = 0.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-linear_accel = 0.0
-linear_accel_random = 0.0
-radial_accel = 0.0
-radial_accel_random = 0.0
-tangential_accel = 0.0
-tangential_accel_random = 0.0
-damping = 0.0
-damping_random = 0.0
-angle = 0.0
-angle_random = 0.0
-scale = 1.0
 scale_random = 0.3
 color = Color( 0.0117647, 0.996078, 0.972549, 1 )
-hue_variation = 0.0
-hue_variation_random = 0.0
-anim_speed = 0.0
-anim_speed_random = 0.0
-anim_offset = 0.0
-anim_offset_random = 0.0
-anim_loop = false
-_sections_unfolded = [ "Scale" ]
 
-[sub_resource type="Animation" id=3]
-
-resource_name = "landing"
-length = 1.0
-loop = false
-step = 0.1
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Area2D/playerShip2_blue:scale")
 tracks/0/interp = 1
@@ -142,155 +105,63 @@ tracks/6/keys = {
 "values": [ 0, -1 ]
 }
 
-[node name="Node2D" type="Node2D" index="0"]
+[node name="Node2D" type="Node2D"]
 
-_sections_unfolded = [ "Z" ]
-
-[node name="Area2D" type="Area2D" parent="." index="0"]
-
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
+[node name="Area2D" type="Area2D" parent="."]
 script = ExtResource( 1 )
-rot_speed = 2.6
-thrust = 100.0
-max_vel = 200.0
-friction = 0.25
 bullet = ExtResource( 2 )
 
-[node name="playerShip2_blue" type="Sprite" parent="Area2D" index="0"]
-
+[node name="playerShip2_blue" type="Sprite" parent="Area2D"]
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
-_sections_unfolded = [ "Transform", "Visibility", "Z Index" ]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 3 )
 
-shape = SubResource( 1 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="Camera2D" type="Camera2D" parent="Area2D" index="2"]
-
-anchor_mode = 1
-rotating = false
+[node name="Camera2D" type="Camera2D" parent="Area2D"]
 current = true
-zoom = Vector2( 1, 1 )
-limit_left = -10000000
-limit_top = -10000000
-limit_right = 10000000
-limit_bottom = 10000000
-limit_smoothed = false
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-smoothing_enabled = false
-smoothing_speed = 5.0
-offset_v = 0.0
-offset_h = 0.0
-drag_margin_left = 0.2
-drag_margin_top = 0.2
-drag_margin_right = 0.2
-drag_margin_bottom = 0.2
-editor_draw_screen = true
-editor_draw_limits = false
-editor_draw_drag_margin = false
 
-[node name="bullet_container" type="Node" parent="Area2D" index="3"]
+[node name="bullet_container" type="Node" parent="Area2D"]
 
-[node name="muzzle" type="Position2D" parent="Area2D" index="4"]
-
+[node name="muzzle" type="Position2D" parent="Area2D"]
 position = Vector2( 0, -70 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="gun_timer" type="Timer" parent="Area2D" index="5"]
-
-process_mode = 1
+[node name="gun_timer" type="Timer" parent="Area2D"]
 wait_time = 0.5
 one_shot = true
-autostart = false
 
-[node name="engine_flare" type="Particles2D" parent="Area2D" index="6"]
-
+[node name="engine_flare" type="Particles2D" parent="Area2D"]
 position = Vector2( 0, 34 )
 scale = Vector2( 0.5, 1 )
-emitting = true
 amount = 2
 lifetime = 0.3
-one_shot = false
-preprocess = 0.0
-speed_scale = 1.0
-explosiveness = 0.0
-randomness = 0.0
-fixed_fps = 0
-fract_delta = true
-visibility_rect = Rect2( -100, -100, 200, 200 )
-local_coords = true
-draw_order = 0
 process_material = SubResource( 2 )
 texture = ExtResource( 4 )
-normal_map = null
-h_frames = 1
-v_frames = 1
-_sections_unfolded = [ "Process Material", "Transform" ]
 
-[node name="dock" type="Position2D" parent="Area2D" index="7"]
-
+[node name="dock" type="Position2D" parent="Area2D"]
 position = Vector2( 0, 23 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="shield_effect" type="Sprite" parent="Area2D" index="8"]
-
+[node name="shield_effect" type="Sprite" parent="Area2D"]
 visible = false
 scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 5 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="shield_timer" type="Timer" parent="Area2D" index="9"]
-
-process_mode = 1
+[node name="shield_timer" type="Timer" parent="Area2D"]
 wait_time = 0.5
-one_shot = false
-autostart = false
 
-[node name="shield_indicator" type="Sprite" parent="Area2D" index="10"]
-
+[node name="shield_indicator" type="Sprite" parent="Area2D"]
 modulate = Color( 0, 1, 0, 1 )
 texture = ExtResource( 6 )
-_sections_unfolded = [ "Material", "Transform" ]
 
-[node name="recharge_timer" type="Timer" parent="Area2D" index="11"]
-
+[node name="recharge_timer" type="Timer" parent="Area2D"]
 process_mode = 0
-wait_time = 1.0
-one_shot = false
-autostart = false
 
-[node name="heat_timer" type="Timer" parent="Area2D" index="12"]
-
-process_mode = 1
-wait_time = 1.0
+[node name="heat_timer" type="Timer" parent="Area2D"]
 one_shot = true
-autostart = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
-
-root_node = NodePath("..")
-autoplay = ""
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-playback_speed = 1.0
-anims/landing = SubResource( 3 )
-blend_times = [  ]
-
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/landing = SubResource( 4 )
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
-
 [connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
-
 [connection signal="timeout" from="Area2D/recharge_timer" to="Area2D" method="_on_recharge_timer_timeout"]
-
 [connection signal="animation_finished" from="AnimationPlayer" to="Area2D" method="_on_AnimationPlayer_animation_finished"]
-
-
