@@ -13,7 +13,6 @@ var power_recharge = 5
 signal power_changed
 
 onready var warp_effect = preload("res://warp_effect.tscn")
-onready var colony = preload("res://colony.tscn")
 
 onready var recharge_timer = $"recharge_timer"
 
@@ -231,20 +230,8 @@ func _input(event):
 		if not orbiting:
 			print("Not orbiting")
 		else:
-			var pl = orbiting.get_parent()
-			print("Orbiting planet: " + pl.get_name())
-			# decrease planet pop
-			if pl.population > 50000:
-				pl.population -= 50000
-				
-				print("Creating colony...")
-				# create colony
-				var co = colony.instance()
-				add_child(co)
-				co.set_position(get_node("dock").get_position())
-				# don't overlap
-				co.set_z_index(-1)
-			
+			var col = pick_colony()
+			if col:
 				emit_signal("officer_message", "We have picked up a colony. Transport it to a planet and press / to drop it.")
 				
 			else:

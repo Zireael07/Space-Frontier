@@ -67,6 +67,9 @@ amount = 2
 lifetime = 0.3
 process_material = SubResource( 2 )
 texture = ExtResource( 7 )
+
+[node name="dock" type="Position2D" parent="Area2D"]
+position = Vector2( 0, 23 )
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D/task_timer" to="Area2D" method="_on_task_timer_timeout"]

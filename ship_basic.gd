@@ -29,6 +29,7 @@ onready var bullet_container = $"bullet_container"
 onready var gun_timer = $"gun_timer"
 onready var explosion = preload("res://explosion.tscn")
 onready var debris = preload("res://debris_enemy.tscn")
+onready var colony = preload("res://colony.tscn")
 
 var docked = false
 
@@ -110,3 +111,21 @@ func get_closest_enemy():
 			#print("Target is : " + t[1].get_parent().get_name())
 			
 			return t[1]
+
+func pick_colony():
+	var pl = orbiting.get_parent()
+	print("Orbiting planet: " + pl.get_name())
+	# decrease planet pop
+	if pl.population > 50000:
+		pl.population -= 50000
+		
+		print("Creating colony...")
+		# create colony
+		var co = colony.instance()
+		add_child(co)
+		co.set_position(get_node("dock").get_position())
+		# don't overlap
+		co.set_z_index(-1)
+		return true
+	else:
+		return false

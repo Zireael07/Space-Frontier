@@ -150,7 +150,6 @@ func refit_tractor(refit_target):
 
 	docked = true
 
-
 # draw a red rectangle around the target
 func _draw():
 	if game.player.HUD.target == self:
@@ -186,6 +185,8 @@ func _on_shield_timer_timeout():
 func _on_task_timer_timeout():
 	print("Task timer timeout")
 	if orbiting:
+		# pick up colony from planet
+		pick_colony()
 		# deorbit
-		deorbit()
+		#deorbit()
 
