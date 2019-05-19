@@ -343,12 +343,11 @@ func _on_ButtonView_pressed():
 	
 	label.set_text(txt)
 	
-	# is the last child a colony?
-	var last = planet.get_child(planet.get_child_count()-1)
-	if last.is_in_group("colony") and not last.is_in_group("enemy_col"):
-		# tint cyan
+	var col = planet.has_colony()
+	if col and col == "colony":
+	# tint cyan
 		label.set_self_modulate(Color(0, 1, 1))
-	elif last.is_in_group("enemy_col"):
+	elif col and col == "enemy_col":
 		# tint red
 		label.set_self_modulate(Color(1, 0, 0))
 	else:
@@ -358,6 +357,8 @@ func _on_ButtonView_pressed():
 	# set text
 	var text = "Mass: " + str(planet.mass) + "\n" + \
 	"Pressure: " + "\n" + "Gravity:" + "\n" + "Temperature" + "\n" + "Hydro:"
+	if col:
+		text = text + "\n" + " Population: " + str(planet.population)
 
 	
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
