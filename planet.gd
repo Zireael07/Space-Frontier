@@ -26,6 +26,8 @@ var orbiter
 var orbit_rot = 0
 var orbit_rate = 0.04
 
+signal planet_colonized
+
 func _ready():
 	connect("planet_orbited", self, "_on_planet_orbited")
 	
@@ -174,6 +176,7 @@ func _on_Area2D_area_entered(area):
 			else:
 #				print("Colony released")
 				if not has_node("colony") and not has_colony():
+					emit_signal("planet_colonized", self)
 					print("Adding colony to planet")
 					# add colony to planet
 					# prevent crash

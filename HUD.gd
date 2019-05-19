@@ -23,6 +23,7 @@ func _ready():
 		
 	for p in planets:
 		p.connect("planet_targeted", self, "_on_planet_targeted")
+		p.connect("planet_colonized", self, "_on_planet_colonized")
 		
 	for c in get_tree().get_nodes_in_group("colony"):
 		# "colony" is a group of the parent of colony itself
@@ -66,6 +67,7 @@ func _ready():
 		# is it a colonized planet?
 		#var last = p.get_child(p.get_child_count()-1)
 		var col = p.has_colony()
+		#print(p.get_name() + " has colony " + str(col))
 		if col and col == "colony":
 			# tint cyan
 			label.set_self_modulate(Color(0, 1, 1))
@@ -222,6 +224,19 @@ func _on_planet_targeted(planet):
 	# hide panel info if any
 	for n in $"Control/Panel2".get_children():
 		n.hide()	
+
+func _on_planet_colonized(planet):
+	var node = null
+	# get label
+	for l in $"Control2/Panel_rightHUD/PanelInfo/NavInfo".get_children():
+		# because ordering in groups cannot be relied on 100%
+		if l.get_text() == planet.get_node("Label").get_text():
+			node = l.get_name()
+	
+	if node:
+		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".get_node(node).set_self_modulate(Color(0, 1, 1))
+	
+
 	
 func _on_target_shield_changed(shield):
 	#print("Shields from signal is " + str(shield))
