@@ -96,9 +96,9 @@ func deorbit():
 	.deorbit()
 
 	# AI switch to other target
-	if get_tree().get_nodes_in_group("asteroid").size() > 3:
-		brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-		brain.set_state(brain.STATE_MINE)
+	#if get_tree().get_nodes_in_group("asteroid").size() > 3:
+	#	brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+	#	brain.set_state(brain.STATE_MINE)
 			
 func resource_picked():
 	# refit
@@ -185,8 +185,12 @@ func _on_shield_timer_timeout():
 func _on_task_timer_timeout():
 	print("Task timer timeout")
 	if orbiting:
-		# pick up colony from planet
-		pick_colony()
-		# deorbit
-		#deorbit()
+		if get_colony_in_dock() == null:
+			# pick up colony from planet
+			pick_colony()
+		else:
+			# deorbit
+			deorbit()		
+			brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
+			brain.set_state(brain.STATE_COLONIZE)
 

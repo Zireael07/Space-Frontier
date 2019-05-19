@@ -11,7 +11,8 @@ const STATE_IDLE   = 1
 const STATE_ORBIT  = 2
 const STATE_ATTACK = 3
 const STATE_REFIT = 4
-const STATE_MINE = 5 # not in original Stellar Frontier
+const STATE_COLONIZE = 5 
+const STATE_MINE = 6 # not in original Stellar Frontier
 
 signal state_changed
 
@@ -76,6 +77,8 @@ func set_state(new_state, param=null):
 		state = AttackState.new(self, param)
 	elif new_state == STATE_REFIT:
 		state = RefitState.new(self, param)
+	elif new_state == STATE_COLONIZE:
+		state = ColonizeState.new(self)
 	
 	emit_signal("state_changed", self)
 	
@@ -94,6 +97,8 @@ func get_state():
 		return STATE_ATTACK
 	elif state is RefitState:
 		return STATE_REFIT
+	elif state is ColonizeState:
+		return STATE_COLONIZE
 
 
 # -----------------------------
@@ -173,6 +178,28 @@ class RefitState:
 			ship.ship.refit_tractor(base)
 			# dummy
 			ship.target = ship.get_global_position()
+
+class ColonizeState:
+	var ship
+	
+	func _init(shp):
+		ship = shp
+		
+	func update(delta):
+		# refresh target position
+		ship.target = ship.get_tree().get_nodes_in_group("planets")[1].get_global_position()
+		# steering behavior
+		var steer = ship.get_steering_seek(ship.target)	
+		# normal case
+		ship.vel += steer
+	
+		ship.ship.move_AI(ship.vel, delta)
+		
+		if ship.get_global_position().distance_to(ship.target) < 50:
+			if ship.ship.get_colony_in_dock() == null:
+				ship.target = ship.ship.get_colonized_planet().get_global_position()
+				ship.set_state(ship.STATE_ORBIT)
+
 
 # completely original	
 class MineState:

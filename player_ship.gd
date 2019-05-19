@@ -274,13 +274,9 @@ func _input(event):
 		print("Undock pressed")
 		
 		tractor = null
-		
-		# we normally have 8 children nodes
-		# TODO: is there a way to check if any child is in group and return the first?
-		if get_child_count() > 9 and get_child(9).is_in_group("colony"):
-			var col = get_child(9)
-			print("We have a colony in dock")
-			
+	
+		var col = get_colony_in_dock()
+		if col:
 			# undock
 			remove_child(col)
 			get_parent().get_parent().add_child(col)

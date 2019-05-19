@@ -161,18 +161,19 @@ func reparent(area):
 
 func reposition(area):
 	area.get_parent().set_position(Vector2(0,0))
+	area.get_child(0).set_z_index(1)
 
 func _on_Area2D_area_entered(area):
 	if area.get_parent().is_in_group("colony"):
-		print("Colony entered planet space")
+#		print("Colony entered planet space")
 		# prevents looping (area collisions don't exclude children!)
 		if not self == area.get_parent().get_parent():
-			print("Colony isn't parented to us")
+#			print("Colony isn't parented to us")
 			if area.get_parent().get_parent().get_parent().is_in_group("player"):
 				print("Colony being hauled by player")
 			else:
-				print("Colony released")
-				if not has_node("colony") or not has_colony():
+#				print("Colony released")
+				if not has_node("colony") and not has_colony():
 					print("Adding colony to planet")
 					# add colony to planet
 					# prevent crash
