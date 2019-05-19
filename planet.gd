@@ -15,7 +15,7 @@ const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
 const LS_TO_AU = 30 #500 realistic value
 const AU = LS_TO_AU*LIGHT_SEC
 
-var population = 100000
+var population = 0
 	
 var targetted = false
 signal planet_targeted
@@ -38,7 +38,8 @@ func _ready():
 	
 	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls, " + str(ls/LS_TO_AU) + " AU")
 	
-	
+	if has_colony():
+		population = 100000
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
 	#pass
@@ -176,6 +177,7 @@ func _on_Area2D_area_entered(area):
 			else:
 #				print("Colony released")
 				if not has_node("colony") and not has_colony():
+					population = 50000
 					emit_signal("planet_colonized", self)
 					print("Adding colony to planet")
 					# add colony to planet
