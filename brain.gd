@@ -54,6 +54,9 @@ func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 
+	# calculate speed in fraction of c
+	ship.spd = ship.vel.length() / ship.LIGHT_SPEED
+
 	# use states
 	state.update(delta)
 

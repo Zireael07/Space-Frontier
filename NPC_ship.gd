@@ -66,6 +66,8 @@ func move_AI(vel, delta):
 		# movement happens!
 		#acc += vel * -friction
 		#vel += acc *delta
+		# prevent exceeding max speed
+		vel = vel.clamped(max_vel)
 		pos += vel * delta
 		set_position(pos)
 	

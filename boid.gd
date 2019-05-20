@@ -37,7 +37,7 @@ func fix_atan(x,y):
 	
 # AI - steering behaviors
 # seek
-func get_steering_seek(target, cap=max_vel/4):
+func get_steering_seek(target, cap=(max_vel/4)):
 	var steering = Vector2(0,0)
 	desired = target - get_global_position()
 	
