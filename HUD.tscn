@@ -25,7 +25,6 @@ margin_bottom = 40.0
 script = ExtResource( 1 )
 
 [node name="Control2" type="Control" parent="."]
-editor/display_folded = true
 margin_left = 825.0
 margin_right = 865.0
 margin_bottom = 40.0
@@ -71,7 +70,6 @@ margin_right = 197.0
 margin_bottom = 206.0
 
 [node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
-visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
@@ -119,6 +117,13 @@ margin_top = 187.0
 margin_right = 92.0
 margin_bottom = 207.0
 text = "Go to"
+
+[node name="ConquerButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+margin_left = 94.0
+margin_top = 187.0
+margin_right = 159.0
+margin_bottom = 207.0
+text = "Conquer"
 
 [node name="ShipInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 editor/display_folded = true
@@ -525,7 +530,6 @@ margin_top = 249.0
 margin_right = 456.0
 margin_bottom = 263.0
 text = "PAUSED"
-
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonPlanet" to="." method="_on_ButtonPlanet_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonShip" to="." method="_on_ButtonShip_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonRefit" to="." method="_on_ButtonRefit_pressed"]

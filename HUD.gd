@@ -363,12 +363,14 @@ func _on_ButtonView_pressed():
 	
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 	
-	
+	# connected from script because they rely on ID of the planet
 	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".is_connected("pressed", player, "_on_goto_pressed"):
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".disconnect("pressed", player, "_on_goto_pressed")
-		
 	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed", [select_id])
 
+	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".is_connected("pressed", player, "_on_conquer_pressed"):
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".disconnect("pressed", player, "_on_conquer_pressed")
+	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton").connect("pressed", player, "_on_conquer_pressed", [select_id])
 
 func _on_ButtonUp2_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
@@ -413,3 +415,7 @@ func _on_ButtonDown3_pressed():
 
 func _on_BackButton_pressed():
 	switch_to_navi()
+
+
+func _on_ConquerButton_pressed():
+	pass # Replace with function body.

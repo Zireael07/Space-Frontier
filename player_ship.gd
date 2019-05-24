@@ -32,6 +32,9 @@ var cargo = {}
 var credits = 0
 var landed = false
 
+# for AI orders
+var conquer_target = null
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -462,6 +465,10 @@ func _on_recharge_timer_timeout():
 	if power < 100:
 		power += power_recharge
 		emit_signal("power_changed", power)
+
+func _on_conquer_pressed(id):
+	conquer_target = id
+
 
 func sell_cargo(id):
 	if not docked:

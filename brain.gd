@@ -189,8 +189,14 @@ class ColonizeState:
 		ship = shp
 		
 	func update(delta):
+		# default
+		var id = 1
+		# conquer target given by the player
+		if ship.get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target != null:
+			id = ship.get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target
+		
 		# refresh target position
-		ship.target = ship.get_tree().get_nodes_in_group("planets")[1].get_global_position()
+		ship.target = ship.get_tree().get_nodes_in_group("planets")[id].get_global_position()
 		# steering behavior
 		var steer = ship.get_steering_seek(ship.target)	
 		# normal case
