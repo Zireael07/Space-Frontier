@@ -311,6 +311,7 @@ margin_bottom = 207.0
 text = "> Down"
 
 [node name="minimap" type="Control" parent="Control2/Panel_rightHUD"]
+editor/display_folded = true
 margin_left = 2.0
 margin_top = 400.0
 margin_right = 202.0
@@ -328,6 +329,11 @@ margin_right = 110.0
 margin_bottom = 109.0
 rect_pivot_offset = Vector2( 8, 9 )
 texture = ExtResource( 7 )
+
+[node name="status_light" type="ColorRect" parent="Control2"]
+modulate = Color( 0, 1, 0, 1 )
+margin_left = -20.0
+margin_bottom = 40.0
 
 [node name="Control" type="Control" parent="."]
 editor/display_folded = true
@@ -510,6 +516,7 @@ value = 100.0
 percent_visible = false
 
 [node name="Control3" type="Control" parent="."]
+editor/display_folded = true
 margin_right = 40.0
 margin_bottom = 40.0
 

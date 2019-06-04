@@ -13,8 +13,13 @@ var shields = 150
 signal shield_changed
 
 var targetted = false
+# for player targeting the AI
 signal AI_targeted
+# for the AI targeting other ships
+signal target_acquired_AI
+signal target_lost_AI
 
+var targetables = []
 var shoot_target = null
 var shoot_rel_pos = Vector2()
 
@@ -26,7 +31,7 @@ func _ready():
 	target = get_parent().get_position() + Vector2(200, -200)
 	
 	if is_in_group("enemy"):
-		shoot_target = get_tree().get_nodes_in_group("player")[0].get_child(0)
+		targetables.append(get_tree().get_nodes_in_group("player")[0].get_child(0))
 	
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -37,15 +42,29 @@ func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 
-	
 	#print("Target: " + str(target))
+	# select target
+	if targetables.size() > 0 and targetables.size() < 2:
+		#print("Get targetables")
+		var dist = get_global_transform().xform_inv(targetables[0].get_global_position()).length()
+		if shoot_target == null and dist < 500:
+			shoot_target = targetables[0]
+			# will have to be changed when other ships will become targetables
+			targetables[0].targeted_by = self
+			emit_signal("target_acquired_AI", self)
+			print("AI acquired target")
+	
 	if shoot_target != null:
 		shoot_rel_pos = get_global_transform().xform_inv(shoot_target.get_global_position())
 	
 		if shoot_rel_pos.length() < 500:
 			if gun_timer.get_time_left() == 0:
 				shoot()
-	
+		else:
+			shoot_target.targeted_by = null
+			shoot_target = null
+			emit_signal("target_lost_AI", self)
+			print("AI lost target")
 	
 	
 	#print(shoot_rel_pos)
