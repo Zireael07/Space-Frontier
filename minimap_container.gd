@@ -140,16 +140,18 @@ func _process(delta):
 		var rel_loc = asteroids[i].get_global_position() - player.get_child(0).get_global_position()
 		asteroid_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 		
-
-	for i in range(friendlies.size()):
+	# friendlies and hostiles can be removed in-game, so we're not doing it with indices
+	for f in friendlies:
+		var i = friendlies.find(f)
 		# the minimap doesn't rotate
-		var rel_loc = friendlies[i].get_global_position() - player.get_child(0).get_global_position()
+		var rel_loc = f.get_global_position() - player.get_child(0).get_global_position()
 		friendly_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 
-	for i in range(hostiles.size()):
-		if is_instance_valid(hostiles[i]):
+	for h in hostiles:
+		var i = hostiles.find(h)
+		if is_instance_valid(h):
 			# the minimap doesn't rotate
-			var rel_loc = hostiles[i].get_global_position() - player.get_child(0).get_global_position()
+			var rel_loc = h.get_global_position() - player.get_child(0).get_global_position()
 			hostile_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 		else:
 			#print("Removing i: " + str(i))
@@ -158,4 +160,4 @@ func _process(delta):
 			hostiles.remove(i)
 			hostile_sprites.remove(i)
 			# to prevent errors with subsequent indices not found
-			break
+			#break

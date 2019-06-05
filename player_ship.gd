@@ -355,9 +355,9 @@ func get_closest_planet():
 func get_closest_target():
 	var t = get_closest_enemy()
 	#t[1].targetted = true
-	t[1].emit_signal("AI_targeted", t[1])
+	t.emit_signal("AI_targeted", t)
 	# redraw 
-	t[1].update()
+	t.update()
 
 
 func _draw():
