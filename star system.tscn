@@ -34,6 +34,7 @@ text = "Kepler-99"
 
 [node name="planet" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -2.62268e-05, -600 )
+hydro = 0.2
 
 [node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
 rotation = -0.982794
@@ -61,6 +62,7 @@ text = "Paradise"
 
 [node name="planet3" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -1540, 400 )
+hydro = 0.0
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
 texture = ExtResource( 6 )
@@ -82,7 +84,6 @@ position = Vector2( 696, 524 )
 
 [node name="asteroid4" parent="planet_holder" instance=ExtResource( 7 )]
 position = Vector2( 736, 388 )
-
 
 [editable path="planet_holder/planet"]
 

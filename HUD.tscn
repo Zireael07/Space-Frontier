@@ -70,6 +70,7 @@ margin_right = 197.0
 margin_bottom = 206.0
 
 [node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
@@ -281,7 +282,6 @@ margin_bottom = 207.0
 text = "> Down"
 
 [node name="NavInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
-visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 

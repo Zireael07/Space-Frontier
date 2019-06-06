@@ -10,6 +10,7 @@ export(float) var planet_rad_factor = 1.0
 export(Vector2) var data setget setData
 
 export(float) var mass = 1 # in Earth masses
+export(float) var hydro = 0.3 # water/land ratio (surface, not volume = 30% for Earth)
 
 const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
 const LS_TO_AU = 30 #500 realistic value

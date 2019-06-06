@@ -371,7 +371,7 @@ func _on_ButtonView_pressed():
 	
 	# set text
 	var text = "Mass: " + str(planet.mass) + "\n" + \
-	"Pressure: " + "\n" + "Gravity:" + "\n" + "Temperature" + "\n" + "Hydro:"
+	"Pressure: " + "\n" + "Gravity:" + "\n" + "Temperature" + "\n" + "Hydro: " + str(planet.hydro)
 	if col:
 		text = text + "\n" + " Population: " + str(planet.population)
 
