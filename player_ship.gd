@@ -481,11 +481,16 @@ func sell_cargo(id):
 		return
 	
 	
-	if cargo[cargo.keys()[0]] > 0:
-		cargo[cargo.keys()[0]] -= 1
+	if cargo[cargo.keys()[id]] > 0:
+		cargo[cargo.keys()[id]] -= 1
 		# update listing
 		HUD.set_cargo_listing(str(cargo).replace("(", "").replace(")", "").replace(", ", "\n"))
 		credits += 50
+		# add cargo to starbase
+		if not get_parent().get_parent().storage.has(cargo.keys()[id]):
+			get_parent().get_parent().storage[cargo.keys()[id]] = 1
+		else:
+			get_parent().get_parent().storage[cargo.keys()[id]] += 1
 		
 
 # atan2(0,-1) returns 180 degrees in 3.0, we want 0

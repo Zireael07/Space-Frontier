@@ -23,6 +23,11 @@ var targetables = []
 var shoot_target = null
 var shoot_rel_pos = Vector2()
 
+# see asteroid.gd and debris_resource.gd
+enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
+enum processed { METHANE }
+var storage = {}
+
 func _ready():
 	#add_to_group("enemy")
 	

@@ -115,7 +115,7 @@ func get_closest_enemy():
 func get_colony_in_dock():
 	var last = get_child(get_child_count()-1)
 	if last.is_in_group("colony"):
-		print("We have a colony in dock")
+		#print("We have a colony in dock")
 		return last
 	else:
 		return null
