@@ -3,7 +3,7 @@ extends Area2D
 # class member variables go here, for example:
 export(int) var resource = 1
 
-enum elements {CARBON, IRON, MAGNESIUM, SILICON}
+enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
 
 func _ready():
 	# Called when the node is added to the scene for the first time.

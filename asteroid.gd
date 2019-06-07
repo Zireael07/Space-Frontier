@@ -1,7 +1,7 @@
 extends Node2D
 
 # class member variables go here, for example:
-var elements = { CARBON = 0, IRON = 1, MAGNESIUM = 2, SILICON = 3 }
+var elements = { CARBON = 0, IRON = 1, MAGNESIUM = 2, SILICON = 3, HYDROGEN = 4 }
 var contains = []
 var resource_debris = preload("res://debris_resource.tscn")
 
@@ -9,9 +9,11 @@ func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
 	
-	contains.append([elements.CARBON, 1])
-	contains.append([elements.IRON, 70])
-	contains.append([elements.SILICON, 29])
+	# current composition is based on S-type asteroids (mostly iron and silicon)
+	contains.append([elements.CARBON, 5])
+	contains.append([elements.IRON, 67])
+	contains.append([elements.SILICON, 22])
+	contains.append([elements.HYDROGEN, 3])
 
 
 func get_chance_roll_table(chances, pad=false):
