@@ -181,18 +181,23 @@ func _on_shield_changed(shield):
 
 func _on_shield_timer_timeout():
 	$"shield_effect".hide()
-	#pass # replace with function body
 
 
 func _on_task_timer_timeout():
 	print("Task timer timeout")
 	if orbiting:
-		if get_colony_in_dock() == null:
-			# pick up colony from planet
-			pick_colony()
+		if not get_tree().get_nodes_in_group("planets")[1].has_colony():
+			if get_colony_in_dock() == null:
+				# pick up colony from planet
+				pick_colony()
+			else:
+				# deorbit
+				deorbit()		
+				brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
+				brain.set_state(brain.STATE_COLONIZE)
 		else:
-			# deorbit
-			deorbit()		
-			brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
-			brain.set_state(brain.STATE_COLONIZE)
+			deorbit()
+			if get_tree().get_nodes_in_group("asteroid").size() > 3:
+				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+			brain.set_state(brain.STATE_MINE)
 
