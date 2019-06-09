@@ -181,6 +181,16 @@ class RefitState:
 			ship.ship.refit_tractor(base)
 			# dummy
 			ship.target = ship.get_global_position()
+		# sell cargo
+		if ship.ship.docked:
+			if ship.ship.cargo[ship.ship.cargo.keys()[0]] > 0:
+				ship.ship.cargo[ship.ship.cargo.keys()[0]] -= 1
+		
+				# add cargo to starbase
+				if not ship.ship.get_parent().get_parent().storage.has(ship.ship.cargo.keys()[0]):
+					ship.ship.get_parent().get_parent().storage[ship.ship.cargo.keys()[0]] = 1
+				else:
+					ship.ship.get_parent().get_parent().storage[ship.ship.cargo.keys()[0]] += 1
 
 class ColonizeState:
 	var ship

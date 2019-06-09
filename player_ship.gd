@@ -30,7 +30,6 @@ var targeted_by = null
 var HUD = null
 signal officer_message
 
-var cargo = {}
 var credits = 0
 var landed = false
 

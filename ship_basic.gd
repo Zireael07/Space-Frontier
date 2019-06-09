@@ -32,6 +32,7 @@ onready var debris = preload("res://debris_enemy.tscn")
 onready var colony = preload("res://colony.tscn")
 
 var docked = false
+var cargo = {}
 
 
 # Called when the node enters the scene tree for the first time.

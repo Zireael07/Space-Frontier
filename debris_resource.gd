@@ -42,6 +42,13 @@ func _on_debris_area_entered(area):
 		var res_id = elements.keys()[resource]
 		print("1 unit of " + str(res_id))
 		
+		if not area.cargo.has(elements.keys()[resource]):
+			# we don't have Dictionary.append, so just create
+			area.cargo[res_id] = 1
+		else:
+			area.cargo[res_id] += 1
+		
+		
 		# trigger AI routines
 		area.resource_picked()
 		queue_free()
