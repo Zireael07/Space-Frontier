@@ -429,6 +429,7 @@ value = 100.0
 percent_visible = false
 
 [node name="Panel2" type="Panel" parent="Control"]
+editor/display_folded = true
 margin_left = 215.0
 margin_right = 650.0
 margin_bottom = 149.0
@@ -516,11 +517,11 @@ value = 100.0
 percent_visible = false
 
 [node name="Control3" type="Control" parent="."]
-editor/display_folded = true
 margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Officer" type="Label" parent="Control3"]
+margin_top = 20.0
 margin_right = 40.0
 margin_bottom = 14.0
 
