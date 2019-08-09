@@ -1,16 +1,17 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://HUD.gd" type="Script" id=1]
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=2]
 [ext_resource path="res://assets/hud/grey_panel.png" type="Texture" id=3]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=4]
 [ext_resource path="res://assets/ships/playerShip2_blue.png" type="Texture" id=5]
-[ext_resource path="res://minimap_container.gd" type="Script" id=6]
-[ext_resource path="res://assets/hud/arrow.png" type="Texture" id=7]
-[ext_resource path="res://assets/HUD ship outline.tres" type="Material" id=8]
-[ext_resource path="res://assets/bottom_bar_style.tres" type="StyleBox" id=9]
-[ext_resource path="res://assets/hud/HUD_panel_green.tres" type="StyleBox" id=10]
-[ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=11]
+[ext_resource path="res://orrery_container.gd" type="Script" id=6]
+[ext_resource path="res://minimap_container.gd" type="Script" id=7]
+[ext_resource path="res://assets/hud/arrow.png" type="Texture" id=8]
+[ext_resource path="res://assets/HUD ship outline.tres" type="Material" id=9]
+[ext_resource path="res://assets/bottom_bar_style.tres" type="StyleBox" id=10]
+[ext_resource path="res://assets/hud/HUD_panel_green.tres" type="StyleBox" id=11]
+[ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=12]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 3 )
@@ -64,6 +65,7 @@ margin_bottom = 20.0
 text = "Cargo"
 
 [node name="PanelInfo" type="Panel" parent="Control2/Panel_rightHUD"]
+editor/display_folded = true
 margin_left = 4.0
 margin_top = 20.0
 margin_right = 197.0
@@ -310,13 +312,23 @@ margin_right = 170.0
 margin_bottom = 207.0
 text = "> Down"
 
+[node name="orrery" type="Control" parent="Control2/Panel_rightHUD"]
+margin_left = 20.0
+margin_top = 230.0
+margin_right = 180.0
+margin_bottom = 390.0
+script = ExtResource( 6 )
+
+[node name="Panel" type="Panel" parent="Control2/Panel_rightHUD/orrery"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
 [node name="minimap" type="Control" parent="Control2/Panel_rightHUD"]
-editor/display_folded = true
 margin_left = 2.0
 margin_top = 400.0
 margin_right = 202.0
 margin_bottom = 600.0
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
 [node name="Panel" type="Panel" parent="Control2/Panel_rightHUD/minimap"]
 margin_right = 200.0
@@ -328,7 +340,7 @@ margin_top = 91.0
 margin_right = 110.0
 margin_bottom = 109.0
 rect_pivot_offset = Vector2( 8, 9 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 
 [node name="status_light" type="ColorRect" parent="Control2"]
 modulate = Color( 0, 1, 0, 1 )
@@ -351,7 +363,7 @@ custom_styles/panelf = ExtResource( 2 )
 custom_styles/panel = ExtResource( 2 )
 
 [node name="player_outline" type="TextureRect" parent="Control/Panel"]
-material = ExtResource( 8 )
+material = ExtResource( 9 )
 margin_left = -2.0
 margin_top = 26.0
 margin_right = 110.0
@@ -383,7 +395,7 @@ margin_top = 38.0
 margin_right = 264.0
 margin_bottom = 54.0
 rect_scale = Vector2( 1.5, 1.5 )
-custom_styles/fg = ExtResource( 9 )
+custom_styles/fg = ExtResource( 10 )
 step = 1.0
 value = 100.0
 percent_visible = false
@@ -403,7 +415,7 @@ margin_top = 61.0
 margin_right = 264.0
 margin_bottom = 77.0
 rect_scale = Vector2( 1.5, 1.5 )
-custom_styles/fg = ExtResource( 9 )
+custom_styles/fg = ExtResource( 10 )
 step = 1.0
 value = 100.0
 percent_visible = false
@@ -423,7 +435,7 @@ margin_top = 85.0
 margin_right = 265.0
 margin_bottom = 101.0
 rect_scale = Vector2( 1.5, 1.5 )
-custom_styles/fg = ExtResource( 9 )
+custom_styles/fg = ExtResource( 10 )
 step = 1.0
 value = 100.0
 percent_visible = false
@@ -436,18 +448,18 @@ margin_bottom = 149.0
 rect_scale = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panelf = ExtResource( 10 )
+custom_styles/panelf = ExtResource( 11 )
 custom_styles/panel = ExtResource( 2 )
 
 [node name="target_outline" type="TextureRect" parent="Control/Panel2"]
 visible = false
-material = ExtResource( 8 )
+material = ExtResource( 9 )
 margin_left = 426.0
 margin_top = 118.0
 margin_right = 523.0
 margin_bottom = 202.0
 rect_rotation = 180.0
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 stretch_mode = 4
 
 [node name="Label_po2" type="Label" parent="Control/Panel2"]
@@ -467,7 +479,7 @@ margin_top = 39.0
 margin_right = 267.0
 margin_bottom = 55.0
 rect_scale = Vector2( 1.5, 1.5 )
-custom_styles/fg = ExtResource( 9 )
+custom_styles/fg = ExtResource( 10 )
 step = 1.0
 value = 100.0
 percent_visible = false
@@ -489,7 +501,7 @@ margin_top = 62.0
 margin_right = 267.0
 margin_bottom = 78.0
 rect_scale = Vector2( 1.5, 1.5 )
-custom_styles/fg = ExtResource( 9 )
+custom_styles/fg = ExtResource( 10 )
 step = 1.0
 value = 100.0
 percent_visible = false
@@ -511,7 +523,7 @@ margin_top = 86.0
 margin_right = 268.0
 margin_bottom = 102.0
 rect_scale = Vector2( 1.5, 1.5 )
-custom_styles/fg = ExtResource( 9 )
+custom_styles/fg = ExtResource( 10 )
 step = 1.0
 value = 100.0
 percent_visible = false
