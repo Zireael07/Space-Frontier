@@ -61,14 +61,26 @@ func _ready():
 		star_arrow.set_visible(false)
 		
 	for p in planets:
+		# so that the icon and label have a common parent
+		var con = Control.new()
+		add_child(con)
+		
 		var planet_sprite = TextureRect.new()
 		planet_sprite.set_texture(planet)
 		if p.planet_rad_factor < 0.5:
 			planet_sprite.set_scale(Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2))
 		else:
 			planet_sprite.set_scale(Vector2(p.planet_rad_factor, p.planet_rad_factor))
-		planet_sprites.append(planet_sprite)
-		add_child(planet_sprite)
+		
+		# label
+		var label = Label.new()
+		label.set_text(p.get_node("Label").get_text())
+		label.set_position(Vector2(36*stars[0].star_radius_factor,36*stars[0].star_radius_factor))
+		con.add_child(label)
+			
+		
+		planet_sprites.append(con)
+		con.add_child(planet_sprite)
 	
 	for a in asteroids:
 		var asteroid_sprite = TextureRect.new()
