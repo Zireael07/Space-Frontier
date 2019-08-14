@@ -15,6 +15,7 @@ export(float) var hydro = 0.3 # water/land ratio (surface, not volume = 30% for 
 const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
 const LS_TO_AU = 30 #500 realistic value
 const AU = LS_TO_AU*LIGHT_SEC
+var dist = 0
 
 var population = 0
 	
@@ -33,7 +34,7 @@ func _ready():
 	connect("planet_orbited", self, "_on_planet_orbited")
 	
 	
-	var dist = get_position().length()
+	dist = get_position().length()
 	
 	var ls = dist/LIGHT_SEC
 	
