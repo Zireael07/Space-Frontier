@@ -15,6 +15,7 @@ var planet_sprites = []
 var asteroid_sprites = []
 
 var center = Vector2(get_size().x/2, get_size().y/2)
+var star_center = center
 
 var zoom_scale = 24 # to see the entire proc system
 
@@ -35,10 +36,10 @@ func _ready():
 		add_child(star_sprite)
 	
 	# adjust center offset based on star scale
-	center = center - Vector2(16*stars[0].star_radius_factor,16*stars[0].star_radius_factor)
+	star_center = center - Vector2(16*stars[0].star_radius_factor,16*stars[0].star_radius_factor)
 	
 	# star 1 is the center
-	star_sprites[0].set_position(center)
+	star_sprites[0].set_position(star_center)
 		
 	for p in planets:
 		# so that the icon and label have a common parent
@@ -70,7 +71,6 @@ func _ready():
 	
 	
 	set_clip_contents(true)
-	
 
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
@@ -90,9 +90,10 @@ func _process(delta):
 	for i in range(planets.size()):
 		# the minimap doesn't rotate
 		var rel_loc = planets[i].get_global_position() - stars[0].get_global_position()
-		#var rel_loc = player.get_global_transform().xform_inv(planets[i].get_global_transform().origin)
-		#planet_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale))
-		planet_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+		#var rel_loc = stars[0].get_global_transform().xform_inv(planets[i].get_global_transform().origin)
+		var off = 36*planets[i].planet_rad_factor*0.25
+		var map_pos = Vector2((rel_loc.x/zoom_scale)+center.x-off, (rel_loc.y/zoom_scale)+center.y-off)
+		planet_sprites[i].set_position(map_pos)
 
 	for i in range(asteroids.size()):
 		# the minimap doesn't rotate
