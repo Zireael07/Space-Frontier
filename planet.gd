@@ -30,6 +30,8 @@ var orbit_rate = 0.04
 
 signal planet_colonized
 
+# Called when the node is added to the scene for the first time.
+# Initialization here
 func _ready():
 	connect("planet_orbited", self, "_on_planet_orbited")
 	
@@ -40,11 +42,31 @@ func _ready():
 	
 	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls, " + str(ls/LS_TO_AU) + " AU")
 	
+	calculate_orbit_period()
+	
 	if has_colony():
 		population = 100000
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
-	#pass
+
+# Kepler's Third Law:
+# The square of the period of any planet is proportional to the cube of the semi-major axis of its orbit.
+# t^2 = au^3 if period is in years and axis is in AU
+func calculate_orbit_period():
+	# gravitational constant
+	var G = (6.67428e-11)
+	
+	var axis = (dist/LIGHT_SEC)/LS_TO_AU
+	
+	# by default, the equation works on seconds, meters and kilograms
+	var AU = 149597870691 #meters
+	var yr = 3.15581e7 #seconds (86400 for a day)
+	var sun = 5.027399e-31 #kg
+	
+	# T = 2*PI*sqrt(a^3/GM) [ substitute (M1+M2) for M if we're talking binary system ]
+	var t = 2*PI*sqrt(pow(axis*AU, 3)/G*sun) # in seconds
+	
+	print(str(t/86400) + " days, " + str(t/yr) + " year(s)")
+	return t
+	
 
 func setData(val):
 	if Engine.is_editor_hint() and val != null:
