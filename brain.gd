@@ -132,6 +132,16 @@ class IdleState:
 	func update(delta):
 		ship.move_generic(delta)
 		
+		
+		var enemy = ship.ship.get_closest_enemy()
+		if enemy:
+			var dist = ship.get_global_position().distance_to(enemy.get_global_position())
+			#print(str(dist))
+			if dist < 100:
+				print("We are close to an enemy " + str(enemy.get_parent().get_name()) + " switching")
+				ship.set_state(STATE_ATTACK, enemy)
+
+		
 
 class OrbitState:
 	var ship
@@ -151,15 +161,22 @@ class AttackState:
 		target = tg
 	
 	func update(delta):
-		# steering behavior
-		var steer = ship.set_heading(ship.target)	
+		var steer = Vector2(0,0)
+		if is_instance_valid(target):
+			# steering behavior
+			steer = ship.set_heading(target.get_global_position())
+		# if target was killed, bail out immediately
+		else:
+			ship.set_state(ship.prev_state)
+			
 		# normal case
 		ship.vel += steer
-	
+		
 		ship.ship.move_AI(ship.vel, delta)
 		
 		var enemy = ship.ship.get_closest_enemy()
 		if enemy != null and enemy == target:
+			#print("Shooting" + str(enemy.get_parent().get_name()))
 			ship.ship.shoot_wrapper()
 		else:
 			ship.set_state(ship.prev_state)
