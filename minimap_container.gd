@@ -155,9 +155,15 @@ func _process(delta):
 	# friendlies and hostiles can be removed in-game, so we're not doing it with indices
 	for f in friendlies:
 		var i = friendlies.find(f)
-		# the minimap doesn't rotate
-		var rel_loc = f.get_global_position() - player.get_child(0).get_global_position()
-		friendly_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+		if is_instance_valid(f):
+			# the minimap doesn't rotate
+			var rel_loc = f.get_global_position() - player.get_child(0).get_global_position()
+			friendly_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+		else:
+			# remove all references to the killed ship and its minimap icon
+			remove_child(friendly_sprites[i])
+			friendlies.remove(i)
+			friendly_sprites.remove(i)
 
 	for h in hostiles:
 		var i = hostiles.find(h)
