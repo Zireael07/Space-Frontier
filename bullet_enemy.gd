@@ -23,7 +23,7 @@ func _on_lifetime_timeout():
 	queue_free()
 
 func _on_bullet_area_entered( area ):
-	if area.get_parent().get_groups().has("player"):
+	if area.get_parent().get_groups().has("player") or area.get_groups().has("friendly"):
 		queue_free()
 		print(area.get_parent().get_name())
 
@@ -34,6 +34,9 @@ func _on_bullet_area_entered( area ):
 		area.emit_signal("shield_changed", [area.shields])
 		
 		if area.shields <= 0:
+			if area.get_groups().has("friendly"):
+				area.get_parent().queue_free()
+			
 			# kill the player
 			# reenable when it doesn't destroy the game
 			#area.get_parent().queue_free()

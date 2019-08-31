@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://NPC_ship.gd" type="Script" id=1]
-[ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://bullet_enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=3]
 [ext_resource path="res://assets/fire11.png" type="Texture" id=4]
 [ext_resource path="res://assets/shield_Edit.png" type="Texture" id=5]
@@ -15,6 +15,7 @@ radius = 23.0021
 flag_disable_z = true
 gravity = Vector3( 0, 98, 0 )
 initial_velocity = 0.13
+angular_velocity = 1.05
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale_random = 0.3
