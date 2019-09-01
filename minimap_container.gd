@@ -10,12 +10,16 @@ onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
 onready var friendly = preload("res://assets/hud/arrow.png")
 onready var hostile = preload("res://assets/hud/red_arrow.png")
 
+onready var starbase = preload("res://assets/hud/blue_boxTick.png")
+
+
 var stars
 var planets
 var asteroids
 
 var friendlies
 var hostiles
+var starbases
 
 var star_sprites = []
 var planet_sprites = []
@@ -23,6 +27,7 @@ var asteroid_sprites = []
 
 var friendly_sprites = []
 var hostile_sprites = []
+var starbase_sprites = []
 
 var star_arrow
 
@@ -44,6 +49,7 @@ func _ready():
 	player = get_tree().get_nodes_in_group("player")[0]
 	friendlies = get_tree().get_nodes_in_group("friendly")
 	hostiles = get_tree().get_nodes_in_group("enemy")
+	starbases = get_tree().get_nodes_in_group("starbase")
 	
 	
 	for s in stars:
@@ -101,13 +107,19 @@ func _ready():
 		hostile_sprite.set_texture(hostile)
 		hostile_sprites.append(hostile_sprite)
 		add_child(hostile_sprite)
+		
+	for sb in starbases:
+		var starbase_sprite = TextureRect.new()
+		starbase_sprite.set_texture(starbase)
+		starbase_sprite.set_scale(Vector2(0.5, 0.5))
+		starbase_sprites.append(starbase_sprite)
+		add_child(starbase_sprite)
 	
 	
 	# make sure player is the last child (to be drawn last)
-	move_child($"player", stars.size()+planets.size()+asteroids.size()+friendlies.size()+hostiles.size()+2)
+	move_child($"player", stars.size()+planets.size()+asteroids.size()+friendlies.size()+hostiles.size()+starbases.size()+2)
 	center = Vector2($"player".get_position().x, $"player".get_position().y)
 	set_clip_contents(true)
-	
 
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
@@ -151,7 +163,13 @@ func _process(delta):
 		# the minimap doesn't rotate
 		var rel_loc = asteroids[i].get_global_position() - player.get_child(0).get_global_position()
 		asteroid_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
-		
+	
+	for i in range(starbases.size()):
+		# the minimap doesn't rotate
+		var rel_loc = starbases[i].get_global_position() - player.get_child(0).get_global_position()
+		starbase_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))		
+	
+	
 	# friendlies and hostiles can be removed in-game, so we're not doing it with indices
 	for f in friendlies:
 		var i = friendlies.find(f)
@@ -177,5 +195,5 @@ func _process(delta):
 			remove_child(hostile_sprites[i])
 			hostiles.remove(i)
 			hostile_sprites.remove(i)
-			# to prevent errors with subsequent indices not found
-			#break
+
+			
