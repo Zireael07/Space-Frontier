@@ -34,6 +34,8 @@ onready var colony = preload("res://colony.tscn")
 var docked = false
 var cargo = {}
 
+signal colony_picked
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -141,6 +143,8 @@ func pick_colony():
 		co.set_position(get_node("dock").get_position())
 		# don't overlap
 		co.set_z_index(-1)
+		# emit signal
+		emit_signal("colony_picked", co)
 		return true
 	else:
 		return false

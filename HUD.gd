@@ -42,6 +42,10 @@ func _ready():
 	
 	player.connect("officer_message", self, "_on_officer_messaged")
 	
+	player.connect("colony_picked", self, "_on_colony_picked")
+	for f in get_tree().get_nodes_in_group("friendly"):
+		f.connect("colony_picked", self, "_on_colony_picked")
+	
 #	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
 	
 	
@@ -242,7 +246,10 @@ func _on_planet_colonized(planet):
 	if node:
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".get_node(node).set_self_modulate(Color(0, 1, 1))
 	
-
+func _on_colony_picked(colony):
+	print("Colony picked HUD")
+	# pass to correct node
+	$"Control2/Panel_rightHUD/minimap"._on_colony_picked(colony)
 	
 func _on_target_shield_changed(shield):
 	#print("Shields from signal is " + str(shield))

@@ -10,6 +10,8 @@ onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
 onready var friendly = preload("res://assets/hud/arrow.png")
 onready var hostile = preload("res://assets/hud/red_arrow.png")
 
+onready var colony_tex = preload("res://assets/hud/blue_button06.png")
+
 onready var starbase = preload("res://assets/hud/blue_boxTick.png")
 
 
@@ -21,6 +23,8 @@ var friendlies
 var hostiles
 var starbases
 
+var colonies = []
+
 var star_sprites = []
 var planet_sprites = []
 var asteroid_sprites = []
@@ -28,6 +32,7 @@ var asteroid_sprites = []
 var friendly_sprites = []
 var hostile_sprites = []
 var starbase_sprites = []
+var colony_sprites = []
 
 var star_arrow
 
@@ -121,6 +126,16 @@ func _ready():
 	center = Vector2($"player".get_position().x, $"player".get_position().y)
 	set_clip_contents(true)
 
+func _on_colony_picked(colony):
+	print("On colony picked")
+	var col_sprite = TextureRect.new()
+	col_sprite.set_texture(colony_tex)
+	col_sprite.set_scale(Vector2(0.25, 0.25))
+	colony_sprites.append(col_sprite)
+	add_child(col_sprite)
+	colonies.append(colony)
+	
+
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
@@ -168,6 +183,20 @@ func _process(delta):
 		# the minimap doesn't rotate
 		var rel_loc = starbases[i].get_global_position() - player.get_child(0).get_global_position()
 		starbase_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))		
+	
+	# draw colonies before ships
+	for c in colonies:
+		var i = colonies.find(c)
+		if is_instance_valid(c):
+			# the minimap doesn't rotate
+			var rel_loc = c.get_global_position() - player.get_child(0).get_global_position()
+			colony_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+			
+		else:
+			# remove all references to the killed ship and its minimap icon
+			remove_child(colony_sprites[i])
+			colonies.remove(i)
+			colony_sprites.remove(i)
 	
 	
 	# friendlies and hostiles can be removed in-game, so we're not doing it with indices
