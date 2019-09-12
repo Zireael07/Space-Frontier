@@ -23,14 +23,25 @@ func _ready():
 	var rev = get_star_type(star_type)
 	print(str(rev))
 	
+	
+	# luminosities from https://github.com/irskep/stellardream/blob/master/src/stars.ts
+	
 	if star_type == star_types.YELLOW:
 		$Sprite.set_texture(yellow)
+		# set luminosity
+		luminosity = rand_range(0.58, 1.54)
+		
+		
 	elif star_type == star_types.RED_DWARF:
 		$Sprite.set_texture(red)
 		# red dwarf is smaller
 		var star_scale = rand_range(0.25, 0.5) # M0V can go up to 60% Sun's radius but let's ignore them for now
 		$Sprite.set_scale(Vector2(star_scale, star_scale))
 		star_radius_factor = star_scale
+		# set luminosity
+		luminosity = rand_range(0.000158, 0.086)
+	
+	print("Stellar luminosity: " + str(luminosity))
 	
 	# names
 	# sufficiently big number

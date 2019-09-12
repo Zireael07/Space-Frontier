@@ -5,7 +5,7 @@ extends Node2D
 export var rotation_rate = 0.15
 export var orbit_rate = 0.00002
 export var star_radius_factor = 1.0
-
+export var luminosity = 1.00 # 1 is the luminosity of the Sun
 
 var rot = 0
 var orbit_rot = 0
