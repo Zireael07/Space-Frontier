@@ -17,6 +17,7 @@ margin_bottom = 40.0
 [node name="ParallaxBackground" parent="." instance=ExtResource( 1 )]
 
 [node name="star" parent="." instance=ExtResource( 2 )]
+luminosity = 0.05
 
 [node name="player" parent="." groups=[
 "player",
@@ -44,4 +45,3 @@ position = Vector2( 2000, 500 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 9 )]
-

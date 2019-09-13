@@ -16,6 +16,7 @@
 position = Vector2( 500, 500 )
 script = ExtResource( 1 )
 orbit_rate = 0.02
+luminosity = 0.5
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 9.92185
