@@ -349,8 +349,27 @@ func _on_ButtonUpgrade_pressed():
 
 func _on_ButtonView_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
-	# if we are pointing at first entry (a star), return
+	
+	
+	# if we are pointing at first entry (a star), show star description instead
 	if cursor.get_position().y < 15:
+		var star = get_tree().get_nodes_in_group("star")[0]
+		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(star.get_node("Sprite").get_texture())
+		
+		# set label
+		var txt = "Star: " + str(star.get_node("Label").get_text())
+		var label = $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/LabelName"
+	
+		label.set_text(txt)
+		
+		# set text
+		var text = "Luminosity: " + str(star.luminosity) + "\n" + \
+		"Habitable zone: " + str(star.hz_inner) + "-" + str(star.hz_outer)
+
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
+		
 		return
 	var select_id = (cursor.get_position().y - 15) / 15
 	var planet = get_tree().get_nodes_in_group("planets")[select_id]
