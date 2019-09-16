@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://star system.gd" type="Script" id=1]
-[ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=2]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
 [ext_resource path="res://planet_new.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/bodies/Planet-only1.png" type="Texture" id=4]
 [ext_resource path="res://colony.tscn" type="PackedScene" id=5]
@@ -16,10 +16,12 @@
 position = Vector2( 500, 500 )
 script = ExtResource( 1 )
 orbit_rate = 0.02
-luminosity = 0.5
+star_radius_factor = 0.5
+luminosity = 0.2
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 9.92185
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
