@@ -66,7 +66,13 @@ func calculate_orbit_period():
 	
 	print(str(t/86400) + " days, " + str(t/yr) + " year(s)")
 	return t
-	
+
+func is_habitable():
+	var star = get_parent().get_parent()
+	if (dist/LIGHT_SEC)/LS_TO_AU >= star.hz_inner and (dist/LIGHT_SEC)/LS_TO_AU <= star.hz_outer:
+		return true
+	else:
+		return false
 
 func setData(val):
 	if Engine.is_editor_hint() and val != null:

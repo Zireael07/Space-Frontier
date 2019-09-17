@@ -400,6 +400,8 @@ func _on_ButtonView_pressed():
 	"Pressure: " + "\n" + "Gravity:" + "\n" + "Temperature" + "\n" + "Hydro: " + str(planet.hydro)
 	if col:
 		text = text + "\n" + " Population: " + str(planet.population)
+	if planet.is_habitable():
+		text = text + "\n" + " Habitable"
 
 	
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
