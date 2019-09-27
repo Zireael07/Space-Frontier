@@ -115,19 +115,19 @@ func resource_picked():
 
 func move_orbit(delta):
 	# orbiting temporarily limited to friendlies
-	if kind_id == kind.friendly:
-		if (brain.target - get_global_position()).length() < 300 and not orbiting:
-			##orbit
-			print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
-			orbit_planet(get_colonized_planet())
-		elif not orbiting:
-			var steer = brain.get_steering_arrive(brain.target)
-			# normal case
-			vel += steer
-	else:
-		var steer = brain.get_steering_arrive(brain.target)	
+	#if kind_id == kind.friendly:
+	if (brain.target - get_global_position()).length() < 300 and not orbiting:
+		##orbit
+		print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
+		orbit_planet(get_colonized_planet())
+	elif not orbiting:
+		var steer = brain.get_steering_arrive(brain.target)
 		# normal case
 		vel += steer
+	#else:
+	#	var steer = brain.get_steering_arrive(brain.target)	
+		# normal case
+	#	vel += steer
 	
 	move_AI(vel, delta)	
 
@@ -188,16 +188,23 @@ func _on_task_timer_timeout():
 	if orbiting:
 		if not get_tree().get_nodes_in_group("planets")[1].has_colony():
 			if get_colony_in_dock() == null:
-				# pick up colony from planet
-				pick_colony()
+				if kind_id == kind.friendly:
+					# pick up colony from planet
+					pick_colony()
+				else:
+					print("Blockading a planet")
 			else:
 				# deorbit
 				deorbit()		
-				brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
-				brain.set_state(brain.STATE_COLONIZE)
+				#brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
+				#brain.set_state(brain.STATE_COLONIZE)
+				if get_tree().get_nodes_in_group("asteroid").size() > 3:
+					brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+				brain.set_state(brain.STATE_MINE)
 		else:
 			deorbit()
 			if get_tree().get_nodes_in_group("asteroid").size() > 3:
 				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 			brain.set_state(brain.STATE_MINE)
-
+	#else:
+		

@@ -24,9 +24,11 @@ func select_target():
 	#target 
 	#planet #1
 	if get_tree().get_nodes_in_group("asteroid").size() > 3:
-		if ship.kind_id == ship.kind.friendly and ship.get_colonized_planet() != null:
+		if ship.get_colonized_planet() != null:
+		#if ship.kind_id == ship.kind.friendly and ship.get_colonized_planet() != null:
 			target = ship.get_colonized_planet().get_global_position()
 			set_state(STATE_ORBIT)
+			print("Set orbit state for " + ship.get_parent().get_name())
 			#target_type = "COLONY_PLANET"
 		else:
 			target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
@@ -260,7 +262,7 @@ class MineState:
 		
 		# if close to target, shoot it
 		if ship.get_global_position().distance_to(ship.target) < 10 and not shot:
-			print("Close to target")
+			#print("Close to target")
 			ship.ship.shoot_wrapper()
 			
 			var ress = ship.get_tree().get_nodes_in_group("resource")
