@@ -269,6 +269,11 @@ func _on_target_shield_changed(shield):
 func _on_target_acquired_by_AI(AI):
 	$"Control2/status_light".set_modulate(Color(1,0,0))
 	print("On target_acquired")
+	# pause on player being targeted
+	paused = true
+	get_tree().set_pause(paused)
+	$"pause_panel".show()
+	
 
 func _on_target_lost_by_AI(AI):
 	$"Control2/status_light".set_modulate(Color(0,1,0))
