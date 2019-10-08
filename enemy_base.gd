@@ -19,6 +19,8 @@ signal AI_targeted
 signal target_acquired_AI
 signal target_lost_AI
 
+signal distress_called
+
 var targetables = []
 var shoot_target = null
 var shoot_rel_pos = Vector2()
@@ -29,6 +31,7 @@ enum processed { METHANE }
 var storage = {}
 
 func _ready():
+	connect("distress_called", self, "_on_distress_called")
 	#add_to_group("enemy")
 	
 	#target
@@ -136,3 +139,11 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 			
 		# redraw
 		update()
+
+func _on_distress_called(target):
+	if is_in_group("enemy"):
+		for n in get_tree().get_nodes_in_group("enemy"):
+			if not n.is_in_group("starbase"):
+				n.brain.target = target.get_global_position()
+				n.brain.set_state(n.brain.STATE_IDLE)
+				print("Targeting " + str(target.get_parent().get_name()) + " in response to distress call")

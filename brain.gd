@@ -132,6 +132,10 @@ class IdleState:
 		ship = shp
 		
 	func update(delta):
+		# deorbit
+		if ship.ship.orbiting:
+			ship.ship.deorbit()
+		
 		ship.move_generic(delta)
 		
 		

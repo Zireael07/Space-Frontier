@@ -33,8 +33,13 @@ func _on_bullet_area_entered( area ):
 		# emit signal
 		area.emit_signal("shield_changed", area.shields)
 		
+		var sb = area.is_in_group("starbase")
+		if sb:
+			area.emit_signal("distress_called", get_parent().get_parent())
+		
+		
 		if area.shields <= 0:
-			var sb = area.is_in_group("starbase")
+			
 			# kill the AI
 			area.get_parent().queue_free()
 			# untarget it
