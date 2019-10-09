@@ -13,6 +13,7 @@ onready var hostile = preload("res://assets/hud/red_arrow.png")
 onready var colony_tex = preload("res://assets/hud/blue_button06.png")
 
 onready var starbase = preload("res://assets/hud/blue_boxTick.png")
+onready var sb_enemy = preload("res://assets/hud/red_boxTick.png")
 
 
 var stars
@@ -22,6 +23,7 @@ var asteroids
 var friendlies
 var hostiles
 var starbases
+var sb_enemies = []
 
 var colonies = []
 
@@ -32,6 +34,7 @@ var asteroid_sprites = []
 var friendly_sprites = []
 var hostile_sprites = []
 var starbase_sprites = []
+var sb_enemy_sprites = []
 var colony_sprites = []
 
 var star_arrow
@@ -53,9 +56,24 @@ func _ready():
 	
 	player = get_tree().get_nodes_in_group("player")[0]
 	friendlies = get_tree().get_nodes_in_group("friendly")
-	hostiles = get_tree().get_nodes_in_group("enemy")
-	starbases = get_tree().get_nodes_in_group("starbase")
 	
+	hostiles = get_tree().get_nodes_in_group("enemy")
+	# remove starbases from this list
+	for i in range(hostiles.size()-1):
+		var h = hostiles[i]
+		if h.is_in_group("starbase"):
+			hostiles.remove(hostiles.find(h))
+	
+	
+	# more tricky
+	starbases = get_tree().get_nodes_in_group("starbase")
+	for i in range(starbases.size()-1):
+		var sb = starbases[i]
+		# move to correct list
+		if sb.is_in_group("enemy"):
+			#print("Move sb to enemy list")
+			starbases.remove(starbases.find(sb))
+			sb_enemies.append(sb)
 	
 	for s in stars:
 		var star_sprite = TextureRect.new()
@@ -120,6 +138,12 @@ func _ready():
 		starbase_sprites.append(starbase_sprite)
 		add_child(starbase_sprite)
 	
+	for sb in sb_enemies:
+		var sb_sprite = TextureRect.new()
+		sb_sprite.set_texture(sb_enemy)
+		sb_sprite.set_scale(Vector2(0.5, 0.5))
+		sb_enemy_sprites.append(sb_sprite)
+		add_child(sb_sprite)
 	
 	# make sure player is the last child (to be drawn last)
 	move_child($"player", stars.size()+planets.size()+asteroids.size()+friendlies.size()+hostiles.size()+starbases.size()+2)
@@ -182,7 +206,19 @@ func _process(delta):
 	for i in range(starbases.size()):
 		# the minimap doesn't rotate
 		var rel_loc = starbases[i].get_global_position() - player.get_child(0).get_global_position()
-		starbase_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))		
+		starbase_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+	
+	for sb in sb_enemies:
+		var i = sb_enemies.find(sb)
+		if is_instance_valid(sb):
+			# the minimap doesn't rotate
+			var rel_loc = sb_enemies[i].get_global_position() - player.get_child(0).get_global_position()
+			sb_enemy_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))			
+		else:
+			# remove all references to killed starbase
+			remove_child(sb_enemy_sprites[i])
+			sb_enemies.remove(i)
+			sb_enemy_sprites.remove(i)
 	
 	# draw colonies before ships
 	for c in colonies:
