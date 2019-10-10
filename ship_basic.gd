@@ -100,7 +100,7 @@ func get_closest_enemy():
 	if is_in_group("enemy"):
 		nodes = get_tree().get_nodes_in_group("friendly")
 		# add player
-		# get_tree().get_nodes_in_group("player")[0].get_child(0)
+		nodes.append(get_tree().get_nodes_in_group("player")[0].get_child(0))
 	else:	
 		nodes = get_tree().get_nodes_in_group("enemy")
 	
