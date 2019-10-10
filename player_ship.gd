@@ -25,7 +25,7 @@ var warping = false
 var tractored = false
 var refit_target = false
 
-var targeted_by = null
+var targeted_by = []
 
 var HUD = null
 signal officer_message

@@ -7,7 +7,11 @@ onready var task_timer = $"task_timer"
 var target_type = null
 
 var targetted = false
+# for player targeting the AI
 signal AI_targeted
+# for the AI targeting other ships
+signal target_acquired_AI
+signal target_lost_AI
 
 export(int) var kind_id = 0
 

@@ -58,7 +58,7 @@ func _process(delta):
 		if shoot_target == null and dist < 500:
 			shoot_target = targetables[0]
 			# will have to be changed when other ships will become targetables
-			targetables[0].targeted_by = self
+			targetables[0].targeted_by.append(self)
 			emit_signal("target_acquired_AI", self)
 			print("AI acquired target")
 	
@@ -69,10 +69,12 @@ func _process(delta):
 			if gun_timer.get_time_left() == 0:
 				shoot()
 		else:
-			shoot_target.targeted_by = null
+			shoot_target.targeted_by.remove(shoot_target.targeted_by.find(self))
+			if shoot_target.targeted_by.size() < 1:
+				emit_signal("target_lost_AI", self)
 			shoot_target = null
-			emit_signal("target_lost_AI", self)
 			print("AI lost target")
+			
 	
 	
 	#print(shoot_rel_pos)

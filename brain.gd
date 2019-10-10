@@ -143,10 +143,14 @@ class IdleState:
 		if enemy:
 			var dist = ship.get_global_position().distance_to(enemy.get_global_position())
 			#print(str(dist))
-			if dist < 100:
+			if dist < 150:
 				print("We are close to an enemy " + str(enemy.get_parent().get_name()) + " switching")
 				ship.set_state(STATE_ATTACK, enemy)
-
+				# signal player being attacked if it's the case
+				if enemy.get_parent().is_in_group("player"):
+					enemy.targeted_by.append(ship.ship)
+					ship.ship.emit_signal("target_acquired_AI", ship.ship)
+					print("AI ship acquired target")
 		
 
 class OrbitState:

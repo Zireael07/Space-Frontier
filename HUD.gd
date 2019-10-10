@@ -24,6 +24,7 @@ func _ready():
 		#if "target_acquired_AI" in e.get_signal_list():
 		for s in e.get_signal_list():
 			if s.name == "target_acquired_AI":
+				print("Connecting target acquired for " + str(e.get_parent().get_name()))
 				e.connect("target_acquired_AI", self, "_on_target_acquired_by_AI")
 				e.connect("target_lost_AI", self, "_on_target_lost_by_AI")
 		
@@ -268,7 +269,7 @@ func _on_target_shield_changed(shield):
 
 func _on_target_acquired_by_AI(AI):
 	$"Control2/status_light".set_modulate(Color(1,0,0))
-	print("On target_acquired")
+	print("On target_acquired, pausing...")
 	# pause on player being targeted
 	paused = true
 	get_tree().set_pause(paused)
