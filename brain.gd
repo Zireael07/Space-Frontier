@@ -77,7 +77,7 @@ func set_state(new_state, param=null):
 	elif new_state == STATE_ORBIT:
 		state = OrbitState.new(self)
 	elif new_state == STATE_MINE:
-		state = MineState.new(self)
+		state = MineState.new(self, param)
 	elif new_state == STATE_ATTACK:
 		state = AttackState.new(self, param)
 	elif new_state == STATE_REFIT:
@@ -251,12 +251,14 @@ class ColonizeState:
 class MineState:
 	var ship
 	var shot = false
+	var object
 	
-	func _init(shp):
+	func _init(shp,obj):
 		ship = shp
+		object = obj
 		
 	func update(delta):
-		ship.move_generic(delta)
+		var steer = Vector2(0,0)
 		
 		var enemy = ship.ship.get_closest_enemy()
 		if enemy:
@@ -267,9 +269,25 @@ class MineState:
 				#ship.target = enemy.get_global_position()
 				ship.set_state(STATE_ATTACK, enemy)
 
+		# aim towards the target
+		if ship.get_global_position().distance_to(ship.target) < 100:
+			# update target location
+			ship.target = object.get_global_position()
+			#print("Heading towards " + str(ship.target))
+			# steering behavior
+			steer = ship.set_heading(ship.target)
+			if ship.get_global_position().distance_to(ship.target) > 50:
+				steer += ship.get_steering_arrive(ship.target)
+		else:
+			steer = ship.get_steering_arrive(ship.target)
+			
+		# normal case
+		ship.vel += steer
 		
+		ship.ship.move_AI(ship.vel, delta)
+			
 		# if close to target, shoot it
-		if ship.get_global_position().distance_to(ship.target) < 10 and not shot:
+		if ship.get_global_position().distance_to(ship.target) < 50 and not shot:
 			#print("Close to target")
 			ship.ship.shoot_wrapper()
 			

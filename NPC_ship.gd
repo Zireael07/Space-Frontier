@@ -204,11 +204,11 @@ func _on_task_timer_timeout():
 				#brain.set_state(brain.STATE_COLONIZE)
 				if get_tree().get_nodes_in_group("asteroid").size() > 3:
 					brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-				brain.set_state(brain.STATE_MINE)
+				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 		else:
 			deorbit()
 			if get_tree().get_nodes_in_group("asteroid").size() > 3:
 				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-			brain.set_state(brain.STATE_MINE)
+			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 	#else:
 		
