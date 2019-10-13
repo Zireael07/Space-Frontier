@@ -7,7 +7,7 @@
 [ext_resource path="res://assets/shieldGreen_Edit.png" type="Texture" id=5]
 [ext_resource path="res://assets/crosshair123.png" type="Texture" id=6]
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=1]
 radius = 23.0021
 
 [sub_resource type="ParticlesMaterial" id=2]
@@ -19,7 +19,7 @@ orbit_velocity_random = 0.0
 scale_random = 0.3
 color = Color( 0.0117647, 0.996078, 0.972549, 1 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Area2D/playerShip2_blue:scale")
 tracks/0/interp = 1
@@ -116,7 +116,7 @@ scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="Area2D"]
 current = true
@@ -156,12 +156,17 @@ texture = ExtResource( 6 )
 [node name="recharge_timer" type="Timer" parent="Area2D"]
 process_mode = 0
 
+[node name="shield_recharge_timer" type="Timer" parent="Area2D"]
+process_mode = 0
+autostart = true
+
 [node name="heat_timer" type="Timer" parent="Area2D"]
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/landing = SubResource( 4 )
+anims/landing = SubResource( 3 )
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D/recharge_timer" to="Area2D" method="_on_recharge_timer_timeout"]
+[connection signal="timeout" from="Area2D/shield_recharge_timer" to="Area2D" method="_on_shield_recharge_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="Area2D" method="_on_AnimationPlayer_animation_finished"]

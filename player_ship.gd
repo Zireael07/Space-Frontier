@@ -407,7 +407,8 @@ func _on_shield_changed(data):
 		$"shield_indicator".set_modulate(Color(1.0, 0.0, 0.0))
 	elif shields < 0.7* 100: #current max
 		$"shield_indicator".set_modulate(Color(1.0, 1.0, 0.0))
-
+	else:
+		$"shield_indicator".set_modulate(Color(0.0, 1.0, 0.0))
 
 func _on_shield_timer_timeout():
 	$"shield_effect".hide()
@@ -419,6 +420,21 @@ func heat_damage():
 	emit_signal("shield_changed", [shields, false])
 	get_node("heat_timer").start()
 
+func _on_shield_recharge_timer_timeout():
+	# no recharging if landing
+	if landed:
+		print("We're landed, no recharging")
+		return
+		
+	if shields < 100 and power > 0:
+		shields = shields + 5
+		emit_signal("shield_changed", [shields, false])
+		# draw some power
+		power = power - 10
+		emit_signal("power_changed", power)
+		
+	get_node("shield_recharge_timer").start()
+	
 
 # click to target functionality
 func _on_Area2D_input_event(viewport, event, shape_idx):
