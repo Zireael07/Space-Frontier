@@ -32,6 +32,7 @@ signal officer_message
 
 var credits = 0
 var landed = false
+signal planet_landed
 
 # for AI orders
 var conquer_target = null
@@ -305,6 +306,7 @@ func _input(event):
 				$"shield_indicator".hide()
 				get_parent().get_node("AnimationPlayer").play("landing")
 				landed = true
+				emit_signal("planet_landed")
 			else:
 				print("Too far away to land")
 		else:

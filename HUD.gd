@@ -43,6 +43,8 @@ func _ready():
 	
 	player.connect("officer_message", self, "_on_officer_messaged")
 	
+	player.connect("planet_landed", self, "_on_planet_landed")
+	
 	player.connect("colony_picked", self, "_on_colony_picked")
 	for f in get_tree().get_nodes_in_group("friendly"):
 		f.connect("colony_picked", self, "_on_colony_picked")
@@ -307,11 +309,17 @@ func switch_to_refit():
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".show()
 
-func _on_ButtonCargo_pressed():
+func switch_to_cargo():
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
-	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".show()
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".show()	
+
+func _on_ButtonCargo_pressed():
+	switch_to_cargo()
+	
+func _on_planet_landed():
+	switch_to_cargo()
 
 func set_cargo_listing(text):
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".set_text(text)
