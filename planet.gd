@@ -269,6 +269,7 @@ func _on_module_timer_timeout():
 		print("Module timer")
 		var pos = get_global_position()
 		var mo = module.instance()
+		mo.get_child(0).module = 3 # cloak
 		get_parent().add_child(mo)
 		mo.set_global_position(pos)
 		mo.set_z_index(2)

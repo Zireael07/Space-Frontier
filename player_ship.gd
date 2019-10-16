@@ -12,6 +12,9 @@ var warp_power_draw = 50
 var power_recharge = 5
 signal power_changed
 
+var has_cloak = false
+var cloaked = false
+
 onready var warp_effect = preload("res://warp_effect.tscn")
 
 onready var recharge_timer = $"recharge_timer"
@@ -313,7 +316,15 @@ func _input(event):
 			get_parent().get_node("AnimationPlayer").play_backwards("landing")
 			$"shield_indicator".show()
 			landed = false
-		
+	
+	if Input.is_action_pressed("cloak"):
+		if has_cloak:
+			cloaked = !cloaked
+			if cloaked:
+				# sprite only!
+				get_child(0).set_modulate(Color(0.3, 0.3, 0.3))
+			else:
+				set_modulate(Color(1,1,1))	
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
