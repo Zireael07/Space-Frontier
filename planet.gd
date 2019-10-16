@@ -30,6 +30,8 @@ var orbit_rate = 0.04
 
 signal planet_colonized
 
+onready var module = preload("res://debris_enemy.tscn")
+
 # Called when the node is added to the scene for the first time.
 # Initialization here
 func _ready():
@@ -258,6 +260,15 @@ func _on_pop_timer_timeout():
 	if has_colony():
 		print("Pop increase")
 		population += 1000
-	else:
-		print("No colony?")
-	#pass # Replace with function body.
+#	else:
+#		print("No colony?")
+
+
+func _on_module_timer_timeout():
+	if has_colony():
+		print("Module timer")
+		var pos = get_global_position()
+		var mo = module.instance()
+		get_parent().add_child(mo)
+		mo.set_global_position(pos)
+		mo.set_z_index(2)
