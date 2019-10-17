@@ -56,6 +56,8 @@ func _process(delta):
 		#print("Get targetables")
 		var dist = get_global_transform().xform_inv(targetables[0].get_global_position()).length()
 		if shoot_target == null and dist < 500:
+			if targetables[0].cloaked:
+				return
 			shoot_target = targetables[0]
 			# will have to be changed when other ships will become targetables
 			targetables[0].targeted_by.append(self)
@@ -146,6 +148,9 @@ func _on_distress_called(target):
 	if is_in_group("enemy"):
 		for n in get_tree().get_nodes_in_group("enemy"):
 			if not n.is_in_group("starbase"):
+				#if target.cloaked:
+				#	return
+					
 				n.brain.target = target.get_global_position()
 				n.brain.set_state(n.brain.STATE_IDLE)
 				print("Targeting " + str(target.get_parent().get_name()) + " in response to distress call")

@@ -99,8 +99,10 @@ func get_closest_enemy():
 	var nodes = []
 	if is_in_group("enemy"):
 		nodes = get_tree().get_nodes_in_group("friendly")
-		# add player
-		nodes.append(get_tree().get_nodes_in_group("player")[0].get_child(0))
+		var player = get_tree().get_nodes_in_group("player")[0].get_child(0)
+		if not player.cloaked:
+			# add player
+			nodes.append(player)
 	else:	
 		nodes = get_tree().get_nodes_in_group("enemy")
 	

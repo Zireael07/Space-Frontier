@@ -319,12 +319,13 @@ func _input(event):
 	
 	if Input.is_action_pressed("cloak"):
 		if has_cloak:
-			cloaked = !cloaked
+			# toggle
+			cloaked = not cloaked
 			if cloaked:
 				# sprite only!
 				get_child(0).set_modulate(Color(0.3, 0.3, 0.3))
 			else:
-				set_modulate(Color(1,1,1))	
+				get_child(0).set_modulate(Color(1,1,1))	
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
