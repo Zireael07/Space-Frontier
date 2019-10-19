@@ -66,7 +66,6 @@ margin_bottom = 20.0
 text = "Cargo"
 
 [node name="PanelInfo" type="Panel" parent="Control2/Panel_rightHUD"]
-editor/display_folded = true
 margin_left = 4.0
 margin_top = 20.0
 margin_right = 197.0
@@ -350,7 +349,6 @@ margin_left = -20.0
 margin_bottom = 40.0
 
 [node name="Control" type="Control" parent="."]
-editor/display_folded = true
 margin_top = 525.0
 margin_right = 40.0
 margin_bottom = 565.0
@@ -443,7 +441,6 @@ value = 100.0
 percent_visible = false
 
 [node name="Panel2" type="Panel" parent="Control"]
-editor/display_folded = true
 margin_left = 215.0
 margin_right = 650.0
 margin_bottom = 149.0
@@ -529,6 +526,16 @@ custom_styles/fg = ExtResource( 11 )
 step = 1.0
 value = 100.0
 percent_visible = false
+
+[node name="Label_arm" type="Label" parent="Control/Panel2"]
+visible = false
+margin_left = 115.0
+margin_top = 121.0
+margin_right = 159.0
+margin_bottom = 135.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
+text = "Armor: 100"
 
 [node name="Control3" type="Control" parent="."]
 margin_right = 40.0

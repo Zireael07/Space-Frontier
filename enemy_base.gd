@@ -11,6 +11,8 @@ onready var explosion = preload("res://explosion.tscn")
 
 var shields = 150
 signal shield_changed
+var armor = 100
+signal armor_changed
 
 var targetted = false
 # for player targeting the AI

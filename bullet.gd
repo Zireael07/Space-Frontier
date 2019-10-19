@@ -29,9 +29,14 @@ func _on_bullet_area_entered( area ):
 		
 		var pos = area.get_global_position()
 		
-		area.shields -= 10
-		# emit signal
-		area.emit_signal("shield_changed", area.shields)
+		# go through armor first
+		if 'armor' in area and area.armor > 0:
+			area.armor -= 5 # armor absorbs some of the damage
+			area.emit_signal("armor_changed", area.armor)
+		else:
+			area.shields -= 10
+			# emit signal
+			area.emit_signal("shield_changed", area.shields)
 		
 		var sb = area.is_in_group("starbase")
 		if sb:

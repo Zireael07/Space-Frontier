@@ -179,7 +179,7 @@ func _on_power_changed(power):
 	else:
 		$"Control/Panel/ProgressBar_po".value = 0
 
-	
+
 func _on_module_level_changed(module, level):
 	var info = $"Control2/Panel_rightHUD/PanelInfo/ShipInfo/"
 
@@ -206,6 +206,8 @@ func _on_AI_targeted(AI):
 			prev_target.targetted = false
 		prev_target.update()
 		prev_target.disconnect("shield_changed", self, "_on_target_shield_changed")
+		if 'armor' in prev_target:
+			prev_target.disconnect("armor_changed", self, "_on_target_armor_changed")
 	
 	# assume sprite is always the first child of the ship
 	$"Control/Panel2/target_outline".set_texture(AI.get_child(0).get_texture())
@@ -213,15 +215,39 @@ func _on_AI_targeted(AI):
 	
 	for n in $"Control/Panel2".get_children():
 		n.show()
+		if not 'armor' in AI:
+			$"Control/Panel2/Label_arm".hide()
 	
 		
 	target.connect("shield_changed", self, "_on_target_shield_changed")
+	if 'armor' in AI:
+		target.connect("armor_changed", self, "_on_target_armor_changed")
 
 func hide_target_panel():
 	# hide panel info if any
 	for n in $"Control/Panel2".get_children():
 		n.hide()
 
+func _on_target_shield_changed(shield):
+	#print("Shields from signal is " + str(shield))
+	
+	# original max is 100
+	# avoid truncation
+	var maxx = 100.0
+	var perc = shield/maxx * 100
+	
+	#print("Perc: " + str(perc))
+	
+	if perc >= 0:
+		$"Control/Panel2/ProgressBar_sh2".value = perc
+	else:
+		$"Control/Panel2/ProgressBar_sh2".value = 0
+
+func _on_target_armor_changed(armor):
+	if armor >= 0:
+		$"Control/Panel2/Label_arm".set_text("Armor: " + str(armor))
+	else:
+		$"Control/Panel2/Label_arm".set_text("Armor: " + str(armor))
 	
 func _on_planet_targeted(planet):
 	var prev_target = null
@@ -254,20 +280,8 @@ func _on_colony_picked(colony):
 	# pass to correct node
 	$"Control2/Panel_rightHUD/minimap"._on_colony_picked(colony)
 	
-func _on_target_shield_changed(shield):
-	#print("Shields from signal is " + str(shield))
+
 	
-	# original max is 100
-	# avoid truncation
-	var maxx = 100.0
-	var perc = shield/maxx * 100
-	
-	#print("Perc: " + str(perc))
-	
-	if perc >= 0:
-		$"Control/Panel2/ProgressBar_sh2".value = perc
-	else:
-		$"Control/Panel2/ProgressBar_sh2".value = 0
 
 func _on_target_acquired_by_AI(AI):
 	$"Control2/status_light".set_modulate(Color(1,0,0))
