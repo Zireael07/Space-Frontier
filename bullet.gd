@@ -52,6 +52,12 @@ func _on_bullet_area_entered( area ):
 					get_parent().get_parent().targeted_by.remove(find)
 				if get_parent().get_parent().targeted_by.size() < 1:
 					area.emit_signal("target_lost_AI", area)			
+			
+			# mark is as no longer orbiting
+			if area.orbiting != null:
+				print("AI killed, no longer orbiting")
+				area.orbiting.get_parent().remove_orbiter(area)
+			
 			# kill the AI
 			area.get_parent().queue_free()
 

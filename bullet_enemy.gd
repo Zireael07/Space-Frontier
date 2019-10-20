@@ -37,6 +37,13 @@ func _on_bullet_area_entered( area ):
 		
 		if area.shields <= 0:
 			if area.get_groups().has("friendly"):
+				
+				# mark is as no longer orbiting
+				if area.orbiting != null:
+					print("AI killed, no longer orbiting")
+					area.orbiting.get_parent().remove_orbiter(area)
+				
+				# kill the AI
 				area.get_parent().queue_free()
 			
 			# kill the player
