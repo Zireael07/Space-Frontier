@@ -25,7 +25,7 @@ func _on_lifetime_timeout():
 func _on_bullet_area_entered( area ):
 	if area.get_groups().has("enemy"):
 		queue_free()
-		print(area.get_parent().get_name())
+		#print(area.get_parent().get_name())
 		
 		var pos = area.get_global_position()
 		
@@ -47,7 +47,9 @@ func _on_bullet_area_entered( area ):
 			# status light update
 			if 'targeted_by' in get_parent().get_parent():
 				print("Update status light on AI death")
-				get_parent().get_parent().targeted_by.remove(get_parent().get_parent().targeted_by.find(area))
+				var find = get_parent().get_parent().targeted_by.find(area)
+				if find != -1:
+					get_parent().get_parent().targeted_by.remove(find)
 				if get_parent().get_parent().targeted_by.size() < 1:
 					area.emit_signal("target_lost_AI", area)			
 			# kill the AI
