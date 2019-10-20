@@ -34,6 +34,8 @@ var HUD = null
 signal officer_message
 
 var credits = 0
+var kills = 0
+signal kill_gained
 var landed = false
 signal planet_landed
 

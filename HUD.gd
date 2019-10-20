@@ -42,6 +42,7 @@ func _ready():
 	player.connect("power_changed", self, "_on_power_changed")
 	
 	player.connect("officer_message", self, "_on_officer_messaged")
+	player.connect("kill_gained", self, "_on_kill_gained")
 	
 	player.connect("planet_landed", self, "_on_planet_landed")
 	
@@ -192,6 +193,8 @@ func _on_module_level_changed(module, level):
 func _on_officer_messaged(message):
 	$"Control3/Officer".set_text("1st Officer>: " + str(message))
 
+func _on_kill_gained(num):
+	$"Control/Panel/Label_kill".set_text("Kills: " + str(num))
 
 func _on_AI_targeted(AI):
 	var prev_target = null

@@ -74,6 +74,11 @@ func _on_bullet_area_entered( area ):
 				expl.set_scale(Vector2(1,1))
 			expl.play()
 			
+			# count a kill
+			if 'kills' in get_parent().get_parent():
+				get_parent().get_parent().kills = get_parent().get_parent().kills + 1
+				get_parent().get_parent().emit_signal("kill_gained", get_parent().get_parent().kills)
+			
 			# prevent hitting an asteroid in the same shot
 			return
 	

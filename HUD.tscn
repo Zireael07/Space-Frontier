@@ -440,6 +440,15 @@ step = 1.0
 value = 100.0
 percent_visible = false
 
+[node name="Label_kill" type="Label" parent="Control/Panel"]
+margin_left = 114.0
+margin_top = 120.0
+margin_right = 154.0
+margin_bottom = 139.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
+text = "Kills: 0"
+
 [node name="Panel2" type="Panel" parent="Control"]
 margin_left = 215.0
 margin_right = 650.0
