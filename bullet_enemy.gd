@@ -29,9 +29,11 @@ func _on_bullet_area_entered( area ):
 
 		var pos = area.get_global_position()
 
-		area.shields -= 10
-		# emit signal
-		area.emit_signal("shield_changed", [area.shields])
+		# prevent negative shields
+		if area.shields > 0:
+			area.shields -= 10
+			# emit signal
+			area.emit_signal("shield_changed", [area.shields])
 		
 		if area.shields <= 0:
 			if area.get_groups().has("friendly"):
