@@ -340,6 +340,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 func shoot():
 	if power <= shoot_power_draw:
+		emit_signal("officer_message", "Weapons systems offline!")
 		return
 		
 	power -= shoot_power_draw
