@@ -191,7 +191,10 @@ func _on_module_level_changed(module, level):
 		#$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".set_text("Engine: " + str(level))
 
 func _on_officer_messaged(message):
+	$"Control3/Officer".show()
 	$"Control3/Officer".set_text("1st Officer>: " + str(message))
+	# start the hide timer
+	$"Control3/officer_timer".start()
 
 func _on_kill_gained(num):
 	$"Control/Panel/Label_kill".set_text("Kills: " + str(num))
@@ -493,3 +496,8 @@ func _on_BackButton_pressed():
 
 func _on_ConquerButton_pressed():
 	pass # Replace with function body.
+
+
+func _on_officer_timer_timeout():
+	$"Control3/Officer".hide()
+	#pass # Replace with function body.
