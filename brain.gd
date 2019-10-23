@@ -218,6 +218,10 @@ class RefitState:
 					ship.ship.get_parent().get_parent().storage[ship.ship.cargo.keys()[0]] = 1
 				else:
 					ship.ship.get_parent().get_parent().storage[ship.ship.cargo.keys()[0]] += 1
+			
+			# start timer
+			# task timer allows the AI to leave after some time passed
+			#ship.ship.task_timer.start()
 
 class ColonizeState:
 	var ship
@@ -271,6 +275,8 @@ class MineState:
 
 		# aim towards the target
 		if ship.get_global_position().distance_to(ship.target) < 100:
+			if object == null:
+				print("Bug, object shouldn't be null!")
 			# update target location
 			ship.target = object.get_global_position()
 			#print("Heading towards " + str(ship.target))
