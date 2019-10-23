@@ -200,15 +200,18 @@ func _on_task_timer_timeout():
 			else:
 				# deorbit
 				deorbit()		
-				#brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
-				#brain.set_state(brain.STATE_COLONIZE)
-				if get_tree().get_nodes_in_group("asteroid").size() > 3:
-					brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+				brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
+				brain.set_state(brain.STATE_COLONIZE)
+				#if get_tree().get_nodes_in_group("asteroid").size() > 3:
+				#	brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+				#brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 		else:
 			deorbit()
 			if get_tree().get_nodes_in_group("asteroid").size() > 3:
 				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
-	#else:
-		
+	else:
+		if not (brain.get_state() in [brain.STATE_MINE, brain.STATE_REFIT, brain.STATE_COLONIZE]):
+			if get_tree().get_nodes_in_group("asteroid").size() > 3:
+				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
