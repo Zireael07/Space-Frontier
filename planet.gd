@@ -211,6 +211,8 @@ func _on_Area2D_area_entered(area):
 				if not has_node("colony") and not has_colony():
 					population = 50000
 					emit_signal("planet_colonized", self)
+					# it wants the top node, not the area itself
+					area.emit_signal("colony_colonized", area.get_parent())
 					print("Adding colony to planet")
 					# add colony to planet
 					# prevent crash

@@ -147,6 +147,9 @@ func pick_colony():
 		co.set_z_index(-1)
 		# emit signal
 		emit_signal("colony_picked", co)
+		# connect signals
+		# "colony" is a group of the parent of colony itself
+		co.get_child(0).connect("colony_colonized", game.player.HUD, "_on_colony_colonized")
 		return true
 	else:
 		return false

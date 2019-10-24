@@ -34,8 +34,9 @@ func _ready():
 		
 	for c in get_tree().get_nodes_in_group("colony"):
 		# "colony" is a group of the parent of colony itself
+		c.get_child(0).connect("colony_colonized", self, "_on_colony_colonized")
 		# because colonies don't have HUD info yet
-		c.get_child(0).connect("colony_targeted", self, "_on_planet_targeted")	
+		c.get_child(0).connect("colony_targeted", self, "_on_planet_targeted")
 	
 	player.connect("shield_changed", self, "_on_shield_changed")
 	player.connect("module_level_changed", self, "_on_module_level_changed")
@@ -280,13 +281,17 @@ func _on_planet_colonized(planet):
 	
 	if node:
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".get_node(node).set_self_modulate(Color(0, 1, 1))
-	
+
+# minimap	
 func _on_colony_picked(colony):
 	print("Colony picked HUD")
 	# pass to correct node
 	$"Control2/Panel_rightHUD/minimap"._on_colony_picked(colony)
 	
-
+func _on_colony_colonized(colony):
+	print("Colony colonized HUD")
+	# pass to correct node
+	$"Control2/Panel_rightHUD/minimap"._on_colony_colonized(colony)
 	
 
 func _on_target_acquired_by_AI(AI):

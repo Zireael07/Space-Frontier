@@ -25,6 +25,7 @@ var hostiles
 var starbases
 var sb_enemies = []
 
+var colony_map = {}
 var colonies = []
 
 var star_sprites = []
@@ -158,7 +159,14 @@ func _on_colony_picked(colony):
 	colony_sprites.append(col_sprite)
 	add_child(col_sprite)
 	colonies.append(colony)
-	
+	colony_map[colony] = col_sprite
+
+func _on_colony_colonized(colony):
+	print("Removing colony from minimap...")
+	var spr = colony_map[colony]
+	remove_child(spr)
+	colonies.remove(colonies.find(colony))
+	colony_sprites.remove(colony_sprites.find(spr))
 
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.

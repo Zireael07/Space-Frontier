@@ -12,13 +12,11 @@ var targetted = false
 var tractor = false
 signal colony_targeted
 
+signal colony_colonized
+
 
 func _ready():
 	get_parent().add_to_group("colony")
-
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass
 
 # using this because we don't need physics
 func _process(delta):
@@ -28,40 +26,41 @@ func _process(delta):
 	# redraw 
 	update()
 	
-	if tractor and not get_parent().get_parent().get_parent().is_in_group("player"):
-		#print("Parent is " + get_parent().get_parent().get_parent().get_name())
-		target = tractor.get_node("dock").get_global_position()
-	
-		rel_pos = get_global_transform().xform_inv(target)
-		#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
+	if tractor:
+		if not get_parent().get_parent().get_parent().is_in_group("player") and not get_parent().get_parent().is_in_group("friendly"):
+			#print("Parent is " + get_parent().get_parent().get_parent().get_name())
+			target = tractor.get_node("dock").get_global_position()
 		
-		# steering behavior
-		var steer = get_steering_seek(target, 80)
-		# normal case
-		vel += steer
-	
-		# movement happens!
-		#acc += vel * -friction
-		#vel += acc *delta
-		pos += vel * delta
-		set_position(pos)
-		
-		# snap once close enough
-		var dist = get_global_position().distance_to(tractor.get_node("dock").get_global_position())
-		if dist < 20:
-			# reparent
-			get_parent().get_parent().remove_child(get_parent())
-			tractor.add_child(get_parent())
-			# set better z so that we don't overlap parent ship
-			get_parent().set_z_index(-1)
+			rel_pos = get_global_transform().xform_inv(target)
+			#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
 			
-			# all local positions relative to the immediate parent
-			get_parent().set_position(tractor.get_node("dock").get_position()+Vector2(0,20))
-			set_position(Vector2(0,0))
-			print("Adding colony as tractoring ship's child")
-			# switch off tractor
-			tractor = null
-			get_parent().get_parent().tractor = null
+			# steering behavior
+			var steer = get_steering_seek(target, 80)
+			# normal case
+			vel += steer
+		
+			# movement happens!
+			#acc += vel * -friction
+			#vel += acc *delta
+			pos += vel * delta
+			set_position(pos)
+			
+			# snap once close enough
+			var dist = get_global_position().distance_to(tractor.get_node("dock").get_global_position())
+			if dist < 20:
+				# reparent
+				get_parent().get_parent().remove_child(get_parent())
+				tractor.add_child(get_parent())
+				# set better z so that we don't overlap parent ship
+				get_parent().set_z_index(-1)
+				
+				# all local positions relative to the immediate parent
+				get_parent().set_position(tractor.get_node("dock").get_position()+Vector2(0,20))
+				set_position(Vector2(0,0))
+				print("Adding colony as tractoring ship's child")
+				# switch off tractor
+				tractor = null
+				get_parent().get_parent().tractor = null
 			
 		
 	#pass
