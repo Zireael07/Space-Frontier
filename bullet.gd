@@ -66,6 +66,10 @@ func _on_bullet_area_entered( area ):
 			# hide the target panel HUD
 			game.player.HUD.hide_target_panel()
 			
+			# officer message for player
+			if get_parent().get_parent() == game.player:
+				game.player.emit_signal("officer_message", "Received kill credit of 10,000") # hardcoded amount for now
+			
 			# debris
 			var deb = get_parent().get_parent().debris.instance()
 			get_parent().get_parent().get_parent().add_child(deb)

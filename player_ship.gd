@@ -186,6 +186,8 @@ func _process(delta):
 			# disable tractor
 			tractored = false
 			docked = true
+			# officer message
+			emit_signal("officer_message", "Docking successful")
 			# show refit screen
 			self.HUD.switch_to_refit()
 			
