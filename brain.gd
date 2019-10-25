@@ -248,7 +248,7 @@ class ColonizeState:
 		if ship.get_global_position().distance_to(ship.target) < 50:
 			if ship.ship.get_colony_in_dock() == null:
 				ship.target = ship.ship.get_colonized_planet().get_global_position()
-				ship.set_state(ship.STATE_ORBIT)
+				ship.set_state(STATE_ORBIT)
 
 
 # completely original	
@@ -277,8 +277,10 @@ class MineState:
 		if ship.get_global_position().distance_to(ship.target) < 100:
 			if object == null:
 				print("Bug, object shouldn't be null!")
-			# update target location
-			ship.target = object.get_global_position()
+				ship.set_state(STATE_IDLE)
+			else:
+				# update target location
+				ship.target = object.get_global_position()
 			#print("Heading towards " + str(ship.target))
 			# steering behavior
 			steer = ship.set_heading(ship.target)
