@@ -68,7 +68,11 @@ func _process(delta):
 func set_state(new_state, param=null):
 	# if we need to clean up
 	#state.exit()
-	prev_state = get_state()
+	
+	if get_state() in [STATE_MINE, STATE_ATTACK, STATE_REFIT]:
+		prev_state = [ get_state(), state.param ]
+	else:
+		prev_state = [ get_state(), null ]
 	
 	if new_state == STATE_INITIAL:
 		state = InitialState.new(self)
@@ -164,10 +168,12 @@ class OrbitState:
 
 class AttackState:
 	var ship
+	var param # for previous state
 	var target
 	
 	func _init(shp, tg):
 		ship = shp
+		param = tg
 		target = tg
 	
 	func update(delta):
@@ -177,7 +183,8 @@ class AttackState:
 			steer = ship.set_heading(target.get_global_position())
 		# if target was killed, bail out immediately
 		else:
-			ship.set_state(ship.prev_state)
+			# this way, we also pass the parameters
+			ship.set_state(ship.prev_state[0], ship.prev_state[1])
 			
 		# normal case
 		ship.vel += steer
@@ -189,14 +196,17 @@ class AttackState:
 			#print("Shooting" + str(enemy.get_parent().get_name()))
 			ship.ship.shoot_wrapper()
 		else:
-			ship.set_state(ship.prev_state)
+			# this way, we also pass the parameters
+			ship.set_state(ship.prev_state[0], ship.prev_state[1])
 			
 class RefitState:
 	var ship
+	var param # for previous state
 	var base
 	
 	func _init(shp, sb):
 		ship = shp
+		param = sb
 		base = sb
 	
 	func update(delta):
@@ -255,11 +265,13 @@ class ColonizeState:
 class MineState:
 	var ship
 	var shot = false
+	var param # for previous state
 	var object
 	
 	func _init(shp,obj):
 		ship = shp
 		object = obj
+		param = obj
 		
 	func update(delta):
 		var steer = Vector2(0,0)
@@ -275,17 +287,21 @@ class MineState:
 
 		# aim towards the target
 		if ship.get_global_position().distance_to(ship.target) < 100:
-			if object == null:
+			if object == null and not shot:
 				print("Bug, object shouldn't be null!")
 				ship.set_state(STATE_IDLE)
+			elif shot:
+				# do nothing
+				pass
 			else:
 				# update target location
 				ship.target = object.get_global_position()
-			#print("Heading towards " + str(ship.target))
+			
+			print("Heading towards " + str(ship.target))
 			# steering behavior
 			steer = ship.set_heading(ship.target)
-			if ship.get_global_position().distance_to(ship.target) > 50:
-				steer += ship.get_steering_arrive(ship.target)
+			#if ship.get_global_position().distance_to(ship.target) > 50:
+			steer += ship.get_steering_arrive(ship.target)
 		else:
 			steer = ship.get_steering_arrive(ship.target)
 			
@@ -299,9 +315,9 @@ class MineState:
 			#print("Close to target")
 			ship.ship.shoot_wrapper()
 			
-			var ress = ship.get_tree().get_nodes_in_group("resource")
-			if ress.size() > 0:
-				shot = true
-				ship.target = ress[0].get_global_position()
+		var ress = ship.get_tree().get_nodes_in_group("resource")
+		if ress.size() > 0:
+			shot = true
+			ship.target = ress[0].get_global_position()
 				
 				
