@@ -111,12 +111,18 @@ func deorbit():
 	#	brain.set_state(brain.STATE_MINE)
 			
 func resource_picked():
-	# refit
+	# increment the counter
+	brain.state.cnt += 1
+	print("Counter: " + str(brain.state.cnt))
+
+	# reset just in case
+	brain.state.shot = false
 
 	# get the base
 	var base = get_friendly_base()
-	if base != null:
-		print("Resource picked, refit")
+	# refit
+	if base != null and brain.state.cnt == brain.state.target_num:
+		print("Resources picked, refit")
 		brain.target = base.get_global_position()
 		brain.set_state(brain.STATE_REFIT, base)
 
@@ -190,7 +196,7 @@ func _on_shield_changed(shield):
 func _on_shield_timer_timeout():
 	$"shield_effect".hide()
 
-
+#TODO: maybe move to brain.gd?
 func _on_task_timer_timeout():
 	print("Task timer timeout")
 	if orbiting:

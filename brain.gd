@@ -267,11 +267,15 @@ class MineState:
 	var shot = false
 	var param # for previous state
 	var object
+	var cnt = 0
+	var target_num = 0
 	
 	func _init(shp,obj):
 		ship = shp
 		object = obj
 		param = obj
+		cnt = 0
+		target_num = 2
 		
 	func update(delta):
 		var steer = Vector2(0,0)
@@ -297,7 +301,7 @@ class MineState:
 				# update target location
 				ship.target = object.get_global_position()
 			
-			print("Heading towards " + str(ship.target))
+			#print("Heading towards " + str(ship.target))
 			# steering behavior
 			steer = ship.set_heading(ship.target)
 			#if ship.get_global_position().distance_to(ship.target) > 50:
@@ -317,7 +321,8 @@ class MineState:
 			
 		var ress = ship.get_tree().get_nodes_in_group("resource")
 		if ress.size() > 0:
-			shot = true
+			if not shot:
+				shot = true
 			ship.target = ress[0].get_global_position()
 				
-				
+		# NPC ship resource_picked handles the switch to refit
