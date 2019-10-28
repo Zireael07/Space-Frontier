@@ -101,6 +101,8 @@ func _process(delta):
 	if Input.is_action_pressed("ui_up"):
 		# undock
 		if docked:
+			# restore original z
+			get_parent().set_z_index(0)
 			docked = false
 		
 		# deorbit

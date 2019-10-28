@@ -68,6 +68,8 @@ func move_AI(vel, delta):
 	
 	# undock
 	if docked:
+		# restore original z
+		get_parent().set_z_index(0)
 		docked = false
 	
 	if not orbiting:
