@@ -65,6 +65,14 @@ func _on_bullet_area_entered( area ):
 			game.player.HUD.target = null
 			# hide the target panel HUD
 			game.player.HUD.hide_target_panel()
+
+			# count a kill
+			if 'kills' in get_parent().get_parent():
+				get_parent().get_parent().kills = get_parent().get_parent().kills + 1
+				get_parent().get_parent().emit_signal("kill_gained", get_parent().get_parent().kills)
+				# credits
+				get_parent().get_parent().credits = get_parent().get_parent().credits + 10000
+				print("Cr: " + str(get_parent().get_parent().credits))
 			
 			# officer message for player
 			if get_parent().get_parent() == game.player:
@@ -75,7 +83,7 @@ func _on_bullet_area_entered( area ):
 			get_parent().get_parent().get_parent().add_child(deb)
 			deb.set_global_position(pos)
 			
-			# explosion
+			# explosion effect
 			var expl = get_parent().get_parent().explosion.instance()
 			print(get_parent().get_parent().get_parent().get_name())
 			get_parent().get_parent().get_parent().add_child(expl)
@@ -86,10 +94,7 @@ func _on_bullet_area_entered( area ):
 				expl.set_scale(Vector2(1,1))
 			expl.play()
 			
-			# count a kill
-			if 'kills' in get_parent().get_parent():
-				get_parent().get_parent().kills = get_parent().get_parent().kills + 1
-				get_parent().get_parent().emit_signal("kill_gained", get_parent().get_parent().kills)
+
 			
 			# prevent hitting an asteroid in the same shot
 			return
