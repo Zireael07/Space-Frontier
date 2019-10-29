@@ -29,6 +29,9 @@ func _on_bullet_area_entered( area ):
 		
 		var pos = area.get_global_position()
 		
+		# notify AI - it has been attacked
+		area.emit_signal("AI_hit", get_parent().get_parent())
+		
 		# go through armor first
 		if 'armor' in area and area.armor > 0:
 			area.armor -= 5 # armor absorbs some of the damage

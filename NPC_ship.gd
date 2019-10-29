@@ -13,6 +13,8 @@ signal AI_targeted
 signal target_acquired_AI
 signal target_lost_AI
 
+signal AI_hit
+
 export(int) var kind_id = 0
 
 enum kind { enemy, friendly}
@@ -28,6 +30,7 @@ func _ready():
 #	print("Groups: " + str(get_groups()))
 	
 	connect("shield_changed", self, "_on_shield_changed")
+	connect("AI_hit", self, "_on_AI_hit")
 
 	brain = get_node("brain")
 	# register ourselves with brain
@@ -128,6 +131,17 @@ func resource_picked():
 		brain.target = base.get_global_position()
 		brain.set_state(brain.STATE_REFIT, base)
 
+func _on_AI_hit(attacker):
+	print("AI hit by " + str(attacker.get_name()))
+	# switch to attack
+	if brain.get_state() != brain.STATE_ATTACK:
+		brain.set_state(brain.STATE_ATTACK, attacker)
+	
+	# signal player being attacked if it's the case
+	if attacker.is_in_group("player"):
+		attacker.targeted_by.append(self)
+		emit_signal("target_acquired_AI", self)
+		print("AI ship acquired target")
 
 func move_orbit(delta):
 	# orbiting temporarily limited to friendlies
@@ -223,7 +237,7 @@ func _on_task_timer_timeout():
 				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 	else:
-		if not (brain.get_state() in [brain.STATE_MINE, brain.STATE_REFIT, brain.STATE_COLONIZE]):
+		if not (brain.get_state() in [brain.STATE_MINE, brain.STATE_REFIT, brain.STATE_COLONIZE, brain.STATE_ATTACK]):
 			if get_tree().get_nodes_in_group("asteroid").size() > 3:
 				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])

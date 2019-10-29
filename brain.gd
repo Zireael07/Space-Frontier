@@ -177,6 +177,11 @@ class AttackState:
 		target = tg
 	
 	func update(delta):
+		# deorbit
+		if ship.ship.orbiting:
+			ship.ship.deorbit()
+		
+		
 		var steer = Vector2(0,0)
 		if is_instance_valid(target):
 			# steering behavior
