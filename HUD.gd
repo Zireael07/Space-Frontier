@@ -435,7 +435,16 @@ func _on_ButtonView_pressed():
 	
 	
 	# set text
-	var text = "Mass: " + str(planet.mass) + "\n" + \
+	var au_dist = (planet.dist/planet.LIGHT_SEC)/planet.LS_TO_AU
+	var period = planet.calculate_orbit_period()
+	var yr = 3.15581e7 #seconds (86400 for a day)
+	
+	# this comes first because most other parameters are determined by orbital parameters
+	# lots of linebreaks because of planet graphic on the right
+	var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
+	var text = "Orbital radius: " + "\n" + str(au_dist) + " AU" + "\n" + "period: " + "\n" + str(period_string)
+	# those parameters have been present in the original game
+	text = text + "\n" + "Mass: " + str(planet.mass) + "\n" + \
 	"Pressure: " + "\n" + "Gravity:" + "\n" + "Temperature" + "\n" + "Hydro: " + str(planet.hydro)
 	if col:
 		text = text + "\n" + " Population: " + str(planet.population)

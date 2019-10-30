@@ -66,7 +66,7 @@ func calculate_orbit_period():
 	# T = 2*PI*sqrt(a^3/GM) [ substitute (M1+M2) for M if we're talking binary system ]
 	var t = 2*PI*sqrt(pow(axis*AU, 3)/G*sun) # in seconds
 	
-	print(str(t/86400) + " days, " + str(t/yr) + " year(s)")
+	#print(str(t/86400) + " days, " + str(t/yr) + " year(s)")
 	return t
 
 func is_habitable():
