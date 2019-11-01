@@ -14,6 +14,8 @@ signal colony_targeted
 
 signal colony_colonized
 
+var shoot_rel_pos = Vector2()
+
 
 func _ready():
 	get_parent().add_to_group("colony")
@@ -25,6 +27,21 @@ func _process(delta):
 
 	# redraw 
 	update()
+	
+	# shoot targets
+	if not tractor and not get_parent().get_parent().is_in_group("friendly"):
+		var enemy = get_closest_enemy()
+		if enemy:
+			shoot_rel_pos = get_global_transform().xform_inv(enemy.get_global_position())
+			var dist = get_global_position().distance_to(enemy.get_global_position())
+			#print(str(dist))
+			if dist < 350:
+				#print("Colony is close to an enemy " + str(enemy.get_parent().get_name()))
+				if gun_timer.get_time_left() == 0:
+					shoot()
+			
+					
+	
 	
 	if tractor:
 		if not get_parent().get_parent().get_parent().is_in_group("player") and not get_parent().get_parent().is_in_group("friendly"):
@@ -65,11 +82,33 @@ func _process(delta):
 		
 	#pass
 
+func get_closest_enemy():
+	var nodes = []
+	nodes = get_tree().get_nodes_in_group("enemy")
+	
+	var dists = []
+	var targs = []
+	
+	for t in nodes:
+		var dist = t.get_global_position().distance_to(get_global_position())
+		dists.append(dist)
+		targs.append([dist, t])
+
+	dists.sort()
+	#print("Dists sorted: " + str(dists))
+	
+	for t in targs:
+		if t[0] == dists[0]:
+			#print("Target is : " + t[1].get_parent().get_name())
+			
+			return t[1]
+
 func shoot():
 	gun_timer.start()
 	var b = bullet.instance()
 	bullet_container.add_child(b)
-	b.start_at(get_rotation(), $"muzzle".get_global_position())
+	var heading = fix_atan(shoot_rel_pos.x, shoot_rel_pos.y)
+	b.start_at(get_rotation() - heading, $"muzzle".get_global_position())
 
 
 # AI

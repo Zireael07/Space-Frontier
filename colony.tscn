@@ -1,56 +1,30 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://colony.gd" type="Script" id=1]
-[ext_resource path="res://assets/ships/ufoBlue.png" type="Texture" id=2]
+[ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ships/ufoBlue.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-
-custom_solver_bias = 0.0
 radius = 23.0021
 
-[node name="Node2D" type="Node2D" index="0"]
+[node name="Node2D" type="Node2D"]
 
-[node name="Area2D" type="Area2D" parent="." index="0"]
-
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
+[node name="Area2D" type="Area2D" parent="."]
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform" ]
-rot_speed = 2.6
-thrust = 500
-max_vel = 400
-friction = 0.65
-max_speed = 100
-bullet = null
+bullet = ExtResource( 2 )
 
-[node name="blue_colony" type="Sprite" parent="Area2D" index="0"]
-
+[node name="blue_colony" type="Sprite" parent="Area2D"]
 scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
+texture = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="1"]
-
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 1 )
 
-[node name="bullet_container" type="Node" parent="Area2D" index="2"]
+[node name="bullet_container" type="Node" parent="Area2D"]
 
-[node name="muzzle" type="Position2D" parent="Area2D" index="3"]
+[node name="muzzle" type="Position2D" parent="Area2D"]
 
-_sections_unfolded = [ "Transform" ]
-
-[node name="gun_timer" type="Timer" parent="Area2D" index="4"]
-
-process_mode = 1
-wait_time = 0.5
+[node name="gun_timer" type="Timer" parent="Area2D"]
+wait_time = 1.5
 one_shot = true
-autostart = false
-
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
-
-

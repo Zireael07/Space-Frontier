@@ -82,20 +82,22 @@ func _on_bullet_area_entered( area ):
 				game.player.emit_signal("officer_message", "Received kill credit of 10,000") # hardcoded amount for now
 			
 			# debris
-			var deb = get_parent().get_parent().debris.instance()
-			get_parent().get_parent().get_parent().add_child(deb)
-			deb.set_global_position(pos)
+			if "debris" in get_parent().get_parent():
+				var deb = get_parent().get_parent().debris.instance()
+				get_parent().get_parent().get_parent().add_child(deb)
+				deb.set_global_position(pos)
 			
 			# explosion effect
-			var expl = get_parent().get_parent().explosion.instance()
-			print(get_parent().get_parent().get_parent().get_name())
-			get_parent().get_parent().get_parent().add_child(expl)
-			expl.set_global_position(pos)
-			if sb:
-				expl.set_scale(Vector2(2,2))
-			else:
-				expl.set_scale(Vector2(1,1))
-			expl.play()
+			if "explosion" in get_parent().get_parent():
+				var expl = get_parent().get_parent().explosion.instance()
+				print(get_parent().get_parent().get_parent().get_name())
+				get_parent().get_parent().get_parent().add_child(expl)
+				expl.set_global_position(pos)
+				if sb:
+					expl.set_scale(Vector2(2,2))
+				else:
+					expl.set_scale(Vector2(1,1))
+				expl.play()
 			
 
 			
