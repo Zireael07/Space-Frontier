@@ -106,9 +106,11 @@ func get_closest_enemy():
 func shoot():
 	gun_timer.start()
 	var b = bullet.instance()
+	# increase effective colony bullet range
+	b.get_node("lifetime").wait_time = 0.3
 	bullet_container.add_child(b)
 	var heading = fix_atan(shoot_rel_pos.x, shoot_rel_pos.y)
-	b.start_at(get_rotation() - heading, $"muzzle".get_global_position())
+	b.start_at(get_global_rotation() - heading, $"muzzle".get_global_position())
 
 
 # AI
