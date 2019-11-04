@@ -19,12 +19,31 @@ export(int) var kind_id = 0
 
 enum kind { enemy, friendly}
 
+var ship_name = ""
+
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	
+	randomize()
+	
+	var friendly_names = ["Victorious", "Notorious"]
+	var enemy_names = ["Slasher", "Gnasher"]
+	
 	if kind_id == kind.enemy:
+		var id = randi() % enemy_names.size() # return between 0 and size -1
+		ship_name = enemy_names[id]
+		$"Label".set_text(ship_name)
+		# tint red
+		$"Label".set_self_modulate(Color(1, 0, 0))
 		add_to_group("enemy")
 	elif kind_id == kind.friendly:
+		var id = randi() % friendly_names.size() # return between 0 and size-1
+		ship_name = friendly_names[id]
+		$"Label".set_text(ship_name)
+		# tint cyan
+		$"Label".set_self_modulate(Color(0, 1, 1))
 		add_to_group("friendly")
 		
 #	print("Groups: " + str(get_groups()))
@@ -85,7 +104,10 @@ func move_AI(vel, delta):
 		set_position(pos)
 	
 	# rotation
-	set_rotation(-a)	
+	set_rotation(-a)
+	
+	# straighten out labels
+	$"Label".set_rotation(a)
 
 func shoot_wrapper():
 	if gun_timer.get_time_left() == 0:

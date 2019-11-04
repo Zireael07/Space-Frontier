@@ -68,6 +68,12 @@ script = ExtResource( 7 )
 
 [node name="task_timer" type="Timer" parent="Area2D"]
 wait_time = 2.0
+
+[node name="Label" type="Label" parent="Area2D"]
+margin_top = 40.0
+margin_right = 38.0
+margin_bottom = 54.0
+text = "Name"
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D/task_timer" to="Area2D" method="_on_task_timer_timeout"]
