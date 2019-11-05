@@ -27,7 +27,6 @@ margin_bottom = 40.0
 script = ExtResource( 1 )
 
 [node name="Control2" type="Control" parent="."]
-editor/display_folded = true
 margin_left = 825.0
 margin_right = 865.0
 margin_bottom = 40.0
@@ -325,7 +324,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 7 )
 
-[node name="minimap" type="Control" parent="Control2/Panel_rightHUD"]
+[node name="minimap" type="Control" parent="Control2/Panel_rightHUD" groups=[
+"minimap",
+]]
 margin_left = 2.0
 margin_top = 400.0
 margin_right = 202.0

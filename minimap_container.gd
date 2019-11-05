@@ -50,6 +50,7 @@ var zoom_scale = 12
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	print("Minimap init")
 	
 	stars = get_tree().get_nodes_in_group("star")
 	planets = get_tree().get_nodes_in_group("planets")
@@ -147,9 +148,19 @@ func _ready():
 		add_child(sb_sprite)
 	
 	# make sure player is the last child (to be drawn last)
-	move_child($"player", stars.size()+planets.size()+asteroids.size()+friendlies.size()+hostiles.size()+starbases.size()+2)
+	move_child($"player", get_child_count()-1) #stars.size()+planets.size()+asteroids.size()+friendlies.size()+hostiles.size()+starbases.size()+2)
 	center = Vector2($"player".get_position().x, $"player".get_position().y)
 	set_clip_contents(true)
+
+func _on_ship_spawned(ship):
+	print("On ship spawned")
+	var friendly_sprite = TextureRect.new()
+	friendly_sprite.set_texture(friendly)
+	friendly_sprites.append(friendly_sprite)
+	add_child(friendly_sprite)
+	friendlies.append(ship)
+
+
 
 func _on_colony_picked(colony):
 	print("On colony picked")
@@ -163,10 +174,12 @@ func _on_colony_picked(colony):
 
 func _on_colony_colonized(colony):
 	print("Removing colony from minimap...")
-	var spr = colony_map[colony]
-	remove_child(spr)
-	colonies.remove(colonies.find(colony))
-	colony_sprites.remove(colony_sprites.find(spr))
+	# paranoia
+	if colony in colony_map:
+		var spr = colony_map[colony]
+		remove_child(spr)
+		colonies.remove(colonies.find(colony))
+		colony_sprites.remove(colony_sprites.find(spr))
 
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
