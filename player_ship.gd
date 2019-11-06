@@ -386,6 +386,9 @@ func _draw():
 	# distance indicator at a distance of 100 from the nosetip
 	draw_line(Vector2(10, -100), Vector2(-10, -100), Color(1,1,0), 4.0, true)
 	
+	# weapon range indicator
+	var rang = 1000 * 0.25 # 1000 is the bullet's speed, 0.25 is the bullet's lifetime
+	draw_line(Vector2(10, -rang) , Vector2(-10, -rang), Color(1,0,0), 4.0, true)
 	
 	# draw a red rectangle around the target
 	if target == self:
