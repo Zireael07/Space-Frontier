@@ -385,7 +385,7 @@ func _on_ButtonUpgrade_pressed():
 			player.shield_level += 1
 			player.credits -= 50
 
-
+# show planet/star descriptions
 func _on_ButtonView_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
 	
@@ -445,7 +445,8 @@ func _on_ButtonView_pressed():
 	var text = "Orbital radius: " + "\n" + str(au_dist) + " AU" + "\n" + "period: " + "\n" + str(period_string)
 	# those parameters have been present in the original game
 	text = text + "\n" + "Mass: " + str(planet.mass) + "\n" + \
-	"Pressure: " + "\n" + "Gravity:" + "\n" + "Temperature" + "\n" + "Hydro: " + str(planet.hydro)
+	"Pressure: " + "\n" + "Gravity:" + "\n" + "Temperature: " + str(planet.temp) + " K \n " + str(planet.temp-273.15) + " C \n" + \
+	 "Hydro: " + str(planet.hydro)
 	if col:
 		text = text + "\n" + " Population: " + str(planet.population)
 	if planet.is_habitable():

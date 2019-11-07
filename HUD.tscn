@@ -84,7 +84,7 @@ text = "Planet:"
 [node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
 margin_top = 20.0
 margin_right = 192.0
-margin_bottom = 208.0
+margin_bottom = 184.0
 bbcode_text = "Planet:
 
 Pressure:

@@ -11,6 +11,8 @@ export(Vector2) var data setget setData
 
 export(float) var mass = 1 # in Earth masses
 export(float) var hydro = 0.3 # water/land ratio (surface, not volume = 30% for Earth)
+var albedo = 0.3 # test value Bond albedo, ranges from 0 to 1
+var temp = 0 # in Kelvin
 
 const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
 const LS_TO_AU = 30 #500 realistic value
@@ -46,6 +48,8 @@ func _ready():
 	
 	calculate_orbit_period()
 	
+	temp = calculate_temperature()
+	
 	if has_colony():
 		population = 100000
 
@@ -75,6 +79,17 @@ func is_habitable():
 		return true
 	else:
 		return false
+
+# Radiative equilibrium tempetature
+func calculate_temperature():
+	var star = get_parent().get_parent()
+	var axis = (dist/LIGHT_SEC)/LS_TO_AU
+	# https://spacemath.gsfc.nasa.gov/astrob/6Page61.pdf
+	# T = 273*((L(1-a) / D2)^0.25)
+	var t = star.luminosity*(1-albedo) / pow(axis,2)
+	var T = 273 * pow(t, 0.25)
+	return T
+
 
 func setData(val):
 	if Engine.is_editor_hint() and val != null:
