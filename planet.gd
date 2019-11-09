@@ -10,6 +10,8 @@ export(float) var planet_rad_factor = 1.0
 export(Vector2) var data setget setData
 
 export(float) var mass = 1 # in Earth masses
+var radius = 1.0 # in Earth radius
+var gravity = 1.0 # in Earth gravity
 export(float) var hydro = 0.3 # water/land ratio (surface, not volume = 30% for Earth)
 var albedo = 0.3 # test value Bond albedo, ranges from 0 to 1
 var temp = 0 # in Kelvin
@@ -50,6 +52,10 @@ func _ready():
 	
 	temp = calculate_temperature()
 	
+	# type is the parameter, skipped for now
+	radius = calculate_radius()
+	gravity = calculate_gravity(mass, radius)
+	
 	if has_colony():
 		population = 100000
 
@@ -89,6 +95,34 @@ func calculate_temperature():
 	var t = star.luminosity*(1-albedo) / pow(axis,2)
 	var T = 273 * pow(t, 0.25)
 	return T
+
+# https://arxiv.org/pdf/1603.08614v2.pdf (Jingjing, Kipping 2016)
+func calculate_radius(type="rocky"):
+	randomize()
+	# <= 2 masses of Earth
+	if type == "rocky":
+		var radius = pow(mass, 0.28)
+		# fudge
+		var max_dev = radius*0.04 # 4% max spread
+		radius = rand_range(radius-max_dev, radius+max_dev)
+		return radius
+	# others (not implemented yet)
+	# Neptunian = <= 130 masses of Earth
+	# radius = pow(mass, 0.59)
+	# max spread 15%
+	# Jovian = < 0.08 Sun masses
+	# all the [Jovian] worlds have almost the same radius
+	# radius = pow(mass, -0.04)
+	# max spread 8%
+	# anything above that is a star so needn't apply
+	else:
+		return 1 # dummy
+
+# if we have mass and radius, we get gravity as a bonus
+func calculate_gravity(mass, radius):
+	# measured in multiplies of Earth's mass and radius and therefore gravity
+	# g = m/r^2 
+	return mass/pow(radius, 2)
 
 
 func setData(val):
