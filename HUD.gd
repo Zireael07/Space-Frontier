@@ -434,19 +434,29 @@ func _on_ButtonView_pressed():
 		label.set_self_modulate(Color(1,1,1))
 	
 	
-	# set text
+	
 	var au_dist = (planet.dist/planet.LIGHT_SEC)/planet.LS_TO_AU
 	var period = planet.calculate_orbit_period()
 	var yr = 3.15581e7 #seconds (86400 for a day)
 	
+	#formatting
+	var format_AU = "%.3f AU" % au_dist
+	var format_grav = "%.2f g" % planet.gravity
+	var format_temp = "%d K" % planet.temp
+	var format_tempC = "(%d C)" % (planet.temp-273.15)
+	
+	# linebreak because of planet graphic on the right
+	#var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
+	var format_days = "%.1f days, \n%.2f year(s)" % [(period/86400), (period/yr)] 
+	
+	# set text
 	# this comes first because most other parameters are determined by orbital parameters
 	# lots of linebreaks because of planet graphic on the right
-	var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
-	var text = "Orbital radius: " + "\n" + str(au_dist) + " AU" + "\n" + "period: " + "\n" + str(period_string)
+	var text = "Orbital radius: " + "\n" + str(format_AU) + "\n" + "period: " + "\n" + str(format_days)
 	# those parameters have been present in the original game
 	text = text + "\n" + "Mass: " + str(planet.mass) + "\n" + \
-	"Pressure: " + "\n" + "Gravity: " + str(planet.gravity) + "\n" + \
-	"Temperature: " + str(planet.temp) + " K \n " + str(planet.temp-273.15) + " C \n" + \
+	"Pressure: " + "\n" + "Gravity: " + str(format_grav) + "\n" + \
+	"Temperature: " + str(format_temp) + " " + str(format_tempC) + " \n" + \
 	"Hydro: " + str(planet.hydro)
 	if col:
 		text = text + "\n" + " Population: " + str(planet.population)
