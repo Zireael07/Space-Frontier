@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://enemy_ship.tscn" type="PackedScene" id=1]
+[ext_resource path="res://enemy_starbase.tscn" type="PackedScene" id=2]
+[ext_resource path="res://friendly_ship.tscn" type="PackedScene" id=3]
+[ext_resource path="res://colony.tscn" type="PackedScene" id=4]
+[ext_resource path="res://starbase.tscn" type="PackedScene" id=5]
+[ext_resource path="res://player_ship.tscn" type="PackedScene" id=6]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=7]
+[ext_resource path="res://HUD.gd" type="Script" id=8]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="enemy" type="Node2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 2120, 930 )
+
+[node name="enemy_base" type="Node2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( -800, 700 )
+
+[node name="friendly" type="Node2D" parent="." instance=ExtResource( 3 )]
+position = Vector2( 2000, 800 )
+
+[node name="Node2D" type="Node2D" parent="." groups=[
+"colony",
+] instance=ExtResource( 4 )]
+position = Vector2( -200, 850 )
+
+[node name="Node2D2" type="Node2D" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2000, 500 )
+
+[node name="player" type="Node2D" parent="." groups=[
+"player",
+] instance=ExtResource( 6 )]
+position = Vector2( 2014, 676 )
+z_index = 5
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer" instance=ExtResource( 7 )]
+pause_mode = 2
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 8 )

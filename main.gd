@@ -3,9 +3,37 @@ extends Control
 # Declare member variables here. Examples:
 var friendly = preload("res://friendly_ship.tscn")
 
+# star systems
+var proc_system = preload("res://star system.tscn")
+var sol = preload("res://Sol system.tscn")
+var trappist = preload("res://Trappist system.tscn")
+
+# game core
+var core = preload("res://game_core.tscn")
+
+func spawn_system(system="proc"):
+	var sys = proc_system
+	if system == "Sol":
+		sys = sol
+	elif system == "trappist":
+		sys = trappist
+		
+	var system_inst = sys.instance()
+	add_child(system_inst)
+	
+func spawn_core():
+	var cor = core.instance()
+	add_child(cor)
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("Main init")
+	
+	spawn_system()
+	spawn_core()
+	
 	spawn_friendly()
 	
 	
@@ -38,10 +66,10 @@ func spawn_friendly():
 		print("Spawning @ : " + str(p.get_global_position() + offset))
 		sp.get_child(0).set_position(Vector2(0,0))
 		sp.set_name("friendly2")
-		add_child(sp)
+		get_child(2).add_child(sp)
 		var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
 		print("Player index: " + str(p_ind))
-		move_child(sp, p_ind+1)
+		get_child(2).move_child(sp, p_ind+1)
 		#add_child_below_node(get_tree().get_nodes_in_group("player")[0], sp)
 		
 		# give minimap icon
