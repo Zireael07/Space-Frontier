@@ -257,16 +257,16 @@ func _on_task_timer_timeout():
 			deorbit()
 			if get_tree().get_nodes_in_group("asteroid").size() > 3:
 				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 	else:
 		if not (brain.get_state() in [brain.STATE_MINE, brain.STATE_REFIT, brain.STATE_COLONIZE, brain.STATE_ATTACK]):
 			if get_tree().get_nodes_in_group("asteroid").size() > 3:
 				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 		if brain.get_state() == brain.STATE_REFIT:
 			if not docked:
 				return
 			else:
 				if get_tree().get_nodes_in_group("asteroid").size() > 3:
 					brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+					brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
