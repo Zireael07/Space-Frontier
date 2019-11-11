@@ -68,11 +68,11 @@ func make_circle(center, segments, radius):
 func draw_empty_circle(circle):
 	draw_polyline(circle, Color(0,1,0), 2.0)		
 	
-func _draw():
-	# if Engine.is_editor_hint():
-	
-	draw_empty_circle(make_circle(Vector2(0,0), 24, hz_inner*AU))
-	draw_empty_circle(make_circle(Vector2(0,0), 24, hz_outer*AU))
-	
-#	draw_line(Vector2(0,0), Vector2(0,600), Color(0,1,0))
-	pass
+#func _draw():
+#	# if Engine.is_editor_hint():
+#
+#	draw_empty_circle(make_circle(Vector2(0,0), 24, hz_inner*AU))
+#	draw_empty_circle(make_circle(Vector2(0,0), 24, hz_outer*AU))
+#
+##	draw_line(Vector2(0,0), Vector2(0,600), Color(0,1,0))
+#	pass
