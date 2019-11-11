@@ -28,7 +28,7 @@ func _ready():
 	var hzs = calculate_hz(luminosity)
 	hz_inner = hzs[0]
 	hz_outer = hzs[1]
-	pass
+	#pass
 
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
