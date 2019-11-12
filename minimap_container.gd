@@ -53,6 +53,11 @@ func _ready():
 	print("Minimap init")
 	
 	stars = get_tree().get_nodes_in_group("star")
+	
+	# set zoom scale
+	zoom_scale = stars[0].zoom_scale
+	
+	
 	planets = get_tree().get_nodes_in_group("planets")
 	asteroids = get_tree().get_nodes_in_group("asteroid")
 	

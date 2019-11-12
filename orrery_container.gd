@@ -24,6 +24,10 @@ func _ready():
 	# Initialization here
 	
 	stars = get_tree().get_nodes_in_group("star")
+	
+	# set zoom scale
+	zoom_scale = stars[0].zoom_scale*2 # usually the zoom scale for orrery is twice of the normal minimap
+	
 	planets = get_tree().get_nodes_in_group("planets")
 	asteroids = get_tree().get_nodes_in_group("asteroid")
 	

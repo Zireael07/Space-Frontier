@@ -21,6 +21,10 @@ var orbit_rot = 0
 onready var sprite = $"Sprite"
 onready var planets = $"planet_holder"
 
+# for minimap
+export var zoom_scale = 12
+
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
