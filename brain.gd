@@ -26,17 +26,16 @@ func select_target():
 	if get_tree().get_nodes_in_group("asteroid").size() > 3:
 		if ship.get_colonized_planet() != null:
 		#if ship.kind_id == ship.kind.friendly and ship.get_colonized_planet() != null:
-			target = ship.get_colonized_planet().get_global_position()
-			set_state(STATE_ORBIT)
+			#target = ship.get_colonized_planet().get_global_position()
+			set_state(STATE_ORBIT, ship.get_colonized_planet())
 			print("Set orbit state for " + ship.get_parent().get_name())
-			#target_type = "COLONY_PLANET"
 		else:
 			target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 			set_state(STATE_IDLE)
 	else:
 		if ship.kind_id == ship.kind.friendly:
-			target = ship.get_colonized_planet().get_global_position()
-			set_state(STATE_ORBIT)
+			#target = ship.get_colonized_planet().get_global_position()
+			set_state(STATE_ORBIT, ship.get_colonized_planet())
 		else:
 			target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
 			set_state(STATE_IDLE)
@@ -69,17 +68,22 @@ func set_state(new_state, param=null):
 	# if we need to clean up
 	#state.exit()
 	
-	if get_state() in [STATE_MINE, STATE_ATTACK, STATE_REFIT]:
+	if get_state() in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT]:
 		prev_state = [ get_state(), state.param ]
 	else:
 		prev_state = [ get_state(), null ]
+	
+	# paranoia
+	if (new_state in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT] and param == null):
+		print("We forgot a parameter for the state " + str(new_state))
+	
 	
 	if new_state == STATE_INITIAL:
 		state = InitialState.new(self)
 	elif new_state == STATE_IDLE:
 		state = IdleState.new(self)
 	elif new_state == STATE_ORBIT:
-		state = OrbitState.new(self)
+		state = OrbitState.new(self, param)
 	elif new_state == STATE_MINE:
 		state = MineState.new(self, param)
 	elif new_state == STATE_ATTACK:
@@ -159,11 +163,16 @@ class IdleState:
 
 class OrbitState:
 	var ship
+	var param # for previous state
 	
-	func _init(shp):
+	func _init(shp, planet):
 		ship = shp
+		param = planet
 		
 	func update(delta):
+		# update target location
+		ship.target = param.get_global_position()
+		
 		ship.ship.move_orbit(delta)
 
 class AttackState:
@@ -262,8 +271,8 @@ class ColonizeState:
 		
 		if ship.get_global_position().distance_to(ship.target) < 50:
 			if ship.ship.get_colony_in_dock() == null:
-				ship.target = ship.ship.get_colonized_planet().get_global_position()
-				ship.set_state(STATE_ORBIT)
+				#ship.target = ship.ship.get_colonized_planet().get_global_position()
+				ship.set_state(STATE_ORBIT, ship.ship.get_colonized_planet())
 
 
 # completely original	

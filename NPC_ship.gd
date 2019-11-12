@@ -131,6 +131,9 @@ func orbit_planet(planet):
 
 func deorbit():
 	.deorbit()
+	
+	# force change state
+	brain.set_state(brain.STATE_IDLE)
 
 	# AI switch to other target
 	#if get_tree().get_nodes_in_group("asteroid").size() > 3:
@@ -166,9 +169,10 @@ func _on_AI_hit(attacker):
 		print("AI ship acquired target")
 
 func move_orbit(delta):
-	# orbiting temporarily limited to friendlies
-	#if kind_id == kind.friendly:
-	if (brain.target - get_global_position()).length() < 300 and not orbiting:
+	# 300 is experimentally picked
+	var rad_f = get_colonized_planet().planet_rad_factor
+	if (brain.target - get_global_position()).length() < 300*rad_f and not orbiting:
+		print("In orbit range: " + str((brain.target - get_global_position()).length()) + " " + str((300*rad_f)))
 		##orbit
 		print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
 		orbit_planet(get_colonized_planet())
