@@ -110,13 +110,25 @@ func _ready():
 		
 		# label
 		var label = Label.new()
-		label.set_text(p.get_node("Label").get_text())
+		
+		var txt = p.get_node("Label").get_text()
+		label.set_text(txt) # default
+		
+		# if the names end in a,b,c, etc., show just the letter to save space
+		var ends = ["a", "b", "c", "d", "e"]
+		for e in ends:
+			if txt.ends_with(e):
+				label.set_text(e)
+				break
+		
+		planet_sprites.append(con)
+		con.add_child(planet_sprite)
+		
 		label.set_position(Vector2(36*stars[0].star_radius_factor,36*stars[0].star_radius_factor))
 		con.add_child(label)
 			
 		
-		planet_sprites.append(con)
-		con.add_child(planet_sprite)
+		
 	
 	for a in asteroids:
 		var asteroid_sprite = TextureRect.new()
