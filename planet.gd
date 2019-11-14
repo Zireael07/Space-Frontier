@@ -270,6 +270,9 @@ func _on_Area2D_area_entered(area):
 					call_deferred("reposition", area)
 				else:
 					print("We already have a colony")
+					# add to population
+					population += 50000
+					area.get_parent().queue_free()
 		else:
 			print("Colony is already ours")
 
