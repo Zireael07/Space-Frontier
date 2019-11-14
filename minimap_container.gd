@@ -114,12 +114,14 @@ func _ready():
 		var txt = p.get_node("Label").get_text()
 		label.set_text(txt) # default
 		
-		# if the names end in a,b,c, etc., show just the letter to save space
-		var ends = ["a", "b", "c", "d", "e"]
-		for e in ends:
-			if txt.ends_with(e):
-				label.set_text(e)
-				break
+		# if the names end in star name + a,b,c, etc., show just the letter to save space
+		var star_name = stars[0].get_node("Label").get_text()
+		if txt.find(star_name) != -1:
+			var ends = ["a", "b", "c", "d", "e"]
+			for e in ends:
+				if txt.ends_with(e):
+					label.set_text(e)
+					break
 		
 		planet_sprites.append(con)
 		con.add_child(planet_sprite)
