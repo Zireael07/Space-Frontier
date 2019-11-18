@@ -338,5 +338,14 @@ class MineState:
 			if not shot:
 				shot = true
 			ship.target = ress[0].get_global_position()
+		else:
+			# if shot and no resource (e.g. because someone else picked it up)
+			if shot:
+				print("Someone picked our resource")
+				# reset
+				shot = false
+				# force update target location
+				ship.target = object.get_global_position()
+#
 				
 		# NPC ship resource_picked handles the switch to refit
