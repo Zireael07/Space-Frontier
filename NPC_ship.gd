@@ -258,7 +258,12 @@ func _on_task_timer_timeout():
 			if get_colony_in_dock() == null:
 				if kind_id == kind.friendly:
 					# pick up colony from planet
-					pick_colony()
+					if not pick_colony():
+						print("We can't pick colony now, go do something else...")
+						deorbit()
+						if get_tree().get_nodes_in_group("asteroid").size() > 3:
+							brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+							brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 				else:
 					print("Blockading a planet")
 			else:
