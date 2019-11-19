@@ -192,13 +192,24 @@ class AttackState:
 		
 		
 		var steer = Vector2(0,0)
+		# if no target, bail out
+		if target == null:
+			print("No target?!")
+			# this way, we also pass the parameters
+			ship.set_state(ship.prev_state[0], ship.prev_state[1])
+			print("Set state to: " + str(ship.get_state()))
+			return
+		
 		if is_instance_valid(target):
 			# steering behavior
 			steer = ship.set_heading(target.get_global_position())
 		# if target was killed, bail out immediately
 		else:
+			#print("Prev state: " + str(ship.prev_state))
 			# this way, we also pass the parameters
 			ship.set_state(ship.prev_state[0], ship.prev_state[1])
+			#print("Set state to: " + str(ship.get_state()))
+			return
 			
 		# normal case
 		ship.vel += steer
@@ -211,7 +222,10 @@ class AttackState:
 			ship.ship.shoot_wrapper()
 		else:
 			# this way, we also pass the parameters
+			#print("Prev state: " + str(ship.prev_state))
 			ship.set_state(ship.prev_state[0], ship.prev_state[1])
+			#print("Set state to: " + str(ship.get_state()))
+			return
 			
 class RefitState:
 	var ship

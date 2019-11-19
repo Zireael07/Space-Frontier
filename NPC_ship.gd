@@ -132,13 +132,14 @@ func orbit_planet(planet):
 func deorbit():
 	.deorbit()
 	
-	# force change state
-	brain.set_state(brain.STATE_IDLE)
-
-	# AI switch to other target
-	#if get_tree().get_nodes_in_group("asteroid").size() > 3:
-	#	brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-	#	brain.set_state(brain.STATE_MINE)
+	if not (brain.get_state() in [brain.STATE_ATTACK]):
+		# force change state
+		brain.set_state(brain.STATE_IDLE)
+	
+		# we should fire the task timer timeout, but since it goes to mining 90% of the time, just pretend it does so too...
+		if get_tree().get_nodes_in_group("asteroid").size() > 3:
+				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 			
 func resource_picked():
 	# paranoia
