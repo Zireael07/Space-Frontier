@@ -74,7 +74,7 @@ func _process(delta):
 
 	# shoot
 	if Input.is_action_pressed("shoot"):
-		if gun_timer.get_time_left() == 0:
+		if gun_timer.get_time_left() == 0 and not landed:
 			shoot()
 
 	# tractor
@@ -318,12 +318,16 @@ func _input(event):
 				get_parent().get_node("AnimationPlayer").play("landing")
 				landed = true
 				emit_signal("planet_landed")
+				# reparent
+				get_parent().get_parent().remove_child(get_parent())
+				pl[1].get_node("orbit_holder").add_child(get_parent())
+				get_parent().set_position(Vector2(0,0))
+				set_position(Vector2(0,0))
+				pos = Vector2(0,0)
 			else:
 				print("Too far away to land")
 		else:
-			get_parent().get_node("AnimationPlayer").play_backwards("landing")
-			$"shield_indicator".show()
-			landed = false
+			launch()
 	
 	if Input.is_action_pressed("cloak"):
 		if has_cloak:
@@ -342,6 +346,23 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 #	if not $"shield_indicator".is_visible():
 #		$"shield_indicator".show()
 
+func launch():
+	get_parent().get_node("AnimationPlayer").play_backwards("landing")
+	$"shield_indicator".show()
+	landed = false
+	# reparent
+	var root = get_node("/root/Control")
+	var gl = get_global_position()
+			
+	get_parent().get_parent().remove_child(get_parent())
+	root.add_child(get_parent())
+			
+	get_parent().set_global_position(gl)
+	set_position(Vector2(0,0))
+	pos = Vector2(0,0)
+			
+	set_global_rotation(get_global_rotation())
+			
 func shoot():
 	if power <= shoot_power_draw:
 		emit_signal("officer_message", "Weapons systems offline!")
