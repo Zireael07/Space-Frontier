@@ -99,6 +99,10 @@ func _process(delta):
 		rot += rot_speed*delta
 	# thrust
 	if Input.is_action_pressed("ui_up"):
+		# QoL feature - launch
+		if landed:
+			launch()
+		
 		# undock
 		if docked:
 			# restore original z
