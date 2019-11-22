@@ -93,6 +93,18 @@ func move_AI(vel, delta):
 		# restore original z
 		get_parent().set_z_index(0)
 		docked = false
+		# reparent
+		var root = get_node("/root/Control")
+		var gl = get_global_position()
+				
+		get_parent().get_parent().remove_child(get_parent())
+		root.add_child(get_parent())
+				
+		get_parent().set_global_position(gl)
+		set_position(Vector2(0,0))
+		pos = Vector2(0,0)
+				
+		set_global_rotation(get_global_rotation())
 	
 	if not orbiting:
 		# movement happens!
@@ -212,12 +224,29 @@ func refit_tractor(refit_target):
 	vel = Vector2(0,0)
 	acc = Vector2(0,0)
 	
+	var friend_docked = false
+	# 6 is the default, so only check if we have more
+	if get_parent().get_parent().get_child_count() > 6:
+		for ch in get_parent().get_parent().get_children():
+			if ch is Node2D and ch.get_index() > 5:
+				if ch.is_in_group("player"):
+					print("Player docked with the starbase")
+					friend_docked = true
+					break
+				if ch.get_child_count() > 0 and ch.get_child(0).is_in_group("friendly"):
+					print("Friendly docked with the starbase")
+					friend_docked = true
+					break
+	
 	# all local positions relative to the immediate parent
-	get_parent().set_position(Vector2(0,50))
+	if friend_docked:
+		get_parent().set_position(Vector2(-25,50))
+	else:
+		get_parent().set_position(Vector2(0,50))
 	set_position(Vector2(0,0))
 	pos = Vector2(0,0)
 	
-	print("Adding ship as tractoring ship's child")
+	#print("Adding ship as tractoring ship's child")
 
 	docked = true
 
