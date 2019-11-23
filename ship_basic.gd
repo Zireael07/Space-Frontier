@@ -29,6 +29,7 @@ onready var bullet_container = $"bullet_container"
 onready var gun_timer = $"gun_timer"
 onready var explosion = preload("res://explosion.tscn")
 onready var debris = preload("res://debris_enemy.tscn")
+var deb_chances = []
 onready var colony = preload("res://colony.tscn")
 
 var docked = false
@@ -39,7 +40,50 @@ signal colony_picked
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	deb_chances.append(["engine", 50])
+	deb_chances.append(["shields", 30])
+	deb_chances.append(["power", 20])
+
+# TODO: those are used at least in 3 spots (here and in asteroids and in proc star system, unify?
+func get_chance_roll_table(chances, pad=false):
+	var num = -1
+	var chance_roll = []
+	for chance in chances:
+		#print(chance)
+		var old_num = num + 1
+		num += 1 + chance[1]
+		# clip top number to 100
+		if num > 100:
+			num = 100
+		chance_roll.append([chance[0], old_num, num])
+
+	if pad:
+		# pad out to 100
+		print("Last number is " + str(num))
+		# print "Last number is " + str(num)
+		chance_roll.append(["None", num, 100])
+
+	return chance_roll
+
+# wants a table of chances [[name, low, upper]]
+func random_choice_table(table):
+	var roll = randi() % 101 # between 0 and 100
+	print("Roll: " + str(roll))
+	
+	for row in table:
+		if roll >= row[1] and roll <= row[2]:
+			print("Random roll picked: " + str(row[0]))
+			return row[0]
+
+# random select from a table
+func select_random_debris():
+	var chance_roll_table = get_chance_roll_table(deb_chances)
+	print(chance_roll_table)
+	
+	var res = random_choice_table(chance_roll_table)
+	print("Debris res: " + str(res))
+	return res
+
 
 func orbit_planet(planet):
 	# nuke any velocity left

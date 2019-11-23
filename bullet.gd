@@ -82,15 +82,18 @@ func _on_bullet_area_entered( area ):
 				game.player.emit_signal("officer_message", "Received kill credit of 10,000") # hardcoded amount for now
 			
 			# debris
-			if "debris" in get_parent().get_parent():
-				var deb = get_parent().get_parent().debris.instance()
+			if "debris" in area:
+				var deb = area.debris.instance()
+				# randomize
+				var sel = area.select_random_debris()
+				deb.get_child(0).module = deb.get_child(0).match_string(sel)
 				get_parent().get_parent().get_parent().add_child(deb)
 				deb.set_global_position(pos)
 			
 			# explosion effect
 			if "explosion" in get_parent().get_parent():
 				var expl = get_parent().get_parent().explosion.instance()
-				print(get_parent().get_parent().get_parent().get_name())
+				#print(get_parent().get_parent().get_parent().get_name())
 				get_parent().get_parent().get_parent().add_child(expl)
 				expl.set_global_position(pos)
 				if sb:
@@ -107,7 +110,7 @@ func _on_bullet_area_entered( area ):
 	if area.get_parent().get_groups().has("asteroid"):
 		queue_free()
 		
-		print(area.get_parent().get_name())
+		#print(area.get_parent().get_name())
 		
 		var pos = area.get_global_position()
 		

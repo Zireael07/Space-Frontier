@@ -15,6 +15,14 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
+var lookup_table = {"shields" : modules.shields, "engine" : modules.engine, "power" : modules.power}
+func match_string(string):
+	if lookup_table.has(string):
+		return lookup_table[string]
+	else:
+		print("Error, no module matches string " + str(string))
+		return null
+
 
 func _on_debris_area_entered(area):
 	if area.get_parent().get_groups().has("player"):
