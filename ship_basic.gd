@@ -40,6 +40,7 @@ signal colony_picked
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# randomizing is done here and not in debris because planet-spawned debris has the module pre-selected
 	deb_chances.append(["engine", 50])
 	deb_chances.append(["shields", 30])
 	deb_chances.append(["power", 20])

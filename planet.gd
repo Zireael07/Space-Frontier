@@ -325,5 +325,7 @@ func _on_module_timer_timeout():
 		var mo = module.instance()
 		mo.get_child(0).module = 3 # cloak
 		get_parent().add_child(mo)
-		mo.set_global_position(pos)
+		# slight offset
+		var offset = Vector2(10,10)
+		mo.set_global_position(pos+offset)
 		mo.set_z_index(2)
