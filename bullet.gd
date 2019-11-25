@@ -83,12 +83,17 @@ func _on_bullet_area_entered( area ):
 			
 			# debris
 			if "debris" in area:
-				var deb = area.debris.instance()
-				# randomize
-				var sel = area.select_random_debris()
-				deb.get_child(0).module = deb.get_child(0).match_string(sel)
-				get_parent().get_parent().get_parent().add_child(deb)
-				deb.set_global_position(pos)
+				# do we get one at all?
+				var chance = randf()
+				if chance > 0.6:
+					var deb = area.debris.instance()
+					# randomize
+					var sel = area.select_random_debris()
+					deb.get_child(0).module = deb.get_child(0).match_string(sel)
+					get_parent().get_parent().get_parent().add_child(deb)
+					deb.set_global_position(pos)
+				else:
+					print("Not getting any debris")
 			
 			# explosion effect
 			if "explosion" in get_parent().get_parent():
