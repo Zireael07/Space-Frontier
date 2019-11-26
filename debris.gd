@@ -37,10 +37,13 @@ func _on_debris_area_entered(area):
 		elif module == modules.engine:
 			print("Wants to upgrade engine")
 			area.engine_level = 2
+			area.thrust = 0.3 * area.LIGHT_SPEED
+			area.max_vel = 0.6 * area.LIGHT_SPEED
 			area.emit_signal("module_level_changed", "engine", 2)
 		elif module == modules.power:
 			print("Wants to upgrade power")
 			area.power_level = 2
+			area.power = 150
 			area.emit_signal("module_level_changed", "power", 2)
 		elif module == modules.cloak:
 			print("Added cloak module")
