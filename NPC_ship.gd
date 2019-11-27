@@ -276,6 +276,15 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 func _on_shield_changed(shield):
 	$"shield_effect".show()
 	$"shield_timer".start()
+	# if shield falls low, go away	
+		
+	if shield[0] < 40:
+		print("Flee because of low shields")
+		if orbiting:
+			deorbit()
+		if get_tree().get_nodes_in_group("asteroid").size() > 3:
+			brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 
 func _on_shield_timer_timeout():
 	$"shield_effect".hide()

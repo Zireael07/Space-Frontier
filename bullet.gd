@@ -39,7 +39,7 @@ func _on_bullet_area_entered( area ):
 		else:
 			area.shields -= 10
 			# emit signal
-			area.emit_signal("shield_changed", area.shields)
+			area.emit_signal("shield_changed", [area.shields])
 		
 		var sb = area.is_in_group("starbase")
 		if sb:
