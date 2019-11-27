@@ -218,8 +218,16 @@ class AttackState:
 		
 		var enemy = ship.ship.get_closest_enemy()
 		if enemy != null and enemy == target:
-			#print("Shooting" + str(enemy.get_parent().get_name()))
-			ship.ship.shoot_wrapper()
+			var dist = ship.get_global_position().distance_to(enemy.get_global_position())
+			#print(str(dist))
+			if dist < 150:
+				#print("Shooting" + str(enemy.get_parent().get_name()))
+				ship.ship.shoot_wrapper()
+			# don't attack if enemy is too far
+			else:
+				ship.set_state(ship.prev_state[0], ship.prev_state[1])
+				#print("Set state to: " + str(ship.get_state()))
+				return
 		else:
 			# this way, we also pass the parameters
 			#print("Prev state: " + str(ship.prev_state))
