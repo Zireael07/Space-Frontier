@@ -133,12 +133,20 @@ func deorbit():
 	
 func get_friendly_base():
 	var bases = get_tree().get_nodes_in_group("starbase")
-#	print(str(bases))
-	for b in bases:
-		print(b.get_name())
-		if not b.is_in_group("enemy"):
-			print(b.get_name() + " is not enemy")
-			return b
+	
+	if is_in_group("friendly"):	
+	#	print(str(bases))
+		for b in bases:
+			print(b.get_name())
+			if not b.is_in_group("enemy"):
+				print(b.get_name() + " is not enemy")
+				return b
+	elif is_in_group("enemy"):
+		for b in bases:
+			print(b.get_name())
+			if b.is_in_group("enemy"):
+				print(b.get_name() + " is enemy")
+				return b
 
 func get_closest_enemy():
 	var nodes = []

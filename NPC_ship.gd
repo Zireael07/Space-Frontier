@@ -282,9 +282,18 @@ func _on_shield_changed(shield):
 		print("Flee because of low shields")
 		if orbiting:
 			deorbit()
-		if get_tree().get_nodes_in_group("asteroid").size() > 3:
-			brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+		# head to a friendly base for protection
+		# get the base
+		var base = get_friendly_base()
+		if base != null:
+			#print(base.get_name())
+			print("Fleeing to our base")
+			brain.target = base.get_global_position()
+			brain.set_state(brain.STATE_REFIT, base)
+		
+#		if get_tree().get_nodes_in_group("asteroid").size() > 3:
+#			brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+#			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 
 func _on_shield_timer_timeout():
 	$"shield_effect".hide()

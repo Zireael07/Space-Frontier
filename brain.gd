@@ -256,6 +256,9 @@ class RefitState:
 			ship.target = ship.get_global_position()
 		# sell cargo
 		if ship.ship.docked:
+			# prevent crash if nothing in cargo
+			if ship.ship.cargo.size() < 1:
+				return
 			if ship.ship.cargo[ship.ship.cargo.keys()[0]] > 0:
 				ship.ship.cargo[ship.ship.cargo.keys()[0]] -= 1
 		
