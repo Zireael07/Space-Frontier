@@ -176,6 +176,33 @@ func get_closest_enemy():
 			
 			return t[1]
 
+func get_closest_floating_colony():
+	var colonies = []
+	var nodes = []
+	colonies = get_tree().get_nodes_in_group("colony")
+	# exlude those colonies that are tractored
+	for c in colonies:
+		if not c.get_child(0).tractor and not c.get_parent().is_in_group("friendly") and not c.get_parent().is_in_group("planets"):
+			nodes.append(c)
+			
+	
+	var dists = []
+	var targs = []
+	
+	for t in nodes:
+		var dist = t.get_global_position().distance_to(get_global_position())
+		dists.append(dist)
+		targs.append([dist, t])
+
+	dists.sort()
+	#print("Dists sorted: " + str(dists))
+	
+	for t in targs:
+		if t[0] == dists[0]:
+			print("Target colony is : " + t[1].get_name())
+			
+			return t[1]
+
 func get_colony_in_dock():
 	var last = get_child(get_child_count()-1)
 	if last.is_in_group("colony"):

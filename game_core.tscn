@@ -19,7 +19,7 @@ position = Vector2( -800, 700 )
 [node name="friendly" parent="." instance=ExtResource( 3 )]
 position = Vector2( 2000, 800 )
 
-[node name="Node2D" parent="." groups=[
+[node name="float_colony" parent="." groups=[
 "colony",
 ] instance=ExtResource( 4 )]
 position = Vector2( 700, 1250 )

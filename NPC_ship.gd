@@ -332,6 +332,20 @@ func _on_task_timer_timeout():
 			if get_tree().get_nodes_in_group("asteroid").size() > 3:
 				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+		if not (brain.get_state() == brain.STATE_ATTACK) and not docked:
+			if get_colony_in_dock() == null:
+				if kind_id == kind.friendly:
+					#print("We're friendlies without a colony in dock")
+					# find closest colony
+					var close_col = get_closest_floating_colony()
+					if close_col != null:
+						var dist = (close_col.get_global_position() - get_global_position()).length()
+						print("We have a floating colony @ dist: " + str(dist))
+						if dist < 500:
+							brain.target = close_col.get_global_position()
+							brain.set_state(brain.STATE_IDLE)
+							print("Floating colony close by")
+					
 		if brain.get_state() == brain.STATE_REFIT:
 			if not docked:
 				return
