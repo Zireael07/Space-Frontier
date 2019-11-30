@@ -146,6 +146,19 @@ class IdleState:
 		
 		ship.move_generic(delta)
 		
+		# if we're on top of our target
+		var t_dist = ship.get_global_position().distance_to(ship.target)
+		if t_dist < 20:
+			# tractor
+			if not ship.ship.tractor:
+				# if we have a floating colony
+				if ship.ship.get_closest_floating_colony() != null:
+					# check if ship target and floating colony position are roughly the same
+					if ship.target.distance_to(ship.ship.get_closest_floating_colony().get_global_position()) < 20:
+						print("Ship target is floating colony")
+						ship.ship.tractor = ship.ship.get_closest_floating_colony()
+						# mark the target as tractored
+						ship.ship.tractor.get_child(0).tractor = ship.ship
 		
 		var enemy = ship.ship.get_closest_enemy()
 		if enemy:
