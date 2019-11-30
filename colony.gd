@@ -45,6 +45,10 @@ func _process(delta):
 	
 	if tractor:
 		if not get_parent().get_parent().get_parent().is_in_group("player") and not get_parent().get_parent().is_in_group("friendly"):
+			# paranoia
+			if not tractor.has_node("dock"):
+				print("Tractorer " + tractor.get_name() + " has no dock?!")
+				return
 			#print("Parent is " + get_parent().get_parent().get_parent().get_name())
 			target = tractor.get_node("dock").get_global_position()
 		

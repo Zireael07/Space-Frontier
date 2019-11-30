@@ -32,6 +32,8 @@ onready var debris = preload("res://debris_enemy.tscn")
 var deb_chances = []
 onready var colony = preload("res://colony.tscn")
 
+var tractor = null
+
 var docked = false
 var cargo = {}
 

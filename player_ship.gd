@@ -22,7 +22,6 @@ onready var warp_effect = preload("res://warp_effect.tscn")
 onready var recharge_timer = $"recharge_timer"
 
 var target = null
-var tractor = null
 var heading = null
 var warp_target = null
 var warping = false
