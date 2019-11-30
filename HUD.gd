@@ -454,7 +454,7 @@ func _on_ButtonView_pressed():
 
 
 
-	var au_dist = (planet.dist/planet.LIGHT_SEC)/planet.LS_TO_AU
+	var au_dist = (planet.dist/game.LIGHT_SEC)/game.LS_TO_AU
 	var period = planet.calculate_orbit_period()
 	var yr = 3.15581e7 #seconds (86400 for a day)
 
@@ -545,4 +545,3 @@ func _on_ConquerButton_pressed():
 
 func _on_officer_timer_timeout():
 	$"Control3/Officer".hide()
-	#pass # Replace with function body.

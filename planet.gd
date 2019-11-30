@@ -16,9 +16,6 @@ export(float) var hydro = 0.3 # water/land ratio (surface, not volume = 30% for 
 var albedo = 0.3 # test value Bond albedo, ranges from 0 to 1
 var temp = 0 # in Kelvin
 
-const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
-const LS_TO_AU = 30 #500 realistic value
-const AU = LS_TO_AU*LIGHT_SEC
 var dist = 0
 
 var population = 0
@@ -44,9 +41,9 @@ func _ready():
 	
 	dist = get_position().length()
 	
-	var ls = dist/LIGHT_SEC
+	var ls = dist/game.LIGHT_SEC
 	
-	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls, " + str(ls/LS_TO_AU) + " AU")
+	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls, " + str(ls/game.LS_TO_AU) + " AU")
 	
 	calculate_orbit_period()
 	
@@ -66,7 +63,7 @@ func calculate_orbit_period():
 	# gravitational constant
 	var G = (6.67428e-11)
 	
-	var axis = (dist/LIGHT_SEC)/LS_TO_AU
+	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
 	
 	# by default, the equation works on seconds, meters and kilograms
 	var AU = 149597870691 #meters
@@ -81,7 +78,8 @@ func calculate_orbit_period():
 
 func is_habitable():
 	var star = get_parent().get_parent()
-	if (dist/LIGHT_SEC)/LS_TO_AU >= star.hz_inner and (dist/LIGHT_SEC)/LS_TO_AU <= star.hz_outer:
+	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
+	if axis >= star.hz_inner and axis <= star.hz_outer:
 		return true
 	else:
 		return false
@@ -89,7 +87,7 @@ func is_habitable():
 # Radiative equilibrium tempetature
 func calculate_temperature():
 	var star = get_parent().get_parent()
-	var axis = (dist/LIGHT_SEC)/LS_TO_AU
+	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
 	# https://spacemath.gsfc.nasa.gov/astrob/6Page61.pdf
 	# T = 273*((L(1-a) / D2)^0.25)
 	var t = star.luminosity*(1-albedo) / pow(axis,2)

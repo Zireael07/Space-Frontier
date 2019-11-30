@@ -7,11 +7,6 @@ export var orbit_rate = 0.00002
 export var star_radius_factor = 1.0
 export var luminosity = 1.00 # 1 is the luminosity of the Sun
 
-# TODO: put them somewhere global for the whole game to use
-const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
-const LS_TO_AU = 30 #500 realistic value
-const AU = LS_TO_AU*LIGHT_SEC
-
 var hz_inner = 0.9 #dummy, in AU
 var hz_outer = 1.1
 

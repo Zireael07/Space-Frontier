@@ -5,10 +5,6 @@ extends Panel
 # weird fudge
 var center = Vector2(80, 80) + Vector2(1,2)
 
-# TODO: put them somewhere global for the whole game to use
-const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
-const LS_TO_AU = 30 #500 realistic value
-const AU = LS_TO_AU*LIGHT_SEC
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,5 +42,5 @@ func _draw():
 	
 	# draw star hz
 	var star = get_parent().stars[0]
-	draw_empty_circle(make_circle(center, 24, int((star.hz_inner*AU)/get_parent().zoom_scale) + fudge), Color(0,1,0))
-	draw_empty_circle(make_circle(center, 24, int((star.hz_outer*AU)/get_parent().zoom_scale) + fudge), Color(0,1,0))
+	draw_empty_circle(make_circle(center, 24, int((star.hz_inner*game.AU)/get_parent().zoom_scale) + fudge), Color(0,1,0))
+	draw_empty_circle(make_circle(center, 24, int((star.hz_outer*game.AU)/get_parent().zoom_scale) + fudge), Color(0,1,0))
