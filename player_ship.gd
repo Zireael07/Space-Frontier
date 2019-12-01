@@ -310,9 +310,9 @@ func _input(event):
 	if Input.is_action_pressed("tractor"):
 		# toggle
 		if not tractor:
-		#tractor = true
-			# TODO: closest colony
-			tractor = get_tree().get_nodes_in_group("colony")[1]
+			var col = get_closest_floating_colony()
+			if col != null:
+				tractor = col
 		else:
 			tractor = null
 
