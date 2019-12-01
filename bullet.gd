@@ -32,6 +32,14 @@ func _on_bullet_area_entered( area ):
 		# notify AI - it has been attacked
 		area.emit_signal("AI_hit", get_parent().get_parent())
 		
+		# QoL for player
+		if get_parent().get_parent() == game.player:
+			# if we hit it and we haven't targeted it, target it
+			if game.player.HUD.target != area:
+				area.emit_signal("AI_targeted", area)
+				# redraw 
+				area.update()
+		
 		# go through armor first
 		if 'armor' in area and area.armor > 0:
 			area.armor -= 5 # armor absorbs some of the damage
@@ -96,8 +104,8 @@ func _on_bullet_area_entered( area ):
 					print("Not getting any debris")
 			
 			# explosion effect
-			if "explosion" in get_parent().get_parent():
-				var expl = get_parent().get_parent().explosion.instance()
+			if "explosion" in area:
+				var expl = area.explosion.instance()
 				#print(get_parent().get_parent().get_parent().get_name())
 				get_parent().get_parent().get_parent().add_child(expl)
 				expl.set_global_position(pos)
