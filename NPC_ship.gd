@@ -100,7 +100,10 @@ func get_colonize_target():
 		if t[0] == pops[0]:
 			print("Target planet is : " + t[1].get_name())
 			
-			return t[1]
+			# get id in planets list (it's guaranteed to be in it because of step #1 of our search
+			var id = planets.find(t[1])
+			
+			return id #t[1]
 
 # --------------------
 
@@ -353,11 +356,12 @@ func _on_task_timer_timeout():
 				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 	else:
-		# if we somehow picked up a colony, offload it first
-		if get_colony_in_dock() != null:
-			var col_tg = get_colonize_target()
+		# if we somehow picked up a colony and aren't colonizing, offload it first
+		if get_colony_in_dock() != null and not (brain.get_state() == brain.STATE_COLONIZE):
+			var col_id = get_colonize_target()
+			var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
 			brain.target = col_tg.get_global_position()
-			brain.set_state(brain.STATE_COLONIZE)
+			brain.set_state(brain.STATE_COLONIZE, col_id)
 			
 		if not (brain.get_state() in [brain.STATE_MINE, brain.STATE_REFIT, brain.STATE_COLONIZE, brain.STATE_ATTACK]):
 			if get_tree().get_nodes_in_group("asteroid").size() > 3:
