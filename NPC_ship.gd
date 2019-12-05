@@ -224,11 +224,20 @@ func _on_AI_hit(attacker):
 func move_orbit(delta):
 	# 300 is experimentally picked
 	var rad_f = get_colonized_planet().planet_rad_factor
-	if (brain.target - get_global_position()).length() < 300*rad_f and not orbiting:
+	
+	if (brain.target - get_global_position()).length() < 200*rad_f:
+		print("Too close to orbit")
+		var tg_ahead = get_global_position() + to_global(Vector2(100,100))
+		var steer = brain.get_steering_seek(tg_ahead)
+		# normal case
+		vel += steer
+	elif (brain.target - get_global_position()).length() < 300*rad_f and not orbiting:
 		print("In orbit range: " + str((brain.target - get_global_position()).length()) + " " + str((300*rad_f)))
 		##orbit
 		print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
 		orbit_planet(get_colonized_planet())
+	
+	# dummy
 	elif not orbiting:
 		var steer = brain.get_steering_arrive(brain.target)
 		# normal case
