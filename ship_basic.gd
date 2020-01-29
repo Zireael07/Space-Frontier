@@ -136,7 +136,7 @@ func deorbit():
 func get_friendly_base():
 	var bases = get_tree().get_nodes_in_group("starbase")
 	
-	if is_in_group("friendly"):	
+	if is_in_group("friendly") or get_parent().is_in_group("player"):	
 	#	print(str(bases))
 		for b in bases:
 			print(b.get_name())
