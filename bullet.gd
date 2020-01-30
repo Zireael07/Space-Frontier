@@ -98,8 +98,7 @@ func _on_bullet_area_entered( area ):
 					# randomize
 					var sel = area.select_random_debris()
 					deb.get_child(0).module = deb.get_child(0).match_string(sel)
-					get_parent().get_parent().get_parent().add_child(deb)
-					deb.set_global_position(pos)
+					call_deferred("spawn_debris", deb, pos)
 				else:
 					print("Not getting any debris")
 			
@@ -131,10 +130,8 @@ func _on_bullet_area_entered( area ):
 		var deb = area.get_parent().resource_debris.instance()
 		# randomize the resource
 		deb.get_child(0).resource = area.get_parent().select_random()
-		get_parent().get_parent().get_parent().add_child(deb)
-		#print(get_parent().get_parent().get_parent().get_name())
-		deb.set_global_position(pos)
-		deb.set_scale(Vector2(0.5, 0.5))
+		# prevent a debugger message Can't change state while flushing queries
+		call_deferred("spawn_debris", deb, pos)
 		
 		# explosion
 		var expl = get_parent().get_parent().explosion.instance()
@@ -142,4 +139,13 @@ func _on_bullet_area_entered( area ):
 		expl.set_global_position(pos)
 		expl.set_scale(Vector2(0.5, 0.5))
 		expl.play()
-		
+
+func spawn_debris(deb, pos):
+	get_parent().get_parent().get_parent().add_child(deb)
+	deb.set_global_position(pos)
+
+func spawn_debris_asteroid(deb, pos):
+	get_parent().get_parent().get_parent().add_child(deb)
+	#print(get_parent().get_parent().get_parent().get_name())
+	deb.set_global_position(pos)
+	deb.set_scale(Vector2(0.5, 0.5))
