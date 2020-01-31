@@ -572,6 +572,17 @@ func _on_recharge_timer_timeout():
 func _on_conquer_pressed(id):
 	conquer_target = id
 
+func update_cargo_listing(cargo):
+	# update listing
+	var list = []
+	#print(str(cargo.keys()))
+	for i in range(0, cargo.keys().size()):
+		list.append(str(cargo.keys()[i]) + ": " + str(cargo[cargo.keys()[i]]))
+	
+	var listing = str(list).lstrip("[").rstrip("]").replace(", ", "\n")
+	# this would end up in a different orders than the ids
+	#var listing = str(cargo).lstrip("{").rstrip("}").replace("(", "").replace(")", "").replace(", ", "\n")
+	HUD.set_cargo_listing(str(listing))
 
 func sell_cargo(id):
 	if not docked:
@@ -584,8 +595,7 @@ func sell_cargo(id):
 	
 	if cargo[cargo.keys()[id]] > 0:
 		cargo[cargo.keys()[id]] -= 1
-		# update listing
-		HUD.set_cargo_listing(str(cargo).replace("(", "").replace(")", "").replace(", ", "\n"))
+		update_cargo_listing(cargo)
 		credits += 50
 		# add cargo to starbase
 		if not get_parent().get_parent().storage.has(cargo.keys()[id]):
