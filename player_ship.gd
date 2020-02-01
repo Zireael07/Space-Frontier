@@ -572,17 +572,28 @@ func _on_recharge_timer_timeout():
 func _on_conquer_pressed(id):
 	conquer_target = id
 
-func update_cargo_listing(cargo):
+func update_cargo_listing(cargo, base_storage=null):
 	# update listing
 	var list = []
 	#print(str(cargo.keys()))
 	for i in range(0, cargo.keys().size()):
 		list.append(str(cargo.keys()[i]) + ": " + str(cargo[cargo.keys()[i]]))
 	
+		if base_storage != null:
+		#print(str(base_storage))
+			if cargo.keys()[i] in base_storage:
+				list[i] = list[i] + "/ base: " + str(base_storage[cargo.keys()[i]])
+	
 	var listing = str(list).lstrip("[").rstrip("]").replace(", ", "\n")
 	# this would end up in a different orders than the ids
 	#var listing = str(cargo).lstrip("{").rstrip("}").replace("(", "").replace(")", "").replace(", ", "\n")
 	HUD.set_cargo_listing(str(listing))
+
+func refresh_cargo():
+	if 'storage' in get_parent().get_parent():
+		update_cargo_listing(cargo, get_parent().get_parent().storage)
+	else:
+		update_cargo_listing(cargo)
 
 func sell_cargo(id):
 	if not docked:
@@ -595,14 +606,13 @@ func sell_cargo(id):
 	
 	if cargo[cargo.keys()[id]] > 0:
 		cargo[cargo.keys()[id]] -= 1
-		update_cargo_listing(cargo)
 		credits += 50
 		# add cargo to starbase
 		if not get_parent().get_parent().storage.has(cargo.keys()[id]):
 			get_parent().get_parent().storage[cargo.keys()[id]] = 1
 		else:
 			get_parent().get_parent().storage[cargo.keys()[id]] += 1
-		
+		update_cargo_listing(cargo, get_parent().get_parent().storage)
 
 # atan2(0,-1) returns 180 degrees in 3.0, we want 0
 # this counts in radians

@@ -29,7 +29,7 @@ var shoot_rel_pos = Vector2()
 
 # see asteroid.gd and debris_resource.gd
 enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
-enum processed { METHANE }
+enum processed { METHANE } #CH4
 var storage = {}
 
 func _ready():
@@ -156,3 +156,16 @@ func _on_distress_called(target):
 				n.brain.target = target.get_global_position()
 				n.brain.set_state(n.brain.STATE_IDLE)
 				print("Targeting " + str(target.get_parent().get_name()) + " in response to distress call")
+
+func starbase_listing():
+	# update listing
+	var list = []
+	#print(str(cargo.keys()))
+	for i in range(0, storage.keys().size()):
+		list.append(str(storage.keys()[i]) + ": " + str(storage[storage.keys()[i]]))
+	
+	var listing = str(list).lstrip("[").rstrip("]").replace(", ", "\n")
+	return listing
+
+
+#func _on_player_docked():

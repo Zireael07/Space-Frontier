@@ -364,9 +364,12 @@ func switch_to_cargo():
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".show()
 
 func _on_ButtonCargo_pressed():
+	# refresh data
+	player.refresh_cargo()
 	switch_to_cargo()
 
 func _on_planet_landed():
+	
 	switch_to_cargo()
 
 func set_cargo_listing(text):
