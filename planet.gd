@@ -316,8 +316,23 @@ func _on_pop_timer_timeout():
 #		print("No colony?")
 
 
+func enough_modules():
+	var enough = true
+	var count = 0
+	for c in get_parent().get_children():
+		if c.is_in_group("debris"):
+			count = count + 1
+	
+	if count < 2:
+		enough = false
+	else:
+		enough = true
+	
+	print("Enough modules: " + str(enough))
+	return enough
+
 func _on_module_timer_timeout():
-	if has_colony():
+	if has_colony() and not enough_modules():
 		print("Module timer")
 		var pos = get_global_position()
 		var mo = module.instance()

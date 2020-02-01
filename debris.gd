@@ -52,6 +52,6 @@ func _on_debris_area_entered(area):
 			print("Not supported")
 		
 		
-		queue_free()
+		get_parent().queue_free()
 		
 	#pass # replace with function body
