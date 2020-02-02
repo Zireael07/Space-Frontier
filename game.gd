@@ -7,6 +7,18 @@ const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
 const LS_TO_AU = 30 #500 realistic value
 const AU = LS_TO_AU*LIGHT_SEC
 
+# ship name lists here for consistency
+# highly US themed names and some mythological animals
+var friendly_names = ["Victorious", "Notorious", "Triumphant", "Courageous", "Reliant", "Privateer", "Providence", "Constellation", \
+"Felicity", "Constitution", "Galactica", "Atlantis", "Cherokee", "Firebird", "Starbird", "Pegasus", "Hercules"]
+# evil sounding
+var enemy_names = ["Slasher", "Gnasher", "Raider", "Executioner", "Annihilator", "Plunder", "Destructor", \
+"Merciless", "Fearless"]
+# animal themed
+var neutral_names = ["Meerkat", "Ursa", "Pouncer", "Fang", "Panther", "Cougar", "Claw", "Leopard", \
+# fit the theme
+"Mustang", "Vulture"]
+
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here

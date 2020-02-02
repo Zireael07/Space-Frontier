@@ -34,7 +34,8 @@ func _ready():
 	spawn_system()
 	spawn_core()
 	
-	spawn_friendly()
+	for i in range(4):
+		spawn_friendly(i)
 	
 	
 	#pass # Replace with function body.
@@ -55,7 +56,7 @@ func get_colonized_planet():
 		return null
 
 
-func spawn_friendly():
+func spawn_friendly(i):
 	var p = get_colonized_planet()
 	if p:
 		var sp = friendly.instance()
@@ -65,7 +66,7 @@ func spawn_friendly():
 		sp.set_global_position(p.get_global_position() + offset)
 		print("Spawning @ : " + str(p.get_global_position() + offset))
 		sp.get_child(0).set_position(Vector2(0,0))
-		sp.set_name("friendly2")
+		sp.set_name("friendly"+str(i))
 		get_child(2).add_child(sp)
 		var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
 		print("Player index: " + str(p_ind))
