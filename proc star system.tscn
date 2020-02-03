@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://procedural star system.gd" type="Script" id=1]
-[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
+[ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=2]
 [ext_resource path="res://planet_new.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=4]
 [ext_resource path="res://colony_enemy.tscn" type="PackedScene" id=5]
@@ -11,152 +11,98 @@
 
 [sub_resource type="StyleBoxFlat" id=1]
 
-content_margin_left = -1.0
-content_margin_right = -1.0
-content_margin_top = -1.0
-content_margin_bottom = -1.0
-bg_color = Color( 0.6, 0.6, 0.6, 1 )
-draw_center = true
-border_width_left = 0
-border_width_top = 0
-border_width_right = 0
-border_width_bottom = 0
-border_color = Color( 0.8, 0.8, 0.8, 1 )
-border_blend = false
-corner_radius_top_left = 0
-corner_radius_top_right = 0
-corner_radius_bottom_right = 0
-corner_radius_bottom_left = 0
-corner_detail = 8
-expand_margin_left = 0.0
-expand_margin_right = 0.0
-expand_margin_top = 0.0
-expand_margin_bottom = 0.0
-shadow_color = Color( 0, 0, 0, 0.6 )
-shadow_size = 0
-anti_aliasing = true
-anti_aliasing_size = 1
-
-[node name="star" type="Node2D" index="0" groups=[
+[node name="star" type="Node2D" groups=[
 "star",
 ]]
-
 position = Vector2( 500, 500 )
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform" ]
-rotation_rate = 0.15
 orbit_rate = 0.02
 star_radius_factor = 0.432023
+luminosity = 0.894821
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
-
+[node name="Sprite" type="Sprite" parent="."]
 rotation = 9.92185
 scale = Vector2( 0.432023, 0.432023 )
 texture = ExtResource( 2 )
 
-[node name="Label" type="Label" parent="." index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Label" type="Label" parent="."]
 margin_left = -400.0
 margin_top = 350.0
 margin_right = -328.0
 margin_bottom = 366.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Kepler 1863"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Rect", "custom_colors", "custom_styles" ]
+text = "Kepler 1373"
 
-[node name="planet_holder" type="Node2D" parent="." index="2"]
+[node name="planet_holder" type="Node2D" parent="."]
 
-_sections_unfolded = [ "Transform" ]
-
-[node name="planet" parent="planet_holder" index="0" instance=ExtResource( 3 )]
-
-mass = 3.75641
-
-[node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
-
-rotation = -0.133051
+[node name="planet" parent="planet_holder" instance=ExtResource( 3 )]
+mass = 2.64894
 
 [node name="Label" parent="planet_holder/planet" index="2"]
+text = "Kepler 1373b"
 
-text = "Kepler 1863b"
-
-[node name="planet2" parent="planet_holder" index="1" instance=ExtResource( 3 )]
-
+[node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -1594, 427 )
-mass = 3.64054
+mass = 4.9509
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
-
 texture = ExtResource( 4 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet2" index="1"]
-
 rotation = 1.65324
 
 [node name="Label" parent="planet_holder/planet2" index="2"]
+text = "Kepler 1373c"
 
-text = "Kepler 1863c"
+[node name="colony2" parent="planet_holder/planet2" instance=ExtResource( 5 )]
 
-[node name="colony2" parent="planet_holder/planet2" index="5" instance=ExtResource( 5 )]
-
-[node name="planet3" parent="planet_holder" index="2" instance=ExtResource( 3 )]
-
+[node name="planet3" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( 1692.5, -148 )
-mass = 2.68968
+mass = 3.56516
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
-
 texture = ExtResource( 6 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
-
 rotation = -0.626209
 
 [node name="Label" parent="planet_holder/planet3" index="2"]
+text = "Kepler 1373d"
 
-text = "Kepler 1863d"
-
-[node name="colony2" parent="planet_holder/planet3" index="5" instance=ExtResource( 7 )]
-
+[node name="colony2" parent="planet_holder/planet3" instance=ExtResource( 7 )]
 position = Vector2( 0.0300293, -0.0780029 )
-_sections_unfolded = [ "Transform" ]
 
-[node name="planet4" parent="planet_holder" index="3" instance=ExtResource( 3 )]
+[node name="planet4" parent="planet_holder" instance=ExtResource( 3 )]
+position = Vector2( -6.85395e-05, 1568 )
+mass = 0.561743
 
-position = Vector2( -6.85395e-005, 1568 )
-mass = 4.5493
-
-[node name="asteroid" parent="planet_holder" index="4" instance=ExtResource( 8 )]
-
+[node name="asteroid" parent="planet_holder" instance=ExtResource( 8 )]
 position = Vector2( 580, 764 )
 
-[node name="asteroid2" parent="planet_holder" index="5" instance=ExtResource( 8 )]
-
+[node name="asteroid2" parent="planet_holder" instance=ExtResource( 8 )]
 position = Vector2( 644, 660 )
 
-[node name="asteroid3" parent="planet_holder" index="6" instance=ExtResource( 8 )]
-
+[node name="asteroid3" parent="planet_holder" instance=ExtResource( 8 )]
 position = Vector2( 696, 524 )
 
-[node name="asteroid4" parent="planet_holder" index="7" instance=ExtResource( 8 )]
-
+[node name="asteroid4" parent="planet_holder" instance=ExtResource( 8 )]
 position = Vector2( 736, 388 )
 
+[node name="asteroid8" parent="planet_holder" instance=ExtResource( 8 )]
+position = Vector2( -610, 764 )
+
+[node name="asteroid7" parent="planet_holder" instance=ExtResource( 8 )]
+position = Vector2( -630, 660 )
+
+[node name="asteroid6" parent="planet_holder" instance=ExtResource( 8 )]
+position = Vector2( -640, 524 )
+
+[node name="asteroid5" parent="planet_holder" instance=ExtResource( 8 )]
+position = Vector2( -644, 388 )
 
 [editable path="planet_holder/planet"]
+
 [editable path="planet_holder/planet2"]
+
 [editable path="planet_holder/planet3"]

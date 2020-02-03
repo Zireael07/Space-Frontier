@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://star system.gd" type="Script" id=1]
 [ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://colony.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=6]
 [ext_resource path="res://asteroid.tscn" type="PackedScene" id=7]
+[ext_resource path="res://asteroid.gd" type="Script" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -49,7 +50,6 @@ text = "Jungle"
 position = Vector2( -6.85395e-05, 1568 )
 
 [node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
-editor/display_folded = true
 position = Vector2( 1852.92, 200 )
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
@@ -87,6 +87,30 @@ position = Vector2( 696, 524 )
 
 [node name="asteroid4" parent="planet_holder" instance=ExtResource( 7 )]
 position = Vector2( 736, 388 )
+
+[node name="asteroid8" type="Node2D" parent="planet_holder" groups=[
+"asteroid",
+] instance=ExtResource( 7 )]
+position = Vector2( -610, 764 )
+script = ExtResource( 8 )
+
+[node name="asteroid7" type="Node2D" parent="planet_holder" groups=[
+"asteroid",
+] instance=ExtResource( 7 )]
+position = Vector2( -630, 660 )
+script = ExtResource( 8 )
+
+[node name="asteroid6" type="Node2D" parent="planet_holder" groups=[
+"asteroid",
+] instance=ExtResource( 7 )]
+position = Vector2( -640, 524 )
+script = ExtResource( 8 )
+
+[node name="asteroid5" type="Node2D" parent="planet_holder" groups=[
+"asteroid",
+] instance=ExtResource( 7 )]
+position = Vector2( -644, 388 )
+script = ExtResource( 8 )
 
 [editable path="planet_holder/planet"]
 
