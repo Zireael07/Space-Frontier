@@ -303,7 +303,7 @@ class ColonizeState:
 			if ship.get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target != null:
 				id = ship.get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target
 		else:
-			print("Setting id to target " + str(param))
+			#print("Setting id to target " + str(param))
 			id = param
 			
 		# refresh target position

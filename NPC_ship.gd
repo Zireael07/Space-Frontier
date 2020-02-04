@@ -344,9 +344,12 @@ func _on_task_timer_timeout():
 					if not pick_colony():
 						print("We can't pick colony now, go do something else...")
 						deorbit()
-						if get_tree().get_nodes_in_group("asteroid").size() > 3:
-							brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-							brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+						var closest = get_closest_asteroid()
+						brain.target = closest.get_global_position()
+						brain.set_state(brain.STATE_MINE, closest)
+#						if get_tree().get_nodes_in_group("asteroid").size() > 3:
+#							brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+#							brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 				else:
 					print("Blockading a planet")
 			else:
@@ -359,9 +362,12 @@ func _on_task_timer_timeout():
 				#brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 		else:
 			deorbit()
-			if get_tree().get_nodes_in_group("asteroid").size() > 3:
-				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+			var closest = get_closest_asteroid()
+			brain.target = closest.get_global_position()
+			brain.set_state(brain.STATE_MINE, closest)
+#			if get_tree().get_nodes_in_group("asteroid").size() > 3:
+#				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+#				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 	else:
 		# if we somehow picked up a colony and aren't colonizing, offload it first
 		if get_colony_in_dock() != null and not (brain.get_state() == brain.STATE_COLONIZE):
@@ -371,9 +377,12 @@ func _on_task_timer_timeout():
 			brain.set_state(brain.STATE_COLONIZE, col_id)
 			
 		if not (brain.get_state() in [brain.STATE_MINE, brain.STATE_REFIT, brain.STATE_COLONIZE, brain.STATE_ATTACK]):
-			if get_tree().get_nodes_in_group("asteroid").size() > 3:
-				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+			var closest = get_closest_asteroid()
+			brain.target = closest.get_global_position()
+			brain.set_state(brain.STATE_MINE, closest)
+#			if get_tree().get_nodes_in_group("asteroid").size() > 3:
+#				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+#				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
 		if not (brain.get_state() == brain.STATE_ATTACK) and not docked:
 			if get_colony_in_dock() == null:
 				if kind_id == kind.friendly:
@@ -392,6 +401,9 @@ func _on_task_timer_timeout():
 			if not docked:
 				return
 			else:
-				if get_tree().get_nodes_in_group("asteroid").size() > 3:
-					brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-					brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+				var closest = get_closest_asteroid()
+				brain.target = closest.get_global_position()
+				brain.set_state(brain.STATE_MINE, closest)
+#				if get_tree().get_nodes_in_group("asteroid").size() > 3:
+#					brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+#					brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
