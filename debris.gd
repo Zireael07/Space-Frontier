@@ -25,7 +25,7 @@ func match_string(string):
 
 
 func _on_debris_area_entered(area):
-	if area.get_parent().get_groups().has("player"):
+	if area.get_parent().is_in_group("player"):
 		print("debris entered by " + area.get_parent().get_name())
 		
 		# upgrade
@@ -54,4 +54,10 @@ func _on_debris_area_entered(area):
 		
 		get_parent().queue_free()
 		
+	if area.is_in_group("friendly"):
+		print("Debris entered by " + area.get_name())
+		
+		#TODO: upgrade NPC ship
+		
+		get_parent().queue_free()
 	#pass # replace with function body
