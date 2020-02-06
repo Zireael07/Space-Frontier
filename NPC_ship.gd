@@ -345,8 +345,9 @@ func _on_task_timer_timeout():
 						print("We can't pick colony now, go do something else...")
 						deorbit()
 						var closest = get_closest_asteroid()
-						brain.target = closest.get_global_position()
-						brain.set_state(brain.STATE_MINE, closest)
+						if closest:
+							brain.target = closest.get_global_position()
+							brain.set_state(brain.STATE_MINE, closest)
 #						if get_tree().get_nodes_in_group("asteroid").size() > 3:
 #							brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 #							brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
@@ -363,8 +364,9 @@ func _on_task_timer_timeout():
 		else:
 			deorbit()
 			var closest = get_closest_asteroid()
-			brain.target = closest.get_global_position()
-			brain.set_state(brain.STATE_MINE, closest)
+			if closest:
+				brain.target = closest.get_global_position()
+				brain.set_state(brain.STATE_MINE, closest)
 #			if get_tree().get_nodes_in_group("asteroid").size() > 3:
 #				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 #				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
@@ -378,8 +380,9 @@ func _on_task_timer_timeout():
 			
 		if not (brain.get_state() in [brain.STATE_MINE, brain.STATE_REFIT, brain.STATE_COLONIZE, brain.STATE_ATTACK]):
 			var closest = get_closest_asteroid()
-			brain.target = closest.get_global_position()
-			brain.set_state(brain.STATE_MINE, closest)
+			if closest:
+				brain.target = closest.get_global_position()
+				brain.set_state(brain.STATE_MINE, closest)
 #			if get_tree().get_nodes_in_group("asteroid").size() > 3:
 #				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 #				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
@@ -402,8 +405,9 @@ func _on_task_timer_timeout():
 				return
 			else:
 				var closest = get_closest_asteroid()
-				brain.target = closest.get_global_position()
-				brain.set_state(brain.STATE_MINE, closest)
+				if closest:
+					brain.target = closest.get_global_position()
+					brain.set_state(brain.STATE_MINE, closest)
 #				if get_tree().get_nodes_in_group("asteroid").size() > 3:
 #					brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 #					brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
