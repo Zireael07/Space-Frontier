@@ -322,7 +322,7 @@ class ColonizeState:
 					ship.target = ship.ship.get_colonized_planet().get_global_position()
 					ship.set_state(STATE_ORBIT, ship.ship.get_colonized_planet())
 				else:
-					ship.target = ship.ship.get_colonized_planet().get_global_position() + Vector2(200,200)
+					ship.target = ship.ship.get_colonized_planet().get_global_position() + Vector2(200,200) * ship.ship.get_colonized_planet().planet_rad_factor
 					ship.set_state(STATE_IDLE)
 
 
