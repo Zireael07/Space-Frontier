@@ -38,6 +38,7 @@ text = "TRAPPIST-1"
 [node name="planet" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -6.07588e-06, 139 )
 planet_rad_factor = 0.2
+tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
 scale = Vector2( 0.1, 0.1 )
@@ -56,6 +57,7 @@ scale = Vector2( 0.2, 0.2 )
 position = Vector2( 2.26573e-06, -190 )
 planet_rad_factor = 0.2
 mass = 1.15
+tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 scale = Vector2( 0.1, 0.1 )
@@ -75,6 +77,7 @@ scale = Vector2( 0.2, 0.2 )
 position = Vector2( -188.798, 188.798 )
 planet_rad_factor = 0.2
 mass = 0.2
+tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
 material = ExtResource( 5 )
@@ -95,6 +98,7 @@ scale = Vector2( 0.2, 0.2 )
 position = Vector2( -1.53427e-05, 351 )
 planet_rad_factor = 0.3
 mass = 0.77
+tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet4" index="0"]
 scale = Vector2( 0.15, 0.15 )

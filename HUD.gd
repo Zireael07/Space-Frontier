@@ -436,6 +436,7 @@ func _on_ButtonView_pressed():
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 
 		return
+	
 	var select_id = (cursor.get_position().y - 15) / 15
 	var planet = get_tree().get_nodes_in_group("planets")[select_id]
 
@@ -484,11 +485,12 @@ func _on_ButtonView_pressed():
 	"Pressure: " + "\n" + "Gravity: " + str(format_grav) + "\n" + \
 	"Temperature: " + str(format_temp) + " " + str(format_tempC) + " \n" + \
 	"Hydro: " + str(planet.hydro)
+	if planet.tidally_locked:
+		text = text + "\n" + " Tidally locked"
 	if col:
 		text = text + "\n" + " Population: " + str(planet.population)
 	if planet.is_habitable():
 		text = text + "\n" + " Habitable"
-
 
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 

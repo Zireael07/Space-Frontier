@@ -28,6 +28,7 @@ var orbiters = []
 var orbiter
 var orbit_rot = 0
 var orbit_rate = 0.04
+export(bool) var tidally_locked = false
 
 signal planet_colonized
 
