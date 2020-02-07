@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://assets/bodies/texture_template.png" type="Texture" id=1]
+[ext_resource path="res://assets/bodies/planet_rotating.shader" type="Shader" id=2]
+
+[resource]
+shader = ExtResource( 2 )
+shader_param/rotate_angle = 0.0
+shader_param/time = 2.0
+shader_param/vectors = ExtResource( 1 )

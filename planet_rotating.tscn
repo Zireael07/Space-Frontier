@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://planet.gd" type="Script" id=1]
+[ext_resource path="res://assets/planet_rotating_material.tres" type="Material" id=2]
+[ext_resource path="res://assets/bodies/texture_earth.png" type="Texture" id=3]
+[ext_resource path="res://assets/Planet-shadow_only.png" type="Texture" id=4]
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform vec4 aura_color : hint_color;
+
+void fragment()
+{
+	vec4 col = texture(TEXTURE, UV);
+	
+	if (col.a > 0.08 && col.r > 0.1)
+	{
+		COLOR.rgba = vec4(aura_color.rgb, col.a);
+	}
+	else
+	{
+		COLOR.rgba = col.rgba; //+ vec3(1,0,0);
+	}
+	//COLOR.rgb = vec3(1,0,0);
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/aura_color = Color( 1, 0.706604, 0.0117188, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 150.0
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = ExtResource( 2 )
+scale = Vector2( 0.5, 1 )
+texture = ExtResource( 3 )
+
+[node name="Sprite_shadow" type="Sprite" parent="."]
+visible = false
+material = SubResource( 3 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 150.0
+margin_top = 150.0
+margin_right = 202.0
+margin_bottom = 164.0
+custom_styles/normal = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Emerald"
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 5 )
+
+[node name="orbit_holder" type="Node2D" parent="."]
+
+[node name="pop_timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="module_timer" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
