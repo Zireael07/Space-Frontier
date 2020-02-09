@@ -32,19 +32,23 @@ margin_right = -328.0
 margin_bottom = 366.0
 custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Kepler 1373"
+text = "Kepler 1443"
 
 [node name="planet_holder" type="Node2D" parent="."]
 
 [node name="planet" parent="planet_holder" instance=ExtResource( 3 )]
-mass = 2.64894
+position = Vector2( -1200, -500 )
+mass = 1.76558
+
+[node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
+rotation = 2.35619
 
 [node name="Label" parent="planet_holder/planet" index="2"]
-text = "Kepler 1373b"
+text = "Kepler 1443b"
 
 [node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -1594, 427 )
-mass = 4.9509
+mass = 1.29197
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 texture = ExtResource( 4 )
