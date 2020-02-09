@@ -129,7 +129,10 @@ func _on_bullet_area_entered( area ):
 		# debris
 		var deb = area.get_parent().resource_debris.instance()
 		# randomize the resource
-		deb.get_child(0).resource = area.get_parent().select_random()
+		var res = area.get_parent().select_random()
+		# paranoia
+		if res != null:
+			deb.get_child(0).resource = res 
 		# prevent a debugger message Can't change state while flushing queries
 		call_deferred("spawn_debris", deb, pos)
 		
