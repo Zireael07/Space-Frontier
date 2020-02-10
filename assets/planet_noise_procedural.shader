@@ -41,6 +41,11 @@ void fragment(){
 	//rotated_coords += vec2(0.5);
 	vec2 uv = rotated_coords;
 	//vec2 uv = UV;
+	
+	// add some shadow
+	vec2 height_uv = uv;
+	float height = texture(TEXTURE, height_uv).r;
+	
 	//colorize the CPU noise
 	vec4 col_noise = texture(TEXTURE, uv);
 	vec4 col_planet = vec4(1.0);
@@ -52,6 +57,9 @@ void fragment(){
 	}
 
 	//output to screen
-	COLOR = vec4(col_planet.rgb, planet);
+	//COLOR = vec4(height);
+	// mix in some height/shading
+	COLOR = mix(vec4(col_planet.rgb, planet), vec4(0.0, 0.0, 0.0, planet), height);
+	//COLOR = vec4(col_planet.rgb, planet);
 	
 }

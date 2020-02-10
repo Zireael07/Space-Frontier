@@ -7,13 +7,14 @@
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
 shader_param/rotate_perc = 0.0
-shader_param/cut_off = 0.565
+shader_param/cut_off = 0.519
 shader_param/color_land = Color( 0.027451, 0.313726, 0.027451, 1 )
 shader_param/color_sea = Color( 0.117647, 0.631373, 0.113725, 1 )
 
 [sub_resource type="OpenSimplexNoise" id=2]
 
 [sub_resource type="NoiseTexture" id=3]
+seamless = true
 noise = SubResource( 2 )
 
 [sub_resource type="Shader" id=4]
