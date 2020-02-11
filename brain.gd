@@ -263,7 +263,7 @@ class RefitState:
 		
 		# if close, do tractor effect
 		if ship.get_global_position().distance_to(ship.target) < 50 and not ship.ship.docked:
-			print("Should be tractoring")
+			#print("Should be tractoring")
 			ship.ship.refit_tractor(base)
 			# dummy
 			ship.target = ship.get_global_position()
@@ -298,9 +298,12 @@ class ColonizeState:
 		if not param:
 			#print("No param given for colonize state")
 			# default
-			id = 1
+			#id = 1
+			id = ship.ship.get_colonize_target()
 			# conquer target given by the player
-			if ship.get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target != null:
+			var conquer_target = ship.get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target
+			if conquer_target != null:
+				print("Conquer target " + str(conquer_target))
 				id = ship.get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target
 		else:
 			#print("Setting id to target " + str(param))
@@ -308,6 +311,7 @@ class ColonizeState:
 			
 		# refresh target position
 		ship.target = ship.get_tree().get_nodes_in_group("planets")[id].get_global_position()
+		#print("ID" + str(id) + " tg: " + str(ship.target))
 		# steering behavior
 		var steer = ship.get_steering_seek(ship.target)	
 		# normal case
@@ -315,9 +319,19 @@ class ColonizeState:
 	
 		ship.ship.move_AI(ship.vel, delta)
 		
+		# we somehow lost the colony?
+		if ship.ship.get_colony_in_dock() == null:
+			print("We want to orbit colonized planet")
+			if ship.ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
+				ship.target = ship.ship.get_colonized_planet().get_global_position()
+				ship.set_state(STATE_ORBIT, ship.ship.get_colonized_planet())
+			else:
+				ship.target = ship.ship.get_colonized_planet().get_global_position() + Vector2(200,200) * ship.ship.get_colonized_planet().planet_rad_factor
+				ship.set_state(STATE_IDLE)
+		
 		if ship.get_global_position().distance_to(ship.target) < 50:
 			if ship.ship.get_colony_in_dock() == null:
-				print("We want to orbit colonized planet")
+				print("We colonized it, want to orbit colonized planet")
 				if ship.ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
 					ship.target = ship.ship.get_colonized_planet().get_global_position()
 					ship.set_state(STATE_ORBIT, ship.ship.get_colonized_planet())

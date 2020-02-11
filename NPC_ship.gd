@@ -77,10 +77,12 @@ func get_colonize_target():
 	var ps = []
 	var planets = get_tree().get_nodes_in_group("planets")
 	for p in planets:
-		# exclude those without colony
+		# exclude those with colony
 		var col = p.has_colony()
-		if col and col == "colony":
+		if !col:
 			ps.append(p)
+		#if col and col == "colony":
+		#	ps.append(p)
 	
 	var pops = []
 	var targs = []
@@ -96,7 +98,7 @@ func get_colonize_target():
 	
 	for t in targs:
 		if t[0] == pops[0]:
-			print("Target planet is : " + t[1].get_name())
+			#print("Colonize target planet is : " + t[1].get_name())
 			
 			# get id in planets list (it's guaranteed to be in it because of step #1 of our search
 			var id = planets.find(t[1])
@@ -224,7 +226,7 @@ func move_orbit(delta):
 	var rad_f = get_colonized_planet().planet_rad_factor
 	
 	if (brain.target - get_global_position()).length() < 200*rad_f:
-		print("Too close to orbit")
+		#print("Too close to orbit")
 		var tg_ahead = get_global_position() + to_global(Vector2(100,100))
 		var steer = brain.get_steering_seek(tg_ahead)
 		# normal case
@@ -265,11 +267,11 @@ func refit_tractor(refit_target):
 		for ch in get_parent().get_parent().get_children():
 			if ch is Node2D and ch.get_index() > 5:
 				if ch.is_in_group("player"):
-					print("Player docked with the starbase")
+					#print("Player docked with the starbase")
 					friend_docked = true
 					break
 				if ch.get_child_count() > 0 and ch.get_child(0).is_in_group("friendly"):
-					print("Friendly docked with the starbase")
+					#print("Friendly docked with the starbase")
 					friend_docked = true
 					break
 	
@@ -337,7 +339,10 @@ func _on_shield_timer_timeout():
 func _on_task_timer_timeout():
 	print("Task timer timeout")
 	if orbiting:
-		if not get_tree().get_nodes_in_group("planets")[1].has_colony():
+		# if player-specified colony target is not colonized
+		if get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target != null or \
+		get_colonize_target() != null: # or we have a colonize target (planet w/o colony)
+		#if not get_tree().get_nodes_in_group("planets")[1].has_colony():
 			if get_colony_in_dock() == null:
 				if kind_id == kind.friendly:
 					# pick up colony from planet
@@ -351,13 +356,26 @@ func _on_task_timer_timeout():
 #						if get_tree().get_nodes_in_group("asteroid").size() > 3:
 #							brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 #							brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+					else:
+						# explicitly go colonize
+						var col_id = get_colonize_target()
+						print("Colonize target " + str(col_id))
+						brain.set_state(brain.STATE_COLONIZE, col_id)
+						var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
+						print("Col tg name " + str(col_tg.get_name()))
+						brain.target = col_tg.get_global_position()
 				else:
 					print("Blockading a planet")
 			else:
 				# deorbit
 				deorbit()		
-				brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
-				brain.set_state(brain.STATE_COLONIZE)
+				var col_id = get_colonize_target()
+				print("Colonize target " + str(col_id))
+				var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
+				brain.target = col_tg.get_global_position()
+				print("We have a colony, leaving for... " + str(col_tg.get_name()))
+				#brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
+				brain.set_state(brain.STATE_COLONIZE, col_id)
 				#if get_tree().get_nodes_in_group("asteroid").size() > 3:
 				#	brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 				#brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
@@ -374,6 +392,7 @@ func _on_task_timer_timeout():
 		# if we somehow picked up a colony and aren't colonizing, offload it first
 		if get_colony_in_dock() != null and not (brain.get_state() == brain.STATE_COLONIZE):
 			var col_id = get_colonize_target()
+			print("Colonize target " + str(col_id))
 			var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
 			brain.target = col_tg.get_global_position()
 			brain.set_state(brain.STATE_COLONIZE, col_id)
