@@ -255,25 +255,41 @@ func _on_Area2D_area_entered(area):
 			if area.get_parent().get_parent().get_parent().is_in_group("player"):
 				print("Colony being hauled by player")
 			else:
-#				print("Colony released")
-				if not has_node("colony") and not has_colony():
-					population = 50000
-					emit_signal("planet_colonized", self)
-					# it wants the top node, not the area itself
-					area.emit_signal("colony_colonized", area.get_parent())
-					print("Adding colony to planet")
-					# add colony to planet
-					# prevent crash
-					call_deferred("reparent", area)
-					# must happen after reparenting
-					call_deferred("reposition", area)
-				else:
-					print("We already have a colony")
-					# add to population
-					population += 50000
-					area.get_parent().queue_free()
+				#print("Colony hauled by AI")
+				var brain = area.get_parent().get_parent().brain
+				if brain != null:
+					#print("AI has brain")
+					if brain.get_state() == brain.STATE_COLONIZE:
+						# is it the colonization target?
+						var id = brain.get_state_obj().param
+						print("Colonize id is: " + str(id))
+						if get_tree().get_nodes_in_group("planets")[id] == self:
+							print("We are the colonize target")
+							AI_do_colonize(area)			
+
 		else:
 			print("Colony is already ours")
+
+func AI_do_colonize(area):
+#	print("Colony released")
+	if not has_node("colony") and not has_colony():
+		population = 50000
+		emit_signal("planet_colonized", self)
+		# it wants the top node, not the area itself
+		area.emit_signal("colony_colonized", area.get_parent())
+		print("Adding colony to planet")
+		# add colony to planet
+		# prevent crash
+		call_deferred("reparent", area)
+		# must happen after reparenting
+		call_deferred("reposition", area)
+	else:
+		print("We already have a colony")
+		# add to population
+		population += 50000
+		area.get_parent().queue_free()	
+
+
 
 func _on_planet_orbited(ship):
 	orbiter = ship

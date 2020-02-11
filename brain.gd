@@ -113,6 +113,9 @@ func get_state():
 	elif state is ColonizeState:
 		return STATE_COLONIZE
 
+func get_state_obj():
+	return state
+
 
 # -----------------------------
 # states

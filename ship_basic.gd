@@ -222,7 +222,7 @@ func get_closest_floating_colony():
 	
 	for t in targs:
 		if t[0] == dists[0]:
-			print("Target colony is : " + t[1].get_name())
+			#print("Target colony is : " + t[1].get_name())
 			
 			return t[1]
 
