@@ -24,7 +24,7 @@ var ship_name = ""
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	set_z_index(game.SHIP_Z)
+	get_parent().set_z_index(game.SHIP_Z)
 	
 	randomize()
 	
@@ -120,7 +120,7 @@ func move_AI(vel, delta):
 	# undock
 	if docked:
 		# restore original z
-		get_parent().set_z_index(0)
+		set_z_index(0)
 		docked = false
 		# reparent
 		var root = get_node("/root/Control")
