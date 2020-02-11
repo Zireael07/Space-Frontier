@@ -179,9 +179,15 @@ func _process(delta):
 		if has_node("Sprite_shadow"):
 			#var angle_to_star = atan2(self.get_position().x, self.get_position().y)
 			# we have to use this because there are rotations to consider
-			var angle_to_star = get_tree().get_nodes_in_group("star")[0].get_global_position().angle_to(get_global_position())
+			#var angle_to_star = get_tree().get_nodes_in_group("star")[0].get_global_position().angle_to(get_global_position())
+			var rel_loc = get_tree().get_nodes_in_group("star")[0].get_global_position() - get_global_position()
+			var a = atan2(rel_loc.x, rel_loc.y)
+			# add 180 deg to point at the star, not away
+			var angle_to_star = (-a+3.141593)
+			#var angle_to_star = fix_atan(rel_loc.x, rel_loc.y)
 			#print("Angle to star: "+ str(angle_to_star))
-			$"Sprite_shadow".set_rotation(angle_to_star)
+			
+			$"Sprite_shadow".set_global_rotation(angle_to_star)
 	
 	# planets handle orbiting now	
 	if has_node("orbit_holder"):
