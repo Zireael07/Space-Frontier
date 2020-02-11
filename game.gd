@@ -19,6 +19,13 @@ var neutral_names = ["Meerkat", "Ursa", "Pouncer", "Fang", "Panther", "Cougar", 
 # fit the theme
 "Mustang", "Vulture"]
 
+# z index for consistent drawing
+const PLAYER_Z = 10 # on top of everything else
+const BASE_Z = 9
+const SHIP_Z = 8
+const ASTEROID_Z = 3
+const PLANET_Z = 2
+
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here

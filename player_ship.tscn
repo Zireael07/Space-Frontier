@@ -106,6 +106,7 @@ tracks/6/keys = {
 }
 
 [node name="Node2D" type="Node2D"]
+z_as_relative = false
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource( 1 )

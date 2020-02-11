@@ -33,6 +33,8 @@ enum processed { METHANE } #CH4
 var storage = {}
 
 func _ready():
+	set_z_index(game.BASE_Z)
+	
 	connect("distress_called", self, "_on_distress_called")
 	#add_to_group("enemy")
 	

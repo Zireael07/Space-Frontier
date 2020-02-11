@@ -21,6 +21,7 @@ scale_random = 0.3
 color = Color( 0.0117647, 0.996078, 0.972549, 1 )
 
 [node name="Node2D" type="Node2D"]
+z_as_relative = false
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource( 1 )

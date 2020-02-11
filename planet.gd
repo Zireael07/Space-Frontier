@@ -37,6 +37,8 @@ onready var module = preload("res://debris_enemy.tscn")
 # Called when the node is added to the scene for the first time.
 # Initialization here
 func _ready():
+	set_z_index(game.PLANET_Z)
+	
 	connect("planet_orbited", self, "_on_planet_orbited")
 	
 	

@@ -11,6 +11,8 @@ export (int) var type = 1
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
+	set_z_index(game.ASTEROID_Z)
+	
 	if type == types.C:
 		# adapted from carbonacerous meteorite compositions from https://www.permanent.com/meteorite-compositions.html
 		contains.append([elements.CARBON, 10]) # boosted to be noticeable to the player

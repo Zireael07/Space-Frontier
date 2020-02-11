@@ -24,6 +24,7 @@ var ship_name = ""
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	set_z_index(game.SHIP_Z)
 	
 	randomize()
 	
@@ -255,7 +256,7 @@ func refit_tractor(refit_target):
 	# refit target needs to be a node because here
 	refit_target.add_child(get_parent())
 	# set better z so that we don't overlap parent ship
-	get_parent().set_z_index(-1)
+	set_z_index(-1)
 	
 	# nuke any velocity left
 	vel = Vector2(0,0)

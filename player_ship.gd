@@ -47,7 +47,7 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	game.player = self
-	
+	set_z_index(game.PLAYER_Z)
 	
 	connect("shield_changed", self, "_on_shield_changed")
 	
@@ -105,7 +105,7 @@ func _process(delta):
 		# undock
 		if docked:
 			# restore original z
-			get_parent().set_z_index(0)
+			get_parent().set_z_index(game.PLAYER_Z)
 			docked = false
 			# reparent
 			var root = get_node("/root/Control")
@@ -184,7 +184,8 @@ func _process(delta):
 			# refit target needs to be a node because here
 			refit_target.add_child(get_parent())
 			# set better z so that we don't overlap parent ship
-			get_parent().set_z_index(-1)
+			set_z_index(-1)
+			#set_z_index(game.BASE_Z-1)
 			
 			# nuke any velocity left
 			vel = Vector2(0,0)
