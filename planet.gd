@@ -257,17 +257,21 @@ func _on_Area2D_area_entered(area):
 			if area.get_parent().get_parent().get_parent().is_in_group("player"):
 				print("Colony being hauled by player")
 			else:
-				#print("Colony hauled by AI")
-				var brain = area.get_parent().get_parent().brain
-				if brain != null:
-					#print("AI has brain")
-					if brain.get_state() == brain.STATE_COLONIZE:
-						# is it the colonization target?
-						var id = brain.get_state_obj().param
-						print("Colonize id is: " + str(id))
-						if get_tree().get_nodes_in_group("planets")[id] == self:
-							print("We are the colonize target")
-							AI_do_colonize(area)			
+				# colony is free-floating (because the player just let go)
+				if not 'brain' in area.get_parent().get_parent():
+					# colonize
+					AI_do_colonize(area)
+				else:
+					var brain = area.get_parent().get_parent().brain
+					if brain != null:
+						#print("Colony hauled by AI")
+						if brain.get_state() == brain.STATE_COLONIZE:
+							# is it the colonization target?
+							var id = brain.get_state_obj().param
+							print("Colonize id is: " + str(id))
+							if get_tree().get_nodes_in_group("planets")[id] == self:
+								print("We are the colonize target")
+								AI_do_colonize(area)			
 
 		else:
 			print("Colony is already ours")
