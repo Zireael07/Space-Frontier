@@ -12,7 +12,8 @@ const STATE_ORBIT  = 2
 const STATE_ATTACK = 3
 const STATE_REFIT = 4
 const STATE_COLONIZE = 5 
-const STATE_MINE = 6 # not in original Stellar Frontier
+const STATE_GO_PLANET = 6
+const STATE_MINE = 7 # not in original Stellar Frontier
 
 signal state_changed
 
@@ -68,13 +69,13 @@ func set_state(new_state, param=null):
 	# if we need to clean up
 	#state.exit()
 	
-	if get_state() in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE]:
+	if get_state() in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE, STATE_GO_PLANET]:
 		prev_state = [ get_state(), state.param ]
 	else:
 		prev_state = [ get_state(), null ]
 	
 	# paranoia
-	if (new_state in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE] and param == null):
+	if (new_state in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE, STATE_GO_PLANET] and param == null):
 		print("We forgot a parameter for the state " + str(new_state))
 	
 	
@@ -92,6 +93,8 @@ func set_state(new_state, param=null):
 		state = RefitState.new(self, param)
 	elif new_state == STATE_COLONIZE:
 		state = ColonizeState.new(self, param)
+	elif new_state == STATE_GO_PLANET:
+		state = PlanetState.new(self, param)
 	
 	emit_signal("state_changed", self)
 	
@@ -112,6 +115,8 @@ func get_state():
 		return STATE_REFIT
 	elif state is ColonizeState:
 		return STATE_COLONIZE
+	elif state is PlanetState:
+		return STATE_GO_PLANET
 
 func get_state_obj():
 	return state
@@ -325,23 +330,52 @@ class ColonizeState:
 		# we somehow lost the colony?
 		if ship.ship.get_colony_in_dock() == null:
 			print("We want to orbit colonized planet")
-			if ship.ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
-				ship.target = ship.ship.get_colonized_planet().get_global_position()
-				ship.set_state(STATE_ORBIT, ship.ship.get_colonized_planet())
-			else:
-				ship.target = ship.ship.get_colonized_planet().get_global_position() + Vector2(200,200) * ship.ship.get_colonized_planet().planet_rad_factor
-				ship.set_state(STATE_IDLE)
+#			if ship.ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
+#				ship.target = ship.ship.get_colonized_planet().get_global_position()
+#				ship.set_state(STATE_ORBIT, ship.ship.get_colonized_planet())
+#			else:
+			#ship.target = ship.ship.get_colonized_planet().get_global_position() + Vector2(200,200) * ship.ship.get_colonized_planet().planet_rad_factor
+			ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
 		
 		if ship.get_global_position().distance_to(ship.target) < 50:
 			if ship.ship.get_colony_in_dock() == null:
 				print("We colonized it, want to orbit colonized planet")
-				if ship.ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
-					ship.target = ship.ship.get_colonized_planet().get_global_position()
-					ship.set_state(STATE_ORBIT, ship.ship.get_colonized_planet())
-				else:
-					ship.target = ship.ship.get_colonized_planet().get_global_position() + Vector2(200,200) * ship.ship.get_colonized_planet().planet_rad_factor
-					ship.set_state(STATE_IDLE)
+#				if ship.ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
+#					ship.target = ship.ship.get_colonized_planet().get_global_position()
+#					ship.set_state(STATE_ORBIT, ship.ship.get_colonized_planet())
+#				else:
+				#ship.target = ship.ship.get_colonized_planet().get_global_position() + Vector2(200,200) * ship.ship.get_colonized_planet().planet_rad_factor
+				ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
 
+
+class PlanetState:
+	var ship
+	var param # for previous state
+	var id
+	
+	func _init(shp, planet):
+		ship = shp
+		param = planet
+		
+		var planets = ship.get_tree().get_nodes_in_group("planets")
+		id = planets.find(planet)
+		
+	func update(delta):
+		# refresh target position
+		ship.target = ship.get_tree().get_nodes_in_group("planets")[id].get_global_position()
+		#print("ID" + str(id) + " tg: " + str(ship.target))
+		# steering behavior
+		var steer = ship.get_steering_seek(ship.target)	
+		# normal case
+		ship.vel += steer
+	
+		ship.ship.move_AI(ship.vel, delta)
+		
+		# if close, orbit
+		# 300 is experimentally picked
+		var rad_f = ship.ship.get_colonized_planet().planet_rad_factor
+		if (ship.target - ship.get_global_position()).length() < 300*rad_f:
+			ship.set_state(STATE_ORBIT, ship.ship.get_colonized_planet())
 
 # completely original	
 class MineState:

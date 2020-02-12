@@ -398,7 +398,7 @@ func _on_task_timer_timeout():
 			brain.target = col_tg.get_global_position()
 			brain.set_state(brain.STATE_COLONIZE, col_id)
 			
-		if not (brain.get_state() in [brain.STATE_MINE, brain.STATE_REFIT, brain.STATE_COLONIZE, brain.STATE_ATTACK]):
+		if not (brain.get_state() in [brain.STATE_MINE, brain.STATE_REFIT, brain.STATE_COLONIZE, brain.STATE_ATTACK, brain.STATE_GO_PLANET]):
 			var closest = get_closest_asteroid()
 			if closest:
 				brain.target = closest.get_global_position()
