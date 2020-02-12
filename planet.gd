@@ -81,6 +81,8 @@ func calculate_orbit_period():
 
 func is_habitable():
 	var star = get_parent().get_parent()
+	if not 'hz_inner' in star:
+		return false # dummy
 	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
 	if axis >= star.hz_inner and axis <= star.hz_outer:
 		return true
@@ -90,6 +92,9 @@ func is_habitable():
 # Radiative equilibrium tempetature
 func calculate_temperature():
 	var star = get_parent().get_parent()
+	if not 'luminosity' in star:
+		return 273 #dummy
+		
 	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
 	# https://spacemath.gsfc.nasa.gov/astrob/6Page61.pdf
 	# T = 273*((L(1-a) / D2)^0.25)
