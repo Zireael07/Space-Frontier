@@ -393,6 +393,8 @@ class MineState:
 		cnt = 0
 		target_num = 2
 		
+		ship.ship.timer_count = 0
+		
 	func update(delta):
 		var steer = Vector2(0,0)
 		
@@ -431,7 +433,7 @@ class MineState:
 		ship.ship.move_AI(ship.vel, delta)
 			
 		# if close to target, shoot it
-		if ship.get_global_position().distance_to(ship.target) < 50 and not shot:
+		if ship.get_global_position().distance_to(ship.target) < 80 and not shot:
 			#print("Close to target")
 			ship.ship.shoot_wrapper()
 			

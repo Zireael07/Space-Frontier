@@ -4,6 +4,7 @@ extends "ship_basic.gd"
 # AI specific stuff
 var brain
 onready var task_timer = $"task_timer"
+var timer_count = 0
 var target_type = null
 
 var targetted = false
@@ -237,6 +238,8 @@ func move_orbit(delta):
 		##orbit
 		print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
 		orbit_planet(get_colonized_planet())
+	# if too far away, just ignore
+	
 	
 	# dummy
 	elif not orbiting:
@@ -336,9 +339,10 @@ func _on_shield_changed(shield):
 func _on_shield_timer_timeout():
 	$"shield_effect".hide()
 
-#TODO: maybe move to brain.gd?
+#TODO: maybe move contents to brain.gd?
 func _on_task_timer_timeout():
 	print("Task timer timeout")
+	timer_count += 1
 	if orbiting:
 		# if player-specified colony target is not colonized
 		if get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target != null or \
@@ -431,3 +435,31 @@ func _on_task_timer_timeout():
 #				if get_tree().get_nodes_in_group("asteroid").size() > 3:
 #					brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 #					brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+
+
+		if brain.get_state() == brain.STATE_MINE:
+			# if task timeout happened and we're still mining, quit it
+			if timer_count > 4:
+				# ignore if we're far from target
+				var dist = get_global_position().distance_to(brain.target)
+				if dist > 150:
+					# ignore
+					pass
+				else:
+					print("We got stuck mining @ dist: " + str(dist))
+					# assume we got bored, look for something else to do../
+					# do we have something to colonize?
+					# if player-specified colony target is not colonized
+					if get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target != null or \
+					get_colonize_target() != null: # or we have a colonize target (planet w/o colony)
+						if get_colony_in_dock() == null:
+							if kind_id == kind.friendly:
+								if get_colonized_planet().get_global_position().distance_to(get_global_position()) > 500:
+									#brain.target = get_colonized_planet().get_global_position() + Vector2(200,200) * get_colonized_planet().planet_rad_factor
+									brain.set_state(brain.STATE_GO_PLANET, get_colonized_planet())
+					else:
+						# add offset to brain target to "unstick" ourselves
+						brain.target = brain.target + Vector2(50,50)
+						brain.set_state(brain.STATE_IDLE)
+					
+			#pass
