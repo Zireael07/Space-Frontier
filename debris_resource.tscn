@@ -19,5 +19,4 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="debris"]
 texture = ExtResource( 2 )
-
 [connection signal="area_entered" from="debris" to="debris" method="_on_debris_area_entered"]

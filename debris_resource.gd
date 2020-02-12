@@ -32,7 +32,7 @@ func _on_debris_area_entered(area):
 		# listing (player-only)
 		area.update_cargo_listing(area.cargo)
 		
-		queue_free()
+		get_parent().queue_free()
 		
 	if area.get_groups().has("friendly"):
 		print("debris entered by " + area.get_parent().get_name())
@@ -49,4 +49,4 @@ func _on_debris_area_entered(area):
 		
 		# trigger AI routines
 		area.resource_picked()
-		queue_free()
+		get_parent().queue_free()
