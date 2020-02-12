@@ -80,6 +80,10 @@ func _ready():
 		# mark habitable planets
 		if p.is_habitable():
 			txt = txt + " * "
+		# does it have enough pop for a colony?
+		if p.population > 51000:
+			txt = txt + " ^ "
+			
 		label.set_text(txt)
 		label.set_position(Vector2(10,y))
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)

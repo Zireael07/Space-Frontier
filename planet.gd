@@ -337,10 +337,35 @@ func has_colony():
 
 	return ret
 
+func update_HUD_colony_pop(planet, add):
+	var node = null
+	var hud = game.player.HUD
+	# get label
+	for l in hud.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").get_children():
+		# because ordering in groups cannot be relied on 100%
+		if l.get_text().find(planet.get_node("Label").get_text()) != -1:
+			node = l.get_name()
+	
+	if node:
+		var parent = hud.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo")
+		if add:
+			parent.get_node(node).set_text(parent.get_node(node).get_text() + " ^ ")
+		else:
+			# remove flag
+			if parent.get_node(node).get_text().find("^") != -1:
+				var text = parent.get_node(node).get_text()
+				parent.get_node(node).set_text(text.rstrip(" ^ "))
+
+
 func _on_pop_timer_timeout():
 	if has_colony():
 		print("Pop increase")
 		population += 1000
+	
+	# does it have enough pop for a colony?
+	if population > 51000:
+		update_HUD_colony_pop(self, true)
+
 #	else:
 #		print("No colony?")
 
