@@ -18,6 +18,7 @@ onready var planets = $"planet_holder"
 
 # for minimap
 export var zoom_scale = 12
+export var custom_orrery_scale = 0
 
 
 func _ready():

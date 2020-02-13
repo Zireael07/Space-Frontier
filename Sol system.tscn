@@ -16,6 +16,7 @@
 position = Vector2( 500, 500 )
 script = ExtResource( 1 )
 zoom_scale = 24
+custom_orrery_scale = 280
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 9.92185
