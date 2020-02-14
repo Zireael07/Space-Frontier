@@ -438,7 +438,7 @@ class MineState:
 			ship.ship.shoot_wrapper()
 			
 		var ress = ship.get_tree().get_nodes_in_group("resource")
-		if ress.size() > 0:
+		if ress.size() > 0 and ress[0].get_global_position().distance_to(ship.get_global_position()) < 200:
 			if not shot:
 				shot = true
 			ship.target = ress[0].get_global_position()
