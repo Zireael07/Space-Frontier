@@ -354,7 +354,8 @@ func update_HUD_colony_pop(planet, add):
 	if node:
 		var parent = hud.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo")
 		if add:
-			parent.get_node(node).set_text(parent.get_node(node).get_text() + " ^ ")
+			if parent.get_node(node).get_text().find("^") == -1:
+				parent.get_node(node).set_text(parent.get_node(node).get_text() + " ^ ")
 		else:
 			# remove flag
 			if parent.get_node(node).get_text().find("^") != -1:
