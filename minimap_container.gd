@@ -214,11 +214,12 @@ func _process(delta):
 		var dist = Vector2(rel_loc.x, rel_loc.y).length()
 		#print ("Px to star: " + str(dist))
 		
-		if dist > 1200:
+		# if star is so far away that it is outside of the minimap area
+		if dist > (100*zoom_scale): # experimentally determined value
 			# indicate distant stars
 			#print("Star out of minimap area")
 			star_arrow.set_visible(true)
-			var pos = Vector2(rel_loc.x, rel_loc.y).clamped(1200-50)
+			var pos = Vector2(rel_loc.x, rel_loc.y).clamped((100*zoom_scale)-50) # experimentally determined value
 			var a = atan2(rel_loc.x, rel_loc.y)
 			
 			#print("Pos: " + str(pos) + " for rel_pos" + str(rel_loc))
