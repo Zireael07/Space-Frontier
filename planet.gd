@@ -34,6 +34,8 @@ signal planet_colonized
 
 onready var module = preload("res://debris_enemy.tscn")
 
+var labl_loc = Vector2()
+
 # Called when the node is added to the scene for the first time.
 # Initialization here
 func _ready():
@@ -58,6 +60,8 @@ func _ready():
 	
 	if has_colony():
 		population = 100000
+		
+	labl_loc = $"Label".get_position()
 
 # Kepler's Third Law:
 # The square of the period of any planet is proportional to the cube of the semi-major axis of its orbit.
@@ -180,6 +184,13 @@ func _process(delta):
 	if get_parent().is_class("Node2D"):
 		#print("Parent is a Node2D")
 		$"Label".set_rotation(-get_parent().get_rotation())
+		
+		# get the label to stay in one place from player POV
+		var angle = -get_parent().get_rotation() + deg2rad(45) # because the label is located at 45 deg angle...
+		# effectively inverse of atan2()
+		var angle_loc = Vector2(cos(angle), sin(angle))
+		#Controls don't have transforms so we have to manually set position
+		$"Label"._set_position(angle_loc*labl_loc.length())
 	
 		if has_node("Sprite_shadow"):
 			#var angle_to_star = atan2(self.get_position().x, self.get_position().y)
