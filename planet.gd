@@ -196,7 +196,8 @@ func _process(delta):
 	
 	# planets handle orbiting now	
 	if has_node("orbit_holder"):
-		if orbiters.size() > 0:
+		# if orbiters or moon
+		if orbiters.size() > 0 or has_moon():
 			orbit_rot += orbit_rate * delta
 			get_node("orbit_holder").set_rotation(orbit_rot)
 	
@@ -205,6 +206,13 @@ func _process(delta):
 #	# Update game logic here.
 #	pass
 
+func has_moon():
+	var ret = false
+	for c in get_node("orbit_holder").get_children():
+		if c.is_in_group("moon"):
+			ret = true
+	#print("Has moon: " + str(ret))
+	return ret
 
 func _draw():
 	# debugging

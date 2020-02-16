@@ -61,7 +61,10 @@ rotation = 3.4641e-07
 [node name="Label" parent="planet_holder/planet3" index="2"]
 text = "Earth"
 
-[node name="Node2D" parent="planet_holder/planet3/orbit_holder" index="0" instance=ExtResource( 9 )]
+[node name="orbit_holder" parent="planet_holder/planet3" index="4"]
+[node name="Node2D" parent="planet_holder/planet3/orbit_holder" index="0" groups=[
+"moon",
+] instance=ExtResource( 9 )]
 position = Vector2( -8.74228e-06, 200 )
 
 [node name="Sprite" parent="planet_holder/planet3/orbit_holder/Node2D" index="0"]
