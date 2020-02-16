@@ -5,7 +5,7 @@ var player
 # for consistency's sake across the game
 const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
 const LS_TO_AU = 30 #500 realistic value
-const AU = LS_TO_AU*LIGHT_SEC
+const AU = LS_TO_AU*LIGHT_SEC #1200
 
 # ship name lists here for consistency
 # highly US themed names and some mythological animals

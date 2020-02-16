@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://star system.gd" type="Script" id=1]
 [ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=2]
 [ext_resource path="res://planet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=4]
+[ext_resource path="res://assets/bodies/moonmap.jpg" type="Texture" id=5]
 [ext_resource path="res://colony.tscn" type="PackedScene" id=7]
 [ext_resource path="res://planet_new.tscn" type="PackedScene" id=8]
 [ext_resource path="res://planet_rotating.tscn" type="PackedScene" id=9]
@@ -60,6 +61,24 @@ rotation = 3.4641e-07
 [node name="Label" parent="planet_holder/planet3" index="2"]
 text = "Earth"
 
+[node name="Node2D" parent="planet_holder/planet3/orbit_holder" index="0" instance=ExtResource( 9 )]
+position = Vector2( -8.74228e-06, 200 )
+
+[node name="Sprite" parent="planet_holder/planet3/orbit_holder/Node2D" index="0"]
+scale = Vector2( 0.062, 0.125 )
+texture = ExtResource( 5 )
+
+[node name="Sprite_shadow" parent="planet_holder/planet3/orbit_holder/Node2D" index="1"]
+visible = false
+rotation = 3.4641e-07
+
+[node name="Label" parent="planet_holder/planet3/orbit_holder/Node2D" index="2"]
+margin_left = 37.0
+margin_top = 37.0
+margin_right = 89.0
+margin_bottom = 51.0
+text = "Moon"
+
 [node name="colony2" parent="planet_holder/planet3" instance=ExtResource( 7 )]
 position = Vector2( -0.000518799, 0 )
 
@@ -78,5 +97,7 @@ text = "Mars"
 [editable path="planet_holder/planet4"]
 
 [editable path="planet_holder/planet3"]
+
+[editable path="planet_holder/planet3/orbit_holder/Node2D"]
 
 [editable path="planet_holder/planet2"]
