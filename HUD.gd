@@ -210,6 +210,7 @@ func _on_officer_messaged(message):
 func _on_kill_gained(num):
 	$"Control/Panel/Label_kill".set_text("Kills: " + str(num))
 
+# called when a player target an AI ship
 func _on_AI_targeted(AI):
 	var prev_target = null
 	if target != null:
@@ -229,7 +230,7 @@ func _on_AI_targeted(AI):
 	# assume sprite is always the first child of the ship
 	$"Control/Panel2/target_outline".set_texture(AI.get_child(0).get_texture())
 
-
+	# bottom panel
 	for n in $"Control/Panel2".get_children():
 		n.show()
 		if not 'armor' in AI:
@@ -243,11 +244,21 @@ func _on_AI_targeted(AI):
 		target.connect("armor_changed", self, "_on_target_armor_changed")
 		# force update
 		target.emit_signal("armor_changed", target.armor)
+		
+	# ship info
+	# assume sprite is always the first child of the ship
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/TextureRect2".set_texture(AI.get_child(0).get_texture())
+	# switch to ship panel
+	_on_ButtonShip_pressed()
 
 func hide_target_panel():
 	# hide panel info if any
 	for n in $"Control/Panel2".get_children():
 		n.hide()
+	# default ship panel back to player sprite
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/TextureRect2".set_texture(player.get_child(0).get_texture())
+	# switch away from ship panel
+	_on_ButtonPlanet_pressed()
 
 func _on_target_shield_changed(shield):
 	#print("Shields from signal is " + str(shield))
@@ -335,12 +346,27 @@ func _on_ButtonPlanet_pressed():
 
 
 func _on_ButtonShip_pressed():
-	# get the correct data
-	# for now, assume we want our own ship's data
-	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".set_text("Power: " + str(player.engine_level))
-	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".set_text("Engine: " + str(player.power_level))
-	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".set_text("Shields: " + str(player.shield_level))
-
+	if target != null and target.is_in_group("friendly") or target.is_in_group("enemy"):
+		# correctly name starbases
+		if target.is_in_group("starbase"):
+			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Starbase")
+		else:
+			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
+		# no modules for AI yet
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".hide()
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".hide()
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".hide()
+	else:
+		# get the correct data
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
+		# for now, assume we want our own ship's data
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".show()
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".set_text("Power: " + str(player.power_level))
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".show()
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".set_text("Engine: " + str(player.engine_level))
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".show()
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".set_text("Shields: " + str(player.shield_level))
+		
 
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
