@@ -248,6 +248,16 @@ func _process(delta):
 		if get_node("heat_timer").get_time_left() == 0:
 			heat_damage()
 
+	# target direction indicator
+	if HUD.target != null and HUD.target != self:
+		get_node("target_dir").show()
+		var tg_rel_pos = get_global_transform().xform_inv(HUD.target.get_global_position())
+		get_node("target_dir").set_position(tg_rel_pos.clamped(60))
+		# point at the target
+		#var a = atan2(tg_rel_pos.x, tg_rel_pos.y)
+		var a = fix_atan(tg_rel_pos.x, tg_rel_pos.y)
+		#var angle_to = (-a+3.141593)
+		get_node("target_dir").set_rotation(-a)
 
 func player_heading(target, delta):
 	var rel_pos = get_global_transform().xform_inv(target)

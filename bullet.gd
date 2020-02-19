@@ -76,6 +76,8 @@ func _on_bullet_area_entered( area ):
 			game.player.HUD.target = null
 			# hide the target panel HUD
 			game.player.HUD.hide_target_panel()
+			# hide the direction indicator
+			game.player.get_node("target_dir").hide()
 
 			# count a kill
 			if 'kills' in get_parent().get_parent():
