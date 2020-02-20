@@ -26,6 +26,7 @@ func set_seed(value):
 	var scale_n = (randf() * 2 + 1) / get_texture().get_height()
 	# shaders don't know the Godot color type
 	var color = Vector3(randf(), randf(), randf())
+	var color2 = Vector3(randf(), randf(), randf())
 	var density = randf() * 0.2
 	var falloff = randf() * 2.0 + 3.0
 	
@@ -36,6 +37,7 @@ func set_seed(value):
 	m.set_shader_param("offset", off)
 	m.set_shader_param("scale", scale_n)
 	m.set_shader_param("color", color)
+	m.set_shader_param("color2", color2)
 	m.set_shader_param("density", density)
 	m.set_shader_param("falloff", falloff)
 	

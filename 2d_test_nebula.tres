@@ -1,7 +1,6 @@
 [gd_resource type="Shader" format=2]
 
 [resource]
-
 code = "shader_type canvas_item;
 
 uniform vec2 offset;
@@ -10,6 +9,8 @@ uniform float scale;
 uniform float density;
 uniform float falloff;
 uniform vec3 color;
+
+uniform vec3 color2;
 
 // GLSL textureless classic 2D noise \"cnoise\",
 // with an RSL-style periodic variant \"pnoise\".
@@ -139,12 +140,19 @@ float noise(vec2 p) {
 void fragment() {
 	//tyro
 	//float n = noise(UV*scale*1.0);
-	float n = noise(FRAGCOORD.xy*scale *1.0);
-	n = pow(n + density, falloff);
+	float or_n = noise(FRAGCOORD.xy*scale *1.0);
+	float n = pow(or_n + density, falloff);
 	
-	COLOR.rgb = mix(vec3(0.0), color, n);
+	float col_n = noise(FRAGCOORD.xy*scale*0.5);
 	
-    //COLOR.rgb = vec3(n);
+	vec3 col = mix(color, color2, col_n);
+	//vec3 col = color + color2;
+	
+	//COLOR.rgb = col;
+	float mixi = n;
+	//float mixi = 1.0-(pow(n, density));
+	//for aesthetic reasons, black (background) must not be a minority but be noticeable
+	COLOR.rgb = mix(vec3(0.0), col, mixi);
+	
+    //COLOR.rgb = vec3(or_n);
 }"
-_sections_unfolded = [ "Resource" ]
-
