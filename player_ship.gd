@@ -14,6 +14,10 @@ var shield_recharge = 5
 var power_recharge = 5
 signal power_changed
 
+var engine = 500 # in reality, it represents fuel, call it engine for simplicity
+var engine_draw = 2 # how fast our engine wears out
+signal engine_changed
+
 var has_cloak = false
 var cloaked = false
 
@@ -127,6 +131,10 @@ func _process(delta):
 			if warp_target == null:
 				acc = Vector2(0, -thrust).rotated(rot)
 				$"engine_flare".set_emitting(true)
+				# use up engine
+				if engine > 0:
+					engine = engine - engine_draw
+					emit_signal("engine_changed", engine)
 	else:
 		acc = Vector2(0,0)
 		$"engine_flare".set_emitting(false)
@@ -579,6 +587,15 @@ func _on_recharge_timer_timeout():
 	if power < 100:
 		power += power_recharge
 		emit_signal("power_changed", power)
+
+func _on_engine_timer_timeout():
+	# give back a small amount of engine when we're not boosting it
+	if engine < 500:
+		engine += 1
+		emit_signal("engine_changed", engine)
+
+	
+
 
 func _on_conquer_pressed(id):
 	conquer_target = id

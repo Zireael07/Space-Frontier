@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://player_ship.gd" type="Script" id=1]
 [ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/fire11.png" type="Texture" id=4]
 [ext_resource path="res://assets/shieldGreen_Edit.png" type="Texture" id=5]
 [ext_resource path="res://assets/crosshair123.png" type="Texture" id=6]
+[ext_resource path="res://assets/hud/yellow_dir_arrow.png" type="Texture" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 23.0021
@@ -164,10 +165,19 @@ autostart = true
 [node name="heat_timer" type="Timer" parent="Area2D"]
 one_shot = true
 
+[node name="engine_timer" type="Timer" parent="Area2D"]
+autostart = true
+
+[node name="target_dir" type="Sprite" parent="Area2D"]
+visible = false
+modulate = Color( 1, 0, 0, 1 )
+texture = ExtResource( 7 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/landing = SubResource( 3 )
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D/recharge_timer" to="Area2D" method="_on_recharge_timer_timeout"]
 [connection signal="timeout" from="Area2D/shield_recharge_timer" to="Area2D" method="_on_shield_recharge_timer_timeout"]
+[connection signal="timeout" from="Area2D/engine_timer" to="Area2D" method="_on_engine_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="Area2D" method="_on_AnimationPlayer_animation_finished"]
