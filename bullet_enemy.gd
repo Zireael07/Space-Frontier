@@ -51,10 +51,40 @@ func _on_bullet_area_entered( area ):
 			#area.get_parent().queue_free()
 	
 			# explosion
-			var expl = get_parent().get_parent().explosion.instance()
-			get_parent().get_parent().add_child(expl)
-			expl.set_global_position(pos)
-			expl.play()
+			if "explosion" in area:
+				var expl = area.explosion.instance()
+				get_parent().get_parent().add_child(expl)
+				expl.set_global_position(pos)
+				expl.play()
 			
 			# bugfix
 			#get_parent().get_parent().shoot_target = null
+			return
+	
+	if area.get_parent().get_groups().has("asteroid"):
+		queue_free()
+		
+		#print(area.get_parent().get_name())
+		
+		var pos = area.get_global_position()
+		
+		# debris
+		var deb = area.get_parent().resource_debris.instance()
+		# randomize the resource
+		var res = area.get_parent().select_random()
+		# paranoia
+		if res != null:
+			deb.get_child(0).resource = res 
+		# prevent a debugger message Can't change state while flushing queries
+		call_deferred("spawn_debris", deb, pos)
+		
+		# explosion
+		var expl = get_parent().get_parent().explosion.instance()
+		get_parent().get_parent().get_parent().add_child(expl)
+		expl.set_global_position(pos)
+		expl.set_scale(Vector2(0.5, 0.5))
+		expl.play()
+		
+func spawn_debris(deb, pos):
+	get_parent().get_parent().get_parent().add_child(deb)
+	deb.set_global_position(pos)
