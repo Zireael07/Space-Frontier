@@ -225,6 +225,11 @@ func has_moon():
 	#print("Has moon: " + str(ret))
 	return ret
 
+func get_moon():
+	for c in get_node("orbit_holder").get_children():
+		if c.is_in_group("moon"):
+			return c
+
 func _draw():
 	# debugging
 	if Engine.is_editor_hint():

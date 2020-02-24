@@ -99,6 +99,16 @@ func _ready():
 			# tint red
 			label.set_self_modulate(Color(1, 0, 0))
 		y += 15
+		if p.has_moon():
+			var x = 15 # indent moons
+			# moon label
+			label = Label.new()
+			var moon = p.get_moon()
+			txt = moon.get_node("Label").get_text()
+			label.set_text(txt)
+			label.set_position(Vector2(10+x, y))
+			$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
+			y += 15
 
 		# direction labels
 		dir_label = Label.new()
@@ -482,9 +492,26 @@ func _on_ButtonView_pressed():
 
 		return
 	
-	var select_id = (cursor.get_position().y - 15) / 15
-	var planet = get_tree().get_nodes_in_group("planets")[select_id]
+	else:
+		var select_id = (cursor.get_position().y - 15) / 15
+		var skip = -1
+		var planets = get_tree().get_nodes_in_group("planets")
+		for i in range(planets.size()):
+			if planets[i].has_moon():
+				skip = i
+		
+		if select_id > skip and select_id < skip+2: # assume only one moon for now
+			print("Pointed cursor at moon")
+			return
+		else:
+			if select_id > skip+1:
+				# fix
+				select_id = select_id-1
+			
+			var planet = get_tree().get_nodes_in_group("planets")[select_id]
+			make_planet_view(planet, select_id)
 
+func make_planet_view(planet, select_id):
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
@@ -558,7 +585,11 @@ func _on_ButtonUp2_pressed():
 func _on_ButtonDown2_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
 	var num_list = get_tree().get_nodes_in_group("planets").size()-1
+	
 	var max_y = 15*num_list+1 #because of star
+	for p in get_tree().get_nodes_in_group("planets"):
+		if p.has_moon():
+			max_y = max_y +15
 	#print("num list" + str(num_list) + " max y: " + str(max_y))
 	if cursor.get_position().y < max_y:
 		# down a line
