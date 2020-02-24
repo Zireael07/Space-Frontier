@@ -191,9 +191,9 @@ func _on_power_changed(power):
 		$"Control/Panel/ProgressBar_po".value = 0
 
 func _on_engine_changed(engine):
-	# original max is 500
+	# original max is 1000
 	# avoid truncation
-	var maxx = 500.0
+	var maxx = 1000.0
 	var perc = engine/maxx * 100
 
 	#print("Perc: " + str(perc))
