@@ -514,8 +514,19 @@ func _on_ButtonView_pressed():
 func make_planet_view(planet, select_id):
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
+	# show planet sprite
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(Vector2(0.15, 0.15))
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
-
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(planet.get_node("Sprite").get_material())
+	if planet.get_node("Sprite").get_material() != null:
+		#print("Shader: " + str(planet.get_node("Sprite").get_material().is_class("ShaderMaterial")))
+		var is_rot = planet.get_node("Sprite").get_material().get_shader().has_param("shader_param/time")
+		#print("is rotating: " + str(is_rot))
+		if is_rot:
+			var sc = Vector2(0.15/2, 0.15)
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
+			
+		
 	# set label
 	var txt = "Planet: " + str(planet.get_node("Label").get_text())
 	var label = $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/LabelName"
