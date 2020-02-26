@@ -96,12 +96,12 @@ func _process(delta):
 
 
 	# rotations
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("move_left"):
 		rot -= rot_speed*delta
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("move_right"):
 		rot += rot_speed*delta
 	# thrust
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("move_up"):
 		# QoL feature - launch
 		if landed:
 			launch()
