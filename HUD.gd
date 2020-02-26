@@ -502,6 +502,8 @@ func _on_ButtonView_pressed():
 		
 		if select_id > skip and select_id < skip+2: # assume only one moon for now
 			print("Pointed cursor at moon")
+			var moon = planets[skip].get_moon()
+			make_planet_view(moon)
 			return
 		else:
 			if select_id > skip+1:
@@ -511,7 +513,7 @@ func _on_ButtonView_pressed():
 			var planet = get_tree().get_nodes_in_group("planets")[select_id]
 			make_planet_view(planet, select_id)
 
-func make_planet_view(planet, select_id):
+func make_planet_view(planet, select_id=null):
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	# show planet sprite
@@ -580,11 +582,12 @@ func make_planet_view(planet, select_id):
 	# connected from script because they rely on ID of the planet
 	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".is_connected("pressed", player, "_on_goto_pressed"):
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".disconnect("pressed", player, "_on_goto_pressed")
-	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed", [select_id])
+	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed", [planet])
 
-	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".is_connected("pressed", player, "_on_conquer_pressed"):
-		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".disconnect("pressed", player, "_on_conquer_pressed")
-	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton").connect("pressed", player, "_on_conquer_pressed", [select_id])
+	if select_id != null:
+		if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".is_connected("pressed", player, "_on_conquer_pressed"):
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".disconnect("pressed", player, "_on_conquer_pressed")
+		get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton").connect("pressed", player, "_on_conquer_pressed", [select_id])
 
 func _on_ButtonUp2_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
