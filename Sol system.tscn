@@ -65,7 +65,7 @@ text = "Earth"
 [node name="Node2D" parent="planet_holder/planet3/orbit_holder" index="0" groups=[
 "moon",
 ] instance=ExtResource( 9 )]
-position = Vector2( -8.74228e-06, 200 )
+position = Vector2( -1.31134e-05, 300 )
 
 [node name="Sprite" parent="planet_holder/planet3/orbit_holder/Node2D" index="0"]
 scale = Vector2( 0.062, 0.125 )

@@ -50,9 +50,12 @@ func _ready():
 	
 	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls, " + str(ls/game.LS_TO_AU) + " AU")
 	
-	calculate_orbit_period()
-	
-	temp = calculate_temperature()
+	# moon fix
+	if is_in_group("moon"):
+		mass = 0.0123 #Earth masses
+	else:
+		temp = calculate_temperature()
+		calculate_orbit_period()
 	
 	# type is the parameter, skipped for now
 	radius = calculate_radius()
@@ -62,6 +65,11 @@ func _ready():
 		population = 100000
 		
 	labl_loc = $"Label".get_position()
+	
+	# recalculate temp for our moons last
+	if has_moon():
+		get_moon().temp = get_moon().calculate_temperature()
+		get_moon().calculate_orbit_period()
 
 # Kepler's Third Law:
 # The square of the period of any planet is proportional to the cube of the semi-major axis of its orbit.
@@ -70,12 +78,23 @@ func calculate_orbit_period():
 	# gravitational constant
 	var G = (6.67428e-11)
 	
+	var dist = self.dist
+	if is_in_group("moon"):
+		dist = dist/10 # eyeballed scale
+	
 	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
+	#print("Axis: " + str(axis))
 	
 	# by default, the equation works on seconds, meters and kilograms
 	var AU = 149597870691 #meters
 	var yr = 3.15581e7 #seconds (86400 for a day)
 	var sun = 5.027399e-31 #kg
+	
+	# if we're a moon, substitute planet mass
+	if is_in_group("moon"):
+		sun = 1.6740324e-25 # kg, one Earth mass
+		#var moon_mass = mass*sun
+		#sun = sun + moon_mass # to be extra correct
 	
 	# T = 2*PI*sqrt(a^3/GM) [ substitute (M1+M2) for M if we're talking binary system ]
 	var t = 2*PI*sqrt(pow(axis*AU, 3)/G*sun) # in seconds
@@ -95,11 +114,17 @@ func is_habitable():
 
 # Radiative equilibrium tempetature
 func calculate_temperature():
+	var dist_t = self.dist # to avoid overwriting
 	var star = get_parent().get_parent()
+	# if we're a moon, look up the star and take distance of our parent
+	if get_parent().get_parent().is_in_group("planets"):
+		star = get_parent().get_parent().get_parent().get_parent()
+		dist_t = self.dist + get_parent().get_parent().dist
+		
 	if not 'luminosity' in star:
 		return 273 #dummy
 		
-	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
+	var axis = (dist_t/game.LIGHT_SEC)/game.LS_TO_AU
 	# https://spacemath.gsfc.nasa.gov/astrob/6Page61.pdf
 	# T = 273*((L(1-a) / D2)^0.25)
 	var t = star.luminosity*(1-albedo) / pow(axis,2)
@@ -205,12 +230,13 @@ func _process(delta):
 			
 			$"Sprite_shadow".set_global_rotation(angle_to_star)
 	
-	# planets handle orbiting now	
-	if has_node("orbit_holder"):
-		# if orbiters or moon
-		if orbiters.size() > 0 or has_moon():
-			orbit_rot += orbit_rate * delta
-			get_node("orbit_holder").set_rotation(orbit_rot)
+	if not Engine.is_editor_hint():
+		# planets handle orbiting now	
+		if has_node("orbit_holder"):
+			# if orbiters or moon
+			if orbiters.size() > 0 or has_moon():
+				orbit_rot += orbit_rate * delta
+				get_node("orbit_holder").set_rotation(orbit_rot)
 	
 	
 #	# Called every frame. Delta is time since last frame.
