@@ -179,7 +179,23 @@ func _on_ship_spawned(ship):
 	add_child(friendly_sprite)
 	friendlies.append(ship)
 
+func _on_starbase_spawned(sb):
+	print("On starbase spawned")
+	var starbase_sprite = TextureRect.new()
+	starbase_sprite.set_texture(starbase)
+	starbase_sprite.set_scale(Vector2(0.5, 0.5))
+	starbase_sprites.append(starbase_sprite)
+	add_child(starbase_sprite)
+	starbases.append(sb)
 
+func _on_enemy_starbase_spawned(starbase):
+	print("On enemy starbase spawned")
+	var sb_sprite = TextureRect.new()
+	sb_sprite.set_texture(sb_enemy)
+	sb_sprite.set_scale(Vector2(0.5, 0.5))
+	sb_enemy_sprites.append(sb_sprite)
+	add_child(sb_sprite)
+	sb_enemies.append(starbase)
 
 func _on_colony_picked(colony):
 	print("On colony picked")

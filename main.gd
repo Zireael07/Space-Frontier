@@ -2,6 +2,8 @@ extends Control
 
 # Declare member variables here. Examples:
 var friendly = preload("res://friendly_ship.tscn")
+var starbase = preload("res://starbase.tscn")
+var enemy_starbase = preload("res://enemy_starbase.tscn")
 
 # star systems
 var proc_system = preload("res://star system.tscn")
@@ -21,6 +23,8 @@ func spawn_system(system="proc"):
 	var system_inst = sys.instance()
 	add_child(system_inst)
 	
+	return system
+	
 func spawn_core():
 	var cor = core.instance()
 	add_child(cor)
@@ -31,12 +35,14 @@ func spawn_core():
 func _ready():
 	print("Main init")
 	
-	spawn_system()
+	var system = spawn_system()
 	spawn_core()
 	
 	for i in range(4):
 		spawn_friendly(i)
 	
+	spawn_starbase()
+	spawn_enemy_starbase(system)
 	
 	#pass # Replace with function body.
 
@@ -79,6 +85,49 @@ func spawn_friendly(i):
 		
 		print("Spawned friendly")
 
+func spawn_starbase():
+	var p = get_colonized_planet()
+	
+	if p:
+		var sb = starbase.instance()
+		# random factor
+		randomize()
+		var offset = Vector2(rand_range(500, 1000), rand_range(500, 1000))
+		sb.set_global_position(p.get_global_position() + offset)
+		sb.set_name("friendly_base")
+		get_child(2).add_child(sb)
+		var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
+		print("Player index: " + str(p_ind))
+		get_child(2).move_child(sb, p_ind+1)
+		
+		# give minimap icon
+		var mmap = get_tree().get_nodes_in_group("minimap")[0]
+		mmap._on_starbase_spawned(sb.get_child(0))
+		
+func spawn_enemy_starbase(system):
+	var p
+	
+	var sb = enemy_starbase.instance()
+	
+	if system == "Sol":
+		p = get_tree().get_nodes_in_group("planets")[1] # Venus
+	else:
+		p = get_tree().get_nodes_in_group("planets")[3]
+
+	# random factor
+	randomize()
+	var offset = Vector2(rand_range(200, 400), rand_range(200, 400))
+	sb.set_global_position(p.get_global_position() + offset)
+	
+	sb.set_name("enemy_base")
+	get_child(2).add_child(sb)
+	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
+	print("Player index: " + str(p_ind))
+	get_child(2).move_child(sb, p_ind+1)
+	
+	# give minimap icon
+	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	mmap._on_enemy_starbase_spawned(sb.get_child(0))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
