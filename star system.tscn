@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://star system.gd" type="Script" id=1]
 [ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
@@ -9,6 +9,30 @@
 [ext_resource path="res://asteroid.tscn" type="PackedScene" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform vec4 aura_color : hint_color;
+
+void fragment()
+{
+	vec4 col = texture(TEXTURE, UV);
+	
+	if (col.a > 0.08 && col.r > 0.1)
+	{
+		COLOR.rgba = vec4(aura_color.rgb, col.a);
+	}
+	else
+	{
+		COLOR.rgba = col.rgba; //+ vec3(1,0,0);
+	}
+	//COLOR.rgb = vec3(1,0,0);
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/aura_color = Color( 0.00392157, 0.831373, 0.992157, 1 )
 
 [node name="star" type="Node2D" groups=[
 "star",
@@ -40,7 +64,7 @@ position = Vector2( -2.62268e-05, -600 )
 hydro = 0.2
 
 [node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
-rotation = -0.982794
+rotation = 3.14159
 
 [node name="Label" parent="planet_holder/planet" index="2"]
 text = "Jungle"
@@ -55,9 +79,11 @@ position = Vector2( 1852.92, 200 )
 texture = ExtResource( 4 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet2" index="1"]
-rotation = -0.496234
+material = SubResource( 3 )
+rotation = 4.81991
 
 [node name="Label" parent="planet_holder/planet2" index="2"]
+margin_right = 204.0
 text = "Paradise"
 
 [node name="colony2" parent="planet_holder/planet2" instance=ExtResource( 5 )]
@@ -70,7 +96,7 @@ hydro = 0.0
 texture = ExtResource( 6 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
-rotation = 1.64284
+rotation = 1.31667
 
 [node name="Label" parent="planet_holder/planet3" index="2"]
 text = "Inferno"
