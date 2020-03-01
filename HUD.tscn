@@ -11,7 +11,7 @@
 [ext_resource path="res://assets/hud/arrow.png" type="Texture" id=9]
 [ext_resource path="res://assets/HUD ship outline.tres" type="Material" id=10]
 [ext_resource path="res://assets/bottom_bar_style.tres" type="StyleBox" id=11]
-[ext_resource path="res://assets/hud/HUD_panel_green.tres" type="StyleBox" id=12]
+[ext_resource path="res://assets/Planet-shadow_only.png" type="Texture" id=12]
 [ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=13]
 
 [sub_resource type="StyleBoxTexture" id=1]
@@ -25,6 +25,9 @@ pause_mode = 2
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Control2" type="Control" parent="."]
 margin_left = 825.0
@@ -34,7 +37,6 @@ margin_bottom = 40.0
 [node name="Panel_rightHUD" type="Panel" parent="Control2"]
 margin_right = 202.0
 margin_bottom = 598.0
-custom_styles/panelf = ExtResource( 2 )
 custom_styles/panel = SubResource( 1 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control2/Panel_rightHUD"]
@@ -108,6 +110,14 @@ margin_bottom = 721.0
 rect_scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 4 )
 
+[node name="TextureRect2" type="TextureRect" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+margin_left = 83.0
+margin_top = 1.0
+margin_right = 803.0
+margin_bottom = 721.0
+rect_scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 12 )
+
 [node name="BackButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
 margin_top = 187.0
 margin_right = 42.0
@@ -129,7 +139,6 @@ margin_bottom = 207.0
 text = "Conquer"
 
 [node name="ShipInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
-editor/display_folded = true
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
@@ -182,7 +191,6 @@ margin_bottom = 74.0
 text = "Shields: 1"
 
 [node name="RefitInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
-editor/display_folded = true
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
@@ -246,7 +254,6 @@ margin_bottom = 207.0
 text = "> Down"
 
 [node name="CargoInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
-editor/display_folded = true
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
@@ -356,13 +363,11 @@ margin_right = 40.0
 margin_bottom = 565.0
 
 [node name="Panel" type="Panel" parent="Control"]
-editor/display_folded = true
 margin_right = 435.0
 margin_bottom = 149.0
 rect_scale = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panelf = ExtResource( 2 )
 custom_styles/panel = ExtResource( 2 )
 
 [node name="player_outline" type="TextureRect" parent="Control/Panel"]
@@ -453,14 +458,12 @@ custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Kills: 0"
 
 [node name="Panel2" type="Panel" parent="Control"]
-editor/display_folded = true
 margin_left = 215.0
 margin_right = 650.0
 margin_bottom = 149.0
 rect_scale = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
-custom_styles/panelf = ExtResource( 12 )
 custom_styles/panel = ExtResource( 2 )
 
 [node name="target_outline" type="TextureRect" parent="Control/Panel2"]
@@ -563,7 +566,6 @@ margin_bottom = 14.0
 wait_time = 3.0
 
 [node name="pause_panel" type="Panel" parent="."]
-editor/display_folded = true
 visible = false
 modulate = Color( 1, 1, 1, 0.624314 )
 margin_right = 1024.0

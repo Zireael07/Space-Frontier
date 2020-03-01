@@ -521,6 +521,20 @@ func make_planet_view(planet, select_id=null):
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(Vector2(0.15, 0.15))
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(planet.get_node("Sprite").get_material())
+	# show shadow if planet has one
+	if planet.has_node("Sprite_shadow"):
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".show()
+		# add shader if one is used
+		if planet.get_node("Sprite_shadow").get_material().is_class("ShaderMaterial"):
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_material(planet.get_node("Sprite_shadow").get_material())
+			# set color
+			var has_aura = planet.get_node("Sprite_shadow").get_material().get_shader().has_param("shader_param/aura_color")
+			if has_aura:
+				var aura_col = planet.get_node("Sprite_shadow").get_material().get_shader_param("aura_color")
+				$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".get_material().set_shader_param("aura_color", aura_col)	
+	else:
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
+	
 	if planet.get_node("Sprite").get_material() != null:
 		#print("Shader: " + str(planet.get_node("Sprite").get_material().is_class("ShaderMaterial")))
 		var is_rot = planet.get_node("Sprite").get_material().get_shader().has_param("shader_param/time")
