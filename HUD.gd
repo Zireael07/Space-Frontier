@@ -526,7 +526,7 @@ func make_planet_view(planet, select_id=null):
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(planet.get_node("Sprite").get_material())
 	# show shadow if planet has one
-	if planet.has_node("Sprite_shadow"):
+	if planet.has_node("Sprite_shadow") and planet.get_node("Sprite_shadow").is_visible():
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".show()
 		# add shader if one is used
 		if planet.get_node("Sprite_shadow").get_material().is_class("ShaderMaterial"):
