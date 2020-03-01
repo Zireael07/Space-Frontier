@@ -500,18 +500,19 @@ func _on_ButtonView_pressed():
 			if planets[i].has_moon():
 				skip = i
 		
-		if select_id > skip and select_id < skip+2: # assume only one moon for now
-			print("Pointed cursor at moon")
-			var moon = planets[skip].get_moon()
-			make_planet_view(moon)
-			return
-		else:
-			if select_id > skip+1:
-				# fix
-				select_id = select_id-1
+		if skip != -1:
+			if select_id > skip and select_id < skip+2: # assume only one moon for now
+				print("Pointed cursor at moon")
+				var moon = planets[skip].get_moon()
+				make_planet_view(moon)
+				return
+			else:
+				if select_id > skip+1:
+					# fix
+					select_id = select_id-1
 			
-			var planet = get_tree().get_nodes_in_group("planets")[select_id]
-			make_planet_view(planet, select_id)
+		var planet = get_tree().get_nodes_in_group("planets")[select_id]
+		make_planet_view(planet, select_id)
 
 func make_planet_view(planet, select_id=null):
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
