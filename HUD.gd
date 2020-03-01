@@ -517,8 +517,12 @@ func _on_ButtonView_pressed():
 func make_planet_view(planet, select_id=null):
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
-	# show planet sprite
+	# reset
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(Vector2(0.15, 0.15))
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(83, 1)) 
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(Vector2(0.15, 0.15))
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(83, 1))
+	# show planet sprite
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(planet.get_node("Sprite").get_material())
 	# show shadow if planet has one
@@ -542,6 +546,12 @@ func make_planet_view(planet, select_id=null):
 		if is_rot:
 			var sc = Vector2(0.15/2, 0.15)
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
+			# move to the right to not overlap the text
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(95, 1)) 
+			var sc2 = Vector2(0.15*0.86, 0.15*0.86 ) #0.86 is the ratio of the procedural planet's shadow to the usual's (0.43/0.5)
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(sc2)
+			# experimentally determined values
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, -7))
 			
 		
 	# set label
