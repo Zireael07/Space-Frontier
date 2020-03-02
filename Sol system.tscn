@@ -10,7 +10,7 @@
 [ext_resource path="res://planet_new.tscn" type="PackedScene" id=8]
 [ext_resource path="res://planet_rotating.tscn" type="PackedScene" id=9]
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=1]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
@@ -32,11 +32,11 @@ void fragment()
 	//COLOR.rgb = vec3(1,0,0);
 }"
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=3]
 shader = SubResource( 2 )
 shader_param/aura_color = Color( 0.52549, 0.498039, 0.176471, 1 )
 
-[sub_resource type="Shader" id=5]
+[sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;
 
 uniform vec4 aura_color : hint_color;
@@ -56,8 +56,8 @@ void fragment()
 	//COLOR.rgb = vec3(1,0,0);
 }"
 
-[sub_resource type="ShaderMaterial" id=6]
-shader = SubResource( 5 )
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
 shader_param/aura_color = Color( 0.0117647, 0.952941, 1, 1 )
 
 [node name="star" type="Node2D" groups=[
@@ -77,7 +77,7 @@ margin_left = -400.0
 margin_top = 350.0
 margin_right = -328.0
 margin_bottom = 366.0
-custom_styles/normal = SubResource( 3 )
+custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Sol"
 
@@ -87,6 +87,10 @@ text = "Sol"
 position = Vector2( -0.000236041, 5400 )
 z_index = 2
 
+[node name="Sprite" parent="planet_holder/planet" index="0"]
+modulate = Color( 0.768627, 0.780392, 0.498039, 1 )
+texture = ExtResource( 4 )
+
 [node name="Label" parent="planet_holder/planet" index="1"]
 text = "Mercury"
 
@@ -94,10 +98,11 @@ text = "Mercury"
 position = Vector2( -0.000366211, 8400 )
 
 [node name="Sprite" parent="planet_holder/planet4" index="0"]
+modulate = Color( 0.984314, 0.968627, 0.00392157, 1 )
 texture = ExtResource( 6 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
-material = SubResource( 4 )
+material = SubResource( 3 )
 rotation = 3.90007e-07
 
 [node name="Label" parent="planet_holder/planet4" index="2"]
@@ -109,7 +114,7 @@ text = "Venus"
 position = Vector2( 0, 12000 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
-material = SubResource( 6 )
+material = SubResource( 5 )
 rotation = 3.4641e-07
 
 [node name="Label" parent="planet_holder/planet3" index="2"]
