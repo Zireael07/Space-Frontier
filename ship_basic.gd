@@ -17,6 +17,7 @@ var acc = Vector2()
 var spd = 0
 
 var orbiting = null
+var warping = false
 
 # shields
 var shields = 100

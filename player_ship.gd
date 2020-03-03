@@ -28,7 +28,6 @@ onready var recharge_timer = $"recharge_timer"
 var target = null
 var heading = null
 var warp_target = null
-var warping = false
 
 var tractored = false
 var refit_target = false
@@ -97,9 +96,11 @@ func _process(delta):
 
 	# rotations
 	if Input.is_action_pressed("move_left"):
-		rot -= rot_speed*delta
+		if warp_target == null:
+			rot -= rot_speed*delta
 	if Input.is_action_pressed("move_right"):
-		rot += rot_speed*delta
+		if warp_target == null:
+			rot += rot_speed*delta
 	# thrust
 	if Input.is_action_pressed("move_up"):
 		# QoL feature - launch

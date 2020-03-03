@@ -169,7 +169,7 @@ class IdleState:
 						ship.ship.tractor.get_child(0).tractor = ship.ship
 		
 		var enemy = ship.ship.get_closest_enemy()
-		if enemy:
+		if enemy and (not 'warping' in enemy or not enemy.warping): #starbases don't have warp/Q-drive capability
 			var dist = ship.get_global_position().distance_to(enemy.get_global_position())
 			#print(str(dist))
 			if dist < 150:
