@@ -361,6 +361,9 @@ func _on_task_timer_timeout():
 #						if get_tree().get_nodes_in_group("asteroid").size() > 3:
 #							brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 #							brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+						else:
+							# orbit again
+							brain.set_state(brain.STATE_ORBIT, get_colonized_planet())
 					else:
 						# explicitly go colonize
 						var col_id = get_colonize_target()
