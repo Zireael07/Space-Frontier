@@ -357,6 +357,18 @@ modulate = Color( 0, 1, 0, 1 )
 margin_left = -20.0
 margin_bottom = 40.0
 
+[node name="Control3" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Officer" type="Label" parent="Control3"]
+margin_top = 20.0
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="officer_timer" type="Timer" parent="Control3"]
+wait_time = 3.0
+
 [node name="Control" type="Control" parent="."]
 margin_top = 525.0
 margin_right = 40.0
@@ -552,18 +564,6 @@ margin_bottom = 135.0
 rect_scale = Vector2( 1.5, 1.5 )
 custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Armor: 100"
-
-[node name="Control3" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="Officer" type="Label" parent="Control3"]
-margin_top = 20.0
-margin_right = 40.0
-margin_bottom = 14.0
-
-[node name="officer_timer" type="Timer" parent="Control3"]
-wait_time = 3.0
 
 [node name="pause_panel" type="Panel" parent="."]
 visible = false
