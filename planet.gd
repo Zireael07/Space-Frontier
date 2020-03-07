@@ -321,7 +321,7 @@ func _on_Area2D_area_entered(area):
 				# colony is free-floating (because the player just let go)
 				if not 'brain' in area.get_parent().get_parent():
 					# colonize
-					AI_do_colonize(area)
+					do_colonize(area)
 				else:
 					var brain = area.get_parent().get_parent().brain
 					if brain != null:
@@ -332,16 +332,21 @@ func _on_Area2D_area_entered(area):
 							print("Colonize id is: " + str(id))
 							if get_tree().get_nodes_in_group("planets")[id] == self:
 								print("We are the colonize target")
-								AI_do_colonize(area)			
+								do_colonize(area)			
 
 		else:
 			print("Colony is already ours")
 
-func AI_do_colonize(area):
+func do_colonize(area):
 #	print("Colony released")
 	if not has_node("colony") and not has_colony():
 		population = 50000
 		emit_signal("planet_colonized", self)
+		# reward if there's someone to be rewarded
+		if area.to_reward != null:
+			# currently to_reward is player-only
+			area.to_reward.credits = area.to_reward.credits + 50000
+			print("[CREDITS] Cr: " + str(area.to_reward.credits))
 		# it wants the top node, not the area itself
 		area.emit_signal("colony_colonized", area.get_parent())
 		print("Adding colony to planet")

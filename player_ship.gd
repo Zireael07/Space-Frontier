@@ -343,6 +343,10 @@ func _input(event):
 	
 		var col = get_colony_in_dock()
 		if col:
+			# set flag naming us as to be rewarded for colonizing
+			col.get_child(0).to_reward = self
+			print("[COLONY] To reward: " + str(col.get_child(0).to_reward))
+			
 			# undock
 			remove_child(col)
 			get_parent().get_parent().add_child(col)
@@ -352,7 +356,7 @@ func _input(event):
 			
 			col.set_global_position(get_node("dock").get_global_position() + Vector2(0, 20))
 			
-			print("Undocked")
+			#print("Undocked")
 			
 	if Input.is_action_pressed("nav"):
 		self.HUD.switch_to_navi()

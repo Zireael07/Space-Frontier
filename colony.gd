@@ -13,6 +13,7 @@ var tractor = false
 signal colony_targeted
 
 signal colony_colonized
+var to_reward = null # which ship gets rewarded for the colonization?
 
 var shoot_rel_pos = Vector2()
 
