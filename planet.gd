@@ -347,6 +347,9 @@ func do_colonize(area):
 			# currently to_reward is player-only
 			area.to_reward.credits = area.to_reward.credits + 50000
 			print("[CREDITS] Cr: " + str(area.to_reward.credits))
+			# points
+			area.to_reward.points = area.to_reward.points + 10
+			area.to_reward.emit_signal("points_gained", area.to_reward.points)
 		# it wants the top node, not the area itself
 		area.emit_signal("colony_colonized", area.get_parent())
 		print("Adding colony to planet")

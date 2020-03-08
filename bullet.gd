@@ -83,9 +83,15 @@ func _on_bullet_area_entered( area ):
 			if 'kills' in get_parent().get_parent():
 				get_parent().get_parent().kills = get_parent().get_parent().kills + 1
 				get_parent().get_parent().emit_signal("kill_gained", get_parent().get_parent().kills)
+				# 1 kill = 2 pts
+				get_parent().get_parent().points = get_parent().get_parent().points + 2
+				get_parent().get_parent().emit_signal("points_gained", get_parent().get_parent().points)
+				
 				# credits
 				get_parent().get_parent().credits = get_parent().get_parent().credits + 10000
 				print("Cr: " + str(get_parent().get_parent().credits))
+				
+			
 			
 			# officer message for player
 			if get_parent().get_parent() == game.player:

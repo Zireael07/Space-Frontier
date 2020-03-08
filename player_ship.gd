@@ -39,7 +39,10 @@ signal officer_message
 
 var credits = 0
 var kills = 0
+var points = 0
 signal kill_gained
+signal points_gained
+
 var landed = false
 signal planet_landed
 

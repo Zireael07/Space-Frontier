@@ -45,6 +45,7 @@ func _ready():
 
 	player.connect("officer_message", self, "_on_officer_messaged")
 	player.connect("kill_gained", self, "_on_kill_gained")
+	player.connect("points_gained", self, "_on_points_gained")
 
 	player.connect("planet_landed", self, "_on_planet_landed")
 
@@ -235,6 +236,9 @@ func _on_officer_messaged(message):
 func _on_kill_gained(num):
 	$"Control/Panel/Label_kill".set_text("Kills: " + str(num))
 
+func _on_points_gained(num):
+	$"Control/Panel/Label_points".set_text("Points: " + str(num))
+
 # called when a player target an AI ship
 func _on_AI_targeted(AI):
 	var prev_target = null
@@ -357,7 +361,7 @@ func _on_target_lost_by_AI(AI):
 	$"Control2/status_light".set_modulate(Color(0,1,0))
 	print("On target_lost")
 
-
+#----------------------------------------------------------------------------
 # operate the right HUD
 func switch_to_navi():
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
