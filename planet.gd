@@ -350,6 +350,9 @@ func do_colonize(area):
 			# points
 			area.to_reward.points = area.to_reward.points + 10
 			area.to_reward.emit_signal("points_gained", area.to_reward.points)
+			# rank up!
+			area.to_reward.rank = area.to_reward.rank + 1
+			
 		# it wants the top node, not the area itself
 		area.emit_signal("colony_colonized", area.get_parent())
 		print("Adding colony to planet")

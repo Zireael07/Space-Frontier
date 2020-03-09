@@ -123,6 +123,8 @@ func _process(delta):
 	if player != null and player.is_inside_tree():
 		var format = "%0.2f" % player.spd
 		get_node("Control/Panel/Label").set_text(format + " c")
+		
+		get_node("Control/Panel/Label_rank").set_text(game.ranks.keys()[player.rank])
 
 	# move direction labels to proper places
 	for i in range(planets.size()):

@@ -26,6 +26,9 @@ const SHIP_Z = 8
 const ASTEROID_Z = 3
 const PLANET_Z = 2
 
+# ranks
+enum ranks { CADET, ENSIGN, SCLT, FRLT }
+
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
