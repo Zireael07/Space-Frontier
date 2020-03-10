@@ -377,7 +377,7 @@ func _on_ButtonPlanet_pressed():
 
 
 func _on_ButtonShip_pressed():
-	if target != null and target.is_in_group("friendly") or target.is_in_group("enemy"):
+	if target != null and (target.is_in_group("friendly") or target.is_in_group("enemy")):
 		# correctly name starbases
 		if target.is_in_group("starbase"):
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Starbase")
@@ -576,7 +576,15 @@ func make_planet_view(planet, select_id=null):
 	else:
 		label.set_self_modulate(Color(1,1,1))
 
-
+	var text = ""
+	# first, list things the player is likely to be immediately interested in
+	if planet.is_habitable():
+		text = " Habitable"
+	if planet.tidally_locked:
+		text = text + "\n" + " Tidally locked"
+	if col:
+		# linebreak because of planet graphic
+		text = text + "\n" + " Population: " + "\n" + str(planet.population)
 
 	var au_dist = (planet.dist/game.LIGHT_SEC)/game.LS_TO_AU
 	var period = planet.calculate_orbit_period()
@@ -595,18 +603,13 @@ func make_planet_view(planet, select_id=null):
 	# set text
 	# this comes first because most other parameters are determined by orbital parameters
 	# lots of linebreaks because of planet graphic on the right
-	var text = "Orbital radius: " + "\n" + str(format_AU) + "\n" + "period: " + "\n" + str(format_days)
+	text = text + "\n" + "Orbital radius: " + "\n" + str(format_AU) + "\n" + "period: " + "\n" + str(format_days)
 	# those parameters have been present in the original game
 	text = text + "\n" + "Mass: " + str(planet.mass) + "\n" + \
 	"Pressure: " + "\n" + "Gravity: " + str(format_grav) + "\n" + \
 	"Temperature: " + str(format_temp) + " " + str(format_tempC) + " \n" + \
 	"Hydro: " + str(planet.hydro)
-	if planet.tidally_locked:
-		text = text + "\n" + " Tidally locked"
-	if col:
-		text = text + "\n" + " Population: " + str(planet.population)
-	if planet.is_habitable():
-		text = text + "\n" + " Habitable"
+
 
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 
