@@ -74,6 +74,7 @@ position = Vector2( -6.85395e-05, 1568 )
 
 [node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( 1852.92, 200 )
+atm = 1.0
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 texture = ExtResource( 4 )
