@@ -97,6 +97,7 @@ text = "Mercury"
 [node name="planet4" parent="planet_holder" instance=ExtResource( 8 )]
 position = Vector2( -0.000366211, 8400 )
 atm = 91.0
+greenhouse = 0.99
 
 [node name="Sprite" parent="planet_holder/planet4" index="0"]
 modulate = Color( 0.984314, 0.968627, 0.00392157, 1 )
@@ -114,6 +115,7 @@ text = "Venus"
 ] instance=ExtResource( 9 )]
 position = Vector2( 0, 12000 )
 atm = 1.0
+greenhouse = 0.397
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
 material = SubResource( 5 )
@@ -150,6 +152,7 @@ position = Vector2( -0.000518799, 0 )
 position = Vector2( -0.000786805, 18000 )
 z_index = 2
 atm = 0.06
+greenhouse = 0.086
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 texture = ExtResource( 4 )

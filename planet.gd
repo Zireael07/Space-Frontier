@@ -16,6 +16,7 @@ export(float) var hydro = 0.3 # water/land ratio (surface, not volume = 30% for 
 var albedo = 0.3 # test value Bond albedo, ranges from 0 to 1
 var temp = 0 # in Kelvin
 export(float) var atm = 0.0 # in Earth atmospheres
+export(float) var greenhouse = 0.0 # greenhouse coefficient from 0 to 1, see: http://phl.upr.edu/library/notes/surfacetemperatureofplanets
 
 var dist = 0
 
@@ -113,8 +114,13 @@ func is_habitable():
 	else:
 		return false
 
-# Radiative equilibrium tempetature
+# Radiative equilibrium tempetature + greenhouse effect
 func calculate_temperature():
+	if self.dist == 0:
+		print("Bad distance! " + get_name())
+		return 273 # dummy
+	
+	
 	var dist_t = self.dist # to avoid overwriting
 	var star = get_parent().get_parent()
 	# if we're a moon, look up the star and take distance of our parent
@@ -126,9 +132,13 @@ func calculate_temperature():
 		return 273 #dummy
 		
 	var axis = (dist_t/game.LIGHT_SEC)/game.LS_TO_AU
+	
 	# https://spacemath.gsfc.nasa.gov/astrob/6Page61.pdf
 	# T = 273*((L(1-a) / D2)^0.25)
-	var t = star.luminosity*(1-albedo) / pow(axis,2)
+	# where L = star luminosity
+	# http://phl.upr.edu/library/notes/surfacetemperatureofplanets
+	# T = 273*((L(1-a)) / D2*(1-g))
+	var t = star.luminosity*(1-albedo) / (pow(axis,2) * (1-greenhouse))
 	var T = 273 * pow(t, 0.25)
 	return T
 
