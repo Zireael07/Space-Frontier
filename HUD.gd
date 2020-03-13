@@ -596,6 +596,7 @@ func make_planet_view(planet, select_id=null):
 	var format_temp = "%d K" % planet.temp
 	var format_tempC = "(%d C)" % (planet.temp-273.15)
 	var format_atm = "%.2f atm" % planet.atm
+	var format_greenhouse = "%d " % planet.greenhouse_diff()
 
 	# linebreak because of planet graphic on the right
 	#var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
@@ -609,7 +610,9 @@ func make_planet_view(planet, select_id=null):
 	text = text + "\n" + "Mass: " + str(planet.mass) + "\n" + \
 	"Pressure: " + str(format_atm) + "\n" + \
 	"Gravity: " + str(format_grav) + "\n" + \
-	"Temperature: " + str(format_temp) + " " + str(format_tempC) + " \n" + \
+	"Temperature: " + str(format_temp) + " " + str(format_tempC) + " \n"
+	# this is new
+	text = text + "Greenhouse effect: " + str(format_greenhouse) + "\n" + \
 	"Hydro: " + str(planet.hydro)
 
 

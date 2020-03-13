@@ -114,14 +114,25 @@ func is_habitable():
 	else:
 		return false
 
+func greenhouse_diff():
+	# return early if no greenhouse effect at all
+	if greenhouse == 0.0:
+		return 0.0
+		
+	var equilibrium_temp = calculate_temperature(false)
+	var real_temp = calculate_temperature()
+	
+	return real_temp - equilibrium_temp
+
 # Radiative equilibrium tempetature + greenhouse effect
-func calculate_temperature():
+func calculate_temperature(inc_greenhouse=true):
 	if self.dist == 0:
 		print("Bad distance! " + get_name())
 		return 273 # dummy
 	
 	
 	var dist_t = self.dist # to avoid overwriting
+	var greenhouse = self.greenhouse # to be able to fake 0 effect if needed
 	var star = get_parent().get_parent()
 	# if we're a moon, look up the star and take distance of our parent
 	if get_parent().get_parent().is_in_group("planets"):
@@ -136,6 +147,10 @@ func calculate_temperature():
 	# https://spacemath.gsfc.nasa.gov/astrob/6Page61.pdf
 	# T = 273*((L(1-a) / D2)^0.25)
 	# where L = star luminosity
+	
+	if inc_greenhouse == false:
+		greenhouse = 0
+	
 	# http://phl.upr.edu/library/notes/surfacetemperatureofplanets
 	# T = 273*((L(1-a)) / D2*(1-g))
 	var t = star.luminosity*(1-albedo) / (pow(axis,2) * (1-greenhouse))
