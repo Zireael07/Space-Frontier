@@ -145,6 +145,8 @@ margin_right = 89.0
 margin_bottom = 51.0
 text = "Moon"
 
+[node name="colony3" parent="planet_holder/planet3/orbit_holder/Node2D" instance=ExtResource( 7 )]
+
 [node name="colony2" parent="planet_holder/planet3" instance=ExtResource( 7 )]
 position = Vector2( -0.000518799, 0 )
 

@@ -63,8 +63,12 @@ func _ready():
 	radius = calculate_radius()
 	gravity = calculate_gravity(mass, radius)
 	
+	# set population for planets that start colonized
 	if has_colony():
-		population = 100000
+		if is_in_group("moon"):
+			population = 50000
+		else:
+			population = 100000
 		
 	labl_loc = $"Label".get_position()
 	

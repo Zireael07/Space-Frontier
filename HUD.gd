@@ -109,6 +109,15 @@ func _ready():
 			label.set_text(txt)
 			label.set_position(Vector2(10+x, y))
 			$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
+			# is it a colonized planet?
+			col = moon.has_colony()
+			#print(p.get_name() + " has colony " + str(col))
+			if col and col == "colony":
+				# tint cyan
+				label.set_self_modulate(Color(0, 1, 1))
+			elif col and col == "enemy_col":
+				# tint red
+				label.set_self_modulate(Color(1, 0, 0))
 			y += 15
 
 		# direction labels
