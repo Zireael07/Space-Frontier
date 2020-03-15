@@ -61,6 +61,11 @@ func _ready():
 		# random mass
 		var m = rand_range(0.5,5) # upper bound of super-Earth is 10 Earth masses, but we don't have art yet
 		p.mass = m
+		# more stuff
+		if p.is_habitable():
+			p.hydro = rand_range(0.1, 0.45)
+			p.atm = rand_range(0.01, 1.5)
+			p.greenhouse = rand_range(0.2, 0.99)
 
 func get_star_type(sel):
 	# swap the dictionary around
