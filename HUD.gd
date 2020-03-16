@@ -591,9 +591,17 @@ func make_planet_view(planet, select_id=null):
 		text = " Habitable"
 	if planet.tidally_locked:
 		text = text + "\n" + " Tidally locked"
+		
+	# formatting
+	var format_pop = "%.2fK" % planet.population
+	if planet.population > 1000.0:
+		format_pop = "%.2fM" % (planet.population/1000.0)
+	if planet.population > 1000000.0:
+		format_pop = "%.2fB" % (planet.population/1000000.0)
+		
 	if col:
 		# linebreak because of planet graphic
-		text = text + "\n" + " Population: " + "\n" + str(planet.population)
+		text = text + "\n" + " Population: " + "\n" + str(format_pop)
 
 	var au_dist = (planet.dist/game.LIGHT_SEC)/game.LS_TO_AU
 	var period = planet.calculate_orbit_period()
