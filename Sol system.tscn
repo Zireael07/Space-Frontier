@@ -116,6 +116,7 @@ text = "Venus"
 position = Vector2( 0, 12000 )
 atm = 1.0
 greenhouse = 0.397
+population = 1.1e+07
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
 material = SubResource( 5 )
