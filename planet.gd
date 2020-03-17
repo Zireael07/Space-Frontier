@@ -190,6 +190,43 @@ func calculate_gravity(mass, radius):
 	# g = m/r^2 
 	return mass/pow(radius, 2)
 
+# d = m/V; V = (4/3) π R3
+func get_density(mass, radius):
+	var vol = (4/3)*PI*pow(radius, 3)
+	return mass/vol
+
+# so many things from mass and radius!
+# sqrt(G * M / r)
+func get_cosmic_vel(mass, radius):
+	var G = 0.0000000000667
+	var vel = sqrt(G*mass/radius)
+	return vel # value relative to the Earth's cosmic vel since mass & radius are expressed as relative
+	
+
+# for now, this is just the ESI (Earth Similarity Index)
+# http://www.extrasolar.de/en/cosmopedia/planets.0011.esi
+func calculate_habitability():
+	var rad = (1.0 - abs((radius - 1.0) / (radius + 1.0)))
+	var ESI_radius = pow(rad, 0.57)
+	var Earth_density = get_density(1.0, 1.0)
+	var density = get_density(mass, radius)
+	var dens = (1.0 - abs((density - Earth_density) / (density + Earth_density)))
+	var ESI_density = pow(dens, 1.07)
+	var ESI_interior = sqrt(ESI_radius*ESI_density)
+	var Earth_temp = 287 # in Kelvin (15 Celsius)
+	var temp_fact = (1.0 - abs((temp - Earth_temp) / (temp + Earth_temp))) 
+	var ESI_temp = pow(temp_fact, 5.58)
+	var Earth_vel = get_cosmic_vel(1.0, 1.0)
+	var vel = get_cosmic_vel(mass, radius)
+	var vel_fact = (1.0 - abs((vel - Earth_vel) / (vel + Earth_vel))) 
+	var ESI_vel = pow(vel_fact, 0.7)
+	var ESI_exterior = sqrt(ESI_temp*ESI_vel)
+	
+	var ESI = sqrt(ESI_interior*ESI_exterior)
+	if ESI < 0.0:
+		ESI = 0.0
+		
+	return ESI
 
 func setData(val):
 	if Engine.is_editor_hint() and val != null:
