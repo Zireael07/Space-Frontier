@@ -593,11 +593,11 @@ func make_planet_view(planet, select_id=null):
 		text = text + "\n" + " Tidally locked"
 		
 	# formatting
-	var format_pop = "%.2fK" % planet.population
+	var format_pop = "%.2fK" % (planet.population * 1000)
+	if planet.population > 1.0:
+		format_pop = "%.2fM" % (planet.population)
 	if planet.population > 1000.0:
-		format_pop = "%.2fM" % (planet.population/1000.0)
-	if planet.population > 1000000.0:
-		format_pop = "%.2fB" % (planet.population/1000000.0)
+		format_pop = "%.2fB" % (planet.population/1000.0)
 		
 	if col:
 		# linebreak because of planet graphic

@@ -240,10 +240,10 @@ func pick_colony():
 	var pl = orbiting.get_parent()
 	print("Orbiting planet: " + pl.get_name())
 	# decrease planet pop
-	if pl.population > 51000: # don't bring it to 0!
-		pl.population -= 50000
+	if pl.population > 51/1000.0: # don't bring it to 0K!
+		pl.population -= 50/1000.0
 		# update planet HUD
-		if pl.population < 51000:
+		if pl.population < 51/1000.0:
 			pl.update_HUD_colony_pop(pl, false)
 		
 		print("Creating colony...")

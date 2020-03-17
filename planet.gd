@@ -20,7 +20,7 @@ export(float) var greenhouse = 0.0 # greenhouse coefficient from 0 to 1, see: ht
 
 var dist = 0
 
-export(float) var population = 0.0 # in thousands
+export(float) var population = 0.0 # in millions
 	
 var targetted = false
 signal planet_targeted
@@ -67,9 +67,9 @@ func _ready():
 	# if we set population from editor, don't change it
 	if has_colony() and population == 0.0:
 		if is_in_group("moon"):
-			population = 50
+			population = float(50/1000.0)
 		else:
-			population = 100
+			population = float(100/1000.0)
 		
 	labl_loc = $"Label".get_position()
 	
@@ -371,7 +371,7 @@ func _on_Area2D_area_entered(area):
 func do_colonize(area):
 #	print("Colony released")
 	if not has_node("colony") and not has_colony():
-		population = 50 # in thousands
+		population = 50/1000.0 # in milions
 		emit_signal("planet_colonized", self)
 		# reward if there's someone to be rewarded
 		if area.to_reward != null:
@@ -395,7 +395,7 @@ func do_colonize(area):
 	else:
 		print("We already have a colony")
 		# add to population
-		population += 50 # in thousands
+		population += 50/1000.0 # in milions
 		area.get_parent().queue_free()	
 
 
@@ -458,10 +458,10 @@ func update_HUD_colony_pop(planet, add):
 func _on_pop_timer_timeout():
 	if has_colony():
 		print("Pop increase")
-		population += 1 # in thousands
+		population += 1/1000.0 # in milions
 	
 	# does it have enough pop for a colony?
-	if population > 51: # in thousands
+	if population > 51/1000.0: # in milions
 		update_HUD_colony_pop(self, true)
 
 #	else:
