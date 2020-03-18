@@ -12,6 +12,7 @@ var targetted = false
 var tractor = false
 signal colony_targeted
 
+var population = 0.0 # in milions
 signal colony_colonized
 var to_reward = null # which ship gets rewarded for the colonization?
 

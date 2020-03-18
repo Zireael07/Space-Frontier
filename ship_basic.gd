@@ -239,25 +239,49 @@ func get_colony_in_dock():
 func pick_colony():
 	var pl = orbiting.get_parent()
 	print("Orbiting planet: " + pl.get_name())
+	
+	# if planet has too few pop to begin with
+	if pl.population < 51/1000.0:
+		return false	
+
+	var pop = 0.0
+
 	# decrease planet pop
-	if pl.population > 51/1000.0: # don't bring it to 0K!
-		pl.population -= 50/1000.0
-		# update planet HUD
-		if pl.population < 51/1000.0:
-			pl.update_HUD_colony_pop(pl, false)
+	# if more than 4B, pick up 1B at a time for ease of playing
+	if pl.population > 4000.0:
+		pop = 1000.0
+	elif pl.population > 51/1000.0: # don't bring it to 0K!
+		pop = 50/1000.0
 		
-		print("Creating colony...")
-		# create colony
-		var co = colony.instance()
-		add_child(co)
-		co.set_position(get_node("dock").get_position())
-		# don't overlap
-		co.set_z_index(-1)
-		# emit signal
-		emit_signal("colony_picked", co)
-		# connect signals
-		# "colony" is a group of the parent of colony itself
-		co.get_child(0).connect("colony_colonized", game.player.HUD, "_on_colony_colonized")
-		return true
-	else:
-		return false
+	# update planet and HUD
+	pl.population -= pop
+	if pl.population < 51/1000.0:
+		pl.update_HUD_colony_pop(pl, false)
+	
+	print("Creating colony...")
+	# create colony
+	var co = colony.instance()
+	add_child(co)
+	# actual colony node
+	var col = co.get_child(0)
+	# set its pop
+	col.population = pop
+	# formatting
+	var format_pop = "%.2fK" % (col.population * 1000)
+	if col.population >= 1.0:
+		format_pop = "%.2fM" % (col.population)
+	if col.population >= 1000.0:
+		format_pop = "%.2fB" % (col.population/1000.0)
+	# show pop label
+	col.get_node("Label").set_text(str(format_pop))
+	
+	# place colony in dock
+	co.set_position(get_node("dock").get_position())
+	# don't overlap
+	co.set_z_index(-1)
+	# emit signal
+	emit_signal("colony_picked", co)
+	# connect signals
+	# "colony" is a group of the parent of colony itself
+	co.get_child(0).connect("colony_colonized", game.player.HUD, "_on_colony_colonized")
+	return true

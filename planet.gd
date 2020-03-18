@@ -408,7 +408,8 @@ func _on_Area2D_area_entered(area):
 func do_colonize(area):
 #	print("Colony released")
 	if not has_node("colony") and not has_colony():
-		population = 50/1000.0 # in milions
+		population = area.population # in millions
+		#population = 50/1000.0 # in milions
 		emit_signal("planet_colonized", self)
 		# reward if there's someone to be rewarded
 		if area.to_reward != null:
@@ -432,7 +433,8 @@ func do_colonize(area):
 	else:
 		print("We already have a colony")
 		# add to population
-		population += 50/1000.0 # in milions
+		population += area.population
+		#population += 50/1000.0 # in milions
 		area.get_parent().queue_free()	
 
 

@@ -27,4 +27,12 @@ shape = SubResource( 1 )
 [node name="gun_timer" type="Timer" parent="Area2D"]
 wait_time = 1.5
 one_shot = true
+
+[node name="Label" type="Label" parent="Area2D"]
+margin_top = 30.0
+margin_right = 40.0
+margin_bottom = 44.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
