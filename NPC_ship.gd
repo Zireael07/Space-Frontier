@@ -400,10 +400,14 @@ func _on_task_timer_timeout():
 		# if we somehow picked up a colony and aren't colonizing, offload it first
 		if get_colony_in_dock() != null and not (brain.get_state() == brain.STATE_COLONIZE):
 			var col_id = get_colonize_target()
-			print("Colonize target " + str(col_id))
-			var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
-			brain.target = col_tg.get_global_position()
-			brain.set_state(brain.STATE_COLONIZE, col_id)
+			if col_id != null:
+				print("Colonize target " + str(col_id))
+				var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
+				brain.target = col_tg.get_global_position()
+				brain.set_state(brain.STATE_COLONIZE, col_id)
+			# nothing more to colonize, go back to colonized planet
+			else: 
+				brain.set_state(brain.STATE_GO_PLANET, get_colonized_planet())
 			
 		if not (brain.get_state() in [brain.STATE_MINE, brain.STATE_REFIT, brain.STATE_COLONIZE, brain.STATE_ATTACK, brain.STATE_GO_PLANET]):
 			var closest = get_closest_asteroid()

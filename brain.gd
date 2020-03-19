@@ -316,6 +316,12 @@ class ColonizeState:
 		else:
 			#print("Setting id to target " + str(param))
 			id = param
+		
+		# did we lose the id somehow?
+		if id == null:
+			print("We want to orbit colonized planet")
+			ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
+			return
 			
 		# refresh target position
 		ship.target = ship.get_tree().get_nodes_in_group("planets")[id].get_global_position()
