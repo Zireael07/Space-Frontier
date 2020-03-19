@@ -61,19 +61,35 @@ func _ready():
 #--------------------------------		
 
 func get_colonized_planet():
-	var ret
-	var ps = get_tree().get_nodes_in_group("planets")
-	for p in ps:
+	var ps = []
+	var planets = get_tree().get_nodes_in_group("planets")
+	for p in planets:
 		# is it colonized?
 		var col = p.has_colony()
 		if col and col == "colony":
-			ret = p
+			ps.append(p)
 
-	if ret != null:
-		return ret
-	else:
-		print("No colonized planet found")
-		return null
+	var dists = []
+	var targs = []
+	
+	for t in ps:
+		var dist = t.get_global_position().distance_to(get_global_position())
+		dists.append(dist)
+		targs.append([dist, t])
+
+	dists.sort()
+	#print("Dists sorted: " + str(dists))
+	
+	# get the closest
+	for t in targs:
+		if t[0] == dists[0]:
+			#print("Target is : " + t[1].get_parent().get_name())
+			
+			return t[1]
+	
+#	else:
+#		print("No colonized planet found")
+#		return null
 
 func get_colonize_target():
 	var ps = []

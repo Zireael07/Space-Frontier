@@ -379,9 +379,9 @@ class PlanetState:
 		
 		# if close, orbit
 		# 300 is experimentally picked
-		var rad_f = ship.ship.get_colonized_planet().planet_rad_factor
+		var rad_f = param.planet_rad_factor
 		if (ship.target - ship.get_global_position()).length() < 300*rad_f:
-			ship.set_state(STATE_ORBIT, ship.ship.get_colonized_planet())
+			ship.set_state(STATE_ORBIT, param)
 
 # completely original	
 class MineState:
