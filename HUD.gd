@@ -83,7 +83,7 @@ func _ready():
 		if p.is_habitable():
 			txt = txt + " * "
 		# does it have enough pop for a colony?
-		if p.population > 51000:
+		if p.population > 51/1000.0: # in milions
 			txt = txt + " ^ "
 			
 		label.set_text(txt)
@@ -341,11 +341,14 @@ func _on_planet_colonized(planet):
 	# get label
 	for l in $"Control2/Panel_rightHUD/PanelInfo/NavInfo".get_children():
 		# because ordering in groups cannot be relied on 100%
-		if l.get_text() == planet.get_node("Label").get_text():
+		# find because the nav info text can have additional stuff such as * or ^
+		if l.get_text().find(planet.get_node("Label").get_text().strip_edges()) != -1:
 			node = l.get_name()
 
 	if node:
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".get_node(node).set_self_modulate(Color(0, 1, 1))
+	else:
+		print("Couldn't find node for planet " + str(planet.get_node("Label").get_text()))
 
 # minimap
 func _on_colony_picked(colony):

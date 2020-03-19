@@ -437,6 +437,10 @@ func do_colonize(area):
 		#population += 50/1000.0 # in milions
 		area.get_parent().queue_free()	
 
+	# does it put us over the "can hand out colonists" threshold?
+	# does it have enough pop for a colony?
+	if population > 51/1000.0: # in milions
+		update_HUD_colony_pop(self, true)
 
 
 func _on_planet_orbited(ship):
