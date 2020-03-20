@@ -532,7 +532,7 @@ func _on_ButtonView_pressed():
 		var planet = get_tree().get_nodes_in_group("planets")[select_id]
 		make_planet_view(planet, select_id)
 
-func make_planet_view(planet, select_id=null):
+func make_planet_view(planet, select_id=-1):
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	# reset
@@ -648,7 +648,7 @@ func make_planet_view(planet, select_id=null):
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".disconnect("pressed", player, "_on_goto_pressed")
 	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed", [planet])
 
-	if select_id != null:
+	if select_id != -1:
 		if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".is_connected("pressed", player, "_on_conquer_pressed"):
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".disconnect("pressed", player, "_on_conquer_pressed")
 		get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton").connect("pressed", player, "_on_conquer_pressed", [select_id])
