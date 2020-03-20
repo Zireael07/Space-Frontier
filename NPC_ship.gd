@@ -121,7 +121,8 @@ func get_colonize_target():
 			# get id in planets list (it's guaranteed to be in it because of step #1 of our search
 			var id = planets.find(t[1])
 			
-			return id #t[1]
+			# +1 to avoid problems with state's param being 0 (=null)
+			return id+1 
 
 # --------------------
 
@@ -357,11 +358,11 @@ func _on_shield_timer_timeout():
 
 #TODO: maybe move contents to brain.gd?
 func _on_task_timer_timeout():
-	print("Task timer timeout")
+	#print("Task timer timeout")
 	timer_count += 1
+	var conquer_tg = get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target 
 	if orbiting:
 		# if player-specified colony target is not colonized
-		var conquer_tg = get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target 
 		if conquer_tg != null or get_colonize_target() != null: # or we have a colonize target (planet w/o colony)
 		#if not get_tree().get_nodes_in_group("planets")[1].has_colony():
 			if get_colony_in_dock() == null:
@@ -388,8 +389,9 @@ func _on_task_timer_timeout():
 								col_id = conquer_tg
 							print("Colonize target " + str(col_id))
 							brain.set_state(brain.STATE_COLONIZE, col_id)
-							var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
-							print("Col tg name " + str(col_tg.get_name()))
+							# col_id is the real id+1 to avoid problems with state param being 0 (= null)
+							var col_tg = get_tree().get_nodes_in_group("planets")[col_id-1]
+							print("Col tg name " + str(col_tg.get_node("Label").get_text()))
 							brain.target = col_tg.get_global_position()
 				else:
 					print("Blockading a planet")
@@ -400,10 +402,11 @@ func _on_task_timer_timeout():
 				if col_id != null or conquer_tg != null:
 					if conquer_tg != null:
 						col_id = conquer_tg
-					print("Colonize target " + str(col_id))
-					var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
+					#print("Colonize target " + str(col_id))
+					# col_id is the real id+1 to avoid problems with state param being 0 (= null)
+					var col_tg = get_tree().get_nodes_in_group("planets")[col_id-1]
 					brain.target = col_tg.get_global_position()
-					print("We have a colony, leaving for... " + str(col_tg.get_name()))
+					print("We have a colony, leaving for... " + str(col_tg.get_node("Label").get_text()))
 					#brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
 					brain.set_state(brain.STATE_COLONIZE, col_id)
 
@@ -420,9 +423,12 @@ func _on_task_timer_timeout():
 		# if we somehow picked up a colony and aren't colonizing, offload it first
 		if get_colony_in_dock() != null and not (brain.get_state() == brain.STATE_COLONIZE):
 			var col_id = get_colonize_target()
-			if col_id != null:
+			if col_id != null or conquer_tg != null:
+				if conquer_tg != null:
+					col_id = conquer_tg
 				print("Colonize target " + str(col_id))
-				var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
+				# col_id is the real id+1 to avoid problems with state param being 0 (= null)
+				var col_tg = get_tree().get_nodes_in_group("planets")[col_id-1]
 				brain.target = col_tg.get_global_position()
 				brain.set_state(brain.STATE_COLONIZE, col_id)
 			# nothing more to colonize, go back to colonized planet

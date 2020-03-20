@@ -309,7 +309,7 @@ class ColonizeState:
 	func update(delta):
 		var id = 1
 		if not planet_:
-			#print("No param given for colonize state")
+			print("No param given for colonize state")
 			# default
 			#id = 1
 			id = ship.ship.get_colonize_target()
@@ -329,7 +329,8 @@ class ColonizeState:
 			return
 			
 		# refresh target position
-		ship.target = ship.get_tree().get_nodes_in_group("planets")[id].get_global_position()
+		# id is the real id+1 to avoid problems with state param being 0 (= null)
+		ship.target = ship.get_tree().get_nodes_in_group("planets")[id-1].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
 		# steering behavior
 		var steer = ship.get_steering_seek(ship.target)	

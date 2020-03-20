@@ -398,7 +398,8 @@ func _on_Area2D_area_entered(area):
 							# is it the colonization target?
 							var id = brain.get_state_obj().planet_
 							print("[Colonize] Colonize id is: " + str(id))
-							if get_tree().get_nodes_in_group("planets")[id] == self:
+							# id is the real id+1 to avoid problems with state param being 0 (= null)
+							if get_tree().get_nodes_in_group("planets")[id-1] == self:
 								print("[Colonize] We are the colonize target, id " + str(id))
 								do_colonize(area)			
 
