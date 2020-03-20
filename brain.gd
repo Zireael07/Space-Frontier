@@ -4,6 +4,7 @@ extends "boid.gd"
 var ship
 # FSM
 onready var state = InitialState.new(self)
+onready var curr_state = 0 # debugging helper to see in-editor
 var prev_state
 
 const STATE_INITIAL = 0
@@ -78,6 +79,8 @@ func set_state(new_state, param=null):
 	if (new_state in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE, STATE_GO_PLANET] and param == null):
 		print("We forgot a parameter for the state " + str(new_state))
 	
+	# set the debugging helper var
+	curr_state = new_state
 	
 	if new_state == STATE_INITIAL:
 		state = InitialState.new(self)
