@@ -397,7 +397,7 @@ func _input(event):
 				get_child(0).set_modulate(Color(1,1,1))	
 
 
-func _on_AnimationPlayer_animation_finished(anim_name):
+func _on_AnimationPlayer_animation_finished(_anim_name):
 	print("Animation finished")
 #	#var hide = not $"shield_indicator".is_visible()
 #	if not $"shield_indicator".is_visible():
@@ -606,6 +606,7 @@ func _on_engine_timer_timeout():
 
 
 func _on_conquer_pressed(id):
+	print("Setting conquer target to: " + get_tree().get_nodes_in_group("planets")[id].get_node("Label").get_text())
 	conquer_target = id
 
 func update_cargo_listing(cargo, base_storage=null):

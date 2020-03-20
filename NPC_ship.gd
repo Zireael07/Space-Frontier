@@ -361,8 +361,8 @@ func _on_task_timer_timeout():
 	timer_count += 1
 	if orbiting:
 		# if player-specified colony target is not colonized
-		if get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target != null or \
-		get_colonize_target() != null: # or we have a colonize target (planet w/o colony)
+		var conquer_tg = get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target 
+		if conquer_tg != null or get_colonize_target() != null: # or we have a colonize target (planet w/o colony)
 		#if not get_tree().get_nodes_in_group("planets")[1].has_colony():
 			if get_colony_in_dock() == null:
 				if kind_id == kind.friendly:
@@ -383,26 +383,30 @@ func _on_task_timer_timeout():
 					else:
 						# explicitly go colonize
 						var col_id = get_colonize_target()
-						print("Colonize target " + str(col_id))
-						brain.set_state(brain.STATE_COLONIZE, col_id)
-						var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
-						print("Col tg name " + str(col_tg.get_name()))
-						brain.target = col_tg.get_global_position()
+						if col_id != null or conquer_tg != null:
+							if conquer_tg != null:
+								col_id = conquer_tg
+							print("Colonize target " + str(col_id))
+							brain.set_state(brain.STATE_COLONIZE, col_id)
+							var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
+							print("Col tg name " + str(col_tg.get_name()))
+							brain.target = col_tg.get_global_position()
 				else:
 					print("Blockading a planet")
 			else:
 				# deorbit
 				deorbit()		
 				var col_id = get_colonize_target()
-				print("Colonize target " + str(col_id))
-				var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
-				brain.target = col_tg.get_global_position()
-				print("We have a colony, leaving for... " + str(col_tg.get_name()))
-				#brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
-				brain.set_state(brain.STATE_COLONIZE, col_id)
-				#if get_tree().get_nodes_in_group("asteroid").size() > 3:
-				#	brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-				#brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+				if col_id != null or conquer_tg != null:
+					if conquer_tg != null:
+						col_id = conquer_tg
+					print("Colonize target " + str(col_id))
+					var col_tg = get_tree().get_nodes_in_group("planets")[col_id]
+					brain.target = col_tg.get_global_position()
+					print("We have a colony, leaving for... " + str(col_tg.get_name()))
+					#brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
+					brain.set_state(brain.STATE_COLONIZE, col_id)
+
 		else:
 			deorbit()
 			var closest = get_closest_asteroid()
