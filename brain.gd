@@ -133,7 +133,7 @@ class InitialState:
 	func _init(shp):
 		ship = shp
 		
-	func update(delta):
+	func update(_delta):
 		if not ship.target:
 			ship.select_target()
 	
@@ -299,14 +299,16 @@ class RefitState:
 class ColonizeState:
 	var ship
 	var param # for previous state
+	var planet_
 	
 	func _init(shp, planet):
 		ship = shp
 		param = planet
+		planet_ = planet
 		
 	func update(delta):
 		var id = 1
-		if not param:
+		if not planet_:
 			#print("No param given for colonize state")
 			# default
 			#id = 1
@@ -314,11 +316,11 @@ class ColonizeState:
 			# conquer target given by the player
 			var conquer_target = ship.get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target
 			if conquer_target != null:
-				print("Conquer target " + str(conquer_target))
-				id = ship.get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target
+				#print("[Brain] Conquer target " + str(conquer_target))
+				id = conquer_target
 		else:
 			#print("Setting id to target " + str(param))
-			id = param
+			id = planet_
 		
 		# did we lose the id somehow?
 		if id == null:

@@ -396,10 +396,10 @@ func _on_Area2D_area_entered(area):
 						#print("Colony hauled by AI")
 						if brain.get_state() == brain.STATE_COLONIZE:
 							# is it the colonization target?
-							var id = brain.get_state_obj().param
-							print("Colonize id is: " + str(id))
+							var id = brain.get_state_obj().planet_
+							print("[Colonize] Colonize id is: " + str(id))
 							if get_tree().get_nodes_in_group("planets")[id] == self:
-								print("We are the colonize target")
+								print("[Colonize] We are the colonize target, id " + str(id))
 								do_colonize(area)			
 
 		else:
