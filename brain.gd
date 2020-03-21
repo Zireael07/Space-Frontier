@@ -123,8 +123,10 @@ func task_orbiting(conquer_tg):
 
 	# if nowhere to colonize
 	else:
-		ship.deorbit()
-		_go_mine()
+		var try_mine = _go_mine()
+		if try_mine:
+			ship.deorbit()
+		#_go_mine()
 
 # timer count is governed by ship
 func _on_task_timer_timeout(timer_count):
