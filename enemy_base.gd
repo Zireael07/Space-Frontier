@@ -136,7 +136,7 @@ func _draw():
 	draw_line(Vector2(0,0), shoot_rel_pos, Color(1,0,0))
 
 # click to target functionality
-func _on_Area2D_input_event(viewport, event, shape_idx):
+func _on_Area2D_input_event(_viewport, event, _shape_idx):
 	# any mouse click
 	if event is InputEventMouseButton and event.pressed:
 		#if not targetted:

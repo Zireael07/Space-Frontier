@@ -128,7 +128,7 @@ func _ready():
 		dir_labels.append(dir_label)
 
 
-func _process(delta):
+func _process(_delta):
 	if player != null and player.is_inside_tree():
 		var format = "%0.2f" % player.spd
 		get_node("Control/Panel/Label").set_text(format + " c")
@@ -171,7 +171,7 @@ func _process(delta):
 
 
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_pressed("ui_cancel"):
 		paused = not paused
 		#print("Pressed pause, paused is " + str(paused))
@@ -362,7 +362,7 @@ func _on_colony_colonized(colony):
 	$"Control2/Panel_rightHUD/minimap"._on_colony_colonized(colony)
 
 
-func _on_target_acquired_by_AI(AI):
+func _on_target_acquired_by_AI(_AI):
 	$"Control2/status_light".set_modulate(Color(1,0,0))
 	print("On target_acquired, pausing...")
 	# pause on player being targeted
@@ -371,7 +371,7 @@ func _on_target_acquired_by_AI(AI):
 	$"pause_panel".show()
 
 
-func _on_target_lost_by_AI(AI):
+func _on_target_lost_by_AI(_AI):
 	$"Control2/status_light".set_modulate(Color(0,1,0))
 	print("On target_lost")
 

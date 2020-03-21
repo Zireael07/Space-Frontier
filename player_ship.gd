@@ -291,7 +291,7 @@ func player_heading(target, delta):
 		rot += rot_speed*delta
 	
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_pressed("closest_target"):
 		get_closest_target()
 	
@@ -550,7 +550,7 @@ func _on_shield_recharge_timer_timeout():
 	
 
 # click to target functionality
-func _on_Area2D_input_event(viewport, event, shape_idx):
+func _on_Area2D_input_event(_viewport, event, _shape_idx):
 	# any mouse click
 	if event is InputEventMouseButton and event.pressed:
 		#target = self
@@ -607,7 +607,7 @@ func _on_engine_timer_timeout():
 
 func _on_conquer_pressed(id):
 	print("Setting conquer target to: " + get_tree().get_nodes_in_group("planets")[id].get_node("Label").get_text())
-	conquer_target = id
+	conquer_target = id+1 # to avoid problems with state's parameter being 0 (= null)
 
 func update_cargo_listing(cargo, base_storage=null):
 	# update listing

@@ -62,7 +62,7 @@ func draw_triangle_equilateral(center=Vector2(), direction=Vector2(), radius=50,
 	draw_polygon(points, PoolColorArray([_color]))
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# avoid lines rotating
 	set_rotation(-get_parent().get_rotation())
 	update()

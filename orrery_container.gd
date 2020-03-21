@@ -92,7 +92,7 @@ func _ready():
 	
 	set_clip_contents(true)
 
-func _process(delta):
+func _process(_delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 

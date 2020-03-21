@@ -216,7 +216,7 @@ func _on_colony_colonized(colony):
 		colonies.remove(colonies.find(colony))
 		colony_sprites.remove(colony_sprites.find(spr))
 
-func _process(delta):
+func _process(_delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 
