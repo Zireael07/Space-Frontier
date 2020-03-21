@@ -251,9 +251,9 @@ func move_orbit(delta):
 		# normal case
 		vel += steer
 	elif (brain.target - get_global_position()).length() < 300*rad_f and not orbiting:
-		print("In orbit range: " + str((brain.target - get_global_position()).length()) + " " + str((300*rad_f)))
+		#print("In orbit range: " + str((brain.target - get_global_position()).length()) + " " + str((300*rad_f)))
 		##orbit
-		print("NPC wants to orbit: " + get_colonized_planet().get_name()) 
+		print("NPC wants to orbit: " + get_colonized_planet().get_node("Label").get_text()) 
 		orbit_planet(get_colonized_planet())
 	# if too far away, just ignore
 	
@@ -319,7 +319,7 @@ func _draw():
 		pass
 
 # click to target functionality
-func _on_Area2D_input_event(viewport, event, shape_idx):
+func _on_Area2D_input_event(_viewport, event, _shape_idx):
 	# any mouse click
 	if event is InputEventMouseButton:
 		#if not targetted:

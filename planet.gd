@@ -447,7 +447,7 @@ func do_colonize(area):
 func _on_planet_orbited(ship):
 	orbiter = ship
 	orbiters.append(orbiter)
-	print("Planet orbited " + str(get_name()) + " orbiter " + str(orbiter.get_parent().get_name()))
+	print("Planet orbited " + str(get_node("Label").get_text()) + " orbiter " + str(orbiter.get_parent().get_name()))
 
 	var rel_pos = get_node("orbit_holder").get_global_transform().xform_inv(orbiter.get_global_position())
 	
@@ -456,13 +456,13 @@ func _on_planet_orbited(ship):
 	orbiter.set_position(Vector2(0,0))
 	orbiter.pos = Vector2(0,0)
 
-	print("Rel pos: " + str(rel_pos))
+	#print("Rel pos: " + str(rel_pos))
 	orbiter.set_position(rel_pos)
 	
 	var a = atan2(rel_pos.x, rel_pos.y)
 #	var a = atan2(200,0)
 
-	print("Initial angle " + str(a))
+	#print("Initial angle " + str(a))
 	
 	# redraw (debugging)
 	update()
