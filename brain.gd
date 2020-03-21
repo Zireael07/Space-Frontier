@@ -90,43 +90,47 @@ func _go_mine():
 	else:
 		return false
 
+func task_orbiting(conquer_tg):
+	# if player-specified colony target is not colonized
+	# or we have a colonize target (planet w/o colony)
+	if conquer_tg != null or ship.get_colonize_target() != null:
+		if ship.get_colony_in_dock() == null:
+			if ship.kind_id == ship.kind.friendly:
+				# pick up colony from planet
+				if not ship.pick_colony():
+					print("We can't pick colony now, go do something else...")
+					ship.deorbit()
+					var try_mine = _go_mine()
+					if not try_mine:
+						#if get_colonized_planet().has_moon():
+							# random chance to head for a moon
+							#randomize()
+							#if randi() % 20 > 10:
+							#	brain.target = get_colonized_planet().get_moon().get_global_position()
+							#else:
+							
+						# orbit again
+						set_state(STATE_ORBIT, ship.get_colonized_planet())
+				else:
+					# explicitly go colonize
+					_colonize(conquer_tg)
+			else:
+				print("Blockading a planet")
+		else:
+			# deorbit
+			ship.deorbit()		
+			_colonize(conquer_tg)
 
+	# if nowhere to colonize
+	else:
+		ship.deorbit()
+		_go_mine()
+
+# timer count is governed by ship
 func _on_task_timer_timeout(timer_count):
 	var conquer_tg = get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target 
 	if ship.orbiting:
-		# if player-specified colony target is not colonized
-		if conquer_tg != null or ship.get_colonize_target() != null: # or we have a colonize target (planet w/o colony)
-		#if not get_tree().get_nodes_in_group("planets")[1].has_colony():
-			if ship.get_colony_in_dock() == null:
-				if ship.kind_id == ship.kind.friendly:
-					# pick up colony from planet
-					if not ship.pick_colony():
-						print("We can't pick colony now, go do something else...")
-						ship.deorbit()
-						var try_mine = _go_mine()
-						if not try_mine:
-							#if get_colonized_planet().has_moon():
-								# random chance to head for a moon
-								#randomize()
-								#if randi() % 20 > 10:
-								#	brain.target = get_colonized_planet().get_moon().get_global_position()
-								#else:
-								
-							# orbit again
-							set_state(STATE_ORBIT, ship.get_colonized_planet())
-					else:
-						# explicitly go colonize
-						_colonize(conquer_tg)
-				else:
-					print("Blockading a planet")
-			else:
-				# deorbit
-				ship.deorbit()		
-				_colonize(conquer_tg)
-
-		else:
-			ship.deorbit()
-			_go_mine()
+		task_orbiting(conquer_tg)
 
 	else:
 		# if we somehow picked up a colony and aren't colonizing, offload it first
@@ -532,6 +536,7 @@ class MineState:
 		cnt = 0
 		target_num = 2
 		
+		# reset ship's timer count
 		ship.ship.timer_count = 0
 		
 	func update(delta):
