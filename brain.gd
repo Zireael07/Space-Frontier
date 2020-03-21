@@ -66,6 +66,31 @@ func _process(delta):
 	state.update(delta)
 
 # ------------------------------------------------------------------
+func _colonize(conquer_tg):
+	var col_id = ship.get_colonize_target()
+	if col_id != null or conquer_tg != null:
+		if conquer_tg != null:
+			col_id = conquer_tg
+		print("Colonize target " + str(col_id))
+		set_state(STATE_COLONIZE, col_id)
+		# col_id is the real id+1 to avoid problems with state param being 0 (= null)
+		var col_tg = get_tree().get_nodes_in_group("planets")[col_id-1]
+		target = col_tg.get_global_position()
+		print("We have a colony, leaving for... " + str(col_tg.get_node("Label").get_text()))
+		return true
+	else:
+		return false
+		
+func _go_mine():
+	var closest = ship.get_closest_asteroid()
+	if closest:
+		target = closest.get_global_position()
+		set_state(STATE_MINE, closest)
+		return true
+	else:
+		return false
+
+
 func _on_task_timer_timeout(timer_count):
 	var conquer_tg = get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target 
 	if ship.orbiting:
@@ -78,84 +103,42 @@ func _on_task_timer_timeout(timer_count):
 					if not ship.pick_colony():
 						print("We can't pick colony now, go do something else...")
 						ship.deorbit()
-						var closest = ship.get_closest_asteroid()
-						if closest:
-							target = closest.get_global_position()
-							set_state(STATE_MINE, closest)
-#						if get_tree().get_nodes_in_group("asteroid").size() > 3:
-#							brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-#							brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
-						else:
+						var try_mine = _go_mine()
+						if not try_mine:
 							#if get_colonized_planet().has_moon():
 								# random chance to head for a moon
 								#randomize()
 								#if randi() % 20 > 10:
 								#	brain.target = get_colonized_planet().get_moon().get_global_position()
 								#else:
+								
 							# orbit again
 							set_state(STATE_ORBIT, ship.get_colonized_planet())
 					else:
 						# explicitly go colonize
-						var col_id = ship.get_colonize_target()
-						if col_id != null or conquer_tg != null:
-							if conquer_tg != null:
-								col_id = conquer_tg
-							print("Colonize target " + str(col_id))
-							set_state(STATE_COLONIZE, col_id)
-							# col_id is the real id+1 to avoid problems with state param being 0 (= null)
-							var col_tg = get_tree().get_nodes_in_group("planets")[col_id-1]
-							print("Col tg name " + str(col_tg.get_node("Label").get_text()))
-							target = col_tg.get_global_position()
+						_colonize(conquer_tg)
 				else:
 					print("Blockading a planet")
 			else:
 				# deorbit
 				ship.deorbit()		
-				var col_id = ship.get_colonize_target()
-				if col_id != null or conquer_tg != null:
-					if conquer_tg != null:
-						col_id = conquer_tg
-					#print("Colonize target " + str(col_id))
-					# col_id is the real id+1 to avoid problems with state param being 0 (= null)
-					var col_tg = get_tree().get_nodes_in_group("planets")[col_id-1]
-					target = col_tg.get_global_position()
-					print("We have a colony, leaving for... " + str(col_tg.get_node("Label").get_text()))
-					#brain.target = get_tree().get_nodes_in_group("planets")[1].get_global_position()
-					set_state(STATE_COLONIZE, col_id)
+				_colonize(conquer_tg)
 
 		else:
 			ship.deorbit()
-			var closest = ship.get_closest_asteroid()
-			if closest:
-				target = closest.get_global_position()
-				set_state(STATE_MINE, closest)
-#			if get_tree().get_nodes_in_group("asteroid").size() > 3:
-#				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-#				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+			_go_mine()
+
 	else:
 		# if we somehow picked up a colony and aren't colonizing, offload it first
 		if ship.get_colony_in_dock() != null and not (get_state() == STATE_COLONIZE):
-			var col_id = ship.get_colonize_target()
-			if col_id != null or conquer_tg != null:
-				if conquer_tg != null:
-					col_id = conquer_tg
-				print("Colonize target " + str(col_id))
-				# col_id is the real id+1 to avoid problems with state param being 0 (= null)
-				var col_tg = get_tree().get_nodes_in_group("planets")[col_id-1]
-				target = col_tg.get_global_position()
-				set_state(STATE_COLONIZE, col_id)
+			var try_col = _colonize(conquer_tg)
 			# nothing more to colonize, go back to colonized planet
-			else: 
+			if not try_col: 
 				set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 			
 		if not (get_state() in [STATE_MINE, STATE_REFIT, STATE_COLONIZE, STATE_ATTACK, STATE_GO_PLANET]):
-			var closest = ship.get_closest_asteroid()
-			if closest:
-				target = closest.get_global_position()
-				set_state(STATE_MINE, closest)
-#			if get_tree().get_nodes_in_group("asteroid").size() > 3:
-#				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-#				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+			_go_mine()
+
 		if not (get_state() == STATE_ATTACK) and not ship.docked:
 			if ship.get_colony_in_dock() == null:
 				if ship.kind_id == ship.kind.friendly:
@@ -174,10 +157,7 @@ func _on_task_timer_timeout(timer_count):
 			if not ship.docked:
 				return
 			else:
-				var closest = ship.get_closest_asteroid()
-				if closest:
-					target = closest.get_global_position()
-					set_state(STATE_MINE, closest)
+				_go_mine()
 #				if get_tree().get_nodes_in_group("asteroid").size() > 3:
 #					brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 #					brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
@@ -194,9 +174,11 @@ func _on_task_timer_timeout(timer_count):
 				else:
 					print("We got stuck mining @ dist: " + str(dist))
 					# assume we got bored, look for something else to do../
+					
 					# do we have something to colonize?
 					# if player-specified colony target is not colonized
-					if conquer_tg or ship.get_colonize_target() != null: # or we have a colonize target (planet w/o colony)
+					# or we have a colonize target (planet w/o colony)
+					if conquer_tg or ship.get_colonize_target() != null: 
 						if ship.get_colony_in_dock() == null:
 							if ship.kind_id == ship.kind.friendly:
 								if ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
