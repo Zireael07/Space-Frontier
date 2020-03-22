@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://star system.gd" type="Script" id=1]
 [ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://colony.tscn" type="PackedScene" id=7]
 [ext_resource path="res://planet_new.tscn" type="PackedScene" id=8]
 [ext_resource path="res://planet_rotating.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/bodies/asteroids/a10000.png" type="Texture" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -59,6 +60,9 @@ void fragment()
 [sub_resource type="ShaderMaterial" id=5]
 shader = SubResource( 4 )
 shader_param/aura_color = Color( 0.0117647, 0.952941, 1, 1 )
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 20.0
 
 [node name="star" type="Node2D" groups=[
 "star",
@@ -163,6 +167,37 @@ texture = ExtResource( 4 )
 [node name="Label" parent="planet_holder/planet2" index="1"]
 text = "Mars"
 
+[node name="planet" parent="planet_holder/planet2/orbit_holder" index="0" groups=[
+"moon",
+] instance=ExtResource( 3 )]
+position = Vector2( -1.74846e-05, 400 )
+z_index = 2
+
+[node name="Sprite" parent="planet_holder/planet2/orbit_holder/planet" index="0"]
+texture = ExtResource( 10 )
+
+[node name="Label" parent="planet_holder/planet2/orbit_holder/planet" index="1"]
+text = "Phobos"
+
+[node name="CollisionShape2D" parent="planet_holder/planet2/orbit_holder/planet/Area2D" index="0"]
+shape = SubResource( 6 )
+
+[node name="planet2" parent="planet_holder/planet2/orbit_holder" index="1" groups=[
+"moon",
+] instance=ExtResource( 3 )]
+position = Vector2( -1.74846e-05, 400 )
+z_index = 2
+mass = 0.0123
+
+[node name="Sprite" parent="planet_holder/planet2/orbit_holder/planet2" index="0"]
+texture = ExtResource( 10 )
+
+[node name="Label" parent="planet_holder/planet2/orbit_holder/planet2" index="1"]
+text = "Deimos"
+
+[node name="CollisionShape2D" parent="planet_holder/planet2/orbit_holder/planet2/Area2D" index="0"]
+shape = SubResource( 6 )
+
 [editable path="planet_holder/planet"]
 
 [editable path="planet_holder/planet4"]
@@ -172,3 +207,7 @@ text = "Mars"
 [editable path="planet_holder/planet3/orbit_holder/Node2D"]
 
 [editable path="planet_holder/planet2"]
+
+[editable path="planet_holder/planet2/orbit_holder/planet"]
+
+[editable path="planet_holder/planet2/orbit_holder/planet2"]
