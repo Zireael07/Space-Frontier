@@ -178,6 +178,10 @@ mass = 0.0123
 texture = ExtResource( 10 )
 
 [node name="Label" parent="planet_holder/planet2/orbit_holder/planet" index="1"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 77.0
+margin_bottom = 39.0
 text = "Phobos"
 
 [node name="CollisionShape2D" parent="planet_holder/planet2/orbit_holder/planet/Area2D" index="0"]
@@ -194,6 +198,10 @@ mass = 0.0123
 texture = ExtResource( 10 )
 
 [node name="Label" parent="planet_holder/planet2/orbit_holder/planet2" index="1"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 77.0
+margin_bottom = 39.0
 text = "Deimos"
 
 [node name="CollisionShape2D" parent="planet_holder/planet2/orbit_holder/planet2/Area2D" index="0"]
