@@ -78,8 +78,9 @@ func _ready():
 	
 	# recalculate temp for our moons last
 	if has_moon():
-		get_moon().temp = get_moon().calculate_temperature()
-		get_moon().calculate_orbit_period()
+		for m in get_moons():
+			m.temp = m.calculate_temperature()
+			m.calculate_orbit_period()
 
 # Kepler's Third Law:
 # The square of the period of any planet is proportional to the cube of the semi-major axis of its orbit.
@@ -327,10 +328,13 @@ func has_moon():
 	#print("Has moon: " + str(ret))
 	return ret
 
-func get_moon():
+func get_moons():
+	var moons = []
 	for c in get_node("orbit_holder").get_children():
 		if c.is_in_group("moon"):
-			return c
+			moons.append(c)
+			
+	return moons
 
 func _draw():
 	# debugging

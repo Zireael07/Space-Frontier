@@ -102,23 +102,25 @@ func _ready():
 		y += 15
 		if p.has_moon():
 			var x = 15 # indent moons
-			# moon label
-			label = Label.new()
-			var moon = p.get_moon()
-			txt = moon.get_node("Label").get_text()
-			label.set_text(txt)
-			label.set_position(Vector2(10+x, y))
-			$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
-			# is it a colonized planet?
-			col = moon.has_colony()
-			#print(p.get_name() + " has colony " + str(col))
-			if col and col == "colony":
-				# tint cyan
-				label.set_self_modulate(Color(0, 1, 1))
-			elif col and col == "enemy_col":
-				# tint red
-				label.set_self_modulate(Color(1, 0, 0))
-			y += 15
+			for m in p.get_moons():
+				# moon label
+				label = Label.new()
+				
+				#var moon = p.get_moon()
+				txt = m.get_node("Label").get_text()
+				label.set_text(txt)
+				label.set_position(Vector2(10+x, y))
+				$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
+				# is it a colonized planet?
+				col = m.has_colony()
+				#print(p.get_name() + " has colony " + str(col))
+				if col and col == "colony":
+					# tint cyan
+					label.set_self_modulate(Color(0, 1, 1))
+				elif col and col == "enemy_col":
+					# tint red
+					label.set_self_modulate(Color(1, 0, 0))
+				y += 15
 
 		# direction labels
 		dir_label = Label.new()
@@ -180,7 +182,11 @@ func _input(_event):
 			$"pause_panel".show() #(not paused)
 		else:
 			$"pause_panel".hide()
-
+	if Input.is_action_pressed("orders"):
+		if not paused:
+			return
+		else:
+			$"pause_panel/Label".set_text("ORDERS MODE")
 
 
 func _on_shield_changed(data):
@@ -512,22 +518,27 @@ func _on_ButtonView_pressed():
 	
 	else:
 		var select_id = (cursor.get_position().y - 15) / 15
-		var skip = -1
+		var skips = []
 		var planets = get_tree().get_nodes_in_group("planets")
 		for i in range(planets.size()):
 			if planets[i].has_moon():
-				skip = i
+				skips.append(i)
 		
-		if skip != -1:
-			if select_id > skip and select_id < skip+2: # assume only one moon for now
-				print("Pointed cursor at moon")
-				var moon = planets[skip].get_moon()
+		# if the planet has a moon(s)
+		for skip in skips:
+		#if skip != -1:
+			# how many moons do we have?
+			var num_moons = planets[skip].get_moons().size()
+			if select_id > skip and select_id < skip+num_moons+1:
+				var m_id = select_id-skip-1
+				print("Pointed cursor at moon " + str(m_id))
+				var moon = planets[skip].get_moons()[m_id]
 				make_planet_view(moon)
 				return
 			else:
-				if select_id > skip+1:
+				if select_id > skip+num_moons:
 					# fix
-					select_id = select_id-1
+					select_id = select_id-num_moons
 			
 		var planet = get_tree().get_nodes_in_group("planets")[select_id]
 		make_planet_view(planet, select_id)
@@ -667,7 +678,8 @@ func _on_ButtonDown2_pressed():
 	var max_y = 15*num_list+1 #because of star
 	for p in get_tree().get_nodes_in_group("planets"):
 		if p.has_moon():
-			max_y = max_y +15
+			for m in p.get_moons():
+				max_y = max_y +15
 	#print("num list" + str(num_list) + " max y: " + str(max_y))
 	if cursor.get_position().y < max_y:
 		# down a line
