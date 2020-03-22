@@ -4,7 +4,7 @@ extends Node2D
 # class member variables go here, for example:
 export(float) var planet_rad_factor = 1.0
 
-#export(int) var angle = 0 setget setAngle #, getAngle
+#export(int) var orbit_angle setget setOrbitAngle #, getAngle
 #export(int) var dist = 100 setget setDist #, getDist
 
 export(Vector2) var data setget setData
@@ -54,6 +54,9 @@ func _ready():
 	
 	# moon fix
 	if is_in_group("moon"):
+		# can't be both a moon and a planet
+		if is_in_group("planets"):
+			remove_from_group("planets")
 		mass = 0.0123 #Earth masses
 	else:
 		temp = calculate_temperature()
@@ -243,26 +246,29 @@ func place(angle,dist):
 	
 	set_position(pos)
 
-#func setAngle(val):
-#	print("Set angle to : " + str(val))
-#	var pos = Vector2(0, dist).rotated(deg2rad(val))
-#	print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(val)))
-#	print("Position is " + str(pos))
-#
-#	#place(val, getDist())
-#
+func setOrbitAngle(val):
+	print("Set angle to : " + str(val))
+	var pos = Vector2(0, dist).rotated(deg2rad(val))
+	print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(val)))
+	print("Position is " + str(pos))
+
+	set_position(pos)
+	#place(val, getDist())
+
 #func setDist(val):
 #	print("Set dist to: " + str(val))
-#	var pos = Vector2(0, val).rotated(deg2rad(angle))
-#	print("vec: 0, " + str(val) + " rot: " + str(deg2rad(angle)))
+#	var pos = Vector2(0, val).rotated(deg2rad(orbit_angle))
+#	print("vec: 0, " + str(val) + " rot: " + str(deg2rad(orbit_angle)))
 #
 #
 #	print("Position is " + str(pos))
 #
-#	#place(getAngle(), val)
+#	set_position(pos)
 #
+#	#place(getAngle(), val)
+
 #func getAngle():
-#	return angle
+#	return orbit_angle
 #
 #func getDist():
 #	return dist

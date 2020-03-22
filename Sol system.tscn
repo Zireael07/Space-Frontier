@@ -117,14 +117,14 @@ text = "Venus"
 [node name="planet3" parent="planet_holder" groups=[
 "planets",
 ] instance=ExtResource( 9 )]
-position = Vector2( 0, 12000 )
+position = Vector2( -0.000524537, 12000 )
 atm = 1.0
 greenhouse = 0.397
 population = 11000.0
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
 material = SubResource( 5 )
-rotation = 3.4641e-07
+rotation = 3.89643e-07
 
 [node name="Label" parent="planet_holder/planet3" index="2"]
 text = "Earth"
@@ -141,7 +141,7 @@ texture = ExtResource( 5 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet3/orbit_holder/Node2D" index="1"]
 visible = false
-rotation = 3.4641e-07
+rotation = 3.88589e-07
 
 [node name="Label" parent="planet_holder/planet3/orbit_holder/Node2D" index="2"]
 margin_left = 37.0
@@ -172,6 +172,7 @@ text = "Mars"
 ] instance=ExtResource( 3 )]
 position = Vector2( -1.74846e-05, 400 )
 z_index = 2
+mass = 0.0123
 
 [node name="Sprite" parent="planet_holder/planet2/orbit_holder/planet" index="0"]
 texture = ExtResource( 10 )
@@ -185,7 +186,7 @@ shape = SubResource( 6 )
 [node name="planet2" parent="planet_holder/planet2/orbit_holder" index="1" groups=[
 "moon",
 ] instance=ExtResource( 3 )]
-position = Vector2( -1.74846e-05, 400 )
+position = Vector2( -200, 346.41 )
 z_index = 2
 mass = 0.0123
 
