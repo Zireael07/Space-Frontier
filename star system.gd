@@ -25,10 +25,26 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	
+	# load data
+	load_data(get_name())
+	
 	var hzs = calculate_hz(luminosity)
 	hz_inner = hzs[0]
 	hz_outer = hzs[1]
-	#pass
+
+func load_data(name):
+	var file = File.new()
+	file.open("res://"+str(name)+"_system.csv", file.READ)
+	while !file.eof_reached():
+		var csv = file.get_csv_line()
+		# skip header
+		if csv[0] == "name":
+			continue
+		# skip empty lines
+		if csv.size() > 1:
+			print(str(csv))
+
+	file.close()
 
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.

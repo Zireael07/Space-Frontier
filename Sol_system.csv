@@ -1,0 +1,8 @@
+name,angle,dist, type
+Mercury,0,5400, planet
+Venus,0,8600, planet
+Earth,0,12000, planet
+Moon,0,300, moon
+Mars,0,18000, planet
+Deimos,-30,400, moon
+Phobos,30,400, moon

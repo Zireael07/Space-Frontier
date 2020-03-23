@@ -64,7 +64,7 @@ shader_param/aura_color = Color( 0.0117647, 0.952941, 1, 1 )
 [sub_resource type="CircleShape2D" id=6]
 radius = 20.0
 
-[node name="star" type="Node2D" groups=[
+[node name="Sol" type="Node2D" groups=[
 "star",
 ]]
 position = Vector2( 500, 500 )
