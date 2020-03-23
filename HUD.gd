@@ -581,6 +581,11 @@ func make_planet_view(planet, select_id=-1):
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(sc2)
 			# experimentally determined values
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, -7))
+	# why the eff do the asteroid/moon crosses seem not to have material?
+	else:
+		if planet.is_in_group("moon"):
+			var sc = Vector2(1, 1)
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
 			
 		
 	# set label
