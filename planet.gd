@@ -43,10 +43,9 @@ var labl_loc = Vector2()
 func _ready():
 	print("Planet init")
 	set_z_index(game.PLANET_Z)
-	
 	connect("planet_orbited", self, "_on_planet_orbited")
 	
-	setup()
+	#setup()
 
 func setup(angle=0, dis=0):
 	if angle != 0 and dis !=0:

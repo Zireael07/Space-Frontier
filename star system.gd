@@ -20,13 +20,33 @@ onready var planets = $"planet_holder"
 export var zoom_scale = 12
 export var custom_orrery_scale = 0
 
+# data
+var data = []
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	
+	print("Star system init")
 	# load data
-	load_data(get_name())
+	data = load_data(get_name())
+	
+	for line in data:
+		print(str(line))
+		# match rows to planets
+		for c in get_node("planet_holder").get_children():
+			var nam = c.get_node("Label").get_text()
+			if line[0] == nam:
+				print("Name fits data, setup @ " + str(line[1]) + " d: " + str(line[2]))
+				c.setup(int(line[1]), int(line[2]))
+			# moons
+			for m in c.get_node("orbit_holder").get_children():
+				nam = m.get_node("Label").get_text()
+				if line[0] == nam:
+					print("Name fits data, setup @ " + str(line[1]) + " d: " + str(line[2]))
+					m.setup(int(line[1]), int(line[2]))
+				
+		#if data[3] == "planet":
+			
 	
 	var hzs = calculate_hz(luminosity)
 	hz_inner = hzs[0]
@@ -42,9 +62,11 @@ func load_data(name):
 			continue
 		# skip empty lines
 		if csv.size() > 1:
-			print(str(csv))
+			data.append(csv)
+			#print(str(csv))
 
 	file.close()
+	return data
 
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
