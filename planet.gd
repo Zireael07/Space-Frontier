@@ -7,7 +7,7 @@ export(float) var planet_rad_factor = 1.0
 #export(int) var orbit_angle setget setOrbitAngle #, getAngle
 #export(int) var dist = 100 setget setDist #, getDist
 
-export(Vector2) var data setget setData
+export(Vector2) var data #setget setData
 
 export(float) var mass = 1 # in Earth masses
 var radius = 1.0 # in Earth radius
@@ -41,10 +41,17 @@ var labl_loc = Vector2()
 # Called when the node is added to the scene for the first time.
 # Initialization here
 func _ready():
+	print("Planet init")
 	set_z_index(game.PLANET_Z)
 	
 	connect("planet_orbited", self, "_on_planet_orbited")
 	
+	setup()
+
+func setup(angle=0, dis=0):
+	if angle != 0 and dis !=0:
+		# place
+		place(angle, dis)
 	
 	dist = get_position().length()
 	
