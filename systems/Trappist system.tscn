@@ -11,7 +11,7 @@
 
 [sub_resource type="StyleBoxFlat" id=1]
 
-[node name="star" type="Node2D" groups=[
+[node name="Trappist" type="Node2D" groups=[
 "star",
 ]]
 position = Vector2( 500, 500 )
@@ -32,11 +32,15 @@ margin_bottom = 116.0
 custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "TRAPPIST-1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="planet_holder" type="Node2D" parent="."]
 
 [node name="planet" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -6.07588e-06, 139 )
+z_index = 2
 planet_rad_factor = 0.2
 tidally_locked = true
 
@@ -48,13 +52,14 @@ margin_left = 30.0
 margin_top = 30.0
 margin_right = 82.0
 margin_bottom = 44.0
-text = "TRAPPIST 1b"
+text = "TRAPPIST-1b"
 
 [node name="Area2D" parent="planet_holder/planet" index="2"]
 scale = Vector2( 0.2, 0.2 )
 
 [node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( 2.26573e-06, -190 )
+z_index = 2
 planet_rad_factor = 0.2
 mass = 1.15
 tidally_locked = true
@@ -68,13 +73,14 @@ margin_left = 30.0
 margin_top = 30.0
 margin_right = 82.0
 margin_bottom = 44.0
-text = "TRAPPIST 1c"
+text = "TRAPPIST-1c"
 
 [node name="CollisionShape2D" parent="planet_holder/planet2/Area2D" index="0"]
 scale = Vector2( 0.2, 0.2 )
 
 [node name="planet3" parent="planet_holder" instance=ExtResource( 3 )]
-position = Vector2( -188.798, 188.798 )
+position = Vector2( -189.505, 189.505 )
+z_index = 2
 planet_rad_factor = 0.2
 mass = 0.2
 tidally_locked = true
@@ -89,7 +95,7 @@ margin_left = 30.0
 margin_top = 30.0
 margin_right = 109.0
 margin_bottom = 44.0
-text = "TRAPPIST 1d"
+text = "TRAPPIST-1d"
 
 [node name="CollisionShape2D" parent="planet_holder/planet3/Area2D" index="0"]
 scale = Vector2( 0.2, 0.2 )
@@ -104,7 +110,7 @@ tidally_locked = true
 scale = Vector2( 0.15, 0.15 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
-rotation = 0.254188
+rotation = 4.33355e-07
 scale = Vector2( 0.15, 0.15 )
 
 [node name="Label" parent="planet_holder/planet4" index="2"]
@@ -112,7 +118,7 @@ margin_left = 40.0
 margin_top = 40.0
 margin_right = 119.0
 margin_bottom = 54.0
-text = "TRAPPIST 1e"
+text = "TRAPPIST-1e"
 
 [node name="CollisionShape2D" parent="planet_holder/planet4/Area2D" index="0"]
 scale = Vector2( 0.3, 0.3 )
