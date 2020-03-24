@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://procedural star system.gd" type="Script" id=1]
-[ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=2]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
 [ext_resource path="res://planet_new.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=4]
 [ext_resource path="res://colony_enemy.tscn" type="PackedScene" id=5]
@@ -17,12 +17,12 @@
 position = Vector2( 500, 500 )
 script = ExtResource( 1 )
 orbit_rate = 0.02
-star_radius_factor = 0.432023
-luminosity = 0.894821
+star_radius_factor = 0.487451
+luminosity = 0.0269786
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 9.92185
-scale = Vector2( 0.432023, 0.432023 )
+scale = Vector2( 0.487451, 0.487451 )
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
@@ -57,13 +57,13 @@ texture = ExtResource( 4 )
 rotation = 1.65324
 
 [node name="Label" parent="planet_holder/planet2" index="2"]
-text = "Kepler 1373c"
+text = "Kepler 1443c"
 
 [node name="colony2" parent="planet_holder/planet2" instance=ExtResource( 5 )]
 
 [node name="planet3" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( 1692.5, -148 )
-mass = 3.56516
+mass = 1.57812
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
 texture = ExtResource( 6 )
@@ -72,14 +72,14 @@ texture = ExtResource( 6 )
 rotation = -0.626209
 
 [node name="Label" parent="planet_holder/planet3" index="2"]
-text = "Kepler 1373d"
+text = "Kepler 1443d"
 
 [node name="colony2" parent="planet_holder/planet3" instance=ExtResource( 7 )]
 position = Vector2( 0.0300293, -0.0780029 )
 
 [node name="planet4" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -6.85395e-05, 1568 )
-mass = 0.561743
+mass = 1.13881
 
 [node name="asteroid" parent="planet_holder" instance=ExtResource( 8 )]
 position = Vector2( 580, 764 )

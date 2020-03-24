@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://star system.gd" type="Script" id=1]
-[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
-[ext_resource path="res://planet_new.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/bodies/Planet-only1.png" type="Texture" id=4]
-[ext_resource path="res://colony.tscn" type="PackedScene" id=5]
+[ext_resource path="res://colony.tscn" type="PackedScene" id=1]
+[ext_resource path="res://asteroid.tscn" type="PackedScene" id=2]
+[ext_resource path="res://systems/star system.gd" type="Script" id=3]
+[ext_resource path="res://systems/planet_new.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/bodies/Planet-only1.png" type="Texture" id=5]
 [ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=6]
-[ext_resource path="res://asteroid.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -38,7 +38,7 @@ shader_param/aura_color = Color( 0.00392157, 0.831373, 0.992157, 1 )
 "star",
 ]]
 position = Vector2( 500, 500 )
-script = ExtResource( 1 )
+script = ExtResource( 3 )
 orbit_rate = 0.02
 star_radius_factor = 0.45
 luminosity = 0.03
@@ -46,7 +46,7 @@ luminosity = 0.03
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 9.92185
 scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 2 )
+texture = ExtResource( 7 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -400.0
@@ -59,7 +59,7 @@ text = "Kepler-99"
 
 [node name="planet_holder" type="Node2D" parent="."]
 
-[node name="planet" parent="planet_holder" instance=ExtResource( 3 )]
+[node name="planet" parent="planet_holder" instance=ExtResource( 4 )]
 position = Vector2( -2.62268e-05, -600 )
 hydro = 0.2
 
@@ -69,15 +69,15 @@ rotation = 3.14159
 [node name="Label" parent="planet_holder/planet" index="2"]
 text = "Jungle"
 
-[node name="planet4" parent="planet_holder" instance=ExtResource( 3 )]
+[node name="planet4" parent="planet_holder" instance=ExtResource( 4 )]
 position = Vector2( -6.85395e-05, 1568 )
 
-[node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
+[node name="planet2" parent="planet_holder" instance=ExtResource( 4 )]
 position = Vector2( 1852.92, 200 )
 atm = 1.0
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet2" index="1"]
 material = SubResource( 3 )
@@ -87,9 +87,9 @@ rotation = 4.81991
 margin_right = 204.0
 text = "Paradise"
 
-[node name="colony2" parent="planet_holder/planet2" instance=ExtResource( 5 )]
+[node name="colony2" parent="planet_holder/planet2" instance=ExtResource( 1 )]
 
-[node name="planet3" parent="planet_holder" instance=ExtResource( 3 )]
+[node name="planet3" parent="planet_holder" instance=ExtResource( 4 )]
 position = Vector2( -1540, 400 )
 hydro = 0.0
 
@@ -102,31 +102,31 @@ rotation = 1.31667
 [node name="Label" parent="planet_holder/planet3" index="2"]
 text = "Inferno"
 
-[node name="asteroid" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="asteroid" parent="planet_holder" instance=ExtResource( 2 )]
 position = Vector2( 580, 764 )
 
-[node name="asteroid2" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="asteroid2" parent="planet_holder" instance=ExtResource( 2 )]
 position = Vector2( 644, 660 )
 type = 0
 
-[node name="asteroid3" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="asteroid3" parent="planet_holder" instance=ExtResource( 2 )]
 position = Vector2( 696, 524 )
 
-[node name="asteroid4" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="asteroid4" parent="planet_holder" instance=ExtResource( 2 )]
 position = Vector2( 736, 388 )
 type = 0
 
-[node name="asteroid8" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="asteroid8" parent="planet_holder" instance=ExtResource( 2 )]
 position = Vector2( -610, 764 )
 
-[node name="asteroid7" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="asteroid7" parent="planet_holder" instance=ExtResource( 2 )]
 position = Vector2( -630, 660 )
 type = 0
 
-[node name="asteroid6" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="asteroid6" parent="planet_holder" instance=ExtResource( 2 )]
 position = Vector2( -640, 524 )
 
-[node name="asteroid5" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="asteroid5" parent="planet_holder" instance=ExtResource( 2 )]
 position = Vector2( -644, 388 )
 
 [editable path="planet_holder/planet"]

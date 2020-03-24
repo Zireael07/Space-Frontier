@@ -54,16 +54,17 @@ func _ready():
 
 func load_data(name):
 	var file = File.new()
-	file.open("res://"+str(name)+"_system.csv", file.READ)
+	file.open("res://systems/"+str(name)+"_system.csv", file.READ)
 	while !file.eof_reached():
 		var csv = file.get_csv_line()
-		# skip header
-		if csv[0] == "name":
-			continue
-		# skip empty lines
-		if csv.size() > 1:
-			data.append(csv)
-			#print(str(csv))
+		if csv != null:
+			# skip header
+			if csv[0] == "name":
+				continue
+			# skip empty lines
+			if csv.size() > 1:
+				data.append(csv)
+				#print(str(csv))
 
 	file.close()
 	return data

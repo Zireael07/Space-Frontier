@@ -6,9 +6,9 @@ var starbase = preload("res://starbase.tscn")
 var enemy_starbase = preload("res://enemy_starbase.tscn")
 
 # star systems
-var proc_system = preload("res://star system.tscn")
-var sol = preload("res://Sol system.tscn")
-var trappist = preload("res://Trappist system.tscn")
+var proc_system = preload("res://systems/star system.tscn")
+var sol = preload("res://systems/Sol system.tscn")
+var trappist = preload("res://systems/Trappist system.tscn")
 
 # game core
 var core = preload("res://game_core.tscn")

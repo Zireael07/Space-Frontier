@@ -1,15 +1,15 @@
 [gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://star system.gd" type="Script" id=1]
-[ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=2]
-[ext_resource path="res://planet.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=4]
-[ext_resource path="res://assets/bodies/moonmap.jpg" type="Texture" id=5]
-[ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=6]
-[ext_resource path="res://colony.tscn" type="PackedScene" id=7]
-[ext_resource path="res://planet_new.tscn" type="PackedScene" id=8]
-[ext_resource path="res://planet_rotating.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/bodies/asteroids/a10000.png" type="Texture" id=10]
+[ext_resource path="res://colony.tscn" type="PackedScene" id=1]
+[ext_resource path="res://systems/star system.gd" type="Script" id=2]
+[ext_resource path="res://systems/planet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://systems/planet_rotating.tscn" type="PackedScene" id=4]
+[ext_resource path="res://systems/planet_new.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/bodies/asteroids/a10000.png" type="Texture" id=6]
+[ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=7]
+[ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=8]
+[ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=9]
+[ext_resource path="res://assets/bodies/moonmap.jpg" type="Texture" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -68,13 +68,13 @@ radius = 20.0
 "star",
 ]]
 position = Vector2( 500, 500 )
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 zoom_scale = 24
 custom_orrery_scale = 280
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 9.92185
-texture = ExtResource( 2 )
+texture = ExtResource( 7 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = -400.0
@@ -93,19 +93,19 @@ z_index = 2
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
 modulate = Color( 0.768627, 0.780392, 0.498039, 1 )
-texture = ExtResource( 4 )
+texture = ExtResource( 9 )
 
 [node name="Label" parent="planet_holder/planet" index="1"]
 text = "Mercury"
 
-[node name="planet4" parent="planet_holder" instance=ExtResource( 8 )]
+[node name="planet4" parent="planet_holder" instance=ExtResource( 5 )]
 position = Vector2( -0.000375918, 8600 )
 atm = 91.0
 greenhouse = 0.975
 
 [node name="Sprite" parent="planet_holder/planet4" index="0"]
 modulate = Color( 0.984314, 0.968627, 0.00392157, 1 )
-texture = ExtResource( 6 )
+texture = ExtResource( 8 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
 material = SubResource( 3 )
@@ -116,7 +116,7 @@ text = "Venus"
 
 [node name="planet3" parent="planet_holder" groups=[
 "planets",
-] instance=ExtResource( 9 )]
+] instance=ExtResource( 4 )]
 position = Vector2( -0.000524537, 12000 )
 atm = 1.0
 greenhouse = 0.397
@@ -131,13 +131,13 @@ text = "Earth"
 
 [node name="Node2D" parent="planet_holder/planet3/orbit_holder" index="0" groups=[
 "moon",
-] instance=ExtResource( 9 )]
+] instance=ExtResource( 4 )]
 position = Vector2( -1.31134e-05, 300 )
 mass = 0.0123
 
 [node name="Sprite" parent="planet_holder/planet3/orbit_holder/Node2D" index="0"]
 scale = Vector2( 0.062, 0.125 )
-texture = ExtResource( 5 )
+texture = ExtResource( 10 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet3/orbit_holder/Node2D" index="1"]
 visible = false
@@ -150,9 +150,9 @@ margin_right = 89.0
 margin_bottom = 51.0
 text = "Moon"
 
-[node name="colony3" parent="planet_holder/planet3/orbit_holder/Node2D" instance=ExtResource( 7 )]
+[node name="colony3" parent="planet_holder/planet3/orbit_holder/Node2D" instance=ExtResource( 1 )]
 
-[node name="colony2" parent="planet_holder/planet3" instance=ExtResource( 7 )]
+[node name="colony2" parent="planet_holder/planet3" instance=ExtResource( 1 )]
 position = Vector2( -0.000518799, 0 )
 
 [node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
@@ -162,7 +162,7 @@ atm = 0.06
 greenhouse = 0.086
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
-texture = ExtResource( 4 )
+texture = ExtResource( 9 )
 
 [node name="Label" parent="planet_holder/planet2" index="1"]
 text = "Mars"
@@ -175,7 +175,7 @@ z_index = 2
 mass = 0.0123
 
 [node name="Sprite" parent="planet_holder/planet2/orbit_holder/planet" index="0"]
-texture = ExtResource( 10 )
+texture = ExtResource( 6 )
 
 [node name="Label" parent="planet_holder/planet2/orbit_holder/planet" index="1"]
 margin_left = 25.0
@@ -195,7 +195,7 @@ z_index = 2
 mass = 0.0123
 
 [node name="Sprite" parent="planet_holder/planet2/orbit_holder/planet2" index="0"]
-texture = ExtResource( 10 )
+texture = ExtResource( 6 )
 
 [node name="Label" parent="planet_holder/planet2/orbit_holder/planet2" index="1"]
 margin_left = 25.0

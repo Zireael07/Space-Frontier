@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://planet.gd" type="Script" id=1]
-[ext_resource path="res://assets/planet_rotating_material.tres" type="Material" id=2]
-[ext_resource path="res://assets/bodies/texture_earth.png" type="Texture" id=3]
-[ext_resource path="res://assets/Planet-shadow_only.png" type="Texture" id=4]
+[ext_resource path="res://assets/planet_rotating_material.tres" type="Material" id=1]
+[ext_resource path="res://assets/bodies/texture_earth.png" type="Texture" id=2]
+[ext_resource path="res://assets/Planet-shadow_only.png" type="Texture" id=3]
+[ext_resource path="res://systems/planet.gd" type="Script" id=4]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -36,17 +36,17 @@ radius = 150.0
 
 [node name="Node2D" type="Node2D"]
 z_index = 2
-script = ExtResource( 1 )
+script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
-material = ExtResource( 2 )
+material = ExtResource( 1 )
 scale = Vector2( 0.25, 0.5 )
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 
 [node name="Sprite_shadow" type="Sprite" parent="."]
 material = SubResource( 2 )
 scale = Vector2( 0.43, 0.43 )
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = 150.0
