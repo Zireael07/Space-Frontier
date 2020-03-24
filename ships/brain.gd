@@ -288,21 +288,36 @@ class IdleState:
 		if ship.ship.orbiting:
 			ship.ship.deorbit()
 		
-		ship.move_generic(delta)
+		#ship.move_generic(delta)
 		
-		# if we're on top of our target
-		var t_dist = ship.get_global_position().distance_to(ship.target)
-		if t_dist < 20:
-			# tractor
-			if not ship.ship.tractor:
-				# if we have a floating colony
-				if ship.ship.get_closest_floating_colony() != null:
-					# check if ship target and floating colony position are roughly the same
-					if ship.target.distance_to(ship.ship.get_closest_floating_colony().get_global_position()) < 20:
-						print("Ship target is floating colony")
+		if ship.ship.is_target_floating_colony(ship.target):
+			if ship.ship.kind_id == ship.ship.kind.friendly:
+				
+				ship.move_generic(delta)
+				
+				# if we're on top of our target
+				var t_dist = ship.get_global_position().distance_to(ship.target)
+				if t_dist < 20:
+					# tractor
+					if not ship.ship.tractor: 
 						ship.ship.tractor = ship.ship.get_closest_floating_colony()
 						# mark the target as tractored
 						ship.ship.tractor.get_child(0).tractor = ship.ship
+						
+			# if enemy, shoot it instead
+			else:
+				# steering behavior
+				var steer = ship.get_steering_arrive(ship.target)	
+				var t_dist = ship.get_global_position().distance_to(ship.target)
+				if t_dist < 150:
+					# steering behavior
+					steer = ship.set_heading(ship.target)
+					ship.ship.shoot_wrapper()
+					
+				# normal case
+				ship.vel += steer
+				
+				ship.ship.move_AI(ship.vel, delta)
 		
 		var enemy = ship.ship.get_closest_enemy()
 		if enemy and (not 'warping' in enemy or not enemy.warping): #starbases don't have warp/Q-drive capability

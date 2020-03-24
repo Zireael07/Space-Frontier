@@ -228,6 +228,16 @@ func get_closest_floating_colony():
 			
 			return t[1]
 
+func is_target_floating_colony(target):
+	var ret = false
+	# if we have a floating colony
+	if get_closest_floating_colony() != null:
+		# check if ship target and floating colony position are roughly the same
+		if target.distance_to(get_closest_floating_colony().get_global_position()) < 20:
+			#print("Ship target is floating colony")
+			ret = true
+	return ret
+
 func get_colony_in_dock():
 	var last = get_child(get_child_count()-1)
 	if last.is_in_group("colony"):
