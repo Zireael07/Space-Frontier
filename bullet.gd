@@ -30,7 +30,8 @@ func _on_bullet_area_entered( area ):
 		var pos = area.get_global_position()
 		
 		# notify AI - it has been attacked
-		area.emit_signal("AI_hit", get_parent().get_parent())
+		if area.has_user_signal("AI_hit"):
+			area.emit_signal("AI_hit", get_parent().get_parent())
 		
 		# QoL for player
 		if get_parent().get_parent() == game.player:
