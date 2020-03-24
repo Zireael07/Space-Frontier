@@ -1,4 +1,4 @@
-extends "boid.gd"
+extends "ships/boid.gd"
 
 # class member variables go here, for example:
 

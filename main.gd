@@ -1,9 +1,9 @@
 extends Control
 
 # Declare member variables here. Examples:
-var friendly = preload("res://friendly_ship.tscn")
-var starbase = preload("res://starbase.tscn")
-var enemy_starbase = preload("res://enemy_starbase.tscn")
+var friendly = preload("res://ships/friendly_ship.tscn")
+var starbase = preload("res://ships/starbase.tscn")
+var enemy_starbase = preload("res://ships/enemy_starbase.tscn")
 
 # star systems
 var proc_system = preload("res://systems/star system.tscn")

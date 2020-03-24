@@ -1,9 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://enemy_ship.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ships/enemy_ship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://colony.tscn" type="PackedScene" id=4]
-[ext_resource path="res://player_ship.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ships/player_ship.tscn" type="PackedScene" id=6]
 [ext_resource path="res://HUD.tscn" type="PackedScene" id=7]
+
+
 
 [node name="Node2D" type="Node2D"]
 
