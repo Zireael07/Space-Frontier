@@ -45,6 +45,13 @@ func _ready():
 	set_z_index(game.PLANET_Z)
 	connect("planet_orbited", self, "_on_planet_orbited")
 	
+	labl_loc = $"Label".get_position()
+	
+	# debug old positions
+#	dist = get_position().length()
+#	var ls = dist/game.LIGHT_SEC
+#	print("Dist to parent star: " + str(dist) + " " + str(ls) + " ls, " + str(ls/game.LS_TO_AU) + " AU")
+	
 	#setup()
 
 func setup(angle=0, dis=0):
@@ -53,10 +60,8 @@ func setup(angle=0, dis=0):
 		place(angle, dis)
 	
 	dist = get_position().length()
-	
 	var ls = dist/game.LIGHT_SEC
-	
-	print("Dist to parent star" + str(dist) + " " + str(ls) + " ls, " + str(ls/game.LS_TO_AU) + " AU")
+	print("Dist to parent star: " + str(dist) + " " + str(ls) + " ls, " + str(ls/game.LS_TO_AU) + " AU")
 	
 	# moon fix
 	if is_in_group("moon"):
@@ -79,8 +84,7 @@ func setup(angle=0, dis=0):
 			population = float(50/1000.0)
 		else:
 			population = float(100/1000.0)
-		
-	labl_loc = $"Label".get_position()
+
 	
 	# recalculate temp for our moons last
 	if has_moon():

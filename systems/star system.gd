@@ -47,7 +47,14 @@ func _ready():
 						m.setup(int(line[1]), int(line[2]))
 					
 			#if data[3] == "planet":
-			
+	# if no csv
+	else:
+		for c in get_node("planet_holder").get_children():
+			if c.is_in_group("planets"):
+				c.setup()
+				# moons
+				for m in c.get_node("orbit_holder").get_children():
+					m.setup()
 	
 	var hzs = calculate_hz(luminosity)
 	hz_inner = hzs[0]
