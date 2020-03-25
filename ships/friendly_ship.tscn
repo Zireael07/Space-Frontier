@@ -2,11 +2,12 @@
 
 [ext_resource path="res://ships/brain.gd" type="Script" id=1]
 [ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
-[ext_resource path="res://movement_visualizer.gd" type="Script" id=3]
+[ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=3]
 [ext_resource path="res://assets/ships/playerShip2_blue.png" type="Texture" id=4]
 [ext_resource path="res://ships/NPC_ship.gd" type="Script" id=5]
 [ext_resource path="res://assets/shield_Edit.png" type="Texture" id=6]
 [ext_resource path="res://assets/fire11.png" type="Texture" id=7]
+
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 23.0021

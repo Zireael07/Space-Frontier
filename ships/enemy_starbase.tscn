@@ -1,9 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://bullet_enemy.tscn" type="PackedScene" id=1]
-[ext_resource path="res://movement_visualizer.gd" type="Script" id=2]
+[ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=2]
 [ext_resource path="res://ships/enemy_base.gd" type="Script" id=3]
 [ext_resource path="res://assets/ships/ufoRed.png" type="Texture" id=4]
+
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 47.0
