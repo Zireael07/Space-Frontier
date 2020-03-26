@@ -29,6 +29,10 @@ func _ready():
 	
 	randomize()
 	
+	# slight randomization of the task timer
+	var time = randf()
+	$"task_timer".start(2.0+time)
+	
 	if kind_id == kind.enemy:
 		var id = randi() % game.enemy_names.size() # return between 0 and size -1
 		ship_name = game.enemy_names[id]
@@ -362,4 +366,8 @@ func _on_shield_timer_timeout():
 func _on_task_timer_timeout():
 	#print("Task timer timeout")
 	timer_count += 1
+	if timer_count == 1:
+		$"task_timer".wait_time = 2.0
+	
+	
 	brain._on_task_timer_timeout(timer_count)
