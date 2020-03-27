@@ -13,6 +13,9 @@ var trappist = preload("res://systems/Trappist system.tscn")
 # game core
 var core = preload("res://game_core.tscn")
 
+# how many higher ranks to assign to (friendly) AI
+var rank_list = [1,1]
+
 func spawn_system(system="proc"):
 	var sys = proc_system
 	if system == "Sol":
@@ -82,6 +85,11 @@ func spawn_friendly(i):
 		# give minimap icon
 		var mmap = get_tree().get_nodes_in_group("minimap")[0]
 		mmap._on_ship_spawned(sp.get_child(0))
+		
+		# give higher ranks if any left
+		if rank_list.size() > 0:
+			sp.get_child(0).rank = rank_list.pop_front()
+			print("Friendly " + sp.get_name() + " received rank " + str(sp.get_child(0).rank))
 		
 		print("Spawned friendly")
 

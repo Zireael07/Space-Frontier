@@ -172,22 +172,30 @@ margin_right = 40.0
 margin_bottom = 14.0
 text = "Scout"
 
-[node name="Power" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
-margin_top = 30.0
+[node name="Rank" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
+margin_top = 15.0
 margin_right = 40.0
-margin_bottom = 44.0
+margin_bottom = 29.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Power" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
+margin_top = 45.0
+margin_right = 55.0
+margin_bottom = 59.0
 text = "Power: 1"
 
 [node name="Engine" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
-margin_top = 45.0
+margin_top = 60.0
 margin_right = 58.0
-margin_bottom = 59.0
+margin_bottom = 74.0
 text = "Engine: 1"
 
 [node name="Shields" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
-margin_top = 60.0
-margin_right = 40.0
-margin_bottom = 74.0
+margin_top = 75.0
+margin_right = 62.0
+margin_bottom = 89.0
 text = "Shields: 1"
 
 [node name="RefitInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]

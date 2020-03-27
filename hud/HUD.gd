@@ -131,6 +131,7 @@ func _ready():
 
 
 func _process(_delta):
+	# show player speed
 	if player != null and player.is_inside_tree():
 		var format = "%0.2f" % player.spd
 		get_node("Control/Panel/Label").set_text(format + " c")
@@ -167,9 +168,6 @@ func _process(_delta):
 				dir_labels[i].show()
 		else:
 			dir_labels[i].hide()
-
-
-	#pass
 
 
 
@@ -401,6 +399,8 @@ func _on_ButtonShip_pressed():
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Starbase")
 		else:
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
+		
+		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text(game.ranks.keys()[target.rank])
 		# no modules for AI yet
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".hide()
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".hide()
