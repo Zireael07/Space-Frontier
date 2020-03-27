@@ -5,10 +5,13 @@
 [ext_resource path="res://ships/player_ship.tscn" type="PackedScene" id=6]
 [ext_resource path="res://hud/HUD.tscn" type="PackedScene" id=7]
 
-
-
-
 [node name="Node2D" type="Node2D"]
+
+[node name="player" parent="." groups=[
+"player",
+] instance=ExtResource( 6 )]
+position = Vector2( 2014, 676 )
+z_index = 5
 
 [node name="enemy" parent="." instance=ExtResource( 1 )]
 position = Vector2( 2120, 930 )
@@ -17,12 +20,6 @@ position = Vector2( 2120, 930 )
 "colony",
 ] instance=ExtResource( 4 )]
 position = Vector2( 700, 1250 )
-
-[node name="player" parent="." groups=[
-"player",
-] instance=ExtResource( 6 )]
-position = Vector2( 2014, 676 )
-z_index = 5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

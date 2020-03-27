@@ -12,6 +12,7 @@ var center = Vector2(450,450)
 func _ready():
 	player = game.player
 	#player = get_tree().get_nodes_in_group("player")[0].get_child(0)
+	player.HUD = self
 
 	planets = get_tree().get_nodes_in_group("planets")
 
@@ -19,7 +20,7 @@ func _ready():
 
 	# targeting signals
 	for e in get_tree().get_nodes_in_group("enemy"):
-		e.connect("AI_targeted", self, "_on_AI_targeted")
+		#e.connect("AI_targeted", self, "_on_AI_targeted")
 
 		#if "target_acquired_AI" in e.get_signal_list():
 		for s in e.get_signal_list():
@@ -27,6 +28,7 @@ func _ready():
 				print("Connecting target acquired for " + str(e.get_parent().get_name()))
 				e.connect("target_acquired_AI", self, "_on_target_acquired_by_AI")
 				e.connect("target_lost_AI", self, "_on_target_lost_by_AI")
+
 
 	for p in planets:
 		p.connect("planet_targeted", self, "_on_planet_targeted")
@@ -54,9 +56,6 @@ func _ready():
 		f.connect("colony_picked", self, "_on_colony_picked")
 
 #	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
-
-
-	player.HUD = self
 
 	# populate nav menu
 	# star

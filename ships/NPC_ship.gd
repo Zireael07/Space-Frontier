@@ -54,6 +54,8 @@ func _ready():
 	
 	connect("shield_changed", self, "_on_shield_changed")
 	connect("AI_hit", self, "_on_AI_hit")
+	
+	connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
 
 	brain = get_node("brain")
 	# register ourselves with brain
