@@ -281,8 +281,8 @@ func _on_AI_targeted(AI):
 
 
 	target.connect("shield_changed", self, "_on_target_shield_changed")
-	# force update
-	target.emit_signal("shield_changed", [target.shields])
+	# force update but without showing the effect
+	target.emit_signal("shield_changed", [target.shields, false])
 	if 'armor' in AI:
 		target.connect("armor_changed", self, "_on_target_armor_changed")
 		# force update

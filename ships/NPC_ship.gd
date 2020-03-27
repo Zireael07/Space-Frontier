@@ -339,12 +339,19 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		# redraw 
 		update()
 
-func _on_shield_changed(shield):
-	$"shield_effect".show()
-	$"shield_timer".start()
+func _on_shield_changed(data):
+	#print(str(shield))
+	var effect
+	if data.size() > 1:
+		effect = data[1]
+	else:
+		effect = true
+	if effect:
+		$"shield_effect".show()
+		$"shield_timer".start()
 	# if shield falls low, go away	
 		
-	if shield[0] < 40:
+	if data[0] < 40:
 		print("Flee because of low shields")
 		if orbiting:
 			deorbit()
