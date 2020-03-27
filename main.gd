@@ -35,16 +35,16 @@ func spawn_core():
 func _ready():
 	print("Main init")
 	
-	var system = spawn_system()
+	var system = spawn_system("Sol")
 	spawn_core()
 	
 	for i in range(4):
 		spawn_friendly(i)
 	
-	spawn_starbase()
+	spawn_starbase(system)
 	spawn_enemy_starbase(system)
-	
-	#pass # Replace with function body.
+
+# ------------------------------------
 
 func get_colonized_planet():
 	var ret
@@ -85,14 +85,33 @@ func spawn_friendly(i):
 		
 		print("Spawned friendly")
 
-func spawn_starbase():
+func spawn_starbase(system):
 	var p = get_colonized_planet()
 	
 	if p:
 		var sb = starbase.instance()
-		# random factor
 		randomize()
-		var offset = Vector2(rand_range(500, 1000), rand_range(500, 1000))
+		
+		# max offset
+		var max_o = 700
+		
+		if system == "Sol":
+			max_o = 1000
+			
+		# random factor
+		var offset = Vector2(rand_range(500, max_o), rand_range(500, max_o))
+		
+		# sign
+		if system == "proc":
+			# force negative
+			offset = offset*-1
+		else:
+			var sig = randf()		
+			if sig > 0.5:
+				offset = offset*-1
+			
+		
+		
 		sb.set_global_position(p.get_global_position() + offset)
 		sb.set_name("friendly_base")
 		get_child(2).add_child(sb)
