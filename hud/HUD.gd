@@ -399,7 +399,7 @@ func _on_ButtonShip_pressed():
 		else:
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
 		
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text(game.ranks.keys()[target.rank])
+			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text(game.ranks.keys()[target.rank])
 		# no modules for AI yet
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".hide()
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".hide()

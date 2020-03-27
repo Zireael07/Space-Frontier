@@ -143,13 +143,13 @@ func get_friendly_base():
 		for b in bases:
 			print(b.get_name())
 			if not b.is_in_group("enemy"):
-				print(b.get_name() + " is not enemy")
+				#print(b.get_name() + " is not enemy")
 				return b
 	elif is_in_group("enemy"):
 		for b in bases:
 			print(b.get_name())
 			if b.is_in_group("enemy"):
-				print(b.get_name() + " is enemy")
+				#print(b.get_name() + " is enemy")
 				return b
 
 func get_closest_enemy():

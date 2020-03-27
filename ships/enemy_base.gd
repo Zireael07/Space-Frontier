@@ -45,9 +45,7 @@ func _ready():
 	if is_in_group("enemy"):
 		targetables.append(get_tree().get_nodes_in_group("player")[0].get_child(0))
 	
-	# Called every time the node is added to the scene.
-	# Initialization here
-	#pass
+	connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
 
 # using this because we don't need physics
 func _process(delta):
