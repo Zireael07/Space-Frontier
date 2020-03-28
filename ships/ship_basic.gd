@@ -207,7 +207,8 @@ func get_closest_floating_colony():
 	colonies = get_tree().get_nodes_in_group("colony")
 	# exlude those colonies that are tractored
 	for c in colonies:
-		if not c.get_child(0).tractor and not c.get_parent().is_in_group("friendly") and not c.get_parent().is_in_group("planets") and not c.get_parent().get_parent().is_in_group("player"):
+		#if not c.get_child(0).tractor and not c.get_parent().is_in_group("friendly") and not c.get_parent().is_in_group("planets") and not c.get_parent().get_parent().is_in_group("player"):
+		if c.get_child(0).is_floating():
 			nodes.append(c)
 			
 	

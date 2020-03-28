@@ -85,8 +85,12 @@ func _process(delta):
 				tractor = null
 				get_parent().get_parent().tractor = null
 			
-		
-	#pass
+func is_floating():
+	var ret = false
+	if not tractor and not get_parent().get_parent().is_in_group("friendly") and not get_parent().get_parent().is_in_group("planets") \
+	and not get_parent().get_parent().get_parent().is_in_group("player"):
+		ret = true
+	return ret
 
 func get_closest_enemy():
 	var nodes = []
