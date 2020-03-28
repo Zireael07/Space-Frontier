@@ -96,10 +96,28 @@ func task_orbiting(conquer_tg):
 	if conquer_tg != null or ship.get_colonize_target() != null:
 		if ship.get_colony_in_dock() == null:
 			if ship.kind_id == ship.kind.friendly:
-				# pick up colony from planet
-				if not ship.pick_colony():
-					print("We can't pick colony now, go do something else...")
-					ship.deorbit()
+				# are we of high enough rank to be tasked with colonizing?
+				if ship.rank > 0: 
+					# pick up colony from planet
+					if not ship.pick_colony():
+						print("We can't pick colony now, go do something else...")
+						ship.deorbit()
+						var try_mine = _go_mine()
+						if not try_mine:
+							#if get_colonized_planet().has_moon():
+								# random chance to head for a moon
+								#randomize()
+								#if randi() % 20 > 10:
+								#	brain.target = get_colonized_planet().get_moon().get_global_position()
+								#else:
+								
+							# orbit again
+							set_state(STATE_ORBIT, ship.get_colonized_planet())
+					else:
+						# explicitly go colonize
+						_colonize(conquer_tg)
+				# AI cadet
+				else:
 					var try_mine = _go_mine()
 					if not try_mine:
 						#if get_colonized_planet().has_moon():
@@ -111,9 +129,6 @@ func task_orbiting(conquer_tg):
 							
 						# orbit again
 						set_state(STATE_ORBIT, ship.get_colonized_planet())
-				else:
-					# explicitly go colonize
-					_colonize(conquer_tg)
 			else:
 				print("Blockading a planet")
 		else:
