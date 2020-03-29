@@ -84,6 +84,31 @@ func _on_bullet_area_entered( area ):
 		expl.set_global_position(pos)
 		expl.set_scale(Vector2(0.5, 0.5))
 		expl.play()
+		return
+		
+	if area.get_parent().is_in_group("colony"):
+		if area.is_floating():
+			#print("Colony hit!")
+			
+			queue_free()
+			
+			if 'armor' in area:
+				if area.armor > 0:
+					area.armor -= 20
+					area.emit_signal("armor_changed", area.armor)
+				else:
+					# kill the colony
+					area.get_parent().queue_free()
+			
+					var pos = area.get_global_position()
+					# explosion
+					var expl = get_parent().get_parent().explosion.instance()
+					get_parent().get_parent().get_parent().add_child(expl)
+					expl.set_global_position(pos)
+					expl.set_scale(Vector2(0.5, 0.5))
+					expl.play()
+			return
+		
 		
 func spawn_debris(deb, pos):
 	get_parent().get_parent().get_parent().add_child(deb)

@@ -17,6 +17,8 @@ signal colony_colonized
 var to_reward = null # which ship gets rewarded for the colonization?
 
 var shoot_rel_pos = Vector2()
+var armor = 100
+signal armor_changed
 
 
 func _ready():
