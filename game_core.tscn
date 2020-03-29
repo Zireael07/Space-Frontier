@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://ships/enemy_ship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://colony.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ships/player_ship.tscn" type="PackedScene" id=6]
 [ext_resource path="res://hud/HUD.tscn" type="PackedScene" id=7]
@@ -13,13 +12,10 @@
 position = Vector2( 2014, 676 )
 z_index = 5
 
-[node name="enemy" parent="." instance=ExtResource( 1 )]
-position = Vector2( 2120, 930 )
-
 [node name="float_colony" parent="." groups=[
 "colony",
 ] instance=ExtResource( 4 )]
-position = Vector2( 700, 1250 )
+position = Vector2( 600, 1250 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

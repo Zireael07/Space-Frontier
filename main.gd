@@ -3,6 +3,8 @@ extends Control
 # Declare member variables here. Examples:
 var friendly = preload("res://ships/friendly_ship.tscn")
 var starbase = preload("res://ships/starbase.tscn")
+
+var enemy = preload("res://ships/enemy_ship.tscn")
 var enemy_starbase = preload("res://ships/enemy_starbase.tscn")
 
 # star systems
@@ -45,7 +47,9 @@ func _ready():
 		spawn_friendly(i)
 	
 	spawn_starbase(system)
-	spawn_enemy_starbase(system)
+	var pos = spawn_enemy_starbase(system)
+
+	spawn_enemy(pos)
 
 # ------------------------------------
 
@@ -84,7 +88,7 @@ func spawn_friendly(i):
 		
 		# give minimap icon
 		var mmap = get_tree().get_nodes_in_group("minimap")[0]
-		mmap._on_ship_spawned(sp.get_child(0))
+		mmap._on_friendly_ship_spawned(sp.get_child(0))
 		
 		# give higher ranks if any left
 		if rank_list.size() > 0:
@@ -155,7 +159,24 @@ func spawn_enemy_starbase(system):
 	# give minimap icon
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_enemy_starbase_spawned(sb.get_child(0))
+	
+	return sb.get_global_position()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func spawn_enemy(pos):
+	var sp = enemy.instance()
+	# random factor
+	randomize()
+	var offset = Vector2(rand_range(50, 100), rand_range(50, 100))
+	sp.set_global_position(pos + offset)
+	print("Spawning enemy @ : " + str(pos + offset))
+	sp.get_child(0).set_position(Vector2(0,0))
+	sp.set_name("enemy") #+str(i))
+	get_child(2).add_child(sp)
+	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
+	print("Player index: " + str(p_ind))
+	get_child(2).move_child(sp, p_ind+1)
+	#add_child_below_node(get_tree().get_nodes_in_group("player")[0], sp)
+	
+	# give minimap icon
+	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	mmap._on_enemy_ship_spawned(sp.get_child(0))

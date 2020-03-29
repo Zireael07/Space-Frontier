@@ -171,13 +171,21 @@ func _ready():
 	center = Vector2($"player".get_position().x, $"player".get_position().y)
 	set_clip_contents(true)
 
-func _on_ship_spawned(ship):
+func _on_friendly_ship_spawned(ship):
 	print("On ship spawned")
 	var friendly_sprite = TextureRect.new()
 	friendly_sprite.set_texture(friendly)
 	friendly_sprites.append(friendly_sprite)
 	add_child(friendly_sprite)
 	friendlies.append(ship)
+	
+func _on_enemy_ship_spawned(ship):
+	print("On enemy ship spawned")
+	var enemy_sprite = TextureRect.new()
+	enemy_sprite.set_texture(hostile)
+	hostile_sprites.append(enemy_sprite)
+	add_child(enemy_sprite)
+	hostiles.append(ship)
 
 func _on_starbase_spawned(sb):
 	print("On starbase spawned")
