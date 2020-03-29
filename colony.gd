@@ -116,6 +116,8 @@ func get_closest_enemy():
 func shoot():
 	gun_timer.start()
 	var b = bullet.instance()
+	# reduced damage
+	b.dmg = 4
 	# increase effective colony bullet range
 	b.get_node("lifetime").wait_time = 0.3
 	bullet_container.add_child(b)

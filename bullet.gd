@@ -3,6 +3,7 @@ extends Area2D
 # class member variables go here, for example:
 var vel = Vector2()
 export var speed = 1000
+var dmg = 10
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -43,10 +44,13 @@ func _on_bullet_area_entered( area ):
 		
 		# go through armor first
 		if 'armor' in area and area.armor > 0:
-			area.armor -= 5 # armor absorbs some of the damage
+			# armor absorbs some of the damage
+			var ar = int(floor(dmg/2))
+			#print(str(ar))
+			area.armor -= ar 
 			area.emit_signal("armor_changed", area.armor)
 		else:
-			area.shields -= 10
+			area.shields -= dmg
 			# emit signal
 			area.emit_signal("shield_changed", [area.shields])
 		
