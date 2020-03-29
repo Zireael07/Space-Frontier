@@ -23,6 +23,7 @@ signal armor_changed
 
 func _ready():
 	get_parent().add_to_group("colony")
+	connect("colony_colonized", self, "_on_colony_colonized")
 
 # using this because we don't need physics
 func _process(delta):
@@ -182,3 +183,6 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 			
 		# redraw
 		update()
+
+func _on_colony_colonized(colony):
+	get_node("Label").hide()
