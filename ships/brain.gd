@@ -211,6 +211,19 @@ func _on_task_timer_timeout(timer_count):
 						set_state(STATE_IDLE)
 					
 
+func _on_target_killed(target):
+	print("State is: " + str(get_state()))
+	
+	if get_state() == STATE_ATTACK:
+		# go back to previous state
+		set_state(prev_state[0], prev_state[1])
+		
+	if get_state() == STATE_IDLE:
+		# harass
+		set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+		
+	
+
 
 # ------------------------------------------------------------------
 # fsm

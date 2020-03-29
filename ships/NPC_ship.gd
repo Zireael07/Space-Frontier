@@ -16,6 +16,9 @@ signal target_lost_AI
 
 signal AI_hit
 
+# tells us we killed the target, whatever it was
+signal target_killed
+
 export(int) var kind_id = 0
 
 enum kind { enemy, friendly}
@@ -56,6 +59,8 @@ func _ready():
 	connect("AI_hit", self, "_on_AI_hit")
 	
 	connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
+	
+	connect("target_killed", self, "_on_target_killed")
 
 	brain = get_node("brain")
 	# register ourselves with brain
@@ -378,5 +383,9 @@ func _on_task_timer_timeout():
 	if timer_count == 1:
 		$"task_timer".wait_time = 2.0
 	
-	
 	brain._on_task_timer_timeout(timer_count)
+	
+func _on_target_killed(target):
+	print("Killed target " + str(target.get_parent().get_name()))
+	
+	brain._on_target_killed(target)

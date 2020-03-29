@@ -45,11 +45,13 @@ func _on_bullet_area_entered( area ):
 				
 				# kill the AI
 				area.get_parent().queue_free()
+				
 			
 			# kill the player
 			# reenable when it doesn't destroy the game
 			#area.get_parent().queue_free()
-	
+			
+			get_parent().get_parent().emit_signal("target_killed", area)
 			# explosion
 			if "explosion" in area:
 				var expl = area.explosion.instance()
@@ -99,6 +101,8 @@ func _on_bullet_area_entered( area ):
 				else:
 					# kill the colony
 					area.get_parent().queue_free()
+					
+					get_parent().get_parent().emit_signal("target_killed", area)
 			
 					var pos = area.get_global_position()
 					# explosion
