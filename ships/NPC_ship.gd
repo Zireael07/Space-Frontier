@@ -30,6 +30,9 @@ func _ready():
 	# Initialization here
 	get_parent().set_z_index(game.SHIP_Z)
 	
+	# slow down AI shield recharge
+	shield_recharge = 2
+	
 	randomize()
 	
 	# slight randomization of the task timer

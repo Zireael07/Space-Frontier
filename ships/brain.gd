@@ -129,6 +129,8 @@ func task_orbiting(conquer_tg):
 							
 						# orbit again
 						set_state(STATE_ORBIT, ship.get_colonized_planet())
+			
+			# if we're an enemy
 			else:
 				print("Blockading a planet")
 		else:
@@ -177,11 +179,14 @@ func _on_task_timer_timeout(timer_count):
 		if get_state() == STATE_REFIT:
 			if not ship.docked:
 				return
+			# if we're docked
 			else:
-				_go_mine()
-#				if get_tree().get_nodes_in_group("asteroid").size() > 3:
-#					brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-#					brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+				# undock if we regenerated enough shields
+				if ship.shields > 75:
+					var try_mine = _go_mine()
+					if not try_mine:		
+						# orbit again
+						set_state(STATE_ORBIT, ship.get_colonized_planet())
 
 
 		if get_state() == STATE_MINE:
