@@ -23,6 +23,13 @@ var warping = false
 var shields = 100
 signal shield_changed
 
+var shield_recharge = 5
+
+# power
+var power = 100
+var shield_power_draw = 5 # none in the original game, but that way it's more realistic
+signal power_changed
+
 # bullets
 export(PackedScene) var bullet
 onready var bullet_container = $"bullet_container"
@@ -89,6 +96,36 @@ func select_random_debris():
 	print("Debris res: " + str(res))
 	return res
 
+func _on_shield_recharge_timer_timeout():
+	# no recharging if landing
+	if "landed" in self:
+		if self.landed:
+			print("We're landed, no recharging")
+			return
+	
+	# draw the entirety of the power if shields are low
+	if shields < 30 and power - shield_power_draw > 0:
+		shields = shields + shield_recharge
+		emit_signal("shield_changed", [shields, false])
+		if self == game.player:
+			# draw some power
+			power = power - shield_power_draw
+			emit_signal("power_changed", power)
+	
+	# if shields are good, don't drain the power recharging them
+	var keep = power - shield_power_draw
+	if "shoot_power_draw" in self:
+		keep = power - shield_power_draw - self.shoot_power_draw
+	if shields >= 30 and shields < 100 and keep > 5:
+		shields = shields + shield_recharge
+		emit_signal("shield_changed", [shields, false])
+		if self == game.player:
+			# draw some power
+			power = power - shield_power_draw
+			emit_signal("power_changed", power)
+		
+	get_node("shield_recharge_timer").start()
+	#get_node("recharge_timer").start()
 
 func orbit_planet(planet):
 	# nuke any velocity left

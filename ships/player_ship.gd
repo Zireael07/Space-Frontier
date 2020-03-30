@@ -6,13 +6,9 @@ var engine_level = 1
 var power_level = 1
 signal module_level_changed
 
-var power = 100
 var shoot_power_draw = 10
 var warp_power_draw = 50
-var shield_power_draw = 5 # none in the original game, but that way it's more realistic
-var shield_recharge = 5
 var power_recharge = 5
-signal power_changed
 
 var engine = 1000 # in reality, it represents fuel, call it engine for simplicity
 var engine_draw = 2 # how fast our engine wears out
@@ -524,29 +520,7 @@ func heat_damage():
 	emit_signal("shield_changed", [shields, false])
 	get_node("heat_timer").start()
 
-func _on_shield_recharge_timer_timeout():
-	# no recharging if landing
-	if landed:
-		print("We're landed, no recharging")
-		return
-	
-	# draw the entirety of the power if shields are low	
-	if shields < 30 and power - shield_power_draw > 0:
-		shields = shields + shield_recharge
-		emit_signal("shield_changed", [shields, false])
-		# draw some power
-		power = power - shield_power_draw
-		emit_signal("power_changed", power)
-	
-	# if shields are good, don't drain the power recharging them
-	if shields >= 30 and shields < 100 and power - shield_power_draw - shoot_power_draw > 5:
-		shields = shields + shield_recharge
-		emit_signal("shield_changed", [shields, false])
-		# draw some power
-		power = power - shield_power_draw
-		emit_signal("power_changed", power)
-		
-	get_node("shield_recharge_timer").start()
+
 	
 
 # click to target functionality
@@ -591,6 +565,7 @@ func on_warping():
 
 
 func _on_recharge_timer_timeout():
+	#print("Power recharge...")
 	# recharge
 	if power < 100:
 		power += power_recharge
