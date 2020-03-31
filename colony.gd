@@ -20,10 +20,13 @@ var shoot_rel_pos = Vector2()
 var armor = 100
 signal armor_changed
 
+signal distress_called
+
 
 func _ready():
 	get_parent().add_to_group("colony")
 	connect("colony_colonized", self, "_on_colony_colonized")
+	connect("distress_called", self, "_on_distress_called")
 
 # using this because we don't need physics
 func _process(delta):
@@ -184,5 +187,20 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		# redraw
 		update()
 
+func _on_distress_called(target):
+	for n in get_tree().get_nodes_in_group("friendly"):
+		if not n.is_in_group("starbase"):
+			#if target.cloaked:
+			#	return
+				
+			n.brain.target = target.get_global_position()
+			n.brain.set_state(n.brain.STATE_IDLE)
+			#print("Targeting " + str(target.get_parent().get_name()) + " in response to distress call")
+			
+	# player
+	var player = game.player
+	player.emit_signal("officer_message", "Colony is under attack!") # TODO: original game had a press key to respond functionality
+
 func _on_colony_colonized(colony):
 	get_node("Label").hide()
+
