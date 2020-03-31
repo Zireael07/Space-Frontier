@@ -43,13 +43,16 @@ func _ready():
 	var system = spawn_system("Sol")
 	spawn_core()
 	
-	for i in range(4):
-		spawn_friendly(i)
+	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
+	print("Player index: " + str(p_ind))
 	
-	spawn_starbase(system)
-	var pos = spawn_enemy_starbase(system)
+	for i in range(4):
+		spawn_friendly(i, p_ind)
+	
+	spawn_starbase(system, p_ind)
+	var pos = spawn_enemy_starbase(system, p_ind)
 
-	spawn_enemy(pos)
+	spawn_enemy(pos, p_ind)
 
 # ------------------------------------
 
@@ -69,7 +72,7 @@ func get_colonized_planet():
 		return null
 
 
-func spawn_friendly(i):
+func spawn_friendly(i, p_ind):
 	var p = get_colonized_planet()
 	if p:
 		var sp = friendly.instance()
@@ -81,9 +84,8 @@ func spawn_friendly(i):
 		sp.get_child(0).set_position(Vector2(0,0))
 		sp.set_name("friendly"+str(i))
 		get_child(2).add_child(sp)
-		var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
-		print("Player index: " + str(p_ind))
 		get_child(2).move_child(sp, p_ind+1)
+		# doesn't work for some reason
 		#add_child_below_node(get_tree().get_nodes_in_group("player")[0], sp)
 		
 		# give minimap icon
@@ -97,7 +99,7 @@ func spawn_friendly(i):
 		
 		print("Spawned friendly")
 
-func spawn_starbase(system):
+func spawn_starbase(system, p_ind):
 	var p = get_colonized_planet()
 	
 	if p:
@@ -122,20 +124,16 @@ func spawn_starbase(system):
 			if sig > 0.5:
 				offset = offset*-1
 			
-		
-		
 		sb.set_global_position(p.get_global_position() + offset)
 		sb.set_name("friendly_base")
 		get_child(2).add_child(sb)
-		var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
-		print("Player index: " + str(p_ind))
 		get_child(2).move_child(sb, p_ind+1)
 		
 		# give minimap icon
 		var mmap = get_tree().get_nodes_in_group("minimap")[0]
 		mmap._on_starbase_spawned(sb.get_child(0))
 		
-func spawn_enemy_starbase(system):
+func spawn_enemy_starbase(system, p_ind):
 	var p
 	
 	var sb = enemy_starbase.instance()
@@ -152,8 +150,6 @@ func spawn_enemy_starbase(system):
 	
 	sb.set_name("enemy_base")
 	get_child(2).add_child(sb)
-	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
-	print("Player index: " + str(p_ind))
 	get_child(2).move_child(sb, p_ind+1)
 	
 	# give minimap icon
@@ -162,7 +158,7 @@ func spawn_enemy_starbase(system):
 	
 	return sb.get_global_position()
 
-func spawn_enemy(pos):
+func spawn_enemy(pos, p_ind):
 	var sp = enemy.instance()
 	# random factor
 	randomize()
@@ -172,10 +168,7 @@ func spawn_enemy(pos):
 	sp.get_child(0).set_position(Vector2(0,0))
 	sp.set_name("enemy") #+str(i))
 	get_child(2).add_child(sp)
-	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
-	print("Player index: " + str(p_ind))
 	get_child(2).move_child(sp, p_ind+1)
-	#add_child_below_node(get_tree().get_nodes_in_group("player")[0], sp)
 	
 	# give minimap icon
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
