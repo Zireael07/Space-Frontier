@@ -214,6 +214,16 @@ func _on_task_timer_timeout(timer_count):
 						# add offset to target to "unstick" ourselves
 						target = target + Vector2(50,50)
 						set_state(STATE_IDLE)
+		
+		if get_state() == STATE_IDLE:
+			# if task timeout happened and we're still idling, quit it
+			if timer_count > 3:
+				# target NOT a floating colony
+				if not ship.is_target_floating_colony(target):
+					# if we're on top of our target
+					if ship.get_global_position().distance_to(target) < 20:
+						# go back to a planet
+						set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 					
 
 func _on_target_killed(target):
@@ -323,6 +333,7 @@ class IdleState:
 		
 		#ship.move_generic(delta)
 		
+		# handle floating colonies
 		if ship.ship.is_target_floating_colony(ship.target):
 			if ship.ship.kind_id == ship.ship.kind.friendly:
 				
@@ -351,13 +362,17 @@ class IdleState:
 				ship.vel += steer
 				
 				ship.ship.move_AI(ship.vel, delta)
+		# if target isn't a colony...
+		else:
+			ship.move_generic(delta)
 		
+		# handle enemies
 		var enemy = ship.ship.get_closest_enemy()
 		if enemy and (not 'warping' in enemy or not enemy.warping): #starbases don't have warp/Q-drive capability
 			var dist = ship.get_global_position().distance_to(enemy.get_global_position())
 			#print(str(dist))
 			if dist < 150:
-				print("We are close to an enemy " + str(enemy.get_parent().get_name()) + " switching")
+				#print("We are close to an enemy " + str(enemy.get_parent().get_name()) + " switching")
 				ship.set_state(STATE_ATTACK, enemy)
 				# signal player being attacked if it's the case
 				if enemy.get_parent().is_in_group("player"):
@@ -410,10 +425,13 @@ class AttackState:
 			steer = ship.set_heading(target.get_global_position())
 		# if target was killed, bail out immediately
 		else:
-			#print("Prev state: " + str(ship.prev_state))
-			# this way, we also pass the parameters
-			ship.set_state(ship.prev_state[0], ship.prev_state[1])
-			#print("Set state to: " + str(ship.get_state()))
+			#print("[Target killed] Prev state: " + str(ship.prev_state))
+			if ship.prev_state[0] != STATE_IDLE:
+				# this way, we also pass the parameters
+				ship.set_state(ship.prev_state[0], ship.prev_state[1])
+				#print("Set state to: " + str(ship.get_state()))
+			else:
+				ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
 			return
 			
 		# normal case
@@ -430,8 +448,17 @@ class AttackState:
 				ship.ship.shoot_wrapper()
 			# don't attack if enemy is too far
 			else:
+				# this way, we also pass the parameters
 				ship.set_state(ship.prev_state[0], ship.prev_state[1])
 				#print("Set state to: " + str(ship.get_state()))
+				
+#				if ship.prev_state[0] != STATE_IDLE:
+#					# this way, we also pass the parameters
+#					ship.set_state(ship.prev_state[0], ship.prev_state[1])
+#					#print("Set state to: " + str(ship.get_state()))
+#				else:
+#					ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
+
 				return
 		else:
 			# this way, we also pass the parameters
@@ -597,7 +624,7 @@ class MineState:
 			var dist = ship.get_global_position().distance_to(enemy.get_global_position())
 			#print(str(dist))
 			if dist < 100:
-				print("We are close to an enemy, switching")
+				#print("We are close to an enemy, switching")
 				#ship.target = enemy.get_global_position()
 				ship.set_state(STATE_ATTACK, enemy)
 

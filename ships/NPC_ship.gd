@@ -360,7 +360,7 @@ func _on_shield_changed(data):
 	# if shield falls low, go away	
 		
 	if data[0] < 40:
-		print("Flee because of low shields")
+		#print("Flee because of low shields")
 		if orbiting:
 			deorbit()
 		# head to a friendly base for protection
@@ -368,7 +368,7 @@ func _on_shield_changed(data):
 		var base = get_friendly_base()
 		if base != null:
 			#print(base.get_name())
-			print("Fleeing to our base")
+			#print("Fleeing to our base")
 			brain.target = base.get_global_position()
 			brain.set_state(brain.STATE_REFIT, base)
 		
