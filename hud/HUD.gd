@@ -396,6 +396,7 @@ func _on_ButtonShip_pressed():
 		# correctly name starbases
 		if target.is_in_group("starbase"):
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Starbase")
+			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text("REAR ADM.")
 		else:
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
 		
