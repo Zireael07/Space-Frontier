@@ -271,11 +271,16 @@ func move_orbit(delta):
 		##orbit
 		print("NPC wants to orbit: " + get_colonized_planet().get_node("Label").get_text()) 
 		orbit_planet(get_colonized_planet())
-	# if too far away, just ignore
-	
-	
+	# if too far away, go to planet
+	else:
+		if not orbiting:
+			#pass
+			brain.set_state(brain.STATE_GO_PLANET, get_colonized_planet())
+		else:
+			pass
+			
 	# dummy
-	elif not orbiting:
+	if not orbiting:
 		var steer = brain.get_steering_arrive(brain.target)
 		# normal case
 		vel += steer

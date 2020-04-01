@@ -384,14 +384,16 @@ class IdleState:
 class OrbitState:
 	var ship
 	var param # for previous state
+	var planet_
 	
 	func _init(shp, planet):
 		ship = shp
 		param = planet
+		planet_ = planet
 		
 	func update(delta):
 		# update target location
-		ship.target = param.get_global_position()
+		ship.target = planet_.get_global_position()
 		
 		ship.ship.move_orbit(delta)
 
