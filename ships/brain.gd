@@ -23,13 +23,9 @@ func _ready():
 	pass # Replace with function body.
 
 # is run as part of initial setup
-func select_target():
-	#target 
-	#planet #1
+func select_initial_target():
 	if get_tree().get_nodes_in_group("asteroid").size() > 3:
 		if ship.get_colonized_planet() != null:
-		#if ship.kind_id == ship.kind.friendly and ship.get_colonized_planet() != null:
-			#target = ship.get_colonized_planet().get_global_position()
 			set_state(STATE_ORBIT, ship.get_colonized_planet())
 			print("Set orbit state for " + ship.get_parent().get_name())
 		else:
@@ -51,6 +47,20 @@ func move_generic(delta):
 	vel += steer
 	
 	ship.move_AI(vel, delta)
+
+func handle_enemy():
+	var enemy = ship.get_closest_enemy()
+	if enemy and (not 'warping' in enemy or not enemy.warping): #starbases don't have warp/Q-drive capability
+		var dist = get_global_position().distance_to(enemy.get_global_position())
+		#print(str(dist))
+		if dist < 150:
+			#print("We are close to an enemy " + str(enemy.get_parent().get_name()) + " switching")
+			set_state(STATE_ATTACK, enemy)
+			# signal player being attacked if it's the case
+			if enemy.get_parent().is_in_group("player"):
+				enemy.targeted_by.append(ship)
+				ship.emit_signal("target_acquired_AI", ship)
+				print("AI ship acquired target")
 
 
 # using this because we don't need physics
@@ -311,7 +321,7 @@ class InitialState:
 		
 	func update(_delta):
 		if not ship.target:
-			ship.select_target()
+			ship.select_initial_target()
 	
 
 		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
@@ -348,7 +358,7 @@ class IdleState:
 						# mark the target as tractored
 						ship.ship.tractor.get_child(0).tractor = ship.ship
 						
-			# if enemy, shoot it instead
+			# if enemy AI, shoot it instead
 			else:
 				# steering behavior
 				var steer = ship.get_steering_arrive(ship.target)	
@@ -367,18 +377,7 @@ class IdleState:
 			ship.move_generic(delta)
 		
 		# handle enemies
-		var enemy = ship.ship.get_closest_enemy()
-		if enemy and (not 'warping' in enemy or not enemy.warping): #starbases don't have warp/Q-drive capability
-			var dist = ship.get_global_position().distance_to(enemy.get_global_position())
-			#print(str(dist))
-			if dist < 150:
-				#print("We are close to an enemy " + str(enemy.get_parent().get_name()) + " switching")
-				ship.set_state(STATE_ATTACK, enemy)
-				# signal player being attacked if it's the case
-				if enemy.get_parent().is_in_group("player"):
-					enemy.targeted_by.append(ship.ship)
-					ship.ship.emit_signal("target_acquired_AI", ship.ship)
-					print("AI ship acquired target")
+		ship.handle_enemy()
 		
 
 class OrbitState:
@@ -396,6 +395,9 @@ class OrbitState:
 		ship.target = planet_.get_global_position()
 		
 		ship.ship.move_orbit(delta)
+		
+		# handle enemies
+		ship.handle_enemy()
 
 class AttackState:
 	var ship
