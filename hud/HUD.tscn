@@ -365,7 +365,7 @@ visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="Labels" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CensusInfo"]
+[node name="Headings" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CensusInfo"]
 margin_right = 40.0
 margin_bottom = 14.0
 text = "Fleet   Planets Ships Bases"
@@ -373,19 +373,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label1" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CensusInfo"]
+[node name="Label1" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/CensusInfo"]
 margin_top = 20.0
-margin_right = 40.0
+margin_right = 186.0
 margin_bottom = 34.0
-custom_colors/font_color = Color( 0, 0.952941, 1, 1 )
-text = "Fleet1    1           5/5      1/1"
+custom_colors/default_color = Color( 0, 1, 1, 1 )
+text = "Fleet1	1		5/5	1/1"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Label2" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CensusInfo"]
+[node name="Label2" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/CensusInfo"]
 margin_top = 40.0
-margin_right = 40.0
+margin_right = 186.0
 margin_bottom = 54.0
-custom_colors/font_color = Color( 1, 0, 0, 1 )
-text = "Fleet2    0           1/1      1/1"
+custom_colors/default_color = Color( 1, 0.00784314, 0, 1 )
+text = "Fleet2	0		1/1	1/1"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="orrery" type="Control" parent="Control2/Panel_rightHUD"]
 margin_left = 20.0

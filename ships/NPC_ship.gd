@@ -19,6 +19,8 @@ signal AI_hit
 # tells us we killed the target, whatever it was
 signal target_killed
 
+signal ship_killed
+
 export(int) var kind_id = 0
 
 enum kind { enemy, friendly}
@@ -64,6 +66,8 @@ func _ready():
 	connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
 	
 	connect("target_killed", self, "_on_target_killed")
+	
+	connect("ship_killed", game.player.HUD, "_on_ship_killed")
 
 	brain = get_node("brain")
 	# register ourselves with brain

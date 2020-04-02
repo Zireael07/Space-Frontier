@@ -70,12 +70,14 @@ func _on_bullet_area_entered( area ):
 					area.emit_signal("target_lost_AI", area)			
 			
 			# mark is as no longer orbiting
-			if area.orbiting != null:
+			if 'orbiting' in area and area.orbiting != null:
 				print("AI killed, no longer orbiting")
 				area.orbiting.get_parent().remove_orbiter(area)
 			
 			# kill the AI
 			area.get_parent().queue_free()
+			# update census
+			area.emit_signal("ship_killed", area)
 
 			# untarget it
 			game.player.HUD.target = null

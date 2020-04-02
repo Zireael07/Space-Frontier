@@ -52,6 +52,9 @@ func _on_bullet_area_entered( area ):
 			#area.get_parent().queue_free()
 			
 			get_parent().get_parent().emit_signal("target_killed", area)
+			# update census
+			area.emit_signal("ship_killed", area)
+	
 			# explosion
 			if "explosion" in area:
 				var expl = area.explosion.instance()
@@ -91,6 +94,7 @@ func _on_bullet_area_entered( area ):
 	if area.get_parent().is_in_group("colony"):
 		if area.is_floating():
 			#print("Colony hit!")
+			area.emit_signal("distress_called", get_parent().get_parent())
 			
 			queue_free()
 			

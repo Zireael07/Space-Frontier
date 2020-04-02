@@ -361,8 +361,13 @@ func _on_colony_picked(colony):
 
 func _on_colony_colonized(colony):
 	print("Colony colonized HUD")
+	
+	# update census
+	game.fleet1[0] += 1
+	
 	# pass to correct node
 	$"Control2/Panel_rightHUD/minimap"._on_colony_colonized(colony)
+	
 
 
 func _on_target_acquired_by_AI(_AI):
@@ -377,6 +382,19 @@ func _on_target_acquired_by_AI(_AI):
 func _on_target_lost_by_AI(_AI):
 	$"Control2/status_light".set_modulate(Color(0,1,0))
 	print("On target_lost")
+	
+func _on_ship_spawned():
+	pass
+	
+func _on_ship_killed(ship):
+	if ship.kind_id == ship.kind.friendly:
+		game.fleet1[1] -= 1
+		var flt1 = "Fleet 1	" + str(game.fleet1[0]) + "		" + str(game.fleet1[1]) + "	" + str(game.fleet1[2])
+		$"Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label1".set_text(flt1)
+	else:
+		game.fleet2[1] -= 1
+		var flt2 = "Fleet 2	" + str(game.fleet2[0]) + "		" + str(game.fleet2[1]) + "	" + str(game.fleet2[2])
+		$"Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label2".set_text(flt2)
 
 #----------------------------------------------------------------------------
 # operate the right HUD
@@ -399,6 +417,11 @@ func _on_ButtonCensus_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 
+	# update
+	var flt1 = "Fleet 1	" + str(game.fleet1[0]) + "		" + str(game.fleet1[1]) + "	" + str(game.fleet1[2])
+	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label1".set_text(flt1)
+	var flt2 = "Fleet 2	" + str(game.fleet2[0]) + "		" + str(game.fleet2[1]) + "	" + str(game.fleet2[2])
+	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label2".set_text(flt2)
 
 func _on_ButtonShip_pressed():
 	if target != null and (target.is_in_group("friendly") or target.is_in_group("enemy")):

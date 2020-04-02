@@ -53,6 +53,12 @@ func _ready():
 	var pos = spawn_enemy_starbase(system, p_ind)
 
 	spawn_enemy(pos, p_ind)
+	
+	# update census
+	var flt1 = "Fleet 1	" + str(game.fleet1[0]) + "		" + str(game.fleet1[1]) + "	" + str(game.fleet1[2])
+	var flt2 = "Fleet 2	" + str(game.fleet1[0]) + "		" + str(game.fleet2[1]) + "	" + str(game.fleet2[2])
+	game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label1").set_text(flt1)
+	game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label2").set_text(flt2)
 
 # ------------------------------------
 
@@ -98,6 +104,8 @@ func spawn_friendly(i, p_ind):
 			print("Friendly " + sp.get_name() + " received rank " + str(sp.get_child(0).rank))
 		
 		print("Spawned friendly")
+		# add to fleet census
+		game.fleet1[1] += 1
 
 func spawn_starbase(system, p_ind):
 	var p = get_colonized_planet()

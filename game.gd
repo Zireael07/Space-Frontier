@@ -29,6 +29,10 @@ const PLANET_Z = 2
 # ranks
 enum ranks { CADET, ENSIGN, SCLT, FRLT }
 
+# planets ships bases
+var fleet1 = [1, 1, 1]
+var fleet2 = [0, 1, 1] 
+
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
