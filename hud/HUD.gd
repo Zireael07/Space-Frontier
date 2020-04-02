@@ -381,6 +381,7 @@ func _on_target_lost_by_AI(_AI):
 #----------------------------------------------------------------------------
 # operate the right HUD
 func switch_to_navi():
+	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
@@ -389,6 +390,14 @@ func switch_to_navi():
 
 func _on_ButtonPlanet_pressed():
 	switch_to_navi()
+
+func _on_ButtonCensus_pressed():
+	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo".show()
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 
 
 func _on_ButtonShip_pressed():
@@ -416,7 +425,7 @@ func _on_ButtonShip_pressed():
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".show()
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".set_text("Shields: " + str(player.shield_level))
 		
-
+	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
@@ -429,7 +438,7 @@ func switch_to_refit():
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Engine".set_text("Engine: " + str(player.power_level))
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Shields".set_text("Shields: " + str(player.shield_level))
 
-
+	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
@@ -437,6 +446,7 @@ func switch_to_refit():
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".show()
 
 func switch_to_cargo():
+	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
@@ -725,3 +735,4 @@ func _on_ConquerButton_pressed():
 
 func _on_officer_timer_timeout():
 	$"Control3/Officer".hide()
+

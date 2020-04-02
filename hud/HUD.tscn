@@ -38,40 +38,69 @@ margin_bottom = 40.0
 margin_right = 202.0
 margin_bottom = 598.0
 custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panelbuttons" type="Panel" parent="Control2/Panel_rightHUD"]
+margin_right = 198.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control2/Panel_rightHUD"]
-margin_right = 40.0
+margin_right = 164.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonCensus" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
+margin_right = 58.0
+margin_bottom = 20.0
+text = "Census"
 
 [node name="ButtonPlanet" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
-margin_right = 59.0
+margin_left = 62.0
+margin_right = 121.0
 margin_bottom = 20.0
 text = "Planets"
 
 [node name="ButtonShip" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
-margin_left = 63.0
-margin_right = 102.0
+margin_left = 125.0
+margin_right = 164.0
 margin_bottom = 20.0
 text = "Ship"
 
-[node name="ButtonRefit" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
-margin_left = 106.0
-margin_right = 147.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control2/Panel_rightHUD"]
+margin_top = 20.0
+margin_right = 164.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonRefit" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer2"]
+margin_right = 41.0
 margin_bottom = 20.0
 text = "Refit"
 
-[node name="ButtonCargo" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
-margin_left = 151.0
-margin_right = 198.0
+[node name="ButtonCargo" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer2"]
+margin_left = 45.0
+margin_right = 92.0
 margin_bottom = 20.0
 text = "Cargo"
 
 [node name="PanelInfo" type="Panel" parent="Control2/Panel_rightHUD"]
 margin_left = 4.0
-margin_top = 20.0
+margin_top = 40.0
 margin_right = 197.0
-margin_bottom = 206.0
+margin_bottom = 220.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 visible = false
@@ -119,29 +148,32 @@ rect_scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 4 )
 
 [node name="BackButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 42.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "Back"
 
 [node name="GoToButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
 margin_left = 45.0
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 92.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "Go to"
 
 [node name="ConquerButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
 margin_left = 94.0
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 159.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "Conquer"
 
 [node name="ShipInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
 visible = false
@@ -242,23 +274,23 @@ margin_bottom = 44.0
 text = ">"
 
 [node name="ButtonUp" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 42.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "< Up"
 
 [node name="ButtonUpgrade" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_left = 45.0
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 110.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "Upgrade"
 
 [node name="ButtonDown" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_left = 110.0
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 170.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "> Down"
 
 [node name="CargoInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
@@ -279,26 +311,27 @@ margin_bottom = 14.0
 text = ">"
 
 [node name="ButtonUp3" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 42.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "< Up"
 
 [node name="ButtonSell" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
 margin_left = 45.0
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 80.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "Sell"
 
 [node name="ButtonDown3" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
 margin_left = 110.0
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 170.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "> Down"
 
 [node name="NavInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
@@ -308,36 +341,69 @@ margin_bottom = 14.0
 text = ">"
 
 [node name="ButtonUp2" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 42.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "< Up"
 
 [node name="ButtonView" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
 margin_left = 45.0
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 110.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "View"
 
 [node name="ButtonDown2" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
 margin_left = 110.0
-margin_top = 187.0
+margin_top = 180.0
 margin_right = 170.0
-margin_bottom = 207.0
+margin_bottom = 200.0
 text = "> Down"
+
+[node name="CensusInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Labels" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CensusInfo"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Fleet   Planets Ships Bases"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label1" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CensusInfo"]
+margin_top = 20.0
+margin_right = 40.0
+margin_bottom = 34.0
+custom_colors/font_color = Color( 0, 0.952941, 1, 1 )
+text = "Fleet1    1           5/5      1/1"
+
+[node name="Label2" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CensusInfo"]
+margin_top = 40.0
+margin_right = 40.0
+margin_bottom = 54.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+text = "Fleet2    0           1/1      1/1"
 
 [node name="orrery" type="Control" parent="Control2/Panel_rightHUD"]
 margin_left = 20.0
-margin_top = 230.0
+margin_top = 240.0
 margin_right = 180.0
-margin_bottom = 390.0
+margin_bottom = 400.0
 script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="Control2/Panel_rightHUD/orrery"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="minimap" type="Control" parent="Control2/Panel_rightHUD" groups=[
 "minimap",
@@ -611,10 +677,11 @@ margin_top = 249.0
 margin_right = 456.0
 margin_bottom = 263.0
 text = "PAUSED"
+[connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonCensus" to="." method="_on_ButtonCensus_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonPlanet" to="." method="_on_ButtonPlanet_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonShip" to="." method="_on_ButtonShip_pressed"]
-[connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonRefit" to="." method="_on_ButtonRefit_pressed"]
-[connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonCargo" to="." method="_on_ButtonCargo_pressed"]
+[connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer2/ButtonRefit" to="." method="_on_ButtonRefit_pressed"]
+[connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer2/ButtonCargo" to="." method="_on_ButtonCargo_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/PlanetInfo/BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUp" to="." method="_on_ButtonUp_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUpgrade" to="." method="_on_ButtonUpgrade_pressed"]
