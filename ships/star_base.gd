@@ -117,6 +117,8 @@ func _process(delta):
 func shoot():
 	gun_timer.start()
 	var b = bullet.instance()
+	# scale until we find a way to make it a line
+	b.set_scale(Vector2(3, 1))
 	bullet_container.add_child(b)
 	var heading = fix_atan(shoot_rel_pos.x, shoot_rel_pos.y)
 	b.start_at(get_rotation() - heading, $"muzzle".get_global_position())

@@ -122,6 +122,8 @@ func get_closest_enemy():
 func shoot():
 	gun_timer.start()
 	var b = bullet.instance()
+	# scale until smaller gfx is found
+	b.set_scale(Vector2(0.5, 1))
 	# reduced damage
 	b.dmg = 4
 	# increase effective colony bullet range
