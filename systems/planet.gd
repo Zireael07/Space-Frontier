@@ -41,7 +41,7 @@ var labl_loc = Vector2()
 # Called when the node is added to the scene for the first time.
 # Initialization here
 func _ready():
-	print("Planet init")
+	#print("Planet init")
 	set_z_index(game.PLANET_Z)
 	connect("planet_orbited", self, "_on_planet_orbited")
 	
