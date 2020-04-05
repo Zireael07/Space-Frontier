@@ -4,6 +4,7 @@ extends Node2D
 # Declare member variables here. Examples:
 export var radius = 0.2 # AU
 export var num = 20
+export var angle_inc = 15 # for small distances < 0.2 AU
 
 var asteroid_s = preload("res://asteroid.tscn")
 
@@ -24,7 +25,7 @@ func _ready():
 			place(angle-90, radius, ast)
 		
 			# increase angle in degrees
-			angle += 15
+			angle += angle_inc
 	
 	#pass # Replace with function body.
 

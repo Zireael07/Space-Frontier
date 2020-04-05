@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://colony.tscn" type="PackedScene" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=8]
 [ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=9]
 [ext_resource path="res://assets/bodies/moonmap.jpg" type="Texture" id=10]
+[ext_resource path="res://systems/asteroid_belt.gd" type="Script" id=11]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -206,6 +207,12 @@ text = "Deimos"
 
 [node name="CollisionShape2D" parent="planet_holder/planet2/orbit_holder/planet2/Area2D" index="0"]
 shape = SubResource( 6 )
+
+[node name="Node2D" type="Node2D" parent="planet_holder"]
+script = ExtResource( 11 )
+radius = 2.5
+num = 80
+angle_inc = 3
 
 [editable path="planet_holder/planet"]
 
