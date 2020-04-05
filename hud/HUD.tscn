@@ -673,6 +673,40 @@ rect_scale = Vector2( 1.5, 1.5 )
 custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Armor: 100"
 
+[node name="Control4" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="map view" type="Control" parent="Control4"]
+visible = false
+margin_right = 805.0
+margin_bottom = 525.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Control4/map view"]
+margin_right = 805.0
+margin_bottom = 525.0
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control4/map view"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_right = 20.0
+margin_bottom = 14.0
+text = "SYSTEM MAP"
+align = 1
+valign = 1
+
 [node name="pause_panel" type="Panel" parent="."]
 visible = false
 modulate = Color( 1, 1, 1, 0.624314 )

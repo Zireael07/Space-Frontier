@@ -91,6 +91,9 @@ func _ready():
 	
 	
 	set_clip_contents(true)
+	
+	# set cntr
+	get_child(0).set_cntr(Vector2(80,80))
 
 func _process(_delta):
 #	# Called every frame. Delta is time since last frame.

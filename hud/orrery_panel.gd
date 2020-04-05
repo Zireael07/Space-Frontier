@@ -2,15 +2,19 @@
 extends Panel
 
 # Declare member variables here
-# weird fudge
-var center = Vector2(80, 80) + Vector2(1,2)
+var cntr = Vector2(80,80)
+var center = cntr + Vector2(1,2)
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
-
+# to be able to set it for system map (which reuses this code)
+func set_cntr(val):
+	cntr = val
+	# weird fudge
+	center = cntr + Vector2(1,2)
 
 # based on arc functions that I seem to love :P	
 func make_circle(center, segments, radius):
