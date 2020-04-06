@@ -179,6 +179,20 @@ func _input(_event):
 			$"pause_panel".show() #(not paused)
 		else:
 			$"pause_panel".hide()
+	
+	if Input.is_action_pressed("open_map"):
+		# pause, as a kindness to the player
+		paused = not paused
+		#print("Pressed pause, paused is " + str(paused))
+		get_tree().set_pause(paused)
+		if paused:
+			$"Control4/map view/Panel".set_cntr(Vector2(805/2, 525/2))
+			$"Control4/map view".show() #(not paused)
+			
+		else:
+			$"Control4/map view".hide()
+			
+	
 	if Input.is_action_pressed("orders"):
 		if not paused:
 			return
