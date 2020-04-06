@@ -55,7 +55,7 @@ func _ready():
 	#setup()
 
 func setup(angle=0, dis=0):
-	if angle != 0 and dis !=0:
+	if angle != 0 or dis !=0:
 		# place
 		place(angle, dis)
 	
@@ -73,8 +73,12 @@ func setup(angle=0, dis=0):
 		temp = calculate_temperature()
 		calculate_orbit_period()
 	
-	# type is the parameter, skipped for now
-	radius = calculate_radius()
+	# type is the parameter
+	if mass > 300:
+		radius = calculate_radius("jovian")
+	else:
+		# default. i.e. rocky
+		radius = calculate_radius()
 	gravity = calculate_gravity(mass, radius)
 	
 	# set population for planets that start colonized
@@ -191,9 +195,14 @@ func calculate_radius(type="rocky"):
 	# radius = pow(mass, 0.59)
 	# max spread 15%
 	# Jovian = < 0.08 Sun masses
-	# all the [Jovian] worlds have almost the same radius
-	# radius = pow(mass, -0.04)
-	# max spread 8%
+	if type == "jovian":
+		# all the [Jovian] worlds have almost the same radius
+		radius = pow(mass, -0.04)
+		# fudge
+		var max_dev = radius*0.08 # # max spread 8%
+		radius = rand_range(radius-max_dev, radius+max_dev)
+		return radius
+	
 	# anything above that is a star so needn't apply
 	else:
 		return 1 # dummy

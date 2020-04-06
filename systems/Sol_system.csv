@@ -6,3 +6,4 @@ Moon,0,300, moon
 Mars,0,18000, planet
 Deimos,-30,400, moon
 Phobos,30,400, moon
+Jupiter,0,62400, planet

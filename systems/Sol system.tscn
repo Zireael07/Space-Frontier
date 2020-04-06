@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://colony.tscn" type="PackedScene" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=9]
 [ext_resource path="res://assets/bodies/moonmap.jpg" type="Texture" id=10]
 [ext_resource path="res://systems/asteroid_belt.gd" type="Script" id=11]
+[ext_resource path="res://assets/bodies/jupiter2_1k.jpg" type="Texture" id=12]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -64,6 +65,30 @@ shader_param/aura_color = Color( 0.0117647, 0.952941, 1, 1 )
 
 [sub_resource type="CircleShape2D" id=6]
 radius = 20.0
+
+[sub_resource type="Shader" id=7]
+code = "shader_type canvas_item;
+
+uniform vec4 aura_color : hint_color;
+
+void fragment()
+{
+	vec4 col = texture(TEXTURE, UV);
+	
+	if (col.a > 0.08 && col.r > 0.1)
+	{
+		COLOR.rgba = vec4(aura_color.rgb, col.a);
+	}
+	else
+	{
+		COLOR.rgba = col.rgba; //+ vec3(1,0,0);
+	}
+	//COLOR.rgb = vec3(1,0,0);
+}"
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = SubResource( 7 )
+shader_param/aura_color = Color( 0.152941, 0.152941, 0.14902, 1 )
 
 [node name="Sol" type="Node2D" groups=[
 "star",
@@ -171,7 +196,7 @@ text = "Mars"
 [node name="planet" parent="planet_holder/planet2/orbit_holder" index="0" groups=[
 "moon",
 ] instance=ExtResource( 3 )]
-position = Vector2( -1.74846e-05, 400 )
+position = Vector2( -200, 346.41 )
 z_index = 2
 mass = 0.0123
 
@@ -191,7 +216,7 @@ shape = SubResource( 6 )
 [node name="planet2" parent="planet_holder/planet2/orbit_holder" index="1" groups=[
 "moon",
 ] instance=ExtResource( 3 )]
-position = Vector2( -200, 346.41 )
+position = Vector2( 200, 346.41 )
 z_index = 2
 mass = 0.0123
 
@@ -214,6 +239,25 @@ radius = 2.5
 num = 80
 angle_inc = 3
 
+[node name="planet5" parent="planet_holder" groups=[
+"planets",
+] instance=ExtResource( 4 )]
+position = Vector2( -0.00272759, 62400 )
+planet_rad_factor = 2.0
+data = Vector2( 62400, 0 )
+mass = 317.8
+hydro = 0.0
+
+[node name="Sprite" parent="planet_holder/planet5" index="0"]
+texture = ExtResource( 12 )
+
+[node name="Sprite_shadow" parent="planet_holder/planet5" index="1"]
+material = SubResource( 8 )
+rotation = 3.89937e-07
+
+[node name="Label" parent="planet_holder/planet5" index="2"]
+text = "Jupiter"
+
 [editable path="planet_holder/planet"]
 
 [editable path="planet_holder/planet4"]
@@ -227,3 +271,5 @@ angle_inc = 3
 [editable path="planet_holder/planet2/orbit_holder/planet"]
 
 [editable path="planet_holder/planet2/orbit_holder/planet2"]
+
+[editable path="planet_holder/planet5"]
