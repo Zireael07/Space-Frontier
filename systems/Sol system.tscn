@@ -1,21 +1,21 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://colony.tscn" type="PackedScene" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
 [ext_resource path="res://systems/planet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://systems/planet_rotating.tscn" type="PackedScene" id=4]
-[ext_resource path="res://systems/planet_new.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/bodies/asteroids/a10000.png" type="Texture" id=6]
 [ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=7]
-[ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=8]
-[ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=9]
+[ext_resource path="res://assets/bodies/venusmap.jpg" type="Texture" id=8]
+[ext_resource path="res://assets/bodies/mercurymap.jpg" type="Texture" id=9]
 [ext_resource path="res://assets/bodies/moonmap.jpg" type="Texture" id=10]
 [ext_resource path="res://systems/asteroid_belt.gd" type="Script" id=11]
 [ext_resource path="res://assets/bodies/jupiter2_1k.jpg" type="Texture" id=12]
+[ext_resource path="res://assets/bodies/marsmap1k.jpg" type="Texture" id=13]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
-[sub_resource type="Shader" id=2]
+[sub_resource type="Shader" id=9]
 code = "shader_type canvas_item;
 
 uniform vec4 aura_color : hint_color;
@@ -35,9 +35,13 @@ void fragment()
 	//COLOR.rgb = vec3(1,0,0);
 }"
 
-[sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
-shader_param/aura_color = Color( 0.52549, 0.498039, 0.176471, 1 )
+[sub_resource type="ShaderMaterial" id=11]
+shader = SubResource( 9 )
+shader_param/aura_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=12]
+shader = SubResource( 9 )
+shader_param/aura_color = Color( 1, 0.74902, 0, 1 )
 
 [sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;
@@ -62,6 +66,10 @@ void fragment()
 [sub_resource type="ShaderMaterial" id=5]
 shader = SubResource( 4 )
 shader_param/aura_color = Color( 0.0117647, 0.952941, 1, 1 )
+
+[sub_resource type="ShaderMaterial" id=10]
+shader = SubResource( 9 )
+shader_param/aura_color = Color( 0.184314, 0.180392, 0.176471, 1 )
 
 [sub_resource type="CircleShape2D" id=6]
 radius = 20.0
@@ -113,28 +121,34 @@ text = "Sol"
 
 [node name="planet_holder" type="Node2D" parent="."]
 
-[node name="planet" parent="planet_holder" instance=ExtResource( 3 )]
+[node name="planet" parent="planet_holder" groups=[
+"planets",
+] instance=ExtResource( 4 )]
 position = Vector2( -0.000236041, 5400 )
-z_index = 2
+data = Vector2( 5400, 0 )
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
-modulate = Color( 0.768627, 0.780392, 0.498039, 1 )
 texture = ExtResource( 9 )
 
-[node name="Label" parent="planet_holder/planet" index="1"]
+[node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
+material = SubResource( 11 )
+rotation = 3.91621e-07
+
+[node name="Label" parent="planet_holder/planet" index="2"]
 text = "Mercury"
 
-[node name="planet4" parent="planet_holder" instance=ExtResource( 5 )]
+[node name="planet4" parent="planet_holder" groups=[
+"planets",
+] instance=ExtResource( 4 )]
 position = Vector2( -0.000375918, 8600 )
 atm = 91.0
 greenhouse = 0.975
 
 [node name="Sprite" parent="planet_holder/planet4" index="0"]
-modulate = Color( 0.984314, 0.968627, 0.00392157, 1 )
 texture = ExtResource( 8 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
-material = SubResource( 3 )
+material = SubResource( 12 )
 rotation = 3.88993e-07
 
 [node name="Label" parent="planet_holder/planet4" index="2"]
@@ -181,16 +195,22 @@ text = "Moon"
 [node name="colony2" parent="planet_holder/planet3" instance=ExtResource( 1 )]
 position = Vector2( -0.000518799, 0 )
 
-[node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
+[node name="planet2" parent="planet_holder" groups=[
+"planets",
+] instance=ExtResource( 4 )]
 position = Vector2( -0.000786805, 18000 )
-z_index = 2
+data = Vector2( 18000, 0 )
 atm = 0.06
 greenhouse = 0.086
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
-texture = ExtResource( 9 )
+texture = ExtResource( 13 )
 
-[node name="Label" parent="planet_holder/planet2" index="1"]
+[node name="Sprite_shadow" parent="planet_holder/planet2" index="1"]
+material = SubResource( 10 )
+rotation = 3.90491e-07
+
+[node name="Label" parent="planet_holder/planet2" index="2"]
 text = "Mars"
 
 [node name="planet" parent="planet_holder/planet2/orbit_holder" index="0" groups=[
