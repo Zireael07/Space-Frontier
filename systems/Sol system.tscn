@@ -6,12 +6,17 @@
 [ext_resource path="res://systems/planet_rotating.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/bodies/asteroids/a10000.png" type="Texture" id=6]
 [ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=7]
-[ext_resource path="res://assets/bodies/venusmap.jpg" type="Texture" id=8]
-[ext_resource path="res://assets/bodies/mercurymap.jpg" type="Texture" id=9]
-[ext_resource path="res://assets/bodies/moonmap.jpg" type="Texture" id=10]
+[ext_resource path="res://assets/bodies/Sol textures/venusmap.jpg" type="Texture" id=8]
+[ext_resource path="res://assets/bodies/Sol textures/mercurymap.jpg" type="Texture" id=9]
+[ext_resource path="res://assets/bodies/Sol textures/moonmap.jpg" type="Texture" id=10]
 [ext_resource path="res://systems/asteroid_belt.gd" type="Script" id=11]
-[ext_resource path="res://assets/bodies/jupiter2_1k.jpg" type="Texture" id=12]
-[ext_resource path="res://assets/bodies/marsmap1k.jpg" type="Texture" id=13]
+[ext_resource path="res://assets/bodies/Sol textures/jupiter2_1k.jpg" type="Texture" id=12]
+[ext_resource path="res://assets/bodies/Sol textures/marsmap1k.jpg" type="Texture" id=13]
+
+
+
+
+
 
 [sub_resource type="StyleBoxFlat" id=1]
 
