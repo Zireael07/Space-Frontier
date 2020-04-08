@@ -90,12 +90,26 @@ func _process(delta):
 				# switch off tractor
 				tractor = null
 				get_parent().get_parent().tractor = null
+
+# helper
+func is_in_groups(node, groups):
+	var ret = false
+	for g in groups:
+		if node.is_in_group(g):
+			ret = true
+			break
+	
+	#print("In groups " + str(ret))
+	return ret
 			
 func is_floating():
 	var ret = false
-	if not tractor and not get_parent().get_parent().is_in_group("friendly") and not get_parent().get_parent().is_in_group("planets") \
+		#not get_parent().get_parent().is_in_group("friendly") and not get_parent().get_parent().is_in_group("planets") \
+	var groups = ["friendly", "planets", "moon"]
+	if not tractor and not is_in_groups(get_parent().get_parent(), groups) \
 	and not get_parent().get_parent().get_parent().is_in_group("player"):
 		ret = true
+	#print("Is floating: " + str(ret))
 	return ret
 
 func get_closest_enemy():
