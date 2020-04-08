@@ -128,6 +128,8 @@ func task_orbiting(conquer_tg):
 						_colonize(conquer_tg)
 				# AI cadet
 				else:
+					# deorbit
+					ship.deorbit()
 					var try_mine = _go_mine()
 					if not try_mine:
 						#if get_colonized_planet().has_moon():
