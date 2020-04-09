@@ -31,6 +31,8 @@ var orbiter
 var orbit_rot = 0
 var orbit_rate = 0.04
 export(bool) var tidally_locked = false
+var axis_rot = 0.0
+
 
 signal planet_colonized
 
@@ -293,8 +295,16 @@ func setOrbitAngle(val):
 #func getDist():
 #	return dist
 
-
+#	# Called every frame. Delta is time since last frame.
 func _process(delta):
+	# rotate around our axis
+	axis_rot = axis_rot + 0.1*delta
+	# don't exceed 2
+	if axis_rot + 0.1*delta > 2:
+		axis_rot = 2 - axis_rot + 0.1*delta
+	# paranoia
+	if get_node("Sprite").get_material() != null:
+		get_node("Sprite").get_material().set_shader_param("time", axis_rot)
 	
 	# redraw
 	update()
@@ -335,7 +345,7 @@ func _process(delta):
 				get_node("orbit_holder").set_rotation(orbit_rot)
 	
 	
-#	# Called every frame. Delta is time since last frame.
+
 #	# Update game logic here.
 #	pass
 
