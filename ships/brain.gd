@@ -144,7 +144,8 @@ func task_orbiting(conquer_tg):
 			
 			# if we're an enemy
 			else:
-				print("Blockading a planet")
+				#print("Blockading a planet")
+				pass
 		else:
 			# deorbit
 			ship.deorbit()		
@@ -182,7 +183,7 @@ func _on_task_timer_timeout(timer_count):
 					var close_col = ship.get_closest_floating_colony()
 					if close_col != null:
 						var dist = (close_col.get_global_position() - ship.get_global_position()).length()
-						print("We have a floating colony @ dist: " + str(dist))
+						#print("We have a floating colony @ dist: " + str(dist))
 						if dist < 500:
 							target = close_col.get_global_position()
 							set_state(STATE_IDLE)

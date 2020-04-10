@@ -26,7 +26,7 @@ var data = []
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	print("Star system init")
+	print("[Star system] Star system init")
 	# load data
 	data = load_data(get_name())
 	
@@ -51,6 +51,7 @@ func _ready():
 			#if data[3] == "planet":
 	# if no csv
 	else:
+		print("[Star system] No csv..")
 		for c in get_node("planet_holder").get_children():
 			if c.is_in_group("planets"):
 				c.setup()

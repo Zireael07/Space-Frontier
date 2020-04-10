@@ -35,11 +35,11 @@ func _ready():
 #	pass
 
 func place(angle,dist,child):
-	print("Place : a " + str(angle) + " dist: " + str(dist) + " AU")
+	#print("Place : a " + str(angle) + " dist: " + str(dist) + " AU")
 	var d = dist*game.AU
 	var pos = Vector2(0, d).rotated(deg2rad(angle))
-	print("vec: 0, " + str(d) + " rot: " + str(deg2rad(angle)))
-	print("Position is " + str(pos))
+	#print("vec: 0, " + str(d) + " rot: " + str(deg2rad(angle)))
+	#print("Position is " + str(pos))
 	#get_parent().get_global_position() + 
 	
 	child.set_position(pos)

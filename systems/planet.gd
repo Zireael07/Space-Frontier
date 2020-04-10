@@ -255,26 +255,26 @@ func calculate_habitability():
 
 func setData(val):
 	if Engine.is_editor_hint() and val != null:
-		print("Data: " + str(val))
+		#print("Data: " + str(val))
 		place(val[0], val[1])
 
 
 func place(angle,dist):
 	print("Place : a " + str(angle) + " d: " + str(dist))
 	var pos = Vector2(0, dist).rotated(deg2rad(angle))
-	print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(angle)))
+	#print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(angle)))
 	print("Position is " + str(pos))
 	#get_parent().get_global_position() + 
 	
 	set_position(pos)
 
-func setOrbitAngle(val):
-	print("Set angle to : " + str(val))
-	var pos = Vector2(0, dist).rotated(deg2rad(val))
-	print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(val)))
-	print("Position is " + str(pos))
-
-	set_position(pos)
+#func setOrbitAngle(val):
+#	print("Set angle to : " + str(val))
+#	var pos = Vector2(0, dist).rotated(deg2rad(val))
+#	print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(val)))
+#	print("Position is " + str(pos))
+#
+#	set_position(pos)
 	#place(val, getDist())
 
 #func setDist(val):
@@ -420,10 +420,10 @@ func reposition(area):
 
 func _on_Area2D_area_entered(area):
 	if area.get_parent().is_in_group("colony"):
-#		print("Colony entered planet space")
+		#print("Colony entered planet space")
 		# prevents looping (area collisions don't exclude children!)
 		if not self == area.get_parent().get_parent():
-#			print("Colony isn't parented to us")
+			#print("Colony isn't parented to us")
 			if area.get_parent().get_parent().get_parent().is_in_group("player"):
 				print("Colony being hauled by player")
 			else:
@@ -488,7 +488,7 @@ func do_colonize(area):
 func _on_planet_orbited(ship):
 	orbiter = ship
 	orbiters.append(orbiter)
-	print("Planet orbited " + str(get_node("Label").get_text()) + " orbiter " + str(orbiter.get_parent().get_name()))
+	print("Planet orbited " + str(get_node("Label").get_text()) + "; orbiter: " + str(orbiter.get_parent().get_name()))
 
 	var rel_pos = get_node("orbit_holder").get_global_transform().xform_inv(orbiter.get_global_position())
 	
