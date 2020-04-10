@@ -646,7 +646,27 @@ class MineState:
 				ship.set_state(STATE_ATTACK, enemy)
 
 		# aim towards the target
-		if ship.get_global_position().distance_to(ship.target) < 100:
+		var dist = ship.get_global_position().distance_to(ship.target)
+		# we're too close~
+		if dist < 30:
+			# pick it up!
+			if shot:
+				# update position of any pickups
+				var ress = ship.get_tree().get_nodes_in_group("resource")
+				if ress.size() > 0 and ress[0].get_global_position().distance_to(ship.get_global_position()) < 200:
+					ship.target = ress[0].get_global_position()
+				#ship.target = object.get_global_position()
+				# steering behavior
+				steer = ship.set_heading(ship.target)
+				#if ship.get_global_position().distance_to(ship.target) > 50:
+				steer += ship.get_steering_arrive(ship.target)
+			else:
+				# gotta unstick
+				ship.set_state(STATE_IDLE)
+				# unstick vector
+				ship.target = object.get_global_position() + Vector2(50,50)
+				
+		elif dist < 100:
 			if object == null and not shot:
 				print("Bug, object shouldn't be null!")
 				ship.set_state(STATE_IDLE)
@@ -662,6 +682,7 @@ class MineState:
 			steer = ship.set_heading(ship.target)
 			#if ship.get_global_position().distance_to(ship.target) > 50:
 			steer += ship.get_steering_arrive(ship.target)
+		
 		else:
 			steer = ship.get_steering_arrive(ship.target)
 			
@@ -671,12 +692,14 @@ class MineState:
 		ship.ship.move_AI(ship.vel, delta)
 			
 		# if close to target, shoot it
-		if ship.get_global_position().distance_to(ship.target) < 80 and not shot:
+		#var dist = ship.get_global_position().distance_to(ship.target)
+		if dist < 80 and dist > 20 and not shot:
 			#print("Close to target")
 			ship.ship.shoot_wrapper()
-			
-		var ress = ship.get_tree().get_nodes_in_group("resource")
+		
+		var ress = ship.get_tree().get_nodes_in_group("resource")	
 		if ress.size() > 0 and ress[0].get_global_position().distance_to(ship.get_global_position()) < 200:
+			# "shot", i.e. should we be picking sth up?
 			if not shot:
 				shot = true
 			ship.target = ress[0].get_global_position()
@@ -684,10 +707,17 @@ class MineState:
 			# if shot and no resource (e.g. because someone else picked it up)
 			if shot:
 				print("Someone picked our resource")
-				# reset
-				shot = false
-				# force update target location
-				ship.target = object.get_global_position()
-#
+				# not enough dist to fire a 2nd shot
+				if ship.get_global_position().distance_to(ship.target) < 80:
+					print("Unstick...")
+					ship.set_state(STATE_IDLE)
+					# unstick vector
+					ship.target = object.get_global_position() + Vector2(50,50)
+				
+				else:
+					# reset
+					shot = false
+					# force update target location
+					ship.target = object.get_global_position()
 				
 		# NPC ship resource_picked handles the switch to refit
