@@ -5,7 +5,6 @@
 [ext_resource path="res://assets/Planet-shadow_only.png" type="Texture" id=3]
 [ext_resource path="res://systems/planet.gd" type="Script" id=4]
 
-
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
@@ -73,3 +72,4 @@ autostart = true
 [node name="module_timer" type="Timer" parent="."]
 wait_time = 20.0
 autostart = true
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
