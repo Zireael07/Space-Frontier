@@ -94,8 +94,10 @@ func _colonize(conquer_tg):
 func _go_mine():
 	var closest = ship.get_closest_asteroid()
 	if closest:
+		# default amount we return at
+		var amt = 2
 		target = closest.get_global_position()
-		set_state(STATE_MINE, closest)
+		set_state(STATE_MINE, [closest, amt, 0])
 		return true
 	else:
 		return false
@@ -235,8 +237,13 @@ func _on_task_timer_timeout(timer_count):
 				if not ship.is_target_floating_colony(target):
 					# if we're on top of our target
 					if ship.get_global_position().distance_to(target) < 20:
-						# go back to a planet
-						set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+						# if we were mining, keep doing it (and incrementing old counters)
+						if prev_state[0] == STATE_MINE: 
+							# this way, we also pass the parameters
+							set_state(prev_state[0], prev_state[1])
+						else:
+							# go back to a planet
+							set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 					
 
 func _on_target_killed(target):
@@ -613,12 +620,13 @@ class MineState:
 	var cnt = 0
 	var target_num = 0
 	
-	func _init(shp,obj):
+	# params is a list [obj, target_num, cnt]
+	func _init(shp,params):
 		ship = shp
-		object = obj
-		param = obj
-		cnt = 0
-		target_num = 2
+		object = params[0]
+		param = params
+		cnt = params[2]
+		target_num = params[1]
 		
 		# reset ship's timer count
 		ship.ship.timer_count = 0
