@@ -205,30 +205,32 @@ func _on_task_timer_timeout(timer_count):
 
 
 		if get_state() == STATE_MINE:
-			# if task timeout happened and we're still mining, quit it
-			if timer_count > 4:
-				# ignore if we're far from target
-				var dist = get_global_position().distance_to(target)
-				if dist > 150:
-					# ignore
-					pass
-				else:
+			var dist = get_global_position().distance_to(target)
+			# ignore timer count if far away
+			if dist > 150:
+				ship.timer_count = 0
+			else:
+				# if task timeout happened and we're still mining, quit it
+				var tg_count = 4
+				if timer_count > tg_count:
 					print("We got stuck mining @ dist: " + str(dist))
 					# assume we got bored, look for something else to do../
 					
 					# do we have something to colonize?
 					# if player-specified colony target is not colonized
 					# or we have a colonize target (planet w/o colony)
-					if conquer_tg or ship.get_colonize_target() != null: 
-						if ship.get_colony_in_dock() == null:
-							if ship.kind_id == ship.kind.friendly:
-								if ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
-									#brain.target = get_colonized_planet().get_global_position() + Vector2(200,200) * get_colonized_planet().planet_rad_factor
-									set_state(STATE_GO_PLANET, ship.get_colonized_planet())
-					else:
-						# add offset to target to "unstick" ourselves
-						target = target + Vector2(50,50)
-						set_state(STATE_IDLE)
+#					if conquer_tg or ship.get_colonize_target() != null: 
+#						if ship.get_colony_in_dock() == null:
+#							if ship.kind_id == ship.kind.friendly:
+#								if ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
+#									#brain.target = get_colonized_planet().get_global_position() + Vector2(200,200) * get_colonized_planet().planet_rad_factor
+#									set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+#
+#					else:
+
+					# add offset to target to "unstick" ourselves
+					target = target + Vector2(50,50)
+					set_state(STATE_IDLE)
 		
 		if get_state() == STATE_IDLE:
 			# if task timeout happened and we're still idling, quit it
