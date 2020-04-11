@@ -40,7 +40,7 @@ frames = SubResource( 1 )
 frame = 10
 playing = true
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D_aster" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_aster"]
 shape = SubResource( 2 )
