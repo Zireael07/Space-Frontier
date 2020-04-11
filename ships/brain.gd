@@ -95,7 +95,7 @@ func _go_mine():
 	var closest = ship.get_closest_asteroid()
 	if closest:
 		# default amount we return at
-		var amt = 2
+		var amt = 4
 		target = closest.get_global_position()
 		set_state(STATE_MINE, [closest, amt, 0])
 		return true
@@ -174,7 +174,7 @@ func _on_task_timer_timeout(timer_count):
 			if not try_col: 
 				set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 			
-		if not (get_state() in [STATE_MINE, STATE_REFIT, STATE_COLONIZE, STATE_ATTACK, STATE_GO_PLANET]):
+		if not (get_state() in [STATE_IDLE, STATE_MINE, STATE_REFIT, STATE_COLONIZE, STATE_ATTACK, STATE_GO_PLANET]):
 			_go_mine()
 
 		if not (get_state() == STATE_ATTACK) and not ship.docked:
@@ -233,19 +233,20 @@ func _on_task_timer_timeout(timer_count):
 					set_state(STATE_IDLE)
 		
 		if get_state() == STATE_IDLE:
+			# if we were mining, keep doing it (and incrementing old counters)
+			if prev_state[0] == STATE_MINE:
+				if timer_count > 1:
+					# this way, we also pass the parameters
+					print("Prev state params: " + str(prev_state[1]))
+					set_state(prev_state[0], prev_state[1])
 			# if task timeout happened and we're still idling, quit it
 			if timer_count > 3:
 				# target NOT a floating colony
 				if not ship.is_target_floating_colony(target):
 					# if we're on top of our target
 					if ship.get_global_position().distance_to(target) < 20:
-						# if we were mining, keep doing it (and incrementing old counters)
-						if prev_state[0] == STATE_MINE: 
-							# this way, we also pass the parameters
-							set_state(prev_state[0], prev_state[1])
-						else:
-							# go back to a planet
-							set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+						# go back to a planet
+						set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 					
 
 func _on_target_killed(target):
@@ -268,14 +269,21 @@ func set_state(new_state, param=null):
 	# if we need to clean up
 	#state.exit()
 	
-	if get_state() in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE, STATE_GO_PLANET]:
+	if get_state() in [STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE, STATE_GO_PLANET]:
 		prev_state = [ get_state(), state.param ]
+	# make sure we remember the correct count
+	elif get_state() == STATE_MINE:
+		print("Setting prev state for mining, cnt: " + str(state.cnt))
+		prev_state = [ get_state(), [state.param[0], state.param[1], state.cnt] ]
 	else:
 		prev_state = [ get_state(), null ]
 	
 	# paranoia
 	if (new_state in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE, STATE_GO_PLANET] and param == null):
 		print("We forgot a parameter for the state " + str(new_state))
+	
+	# reset ship's timer count
+	self.ship.timer_count = 0
 	
 	# set the debugging helper var
 	curr_state = new_state
@@ -347,6 +355,9 @@ class IdleState:
 	
 	func _init(shp):
 		ship = shp
+		
+		# reset ship's timer count
+		ship.ship.timer_count = 0
 		
 	func update(delta):
 		# deorbit
@@ -625,15 +636,23 @@ class MineState:
 	# params is a list [obj, target_num, cnt]
 	func _init(shp,params):
 		ship = shp
-		object = params[0]
-		param = params
-		cnt = params[2]
-		target_num = params[1]
-		
 		# reset ship's timer count
 		ship.ship.timer_count = 0
 		
+		object = params[0]
+		target_num = params[1]
+		cnt = params[2]
+		
+		# paranoia
+		ship.target = object.get_global_position()
+		
+		param = params
+		if cnt > 0:
+			print("Init Mine state with cnt " + str(cnt))
+		
+		
 	func update(delta):
+		
 		var steer = Vector2(0,0)
 		
 		var enemy = ship.ship.get_closest_enemy()

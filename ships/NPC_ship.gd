@@ -223,15 +223,15 @@ func deorbit():
 func resource_picked():
 	# paranoia
 	if not 'cnt' in brain.state:
-		print("Refit either way!")
-		# go refit either way
-		# get the base
-		var base = get_friendly_base()
-		# refit
-		if base != null:
-			print("Resources picked, refit")
-			brain.target = base.get_global_position()
-			brain.set_state(brain.STATE_REFIT, base)
+#		print("Refit either way!")
+#		# go refit either way
+#		# get the base
+#		var base = get_friendly_base()
+#		# refit
+#		if base != null:
+#			print("Resources picked, refit")
+#			brain.target = base.get_global_position()
+#			brain.set_state(brain.STATE_REFIT, base)
 		return
 	# increment the counter
 	brain.state.cnt += 1
