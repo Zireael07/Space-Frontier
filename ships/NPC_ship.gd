@@ -264,10 +264,17 @@ func move_orbit(delta):
 	# 300 is experimentally picked
 	var rad_f = get_colonized_planet().planet_rad_factor
 	
+	# brain target is the planet we're orbiting
 	if (brain.target - get_global_position()).length() < 200*rad_f:
 		#print("Too close to orbit")
-		var tg_ahead = get_global_position() + to_global(Vector2(100,100))
-		var steer = brain.get_steering_seek(tg_ahead)
+		# randomize the point the AI aims for
+		randomize()
+		var rand1 = randf()
+		var rand2 = randf()
+		var offset = Vector2(rand1, rand2).normalized()*(250*rad_f)
+		var tg_orbit = brain.target + offset
+		#var tg_ahead = get_global_position() + Vector2(100,100)
+		var steer = brain.get_steering_arrive(tg_orbit)
 		# normal case
 		vel += steer
 	elif (brain.target - get_global_position()).length() < 300*rad_f and not orbiting:
@@ -284,10 +291,10 @@ func move_orbit(delta):
 			pass
 			
 	# dummy
-	if not orbiting:
-		var steer = brain.get_steering_arrive(brain.target)
-		# normal case
-		vel += steer
+#	if not orbiting:
+#		var steer = brain.get_steering_arrive(brain.target)
+#		# normal case
+#		vel += steer
 	#else:
 	#	var steer = brain.get_steering_arrive(brain.target)	
 		# normal case
