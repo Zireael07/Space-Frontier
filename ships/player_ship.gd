@@ -18,11 +18,14 @@ var has_cloak = false
 var cloaked = false
 
 onready var warp_effect = preload("res://warp_effect.tscn")
+onready var warp_timer = $"warp_correct_timer"
 
 onready var recharge_timer = $"recharge_timer"
 
 var target = null
+# warp drive
 var heading = null
+var warp_planet
 var warp_target = null
 
 var tractored = false
@@ -153,6 +156,10 @@ func _process(delta):
 	# warp drive!
 	if not heading and warp_target != null:
 		if warping:
+			# update target and heading because the planet is orbiting, after all...
+			#warp_target = warp_planet.get_global_position()
+			#heading = warp_target
+			
 			var desired = warp_target - get_global_position()
 			var dist = desired.length()
 			
@@ -275,8 +282,8 @@ func player_heading(target, delta):
 	# we've turned to face the target
 	if abs(rad2deg(a)) > 179:
 		# emit signal
-		if heading == warp_target:
-			on_warping()
+#		if heading == warp_target:
+#			on_warping()
 		
 		heading = null
 		
@@ -533,8 +540,11 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 
 func _on_goto_pressed(planet):
 	print("Want to go to planet " + str(planet.get_name()))
+	warp_planet = planet
 	warp_target = planet.get_global_position()
 	heading = warp_target
+	on_warping()
+	
 	
 func on_warping():
 	if power < warp_power_draw:
@@ -553,6 +563,7 @@ func on_warping():
 	power -= warp_power_draw
 	emit_signal("power_changed", power)
 	recharge_timer.start()
+	warp_timer.start()
 	
 	# effect
 	var warp = warp_effect.instance()
@@ -562,6 +573,13 @@ func on_warping():
 	
 	# tint a matching orange color
 	set_modulate(Color(1, 0.73, 0))
+
+# update target and heading because the planet is orbiting, after all...
+func _on_warp_correct_timer_timeout():
+	if warping:
+		warp_target = warp_planet.get_global_position()
+		heading = warp_target
+		warp_timer.start()
 
 
 func _on_recharge_timer_timeout():
