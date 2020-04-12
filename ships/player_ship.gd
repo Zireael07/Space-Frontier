@@ -367,6 +367,27 @@ func _input(_event):
 	if Input.is_action_pressed("nav"):
 		self.HUD.switch_to_navi()
 
+	if Input.is_action_pressed("go_planet"):
+		# if we have a planet view open
+		if self.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
+			# extract planet name from planet view
+			var label = self.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/LabelName")
+			var txt = label.get_text()
+			var nm = txt.split(":")
+			var planet_name = nm[1].strip_edges()
+			print("planet: " + planet_name)
+			warp_planet = get_named_planet(planet_name)
+			warp_target = warp_planet.get_global_position()
+			heading = warp_target
+			on_warping()
+			return
+		# if we have a warp_target already set, go to it
+		if warp_planet and not warping:
+			warp_target = warp_planet.get_global_position()
+			heading = warp_target
+			on_warping()
+			return
+
 	if Input.is_action_pressed("landing"):
 		if not landed:
 			var pl = get_closest_planet()
@@ -399,6 +420,19 @@ func _input(_event):
 			else:
 				get_child(0).set_modulate(Color(1,1,1))	
 
+
+func get_named_planet(planet_name):
+	var ret = null
+	# convert planet name to planet node ref
+	var planets = get_tree().get_nodes_in_group("planets")
+	for p in planets:
+		if p.has_node("Label"):
+			var nam = p.get_node("Label").get_text()
+			if planet_name == nam:
+				ret = p
+				break
+				
+	return ret
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
 	print("Animation finished")
