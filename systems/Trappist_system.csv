@@ -1,5 +1,5 @@
 name,angle,dist,mass, type
-TRAPPIST-1b,0,140,1.017,planet
-TRAPPIST-1c,180,190,1.156,planet
-TRAPPIST-1d,45,268,0.297,planet
-TRAPPIST-1e,0,350,0.772,planet
+TRAPPIST-1b,0,0.01166,1.017,planet
+TRAPPIST-1c,180,0.015,1.156,planet
+TRAPPIST-1d,45,0.02233,0.297,planet
+TRAPPIST-1e,0,0.0291,0.772,planet

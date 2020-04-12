@@ -39,9 +39,10 @@ __meta__ = {
 [node name="planet_holder" type="Node2D" parent="."]
 
 [node name="planet" parent="planet_holder" instance=ExtResource( 3 )]
-position = Vector2( -6.07588e-06, 139 )
+position = Vector2( -6.1161e-06, 139.92 )
 z_index = 2
 planet_rad_factor = 0.2
+mass = 1.017
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
@@ -58,10 +59,10 @@ text = "TRAPPIST-1b"
 scale = Vector2( 0.2, 0.2 )
 
 [node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
-position = Vector2( 2.26573e-06, -190 )
+position = Vector2( 2.14648e-06, -180 )
 z_index = 2
 planet_rad_factor = 0.2
-mass = 1.15
+mass = 1.156
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
@@ -79,10 +80,10 @@ text = "TRAPPIST-1c"
 scale = Vector2( 0.2, 0.2 )
 
 [node name="planet3" parent="planet_holder" instance=ExtResource( 3 )]
-position = Vector2( -189.505, 189.505 )
+position = Vector2( -189.476, 189.476 )
 z_index = 2
 planet_rad_factor = 0.2
-mass = 0.2
+mass = 0.297
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
@@ -101,16 +102,17 @@ text = "TRAPPIST-1d"
 scale = Vector2( 0.2, 0.2 )
 
 [node name="planet4" parent="planet_holder" instance=ExtResource( 4 )]
-position = Vector2( -1.53427e-05, 351 )
+position = Vector2( -1.5264e-05, 349.2 )
 planet_rad_factor = 0.3
-mass = 0.77
+mass = 0.772
+population = 0.1
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet4" index="0"]
 scale = Vector2( 0.15, 0.15 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
-rotation = 4.33355e-07
+rotation = 4.33803e-07
 scale = Vector2( 0.15, 0.15 )
 
 [node name="Label" parent="planet_holder/planet4" index="2"]
