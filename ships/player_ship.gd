@@ -66,7 +66,7 @@ func _ready():
 	set_position(Vector2(0,0))
 	
 
-# using this because we don't need physics
+# using this instead of fixed_process because we don't need physics
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
@@ -98,10 +98,10 @@ func _process(delta):
 
 	# rotations
 	if Input.is_action_pressed("move_left"):
-		if warp_target == null:
+		if warping == false:
 			rot -= rot_speed*delta
 	if Input.is_action_pressed("move_right"):
-		if warp_target == null:
+		if warping == false:
 			rot += rot_speed*delta
 	# thrust
 	if Input.is_action_pressed("move_up"):
@@ -293,7 +293,7 @@ func player_heading(target, delta):
 	else:
 		rot += rot_speed*delta
 	
-
+# those functions that need physics
 func _input(_event):
 	if Input.is_action_pressed("closest_target"):
 		get_closest_target()
@@ -366,8 +366,17 @@ func _input(_event):
 			
 	if Input.is_action_pressed("nav"):
 		self.HUD.switch_to_navi()
-
+		
 	if Input.is_action_pressed("go_planet"):
+		# if already warping, abort
+		if warping:
+			print("Aborting q-drive...")
+			warping = false
+			warp_target = null
+			heading = null
+			# remove tint
+			set_modulate(Color(1,1,1))
+			return
 		# if we have a planet view open
 		if self.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
 			# extract planet name from planet view
@@ -381,7 +390,7 @@ func _input(_event):
 			heading = warp_target
 			on_warping()
 			return
-		# if we have a warp_target already set, go to it
+		# if we have a warp planet already set, go to it
 		if warp_planet and not warping:
 			warp_target = warp_planet.get_global_position()
 			heading = warp_target
