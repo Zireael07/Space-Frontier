@@ -32,20 +32,22 @@ func _ready():
 	
 	if data != null:
 		for line in data:
+			# line is [name, angle, dist, (mass), type]
 			print(str(line))
 			# match rows to planets
 			for c in get_node("planet_holder").get_children():
 				if c.has_node("Label"):
 					var nam = c.get_node("Label").get_text()
 					if line[0] == nam:
-						print("Name fits data, setup @ " + str(line[1]) + " d: " + str(line[2]))
-						c.setup(int(line[1]), int(line[2]))
+						print("Name fits, setup @ " + str(line[1]) + " d: " + str(line[2]) + " m:" + str(line[3]))
+						
+						c.setup(int(line[1]), int(line[2]), float(line[3]))
 				# moons
 				if c.has_node("orbit_holder"):
 					for m in c.get_node("orbit_holder").get_children():
 						var nam = m.get_node("Label").get_text()
 						if line[0] == nam:
-							print("Name fits data, setup @ " + str(line[1]) + " d: " + str(line[2]))
+							print("Name fits, setup @ " + str(line[1]) + " d: " + str(line[2]))
 							m.setup(int(line[1]), int(line[2]))
 					
 			#if data[3] == "planet":

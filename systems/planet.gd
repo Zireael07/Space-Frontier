@@ -56,10 +56,14 @@ func _ready():
 	
 	#setup()
 
-func setup(angle=0, dis=0):
+func setup(angle=0, dis=0, mas=0):
+	print("Setup: " + str(angle) + ", " + str(dis) + ", m: " + str(mas))
 	if angle != 0 or dis !=0:
 		# place
 		place(angle, dis)
+	
+	if mas != 0:
+		mass = mas
 	
 	dist = get_position().length()
 	var ls = dist/game.LIGHT_SEC
