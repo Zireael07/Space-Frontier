@@ -628,12 +628,15 @@ func make_planet_view(planet, select_id=-1):
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(sc2)
 			# experimentally determined values
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, -7))
-	# why the eff do the asteroid/moon crosses seem not to have material?
+	# why the eff do the asteroid/moon crosses/dwarf planets seem not to have material?
 	else:
 		if planet.is_in_group("moon"):
 			var sc = Vector2(1, 1)
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
-			
+		# Ceres
+		if planet.get_node("Label").get_text() == "Ceres":
+			var sc = Vector2(1, 1)
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
 		
 	# set label
 	var txt = "Planet: " + str(planet.get_node("Label").get_text())

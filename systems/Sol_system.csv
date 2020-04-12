@@ -6,4 +6,5 @@ Moon,0,300, moon
 Mars,0,1.5,0.107, planet
 Deimos,-30,400, moon
 Phobos,30,400, moon
+Ceres,0,2.77,0.00016, planet
 Jupiter,0,5.2,318, planet
