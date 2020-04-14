@@ -41,7 +41,18 @@ func _ready():
 					if line[0] == nam:
 						print("Name fits, setup @ " + str(line[1]) + " d: " + str(line[2]) + " m:" + str(line[3]))
 						# for planets, distance is given in AU
-						c.setup(int(line[1]), float(line[2])*game.AU, float(line[3]))
+						# the measure of mass varies by type
+						# by default, plain Earth masses
+						var mas = float(line[3])
+						# for moons or dwarf planets, Moon masses
+						if line[4] == " dwarf_planet":
+							mas = float(line[3])*game.MOON_MASS
+						# asteroids are given in Ceres masses (because otherwise the numbers'd be vanishingly small)
+						var Ceres = 0.0128*game.MOON_MASS
+						if line[4] == " asteroid":
+							mas = float(line[3])*Ceres
+							
+						c.setup(int(line[1]), float(line[2])*game.AU, mas)
 				# moons
 				if c.has_node("orbit_holder"):
 					for m in c.get_node("orbit_holder").get_children():
