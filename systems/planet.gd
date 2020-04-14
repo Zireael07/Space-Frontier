@@ -538,7 +538,9 @@ func update_HUD_colony_pop(planet, add):
 		var parent = hud.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo")
 		if add:
 			if parent.get_node(node).get_text().find("^") == -1:
-				var text = txt + " ^ " + " planet "
+				var text = txt + " ^ "
+				if not planet.is_in_group("moon"):
+					text = txt + " ^ " + " planet "
 				if aster:
 					text = txt + " ^ " + " asteroid "
 				parent.get_node(node).set_text(text)

@@ -73,3 +73,5 @@ autostart = true
 wait_time = 20.0
 autostart = true
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="timeout" from="pop_timer" to="." method="_on_pop_timer_timeout"]
+[connection signal="timeout" from="module_timer" to="." method="_on_module_timer_timeout"]
