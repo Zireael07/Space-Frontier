@@ -16,7 +16,7 @@ func _ready():
 
 	planets = get_tree().get_nodes_in_group("planets")
 
-	# connect the signal
+	# connect the signals
 
 	# targeting signals
 	for e in get_tree().get_nodes_in_group("enemy"):
@@ -84,7 +84,12 @@ func _ready():
 		# does it have enough pop for a colony?
 		if p.population > 51/1000.0: # in milions
 			txt = txt + " ^ "
-			
+		# write down type
+		var type = "planet"
+		if p.is_in_group("aster_named"):
+			type = "asteroid"
+		txt = txt + "     " + " " + str(type)
+		
 		label.set_text(txt)
 		label.set_position(Vector2(10,y))
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
@@ -98,6 +103,11 @@ func _ready():
 		elif col and col == "enemy_col":
 			# tint red
 			label.set_self_modulate(Color(1, 0, 0))
+		
+		# tint light gray for asteroids
+		elif p.is_in_group("aster_named"):
+			label.set_self_modulate(Color(0.75,0.75, 0.75))
+			
 		y += 15
 		if p.has_moon():
 			var x = 15 # indent moons

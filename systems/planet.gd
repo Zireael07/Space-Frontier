@@ -526,17 +526,23 @@ func has_colony():
 func update_HUD_colony_pop(planet, add):
 	var node = null
 	var hud = game.player.HUD
+	var txt = planet.get_node("Label").get_text()
+	var aster = planet.is_in_group("aster_named")
 	# get label
 	for l in hud.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").get_children():
 		# because ordering in groups cannot be relied on 100%
-		if l.get_text().find(planet.get_node("Label").get_text()) != -1:
+		if l.get_text().find(txt) != -1:
 			node = l.get_name()
 	
 	if node:
 		var parent = hud.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo")
 		if add:
 			if parent.get_node(node).get_text().find("^") == -1:
-				parent.get_node(node).set_text(parent.get_node(node).get_text() + " ^ ")
+				var text = txt + " ^ " + " planet "
+				if aster:
+					text = txt + " ^ " + " asteroid "
+				parent.get_node(node).set_text(text)
+				#parent.get_node(node).set_text(parent.get_node(node).get_text() + " ^ ")
 		else:
 			# remove flag
 			if parent.get_node(node).get_text().find("^") != -1:
