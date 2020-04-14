@@ -633,8 +633,9 @@ func make_planet_view(planet, select_id=-1):
 		if planet.is_in_group("moon"):
 			var sc = Vector2(1, 1)
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
-		# Ceres
-		if planet.get_node("Label").get_text() == "Ceres":
+		# others
+		var names = ["Ceres", "Pallas", "Vesta"]
+		if planet.get_node("Label").get_text() in names:
 			var sc = Vector2(1, 1)
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
 		

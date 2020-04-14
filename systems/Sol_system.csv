@@ -7,4 +7,6 @@ Mars,0,1.5,0.107, planet
 Deimos,-30,400, moon
 Phobos,30,400, moon
 Ceres,0,2.77,0.00016, planet
+Vesta,0,2.36,0.00000000000000448, planet
+Pallas,4,2.774,0.0000000000101, planet
 Jupiter,0,5.2,318, planet

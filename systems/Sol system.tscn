@@ -288,6 +288,50 @@ text = "Ceres"
 [node name="CollisionShape2D" parent="planet_holder/planet6/Area2D" index="0"]
 shape = SubResource( 9 )
 
+[node name="planet7" parent="planet_holder" instance=ExtResource( 3 )]
+position = Vector2( -0.00123791, 28320 )
+z_index = 2
+planet_rad_factor = 0.25
+data = Vector2( 28320, 0 )
+mass = 4.48e-15
+hydro = 0.0
+
+[node name="Sprite" parent="planet_holder/planet7" index="0"]
+scale = Vector2( 1, 1 )
+texture = ExtResource( 5 )
+
+[node name="Label" parent="planet_holder/planet7" index="1"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 102.0
+margin_bottom = 64.0
+text = "Vesta"
+
+[node name="CollisionShape2D" parent="planet_holder/planet7/Area2D" index="0"]
+shape = SubResource( 9 )
+
+[node name="planet8" parent="planet_holder" instance=ExtResource( 3 )]
+position = Vector2( -2322.05, 33206.9 )
+z_index = 2
+planet_rad_factor = 0.25
+data = Vector2( 32808, 0 )
+mass = 1.01e-11
+hydro = 0.0
+
+[node name="Sprite" parent="planet_holder/planet8" index="0"]
+scale = Vector2( 1, 1 )
+texture = ExtResource( 5 )
+
+[node name="Label" parent="planet_holder/planet8" index="1"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 102.0
+margin_bottom = 64.0
+text = "Pallas"
+
+[node name="CollisionShape2D" parent="planet_holder/planet8/Area2D" index="0"]
+shape = SubResource( 9 )
+
 [node name="planet5" parent="planet_holder" groups=[
 "planets",
 ] instance=ExtResource( 4 )]
@@ -322,5 +366,9 @@ text = "Jupiter"
 [editable path="planet_holder/planet2/orbit_holder/planet2"]
 
 [editable path="planet_holder/planet6"]
+
+[editable path="planet_holder/planet7"]
+
+[editable path="planet_holder/planet8"]
 
 [editable path="planet_holder/planet5"]
