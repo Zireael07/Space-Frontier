@@ -630,12 +630,7 @@ func make_planet_view(planet, select_id=-1):
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, -7))
 	# why the eff do the asteroid/moon crosses/dwarf planets seem not to have material?
 	else:
-		if planet.is_in_group("moon"):
-			var sc = Vector2(1, 1)
-			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
-		# others
-		var names = ["Ceres", "Pallas", "Vesta"]
-		if planet.get_node("Label").get_text() in names:
+		if planet.is_in_group("moon") or planet.is_in_group("aster_named"):
 			var sc = Vector2(1, 1)
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
 		
@@ -689,6 +684,14 @@ func make_planet_view(planet, select_id=-1):
 	var format_tempC = "(%d C)" % (planet.temp-273.15)
 	var format_atm = "%.2f atm" % planet.atm
 	var format_greenhouse = "%d " % planet.greenhouse_diff()
+	# format mass depending on what body we're looking at
+	var format_mass = "%.3f Earth masses" % (planet.mass)
+	if planet.is_in_group("moon") or planet.get_node("Label").get_text() == "Ceres":
+		format_mass = "%.3f Moon masses" % (planet.mass/game.MOON_MASS)
+	# otherwise the numbers would be vanishingly small
+	if planet.is_in_group("aster_named") and planet.get_node("Label").get_text() != "Ceres":
+		var Ceres = 0.0128*game.MOON_MASS
+		format_mass = "%.2f Ceres masses (1 = 0.0128 Moon masses)" % (planet.mass/Ceres) 
 
 	# linebreak because of planet graphic on the right
 	#var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
@@ -699,7 +702,7 @@ func make_planet_view(planet, select_id=-1):
 	# lots of linebreaks because of planet graphic on the right
 	text = text + "\n" + "Orbital radius: " + "\n" + str(format_AU) + "\n" + "period: " + "\n" + str(format_days)
 	# those parameters have been present in the original game
-	text = text + "\n" + "Mass: " + str(planet.mass) + "\n" + \
+	text = text + "\n" + "Mass: " + str(format_mass) + "\n" + \
 	"Pressure: " + str(format_atm) + "\n" + \
 	"Gravity: " + str(format_grav) + "\n" + \
 	"Temperature: " + str(format_temp) + " " + str(format_tempC) + " \n"

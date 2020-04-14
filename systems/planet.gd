@@ -74,7 +74,7 @@ func setup(angle=0, dis=0, mas=0):
 		# can't be both a moon and a planet
 		if is_in_group("planets"):
 			remove_from_group("planets")
-		mass = 0.0123 #Earth masses
+		mass = game.MOON_MASS #in Earth masses
 	else:
 		temp = calculate_temperature()
 		calculate_orbit_period()

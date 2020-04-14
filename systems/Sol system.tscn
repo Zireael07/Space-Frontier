@@ -267,7 +267,9 @@ radius = 2.5
 num = 80
 angle_inc = 3
 
-[node name="planet6" parent="planet_holder" instance=ExtResource( 3 )]
+[node name="planet6" parent="planet_holder" groups=[
+"aster_named",
+] instance=ExtResource( 3 )]
 position = Vector2( -0.00145297, 33240 )
 z_index = 2
 planet_rad_factor = 0.25
@@ -288,7 +290,9 @@ text = "Ceres"
 [node name="CollisionShape2D" parent="planet_holder/planet6/Area2D" index="0"]
 shape = SubResource( 9 )
 
-[node name="planet7" parent="planet_holder" instance=ExtResource( 3 )]
+[node name="planet7" parent="planet_holder" groups=[
+"aster_named",
+] instance=ExtResource( 3 )]
 position = Vector2( -0.00123791, 28320 )
 z_index = 2
 planet_rad_factor = 0.25
@@ -310,7 +314,9 @@ text = "Vesta"
 [node name="CollisionShape2D" parent="planet_holder/planet7/Area2D" index="0"]
 shape = SubResource( 9 )
 
-[node name="planet8" parent="planet_holder" instance=ExtResource( 3 )]
+[node name="planet8" parent="planet_holder" groups=[
+"aster_named",
+] instance=ExtResource( 3 )]
 position = Vector2( -2322.05, 33206.9 )
 z_index = 2
 planet_rad_factor = 0.25
