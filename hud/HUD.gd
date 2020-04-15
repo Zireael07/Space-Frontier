@@ -727,7 +727,10 @@ func make_planet_view(planet, select_id=-1):
 	var dist = game.player.get_global_position().distance_to(planet.get_global_position())
 	#print("Dist to planet: " + str(dist))
 	var ls_travel = dist/game.LIGHT_SEC
-	var format_time = "%.2f s" % ls_travel
+	var format_time = "%d s" % ls_travel
+	if ls_travel > 60.0:
+		var mins = int(round(ls_travel/60))
+		format_time = "%02d:%02d" % [mins, (ls_travel-(mins*60))]  # MM:SS
 	var travel_time = "Est. travel time @ 1.00c: " + format_time
 
 	if dist > 400: # i.e. LIGHT_SPEED = LIGHT_SEC
