@@ -723,6 +723,18 @@ func make_planet_view(planet, select_id=-1):
 
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 
+	# tooltip
+	var dist = game.player.get_global_position().distance_to(planet.get_global_position())
+	#print("Dist to planet: " + str(dist))
+	var ls_travel = dist/game.LIGHT_SEC
+	var format_time = "%.2f s" % ls_travel
+	var travel_time = "Est. travel time @ 1.00c: " + format_time
+
+	if dist > 400: # i.e. LIGHT_SPEED = LIGHT_SEC
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".set_tooltip(travel_time)
+	else:
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".set_tooltip("")
+		
 	# connected from script because they rely on ID of the planet
 	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".is_connected("pressed", player, "_on_goto_pressed"):
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".disconnect("pressed", player, "_on_goto_pressed")
