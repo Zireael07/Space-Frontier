@@ -201,7 +201,16 @@ func _input(_event):
 			
 		else:
 			$"Control4/map view".hide()
-			
+	
+	# move markers by keyboard
+	if Input.is_action_pressed("arrow_up"):
+		# planet list open
+		if get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
+			_on_ButtonUp2_pressed()
+	if Input.is_action_pressed("arrow_down"):
+		# planet list open
+		if get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
+			_on_ButtonDown2_pressed()
 	
 	if Input.is_action_pressed("orders"):
 		if not paused:
