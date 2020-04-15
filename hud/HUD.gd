@@ -610,6 +610,11 @@ func _on_ButtonView_pressed():
 		make_planet_view(planet, select_id)
 
 func make_planet_view(planet, select_id=-1):
+	# richtextlabel scrollbar
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".scroll_to_line(0)
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".get_v_scroll().set_scale(Vector2(2, 1))
+	
+	
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	# reset
