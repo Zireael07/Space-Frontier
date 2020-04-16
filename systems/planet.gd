@@ -554,7 +554,7 @@ func update_HUD_colony_pop(planet, add):
 
 func _on_pop_timer_timeout():
 	if has_colony():
-		print("Pop increase")
+		#print("Pop increase")
 		population += 1/1000.0 # in milions
 	
 	# does it have enough pop for a colony?
@@ -577,12 +577,12 @@ func enough_modules():
 	else:
 		enough = true
 	
-	print("Enough modules: " + str(enough))
+	#print("Enough modules: " + str(enough))
 	return enough
 
 func _on_module_timer_timeout():
 	if has_colony() and not enough_modules():
-		print("Module timer")
+		#print("Module timer")
 		var pos = get_global_position()
 		var mo = module.instance()
 		mo.get_child(0).module = 3 # cloak

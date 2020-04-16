@@ -178,13 +178,13 @@ func get_friendly_base():
 	if is_in_group("friendly") or get_parent().is_in_group("player"):	
 	#	print(str(bases))
 		for b in bases:
-			print(b.get_name())
+			#print(b.get_name())
 			if not b.is_in_group("enemy"):
 				#print(b.get_name() + " is not enemy")
 				return b
 	elif is_in_group("enemy"):
 		for b in bases:
-			print(b.get_name())
+			#print(b.get_name())
 			if b.is_in_group("enemy"):
 				#print(b.get_name() + " is enemy")
 				return b

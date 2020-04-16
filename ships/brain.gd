@@ -102,17 +102,39 @@ func _go_mine():
 	else:
 		return false
 
-func task_orbiting(conquer_tg):
-	# if player-specified colony target is not colonized
-	# or we have a colonize target (planet w/o colony)
-	if conquer_tg != null or ship.get_colonize_target() != null:
-		if ship.get_colony_in_dock() == null:
-			if ship.kind_id == ship.kind.friendly:
-				# are we of high enough rank to be tasked with colonizing?
-				if ship.rank > 0: 
-					# pick up colony from planet
-					if not ship.pick_colony():
-						print("We can't pick colony now, go do something else...")
+func task_orbiting(timer_count, conquer_tg):
+	# prevent too short orbiting
+	if timer_count > 2:
+		# if player-specified colony target is not colonized
+		# or we have a colonize target (planet w/o colony)
+		if conquer_tg != null or ship.get_colonize_target() != null:
+			if ship.get_colony_in_dock() == null:
+				if ship.kind_id == ship.kind.friendly:
+					# are we of high enough rank to be tasked with colonizing?
+					if ship.rank > 0: 
+						# pick up colony from planet
+						if not ship.pick_colony():
+							print("We can't pick colony now, go do something else...")
+							ship.deorbit()
+							var try_mine = _go_mine()
+							if not try_mine:
+								#if get_colonized_planet().has_moon():
+									# random chance to head for a moon
+									#randomize()
+									#if randi() % 20 > 10:
+									#	brain.target = get_colonized_planet().get_moon().get_global_position()
+									#else:
+									
+								# orbit again
+								set_state(STATE_ORBIT, ship.get_colonized_planet())
+						else:
+							# deorbit
+							ship.deorbit()	
+							# explicitly go colonize
+							_colonize(conquer_tg)
+					# AI cadet
+					else:
+						# deorbit
 						ship.deorbit()
 						var try_mine = _go_mine()
 						if not try_mine:
@@ -125,46 +147,28 @@ func task_orbiting(conquer_tg):
 								
 							# orbit again
 							set_state(STATE_ORBIT, ship.get_colonized_planet())
-					else:
-						# explicitly go colonize
-						_colonize(conquer_tg)
-				# AI cadet
+				
+				# if we're an enemy
 				else:
-					# deorbit
-					ship.deorbit()
-					var try_mine = _go_mine()
-					if not try_mine:
-						#if get_colonized_planet().has_moon():
-							# random chance to head for a moon
-							#randomize()
-							#if randi() % 20 > 10:
-							#	brain.target = get_colonized_planet().get_moon().get_global_position()
-							#else:
-							
-						# orbit again
-						set_state(STATE_ORBIT, ship.get_colonized_planet())
-			
-			# if we're an enemy
+					#print("Blockading a planet")
+					pass
 			else:
-				#print("Blockading a planet")
-				pass
+				# deorbit
+				ship.deorbit()		
+				_colonize(conquer_tg)
+	
+		# if nowhere to colonize
 		else:
-			# deorbit
-			ship.deorbit()		
-			_colonize(conquer_tg)
-
-	# if nowhere to colonize
-	else:
-		var try_mine = _go_mine()
-		if try_mine:
-			ship.deorbit()
-		#_go_mine()
+			var try_mine = _go_mine()
+			if try_mine:
+				ship.deorbit()
+			#_go_mine()
 
 # timer count is governed by ship
 func _on_task_timer_timeout(timer_count):
 	var conquer_tg = get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target 
 	if ship.orbiting:
-		task_orbiting(conquer_tg)
+		task_orbiting(timer_count, conquer_tg)
 
 	else:
 		# if we somehow picked up a colony and aren't colonizing, offload it first
@@ -174,7 +178,7 @@ func _on_task_timer_timeout(timer_count):
 			if not try_col: 
 				set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 			
-		if not (get_state() in [STATE_IDLE, STATE_MINE, STATE_REFIT, STATE_COLONIZE, STATE_ATTACK, STATE_GO_PLANET]):
+		if not (get_state() in [STATE_IDLE, STATE_MINE, STATE_REFIT, STATE_COLONIZE, STATE_ATTACK, STATE_GO_PLANET, STATE_ORBIT]):
 			_go_mine()
 
 		if not (get_state() == STATE_ATTACK) and not ship.docked:
@@ -725,10 +729,10 @@ class MineState:
 		else:
 			# if shot and no resource (e.g. because someone else picked it up)
 			if shot:
-				print("Someone picked our resource")
+				#print("Someone picked our resource")
 				# not enough dist to fire a 2nd shot
 				if ship.get_global_position().distance_to(ship.target) < 80:
-					print("Unstick...")
+					#print("Unstick...")
 					ship.set_state(STATE_IDLE)
 					# unstick vector
 					ship.target = object.get_global_position() + Vector2(50,50)

@@ -134,7 +134,7 @@ func get_colonize_target():
 	
 	for t in targs:
 		if t[0] == pops[0]:
-			#print("Colonize target planet is : " + t[1].get_name())
+			print("Colonize target planet is : " + t[1].get_node("Label").get_text())
 			
 			# get id in planets list (it's guaranteed to be in it because of step #1 of our search
 			var id = planets.find(t[1])
