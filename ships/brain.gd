@@ -97,6 +97,14 @@ func _go_mine():
 		# default amount we return at
 		var amt = 4
 		target = closest.get_global_position()
+		# get the base
+		var base = ship.get_friendly_base()
+		if base != null:
+			var dist = target.distance_to(base.get_global_position())
+			print("Dist: " + str(dist))
+			amt = int(round(dist/400))
+			print("Calculated amount to return at " + str(amt))
+			
 		set_state(STATE_MINE, [closest, amt, 0])
 		return true
 	else:
