@@ -284,52 +284,83 @@ func get_colony_in_dock():
 	else:
 		return null
 
+func send_pop_from_planet(planet):
+	# if planet has too few pop to begin with
+	if planet.population < 51/1000.0:
+		return null
+
+	var pop = 1.0
+
+	# decrease planet pop
+	# if more than 4B, pick up 1B at a time for ease of playing
+	if planet.population > 4000.0:
+		pop = 1000.0
+	elif planet.population > 51/1000.0: # don't bring it to 0K!
+		pop = 50/1000.0
+		
+	# update planet and HUD
+	planet.population -= pop
+	if planet.population < 51/1000.0:
+		planet.update_HUD_colony_pop(planet, false)
+		
+	return pop
+
 func pick_colony():
 	var pl = orbiting.get_parent()
 	print("Orbiting planet: " + pl.get_name())
 	
-	# if planet has too few pop to begin with
-	if pl.population < 51/1000.0:
-		return false	
-
-	var pop = 0.0
-
-	# decrease planet pop
-	# if more than 4B, pick up 1B at a time for ease of playing
-	if pl.population > 4000.0:
-		pop = 1000.0
-	elif pl.population > 51/1000.0: # don't bring it to 0K!
-		pop = 50/1000.0
+	var pop = send_pop_from_planet(pl)
+	
+	if pop != null:
+		print("Creating colony...")
+		# create colony
+		var co = colony.instance()
+		add_child(co)
+		# actual colony node
+		var col = co.get_child(0)
+		# set its pop
+		col.population = pop
+		# formatting
+		var format_pop = "%.2fK" % (col.population * 1000)
+		if col.population >= 1.0:
+			format_pop = "%.2fM" % (col.population)
+		if col.population >= 1000.0:
+			format_pop = "%.2fB" % (col.population/1000.0)
+		# show pop label
+		col.get_node("Label").set_text(str(format_pop))
 		
-	# update planet and HUD
-	pl.population -= pop
-	if pl.population < 51/1000.0:
-		pl.update_HUD_colony_pop(pl, false)
+		# place colony in dock
+		co.set_position(get_node("dock").get_position())
+		# don't overlap
+		co.set_z_index(-1)
+		# emit signal
+		emit_signal("colony_picked", co)
+		# connect signals
+		# "colony" is a group of the parent of colony itself
+		co.get_child(0).connect("colony_colonized", game.player.HUD, "_on_colony_colonized")
+		return true
+	else:
+		return false
+
+func add_to_colony():
+	var pl = orbiting.get_parent()
+	print("Orbiting planet: " + pl.get_name())
 	
-	print("Creating colony...")
-	# create colony
-	var co = colony.instance()
-	add_child(co)
-	# actual colony node
-	var col = co.get_child(0)
-	# set its pop
-	col.population = pop
-	# formatting
-	var format_pop = "%.2fK" % (col.population * 1000)
-	if col.population >= 1.0:
-		format_pop = "%.2fM" % (col.population)
-	if col.population >= 1000.0:
-		format_pop = "%.2fB" % (col.population/1000.0)
-	# show pop label
-	col.get_node("Label").set_text(str(format_pop))
+	var pop = send_pop_from_planet(pl)
 	
-	# place colony in dock
-	co.set_position(get_node("dock").get_position())
-	# don't overlap
-	co.set_z_index(-1)
-	# emit signal
-	emit_signal("colony_picked", co)
-	# connect signals
-	# "colony" is a group of the parent of colony itself
-	co.get_child(0).connect("colony_colonized", game.player.HUD, "_on_colony_colonized")
-	return true
+	if pop != null:
+		var col = get_colony_in_dock().get_child(0)
+		#print("Adding " + str(pop) + " to colony of " + str(col.population))
+		# set its pop
+		col.population = col.population + pop
+		# formatting
+		var format_pop = "%.2fK" % (col.population * 1000)
+		if col.population >= 1.0:
+			format_pop = "%.2fM" % (col.population)
+		if col.population >= 1000.0:
+			format_pop = "%.2fB" % (col.population/1000.0)
+		# show pop label
+		col.get_node("Label").set_text(str(format_pop))
+		return true
+	else:
+		return false

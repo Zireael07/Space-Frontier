@@ -302,12 +302,19 @@ func _input(_event):
 		if not orbiting:
 			print("Not orbiting")
 		else:
-			var col = pick_colony()
-			if col:
-				emit_signal("officer_message", "We have picked up a colony. Transport it to a planet and press / to drop it.")
-				
+			if get_colony_in_dock() == null:
+				var col = pick_colony()
+				if col:
+					emit_signal("officer_message", "We have picked up a colony. Transport it to a planet and press / to drop it.")
+				else:
+					print("Planet has too little pop to create colony")
 			else:
-				print("Planet has too little pop to create colony")
+				var added = add_to_colony()
+				if added:
+					emit_signal("officer_message", "We have picked up additional colonists.")
+				
+				
+			
 			
 	
 	if Input.is_action_pressed("orbit"):
@@ -323,7 +330,11 @@ func _input(_event):
 			if pl[1].has_node("orbit_holder"):
 				orbit_planet(pl[1])
 				
-				emit_signal("officer_message", "Orbit established. Press J to request a colony")
+				var txt = "Orbit established."
+				if pl[1].has_colony():
+					txt += " Press J to request a colony"
+				
+				emit_signal("officer_message", txt)
 	
 	if Input.is_action_pressed("refit"):
 		print("Want to refit")
