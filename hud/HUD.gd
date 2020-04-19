@@ -211,6 +211,14 @@ func _input(_event):
 		# planet list open
 		if get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
 			_on_ButtonDown2_pressed()
+	if Input.is_action_pressed("ui_accept"):
+		# planet list open
+		if get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
+			_on_ButtonView_pressed()
+	if Input.is_action_pressed("ui_back"):
+		# if we have a planet view open
+		if get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
+			_on_BackButton_pressed()
 	
 	if Input.is_action_pressed("orders"):
 		if not paused:
