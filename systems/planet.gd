@@ -514,6 +514,16 @@ func _on_planet_orbited(ship):
 
 func remove_orbiter(ship):
 	orbiters.remove(orbiters.find(ship))
+	
+func get_hostile_orbiter():
+	var ret = null
+	for o in orbiters:
+		if o.is_in_group("enemy"):
+			ret = o
+			print("Found hostile orbiter: " + str(orbiter.get_parent().get_name()))
+			break
+	
+	return ret
 
 func has_colony():
 	var ret = false

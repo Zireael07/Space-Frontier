@@ -111,6 +111,17 @@ func _go_mine():
 		return false
 
 func task_orbiting(timer_count, conquer_tg):
+	# check for enemies orbiting
+	#var hostile = null
+	if timer_count > 1:
+		var hostile = ship.get_colonized_planet().get_hostile_orbiter()
+		if hostile:
+			# deorbit
+			ship.deorbit()
+			set_state(STATE_ATTACK, hostile)
+			
+			
+	
 	# prevent too short orbiting
 	if timer_count > 2:
 		# if player-specified colony target is not colonized
@@ -459,9 +470,18 @@ class AttackState:
 			print("Set state to: " + str(ship.get_state()))
 			return
 		
+		# target is a Node here
 		if is_instance_valid(target):
-			# steering behavior
-			steer = ship.set_heading(target.get_global_position())
+			#print("Tg pos: " + str(target.get_global_position()))
+			var rel_pos = ship.get_global_transform().xform_inv(target.get_global_position())
+			#print("Rel pos: " + str(rel_pos))
+			var dist = ship.get_global_position().distance_to(target.get_global_position())
+			if dist < 150:
+				# steering behavior
+				steer = ship.set_heading(target.get_global_position())
+			else:
+				steer = ship.get_steering_seek(target.get_global_position())
+				
 		# if target was killed, bail out immediately
 		else:
 			#print("[Target killed] Prev state: " + str(ship.prev_state))
@@ -485,20 +505,25 @@ class AttackState:
 			if dist < 150:
 				#print("Shooting" + str(enemy.get_parent().get_name()))
 				ship.ship.shoot_wrapper()
-			# don't attack if enemy is too far
 			else:
-				# this way, we also pass the parameters
-				ship.set_state(ship.prev_state[0], ship.prev_state[1])
-				#print("Set state to: " + str(ship.get_state()))
-				
-#				if ship.prev_state[0] != STATE_IDLE:
-#					# this way, we also pass the parameters
-#					ship.set_state(ship.prev_state[0], ship.prev_state[1])
-#					#print("Set state to: " + str(ship.get_state()))
-#				else:
-#					ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
-
-				return
+				# approach any orbiting or enemies close to our planet
+				var rad_f = ship.ship.get_colonized_planet().planet_rad_factor
+				if (enemy.orbiting or enemy.get_global_position().distance_to(ship.ship.get_colonized_planet().get_global_position()) < 350*rad_f):
+					pass
+				# don't attack if enemy is too far
+				else:
+					# this way, we also pass the parameters
+					#ship.set_state(ship.prev_state[0], ship.prev_state[1])
+					#print("Set state to: " + str(ship.get_state()))
+					
+					if ship.prev_state[0] != STATE_IDLE:
+						# this way, we also pass the parameters
+						ship.set_state(ship.prev_state[0], ship.prev_state[1])
+						#print("Set state to: " + str(ship.get_state()))
+					else:
+						ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
+	
+					return
 		else:
 			# this way, we also pass the parameters
 			#print("Prev state: " + str(ship.prev_state))
