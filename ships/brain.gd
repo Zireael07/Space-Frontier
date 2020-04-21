@@ -512,15 +512,13 @@ class AttackState:
 					pass
 				# don't attack if enemy is too far
 				else:
-					# this way, we also pass the parameters
-					#ship.set_state(ship.prev_state[0], ship.prev_state[1])
-					#print("Set state to: " + str(ship.get_state()))
-					
 					if ship.prev_state[0] != STATE_IDLE:
 						# this way, we also pass the parameters
 						ship.set_state(ship.prev_state[0], ship.prev_state[1])
 						#print("Set state to: " + str(ship.get_state()))
 					else:
+						# print("Go planet")
+						# this will be true e.g. after deorbiting, as deorbiting sets state to IDLE!
 						ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
 	
 					return
