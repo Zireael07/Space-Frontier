@@ -379,6 +379,10 @@ func _input(_event):
 		self.HUD.switch_to_navi()
 		
 	if Input.is_action_pressed("go_planet"):
+		# no warping if we are hauling a colony
+		if get_colony_in_dock() != null:
+			emit_signal("officer_message", "Too heavy to engage Q-drive")
+			return
 		# if already warping, abort
 		if warping:
 			print("Aborting q-drive...")
@@ -605,6 +609,14 @@ func _on_goto_pressed(planet):
 	
 	
 func on_warping():
+	if orbiting:
+		deorbit()
+	
+	# no warping if we are hauling a colony
+		if get_colony_in_dock() != null:
+			emit_signal("officer_message", "Too heavy to engage Q-drive")
+			return
+	
 	if power < warp_power_draw:
 		emit_signal("officer_message", "Insufficient power for Q-drive")
 		return
