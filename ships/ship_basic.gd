@@ -171,7 +171,26 @@ func deorbit():
 	pos = Vector2(0,0)
 			
 	set_global_rotation(get_global_rotation())
-	
+
+
+func is_overheating():
+	var star = get_tree().get_nodes_in_group("star")[0]
+	var dist = star.get_global_position().distance_to(get_global_position())
+	if dist < 550* star.star_radius_factor and not warping:
+		return true
+	else:
+		return false
+
+func close_to_sun():
+	var star = get_tree().get_nodes_in_group("star")[0]
+	var dist = star.get_global_position().distance_to(get_global_position())
+	# some margin compared to is_overheating to have time to react
+	if dist < 650* star.star_radius_factor and not warping:
+		return true
+	else:
+		return false		
+
+# ----------------------	
 func get_friendly_base():
 	var bases = get_tree().get_nodes_in_group("starbase")
 	

@@ -256,9 +256,7 @@ func _process(delta):
 	get_node("Camera2D").align()
 	
 	# overheat damage
-	var star = get_tree().get_nodes_in_group("star")[0]
-	var dist = star.get_global_position().distance_to(get_global_position())
-	if dist < 550* star.star_radius_factor and not warping:
+	if is_overheating():
 		#print("distance to star: " + str(dist))
 		if get_node("heat_timer").get_time_left() == 0:
 			heat_damage()
