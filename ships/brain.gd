@@ -105,6 +105,9 @@ func _go_mine():
 			amt = int(round(dist/400))
 			print("Calculated amount to return at " + str(amt))
 			
+		# deorbit
+		ship.deorbit()
+			
 		set_state(STATE_MINE, [closest, amt, 0])
 		return true
 	else:
@@ -134,9 +137,9 @@ func task_orbiting(timer_count, conquer_tg):
 						# pick up colony from planet
 						if not ship.pick_colony():
 							print("We can't pick colony now, go do something else...")
-							ship.deorbit()
+							#ship.deorbit()
 							var try_mine = _go_mine()
-							if not try_mine:
+							#if not try_mine:
 								#if get_colonized_planet().has_moon():
 									# random chance to head for a moon
 									#randomize()
@@ -145,7 +148,7 @@ func task_orbiting(timer_count, conquer_tg):
 									#else:
 									
 								# orbit again
-								set_state(STATE_ORBIT, ship.get_colonized_planet())
+							#	set_state(STATE_ORBIT, ship.get_colonized_planet())
 						else:
 							# deorbit
 							ship.deorbit()	
@@ -154,9 +157,9 @@ func task_orbiting(timer_count, conquer_tg):
 					# AI cadet
 					else:
 						# deorbit
-						ship.deorbit()
+						#ship.deorbit()
 						var try_mine = _go_mine()
-						if not try_mine:
+						#if not try_mine:
 							#if get_colonized_planet().has_moon():
 								# random chance to head for a moon
 								#randomize()
@@ -165,7 +168,7 @@ func task_orbiting(timer_count, conquer_tg):
 								#else:
 								
 							# orbit again
-							set_state(STATE_ORBIT, ship.get_colonized_planet())
+						#	set_state(STATE_ORBIT, ship.get_colonized_planet())
 				
 				# if we're an enemy
 				else:
@@ -179,8 +182,8 @@ func task_orbiting(timer_count, conquer_tg):
 		# if nowhere to colonize
 		else:
 			var try_mine = _go_mine()
-			if try_mine:
-				ship.deorbit()
+			#if try_mine:
+			#	ship.deorbit()
 			#_go_mine()
 
 # timer count is governed by ship
