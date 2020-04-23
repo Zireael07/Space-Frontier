@@ -109,6 +109,35 @@ func get_colonized_planet():
 #		print("No colonized planet found")
 #		return null
 
+func get_planet_colony_available():
+	var ps = []
+	var planets = get_tree().get_nodes_in_group("planets")
+	for p in planets:
+		# is it colonized?
+		var col = p.has_colony()
+		if col and col == "colony":
+			ps.append(p)
+
+	var pops = []
+	var targs = []
+	
+	for p in ps:
+		var pop = p.population
+		pops.append(pop)
+		targs.append([pop, p])
+
+	# sorts by population, ascending
+	pops.sort()
+	#print("Pops sorted: " + str(pops))
+
+	
+	# get the one with the biggest pop
+	for t in targs:
+		if t[0] == pops[pops.size()-1]:
+			print("Colony pickup target is : " + t[1].get_parent().get_name())
+			
+			return t[1]
+
 func get_colonize_target():
 	var ps = []
 	var planets = get_tree().get_nodes_in_group("planets")
