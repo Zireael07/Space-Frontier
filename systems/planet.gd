@@ -558,8 +558,11 @@ func update_HUD_colony_pop(planet, add):
 		else:
 			# remove flag
 			if parent.get_node(node).get_text().find("^") != -1:
+				#print("Should be removing mark for " + str(parent.get_node(node).get_text()))
 				var text = parent.get_node(node).get_text()
-				parent.get_node(node).set_text(text.rstrip(" ^ "))
+				var spl = text.split("^")
+				#print(spl)
+				parent.get_node(node).set_text(spl[0] + " " + spl[1])
 
 
 func _on_pop_timer_timeout():

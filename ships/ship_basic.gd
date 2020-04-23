@@ -287,6 +287,7 @@ func get_colony_in_dock():
 func send_pop_from_planet(planet):
 	# if planet has too few pop to begin with
 	if planet.population < 51/1000.0:
+		planet.update_HUD_colony_pop(planet, false)
 		return null
 
 	var pop = 1.0
@@ -301,6 +302,7 @@ func send_pop_from_planet(planet):
 	# update planet and HUD
 	planet.population -= pop
 	if planet.population < 51/1000.0:
+		#print("Should update HUD for planet: " + str(planet.get_node("Label").get_text()))
 		planet.update_HUD_colony_pop(planet, false)
 		
 	return pop
