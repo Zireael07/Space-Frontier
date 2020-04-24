@@ -606,7 +606,14 @@ class ColonizeState:
 		ship.target = ship.get_tree().get_nodes_in_group("planets")[id-1].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
 		# steering behavior
-		var steer = ship.get_steering_seek(ship.target)	
+		var steer = ship.get_steering_seek(ship.target)
+		# avoid the sun
+		if ship.ship.close_to_sun():
+			var sun = ship.get_tree().get_nodes_in_group("star")[0].get_global_position()
+			# TODO: this should be weighted to avoid negating the seek completely
+			steer = steer + ship.get_steering_avoid(sun, ship.ship.get_rotation())
+			
+			
 		# normal case
 		ship.vel += steer
 	
@@ -650,7 +657,14 @@ class PlanetState:
 		ship.target = ship.get_tree().get_nodes_in_group("planets")[id].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
 		# steering behavior
-		var steer = ship.get_steering_seek(ship.target)	
+		var steer = ship.get_steering_seek(ship.target)
+		
+		# avoid the sun
+		if ship.ship.close_to_sun():
+			var sun = ship.get_tree().get_nodes_in_group("star")[0].get_global_position()
+			# TODO: this should be weighted to avoid negating the seek completely
+			steer = steer + ship.get_steering_avoid(sun, ship.ship.get_rotation())
+		#else:
 		# normal case
 		ship.vel += steer
 	
