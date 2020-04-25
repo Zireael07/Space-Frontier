@@ -149,6 +149,10 @@ func orbit_planet(planet):
 	# placement is handled by the planet in the signal
 	
 func deorbit():
+	# paranoia
+	if not orbiting:
+		return 
+		
 	var rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
 	#print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
 	
@@ -327,6 +331,10 @@ func send_pop_from_planet(planet):
 	return pop
 
 func pick_colony():
+	# paranoia
+	if not orbiting:
+		return
+	
 	var pl = orbiting.get_parent()
 	print("Orbiting planet: " + pl.get_name())
 	

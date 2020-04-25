@@ -106,7 +106,8 @@ func _go_mine():
 			print("Calculated amount to return at " + str(amt))
 			
 		# deorbit
-		ship.deorbit()
+		if ship.orbiting:
+			ship.deorbit()
 			
 		set_state(STATE_MINE, [closest, amt, 0])
 		return true
@@ -255,7 +256,7 @@ func _on_task_timer_timeout(timer_count):
 				# if task timeout happened and we're still mining, quit it
 				var tg_count = 4
 				if timer_count > tg_count:
-					print("We got stuck mining @ dist: " + str(dist))
+					#print("We got stuck mining @ dist: " + str(dist))
 					# assume we got bored, look for something else to do../
 					
 					# do we have something to colonize?
