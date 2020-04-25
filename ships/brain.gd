@@ -224,10 +224,26 @@ func _on_task_timer_timeout(timer_count):
 			else:
 				# undock if we regenerated enough shields
 				if ship.shields > 75:
-					var try_mine = _go_mine()
-					if not try_mine:		
-						# orbit again
-						set_state(STATE_ORBIT, ship.get_colonized_planet())
+					# if player-specified colony target is not colonized
+					# or we have a colonize target (planet w/o colony)
+					if conquer_tg != null or ship.get_colonize_target() != null:
+						if ship.get_colony_in_dock() == null:
+							if ship.kind_id == ship.kind.friendly:
+								# are we of high enough rank to be tasked with colonizing?
+								if ship.rank > 0: 
+									print("Going to a planet after refit")
+									# go to a planet
+									set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+								else:
+									var try_mine = _go_mine()
+									if not try_mine:		
+										# go to a planet
+										set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+					else:			
+						var try_mine = _go_mine()
+						if not try_mine:		
+							# go to a planet
+							set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 
 
 		if get_state() == STATE_MINE:
@@ -568,6 +584,8 @@ class RefitState:
 			# start timer
 			# task timer allows the AI to leave after some time passed
 			#ship.ship.task_timer.start()
+			
+		# refit state is exited by timer_timeout
 
 class ColonizeState:
 	var ship
