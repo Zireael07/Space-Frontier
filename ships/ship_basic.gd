@@ -156,12 +156,14 @@ func deorbit():
 	var rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
 	#print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
 	
-	# remove from list of planet orbiters
-	orbiting.get_parent().remove_orbiter(self)
+	orbiting.get_parent().emit_signal("planet_deorbited", self)
+	
+	# remove from list of a planet's orbiters
+	#orbiting.get_parent().remove_orbiter(self)
 	
 	orbiting = null
 			
-	print("Deorbiting, " + str(get_global_position()) + str(get_parent().get_global_position()))
+	#print("Deorbiting, " + str(get_global_position()) + str(get_parent().get_global_position()))
 			
 	# reparent
 	var root = get_node("/root/Control")

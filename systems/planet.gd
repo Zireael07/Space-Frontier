@@ -26,6 +26,7 @@ var targetted = false
 signal planet_targeted
 
 signal planet_orbited
+signal planet_deorbited
 var orbiters = []
 var orbiter
 var orbit_rot = 0
@@ -46,6 +47,7 @@ func _ready():
 	#print("Planet init")
 	set_z_index(game.PLANET_Z)
 	connect("planet_orbited", self, "_on_planet_orbited")
+	connect("planet_deorbited", self, "_on_planet_deorbited")
 	
 	labl_loc = $"Label".get_position()
 	
@@ -514,13 +516,25 @@ func _on_planet_orbited(ship):
 
 func remove_orbiter(ship):
 	orbiters.remove(orbiters.find(ship))
+
+func _on_planet_deorbited(ship):
+	remove_orbiter(ship)
+	# redraw (debugging)
+	update()
+	print("Ship " + ship.get_parent().get_name() + " deorbited: " + get_node("Label").get_text())
+	# give (enemy) ship a dummy target so that it doesn't idle towards the planet
+	if 'kind_id' in ship and ship.kind_id == ship.kind.enemy:
+		var offset = Vector2(400,400)
+		var tg = get_global_position() + offset
+		ship.brain.target = tg
 	
 func get_hostile_orbiter():
 	var ret = null
 	for o in orbiters:
+		#print(o.get_parent().get_name())
 		if o.is_in_group("enemy"):
 			ret = o
-			print("Found hostile orbiter: " + str(orbiter.get_parent().get_name()))
+			print("Found hostile orbiter: " + str(o.get_parent().get_name()))
 			break
 	
 	return ret
