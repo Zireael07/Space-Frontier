@@ -76,17 +76,21 @@ func _process(delta):
 	state.update(delta)
 
 # ------------------------------------------------------------------
-func _colonize(conquer_tg):
+# 'src_planet' is just for the officer msg
+func _colonize(conquer_tg, src_planet=null):
 	var col_id = ship.get_colonize_target()
 	if col_id != null or conquer_tg != null:
 		if conquer_tg != null:
 			col_id = conquer_tg
-		print("Colonize target " + str(col_id))
+		#print("Colonize target " + str(col_id))
 		set_state(STATE_COLONIZE, col_id)
 		# col_id is the real id+1 to avoid problems with state param being 0 (= null)
 		var col_tg = get_tree().get_nodes_in_group("planets")[col_id-1]
 		target = col_tg.get_global_position()
-		print("We have a colony, leaving for... " + str(col_tg.get_node("Label").get_text()))
+		#print("We have a colony, leaving for... " + str(col_tg.get_node("Label").get_text()))
+		if src_planet != null:
+			game.player.emit_signal("officer_message", 
+			"Colony departing " + str(src_planet.get_node("Label").get_text()) + " for " + str(col_tg.get_node("Label").get_text()))
 		return true
 	else:
 		return false
@@ -101,7 +105,7 @@ func _go_mine():
 		var base = ship.get_friendly_base()
 		if base != null:
 			var dist = target.distance_to(base.get_global_position())
-			print("Dist: " + str(dist))
+			#print("Dist: " + str(dist))
 			amt = int(round(dist/400))
 			print("Calculated amount to return at " + str(amt))
 			
@@ -155,10 +159,11 @@ func task_orbiting(timer_count, conquer_tg):
 								# orbit again
 							#	set_state(STATE_ORBIT, ship.get_colonized_planet())
 						else:
+							var src_planet = ship.orbiting.get_parent()
 							# deorbit
 							ship.deorbit()	
 							# explicitly go colonize
-							_colonize(conquer_tg)
+							_colonize(conquer_tg, src_planet)
 					# AI cadet
 					else:
 						var try_mine = _go_mine()
@@ -178,9 +183,10 @@ func task_orbiting(timer_count, conquer_tg):
 					#print("Blockading a planet")
 					pass
 			else:
+				var src_planet = ship.orbiting.get_parent()
 				# deorbit
 				ship.deorbit()		
-				_colonize(conquer_tg)
+				_colonize(conquer_tg, src_planet)
 	
 		# if nowhere to colonize
 		else:
@@ -196,7 +202,7 @@ func _on_task_timer_timeout(timer_count):
 	else:
 		# if we somehow picked up a colony and aren't colonizing, offload it first
 		if ship.get_colony_in_dock() != null and not (get_state() == STATE_COLONIZE):
-			var try_col = _colonize(conquer_tg)
+			var try_col = _colonize(conquer_tg, null)
 			# nothing more to colonize, go back to colonized planet
 			if not try_col: 
 				set_state(STATE_GO_PLANET, ship.get_colonized_planet())
