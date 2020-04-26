@@ -7,7 +7,9 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 23.0021
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" groups=[
+"colony",
+]]
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource( 1 )
