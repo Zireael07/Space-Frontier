@@ -152,11 +152,12 @@ func _on_bullet_area_entered( area ):
 		call_deferred("spawn_debris", deb, pos)
 		
 		# explosion
-		var expl = get_parent().get_parent().explosion.instance()
-		get_parent().get_parent().get_parent().add_child(expl)
-		expl.set_global_position(pos)
-		expl.set_scale(Vector2(0.5, 0.5))
-		expl.play()
+		if 'explosion' in get_parent().get_parent():
+			var expl = get_parent().get_parent().explosion.instance()
+			get_parent().get_parent().get_parent().add_child(expl)
+			expl.set_global_position(pos)
+			expl.set_scale(Vector2(0.5, 0.5))
+			expl.play()
 
 func spawn_debris(deb, pos):
 	get_parent().get_parent().get_parent().add_child(deb)

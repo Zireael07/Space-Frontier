@@ -25,7 +25,7 @@ func _on_lifetime_timeout():
 func _on_bullet_area_entered( area ):
 	if area.get_parent().get_groups().has("player") or area.get_groups().has("friendly"):
 		queue_free()
-		print(area.get_parent().get_name())
+		#print(area.get_parent().get_name())
 
 		var pos = area.get_global_position()
 
@@ -84,11 +84,13 @@ func _on_bullet_area_entered( area ):
 		call_deferred("spawn_debris", deb, pos)
 		
 		# explosion
-		var expl = get_parent().get_parent().explosion.instance()
-		get_parent().get_parent().get_parent().add_child(expl)
-		expl.set_global_position(pos)
-		expl.set_scale(Vector2(0.5, 0.5))
-		expl.play()
+		if 'explosion' in get_parent().get_parent():
+			var expl = get_parent().get_parent().explosion.instance()
+			get_parent().get_parent().get_parent().add_child(expl)
+			expl.set_global_position(pos)
+			expl.set_scale(Vector2(0.5, 0.5))
+			expl.play()
+		
 		return
 		
 	if area.get_parent().is_in_group("colony"):
@@ -96,11 +98,12 @@ func _on_bullet_area_entered( area ):
 			#print("Colony hit!")
 			area.emit_signal("distress_called", get_parent().get_parent())
 			
+			
 			queue_free()
 			
 			if 'armor' in area:
 				if area.armor > 0:
-					area.armor -= 20
+					area.armor -= 10
 					area.emit_signal("armor_changed", area.armor)
 				else:
 					# kill the colony
