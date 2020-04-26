@@ -122,12 +122,14 @@ func task_orbiting(timer_count, conquer_tg):
 	# check for enemies orbiting
 	#var hostile = null
 	if timer_count > 1:
-		var hostile = ship.get_colonized_planet().get_hostile_orbiter()
-		if hostile:
-			# deorbit
-			ship.deorbit()
-			set_state(STATE_ATTACK, hostile)
-			
+		if ship.kind_id == ship.kind.friendly:
+			var hostile = ship.get_colonized_planet().get_hostile_orbiter()
+			if hostile:
+				# deorbit
+				ship.deorbit()
+				set_state(STATE_ATTACK, hostile)
+		else:
+			pass
 			
 	
 	# prevent too short orbiting
@@ -286,7 +288,7 @@ func _on_task_timer_timeout(timer_count):
 			if prev_state[0] == STATE_MINE:
 				if timer_count > 1:
 					# this way, we also pass the parameters
-					print("Prev state params: " + str(prev_state[1]))
+					#print("Prev state params: " + str(prev_state[1]))
 					set_state(prev_state[0], prev_state[1])
 			# if task timeout happened and we're still idling, quit it
 			if timer_count > 3:
