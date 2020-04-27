@@ -467,6 +467,7 @@ class OrbitState:
 	func update(delta):
 		# update target location
 		ship.target = planet_.get_global_position()
+		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
 		
 		ship.ship.move_orbit(delta)
 		
@@ -683,6 +684,7 @@ class PlanetState:
 		# refresh target position
 		ship.target = ship.get_tree().get_nodes_in_group("planets")[id].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
+		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
 		# steering behavior
 		var steer = ship.get_steering_seek(ship.target)
 		
