@@ -95,6 +95,8 @@ func select_random_debris():
 	var res = random_choice_table(chance_roll_table)
 	print("Debris res: " + str(res))
 	return res
+	
+# ----------------------
 
 func _on_shield_recharge_timer_timeout():
 	# no recharging if landing

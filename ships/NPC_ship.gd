@@ -163,7 +163,7 @@ func get_colonize_target():
 	
 	for t in targs:
 		if t[0] == pops[0]:
-			print("Colonize target planet is : " + t[1].get_node("Label").get_text())
+			#print("Colonize target planet is : " + t[1].get_node("Label").get_text())
 			
 			# get id in planets list (it's guaranteed to be in it because of step #1 of our search
 			var id = planets.find(t[1])
@@ -230,23 +230,18 @@ func shoot():
 
 # AI moves to orbit a planet
 func move_orbit(delta):
-	# 300 is experimentally picked
 	var rad_f = get_colonized_planet().planet_rad_factor
 	
 	# brain target is the planet we're orbiting
 	if (brain.target - get_global_position()).length() < 200*rad_f:
 		#print("Too close to orbit")
 		if not orbiting:
-			# randomize the point the AI aims for
-			randomize()
-			var rand1 = randf()
-			var rand2 = randf()
-			var offset = Vector2(rand1, rand2).normalized()*(250*rad_f)
-			var tg_orbit = brain.target + offset
-			#var tg_ahead = get_global_position() + Vector2(100,100)
+			var tg_orbit = brain.get_state_obj().tg_orbit
+			#print("Tg_orbit: " + str(tg_orbit))
 			var steer = brain.get_steering_arrive(tg_orbit)
 			# normal case
 			vel += steer
+	# 300 is experimentally picked
 	elif (brain.target - get_global_position()).length() < 300*rad_f:
 		if not orbiting:
 			#print("In orbit range: " + str((brain.target - get_global_position()).length()) + " " + str((300*rad_f)))
@@ -314,6 +309,17 @@ func deorbit():
 #		if get_tree().get_nodes_in_group("asteroid").size() > 3:
 #				brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 #				brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
+
+func random_point_on_orbit(rad_f):
+	# randomize the point the AI aims for
+	randomize()
+	var rand1 = randf()
+	#var rand2 = randf()
+	var offset = Vector2(0, 1).normalized()*(250*rad_f)
+	offset = offset.rotated(rand1)
+	print("Offset: " + str(offset))
+	var tg_orbit = brain.target + offset
+	return tg_orbit
 			
 func resource_picked():
 	# paranoia

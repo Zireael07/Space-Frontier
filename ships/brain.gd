@@ -458,11 +458,13 @@ class OrbitState:
 	var ship
 	var param # for previous state
 	var planet_
+	var tg_orbit
 	
 	func _init(shp, planet):
 		ship = shp
 		param = planet
 		planet_ = planet
+		tg_orbit = ship.ship.random_point_on_orbit(planet_.planet_rad_factor)
 		
 	func update(delta):
 		# update target location
