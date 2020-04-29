@@ -622,7 +622,6 @@ func make_planet_view(planet, select_id=-1):
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".scroll_to_line(0)
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".get_v_scroll().set_scale(Vector2(2, 1))
 	
-	
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	# reset
@@ -769,6 +768,29 @@ func make_planet_view(planet, select_id=-1):
 		if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".is_connected("pressed", player, "_on_conquer_pressed"):
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".disconnect("pressed", player, "_on_conquer_pressed")
 		get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton").connect("pressed", player, "_on_conquer_pressed", [select_id])
+
+	# prev/next button
+	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton".is_connected("pressed", self, "_on_prev_pressed"):
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton".disconnect("pressed", self, "_on_prev_pressed")
+	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton").connect("pressed", self, "_on_prev_pressed", [select_id])
+
+# prev/next button
+	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".is_connected("pressed", self, "_on_next_pressed"):
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".disconnect("pressed", self, "_on_next_pressed")
+	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/NextButton").connect("pressed", self, "_on_next_pressed", [select_id])
+
+func _on_prev_pressed(id):
+	if id-1 >= 0:	
+		var planet = get_tree().get_nodes_in_group("planets")[id-1]
+		make_planet_view(planet, id-1)
+	print("Pressed prev: id: " + str(id))
+
+func _on_next_pressed(id):
+	if id+1 < get_tree().get_nodes_in_group("planets").size():
+		var planet = get_tree().get_nodes_in_group("planets")[id+1]
+		make_planet_view(planet, id+1)
+	print("Pressed next: id: " + str(id))
+
 
 func _on_ButtonUp2_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"

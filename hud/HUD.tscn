@@ -147,25 +147,46 @@ margin_bottom = 721.0
 rect_scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 4 )
 
-[node name="BackButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+[node name="PrevButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+margin_left = -5.0
 margin_top = 180.0
-margin_right = 42.0
+margin_right = 15.0
+margin_bottom = 200.0
+text = "<"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+margin_left = 15.0
+margin_top = 180.0
+margin_right = 57.0
 margin_bottom = 200.0
 text = "Back"
 
 [node name="GoToButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
-margin_left = 45.0
+margin_left = 60.0
 margin_top = 180.0
-margin_right = 92.0
+margin_right = 107.0
 margin_bottom = 200.0
 text = "Go to"
 
 [node name="ConquerButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
-margin_left = 94.0
+margin_left = 110.0
 margin_top = 180.0
-margin_right = 159.0
+margin_right = 175.0
 margin_bottom = 200.0
 text = "Conquer"
+
+[node name="NextButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+margin_left = 175.0
+margin_top = 180.0
+margin_right = 195.0
+margin_bottom = 200.0
+text = ">"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ShipInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 visible = false
