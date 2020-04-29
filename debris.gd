@@ -46,8 +46,14 @@ func _on_debris_area_entered(area):
 			area.power = 150
 			area.emit_signal("module_level_changed", "power", 2)
 		elif module == modules.cloak:
-			print("Added cloak module")
-			area.has_cloak = true
+			if area.has_cloak:
+				if area.get_parent().is_in_group("player"):
+					area.emit_signal("officer_message", "Cloak module cannot be upgraded to cloak")
+			else:
+				print("Added cloak module")
+				area.has_cloak = true
+				if area.get_parent().is_in_group("player"):
+					area.emit_signal("officer_message", "A new cloak module was installed")
 		else:
 			print("Not supported")
 		
