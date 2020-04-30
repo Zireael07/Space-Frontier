@@ -207,10 +207,24 @@ func _input(_event):
 		# planet list open
 		if get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
 			_on_ButtonUp2_pressed()
+		# if we have a planet view open
+		if get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
+			var planet_name = planet_name_from_view()
+			var planet = get_named_planet(planet_name)
+			var planets = get_tree().get_nodes_in_group("planets")
+			var id = planets.find(planet)
+			_on_prev_pressed(id)
 	if Input.is_action_pressed("arrow_down"):
 		# planet list open
 		if get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
 			_on_ButtonDown2_pressed()
+		# if we have a planet view open
+		if get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
+			var planet_name = planet_name_from_view()
+			var planet = get_named_planet(planet_name)
+			var planets = get_tree().get_nodes_in_group("planets")
+			var id = planets.find(planet)
+			_on_next_pressed(id)
 	if Input.is_action_pressed("ui_accept"):
 		# planet list open
 		if get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
@@ -227,6 +241,8 @@ func _input(_event):
 			$"pause_panel/Label".set_text("ORDERS MODE")
 
 
+# --------------------
+# signals
 func _on_shield_changed(data):
 	var shield = data[0]
 	#print("Shields from signal is " + str(shield))
@@ -779,17 +795,40 @@ func make_planet_view(planet, select_id=-1):
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".disconnect("pressed", self, "_on_next_pressed")
 	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/NextButton").connect("pressed", self, "_on_next_pressed", [select_id])
 
+# extract planet name from planet view
+func planet_name_from_view():
+	var label = get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/LabelName")
+	var txt = label.get_text()
+	var nm = txt.split(":")
+	var planet_name = nm[1].strip_edges()
+	#print("planet: " + planet_name)
+	return planet_name
+
+func get_named_planet(planet_name):
+	var ret = null
+	# convert planet name to planet node ref
+	var planets = get_tree().get_nodes_in_group("planets")
+	for p in planets:
+		if p.has_node("Label"):
+			var nam = p.get_node("Label").get_text()
+			if planet_name == nam:
+				ret = p
+				break
+				
+	return ret
+
+# UI signals
 func _on_prev_pressed(id):
 	if id-1 >= 0:	
 		var planet = get_tree().get_nodes_in_group("planets")[id-1]
 		make_planet_view(planet, id-1)
-	print("Pressed prev: id: " + str(id))
+	#print("Pressed prev: id: " + str(id))
 
 func _on_next_pressed(id):
 	if id+1 < get_tree().get_nodes_in_group("planets").size():
 		var planet = get_tree().get_nodes_in_group("planets")[id+1]
 		make_planet_view(planet, id+1)
-	print("Pressed next: id: " + str(id))
+	#print("Pressed next: id: " + str(id))
 
 
 func _on_ButtonUp2_pressed():
