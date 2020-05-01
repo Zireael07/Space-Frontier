@@ -296,6 +296,9 @@ func _input(_event):
 	if Input.is_action_pressed("closest_target"):
 		get_closest_target()
 	
+	if Input.is_action_pressed("closest_friendly_target"):
+		get_closest_friendly_target()
+	
 	if Input.is_action_pressed("join"):
 		if not orbiting:
 			print("Not orbiting")
@@ -506,6 +509,11 @@ func get_closest_target():
 	# redraw 
 	t.update()
 
+func get_closest_friendly_target():
+	var t = get_closest_friendly()
+	t.emit_signal("AI_targeted", t)
+	# redraw 
+	t.update()
 
 func _draw():
 	if not warping:

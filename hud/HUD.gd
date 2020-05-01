@@ -494,6 +494,13 @@ func _on_ButtonShip_pressed():
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".hide()
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".hide()
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".hide()
+		
+		if target.is_in_group("friendly"):
+			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".show()
+			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text("Task: " + str(target.brain.tasks[target.brain.curr_state]))
+		else:
+			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".hide()
+		
 	else:
 		# get the correct data
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")

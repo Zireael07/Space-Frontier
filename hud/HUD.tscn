@@ -251,6 +251,13 @@ margin_right = 62.0
 margin_bottom = 89.0
 text = "Shields: 1"
 
+[node name="Task" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
+visible = false
+margin_top = 100.0
+margin_right = 40.0
+margin_bottom = 114.0
+text = "Task:"
+
 [node name="RefitInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 visible = false
 margin_right = 40.0

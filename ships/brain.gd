@@ -18,6 +18,18 @@ const STATE_MINE = 7 # not in original Stellar Frontier
 
 signal state_changed
 
+# human-readable tasks(states)
+var tasks = {
+	0 : "initializing",
+	1 : "idling",
+	2 : "orbiting",
+	3 : "attacking",
+	4 : "refitting",
+	5 : "colonizing",
+	6 : "heading to a planet",
+	7 : "mining"
+}
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
