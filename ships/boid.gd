@@ -79,24 +79,24 @@ func set_heading(target):
 
 	return steering
 
-func get_steering_avoid(target, rotat):
+func get_steering_avoid(target, rotat, cap=(max_vel/4)):
 	var steering = Vector2(0,0)
-	var to_target = get_global_position() - target
+	desired = get_global_position() - target
 	
-	var dist = to_target.length()
+	var dist = desired.length()
 	#desired = Vector2(to_target.x, 0)
-	var sgn = sign(to_target.x)
-	
-	desired = Vector2(2*sgn,0) #  # ignore y component
+#	var sgn = sign(to_target.x)
+#
+#	desired = Vector2(1*sgn,0) #  # ignore y component
 	# rotate by our heading
-	desired.rotated(rotat)
+	#desired.rotated(rotat)
 	
-	desired = desired.normalized()
+	desired = desired.normalized()*2
 	
 	var m = range_lerp(dist, 600, 0, 0, max_speed) # 100 is our max speed?
 	desired = desired * m
 	
 	#steering = Vector2(0,0)
-	steering = desired
+	steering = (desired - vel).clamped(cap)
 	
 	return steering
