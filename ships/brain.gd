@@ -551,7 +551,7 @@ class AttackState:
 			else:
 				# approach any orbiting or enemies close to our planet
 				var rad_f = ship.ship.get_colonized_planet().planet_rad_factor
-				if (enemy.orbiting or enemy.get_global_position().distance_to(ship.ship.get_colonized_planet().get_global_position()) < 350*rad_f):
+				if (('orbiting' in enemy and enemy.orbiting) or enemy.get_global_position().distance_to(ship.ship.get_colonized_planet().get_global_position()) < 350*rad_f):
 					pass
 				# don't attack if enemy is too far
 				else:
