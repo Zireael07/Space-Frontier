@@ -18,7 +18,7 @@ func _ready():
 
 func _on_debris_area_entered(area):
 	if area.get_parent().get_groups().has("player"):
-		print("debris entered by " + area.get_parent().get_name())
+		#print("debris entered by " + area.get_parent().get_name())
 		
 		var res_id = elements.keys()[resource]
 		#print("Picked up 1 unit of " + str(res_id))
@@ -35,7 +35,7 @@ func _on_debris_area_entered(area):
 		get_parent().queue_free()
 		
 	if area.get_groups().has("friendly") or area.get_groups().has("enemy"):
-		print("debris entered by " + area.get_parent().get_name())
+		#print("debris entered by " + area.get_parent().get_name())
 		
 		var res_id = elements.keys()[resource]
 		print("1 unit of " + str(res_id))

@@ -63,7 +63,6 @@ func _physics_process(_delta):
 	# things we want to debug
 	if get_parent().close_to_sun():
 		var sun = get_tree().get_nodes_in_group("star")[0].get_global_position()
-		# TODO: this should be weighted to avoid negating the seek completely
 		steer = get_steering_avoid(sun, get_parent().get_rotation())
 	
 	# avoid lines rotating

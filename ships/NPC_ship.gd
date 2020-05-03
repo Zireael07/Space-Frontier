@@ -134,7 +134,7 @@ func get_planet_colony_available():
 	# get the one with the biggest pop
 	for t in targs:
 		if t[0] == pops[pops.size()-1]:
-			print("Colony pickup target is : " + t[1].get_parent().get_name())
+			print("Colony pickup target is : " + t[1].get_node("Label").get_text())
 			
 			return t[1]
 

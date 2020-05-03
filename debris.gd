@@ -25,7 +25,7 @@ func match_string(string):
 
 
 func _on_debris_area_entered(area):
-	if area.get_parent().is_in_group("player"):
+	if area.get_parent().is_in_group("player") and not area.warping:
 		print("debris entered by " + area.get_parent().get_name())
 		
 		# upgrade
