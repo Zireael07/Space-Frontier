@@ -350,10 +350,15 @@ func _process(delta):
 				orbit_rot += orbit_rate * delta
 				get_node("orbit_holder").set_rotation(orbit_rot)
 	
-	
 
-#	# Update game logic here.
-#	pass
+# ----------------------------------------
+func has_solid_surface():
+	# above ~5 masses of Earth, it's either Neptunian or Jovian
+	# neither have solid surfaces
+	if mass > 5:
+		return false
+	else:
+		return true
 
 func has_moon():
 	var ret = false
@@ -416,6 +421,8 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		# redraw
 		update()
 
+# --------------------
+# colonies
 func reparent(area):
 	area.get_parent().get_parent().remove_child(area.get_parent())
 	add_child(area.get_parent())
@@ -433,6 +440,9 @@ func _on_Area2D_area_entered(area):
 			if area.get_parent().get_parent().get_parent().is_in_group("player"):
 				print("Colony being hauled by player")
 			else:
+				if not has_solid_surface():
+					oops_gg(area)
+					return
 				# colony is free-floating (because the player just let go)
 				if not 'brain' in area.get_parent().get_parent():
 					# colonize
@@ -444,7 +454,7 @@ func _on_Area2D_area_entered(area):
 						if brain.get_state() == brain.STATE_COLONIZE:
 							# is it the colonization target?
 							var id = brain.get_state_obj().planet_
-							print("[Colonize] Colonize id is: " + str(id))
+							#print("[Colonize] Colonize id is: " + str(id))
 							# id is the real id+1 to avoid problems with state param being 0 (= null)
 							if get_tree().get_nodes_in_group("planets")[id-1] == self:
 								print("[Colonize] We are the colonize target, id " + str(id))
@@ -452,6 +462,26 @@ func _on_Area2D_area_entered(area):
 
 		else:
 			print("Colony is already ours")
+
+# 'gg' stands for gas giant, but also for 'good game' (ironically)
+func oops_gg(area):
+	print("Adding sinking colony to planet")
+	# add colony to planet
+	# prevent crash
+	call_deferred("reparent", area)
+	# must happen after reparenting
+	call_deferred("reposition", area)
+	# set timer and sink (disappear) the colony after a couple seconds
+	var sink_time = Timer.new()
+	sink_time.autostart = true
+	area.add_child(sink_time)
+	sink_time.set_wait_time(2.0)
+	sink_time.start(2.0)
+	sink_time.connect("timeout", self, "_on_sink_timer", [area])
+	
+func _on_sink_timer(area):
+	print("Sink timed out")
+	area.get_parent().queue_free()
 
 func do_colonize(area):
 #	print("Colony released")
