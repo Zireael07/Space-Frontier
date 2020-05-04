@@ -144,14 +144,15 @@ func get_colonize_target():
 	for p in planets:
 		# exclude those with colony
 		var col = p.has_colony()
-		if !col:
+		# ignore planets with no solid surface (i.e. we're only interested in rocky ones)
+		if !col and p.has_solid_surface():
 			ps.append(p)
 		#if col and col == "colony":
 		#	ps.append(p)
 	
 	var pops = []
 	var targs = []
-	
+
 	for p in ps:
 		var pop = p.population
 		pops.append(pop)
