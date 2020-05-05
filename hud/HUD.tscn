@@ -520,6 +520,7 @@ custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Pow"
 
 [node name="ProgressBar_po" type="ProgressBar" parent="Control/Panel"]
+modulate = Color( 0.560784, 0.980392, 0.0196078, 1 )
 margin_left = 157.0
 margin_top = 38.0
 margin_right = 264.0
@@ -529,6 +530,9 @@ custom_styles/fg = ExtResource( 8 )
 step = 1.0
 value = 100.0
 percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label_sh" type="Label" parent="Control/Panel"]
 margin_left = 112.0
@@ -540,6 +544,7 @@ custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Shd"
 
 [node name="ProgressBar_sh" type="ProgressBar" parent="Control/Panel"]
+modulate = Color( 0.56, 0.98, 0.02, 1 )
 margin_left = 157.0
 margin_top = 61.0
 margin_right = 264.0
@@ -560,6 +565,7 @@ custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Eng"
 
 [node name="ProgressBar_en" type="ProgressBar" parent="Control/Panel"]
+modulate = Color( 0.56, 0.98, 0.02, 1 )
 margin_left = 158.0
 margin_top = 85.0
 margin_right = 265.0
@@ -637,6 +643,7 @@ text = "Pow"
 
 [node name="ProgressBar_po2" type="ProgressBar" parent="Control/Panel2"]
 visible = false
+modulate = Color( 0.560784, 0.980392, 0.0196078, 1 )
 margin_left = 160.0
 margin_top = 39.0
 margin_right = 267.0
@@ -659,6 +666,7 @@ text = "Shd"
 
 [node name="ProgressBar_sh2" type="ProgressBar" parent="Control/Panel2"]
 visible = false
+modulate = Color( 0.56, 0.98, 0.02, 1 )
 margin_left = 160.0
 margin_top = 62.0
 margin_right = 267.0
@@ -681,6 +689,7 @@ text = "Eng"
 
 [node name="ProgressBar_en2" type="ProgressBar" parent="Control/Panel2"]
 visible = false
+modulate = Color( 0.56, 0.98, 0.02, 1 )
 margin_left = 161.0
 margin_top = 86.0
 margin_right = 268.0

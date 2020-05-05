@@ -138,6 +138,10 @@ func _ready():
 		$"Control3".add_child(dir_label)
 		dir_labels.append(dir_label)
 
+	# force modulate the initial color
+	$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
+	$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
+	$"Control/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
 
 func _process(_delta):
 	# show player speed
@@ -253,6 +257,16 @@ func _on_shield_changed(data):
 	var perc = shield/maxx * 100
 
 	#print("Perc: " + str(perc))
+	
+	# matches the player-specific indicator in player_ship.gd l560
+	if perc > 70:
+		$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
+	elif perc > 50:
+		$"Control/Panel/ProgressBar_sh".set_modulate(Color(1.0, 1.0, 0))
+	elif perc > 25:
+		$"Control/Panel/ProgressBar_sh".set_modulate(Color(1.0, 0, 0))
+	else:
+		$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.35, 0, 0)) # dark red
 
 	if perc >= 0:
 		$"Control/Panel/ProgressBar_sh".value = perc
@@ -266,6 +280,13 @@ func _on_power_changed(power):
 	var perc = power/maxx * 100
 
 	#print("Perc: " + str(perc))
+	
+	if perc > 70:
+		$"Control/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
+	elif perc > 40:
+		$"Control/Panel/ProgressBar_po".set_modulate(Color(1.0, 1.0, 0))
+	else:
+		$"Control/Panel/ProgressBar_po".set_modulate(Color(1.0, 0, 0))
 
 	if perc >= 0:
 		$"Control/Panel/ProgressBar_po".value = perc
@@ -279,6 +300,13 @@ func _on_engine_changed(engine):
 	var perc = engine/maxx * 100
 
 	#print("Perc: " + str(perc))
+	
+	if perc > 70:
+		$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
+	elif perc > 40:
+		$"Control/Panel/ProgressBar_en".set_modulate(Color(1.0, 1.0, 0))
+	else:
+		$"Control/Panel/ProgressBar_en".set_modulate(Color(1.0, 0, 0))
 
 	if perc >= 0:
 		$"Control/Panel/ProgressBar_en".value = perc
@@ -369,6 +397,13 @@ func _on_target_shield_changed(shield):
 	var perc = shield[0]/maxx * 100
 
 	#print("Perc: " + str(perc))
+	
+	if perc > 70:
+		$"Control/Panel2/ProgressBar_sh2".set_modulate(Color(0.41, 0.98, 0.02))
+	elif perc > 40:
+		$"Control/Panel2/ProgressBar_sh2".set_modulate(Color(1.0, 1.0, 0))
+	else:
+		$"Control/Panel2/ProgressBar_sh2".set_modulate(Color(1.0, 0, 0))
 
 	if perc >= 0:
 		$"Control/Panel2/ProgressBar_sh2".value = perc
