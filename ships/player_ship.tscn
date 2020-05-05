@@ -180,6 +180,9 @@ texture = ExtResource( 7 )
 visible = false
 script = ExtResource( 8 )
 
+[node name="landing_timeout" type="Timer" parent="Area2D"]
+wait_time = 5.0
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/landing = SubResource( 3 )
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
@@ -188,4 +191,5 @@ anims/landing = SubResource( 3 )
 [connection signal="timeout" from="Area2D/shield_recharge_timer" to="Area2D" method="_on_shield_recharge_timer_timeout"]
 [connection signal="timeout" from="Area2D/engine_timer" to="Area2D" method="_on_engine_timer_timeout"]
 [connection signal="timeout" from="Area2D/warp_correct_timer" to="Area2D" method="_on_warp_correct_timer_timeout"]
+[connection signal="timeout" from="Area2D/landing_timeout" to="Area2D" method="_on_landing_timeout_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="Area2D" method="_on_AnimationPlayer_animation_finished"]

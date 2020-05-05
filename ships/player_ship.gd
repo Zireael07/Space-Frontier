@@ -43,6 +43,7 @@ signal kill_gained
 signal points_gained
 
 var landed = false
+var can_land = true
 signal planet_landed
 
 # for AI orders
@@ -410,6 +411,8 @@ func _input(_event):
 			return
 
 	if Input.is_action_pressed("landing"):
+		if not can_land:
+			return
 		if not landed:
 			var pl = get_closest_planet()
 			# values are eyeballed for current planets
@@ -418,14 +421,20 @@ func _input(_event):
 				print("Landing...")
 				$"shield_indicator".hide()
 				get_parent().get_node("AnimationPlayer").play("landing")
-				landed = true
-				emit_signal("planet_landed")
+				# landing happens only when the animation is done
+				# prevents too fast landings
+				can_land = false
 				# reparent
 				get_parent().get_parent().remove_child(get_parent())
 				pl[1].get_node("orbit_holder").add_child(get_parent())
 				get_parent().set_position(Vector2(0,0))
 				set_position(Vector2(0,0))
 				pos = Vector2(0,0)
+				# nuke velocities
+				acc = Vector2(0,0)
+				vel = Vector2(0,0)
+				# start the timer
+				$landing_timeout.start()
 			else:
 				print("Too far away to land")
 		else:
@@ -446,6 +455,16 @@ func _input(_event):
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
 	print("Animation finished")
+	# toggle the landing state
+	if not landed:
+		landed = true
+		emit_signal("planet_landed")
+		emit_signal("officer_message", "Landed on a planet. Fuel replenished")
+		# fill up the engine/fuel
+		engine = 1000 
+	else:
+		landed = false
+
 #	#var hide = not $"shield_indicator".is_visible()
 #	if not $"shield_indicator".is_visible():
 #		$"shield_indicator".show()
@@ -453,7 +472,8 @@ func _on_AnimationPlayer_animation_finished(_anim_name):
 func launch():
 	get_parent().get_node("AnimationPlayer").play_backwards("landing")
 	$"shield_indicator".show()
-	landed = false
+	# prevent too fast landings
+	can_land = false
 	# reparent
 	var root = get_node("/root/Control")
 	var gl = get_global_position()
@@ -466,6 +486,10 @@ func launch():
 	pos = Vector2(0,0)
 			
 	set_global_rotation(get_global_rotation())
+	
+
+func _on_landing_timeout_timeout():
+	can_land = true
 			
 func shoot():
 	if warping:
@@ -560,7 +584,7 @@ func _on_shield_changed(data):
 		$"shield_effect".show()
 		$"shield_timer".start()
 	
-	# player-specific indicator
+	# player-specific shield indicator
 	if shields < 0.2 * 100:
 		$"shield_indicator".set_modulate(Color(0.35, 0.0, 0.0)) #dark red
 	elif shields < 0.5 * 100:
