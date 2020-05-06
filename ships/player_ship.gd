@@ -28,6 +28,7 @@ var target = null
 var heading = null
 var warp_planet
 var warp_target = null
+var cruise = false
 
 var tractored = false
 var refit_target = false
@@ -109,6 +110,12 @@ func _process(delta):
 	if Input.is_action_pressed("move_right"):
 		if warping == false:
 			rot += rot_speed*delta
+	
+	if Input.is_action_pressed("move_down"):
+		if cruise:
+			warp_target == null
+			cruise = false
+	
 	# thrust
 	if Input.is_action_pressed("move_up"):
 		boost = true
@@ -138,7 +145,7 @@ func _process(delta):
 		if orbiting:
 			deorbit()
 		else:
-			if warp_target == null:
+			if not warping: #warp_target == null:
 				acc = Vector2(0, -thrust).rotated(rot)
 				$"engine_flare".set_emitting(true)
 				# use up engine only if we changed boost
@@ -147,6 +154,21 @@ func _process(delta):
 					if engine > 0:
 						engine = engine - engine_draw
 						emit_signal("engine_changed", engine)
+	
+	# i.e. switch the booster on and keep it that way without player intervention
+	elif cruise:
+		boost = true
+		# deorbit
+		if orbiting:
+			deorbit()
+		else:
+			acc = Vector2(0, -thrust).rotated(rot)
+			$"engine_flare".set_emitting(true)
+			# use up engine only if we changed boost
+			if boost != old_boost:
+				if engine > 0:
+					engine = engine - engine_draw
+					emit_signal("engine_changed", engine)
 	else:
 		acc = Vector2(0,0)
 		$"engine_flare".set_emitting(false)
@@ -394,8 +416,9 @@ func _input(_event):
 	if Input.is_action_pressed("go_planet"):
 		# no warping if we are hauling a colony
 		if get_colony_in_dock() != null:
-			emit_signal("officer_message", "Too heavy to engage Q-drive")
-			# TODO: engage cruise mode (QoL) i.e. switch the booster on and keep it that way without player intervention
+			emit_signal("officer_message", "Too heavy to engage Q-drive, engaging cruise mode instead")
+			# engage cruise mode
+			cruise = true
 			return
 		# if already warping, abort
 		if warping:
@@ -640,9 +663,10 @@ func on_warping():
 		deorbit()
 	
 	# no warping if we are hauling a colony
-		if get_colony_in_dock() != null:
-			emit_signal("officer_message", "Too heavy to engage Q-drive")
-			return
+	if get_colony_in_dock() != null:
+		emit_signal("officer_message", "Too heavy to engage Q-drive, engaging cruise mode instead")
+		cruise = true
+		return
 	
 	if power < warp_power_draw:
 		emit_signal("officer_message", "Insufficient power for Q-drive")
