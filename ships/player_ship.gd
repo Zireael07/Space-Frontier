@@ -11,8 +11,9 @@ var warp_power_draw = 50
 var power_recharge = 5
 
 var engine = 1000 # in reality, it represents fuel, call it engine for simplicity
-var engine_draw = 2 # how fast our engine wears out
+var engine_draw = 50 # how fast our engine wears out when boosting
 signal engine_changed
+var boost = false
 
 var has_cloak = false
 var cloaked = false
@@ -71,11 +72,15 @@ func _ready():
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
+	# were we boosting last tick?
+	var old_boost = boost 
 
 	# redraw 
 	update()
 
 	spd = vel.length() / LIGHT_SPEED
+	boost = false
+
 
 	# shoot
 	if Input.is_action_pressed("shoot"):
@@ -106,6 +111,7 @@ func _process(delta):
 			rot += rot_speed*delta
 	# thrust
 	if Input.is_action_pressed("move_up"):
+		boost = true
 		# QoL feature - launch
 		if landed:
 			launch()
@@ -135,10 +141,12 @@ func _process(delta):
 			if warp_target == null:
 				acc = Vector2(0, -thrust).rotated(rot)
 				$"engine_flare".set_emitting(true)
-				# use up engine
-				if engine > 0:
-					engine = engine - engine_draw
-					emit_signal("engine_changed", engine)
+				# use up engine only if we changed boost
+				#print("boost: " + str(boost) + "old: " + str(old_boost))
+				if boost != old_boost:
+					if engine > 0:
+						engine = engine - engine_draw
+						emit_signal("engine_changed", engine)
 	else:
 		acc = Vector2(0,0)
 		$"engine_flare".set_emitting(false)
@@ -322,6 +330,7 @@ func _input(_event):
 	if Input.is_action_pressed("orbit"):
 		#print("Try to orbit")
 		var pl = get_closest_planet()
+		# TODO: should approach to orbit just like AI do
 		# values are eyeballed for current planets (scale 1, sprite 720*0.5=360 px)
 		if pl[0] > 300*pl[1].planet_rad_factor:
 			print("Too far away to orbit")
@@ -334,7 +343,9 @@ func _input(_event):
 				
 				var txt = "Orbit established."
 				if pl[1].has_colony():
-					txt += " Press J to request a colony"
+					txt += " Fuel replenished. Press J to request a colony"
+					# fill up the engine/fuel
+					engine = 1000 
 				
 				emit_signal("officer_message", txt)
 	
@@ -384,6 +395,7 @@ func _input(_event):
 		# no warping if we are hauling a colony
 		if get_colony_in_dock() != null:
 			emit_signal("officer_message", "Too heavy to engage Q-drive")
+			# TODO: engage cruise mode (QoL) i.e. switch the booster on and keep it that way without player intervention
 			return
 		# if already warping, abort
 		if warping:

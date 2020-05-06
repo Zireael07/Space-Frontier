@@ -6,7 +6,10 @@ const LIGHT_SPEED = 400 # original Stellar Frontier seems to have used 200 px/s
 export var rot_speed = 2.6 #radians
 export var thrust = 0.25 * LIGHT_SPEED
 export var max_vel = 0.5 * LIGHT_SPEED
-export var friction = 0.25
+# IRL there's no friction in space, but
+# it's there mostly to ensure the ship doesn't float too far beyond the system
+# if the AI or the player gets stuck/forgets where he was going
+export var friction = 0.25 
 
 # motion
 var rot = 0
