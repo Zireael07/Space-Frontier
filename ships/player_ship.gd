@@ -415,11 +415,7 @@ func _input(_event):
 		
 	if Input.is_action_pressed("go_planet"):
 		# no warping if we are hauling a colony
-		if get_colony_in_dock() != null:
-			emit_signal("officer_message", "Too heavy to engage Q-drive, engaging cruise mode instead")
-			# engage cruise mode
-			cruise = true
-			return
+		# the check is in on_warping()
 		# if already warping, abort
 		if warping:
 			print("Aborting q-drive...")
@@ -429,7 +425,7 @@ func _input(_event):
 			# remove tint
 			set_modulate(Color(1,1,1))
 			return
-		# if we have a planet view open
+		# if we have a planet view open, just act as a hotkey for "Go to"
 		if self.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
 			# extract planet name from planet view
 			var planet_name = self.HUD.planet_name_from_view()
