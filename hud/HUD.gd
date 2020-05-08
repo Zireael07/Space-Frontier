@@ -58,6 +58,12 @@ func _ready():
 #	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
 
 	# populate nav menu
+	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
+	# scroll container scrollbar
+	nav_list.set_v_scroll(0)
+
+	nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control"
+
 	# star
 	var s = get_tree().get_nodes_in_group("star")[0]
 	var label = Label.new()
@@ -66,7 +72,7 @@ func _ready():
 		s_type = str(s.get_star_type(s.star_type))
 	label.set_text(s.get_node("Label").get_text() + " " + s_type)
 	label.set_position(Vector2(10,0))
-	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
+	nav_list.add_child(label)
 	# tint gray
 	label.set_self_modulate(Color(0.5,0.5, 0.5))
 
@@ -92,7 +98,7 @@ func _ready():
 		
 		label.set_text(txt)
 		label.set_position(Vector2(10,y))
-		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
+		nav_list.add_child(label)
 		# is it a colonized planet?
 		#var last = p.get_child(p.get_child_count()-1)
 		var col = p.has_colony()
@@ -119,7 +125,7 @@ func _ready():
 				txt = m.get_node("Label").get_text()
 				label.set_text(txt)
 				label.set_position(Vector2(10+x, y))
-				$"Control2/Panel_rightHUD/PanelInfo/NavInfo".add_child(label)
+				nav_list.add_child(label)
 				# is it a colonized planet?
 				col = m.has_colony()
 				#print(p.get_name() + " has colony " + str(col))
@@ -131,12 +137,21 @@ func _ready():
 					label.set_self_modulate(Color(1, 0, 0))
 				y += 15
 
+		#nav_list.get_v_scroll().set_max(y)
+		
+
 		# direction labels
 		dir_label = Label.new()
 		dir_label.set_text(p.get_node("Label").get_text())
 		dir_label.set_position(Vector2(20, 100))
 		$"Control3".add_child(dir_label)
 		dir_labels.append(dir_label)
+		
+#	# test
+#	label = Label.new()
+#	label.set_text("test")
+#	label.set_position(Vector2(10, y))
+#	nav_list.add_child(label)
 
 	# force modulate the initial color
 	$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
@@ -434,14 +449,14 @@ func _on_planet_targeted(planet):
 func _on_planet_colonized(planet):
 	var node = null
 	# get label
-	for l in $"Control2/Panel_rightHUD/PanelInfo/NavInfo".get_children():
+	for l in $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control".get_children():
 		# because ordering in groups cannot be relied on 100%
 		# find because the nav info text can have additional stuff such as * or ^
 		if l.get_text().find(planet.get_node("Label").get_text().strip_edges()) != -1:
 			node = l.get_name()
 
 	if node:
-		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".get_node(node).set_self_modulate(Color(0, 1, 1))
+		$"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control".get_node(node).set_self_modulate(Color(0, 1, 1))
 	else:
 		print("Couldn't find node for planet " + str(planet.get_node("Label").get_text()))
 
@@ -878,6 +893,13 @@ func _on_ButtonUp2_pressed():
 	if cursor.get_position().y > 0:
 		# up a line
 		cursor.set_position(cursor.get_position() - Vector2(0, 15))
+		
+	# do we scroll?
+	if cursor.get_position().y < 15:
+		var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
+		if nav_list.get_v_scroll() > 0:
+			nav_list.set_v_scroll(nav_list.get_v_scroll()-15)
+			print("Scrolling up...")
 
 
 func _on_ButtonDown2_pressed():
@@ -889,6 +911,20 @@ func _on_ButtonDown2_pressed():
 		if p.has_moon():
 			for m in p.get_moons():
 				max_y = max_y +15
+				
+	# do we scroll?		
+	if cursor.get_position().y > 150:
+		var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
+		if nav_list.get_v_scroll() == 0:
+			print("Scrolling list down..")
+			# scroll the list
+			nav_list.set_v_scroll(15)
+		elif nav_list.get_v_scroll() % 15 == 0:
+			var curr = nav_list.get_v_scroll()
+			nav_list.set_v_scroll(curr+15)
+		
+		return
+		
 	#print("num list" + str(num_list) + " max y: " + str(max_y))
 	if cursor.get_position().y < max_y:
 		# down a line

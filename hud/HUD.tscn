@@ -359,9 +359,24 @@ margin_bottom = 200.0
 text = "> Down"
 
 [node name="NavInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
-visible = false
 margin_right = 40.0
 margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlanetList" type="ScrollContainer" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
+margin_right = 190.0
+margin_bottom = 180.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"]
+margin_right = 190.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 190, 180 )
 
 [node name="Cursor2" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
 margin_right = 40.0
