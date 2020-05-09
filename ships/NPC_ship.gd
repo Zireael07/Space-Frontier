@@ -276,6 +276,7 @@ func move_orbit(delta):
 	else:
 		# nuke any velocities existing
 		vel = Vector2(0,0)
+		acc = Vector2(0,0)
 
 	# heading is taken care of below
 
@@ -289,6 +290,7 @@ func orbit_planet(planet):
 	brain.desired = Vector2(0,0)
 	brain.target = planet.get_global_position()
 	vel = Vector2(0,0) 
+	acc = Vector2(0,0)
 	
 	# we're rotated compared to what look_at uses, so it handily makes the AI face the correct direction...
 	look_at(planet.get_global_position())
