@@ -725,7 +725,12 @@ func make_planet_view(planet, select_id=-1):
 		#print("is rotating: " + str(is_rot))
 		if is_rot:
 			var sc = Vector2(0.15/2, 0.15)
+			# Saturn's texture is 1800px instead of 1000px
+			if planet.get_node("Label").get_text() == "Saturn":
+				sc = Vector2(sc.x*0.55, sc.y*0.55) 
+
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
+
 			# move to the right to not overlap the text
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(95, 1)) 
 			var sc2 = Vector2(0.15*0.86, 0.15*0.86 ) #0.86 is the ratio of the procedural planet's shadow to the usual's (0.43/0.5)
