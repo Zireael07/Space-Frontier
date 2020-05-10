@@ -93,7 +93,10 @@ func _ready():
 	set_clip_contents(true)
 	
 	# set cntr
-	get_child(0).set_cntr(Vector2(80,80))
+	if self.get_name() == "map view":
+		get_child(0).set_cntr(Vector2(80,80))
+		zoom_scale = stars[0].custom_orrery_scale*1.6
+		
 
 func _process(_delta):
 #	# Called every frame. Delta is time since last frame.
