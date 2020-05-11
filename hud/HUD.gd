@@ -662,9 +662,11 @@ func _on_ButtonView_pressed():
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 
 		return
-	
+	# any futher entry is not a star
 	else:
-		var select_id = (cursor.get_position().y - 15) / 15
+		var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
+		var line = cursor.get_position().y + nav_list.get_v_scroll()
+		var select_id = (line - 15) / 15
 		var skips = []
 		var planets = get_tree().get_nodes_in_group("planets")
 		for i in range(planets.size()):
@@ -917,9 +919,10 @@ func _on_ButtonDown2_pressed():
 			for m in p.get_moons():
 				max_y = max_y +15
 				
-	# do we scroll?		
-	if cursor.get_position().y > 150:
-		var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
+	# do we scroll?
+	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
+	var line = cursor.get_position().y + nav_list.get_v_scroll()
+	if cursor.get_position().y > 150 and line < max_y:
 		if nav_list.get_v_scroll() == 0:
 			print("Scrolling list down..")
 			# scroll the list
@@ -931,7 +934,7 @@ func _on_ButtonDown2_pressed():
 		return
 		
 	#print("num list" + str(num_list) + " max y: " + str(max_y))
-	if cursor.get_position().y < max_y:
+	if line < max_y:
 		# down a line
 		cursor.set_position(cursor.get_position() + Vector2(0, 15))
 
@@ -961,6 +964,9 @@ func _on_ButtonDown3_pressed():
 
 
 func _on_BackButton_pressed():
+	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
+	# scroll container scrollbar
+	nav_list.set_v_scroll(0)
 	switch_to_navi()
 
 
