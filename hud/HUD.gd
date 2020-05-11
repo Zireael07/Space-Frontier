@@ -647,6 +647,8 @@ func _on_ButtonView_pressed():
 		var star = get_tree().get_nodes_in_group("star")[0]
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
+		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(star.get_node("Sprite").get_material())
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(star.get_node("Sprite").get_texture())
 
 		# set label
