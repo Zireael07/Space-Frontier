@@ -5,6 +5,7 @@ extends Control
 onready var star = preload("res://assets/hud/yellow_circle.png")
 onready var planet = preload("res://assets/hud/red_circle.png")
 onready var asteroid = preload("res://assets/hud/grey_circle.png")
+onready var ship = preload("res://assets/hud/arrow.png")
 
 var stars
 var planets
@@ -13,6 +14,7 @@ var asteroids
 var star_sprites = []
 var planet_sprites = []
 var asteroid_sprites = []
+var ship_sprite = null
 
 var center = Vector2(get_size().x/2, get_size().y/2)
 var star_center = center
@@ -92,11 +94,23 @@ func _ready():
 	
 	set_clip_contents(true)
 	
-	# set cntr
+	# set map view stuff
 	if self.get_name() == "map view":
 		get_child(0).set_cntr(Vector2(80,80))
 		zoom_scale = stars[0].custom_orrery_scale*1.6
 		
+		ship_sprite = TextureRect.new()
+		ship_sprite.set_texture(ship)
+		#ship_sprite.set_scale()
+		add_child(ship_sprite)
+		
+		# doesn't need to be updated in process() because at scales the map is displayed at, we won't see it move anyway
+		update_ship_pos()
+
+func update_ship_pos():
+	var rel_loc = game.player.get_global_position() - stars[0].get_global_position()
+	var off = 9
+	ship_sprite.set_position(Vector2((rel_loc.x/zoom_scale)+center.x-off, (rel_loc.y/zoom_scale)+center.y-off))
 
 func _process(_delta):
 #	# Called every frame. Delta is time since last frame.

@@ -217,6 +217,7 @@ func _input(_event):
 		if paused:
 			$"Control4/map view/Panel".set_cntr(Vector2(805/2, 525/2))
 			$"Control4/map view".show() #(not paused)
+			$"Control4/map view".update_ship_pos()
 			
 		else:
 			$"Control4/map view".hide()
