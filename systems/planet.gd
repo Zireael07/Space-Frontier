@@ -66,6 +66,15 @@ func setup(angle=0, dis=0, mas=0):
 	
 	if mas != 0:
 		mass = mas
+	# calculate from density and radius
+	else:
+		if not is_in_group("moon"):
+			# 1.38 is average density for C-type asteroid, e.g. Ceres
+			# centaurs are said to be similar to Ceres
+			# radius of 25 km in Earth radii (6371 km)
+			mass = get_mass(1.38, 0.00392)
+			#print("Calculated mass: " + str(mass))
+			#mass = 2.679466e-07 # hand calculated
 	
 	dist = get_position().length()
 	var ls = dist/game.LIGHT_SEC
@@ -225,6 +234,16 @@ func calculate_gravity(mass, radius):
 func get_density(mass, radius):
 	var vol = (4/3)*PI*pow(radius, 3)
 	return mass/vol
+
+# inverse of the above, needed for those small bodies that don't have mass data
+func get_mass(density, radius):
+	#var tst = PI*pow(radius,3)
+	#var po = 6.4e-08 # 0.004^3
+	var tst = 2.0096e-07 # hand calculated for above po and radius
+	#print("radius: " + str(radius))
+	var vol = (4/3)*tst #PI*pow(radius, 3.0)
+	print("d: " + str(density) + " vol: " + str(vol) + " m: " + str((density*vol)))
+	return density*vol
 
 # so many things from mass and radius!
 # sqrt(G * M / r)

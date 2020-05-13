@@ -358,6 +358,29 @@ rotation = 3.89937e-07
 [node name="Label" parent="planet_holder/planet5" index="2"]
 text = "Jupiter"
 
+[node name="planet10" parent="planet_holder" groups=[
+"aster_named",
+] instance=ExtResource( 3 )]
+position = Vector2( -0.001, 100080 )
+z_index = 2
+planet_rad_factor = 0.25
+mass = 0.00015744
+hydro = 0.0
+
+[node name="Sprite" parent="planet_holder/planet10" index="0"]
+scale = Vector2( 1, 1 )
+texture = ExtResource( 5 )
+
+[node name="Label" parent="planet_holder/planet10" index="1"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 102.0
+margin_bottom = 64.0
+text = "Okyrhoe"
+
+[node name="CollisionShape2D" parent="planet_holder/planet10/Area2D" index="0"]
+shape = SubResource( 9 )
+
 [node name="planet9" parent="planet_holder" groups=[
 "planets",
 ] instance=ExtResource( 4 )]
@@ -398,5 +421,7 @@ text = "Saturn"
 [editable path="planet_holder/planet8"]
 
 [editable path="planet_holder/planet5"]
+
+[editable path="planet_holder/planet10"]
 
 [editable path="planet_holder/planet9"]
