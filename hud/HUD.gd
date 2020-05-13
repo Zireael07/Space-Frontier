@@ -801,11 +801,11 @@ func make_planet_view(planet, select_id=-1):
 	# format mass depending on what body we're looking at
 	var format_mass = "%.3f Earth masses" % (planet.mass)
 	if planet.is_in_group("moon") or planet.get_node("Label").get_text() == "Ceres":
-		format_mass = "%.3f Moon masses" % (planet.mass/game.MOON_MASS)
+		format_mass = "%.4f Moon masses" % (planet.mass/game.MOON_MASS)
 	# otherwise the numbers would be vanishingly small
 	if planet.is_in_group("aster_named") and planet.get_node("Label").get_text() != "Ceres":
 		var Ceres = 0.0128*game.MOON_MASS
-		format_mass = "%.2f Ceres masses (1 = 0.0128 Moon masses)" % (planet.mass/Ceres) 
+		format_mass = "%.4f Ceres masses (1 = 0.0128 Moon masses)" % (planet.mass/Ceres) 
 
 	# linebreak because of planet graphic on the right
 	#var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
@@ -833,7 +833,7 @@ func make_planet_view(planet, select_id=-1):
 	var ls_travel = dist/game.LIGHT_SEC
 	var format_time = "%d s" % ls_travel
 	if ls_travel > 60.0:
-		var mins = int(round(ls_travel/60))
+		var mins = int(floor(ls_travel/60))
 		format_time = "%02d:%02d" % [mins, (ls_travel-(mins*60))]  # MM:SS
 	var travel_time = "Est. travel time @ 1.00c: " + format_time
 
