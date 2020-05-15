@@ -49,6 +49,7 @@ func _ready():
 							mas = float(line[3])*game.MOON_MASS
 						# asteroids are given in Ceres masses (because otherwise the numbers'd be vanishingly small)
 						var Ceres = 0.0128*game.MOON_MASS
+						#print(str(Ceres))
 						if line[4] == " asteroid":
 							mas = float(line[3])*Ceres
 							
@@ -60,7 +61,12 @@ func _ready():
 						if line[0] == nam:
 							# for moons, distance is absolute
 							print("Name fits, setup @ " + str(line[1]) + " d: " + str(line[2]))
-							m.setup(int(line[1]), int(line[2]))
+							var mas = 0
+							# if we have a mass and our type is moon
+							if line[3] != " moon" and line[4] == " moon":
+								mas = float(line[3])*game.MOON_MASS
+								
+							m.setup(int(line[1]), int(line[2]), mas)
 					
 			#if data[3] == "planet":
 	# if no csv

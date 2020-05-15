@@ -75,17 +75,20 @@ func setup(angle=0, dis=0, mas=0):
 			mass = get_mass(1.38, 0.00392)
 			#print("Calculated mass: " + str(mass))
 			#mass = 2.679466e-07 # hand calculated
+		else:
+			# moons without mass defined default to Earth's moon's mass
+			mass = game.MOON_MASS #in Earth masses
 	
 	dist = get_position().length()
 	var ls = dist/game.LIGHT_SEC
-	print("Dist to parent star: " + str(dist) + " " + str(ls) + " ls, " + str(ls/game.LS_TO_AU) + " AU")
+	#print("Dist to parent star: " + str(dist) + " " + str(ls) + " ls, " + str(ls/game.LS_TO_AU) + " AU")
 	
 	# moon fix
 	if is_in_group("moon"):
 		# can't be both a moon and a planet
 		if is_in_group("planets"):
 			remove_from_group("planets")
-		mass = game.MOON_MASS #in Earth masses
+		#mass = game.MOON_MASS #in Earth masses
 	else:
 		temp = calculate_temperature()
 		calculate_orbit_period()
@@ -166,7 +169,7 @@ func greenhouse_diff():
 
 # Radiative equilibrium tempetature + greenhouse effect
 func calculate_temperature(inc_greenhouse=true):
-	if self.dist == 0:
+	if self.dist == 0 and not is_in_group("moon"):
 		print("Bad distance! " + get_name())
 		return 273 # dummy
 	
@@ -285,7 +288,7 @@ func setData(val):
 
 
 func place(angle,dist):
-	print("Place : a " + str(angle) + " d: " + str(dist))
+	#print("Place : a " + str(angle) + " d: " + str(dist))
 	var pos = Vector2(0, dist).rotated(deg2rad(angle))
 	#print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(angle)))
 	print("Position is " + str(pos))
