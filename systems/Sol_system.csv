@@ -4,8 +4,8 @@ Venus,0,0.7,0.815, planet
 Earth,0,1,1.0, planet
 Moon,0,300,1.0, moon
 Mars,0,1.5,0.107, planet
-Deimos,-30,400, moon
-Phobos,30,400, moon
+Deimos,-30,400,0.0000000201, moon
+Phobos,30,400,0.000000145, moon
 Ceres,0,2.77,0.0128, dwarf_planet
 Vesta,0,2.36,0.28, asteroid
 Pallas,4,2.774,0.21, asteroid
