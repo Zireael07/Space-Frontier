@@ -548,7 +548,16 @@ func _on_ButtonShip_pressed():
 		
 		if target.is_in_group("friendly"):
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".show()
-			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text("Task: " + str(target.brain.tasks[target.brain.curr_state]))
+			var task = "Task: " + str(target.brain.tasks[target.brain.curr_state])
+			if target.brain.curr_state == 5:
+				var id = target.brain.get_state_obj().planet_
+				var p = get_tree().get_nodes_in_group("planets")[id-1]
+				task += " " + str(p.get_node("Label").get_text() ) 
+			if target.brain.curr_state == 6:
+				var id = target.brain.get_state_obj().id
+				var p = get_tree().get_nodes_in_group("planets")[id-1]
+				task += " " + str(p.get_node("Label").get_text()) 
+			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(task)
 		else:
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".hide()
 		
