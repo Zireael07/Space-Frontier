@@ -374,6 +374,14 @@ func _process(delta):
 	
 
 # ----------------------------------------
+func get_planet_class():
+	if mass < 5:
+		return "rocky"
+	else:
+		return "gas giant"
+
+
+
 func has_solid_surface():
 	# above ~5 masses of Earth, it's either Neptunian or Jovian
 	# neither have solid surfaces

@@ -787,6 +787,9 @@ func make_planet_view(planet, select_id=-1):
 	# linebreak because planet graphic
 	text = text + "\n" + "Habitability:" + "\n" + format_habitability+"%"
 	#text = text + "\n" + "Habitability: " + "\n" + str(planet.calculate_habitability())
+	
+	# planet class
+	text = text + "\n" + "Class: " + planet.get_planet_class()
 		
 	# formatting
 	var format_pop = "%.2fK" % (planet.population * 1000)
