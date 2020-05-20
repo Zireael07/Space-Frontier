@@ -101,6 +101,9 @@ func setup(angle=0, dis=0, mas=0):
 		radius = calculate_radius()
 	gravity = calculate_gravity(mass, radius)
 	
+	if not is_habitable():
+		hydro = 0.0
+	
 	# set population for planets that start colonized
 	# if we set population from editor, don't change it
 	if has_colony() and population == 0.0:
@@ -375,6 +378,8 @@ func _process(delta):
 
 # ----------------------------------------
 func get_planet_class():
+	if hydro > 0.25:
+		return "terrestrial"
 	if mass < 5:
 		return "rocky"
 	else:
