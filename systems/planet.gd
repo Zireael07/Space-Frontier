@@ -378,6 +378,14 @@ func _process(delta):
 
 # ----------------------------------------
 func get_planet_class():
+	if is_in_group("moon"):
+		if mass > 0.00001 * game.MOON_MASS:
+			return "moon"
+		else:
+			return "moonlet" # made up name for captured asteroids like Deimos and Phobos
+	if is_in_group("aster_named"):
+		return "asteroid"
+	
 	if hydro > 0.25:
 		return "terrestrial"
 	if mass < 5:
