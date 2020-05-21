@@ -137,6 +137,7 @@ margin_top = 1.0
 margin_right = 803.0
 margin_bottom = 721.0
 rect_scale = Vector2( 0.15, 0.15 )
+mouse_filter = 2
 texture = ExtResource( 9 )
 
 [node name="TextureRect2" type="TextureRect" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
@@ -145,6 +146,7 @@ margin_top = 1.0
 margin_right = 803.0
 margin_bottom = 721.0
 rect_scale = Vector2( 0.15, 0.15 )
+mouse_filter = 2
 texture = ExtResource( 4 )
 
 [node name="PrevButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
