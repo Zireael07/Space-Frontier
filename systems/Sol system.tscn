@@ -136,6 +136,8 @@ text = "Sol"
 position = Vector2( -0.000209815, 4800 )
 data = Vector2( 5400, 0 )
 mass = 0.055
+hydro = 0.0
+ice = 0.01
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
 texture = ExtResource( 9 )
@@ -152,6 +154,7 @@ text = "Mercury"
 ] instance=ExtResource( 4 )]
 position = Vector2( -0.000367176, 8400 )
 mass = 0.815
+hydro = 0.0
 atm = 91.0
 greenhouse = 0.975
 
@@ -169,6 +172,7 @@ text = "Venus"
 "planets",
 ] instance=ExtResource( 4 )]
 position = Vector2( -0.000524537, 12000 )
+ice = 0.1
 atm = 1.0
 greenhouse = 0.397
 population = 11000.0
@@ -185,6 +189,8 @@ text = "Earth"
 ] instance=ExtResource( 4 )]
 position = Vector2( -1.31134e-05, 300 )
 mass = 0.0123
+hydro = 0.0
+ice = 0.03
 population = 0.05
 
 [node name="Sprite" parent="planet_holder/planet3/orbit_holder/Node2D" index="0"]
@@ -213,6 +219,8 @@ position = Vector2( -0.000518799, 0 )
 position = Vector2( -0.000786805, 18000 )
 data = Vector2( 18000, 0 )
 mass = 0.107
+hydro = 0.0
+ice = 0.05
 atm = 0.06
 greenhouse = 0.086
 
@@ -232,6 +240,7 @@ text = "Mars"
 position = Vector2( -200, 346.41 )
 z_index = 2
 mass = 0.0123
+hydro = 0.0
 
 [node name="Sprite" parent="planet_holder/planet2/orbit_holder/planet" index="0"]
 texture = ExtResource( 6 )
@@ -252,6 +261,7 @@ shape = SubResource( 8 )
 position = Vector2( 200, 346.41 )
 z_index = 2
 mass = 0.0123
+hydro = 0.0
 
 [node name="Sprite" parent="planet_holder/planet2/orbit_holder/planet2" index="0"]
 texture = ExtResource( 6 )
@@ -367,6 +377,8 @@ text = "Jupiter"
 ] instance=ExtResource( 4 )]
 position = Vector2( 0.002, 400 )
 mass = 0.0123
+hydro = 0.0
+ice = 0.08
 population = 0.05
 
 [node name="Sprite" parent="planet_holder/planet5/orbit_holder/Node2D2" index="0"]
@@ -389,6 +401,8 @@ text = "Io"
 ] instance=ExtResource( 4 )]
 position = Vector2( 0.002, 700 )
 mass = 0.0123
+hydro = 0.0
+ice = 1.0
 population = 0.05
 
 [node name="Sprite" parent="planet_holder/planet5/orbit_holder/Node2D3" index="0"]
@@ -411,6 +425,8 @@ text = "Europa"
 ] instance=ExtResource( 4 )]
 position = Vector2( 0.002, 1300 )
 mass = 0.0123
+hydro = 0.0
+ice = 0.6
 population = 0.05
 
 [node name="Sprite" parent="planet_holder/planet5/orbit_holder/Node2D4" index="0"]
@@ -433,6 +449,8 @@ text = "Ganymede"
 ] instance=ExtResource( 4 )]
 position = Vector2( 0.002, 2500 )
 mass = 0.0123
+hydro = 0.0
+ice = 0.5
 population = 0.05
 
 [node name="Sprite" parent="planet_holder/planet5/orbit_holder/Node2D5" index="0"]

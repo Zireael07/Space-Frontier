@@ -826,6 +826,8 @@ func make_planet_view(planet, select_id=-1):
 	#var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
 	var format_days = "%.1f days, \n%.2f year(s)" % [(period/86400), (period/yr)]
 
+	var format_ices = "%d" % (planet.ice * 100)
+
 	# set text
 	# this comes first because most other parameters are determined by orbital parameters
 	# lots of linebreaks because of planet graphic on the right
@@ -836,9 +838,11 @@ func make_planet_view(planet, select_id=-1):
 	"Gravity: " + str(format_grav) + "\n" + \
 	"Temperature: " + str(format_temp) + " " + str(format_tempC) + " \n"
 	# this is new
-	text = text + "Greenhouse effect: " + str(format_greenhouse) + "\n" + \
-	"Hydro: " + str(planet.hydro)
-
+	text = text + "Greenhouse effect: " + str(format_greenhouse) + "\n"
+	# this was present in the original game
+	text = text + "Hydro: " + str(planet.hydro) + "\n"
+	# this is new
+	text = text + "Ice cover: " + str(format_ices) + "%"
 
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 
