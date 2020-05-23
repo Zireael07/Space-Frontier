@@ -394,7 +394,15 @@ func get_planet_class():
 	else:
 		return "gas giant"
 
-
+# 'interesting' planets have significant ice or water content
+func is_interesting():
+	var ret = false
+	if hydro > 0.2:
+		ret = true
+	if ice >= 0.05:
+		ret = true
+		
+	return ret
 
 func has_solid_surface():
 	# above ~5 masses of Earth, it's either Neptunian or Jovian

@@ -87,6 +87,9 @@ func _ready():
 		# mark habitable planets
 		if p.is_habitable():
 			txt = txt + " * "
+		# mark those with water or ice content
+		if p.is_interesting():
+			txt = txt + ' " '
 		# does it have enough pop for a colony?
 		if p.population > 51/1000.0: # in milions
 			txt = txt + " ^ "
@@ -123,6 +126,9 @@ func _ready():
 				
 				#var moon = p.get_moon()
 				txt = m.get_node("Label").get_text()
+				# mark moons with water or ice content
+				if m.is_interesting():
+					txt = txt + ' " '
 				label.set_text(txt)
 				label.set_position(Vector2(10+x, y))
 				nav_list.add_child(label)
