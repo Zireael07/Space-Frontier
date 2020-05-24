@@ -1,3 +1,4 @@
 Planet textures from http://planetpixelemporium.com/
 Moon and Earth texture from http://www.johnstonsarchive.net/spaceart/cylmaps.html
 Galilean moons from Bjorn Jonsson's site https://web.archive.org/web/20130313034608/http://www.mmedia.is/~bjj/data/planetary_maps.html
+Saturn ring texture from a stock site that I lost the link to :(
