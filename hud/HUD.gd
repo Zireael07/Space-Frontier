@@ -59,26 +59,38 @@ func _ready():
 
 	# populate nav menu
 	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
+	
 	# scroll container scrollbar
 	nav_list.set_v_scroll(0)
+	# fix for max being stuck at 100
+	nav_list.get_node("_v_scroll").set_max(300)
+	# prevent any off values for scrolling
+	nav_list.get_node("_v_scroll").set_step(15)
+
 
 	nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control"
 
+	# headers
+	var label = Label.new()
+	label.set_text("name       type")
+	label.set_position(Vector2(10,0))
+	nav_list.add_child(label)
+	
 	# star
 	var s = get_tree().get_nodes_in_group("star")[0]
-	var label = Label.new()
+	label = Label.new()
 	var s_type = ""
 	if "star_type" in s:
 		s_type = str(s.get_star_type(s.star_type))
 	label.set_text(s.get_node("Label").get_text() + " " + s_type)
-	label.set_position(Vector2(10,0))
+	label.set_position(Vector2(10,15))
 	nav_list.add_child(label)
 	# tint gray
 	label.set_self_modulate(Color(0.5,0.5, 0.5))
 
 	# planets
 	var dir_label
-	var y = 15
+	var y = 30
 	for i in range (planets.size()):
 		var p = planets[i]
 		# labels for right panel
@@ -153,11 +165,8 @@ func _ready():
 		$"Control3".add_child(dir_label)
 		dir_labels.append(dir_label)
 		
-#	# test
-#	label = Label.new()
-#	label.set_text("test")
-#	label.set_position(Vector2(10, y))
-#	nav_list.add_child(label)
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
+	cursor.set_position(Vector2(0, 15))
 
 	# force modulate the initial color
 	$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
@@ -662,7 +671,7 @@ func _on_ButtonView_pressed():
 
 
 	# if we are pointing at first entry (a star), show star description instead
-	if cursor.get_position().y < 15:
+	if cursor.get_position().y < 30:
 		var star = get_tree().get_nodes_in_group("star")[0]
 		$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
@@ -687,7 +696,7 @@ func _on_ButtonView_pressed():
 	else:
 		var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
 		var line = cursor.get_position().y + nav_list.get_v_scroll()
-		var select_id = (line - 15) / 15
+		var select_id = (line - 30) / 15
 		var skips = []
 		var planets = get_tree().get_nodes_in_group("planets")
 		for i in range(planets.size()):
@@ -925,12 +934,12 @@ func _on_next_pressed(id):
 
 func _on_ButtonUp2_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
-	if cursor.get_position().y > 0:
+	if cursor.get_position().y > 15:
 		# up a line
 		cursor.set_position(cursor.get_position() - Vector2(0, 15))
 		
 	# do we scroll?
-	if cursor.get_position().y < 15:
+	if cursor.get_position().y < 30:
 		var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
 		if nav_list.get_v_scroll() > 0:
 			nav_list.set_v_scroll(nav_list.get_v_scroll()-15)
@@ -941,7 +950,7 @@ func _on_ButtonDown2_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
 	var num_list = get_tree().get_nodes_in_group("planets").size()-1
 	
-	var max_y = 15*num_list+1 #because of star
+	var max_y = 15*(num_list+2) #because of star and header
 	for p in get_tree().get_nodes_in_group("planets"):
 		if p.has_moon():
 			for m in p.get_moons():
@@ -966,6 +975,17 @@ func _on_ButtonDown2_pressed():
 		# down a line
 		cursor.set_position(cursor.get_position() + Vector2(0, 15))
 
+func _on_BackButton_pressed():
+	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
+	# scroll container scrollbar
+	nav_list.set_v_scroll(0)
+	switch_to_navi()
+
+
+func _on_ConquerButton_pressed():
+	pass # Replace with function body.
+
+
 func _on_ButtonSell_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
 	var select_id = (cursor.get_position().y / 15)
@@ -988,18 +1008,6 @@ func _on_ButtonDown3_pressed():
 	if cursor.get_position().y < max_y:
 		# down a line
 		cursor.set_position(cursor.get_position() + Vector2(0,15))
-
-
-
-func _on_BackButton_pressed():
-	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
-	# scroll container scrollbar
-	nav_list.set_v_scroll(0)
-	switch_to_navi()
-
-
-func _on_ConquerButton_pressed():
-	pass # Replace with function body.
 
 
 func _on_officer_timer_timeout():
