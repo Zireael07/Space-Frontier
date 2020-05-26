@@ -636,9 +636,10 @@ func update_HUD_colony_pop(planet, add):
 	var aster = planet.is_in_group("aster_named")
 	# get label
 	for l in hud.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control").get_children():
-		# because ordering in groups cannot be relied on 100%
-		if l.get_text().find(txt) != -1:
-			node = l.get_name()
+		if l is Label:
+			# because ordering in groups cannot be relied on 100%
+			if l.get_text().find(txt) != -1:
+				node = l.get_name()
 	
 	if node:
 		var parent = hud.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control")
