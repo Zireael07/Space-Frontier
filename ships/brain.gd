@@ -596,14 +596,16 @@ class RefitState:
 			# prevent crash if nothing in cargo
 			if ship.ship.cargo.size() < 1:
 				return
-			if ship.ship.cargo[ship.ship.cargo.keys()[0]] > 0:
-				ship.ship.cargo[ship.ship.cargo.keys()[0]] -= 1
-		
-				# add cargo to starbase
-				if not ship.ship.get_parent().get_parent().storage.has(ship.ship.cargo.keys()[0]):
-					ship.ship.get_parent().get_parent().storage[ship.ship.cargo.keys()[0]] = 1
-				else:
-					ship.ship.get_parent().get_parent().storage[ship.ship.cargo.keys()[0]] += 1
+				
+			for id in ship.ship.cargo.keys():
+				if ship.ship.cargo[id] > 0:
+					ship.ship.cargo[id] -= 1
+			
+					# add cargo to starbase
+					if not ship.ship.get_parent().get_parent().storage.has(id):
+						ship.ship.get_parent().get_parent().storage[id] = 1
+					else:
+						ship.ship.get_parent().get_parent().storage[id] += 1
 			
 			# start timer
 			# task timer allows the AI to leave after some time passed
@@ -742,8 +744,8 @@ class MineState:
 		ship.target = object.get_global_position()
 		
 		param = params
-		if cnt > 0:
-			print("Init Mine state with cnt " + str(cnt))
+#		if cnt > 0:
+#			print("Init Mine state with cnt " + str(cnt))
 		
 		
 	func update(delta):
