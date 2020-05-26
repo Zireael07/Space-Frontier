@@ -297,6 +297,12 @@ margin_right = 72.0
 margin_bottom = 74.0
 text = "Shields: 1"
 
+[node name="Others" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
+margin_left = 10.0
+margin_top = 75.0
+margin_right = 72.0
+margin_bottom = 89.0
+
 [node name="Cursor" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/RefitInfo"]
 margin_top = 30.0
 margin_right = 40.0

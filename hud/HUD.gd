@@ -611,6 +611,11 @@ func switch_to_refit():
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Power".set_text("Power: " + str(player.engine_level))
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Engine".set_text("Engine: " + str(player.power_level))
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Shields".set_text("Shields: " + str(player.shield_level))
+	# others
+	var txt_others = ""
+	if player.has_cloak:
+		txt_others = "Cloak"
+	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Others".set_text(txt_others)
 
 	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
@@ -999,16 +1004,13 @@ func _on_ButtonSell_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
 	var select_id = (cursor.get_position().y / 15)
 
-
 	player.sell_cargo(select_id)
-
 
 func _on_ButtonUp3_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
 	if cursor.get_position().y > 0:
 		# up a line
 		cursor.set_position(cursor.get_position() - Vector2(0,15))
-
 
 func _on_ButtonDown3_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
