@@ -33,4 +33,9 @@ one_shot = true
 
 [node name="vis" type="Node2D" parent="Area2D_starbase"]
 script = ExtResource( 2 )
+
+[node name="produce_timer" type="Timer" parent="Area2D_starbase"]
+wait_time = 5.0
+autostart = true
 [connection signal="input_event" from="Area2D_starbase" to="Area2D_starbase" method="_on_Area2D_input_event"]
+[connection signal="timeout" from="Area2D_starbase/produce_timer" to="Area2D_starbase" method="_on_produce_timer_timeout"]

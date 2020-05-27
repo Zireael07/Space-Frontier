@@ -29,7 +29,10 @@ var shoot_rel_pos = Vector2()
 
 # see asteroid.gd and debris_resource.gd
 enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
-enum processed { METHANE } #CH4
+
+#Methane = CH4, carborundum (silicon carbide) = SiC
+# plastics are chains of (C2H4)n
+enum processed { METHANE, CARBORUNDUM, PLASTICS } 
 var storage = {}
 
 func _ready():
@@ -178,3 +181,35 @@ func starbase_listing():
 
 
 #func _on_player_docked():
+
+func add_to_storage(id):
+	if not storage.has(id):
+		storage[id] = 1
+	else:
+		storage[id] += 1
+
+func _on_produce_timer_timeout():
+	print("Produce timer timed out!")
+	# space wizard needs carbon badly!
+	if storage["CARBON"] > 0:
+		# prioritize plastics since they need more H
+		if storage["HYDROGEN"] > 0:
+			if storage["HYDROGEN"] > 10:
+				add_to_storage("PLASTICS")
+				storage["HYDROGEN"] -= 8
+				storage["CARBON"] -= 2
+			elif storage["HYDROGEN"] >= 4:
+				add_to_storage("METHANE")
+				storage["HYDROGEN"] -= 4
+				storage["CARBON"] -= 1
+			else:
+				if storage["SILICON"] > 0:
+					add_to_storage("CARBORUNDUM")
+					storage["CARBON"] -= 1
+					storage["SILICON"] -= 1
+		# out of hydrogen, try something else
+		else:
+			if storage["SILICON"] > 0:
+				add_to_storage("CARBORUNDUM")
+				storage["CARBON"] -= 1
+				storage["SILICON"] -= 1
