@@ -637,11 +637,7 @@ func _on_ButtonCargo_pressed():
 	switch_to_cargo()
 
 func _on_planet_landed():
-	
 	switch_to_cargo()
-
-func set_cargo_listing(text):
-	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".set_text(text)
 
 
 func _on_ButtonRefit_pressed():
@@ -999,6 +995,8 @@ func _on_BackButton_pressed():
 func _on_ConquerButton_pressed():
 	pass # Replace with function body.
 
+func set_cargo_listing(text):
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".set_text(text)
 
 func _on_ButtonSell_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"

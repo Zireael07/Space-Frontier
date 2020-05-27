@@ -722,6 +722,7 @@ func _on_conquer_pressed(id):
 func update_cargo_listing(cargo, base_storage=null):
 	# update listing
 	var list = []
+		
 	#print(str(cargo.keys()))
 	for i in range(0, cargo.keys().size()):
 		list.append(str(cargo.keys()[i]) + ": " + str(cargo[cargo.keys()[i]]))
@@ -731,9 +732,18 @@ func update_cargo_listing(cargo, base_storage=null):
 			if cargo.keys()[i] in base_storage:
 				list[i] = list[i] + "/ base: " + str(base_storage[cargo.keys()[i]])
 	
+	# if we have nothing in cargo, just show full base listing
+	if cargo.size() < 1:
+		if base_storage != null:
+			for i in range(0, base_storage.keys().size()):
+				list.append(" base: " + str(base_storage.keys()[i]) + ": " + str(base_storage[base_storage.keys()[i]]))
+		else:
+			return
+			
 	var listing = str(list).lstrip("[").rstrip("]").replace(", ", "\n")
 	# this would end up in a different orders than the ids
 	#var listing = str(cargo).lstrip("{").rstrip("}").replace("(", "").replace(")", "").replace(", ", "\n")
+
 	HUD.set_cargo_listing(str(listing))
 
 func refresh_cargo():
