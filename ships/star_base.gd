@@ -38,6 +38,8 @@ func _ready():
 	connect("distress_called", self, "_on_distress_called")
 	#add_to_group("enemy")
 	
+	randomize_storage()
+	
 	#target
 	# it's static so we don't need to do it in process()
 	target = get_parent().get_position() + Vector2(200, -200)
@@ -46,6 +48,11 @@ func _ready():
 		targetables.append(get_tree().get_nodes_in_group("player")[0].get_child(0))
 	
 	connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
+
+func randomize_storage():
+	randomize()
+	for e in elements:
+		storage[e] = int(rand_range(8.0, 20.0))
 
 # using this because we don't need physics
 func _process(delta):
