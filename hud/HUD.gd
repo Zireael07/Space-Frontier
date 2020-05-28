@@ -598,7 +598,8 @@ func _on_ButtonShip_pressed():
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".set_text("Engine: " + str(player.engine_level))
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".show()
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".set_text("Shields: " + str(player.shield_level))
-		
+	
+	# show ship panel
 	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
@@ -617,6 +618,13 @@ func switch_to_refit():
 		txt_others = "Cloak"
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo/Others".set_text(txt_others)
 
+	# disable button if not docked
+	if player.docked:
+		$"Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUpgrade".set_disabled(false)
+	else:
+		$"Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUpgrade".set_disabled(true)
+
+	# show correct panel
 	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
@@ -634,6 +642,11 @@ func switch_to_cargo():
 func _on_ButtonCargo_pressed():
 	# refresh data
 	player.refresh_cargo()
+	# disable the button if nothing in cargo
+	if player.cargo.size() < 1:
+		$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/ButtonSell".set_disabled(true)
+	else:
+		$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/ButtonSell".set_disabled(false)
 	switch_to_cargo()
 
 func _on_planet_landed():
