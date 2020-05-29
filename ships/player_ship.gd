@@ -55,12 +55,13 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	game.player = self
+	#get_parent().set_z_index(game.PLAYER_Z)
 	set_z_index(game.PLAYER_Z)
 	
 	connect("shield_changed", self, "_on_shield_changed")
 	
 	# spawn somewhere interesting
-	var planet = get_tree().get_nodes_in_group("planets")[2]
+	var planet = get_tree().get_nodes_in_group("planets")[2] #2 Earth
 	print("Location of planet " + str(planet) + " : " + str(planet.get_global_position()))
 	
 	# fudge
@@ -126,7 +127,8 @@ func _process(delta):
 		# undock
 		if docked:
 			# restore original z
-			get_parent().set_z_index(game.PLAYER_Z)
+			#get_parent().set_z_index(game.PLAYER_Z)
+			set_z_index(game.PLAYER_Z)
 			docked = false
 			# reparent
 			var root = get_node("/root/Control")
