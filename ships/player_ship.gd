@@ -719,38 +719,13 @@ func _on_conquer_pressed(id):
 	print("Setting conquer target to: " + get_tree().get_nodes_in_group("planets")[id].get_node("Label").get_text())
 	conquer_target = id+1 # to avoid problems with state's parameter being 0 (= null)
 
-func update_cargo_listing(cargo, base_storage=null):
-	# update listing
-	var list = []
-		
-	#print(str(cargo.keys()))
-	for i in range(0, cargo.keys().size()):
-		list.append(str(cargo.keys()[i]) + ": " + str(cargo[cargo.keys()[i]]))
-	
-		if base_storage != null:
-		#print(str(base_storage))
-			if cargo.keys()[i] in base_storage:
-				list[i] = list[i] + "/ base: " + str(base_storage[cargo.keys()[i]])
-	
-	# if we have nothing in cargo, just show full base listing
-	if cargo.size() < 1:
-		if base_storage != null:
-			for i in range(0, base_storage.keys().size()):
-				list.append(" base: " + str(base_storage.keys()[i]) + ": " + str(base_storage[base_storage.keys()[i]]))
-		else:
-			return
-			
-	var listing = str(list).lstrip("[").rstrip("]").replace(", ", "\n")
-	# this would end up in a different orders than the ids
-	#var listing = str(cargo).lstrip("{").rstrip("}").replace("(", "").replace(")", "").replace(", ", "\n")
 
-	HUD.set_cargo_listing(str(listing))
 
 func refresh_cargo():
 	if 'storage' in get_parent().get_parent():
-		update_cargo_listing(cargo, get_parent().get_parent().storage)
+		HUD.update_cargo_listing(cargo, get_parent().get_parent().storage)
 	else:
-		update_cargo_listing(cargo)
+		HUD.update_cargo_listing(cargo)
 
 func sell_cargo(id):
 	if not docked:
@@ -769,7 +744,7 @@ func sell_cargo(id):
 			get_parent().get_parent().storage[cargo.keys()[id]] = 1
 		else:
 			get_parent().get_parent().storage[cargo.keys()[id]] += 1
-		update_cargo_listing(cargo, get_parent().get_parent().storage)
+		HUD.update_cargo_listing(cargo, get_parent().get_parent().storage)
 
 # atan2(0,-1) returns 180 degrees in 3.0, we want 0
 # this counts in radians

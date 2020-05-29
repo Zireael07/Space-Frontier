@@ -30,7 +30,8 @@ func _on_debris_area_entered(area):
 			area.cargo[res_id] += 1
 		
 		# listing (player-only)
-		area.update_cargo_listing(area.cargo)
+		if 'HUD' in area:
+			area.HUD.update_cargo_listing(area.cargo)
 		
 		get_parent().queue_free()
 		

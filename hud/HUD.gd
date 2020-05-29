@@ -1008,6 +1008,33 @@ func _on_BackButton_pressed():
 func _on_ConquerButton_pressed():
 	pass # Replace with function body.
 
+func update_cargo_listing(cargo, base_storage=null):
+	# update listing
+	var list = []
+		
+	#print(str(cargo.keys()))
+	for i in range(0, cargo.keys().size()):
+		list.append(str(cargo.keys()[i]) + ": " + str(cargo[cargo.keys()[i]]))
+	
+		if base_storage != null:
+		#print(str(base_storage))
+			if cargo.keys()[i] in base_storage:
+				list[i] = list[i] + "/ base: " + str(base_storage[cargo.keys()[i]])
+	
+	# if we have nothing in cargo, just show full base listing
+	if cargo.size() < 1:
+		if base_storage != null:
+			for i in range(0, base_storage.keys().size()):
+				list.append(" base: " + str(base_storage.keys()[i]) + ": " + str(base_storage[base_storage.keys()[i]]))
+		else:
+			return
+			
+	var listing = str(list).lstrip("[").rstrip("]").replace(", ", "\n")
+	# this would end up in a different orders than the ids
+	#var listing = str(cargo).lstrip("{").rstrip("}").replace("(", "").replace(")", "").replace(", ", "\n")
+
+	set_cargo_listing(str(listing))
+
 func set_cargo_listing(text):
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".set_text(text)
 
