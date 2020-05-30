@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://colony.tscn" type="PackedScene" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
@@ -19,6 +19,8 @@
 [ext_resource path="res://assets/bodies/Sol textures/europa2_out.jpg" type="Texture" id=17]
 [ext_resource path="res://assets/bodies/Sol textures/ganymede.jpg" type="Texture" id=18]
 [ext_resource path="res://assets/bodies/Sol textures/saturn rings stock.png" type="Texture" id=19]
+[ext_resource path="res://assets/bodies/Sol textures/neptunemap.jpg" type="Texture" id=20]
+[ext_resource path="res://assets/bodies/Sol textures/uranusmap.jpg" type="Texture" id=21]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -515,6 +517,47 @@ text = "Saturn"
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 19 )
 
+[node name="planet11" parent="planet_holder" groups=[
+"planets",
+] instance=ExtResource( 4 )]
+position = Vector2( -0.0100711, 230400 )
+planet_rad_factor = 2.0
+mass = 14.5
+hydro = 0.0
+
+[node name="Sprite" parent="planet_holder/planet11" index="0"]
+texture = ExtResource( 21 )
+
+[node name="Sprite_shadow" parent="planet_holder/planet11" index="1"]
+material = SubResource( 11 )
+rotation = 3.9012e-07
+
+[node name="Label" parent="planet_holder/planet11" index="2"]
+text = "Uranus"
+
+[node name="rings2" type="Sprite" parent="planet_holder/planet11"]
+position = Vector2( 0.005, 0 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 19 )
+
+[node name="planet12" parent="planet_holder" groups=[
+"planets",
+] instance=ExtResource( 4 )]
+position = Vector2( -0.0157886, 361200 )
+planet_rad_factor = 2.0
+mass = 17.1
+hydro = 0.0
+
+[node name="Sprite" parent="planet_holder/planet12" index="0"]
+texture = ExtResource( 20 )
+
+[node name="Sprite_shadow" parent="planet_holder/planet12" index="1"]
+material = SubResource( 11 )
+rotation = 3.90091e-07
+
+[node name="Label" parent="planet_holder/planet12" index="2"]
+text = "Neptune"
+
 [editable path="planet_holder/planet"]
 
 [editable path="planet_holder/planet4"]
@@ -548,3 +591,7 @@ texture = ExtResource( 19 )
 [editable path="planet_holder/planet10"]
 
 [editable path="planet_holder/planet9"]
+
+[editable path="planet_holder/planet11"]
+
+[editable path="planet_holder/planet12"]
