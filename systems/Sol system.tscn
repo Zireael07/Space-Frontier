@@ -242,7 +242,7 @@ text = "Mars"
 ] instance=ExtResource( 3 )]
 position = Vector2( -200, 346.41 )
 z_index = 2
-mass = 0.0123
+mass = 1.7835e-09
 hydro = 0.0
 
 [node name="Sprite" parent="planet_holder/planet2/orbit_holder/planet" index="0"]
@@ -263,7 +263,7 @@ shape = SubResource( 8 )
 ] instance=ExtResource( 3 )]
 position = Vector2( 200, 346.41 )
 z_index = 2
-mass = 0.0123
+mass = 2.4723e-10
 hydro = 0.0
 
 [node name="Sprite" parent="planet_holder/planet2/orbit_holder/planet2" index="0"]
@@ -378,8 +378,8 @@ text = "Jupiter"
 [node name="Node2D2" parent="planet_holder/planet5/orbit_holder" index="0" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( 0.002, 400 )
-mass = 0.0123
+position = Vector2( -1.74846e-05, 400 )
+mass = 0.015006
 hydro = 0.0
 ice = 0.08
 population = 0.05
@@ -402,8 +402,8 @@ text = "Io"
 [node name="Node2D3" parent="planet_holder/planet5/orbit_holder" index="1" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( 0.002, 700 )
-mass = 0.0123
+position = Vector2( -3.0598e-05, 700 )
+mass = 0.007995
 hydro = 0.0
 ice = 1.0
 population = 0.05
@@ -426,8 +426,8 @@ text = "Europa"
 [node name="Node2D4" parent="planet_holder/planet5/orbit_holder" index="2" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( 0.002, 1300 )
-mass = 0.0123
+position = Vector2( -5.68248e-05, 1300 )
+mass = 0.024969
 hydro = 0.0
 ice = 0.6
 population = 0.05
@@ -450,8 +450,8 @@ text = "Ganymede"
 [node name="Node2D5" parent="planet_holder/planet5/orbit_holder" index="3" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( 0.002, 2500 )
-mass = 0.0123
+position = Vector2( -0.000109278, 2500 )
+mass = 0.017958
 hydro = 0.0
 ice = 0.5
 population = 0.05
@@ -526,6 +526,7 @@ mass = 14.5
 hydro = 0.0
 
 [node name="Sprite" parent="planet_holder/planet11" index="0"]
+rotation = 1.5708
 texture = ExtResource( 21 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet11" index="1"]
