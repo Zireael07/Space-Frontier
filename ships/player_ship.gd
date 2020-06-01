@@ -729,6 +729,18 @@ func refresh_cargo():
 	else:
 		HUD.update_cargo_listing(cargo)
 
+func cargo_empty(cargo):
+	var ret = false
+	if cargo.size() < 1:
+		ret = true
+	else:
+		ret = true
+		for i in range(0, cargo.keys().size()):
+			if cargo[cargo.keys()[i]] > 0:
+				ret = false
+	
+	return ret
+
 func sell_cargo(id):
 	if not docked:
 		print("We cannot sell if we're not docked")
