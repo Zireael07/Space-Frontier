@@ -257,6 +257,9 @@ func _input(_event):
 			var planets = get_tree().get_nodes_in_group("planets")
 			var id = planets.find(planet)
 			_on_prev_pressed(id)
+		# cargo panel
+		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
+			_on_ButtonUp3_pressed()
 	if Input.is_action_pressed("arrow_down"):
 		# planet list open
 		if get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
@@ -268,10 +271,17 @@ func _input(_event):
 			var planets = get_tree().get_nodes_in_group("planets")
 			var id = planets.find(planet)
 			_on_next_pressed(id)
+		# cargo panel
+		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
+			_on_ButtonDown3_pressed()
+	# accept/back keybinds
 	if Input.is_action_pressed("ui_accept"):
 		# planet list open
 		if get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
 			_on_ButtonView_pressed()
+		# cargo panel
+		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
+			_on_ButtonSell_pressed()
 	if Input.is_action_pressed("ui_back"):
 		# if we have a planet view open
 		if get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
