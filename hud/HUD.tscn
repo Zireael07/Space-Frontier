@@ -359,10 +359,20 @@ margin_right = 80.0
 margin_bottom = 200.0
 text = "Sell"
 
-[node name="ButtonDown3" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
-margin_left = 110.0
+[node name="ButtonBuy" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
+margin_left = 85.0
 margin_top = 180.0
-margin_right = 170.0
+margin_right = 121.0
+margin_bottom = 200.0
+text = "Buy"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonDown3" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
+margin_left = 125.0
+margin_top = 180.0
+margin_right = 185.0
 margin_bottom = 200.0
 text = "> Down"
 
@@ -794,6 +804,7 @@ text = "PAUSED"
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonDown" to="." method="_on_ButtonDown_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/CargoInfo/ButtonUp3" to="." method="_on_ButtonUp3_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/CargoInfo/ButtonSell" to="." method="_on_ButtonSell_pressed"]
+[connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/CargoInfo/ButtonBuy" to="." method="_on_ButtonBuy_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/CargoInfo/ButtonDown3" to="." method="_on_ButtonDown3_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/NavInfo/ButtonUp2" to="." method="_on_ButtonUp2_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/NavInfo/ButtonView" to="." method="_on_ButtonView_pressed"]

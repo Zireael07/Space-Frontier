@@ -1057,6 +1057,20 @@ func _on_ButtonSell_pressed():
 
 	player.sell_cargo(select_id)
 
+
+func _on_ButtonBuy_pressed():
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
+	var select_id = (cursor.get_position().y / 15)
+
+	print("Want to buy " + str(select_id))
+	#player.sell_cargo(select_id)	
+
+func get_base_storage(player):
+	if 'storage' in player.get_parent().get_parent():
+		return player.get_parent().get_parent().storage
+	else:
+		return []
+
 func _on_ButtonUp3_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
 	if cursor.get_position().y > 0:
@@ -1066,6 +1080,8 @@ func _on_ButtonUp3_pressed():
 func _on_ButtonDown3_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
 	var num_list = player.cargo.size()-1
+	if player.cargo_empty(player.cargo):
+		num_list = get_base_storage(player).size()-1
 	var max_y = 15*num_list
 	if cursor.get_position().y < max_y:
 		# down a line
