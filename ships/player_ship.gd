@@ -760,6 +760,26 @@ func sell_cargo(id):
 			get_parent().get_parent().storage[cargo.keys()[id]] += 1
 		HUD.update_cargo_listing(cargo, get_parent().get_parent().storage)
 
+func buy_cargo(id):
+	if not docked:
+		print("We cannot sell if we're not docked")
+		return
+	
+	if not get_parent().get_parent().storage.keys().size() > 0:
+		return
+	
+	
+	if get_parent().get_parent().storage[get_parent().get_parent().storage.keys()[id]] > 0:
+		get_parent().get_parent().storage[get_parent().get_parent().storage.keys()[id]] -= 1
+		credits -= 50
+		# add cargo to player
+		if not cargo.has(get_parent().get_parent().storage.keys()[id]):
+			cargo[get_parent().get_parent().storage.keys()[id]] = 1
+		else:
+			cargo[get_parent().get_parent().storage.keys()[id]] += 1
+		HUD.update_cargo_listing(cargo, get_parent().get_parent().storage)	
+
+
 # atan2(0,-1) returns 180 degrees in 3.0, we want 0
 # this counts in radians
 func fix_atan(x,y):

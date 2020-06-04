@@ -1062,8 +1062,7 @@ func _on_ButtonBuy_pressed():
 	var cursor = $"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
 	var select_id = (cursor.get_position().y / 15)
 
-	print("Want to buy " + str(select_id))
-	#player.sell_cargo(select_id)	
+	player.buy_cargo(select_id)	
 
 func get_base_storage(player):
 	if 'storage' in player.get_parent().get_parent():
