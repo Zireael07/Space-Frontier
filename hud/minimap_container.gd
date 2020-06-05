@@ -59,6 +59,11 @@ func _ready():
 	
 	
 	planets = get_tree().get_nodes_in_group("planets")
+	# treat moons as planets
+	var moons = get_tree().get_nodes_in_group("moon")
+	for m in moons:
+		planets.append(m)
+	
 	asteroids = get_tree().get_nodes_in_group("asteroid")
 	
 	player = get_tree().get_nodes_in_group("player")[0]
@@ -108,6 +113,15 @@ func _ready():
 		else:
 			planet_sprite.set_scale(Vector2(p.planet_rad_factor, p.planet_rad_factor))
 		
+		# moons
+		if p.is_in_group("moon"):
+			planet_sprite.set_scale(Vector2(0.5, 0.5))
+			
+		# center sprite
+		# for some reason, get_size() doesn't work yet
+		var siz = Vector2(36,36)*planet_sprite.get_scale()
+		planet_sprite.set_pivot_offset(siz/2)
+		
 		# label
 		var label = Label.new()
 		
@@ -126,7 +140,7 @@ func _ready():
 		planet_sprites.append(con)
 		con.add_child(planet_sprite)
 		
-		label.set_position(Vector2(36*stars[0].star_radius_factor,36*stars[0].star_radius_factor))
+		label.set_position(siz)
 		con.add_child(label)
 			
 		

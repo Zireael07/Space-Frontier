@@ -34,6 +34,7 @@ func _ready():
 		zoom_scale = stars[0].custom_orrery_scale
 	
 	planets = get_tree().get_nodes_in_group("planets")
+	# given the scale, it doesn't make sense to show moons
 	asteroids = get_tree().get_nodes_in_group("asteroid")
 	
 	
