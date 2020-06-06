@@ -726,6 +726,9 @@ func _on_conquer_pressed(id):
 func refresh_cargo():
 	if 'storage' in get_parent().get_parent():
 		HUD.update_cargo_listing(cargo, get_parent().get_parent().storage)
+	elif 'storage' in get_parent().get_parent().get_parent(): # planet
+		HUD.update_cargo_listing(cargo, get_parent().get_parent().get_parent().storage)
+	
 	else:
 		HUD.update_cargo_listing(cargo)
 

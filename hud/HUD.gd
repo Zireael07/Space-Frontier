@@ -660,7 +660,7 @@ func _on_ButtonCargo_pressed():
 	switch_to_cargo()
 
 func _on_planet_landed():
-	switch_to_cargo()
+	_on_ButtonCargo_pressed()
 
 
 func _on_ButtonRefit_pressed():

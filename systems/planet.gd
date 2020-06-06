@@ -42,6 +42,14 @@ onready var module = preload("res://debris_enemy.tscn")
 
 var labl_loc = Vector2()
 
+# see asteroid.gd and debris_resource.gd
+enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
+
+#Methane = CH4, carborundum (silicon carbide) = SiC
+# plastics are chains of (C2H4)n
+enum processed { METHANE, CARBORUNDUM, PLASTICS } 
+var storage = {}
+
 # Called when the node is added to the scene for the first time.
 # Initialization here
 func _ready():
@@ -52,12 +60,22 @@ func _ready():
 	
 	labl_loc = $"Label".get_position()
 	
+	# if colonized, give some storage
+	if has_colony():
+		randomize_storage()
+	
 	# debug old positions
 #	dist = get_position().length()
 #	var ls = dist/game.LIGHT_SEC
 #	print("Dist to parent star: " + str(dist) + " " + str(ls) + " ls, " + str(ls/game.LS_TO_AU) + " AU")
 	
 	#setup()
+
+func randomize_storage():
+	randomize()
+	for e in processed:
+		storage[e] = int(rand_range(8.0, 20.0))
+
 
 func setup(angle=0, dis=0, mas=0):
 	print("Setup: " + str(angle) + ", " + str(dis) + ", m: " + str(mas))
