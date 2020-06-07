@@ -707,9 +707,20 @@ func enough_modules():
 	
 	#print("Enough modules: " + str(enough))
 	return enough
+	
+func enough_materials():
+	var enough = false
+	if storage["CARBORUNDUM"] >= 2 and storage["PLASTICS"] >= 2:
+		enough = true
+		
+	return enough
 
 func _on_module_timer_timeout():
-	if has_colony() and not enough_modules():
+	if has_colony() and enough_materials() and not enough_modules():
+		# remove materials
+		storage["CARBORUNDUM"] -= 2
+		storage["PLASTICS"] -= 2
+		
 		#print("Module timer")
 		var pos = get_global_position()
 		var mo = module.instance()
