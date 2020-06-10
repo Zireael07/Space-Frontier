@@ -3,6 +3,7 @@ extends Control
 # Declare member variables here. Examples:
 var friendly = preload("res://ships/friendly_ship.tscn")
 var starbase = preload("res://ships/starbase.tscn")
+var drone = preload("res://ships//friendly_drone.tscn")
 
 var enemy = preload("res://ships/enemy_ship.tscn")
 var enemy_starbase = preload("res://ships/enemy_starbase.tscn")
@@ -48,6 +49,8 @@ func _ready():
 	
 	for i in range(4):
 		spawn_friendly(i, p_ind)
+	
+	spawn_friendly_drone(1, p_ind)
 	
 	spawn_starbase(system, p_ind)
 	var pos = spawn_enemy_starbase(system, p_ind)
@@ -140,6 +143,22 @@ func spawn_starbase(system, p_ind):
 		# give minimap icon
 		var mmap = get_tree().get_nodes_in_group("minimap")[0]
 		mmap._on_starbase_spawned(sb.get_child(0))
+
+func spawn_friendly_drone(i, p_ind):
+	var p = get_colonized_planet()
+	if p:
+		var sp = drone.instance()
+		# random factor
+		randomize()
+		var offset = Vector2(rand_range(50, 150), rand_range(50, 150))
+		sp.set_global_position(p.get_global_position() + offset)
+		#print("Spawning @ : " + str(p.get_global_position() + offset))
+		sp.get_child(0).set_position(Vector2(0,0))
+		#sp.set_name("friendly"+str(i))
+		get_child(2).add_child(sp)
+		get_child(2).move_child(sp, p_ind+1)
+		# doesn't work for some reason
+		#add_child_below_node(get_tree().get_nodes_in_group("player")[0], sp)
 		
 func spawn_enemy_starbase(system, p_ind):
 	var p

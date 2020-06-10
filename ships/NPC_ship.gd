@@ -48,7 +48,7 @@ func _ready():
 		# tint red
 		$"Label".set_self_modulate(Color(1, 0, 0))
 		add_to_group("enemy")
-	elif kind_id == kind.friendly:
+	elif kind_id == kind.friendly and has_node("Label"):
 		var id = randi() % game.friendly_names.size() # return between 0 and size-1
 		ship_name = game.friendly_names[id]
 		# remove name that was already used
@@ -216,7 +216,8 @@ func move_AI(vel, delta):
 	set_rotation(-a)
 	
 	# straighten out labels
-	$"Label".set_rotation(a)
+	if has_node("Label"):
+		$"Label".set_rotation(a)
 
 func shoot_wrapper():
 	if gun_timer.get_time_left() == 0:
