@@ -216,8 +216,8 @@ func move_AI(vel, delta):
 	set_rotation(-a)
 	
 	# straighten out labels
-	if has_node("Label"):
-		$"Label".set_rotation(a)
+	#if has_node("Label"):
+	$"Label".set_rotation(a)
 
 func shoot_wrapper():
 	if gun_timer.get_time_left() == 0:

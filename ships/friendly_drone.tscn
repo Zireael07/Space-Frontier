@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ships/brain.gd" type="Script" id=1]
-[ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ships/NPC_drone.gd" type="Script" id=2]
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=3]
-[ext_resource path="res://ships/NPC_ship.gd" type="Script" id=4]
 [ext_resource path="res://assets/ships/playerShip2_blue.png" type="Texture" id=5]
 [ext_resource path="res://assets/fire11.png" type="Texture" id=6]
 [ext_resource path="res://assets/shield_Edit.png" type="Texture" id=7]
@@ -24,10 +23,10 @@ color = Color( 0.0117647, 0.996078, 0.972549, 1 )
 scale = Vector2( 0.5, 0.5 )
 z_as_relative = false
 
-[node name="Area2D_ship_f" type="Area2D" parent="."]
-script = ExtResource( 4 )
-bullet = ExtResource( 2 )
-kind_id = 1
+[node name="Area2D_ship_f" type="Area2D" parent="." groups=[
+"drone",
+]]
+script = ExtResource( 2 )
 
 [node name="playerShip2_blue" type="Sprite" parent="Area2D_ship_f"]
 scale = Vector2( 0.6, 0.6 )
@@ -76,7 +75,5 @@ amount = 2
 lifetime = 0.3
 process_material = SubResource( 2 )
 texture = ExtResource( 6 )
-[connection signal="input_event" from="Area2D_ship_f" to="Area2D_ship_f" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D_ship_f/shield_timer" to="Area2D_ship_f" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D_ship_f/task_timer" to="Area2D_ship_f" method="_on_task_timer_timeout"]
-[connection signal="timeout" from="Area2D_ship_f/shield_recharge_timer" to="Area2D_ship_f" method="_on_shield_recharge_timer_timeout"]
