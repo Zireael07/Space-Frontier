@@ -61,6 +61,10 @@ func move_generic(delta):
 	ship.move_AI(vel, delta)
 
 func handle_enemy():
+	# paranoia
+	if not ship.has_method("get_closest_enemy"):
+		return
+	
 	var enemy = ship.get_closest_enemy()
 	if enemy and (not 'warping' in enemy or not enemy.warping): #starbases don't have warp/Q-drive capability
 		var dist = get_global_position().distance_to(enemy.get_global_position())
@@ -146,22 +150,45 @@ func task_orbiting(timer_count, conquer_tg):
 	
 	# prevent too short orbiting
 	if timer_count > 2:
-		# if player-specified colony target is not colonized
-		# or we have a colonize target (planet w/o colony)
-		if conquer_tg != null or ship.get_colonize_target() != null:
-			if ship.get_colony_in_dock() == null:
-				if ship.kind_id == ship.kind.friendly:
-					# are we of high enough rank to be tasked with colonizing?
-					if ship.rank > 0: 
-						# pick up colony from planet
-						if not ship.pick_colony():
-							print("We can't pick colony now, go do something else...")
-							var colony_pick = ship.get_planet_colony_available()
-							if colony_pick:
-								ship.deorbit()
-								set_state(STATE_GO_PLANET, colony_pick)
+		# if not drone
+		if ship.is_in_group("drone"):
+			print("Drone should be deorbiting")
+		else:
+			# if player-specified colony target is not colonized
+			# or we have a colonize target (planet w/o colony)
+			if conquer_tg != null or ship.get_colonize_target() != null:
+				if ship.get_colony_in_dock() == null:
+					if ship.kind_id == ship.kind.friendly:
+						# are we of high enough rank to be tasked with colonizing?
+						if ship.rank > 0: 
+							# pick up colony from planet
+							if not ship.pick_colony():
+								print("We can't pick colony now, go do something else...")
+								var colony_pick = ship.get_planet_colony_available()
+								if colony_pick:
+									ship.deorbit()
+									set_state(STATE_GO_PLANET, colony_pick)
+								else:
+									var try_mine = _go_mine()
+								#if not try_mine:
+									#if get_colonized_planet().has_moon():
+										# random chance to head for a moon
+										#randomize()
+										#if randi() % 20 > 10:
+										#	brain.target = get_colonized_planet().get_moon().get_global_position()
+										#else:
+										
+									# orbit again
+								#	set_state(STATE_ORBIT, ship.get_colonized_planet())
 							else:
-								var try_mine = _go_mine()
+								var src_planet = ship.orbiting.get_parent()
+								# deorbit
+								ship.deorbit()	
+								# explicitly go colonize
+								_colonize(conquer_tg, src_planet)
+						# AI cadet
+						else:
+							var try_mine = _go_mine()
 							#if not try_mine:
 								#if get_colonized_planet().has_moon():
 									# random chance to head for a moon
@@ -172,39 +199,20 @@ func task_orbiting(timer_count, conquer_tg):
 									
 								# orbit again
 							#	set_state(STATE_ORBIT, ship.get_colonized_planet())
-						else:
-							var src_planet = ship.orbiting.get_parent()
-							# deorbit
-							ship.deorbit()	
-							# explicitly go colonize
-							_colonize(conquer_tg, src_planet)
-					# AI cadet
+					
+					# if we're an enemy
 					else:
-						var try_mine = _go_mine()
-						#if not try_mine:
-							#if get_colonized_planet().has_moon():
-								# random chance to head for a moon
-								#randomize()
-								#if randi() % 20 > 10:
-								#	brain.target = get_colonized_planet().get_moon().get_global_position()
-								#else:
-								
-							# orbit again
-						#	set_state(STATE_ORBIT, ship.get_colonized_planet())
-				
-				# if we're an enemy
+						#print("Blockading a planet")
+						pass
 				else:
-					#print("Blockading a planet")
-					pass
+					var src_planet = ship.orbiting.get_parent()
+					# deorbit
+					ship.deorbit()		
+					_colonize(conquer_tg, src_planet)
+		
+			# if nowhere to colonize
 			else:
-				var src_planet = ship.orbiting.get_parent()
-				# deorbit
-				ship.deorbit()		
-				_colonize(conquer_tg, src_planet)
-	
-		# if nowhere to colonize
-		else:
-			var try_mine = _go_mine()
+				var try_mine = _go_mine()
 
 
 # timer count is governed by ship
@@ -214,102 +222,106 @@ func _on_task_timer_timeout(timer_count):
 		task_orbiting(timer_count, conquer_tg)
 
 	else:
-		# if we somehow picked up a colony and aren't colonizing, offload it first
-		if ship.get_colony_in_dock() != null and not (get_state() == STATE_COLONIZE):
-			var try_col = _colonize(conquer_tg, null)
-			# nothing more to colonize, go back to colonized planet
-			if not try_col: 
-				set_state(STATE_GO_PLANET, ship.get_colonized_planet())
-			
-		if not (get_state() in [STATE_IDLE, STATE_MINE, STATE_REFIT, STATE_COLONIZE, STATE_ATTACK, STATE_GO_PLANET, STATE_ORBIT]):
-			_go_mine()
-
-		if not (get_state() == STATE_ATTACK) and not ship.docked:
-			if ship.get_colony_in_dock() == null:
-				if ship.kind_id == ship.kind.friendly:
-					#print("We're friendlies without a colony in dock")
-					# find closest colony
-					var close_col = ship.get_closest_floating_colony()
-					if close_col != null:
-						var dist = (close_col.get_global_position() - ship.get_global_position()).length()
-						#print("We have a floating colony @ dist: " + str(dist))
-						if dist < 500:
-							target = close_col.get_global_position()
-							set_state(STATE_IDLE)
-							print("Floating colony close by")
-					
-		if get_state() == STATE_REFIT:
-			if not ship.docked:
-				return
-			# if we're docked
-			else:
-				# undock if we regenerated enough shields
-				if ship.shields > 75:
-					# if player-specified colony target is not colonized
-					# or we have a colonize target (planet w/o colony)
-					if conquer_tg != null or ship.get_colonize_target() != null:
-						if ship.get_colony_in_dock() == null:
-							if ship.kind_id == ship.kind.friendly:
-								# are we of high enough rank to be tasked with colonizing?
-								if ship.rank > 0: 
-									print("Going to a planet after refit")
-									# go to a planet
-									set_state(STATE_GO_PLANET, ship.get_colonized_planet())
-								else:
-									var try_mine = _go_mine()
-									if not try_mine:		
+		if ship.is_in_group("drone"):
+			print("Drone task timeout")
+		else:
+		
+			# if we somehow picked up a colony and aren't colonizing, offload it first
+			if ship.get_colony_in_dock() != null and not (get_state() == STATE_COLONIZE):
+				var try_col = _colonize(conquer_tg, null)
+				# nothing more to colonize, go back to colonized planet
+				if not try_col: 
+					set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+				
+			if not (get_state() in [STATE_IDLE, STATE_MINE, STATE_REFIT, STATE_COLONIZE, STATE_ATTACK, STATE_GO_PLANET, STATE_ORBIT]):
+				_go_mine()
+	
+			if not (get_state() == STATE_ATTACK) and not ship.docked:
+				if ship.get_colony_in_dock() == null:
+					if ship.kind_id == ship.kind.friendly:
+						#print("We're friendlies without a colony in dock")
+						# find closest colony
+						var close_col = ship.get_closest_floating_colony()
+						if close_col != null:
+							var dist = (close_col.get_global_position() - ship.get_global_position()).length()
+							#print("We have a floating colony @ dist: " + str(dist))
+							if dist < 500:
+								target = close_col.get_global_position()
+								set_state(STATE_IDLE)
+								print("Floating colony close by")
+						
+			if get_state() == STATE_REFIT:
+				if not ship.docked:
+					return
+				# if we're docked
+				else:
+					# undock if we regenerated enough shields
+					if ship.shields > 75:
+						# if player-specified colony target is not colonized
+						# or we have a colonize target (planet w/o colony)
+						if conquer_tg != null or ship.get_colonize_target() != null:
+							if ship.get_colony_in_dock() == null:
+								if ship.kind_id == ship.kind.friendly:
+									# are we of high enough rank to be tasked with colonizing?
+									if ship.rank > 0: 
+										print("Going to a planet after refit")
 										# go to a planet
 										set_state(STATE_GO_PLANET, ship.get_colonized_planet())
-					else:			
-						var try_mine = _go_mine()
-						if not try_mine:		
-							# go to a planet
+									else:
+										var try_mine = _go_mine()
+										if not try_mine:		
+											# go to a planet
+											set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+						else:			
+							var try_mine = _go_mine()
+							if not try_mine:		
+								# go to a planet
+								set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+	
+	
+			if get_state() == STATE_MINE:
+				var dist = get_global_position().distance_to(target)
+				# ignore timer count if far away
+				if dist > 150:
+					ship.timer_count = 0
+				else:
+					# if task timeout happened and we're still mining, quit it
+					var tg_count = 4
+					if timer_count > tg_count:
+						#print("We got stuck mining @ dist: " + str(dist))
+						# assume we got bored, look for something else to do../
+						
+						# do we have something to colonize?
+						# if player-specified colony target is not colonized
+						# or we have a colonize target (planet w/o colony)
+	#					if conquer_tg or ship.get_colonize_target() != null: 
+	#						if ship.get_colony_in_dock() == null:
+	#							if ship.kind_id == ship.kind.friendly:
+	#								if ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
+	#									#brain.target = get_colonized_planet().get_global_position() + Vector2(200,200) * get_colonized_planet().planet_rad_factor
+	#									set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+	#
+	#					else:
+	
+						# add offset to target to "unstick" ourselves
+						target = target + Vector2(50,50)
+						set_state(STATE_IDLE)
+			
+			if get_state() == STATE_IDLE:
+				# if we were mining, keep doing it (and incrementing old counters)
+				if prev_state[0] == STATE_MINE:
+					if timer_count > 1:
+						# this way, we also pass the parameters
+						#print("Prev state params: " + str(prev_state[1]))
+						set_state(prev_state[0], prev_state[1])
+				# if task timeout happened and we're still idling, quit it
+				if timer_count > 3:
+					# target NOT a floating colony
+					if not ship.is_target_floating_colony(target):
+						# if we're on top of our target
+						if ship.get_global_position().distance_to(target) < 20:
+							# go back to a planet
 							set_state(STATE_GO_PLANET, ship.get_colonized_planet())
-
-
-		if get_state() == STATE_MINE:
-			var dist = get_global_position().distance_to(target)
-			# ignore timer count if far away
-			if dist > 150:
-				ship.timer_count = 0
-			else:
-				# if task timeout happened and we're still mining, quit it
-				var tg_count = 4
-				if timer_count > tg_count:
-					#print("We got stuck mining @ dist: " + str(dist))
-					# assume we got bored, look for something else to do../
-					
-					# do we have something to colonize?
-					# if player-specified colony target is not colonized
-					# or we have a colonize target (planet w/o colony)
-#					if conquer_tg or ship.get_colonize_target() != null: 
-#						if ship.get_colony_in_dock() == null:
-#							if ship.kind_id == ship.kind.friendly:
-#								if ship.get_colonized_planet().get_global_position().distance_to(ship.get_global_position()) > 500:
-#									#brain.target = get_colonized_planet().get_global_position() + Vector2(200,200) * get_colonized_planet().planet_rad_factor
-#									set_state(STATE_GO_PLANET, ship.get_colonized_planet())
-#
-#					else:
-
-					# add offset to target to "unstick" ourselves
-					target = target + Vector2(50,50)
-					set_state(STATE_IDLE)
-		
-		if get_state() == STATE_IDLE:
-			# if we were mining, keep doing it (and incrementing old counters)
-			if prev_state[0] == STATE_MINE:
-				if timer_count > 1:
-					# this way, we also pass the parameters
-					#print("Prev state params: " + str(prev_state[1]))
-					set_state(prev_state[0], prev_state[1])
-			# if task timeout happened and we're still idling, quit it
-			if timer_count > 3:
-				# target NOT a floating colony
-				if not ship.is_target_floating_colony(target):
-					# if we're on top of our target
-					if ship.get_global_position().distance_to(target) < 20:
-						# go back to a planet
-						set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 					
 
 func _on_target_killed(target):
