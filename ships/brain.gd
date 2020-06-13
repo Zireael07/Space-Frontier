@@ -153,6 +153,12 @@ func task_orbiting(timer_count, conquer_tg):
 		# if not drone
 		if ship.is_in_group("drone"):
 			print("Drone should be deorbiting")
+			# deorbit
+			ship.deorbit()
+			# base
+			var base = ship.get_friendly_base()
+			target = base.get_global_position()
+			set_state(STATE_REFIT, base)
 		else:
 			# if player-specified colony target is not colonized
 			# or we have a colonize target (planet w/o colony)
@@ -224,8 +230,18 @@ func _on_task_timer_timeout(timer_count):
 	else:
 		if ship.is_in_group("drone"):
 			print("Drone task timeout")
+			if get_state() == STATE_REFIT:
+				if not ship.docked:
+					return
+				# if we're docked
+				else:
+					print("Drone is docked")
+					
+					if timer_count > 2:
+						# go back to planet
+						set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+						
 		else:
-		
 			# if we somehow picked up a colony and aren't colonizing, offload it first
 			if ship.get_colony_in_dock() != null and not (get_state() == STATE_COLONIZE):
 				var try_col = _colonize(conquer_tg, null)
@@ -600,9 +616,13 @@ class RefitState:
 		# if close, do tractor effect
 		if ship.get_global_position().distance_to(ship.target) < 50 and not ship.ship.docked:
 			#print("Should be tractoring")
-			ship.ship.refit_tractor(base)
-			# dummy
-			ship.target = ship.get_global_position()
+			if ship.has_method("refit_tractor"):
+				ship.ship.refit_tractor(base)
+				# dummy
+				ship.target = ship.get_global_position()
+			else:
+				# pretend it's docked immediately
+				ship.ship.docked = true
 		# sell cargo
 		if ship.ship.docked:
 			# prevent crash if nothing in cargo
@@ -717,7 +737,7 @@ class PlanetState:
 		var steer = ship.get_steering_seek(ship.target)
 		
 		# avoid the sun
-		if ship.ship.close_to_sun():
+		if ship.ship.has_method("close_to_sun") and ship.ship.close_to_sun():
 			var sun = ship.get_tree().get_nodes_in_group("star")[0].get_global_position()
 			# TODO: this should be weighted to avoid negating the seek completely
 			steer = steer + ship.get_steering_avoid(sun, ship.ship.get_rotation())

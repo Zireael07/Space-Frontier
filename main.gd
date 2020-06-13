@@ -154,7 +154,7 @@ func spawn_friendly_drone(i, p_ind):
 		sp.set_global_position(p.get_global_position() + offset)
 		#print("Spawning @ : " + str(p.get_global_position() + offset))
 		sp.get_child(0).set_position(Vector2(0,0))
-		#sp.set_name("friendly"+str(i))
+		sp.set_name("friend_drone"+str(i))
 		get_child(2).add_child(sp)
 		get_child(2).move_child(sp, p_ind+1)
 		# doesn't work for some reason

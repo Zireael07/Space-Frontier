@@ -25,6 +25,7 @@ z_as_relative = false
 
 [node name="Area2D_ship_f" type="Area2D" parent="." groups=[
 "drone",
+"friendly",
 ]]
 script = ExtResource( 2 )
 
