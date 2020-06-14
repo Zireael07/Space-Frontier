@@ -710,8 +710,12 @@ func enough_modules():
 	
 func enough_materials():
 	var enough = false
-	if storage["CARBORUNDUM"] >= 2 and storage["PLASTICS"] >= 2:
-		enough = true
+	
+	if storage.keys().size() < 1:
+		enough = false
+	else:
+		if storage["CARBORUNDUM"] >= 2 and storage["PLASTICS"] >= 2:
+			enough = true
 		
 	return enough
 
