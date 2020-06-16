@@ -22,6 +22,7 @@ var spd = 0
 var orbiting = null
 
 var docked = false
+var bought = false
 var cargo = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -96,3 +97,23 @@ func get_friendly_base():
 			if b.is_in_group("enemy"):
 				#print(b.get_name() + " is enemy")
 				return b
+
+func simple_dock(refit_target):
+	# reparent			
+	get_parent().get_parent().remove_child(get_parent())
+	# refit target needs to be a node because here
+	refit_target.add_child(get_parent())
+	# set better z so that we don't overlap parent ship
+	set_z_index(-1)
+	
+	# nuke any velocity left
+	vel = Vector2(0,0)
+	acc = Vector2(0,0)
+	
+	# drones are far away from starbase
+	get_parent().set_position(Vector2(0,100))
+	set_position(Vector2(0,0))
+	pos = Vector2(0,0)
+
+
+	docked = true

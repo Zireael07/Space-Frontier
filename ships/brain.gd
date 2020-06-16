@@ -618,26 +618,56 @@ class RefitState:
 			#print("Should be tractoring")
 			if ship.has_method("refit_tractor"):
 				ship.ship.refit_tractor(base)
-				# dummy
-				ship.target = ship.get_global_position()
 			else:
-				# pretend it's docked immediately
-				ship.ship.docked = true
-		# sell cargo
-		if ship.ship.docked:
-			# prevent crash if nothing in cargo
-			if ship.ship.cargo.size() < 1:
-				return
-				
-			for id in ship.ship.cargo.keys():
-				if ship.ship.cargo[id] > 0:
-					ship.ship.cargo[id] -= 1
+				ship.ship.simple_dock(base)
 			
-					# add cargo to starbase
-					if not ship.ship.get_parent().get_parent().storage.has(id):
-						ship.ship.get_parent().get_parent().storage[id] = 1
+			# dummy
+			ship.target = ship.get_global_position()
+			
+				
+				# pretend it's docked immediately
+				#ship.ship.docked = true
+		
+		# ship is docked
+		if ship.ship.docked:
+			
+			# buy from starbase
+			if ship.ship.is_in_group("drone"):
+
+				var sb = ship.ship.get_parent().get_parent()
+				if not sb.storage.keys().size() > 0:
+					return
+				if ship.ship.bought:
+					return
+				
+				# buy one random thing from starbase
+				var id = randi() % sb.storage.keys().size()-1
+				ship.ship.bought = true
+				if sb.storage[sb.storage.keys()[id]] > 0:
+					sb.storage[sb.storage.keys()[id]] -= 1
+					# add cargo to player
+					if not ship.ship.cargo.has(sb.storage.keys()[id]):
+						ship.ship.cargo[sb.storage.keys()[id]] = 1
 					else:
-						ship.ship.get_parent().get_parent().storage[id] += 1
+						ship.ship.cargo[sb.storage.keys()[id]] += 1
+						
+					print("Bought something from starbase")
+				
+			# sell cargo	
+			else:
+				# prevent crash if nothing in cargo
+				if ship.ship.cargo.size() < 1:
+					return
+					
+				for id in ship.ship.cargo.keys():
+					if ship.ship.cargo[id] > 0:
+						ship.ship.cargo[id] -= 1
+				
+						# add cargo to starbase
+						if not ship.ship.get_parent().get_parent().storage.has(id):
+							ship.ship.get_parent().get_parent().storage[id] = 1
+						else:
+							ship.ship.get_parent().get_parent().storage[id] += 1
 			
 			# start timer
 			# task timer allows the AI to leave after some time passed
