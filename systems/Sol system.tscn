@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://colony.tscn" type="PackedScene" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://assets/bodies/Sol textures/saturn rings stock.png" type="Texture" id=19]
 [ext_resource path="res://assets/bodies/Sol textures/neptunemap.jpg" type="Texture" id=20]
 [ext_resource path="res://assets/bodies/Sol textures/uranusmap.jpg" type="Texture" id=21]
+[ext_resource path="res://assets/bodies/Sol textures/fargetanik_titan_colored_magentameteorite.jpg" type="Texture" id=22]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -513,6 +514,29 @@ rotation = 3.90045e-07
 [node name="Label" parent="planet_holder/planet9" index="2"]
 text = "Saturn"
 
+[node name="Node2D6" parent="planet_holder/planet9/orbit_holder" index="0" groups=[
+"moon",
+] instance=ExtResource( 4 )]
+position = Vector2( 0, 960 )
+mass = 0.015006
+hydro = 0.0
+ice = 0.08
+
+[node name="Sprite" parent="planet_holder/planet9/orbit_holder/Node2D6" index="0"]
+scale = Vector2( 0.062, 0.125 )
+texture = ExtResource( 22 )
+
+[node name="Sprite_shadow" parent="planet_holder/planet9/orbit_holder/Node2D6" index="1"]
+visible = false
+rotation = 3.89681e-07
+
+[node name="Label" parent="planet_holder/planet9/orbit_holder/Node2D6" index="2"]
+margin_left = 37.0
+margin_top = 37.0
+margin_right = 89.0
+margin_bottom = 52.0
+text = "Titan"
+
 [node name="rings" type="Sprite" parent="planet_holder/planet9"]
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 19 )
@@ -592,6 +616,8 @@ text = "Neptune"
 [editable path="planet_holder/planet10"]
 
 [editable path="planet_holder/planet9"]
+
+[editable path="planet_holder/planet9/orbit_holder/Node2D6"]
 
 [editable path="planet_holder/planet11"]
 
