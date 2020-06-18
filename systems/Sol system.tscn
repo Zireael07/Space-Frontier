@@ -523,12 +523,13 @@ hydro = 0.0
 ice = 0.08
 
 [node name="Sprite" parent="planet_holder/planet9/orbit_holder/Node2D6" index="0"]
+modulate = Color( 0.996078, 0.701961, 0.00784314, 1 )
 scale = Vector2( 0.062, 0.125 )
 texture = ExtResource( 22 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet9/orbit_holder/Node2D6" index="1"]
-visible = false
-rotation = 3.89681e-07
+rotation = 3.90159e-07
+scale = Vector2( 0.129, 0.129 )
 
 [node name="Label" parent="planet_holder/planet9/orbit_holder/Node2D6" index="2"]
 margin_left = 37.0

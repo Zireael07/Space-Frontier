@@ -784,6 +784,10 @@ func make_planet_view(planet, select_id=-1):
 	else:
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
 	
+	# apply any modulate effects
+	var modu = planet.get_node("Sprite").get_modulate()
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_modulate(modu)
+	
 	if planet.get_node("Sprite").get_material() != null:
 		#print("Shader: " + str(planet.get_node("Sprite").get_material().is_class("ShaderMaterial")))
 		var is_rot = planet.get_node("Sprite").get_material().get_shader().has_param("shader_param/time")
@@ -802,11 +806,17 @@ func make_planet_view(planet, select_id=-1):
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(sc2)
 			# experimentally determined values
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, -7))
+			
+			if planet.is_in_group("moon"):
+				# hide shadow
+				$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
 	# why the eff do the asteroid/moon crosses/dwarf planets seem not to have material?
 	else:
 		if planet.is_in_group("moon") or planet.is_in_group("aster_named"):
 			var sc = Vector2(1, 1)
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
+			# hide shadow
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
 		
 	# set label
 	var txt = "Planet: " + str(planet.get_node("Label").get_text())
