@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://colony.tscn" type="PackedScene" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
@@ -22,6 +22,8 @@
 [ext_resource path="res://assets/bodies/Sol textures/neptunemap.jpg" type="Texture" id=20]
 [ext_resource path="res://assets/bodies/Sol textures/uranusmap.jpg" type="Texture" id=21]
 [ext_resource path="res://assets/bodies/Sol textures/fargetanik_titan_colored_magentameteorite.jpg" type="Texture" id=22]
+[ext_resource path="res://assets/bodies/Sol textures/rhea_a_m.jpg" type="Texture" id=23]
+[ext_resource path="res://assets/bodies/Sol textures/enceladus_rgb_cyl_www.jpg" type="Texture" id=24]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -514,7 +516,55 @@ rotation = 3.90045e-07
 [node name="Label" parent="planet_holder/planet9" index="2"]
 text = "Saturn"
 
-[node name="Node2D6" parent="planet_holder/planet9/orbit_holder" index="0" groups=[
+[node name="Node2D8" parent="planet_holder/planet9/orbit_holder" index="0" groups=[
+"moon",
+] instance=ExtResource( 4 )]
+position = Vector2( 0, 150 )
+mass = 0.0038376
+hydro = 0.0
+ice = 0.08
+
+[node name="Sprite" parent="planet_holder/planet9/orbit_holder/Node2D8" index="0"]
+scale = Vector2( 0.062, 0.125 )
+texture = ExtResource( 24 )
+
+[node name="Sprite_shadow" parent="planet_holder/planet9/orbit_holder/Node2D8" index="1"]
+visible = false
+rotation = 3.89988e-07
+scale = Vector2( 0.129, 0.129 )
+
+[node name="Label" parent="planet_holder/planet9/orbit_holder/Node2D8" index="2"]
+margin_left = 37.0
+margin_top = 37.0
+margin_right = 89.0
+margin_bottom = 52.0
+text = "Enceladus"
+
+[node name="Node2D7" parent="planet_holder/planet9/orbit_holder" index="1" groups=[
+"moon",
+] instance=ExtResource( 4 )]
+position = Vector2( -8.74228e-06, 200 )
+mass = 0.0038376
+hydro = 0.0
+ice = 0.08
+
+[node name="Sprite" parent="planet_holder/planet9/orbit_holder/Node2D7" index="0"]
+scale = Vector2( 0.125, 0.25 )
+texture = ExtResource( 23 )
+
+[node name="Sprite_shadow" parent="planet_holder/planet9/orbit_holder/Node2D7" index="1"]
+visible = false
+rotation = 3.89969e-07
+scale = Vector2( 0.129, 0.129 )
+
+[node name="Label" parent="planet_holder/planet9/orbit_holder/Node2D7" index="2"]
+margin_left = 37.0
+margin_top = 37.0
+margin_right = 89.0
+margin_bottom = 52.0
+text = "Rhea"
+
+[node name="Node2D6" parent="planet_holder/planet9/orbit_holder" index="2" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
 position = Vector2( 0, 960 )
@@ -617,6 +667,10 @@ text = "Neptune"
 [editable path="planet_holder/planet10"]
 
 [editable path="planet_holder/planet9"]
+
+[editable path="planet_holder/planet9/orbit_holder/Node2D8"]
+
+[editable path="planet_holder/planet9/orbit_holder/Node2D7"]
 
 [editable path="planet_holder/planet9/orbit_holder/Node2D6"]
 

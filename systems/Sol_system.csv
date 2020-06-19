@@ -16,6 +16,8 @@ Ganymede,0,1300,2.03, moon
 Callisto,0,2500,1.46, moon
 Okyrhoe,0, 8.34,0, asteroid
 Saturn,0,9.5,95, planet
+Enceladus, 0, 150, 0.0146, moon
+Rhea, 0, 200, 0.312, moon
 Titan, 0,400,1.83, moon
 Uranus,0,19.2,14.5, planet
 Neptune,0,30.1,17.1, planet

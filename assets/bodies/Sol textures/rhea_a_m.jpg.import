@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/rhea_a_m.jpg-641f4d8238482c6ee695fe61198361cd.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/bodies/Sol textures/rhea_a_m.jpg"
+dest_files=[ "res://.import/rhea_a_m.jpg-641f4d8238482c6ee695fe61198361cd.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0

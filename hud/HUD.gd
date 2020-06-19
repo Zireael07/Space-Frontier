@@ -797,6 +797,9 @@ func make_planet_view(planet, select_id=-1):
 			# Saturn's texture is 1800px instead of 1000px
 			if planet.get_node("Label").get_text() == "Saturn":
 				sc = Vector2(sc.x*0.55, sc.y*0.55) 
+			# Rhea texture is very low-res (360px)
+			if planet.get_node("Label").get_text() == "Rhea":
+				sc = Vector2(sc.x*3, sc.y*3)
 
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
 
