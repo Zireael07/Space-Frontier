@@ -142,7 +142,7 @@ func setup(angle=0, dis=0, mas=0):
 # The square of the period of any planet is proportional to the cube of the semi-major axis of its orbit.
 # t^2 = au^3 if period is in years and axis is in AU
 func calculate_orbit_period():
-	# gravitational constant
+	# gravitational constant (in (N*m2)/kg2)
 	var G = (6.67428e-11)
 	
 	var dist = self.dist
@@ -151,20 +151,31 @@ func calculate_orbit_period():
 	
 	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
 	#print("Axis: " + str(axis))
+	#print("Check: " + str(axis*game.AU))
 	
-	# by default, the equation works on seconds, meters and kilograms
-	var AU = 149597870691 #meters
+	# by default, the equation works on seconds, meters and kilograms 
+	# because of the units the gravitational constant uses
+	# updated numbers from https://astronomy.stackexchange.com/a/1202 (from Wolfram Alpha)
+	var AU = 1.4959789e11 #meters
 	var yr = 3.15581e7 #seconds (86400 for a day)
-	var sun = 5.027399e-31 #kg
+	var sun = 1.988435e30 #kg
 	
 	# if we're a moon, substitute planet mass
 	if is_in_group("moon"):
-		sun = 1.6740324e-25 # kg, one Earth mass
+		var Earth = 5.9722e24 # kg, one Earth mass https://en.wikipedia.org/wiki/Earth_mass
+		sun = Earth
 		#var moon_mass = mass*sun
 		#sun = sun + moon_mass # to be extra correct
+		
+		if get_parent().get_parent().get_planet_class() == "gas giant":
+			#print(get_node("Label").get_text() + " is a moon of a gas giant")
+			sun = Earth * 95 #206 # average of Jupiter and Saturn masses in Earth masses
+	
+	#print("sun:" + str(sun))
 	
 	# T = 2*PI*sqrt(a^3/GM) [ substitute (M1+M2) for M if we're talking binary system ]
-	var t = 2*PI*sqrt(pow(axis*AU, 3)/G*sun) # in seconds
+	var root = pow((axis*AU), 3) / (G*sun)
+	var t = 2*PI*sqrt(root) # in seconds
 	
 	#print(str(t/86400) + " days, " + str(t/yr) + " year(s)")
 	return t
