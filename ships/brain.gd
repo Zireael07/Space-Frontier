@@ -616,10 +616,10 @@ class RefitState:
 		# if close, do tractor effect
 		if ship.get_global_position().distance_to(ship.target) < 50 and not ship.ship.docked:
 			#print("Should be tractoring")
-			if ship.has_method("refit_tractor"):
-				ship.ship.refit_tractor(base)
-			else:
+			if ship.ship.is_in_group("drone"):
 				ship.ship.simple_dock(base)
+			else:
+				ship.ship.refit_tractor(base)
 			
 			# dummy
 			ship.target = ship.get_global_position()

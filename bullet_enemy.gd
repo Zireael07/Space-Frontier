@@ -29,6 +29,10 @@ func _on_bullet_area_entered( area ):
 
 		var pos = area.get_global_position()
 
+		# do nothing if we hit a drone
+		if not 'shields' in area:
+			return
+
 		# prevent negative shields
 		if area.shields > 0:
 			area.shields -= 10
