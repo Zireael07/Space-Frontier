@@ -169,7 +169,8 @@ func calculate_orbit_period():
 		
 		if get_parent().get_parent().get_planet_class() == "gas giant":
 			#print(get_node("Label").get_text() + " is a moon of a gas giant")
-			sun = Earth * 95 #206 # average of Jupiter and Saturn masses in Earth masses
+			#sun = Earth * 206 # average of Jupiter and Saturn masses in Earth masses
+			sun = Earth * get_parent().get_parent().mass
 	
 	#print("sun:" + str(sun))
 	
