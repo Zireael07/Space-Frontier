@@ -294,7 +294,7 @@ angle_inc = 3
 position = Vector2( -0.00145297, 33240 )
 z_index = 2
 planet_rad_factor = 0.25
-mass = 0.00016
+mass = 0.00015744
 hydro = 0.0
 
 [node name="Sprite" parent="planet_holder/planet6" index="0"]
@@ -519,8 +519,8 @@ text = "Saturn"
 [node name="Node2D8" parent="planet_holder/planet9/orbit_holder" index="0" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( 0, 150 )
-mass = 0.0038376
+position = Vector2( 0, 186 )
+mass = 0.00017958
 hydro = 0.0
 ice = 0.08
 
@@ -543,7 +543,7 @@ text = "Enceladus"
 [node name="Node2D7" parent="planet_holder/planet9/orbit_holder" index="1" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( -8.74228e-06, 200 )
+position = Vector2( 0, 411 )
 mass = 0.0038376
 hydro = 0.0
 ice = 0.08
@@ -567,8 +567,8 @@ text = "Rhea"
 [node name="Node2D6" parent="planet_holder/planet9/orbit_holder" index="2" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( 0, 960 )
-mass = 0.015006
+position = Vector2( 0, 900 )
+mass = 0.022509
 hydro = 0.0
 ice = 0.08
 
