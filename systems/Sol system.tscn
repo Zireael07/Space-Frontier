@@ -381,7 +381,7 @@ text = "Jupiter"
 [node name="Node2D2" parent="planet_holder/planet5/orbit_holder" index="0" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( -1.74846e-05, 400 )
+position = Vector2( 0, 330 )
 mass = 0.015006
 hydro = 0.0
 ice = 0.08
@@ -405,7 +405,7 @@ text = "Io"
 [node name="Node2D3" parent="planet_holder/planet5/orbit_holder" index="1" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( -3.0598e-05, 700 )
+position = Vector2( 0, 525 )
 mass = 0.007995
 hydro = 0.0
 ice = 1.0
@@ -429,7 +429,7 @@ text = "Europa"
 [node name="Node2D4" parent="planet_holder/planet5/orbit_holder" index="2" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( -5.68248e-05, 1300 )
+position = Vector2( 0, 835 )
 mass = 0.024969
 hydro = 0.0
 ice = 0.6
@@ -453,7 +453,7 @@ text = "Ganymede"
 [node name="Node2D5" parent="planet_holder/planet5/orbit_holder" index="3" groups=[
 "moon",
 ] instance=ExtResource( 4 )]
-position = Vector2( -0.000109278, 2500 )
+position = Vector2( 0, 1470 )
 mass = 0.017958
 hydro = 0.0
 ice = 0.5

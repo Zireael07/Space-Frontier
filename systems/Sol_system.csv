@@ -10,10 +10,10 @@ Ceres,0,2.77,0.0128, dwarf_planet
 Vesta,0,2.36,0.28, asteroid
 Pallas,4,2.774,0.21, asteroid
 Jupiter,0,5.2,318, planet
-Io,0,400,1.22, moon
-Europa,0,700,0.65, moon
-Ganymede,0,1300,2.03, moon
-Callisto,0,2500,1.46, moon
+Io,0,330,1.22, moon
+Europa,0,525,0.65, moon
+Ganymede,0,835,2.03, moon
+Callisto,0,1740,1.46, moon
 Okyrhoe,0, 8.34,0, asteroid
 Saturn,0,9.5,95, planet
 Enceladus, 0, 186, 0.0146, moon
