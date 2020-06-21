@@ -862,13 +862,22 @@ func make_planet_view(planet, select_id=-1):
 	if col:
 		# linebreak because of planet graphic
 		text = text + "\n" + " Population: " + "\n" + str(format_pop)
+	
+	var dist = planet.dist
+	var fmt_AU = "%.3f AU"
+	# moons are a special case
+	if planet.is_in_group("moon"):
+		dist = planet.dist/10
+		fmt_AU = "%.4f AU"
 
-	var au_dist = (planet.dist/game.LIGHT_SEC)/game.LS_TO_AU
+	
+	var au_dist = (dist/game.LIGHT_SEC)/game.LS_TO_AU
+	
 	var period = planet.calculate_orbit_period()
 	var yr = 3.15581e7 #seconds (86400 for a day)
 
 	#formatting
-	var format_AU = "%.3f AU" % au_dist
+	var format_AU = fmt_AU % au_dist
 	var format_grav = "%.2f g" % planet.gravity
 	var format_temp = "%d K" % planet.temp
 	var format_tempC = "(%d C)" % (planet.temp-273.15)
@@ -908,16 +917,16 @@ func make_planet_view(planet, select_id=-1):
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 
 	# tooltip
-	var dist = game.player.get_global_position().distance_to(planet.get_global_position())
+	var tool_dist = game.player.get_global_position().distance_to(planet.get_global_position())
 	#print("Dist to planet: " + str(dist))
-	var ls_travel = dist/game.LIGHT_SEC
+	var ls_travel = tool_dist/game.LIGHT_SEC
 	var format_time = "%d s" % ls_travel
 	if ls_travel > 60.0:
 		var mins = int(floor(ls_travel/60))
 		format_time = "%02d:%02d" % [mins, (ls_travel-(mins*60))]  # MM:SS
 	var travel_time = "Est. travel time @ 1.00c: " + format_time
 
-	if dist > 400: # i.e. LIGHT_SPEED = LIGHT_SEC
+	if tool_dist > 400: # i.e. LIGHT_SPEED = LIGHT_SEC
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".set_tooltip(travel_time)
 	else:
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".set_tooltip("")
