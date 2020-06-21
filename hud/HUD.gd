@@ -867,7 +867,13 @@ func make_planet_view(planet, select_id=-1):
 	var fmt_AU = "%.3f AU"
 	# moons are a special case
 	if planet.is_in_group("moon"):
-		dist = planet.dist/10
+		# fudge for Martian moons (for realistic distances, they'd totally overlap the Mars sprite)
+		if planet.get_parent().get_parent().get_node("Label").get_text() == "Mars":
+			# 150 is the rough radius of the sprite
+			dist = dist-150
+		
+		dist = dist/10	
+		# show up to 4 significant digits for moons
 		fmt_AU = "%.4f AU"
 
 	
