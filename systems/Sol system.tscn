@@ -243,7 +243,7 @@ text = "Mars"
 [node name="planet" parent="planet_holder/planet2/orbit_holder" index="0" groups=[
 "moon",
 ] instance=ExtResource( 3 )]
-position = Vector2( -200, 346.41 )
+position = Vector2( -200, 147 )
 z_index = 2
 mass = 1.7835e-09
 hydro = 0.0
@@ -264,7 +264,7 @@ shape = SubResource( 8 )
 [node name="planet2" parent="planet_holder/planet2/orbit_holder" index="1" groups=[
 "moon",
 ] instance=ExtResource( 3 )]
-position = Vector2( 200, 346.41 )
+position = Vector2( 200, 170 )
 z_index = 2
 mass = 2.4723e-10
 hydro = 0.0

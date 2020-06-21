@@ -147,6 +147,11 @@ func calculate_orbit_period():
 	
 	var dist = self.dist
 	if is_in_group("moon"):
+		# fudge for Martian moons (for realistic distances, they'd totally overlap the Mars sprite)
+		if get_parent().get_parent().get_node("Label").get_text() == "Mars":
+			# 150 is the rough radius of the sprite
+			dist = dist-150
+		
 		dist = dist/10 # eyeballed scale
 	
 	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
@@ -163,14 +168,14 @@ func calculate_orbit_period():
 	# if we're a moon, substitute planet mass
 	if is_in_group("moon"):
 		var Earth = 5.9722e24 # kg, one Earth mass https://en.wikipedia.org/wiki/Earth_mass
-		sun = Earth
+		#sun = Earth
 		#var moon_mass = mass*sun
 		#sun = sun + moon_mass # to be extra correct
 		
-		if get_parent().get_parent().get_planet_class() == "gas giant":
+		#if get_parent().get_parent().get_planet_class() == "gas giant":
 			#print(get_node("Label").get_text() + " is a moon of a gas giant")
 			#sun = Earth * 206 # average of Jupiter and Saturn masses in Earth masses
-			sun = Earth * get_parent().get_parent().mass
+		sun = Earth * get_parent().get_parent().mass
 	
 	#print("sun:" + str(sun))
 	
