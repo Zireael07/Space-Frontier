@@ -864,7 +864,11 @@ func make_planet_view(planet, select_id=-1):
 		text = text + "\n" + " Population: " + "\n" + str(format_pop)
 	
 	var dist = planet.dist
-	var fmt_AU = "%.3f AU"
+	# two significant digits is enough for planets
+	var fmt_AU = "%.2f AU"
+	# three digits for asteroids
+	if planet.is_in_group("aster_named"):
+		fmt_AU = "%.3f AU"
 	# moons are a special case
 	if planet.is_in_group("moon"):
 		# fudge for Martian moons (for realistic distances, they'd totally overlap the Mars sprite)
