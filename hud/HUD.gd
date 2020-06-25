@@ -800,8 +800,8 @@ func make_planet_view(planet, select_id=-1):
 			# Rhea texture is very low-res (360px)
 			if planet.get_node("Label").get_text() == "Rhea":
 				sc = Vector2(sc.x*3, sc.y*3)
-			if planet.get_node("Label").get_text() == "Mimas":
-				sc = Vector2(sc.x*0.5, sc.y*0.5)
+#			if planet.get_node("Label").get_text() == "Mimas":
+#				sc = Vector2(sc.x*0.5, sc.y*0.5)
 
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
 

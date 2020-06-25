@@ -516,29 +516,26 @@ rotation = 3.90045e-07
 [node name="Label" parent="planet_holder/planet9" index="2"]
 text = "Saturn"
 
-[node name="Node2D2" parent="planet_holder/planet9/orbit_holder" index="0" groups=[
+[node name="planet3" parent="planet_holder/planet9/orbit_holder" index="0" groups=[
 "moon",
-] instance=ExtResource( 4 )]
+] instance=ExtResource( 3 )]
 position = Vector2( 0, 144 )
-mass = 0.000615
+z_index = 2
+mass = 1.7835e-09
 hydro = 0.0
-ice = 0.03
-population = 0.05
 
-[node name="Sprite" parent="planet_holder/planet9/orbit_holder/Node2D2" index="0"]
-scale = Vector2( 0.031, 0.062 )
-texture = ExtResource( 10 )
+[node name="Sprite" parent="planet_holder/planet9/orbit_holder/planet3" index="0"]
+texture = ExtResource( 6 )
 
-[node name="Sprite_shadow" parent="planet_holder/planet9/orbit_holder/Node2D2" index="1"]
-visible = false
-rotation = 3.8999e-07
-
-[node name="Label" parent="planet_holder/planet9/orbit_holder/Node2D2" index="2"]
-margin_left = 37.0
-margin_top = 37.0
-margin_right = 89.0
-margin_bottom = 51.0
+[node name="Label" parent="planet_holder/planet9/orbit_holder/planet3" index="1"]
+margin_left = 25.0
+margin_top = 25.0
+margin_right = 77.0
+margin_bottom = 39.0
 text = "Mimas"
+
+[node name="CollisionShape2D" parent="planet_holder/planet9/orbit_holder/planet3/Area2D" index="0"]
+shape = SubResource( 8 )
 
 [node name="Node2D8" parent="planet_holder/planet9/orbit_holder" index="1" groups=[
 "moon",
@@ -692,7 +689,7 @@ text = "Neptune"
 
 [editable path="planet_holder/planet9"]
 
-[editable path="planet_holder/planet9/orbit_holder/Node2D2"]
+[editable path="planet_holder/planet9/orbit_holder/planet3"]
 
 [editable path="planet_holder/planet9/orbit_holder/Node2D8"]
 
