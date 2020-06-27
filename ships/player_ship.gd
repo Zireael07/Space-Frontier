@@ -175,6 +175,7 @@ func _process(delta):
 		acc = Vector2(0,0)
 		$"engine_flare".set_emitting(false)
 	
+	# NOTE: actual movement happens here!
 	if not orbiting:
 		# movement happens!
 		# modify acc by friction dependent on vel
@@ -275,7 +276,16 @@ func _process(delta):
 		elif dist < 80:
 			tractored = true
 			#print("We're being tractored in")
-		
+	
+	# approach to orbit
+	if not heading and cruise:
+		var pl = get_closest_planet()
+		if pl[0] > 200 and pl[0] < 300:
+			# stop warp timer
+			warp_timer.stop()
+			# auto-orbit
+			player_orbit(pl)
+			
 	# rotation
 	# handling heading (usually the warp-drive)
 	if heading:
@@ -348,30 +358,25 @@ func _input(_event):
 					emit_signal("officer_message", "We have picked up additional colonists.")
 				
 				
-			
-			
-	
+				
 	if Input.is_action_pressed("orbit"):
 		#print("Try to orbit")
 		var pl = get_closest_planet()
-		# TODO: should approach to orbit just like AI do
+
 		# values are eyeballed for current planets (scale 1, sprite 720*0.5=360 px)
 		if pl[0] > 300*pl[1].planet_rad_factor:
 			print("Too far away to orbit")
+			# approach
+			heading = pl[1].get_global_position()
+			cruise = true
+			# reuse the 1s warp timer
+			warp_timer.start()
+			
 		elif pl[0] < 200*pl[1].planet_rad_factor:
 			print("Too close to orbit")
+			# TODO: head away from planet
 		else:
-			print("Can orbit")
-			if pl[1].has_node("orbit_holder"):
-				orbit_planet(pl[1])
-				
-				var txt = "Orbit established."
-				if pl[1].has_colony():
-					txt += " Fuel replenished. Press J to request a colony"
-					# fill up the engine/fuel
-					engine = 1000 
-				
-				emit_signal("officer_message", txt)
+			player_orbit(pl)
 	
 	if Input.is_action_pressed("refit"):
 		print("Want to refit")
@@ -523,6 +528,23 @@ func launch():
 
 func _on_landing_timeout_timeout():
 	can_land = true
+
+func player_orbit(pl):
+	print("Can orbit")
+	# cancel cruise if any
+	if cruise:
+		cruise = false
+	
+	if pl[1].has_node("orbit_holder"):
+		orbit_planet(pl[1])
+		
+		var txt = "Orbit established."
+		if pl[1].has_colony():
+			txt += " Fuel replenished. Press J to request a colony"
+			# fill up the engine/fuel
+			engine = 1000 
+		
+		emit_signal("officer_message", txt)
 			
 func shoot():
 	if warping:
@@ -541,6 +563,7 @@ func shoot():
 	bullet_container.add_child(b)
 	b.start_at(get_rotation(), $"muzzle".get_global_position())
 
+# ---------------------
 func get_closest_planet():
 	var planets = get_tree().get_nodes_in_group("planets")
 	
@@ -699,7 +722,12 @@ func _on_warp_correct_timer_timeout():
 		warp_target = warp_planet.get_global_position()
 		heading = warp_target
 		warp_timer.start()
-
+	# reuse the timer for approaching the closest planet
+	else:
+		var pl = get_closest_planet()
+		heading = pl[1].get_global_position()
+		if not orbiting:
+			warp_timer.start()
 
 func _on_recharge_timer_timeout():
 	#print("Power recharge...")
