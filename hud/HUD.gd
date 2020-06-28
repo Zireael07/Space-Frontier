@@ -790,7 +790,7 @@ func make_planet_view(planet, select_id=-1):
 	
 	if planet.get_node("Sprite").get_material() != null:
 		#print("Shader: " + str(planet.get_node("Sprite").get_material().is_class("ShaderMaterial")))
-		var is_rot = planet.get_node("Sprite").get_material().get_shader().has_param("shader_param/time")
+		var is_rot = planet.get_node("Sprite").get_material().get_shader().has_param("time")
 		#print("is rotating: " + str(is_rot))
 		if is_rot:
 			var sc = Vector2(0.15/2, 0.15)
@@ -803,6 +803,7 @@ func make_planet_view(planet, select_id=-1):
 #			if planet.get_node("Label").get_text() == "Mimas":
 #				sc = Vector2(sc.x*0.5, sc.y*0.5)
 
+			#print("sc: " + str(sc))
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
 
 			# move to the right to not overlap the text
