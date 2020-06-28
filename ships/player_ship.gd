@@ -30,6 +30,8 @@ var warp_planet
 var warp_target = null
 var cruise = false
 
+var auto_orbit = false
+
 var tractored = false
 var refit_target = false
 
@@ -191,9 +193,8 @@ func _process(delta):
 	# warp drive!
 	if not heading and warp_target != null:
 		if warping:
-			# update target and heading because the planet is orbiting, after all...
-			#warp_target = warp_planet.get_global_position()
-			#heading = warp_target
+			# update target because the planet is orbiting, after all...
+			warp_target = warp_planet.get_global_position()
 			
 			var desired = warp_target - get_global_position()
 			var dist = desired.length()
@@ -208,6 +209,8 @@ func _process(delta):
 				# we've arrived, return to normal space
 				warp_target = null
 				warping = false
+				cruise = false
+				warp_timer.stop()
 				# remove tint
 				set_modulate(Color(1,1,1))
 			
@@ -279,13 +282,14 @@ func _process(delta):
 			#print("We're being tractored in")
 	
 	# approach to orbit
-	if not heading and cruise:
-		var pl = get_closest_planet()
-		if pl[0] > 200 and pl[0] < 300:
-			# stop warp timer
-			warp_timer.stop()
-			# auto-orbit
-			player_orbit(pl)
+	if auto_orbit and warp_target == null:
+		if not heading and cruise:
+			var pl = get_closest_planet()
+			if pl[0] > 200 and pl[0] < 300:
+				# stop warp timer
+				warp_timer.stop()
+				# auto-orbit
+				player_orbit(pl)
 			
 	# rotation
 	# handling heading (usually the warp-drive)
@@ -363,6 +367,7 @@ func _input(_event):
 		if pl[0] > 300*pl[1].planet_rad_factor:
 			print("Too far away to orbit")
 			# approach
+			auto_orbit = true
 			heading = pl[1].get_global_position()
 			cruise = true
 			# reuse the 1s warp timer
@@ -425,6 +430,7 @@ func _input(_event):
 			warping = false
 			warp_target = null
 			heading = null
+			warp_timer.stop()
 			# remove tint
 			set_modulate(Color(1,1,1))
 			return
@@ -530,12 +536,17 @@ func player_heading(target, delta):
 	
 	var a = atan2(rel_pos.x, rel_pos.y)
 	
+#	# disable cruise if any
+#	if cruise:
+#		cruise = false
+	
 	# we've turned to face the target
 	if abs(rad2deg(a)) > 179:
 		#on_heading()
-		
+		#print("Achieved target heading")
 		heading = null
-		
+		# reset cruise
+		cruise = true
 	
 	if a < 0:
 		rot -= rot_speed*delta
@@ -547,6 +558,9 @@ func player_orbit(pl):
 	# cancel cruise if any
 	if cruise:
 		cruise = false
+		
+	if auto_orbit:
+		auto_orbit = false
 	
 	if pl[1].has_node("orbit_holder"):
 		orbit_planet(pl[1])
@@ -695,6 +709,9 @@ func _on_goto_pressed(planet):
 func on_warping():
 	if orbiting:
 		deorbit()
+	# if we somehow are flagged as cruising already, disable it
+	if cruise:
+		cruise = false
 	
 	# no warping if we are hauling a colony
 	if get_colony_in_dock() != null:
@@ -736,7 +753,7 @@ func _on_warp_correct_timer_timeout():
 		heading = warp_target
 		warp_timer.start()
 	# reuse the timer for approaching the closest planet
-	else:
+	elif auto_orbit:
 		var pl = get_closest_planet()
 		heading = pl[1].get_global_position()
 		if not orbiting:
