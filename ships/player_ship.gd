@@ -69,7 +69,8 @@ func _ready():
 	get_parent().set_global_position(planet.get_global_position() + offset)
 	set_position(Vector2(0,0))
 	
-
+#----------------------------------
+# input (spread across process and fixed_process)
 # using this instead of fixed_process because we don't need physics
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
@@ -315,24 +316,6 @@ func _process(delta):
 		#var angle_to = (-a+3.141593)
 		get_node("target_dir").set_rotation(-a)
 
-func player_heading(target, delta):
-	var rel_pos = get_global_transform().xform_inv(target)
-	
-	var a = atan2(rel_pos.x, rel_pos.y)
-	
-	# we've turned to face the target
-	if abs(rad2deg(a)) > 179:
-		# emit signal
-#		if heading == warp_target:
-#			on_warping()
-		
-		heading = null
-		
-	
-	if a < 0:
-		rot -= rot_speed*delta
-	else:
-		rot += rot_speed*delta
 	
 # those functions that need physics
 func _input(_event):
@@ -503,7 +486,7 @@ func _input(_event):
 
 
 
-
+# -------------------------
 func _on_AnimationPlayer_animation_finished(_anim_name):
 	print("Animation finished")
 	# toggle the landing state
@@ -541,6 +524,23 @@ func launch():
 
 func _on_landing_timeout_timeout():
 	can_land = true
+
+func player_heading(target, delta):
+	var rel_pos = get_global_transform().xform_inv(target)
+	
+	var a = atan2(rel_pos.x, rel_pos.y)
+	
+	# we've turned to face the target
+	if abs(rad2deg(a)) > 179:
+		#on_heading()
+		
+		heading = null
+		
+	
+	if a < 0:
+		rot -= rot_speed*delta
+	else:
+		rot += rot_speed*delta
 
 func player_orbit(pl):
 	print("Can orbit")
