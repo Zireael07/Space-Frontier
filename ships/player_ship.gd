@@ -362,6 +362,19 @@ func _input(_event):
 	if Input.is_action_pressed("orbit"):
 		#print("Try to orbit")
 		var pl = get_closest_planet()
+		
+		# does the planet have moons?
+		if pl[1].has_moon():
+			for m in pl[1].get_moons():
+				var m_dist = m.get_global_position().distance_to(get_global_position())
+				print("Moon distance " + str(m_dist))
+				if m_dist < 50:
+					print("Too close to orbit the moon")
+				elif m_dist > 150:
+					print("Too far away to orbit the moon")
+				else:
+					player_orbit([m_dist, m])
+					return
 
 		# values are eyeballed for current planets (scale 1, sprite 720*0.5=360 px)
 		if pl[0] > 300*pl[1].planet_rad_factor:
