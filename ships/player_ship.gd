@@ -353,6 +353,10 @@ func _input(_event):
 		# does the planet have moons?
 		if pl[1].has_moon():
 			for m in pl[1].get_moons():
+				# ignore moonlets (e.g. Phobos and Deimos)
+				if m.mass < 0.00001 * game.MOON_MASS:
+					continue
+					
 				var m_dist = m.get_global_position().distance_to(get_global_position())
 				print("Moon distance " + str(m_dist))
 				if m_dist < 50:
