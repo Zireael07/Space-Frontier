@@ -256,7 +256,15 @@ func _input(_event):
 			var planet = get_named_planet(planet_name)
 			var planets = get_tree().get_nodes_in_group("planets")
 			var id = planets.find(planet)
-			_on_prev_pressed(id, -1)
+			if id == -1:
+#				var moons = get_tree().get_nodes_in_group("moon")
+#				var moon = moons.find(planet)
+				var parent = planet.get_parent().get_parent()
+				var parent_id = planets.find(parent)
+				var m_id = parent.get_moons().find(planet)
+				_on_prev_pressed(m_id, parent_id)
+			else:
+				_on_prev_pressed(id, -1)
 		# cargo panel
 		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
 			_on_ButtonUp3_pressed()
@@ -270,7 +278,15 @@ func _input(_event):
 			var planet = get_named_planet(planet_name)
 			var planets = get_tree().get_nodes_in_group("planets")
 			var id = planets.find(planet)
-			_on_next_pressed(id, -1)
+			if id == -1:
+#				var moons = get_tree().get_nodes_in_group("moon")
+#				var moon = moons.find(planet)
+				var parent = planet.get_parent().get_parent()
+				var parent_id = planets.find(parent)
+				var m_id = parent.get_moons().find(planet)
+				_on_next_pressed(m_id, parent_id)
+			else:
+				_on_next_pressed(id, -1)
 		# cargo panel
 		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
 			_on_ButtonDown3_pressed()
@@ -983,6 +999,18 @@ func get_named_planet(planet_name):
 			if planet_name == nam:
 				ret = p
 				break
+	
+	if ret:
+		pass
+	else:	
+		# no planet found, try moons next
+		var moons = get_tree().get_nodes_in_group("moon")
+		for m in moons:
+			if m.has_node("Label"):
+				var nam = m.get_node("Label").get_text()
+				if planet_name == nam:
+					ret = m
+					break
 				
 	return ret
 
@@ -993,7 +1021,7 @@ func _on_prev_pressed(id, parent_id):
 			var planet = get_tree().get_nodes_in_group("planets")[id-1]
 			make_planet_view(planet, id-1)
 	else:
-		print("Got parent id")
+		#print("Got parent id")
 		var parent = get_tree().get_nodes_in_group("planets")[parent_id] 
 		if id-1 >= 0:
 			var moon = parent.get_moons()[id-1]
@@ -1006,7 +1034,7 @@ func _on_next_pressed(id, parent_id):
 			var planet = get_tree().get_nodes_in_group("planets")[id+1]
 			make_planet_view(planet, id+1)
 	else:
-		print("Got parent id")
+		#print("Got parent id")
 		var parent = get_tree().get_nodes_in_group("planets")[parent_id] 
 		if id+1 < parent.get_moons().size():
 			var moon = parent.get_moons()[id+1]
