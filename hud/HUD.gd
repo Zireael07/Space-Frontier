@@ -256,7 +256,7 @@ func _input(_event):
 			var planet = get_named_planet(planet_name)
 			var planets = get_tree().get_nodes_in_group("planets")
 			var id = planets.find(planet)
-			_on_prev_pressed(id)
+			_on_prev_pressed(id, -1)
 		# cargo panel
 		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
 			_on_ButtonUp3_pressed()
@@ -270,7 +270,7 @@ func _input(_event):
 			var planet = get_named_planet(planet_name)
 			var planets = get_tree().get_nodes_in_group("planets")
 			var id = planets.find(planet)
-			_on_next_pressed(id)
+			_on_next_pressed(id, -1)
 		# cargo panel
 		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
 			_on_ButtonDown3_pressed()
@@ -745,7 +745,7 @@ func _on_ButtonView_pressed():
 				var m_id = select_id-skip-1
 				print("Pointed cursor at moon " + str(m_id))
 				var moon = planets[skip].get_moons()[m_id]
-				make_planet_view(moon)
+				make_planet_view(moon, m_id, skip)
 				return
 			else:
 				if select_id > skip+num_moons:
@@ -755,7 +755,7 @@ func _on_ButtonView_pressed():
 		var planet = get_tree().get_nodes_in_group("planets")[select_id]
 		make_planet_view(planet, select_id)
 
-func make_planet_view(planet, select_id=-1):
+func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# richtextlabel scrollbar
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".scroll_to_line(0)
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".get_v_scroll().set_scale(Vector2(2, 1))
@@ -949,7 +949,7 @@ func make_planet_view(planet, select_id=-1):
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".disconnect("pressed", player, "_on_goto_pressed")
 	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed", [planet])
 
-	if select_id != -1:
+	if parent_id != -1:
 		if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".is_connected("pressed", player, "_on_conquer_pressed"):
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".disconnect("pressed", player, "_on_conquer_pressed")
 		get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton").connect("pressed", player, "_on_conquer_pressed", [select_id])
@@ -957,12 +957,12 @@ func make_planet_view(planet, select_id=-1):
 	# prev/next button
 	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton".is_connected("pressed", self, "_on_prev_pressed"):
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton".disconnect("pressed", self, "_on_prev_pressed")
-	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton").connect("pressed", self, "_on_prev_pressed", [select_id])
+	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton").connect("pressed", self, "_on_prev_pressed", [select_id, parent_id])
 
-# prev/next button
+	# prev/next button
 	if $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".is_connected("pressed", self, "_on_next_pressed"):
 		$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".disconnect("pressed", self, "_on_next_pressed")
-	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/NextButton").connect("pressed", self, "_on_next_pressed", [select_id])
+	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/NextButton").connect("pressed", self, "_on_next_pressed", [select_id, parent_id])
 
 # extract planet name from planet view
 func planet_name_from_view():
@@ -987,16 +987,30 @@ func get_named_planet(planet_name):
 	return ret
 
 # UI signals
-func _on_prev_pressed(id):
-	if id-1 >= 0:	
-		var planet = get_tree().get_nodes_in_group("planets")[id-1]
-		make_planet_view(planet, id-1)
+func _on_prev_pressed(id, parent_id):
+	if parent_id == -1:
+		if id-1 >= 0:	
+			var planet = get_tree().get_nodes_in_group("planets")[id-1]
+			make_planet_view(planet, id-1)
+	else:
+		print("Got parent id")
+		var parent = get_tree().get_nodes_in_group("planets")[parent_id] 
+		if id-1 >= 0:
+			var moon = parent.get_moons()[id-1]
+			make_planet_view(moon, id-1, parent_id)
 	#print("Pressed prev: id: " + str(id))
 
-func _on_next_pressed(id):
-	if id+1 < get_tree().get_nodes_in_group("planets").size():
-		var planet = get_tree().get_nodes_in_group("planets")[id+1]
-		make_planet_view(planet, id+1)
+func _on_next_pressed(id, parent_id):
+	if parent_id == -1:
+		if id+1 < get_tree().get_nodes_in_group("planets").size():
+			var planet = get_tree().get_nodes_in_group("planets")[id+1]
+			make_planet_view(planet, id+1)
+	else:
+		print("Got parent id")
+		var parent = get_tree().get_nodes_in_group("planets")[parent_id] 
+		if id+1 < parent.get_moons().size():
+			var moon = parent.get_moons()[id+1]
+			make_planet_view(moon, id+1, parent_id)
 	#print("Pressed next: id: " + str(id))
 
 
