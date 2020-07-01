@@ -281,8 +281,16 @@ func move_orbit(delta, planet):
 	
 	var rad_f = planet.planet_rad_factor
 	
+	# distances are experimentally picked
+	var min_dist = 200*rad_f
+	var orbit_dist = 300*rad_f
+	if planet.is_in_group("moon"):
+		min_dist = 50*rad_f
+		orbit_dist = 150*rad_f
+		
+	
 	# brain target is the planet we're orbiting
-	if (brain.target - get_global_position()).length() < 200*rad_f:
+	if (brain.target - get_global_position()).length() < min_dist:
 		#print("Too close to orbit")
 		if not orbiting:
 			var tg_orbit = brain.get_state_obj().tg_orbit
@@ -291,7 +299,7 @@ func move_orbit(delta, planet):
 			# normal case
 			vel += steer
 	# 300 is experimentally picked
-	elif (brain.target - get_global_position()).length() < 300*rad_f:
+	elif (brain.target - get_global_position()).length() < orbit_dist:
 		if not orbiting:
 			#print("In orbit range: " + str((brain.target - get_global_position()).length()) + " " + str((300*rad_f)))
 			##orbit
