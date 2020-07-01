@@ -274,8 +274,12 @@ func shoot():
 
 
 # AI moves to orbit a planet
-func move_orbit(delta):
-	var rad_f = get_colonized_planet().planet_rad_factor
+func move_orbit(delta, planet):
+	# paranoia
+	if not planet:
+		planet = get_colonized_planet()
+	
+	var rad_f = planet.planet_rad_factor
 	
 	# brain target is the planet we're orbiting
 	if (brain.target - get_global_position()).length() < 200*rad_f:
@@ -291,15 +295,15 @@ func move_orbit(delta):
 		if not orbiting:
 			#print("In orbit range: " + str((brain.target - get_global_position()).length()) + " " + str((300*rad_f)))
 			##orbit
-			print("NPC wants to orbit: " + get_colonized_planet().get_node("Label").get_text()) 
-			orbit_planet(get_colonized_planet())
+			print("NPC " + get_parent().get_name() + " wants to orbit: " + planet.get_node("Label").get_text()) 
+			orbit_planet(planet)
 			# nuke steer
 			brain.steer = Vector2(0,0)
 	# if too far away, go to planet
 	else:
 		if not orbiting:
 			#pass
-			brain.set_state(brain.STATE_GO_PLANET, get_colonized_planet())
+			brain.set_state(brain.STATE_GO_PLANET, planet)
 		else:
 			pass
 	

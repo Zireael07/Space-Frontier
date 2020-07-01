@@ -176,14 +176,18 @@ func task_orbiting(timer_count, conquer_tg):
 									set_state(STATE_GO_PLANET, colony_pick)
 								else:
 									var try_mine = _go_mine()
-								#if not try_mine:
-									#if get_colonized_planet().has_moon():
-										# random chance to head for a moon
-										#randomize()
-										#if randi() % 20 > 10:
-										#	brain.target = get_colonized_planet().get_moon().get_global_position()
-										#else:
-										
+									# moon test
+#									#if not try_mine:
+#									if ship.get_colonized_planet().has_moon():
+#										var moon = ship.get_colonized_planet().get_moons()[0]
+#										ship.deorbit()
+#										set_state(STATE_GO_PLANET, moon)
+											# random chance to head for a moon
+											#randomize()
+											#if randi() % 20 > 10:
+											#	brain.target = get_colonized_planet().get_moon().get_global_position()
+											#else:
+											
 									# orbit again
 								#	set_state(STATE_ORBIT, ship.get_colonized_planet())
 							else:
@@ -194,9 +198,13 @@ func task_orbiting(timer_count, conquer_tg):
 								_colonize(conquer_tg, src_planet)
 						# AI cadet
 						else:
-							var try_mine = _go_mine()
+							#var try_mine = _go_mine()
+							# moon test
 							#if not try_mine:
-								#if get_colonized_planet().has_moon():
+							if ship.get_colonized_planet().has_moon():
+								var moon = ship.get_colonized_planet().get_moons()[0]
+								ship.deorbit()
+								set_state(STATE_GO_PLANET, moon)
 									# random chance to head for a moon
 									#randomize()
 									#if randi() % 20 > 10:
@@ -511,7 +519,7 @@ class OrbitState:
 		ship.target = planet_.get_global_position()
 		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
 		
-		ship.ship.move_orbit(delta)
+		ship.ship.move_orbit(delta, planet_)
 		
 		# handle enemies
 		ship.handle_enemy()
@@ -749,18 +757,34 @@ class ColonizeState:
 class PlanetState:
 	var ship
 	var param # for previous state
-	var id
+	var id # store it instead of the whole node, for memory optimization purposes
+	var moon = false
 	
 	func _init(shp, planet):
 		ship = shp
 		param = planet
 		
 		var planets = ship.get_tree().get_nodes_in_group("planets")
-		id = planets.find(planet)
+		
+		if planet.is_in_group("moon"):
+			#var parent = planet.get_parent().get_parent()
+			#var moons = parent.get_moons()
+			var moons = ship.get_tree().get_nodes_in_group("moon")
+			id = moons.find(planet)
+			moon = true
+			#id = planets.find(parent)
+		else:
+			id = planets.find(planet)
 		
 	func update(delta):
+		
 		# refresh target position
-		ship.target = ship.get_tree().get_nodes_in_group("planets")[id].get_global_position()
+		var group = ship.get_tree().get_nodes_in_group("planets")
+		if moon:
+			group = ship.get_tree().get_nodes_in_group("moon")
+		#else:
+		
+		ship.target = group[id].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
 		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
 		# steering behavior
@@ -778,9 +802,13 @@ class PlanetState:
 		ship.ship.move_AI(ship.vel, delta)
 		
 		# if close, orbit
-		# 300 is experimentally picked
+		# distances are experimentally picked
 		var rad_f = param.planet_rad_factor
-		if (ship.target - ship.get_global_position()).length() < 300*rad_f:
+		var dist = 300*rad_f
+		if moon:
+			dist = 150*rad_f
+			
+		if (ship.target - ship.get_global_position()).length() < dist:
 			ship.set_state(STATE_ORBIT, param)
 
 # completely original	
