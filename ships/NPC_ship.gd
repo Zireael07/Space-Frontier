@@ -138,6 +138,49 @@ func get_planet_colony_available():
 			
 			return t[1]
 
+func get_colonize_moon():
+	var moon_list = []
+	var planets = get_tree().get_nodes_in_group("planets")
+	for p in planets:
+		if p.has_colony():
+			var moons = p.get_moons()
+			for m in moons:
+				var col = m.has_colony()
+				if !col:
+					moon_list.append(m)
+		
+		# gas giant moons
+#		if not p.has_solid_surface():
+#			var moons = p.get_moons()
+#			for m in moons:
+#				var col = m.has_colony()
+#				if !col:
+#					moon_list.append(m)
+
+	var dists = []
+	var targs = []
+
+	for p in moon_list:
+		#var pop = p.population
+		var dist = p.get_global_position().distance_to(get_global_position())
+		dists.append(dist)
+		targs.append([dist, p])
+
+	# sorts by distance, ascending
+	dists.sort()
+	#print("Pops sorted: " + str(pops))
+	
+	for t in targs:
+		if t[0] == dists[0]:
+			print("Colonize target moon is : " + t[1].get_node("Label").get_text())
+			
+			# get id in planets list
+			var parent = t[1].get_parent().get_parent()
+			var id = planets.find(parent)
+			
+			# +1 to avoid problems with state's param being 0 (=null)
+			return id+1 
+
 func get_colonize_target():
 	var ps = []
 	var planets = get_tree().get_nodes_in_group("planets")
