@@ -221,14 +221,19 @@ func get_friendly_base():
 
 func get_closest_enemy():
 	var nodes = []
+
 	if is_in_group("enemy"):
 		nodes = get_tree().get_nodes_in_group("friendly")
 		
-		# remove drones from this list
-		for i in range(nodes.size()-1):
-			var h = nodes[i]
-			if h.is_in_group("drone"):
-				nodes.remove(nodes.find(h))
+		# more foolproof removing
+		var to_rem = []
+		for n in nodes:
+			if n.is_in_group("drone"):
+				to_rem.append(n)
+				#nodes.remove(nodes.find(n))
+		
+		for r in to_rem:
+			nodes.remove(nodes.find(r))
 		
 		var player = get_tree().get_nodes_in_group("player")[0].get_child(0)
 		if not player.cloaked:

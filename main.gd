@@ -50,7 +50,8 @@ func _ready():
 	for i in range(4):
 		spawn_friendly(i, p_ind)
 	
-	spawn_friendly_drone(1, p_ind)
+	for i in range(4):
+		spawn_friendly_drone(i, p_ind)
 	
 	spawn_starbase(system, p_ind)
 	var pos = spawn_enemy_starbase(system, p_ind)
