@@ -8,6 +8,8 @@ var drone = preload("res://ships//friendly_drone.tscn")
 var enemy = preload("res://ships/enemy_ship.tscn")
 var enemy_starbase = preload("res://ships/enemy_starbase.tscn")
 
+var wormhole = preload("res://blackhole2D.tscn")
+
 # star systems
 var proc_system = preload("res://systems/star system.tscn")
 var sol = preload("res://systems/Sol system.tscn")
@@ -58,11 +60,15 @@ func _ready():
 
 	spawn_enemy(pos, p_ind)
 	
+	# test
+	var wh = spawn_wormhole(p_ind, 2)
+	
 	# update census
 	var flt1 = "Fleet 1	" + str(game.fleet1[0]) + "		" + str(game.fleet1[1]) + "	" + str(game.fleet1[2])
 	var flt2 = "Fleet 2	" + str(game.fleet1[0]) + "		" + str(game.fleet2[1]) + "	" + str(game.fleet2[2])
 	game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label1").set_text(flt1)
 	game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label2").set_text(flt2)
+
 
 # ------------------------------------
 
@@ -201,3 +207,21 @@ func spawn_enemy(pos, p_ind):
 	# give minimap icon
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_enemy_ship_spawned(sp.get_child(0))
+
+func spawn_wormhole(p_ind, planet_id):
+	var wh = wormhole.instance()
+	var p = get_tree().get_nodes_in_group("planets")[planet_id]
+	
+	# random factor
+	randomize()
+	var offset = Vector2(rand_range(50, 100), rand_range(50, 100))
+	
+	wh.set_global_position(p.get_global_position() + offset)
+	
+	wh.set_name("wormhole")
+	get_child(2).add_child(wh)
+	get_child(2).move_child(wh, p_ind+1)
+	
+	print("Spawned a wormhole at " + str(wh.get_global_position()))
+
+	return wh.get_global_position()
