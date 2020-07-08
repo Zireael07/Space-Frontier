@@ -61,7 +61,7 @@ func _ready():
 	spawn_enemy(pos, p_ind)
 	
 	# test
-	var wh = spawn_wormhole(p_ind, 2)
+	spawn_wormhole(p_ind, 11)
 	
 	# update census
 	var flt1 = "Fleet 1	" + str(game.fleet1[0]) + "		" + str(game.fleet1[1]) + "	" + str(game.fleet1[2])
@@ -214,7 +214,7 @@ func spawn_wormhole(p_ind, planet_id):
 	
 	# random factor
 	randomize()
-	var offset = Vector2(rand_range(50, 100), rand_range(50, 100))
+	var offset = Vector2(rand_range(250, 300), rand_range(250, 300))
 	
 	wh.set_global_position(p.get_global_position() + offset)
 	
@@ -224,4 +224,4 @@ func spawn_wormhole(p_ind, planet_id):
 	
 	print("Spawned a wormhole at " + str(wh.get_global_position()))
 
-	return wh.get_global_position()
+	#return wh.get_global_position()
