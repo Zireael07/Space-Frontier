@@ -222,6 +222,10 @@ func spawn_wormhole(p_ind, planet_id):
 	get_child(2).add_child(wh)
 	get_child(2).move_child(wh, p_ind+1)
 	
+	# give minimap icon
+	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	mmap._on_wormhole_spawned(wh)
+	
 	print("Spawned a wormhole at " + str(wh.get_global_position()))
 
 	#return wh.get_global_position()

@@ -10,7 +10,9 @@ shader_param/black_radius = 0.65
 [sub_resource type="ImageTexture" id=2]
 size = Vector2( 200, 200 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" groups=[
+"wormhole",
+]]
 z_index = 20
 z_as_relative = false
 

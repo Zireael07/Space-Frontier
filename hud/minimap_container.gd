@@ -19,6 +19,7 @@ onready var sb_enemy = preload("res://assets/hud/red_boxTick.png")
 var stars
 var planets
 var asteroids
+var wormholes
 
 var friendlies
 var hostiles
@@ -31,6 +32,7 @@ var colonies = []
 var star_sprites = []
 var planet_sprites = []
 var asteroid_sprites = []
+var wormhole_sprites = []
 
 var friendly_sprites = []
 var hostile_sprites = []
@@ -65,6 +67,8 @@ func _ready():
 		planets.append(m)
 	
 	asteroids = get_tree().get_nodes_in_group("asteroid")
+	
+	wormholes = get_tree().get_nodes_in_group("wormhole")
 	
 	player = get_tree().get_nodes_in_group("player")[0]
 	friendlies = get_tree().get_nodes_in_group("friendly")
@@ -153,7 +157,15 @@ func _ready():
 		asteroid_sprites.append(asteroid_sprite)
 		add_child(asteroid_sprite)
 	
+	for w in wormholes:
+		var wormhole_sprite = TextureRect.new()
+		wormhole_sprite.set_texture(planet)
+		wormhole_sprite.set_scale(Vector2(0.5, 0.5))
+		wormhole_sprite.set_modulate(Color(0.2, 0.2, 0.2)) # gray-ish instead of black for a black hole
+		wormhole_sprites.append(wormhole_sprite)
+		add_child(wormhole_sprite)
 	
+	# ships/etc.
 	for f in friendlies:
 		var friendly_sprite = TextureRect.new()
 		friendly_sprite.set_texture(friendly)
@@ -211,13 +223,23 @@ func _on_starbase_spawned(sb):
 	starbases.append(sb)
 
 func _on_enemy_starbase_spawned(starbase):
-	print("On enemy starbase spawned")
+	#print("On enemy starbase spawned")
 	var sb_sprite = TextureRect.new()
 	sb_sprite.set_texture(sb_enemy)
 	sb_sprite.set_scale(Vector2(0.5, 0.5))
 	sb_enemy_sprites.append(sb_sprite)
 	add_child(sb_sprite)
 	sb_enemies.append(starbase)
+
+func _on_wormhole_spawned(wormhole):
+	var wormhole_sprite = TextureRect.new()
+	wormhole_sprite.set_texture(planet)
+	wormhole_sprite.set_scale(Vector2(0.5, 0.5))
+	wormhole_sprite.set_modulate(Color(0.2, 0.2, 0.2)) # black would be for real black hole, this is gray-ish
+	wormhole_sprites.append(wormhole_sprite)
+	add_child(wormhole_sprite)
+	wormholes.append(wormhole)
+
 
 func _on_colony_picked(colony):
 	print("On colony picked")
@@ -282,6 +304,12 @@ func _process(_delta):
 		var rel_loc = asteroids[i].get_global_position() - player.get_child(0).get_global_position()
 		asteroid_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 	
+	for i in range(wormholes.size()):
+		var rel_loc = wormholes[i].get_global_position() - player.get_child(0).get_global_position()
+		wormhole_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+		
+	
+	# ships/etc. (dynamic sprites) start here
 	for i in range(starbases.size()):
 		# the minimap doesn't rotate
 		var rel_loc = starbases[i].get_global_position() - player.get_child(0).get_global_position()
