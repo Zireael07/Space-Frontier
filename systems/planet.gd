@@ -751,3 +751,22 @@ func _on_module_timer_timeout():
 		var offset = Vector2(10,10)
 		mo.set_global_position(pos+offset)
 		mo.set_z_index(2)
+
+# ---------------------
+func convert_planetnode_to_id():
+	var planets = get_tree().get_nodes_in_group("planets")
+	
+	var id = 0
+	var moon = false	
+	if is_in_group("moon"):
+		#var parent = planet.get_parent().get_parent()
+		#var moons = parent.get_moons()
+		var moons = get_tree().get_nodes_in_group("moon")
+		id = moons.find(self)
+		moon = true
+		#id = planets.find(parent)
+	else:
+		id = planets.find(self)
+		
+	print("For " + get_node("Label").get_text() + " ID is " + str(id))
+	return [id, moon]

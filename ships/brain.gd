@@ -14,7 +14,9 @@ const STATE_ATTACK = 3
 const STATE_REFIT = 4
 const STATE_COLONIZE = 5 
 const STATE_GO_PLANET = 6
-const STATE_MINE = 7 # not in original Stellar Frontier
+# not in original Stellar Frontier
+const STATE_MINE = 7 
+const STATE_LAND = 8
 
 signal state_changed
 
@@ -27,7 +29,8 @@ var tasks = {
 	4 : "refitting",
 	5 : "colonizing",
 	6 : "heading to a planet",
-	7 : "mining"
+	7 : "mining",
+	8 : "landing on a planet"
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -378,7 +381,7 @@ func set_state(new_state, param=null):
 		prev_state = [ get_state(), null ]
 	
 	# paranoia
-	if (new_state in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE, STATE_GO_PLANET] and param == null):
+	if (new_state in [STATE_MINE, STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE, STATE_GO_PLANET, STATE_LAND] and param == null):
 		print("We forgot a parameter for the state " + str(new_state))
 	
 	# reset ship's timer count
@@ -403,6 +406,8 @@ func set_state(new_state, param=null):
 		state = ColonizeState.new(self, param)
 	elif new_state == STATE_GO_PLANET:
 		state = PlanetState.new(self, param)
+	elif new_state == STATE_LAND:
+		state = LandState.new(self, param)
 	
 	emit_signal("state_changed", self)
 	
@@ -425,6 +430,8 @@ func get_state():
 		return STATE_COLONIZE
 	elif state is PlanetState:
 		return STATE_GO_PLANET
+	elif state is LandState:
+		return STATE_LAND
 
 func get_state_obj():
 	return state
@@ -764,17 +771,20 @@ class PlanetState:
 		ship = shp
 		param = planet
 		
-		var planets = ship.get_tree().get_nodes_in_group("planets")
-		
-		if planet.is_in_group("moon"):
-			#var parent = planet.get_parent().get_parent()
-			#var moons = parent.get_moons()
-			var moons = ship.get_tree().get_nodes_in_group("moon")
-			id = moons.find(planet)
-			moon = true
-			#id = planets.find(parent)
-		else:
-			id = planets.find(planet)
+		var data = planet.convert_planetnode_to_id()
+		id = data[0]
+		moon = data[1]
+#		var planets = ship.get_tree().get_nodes_in_group("planets")
+#
+#		if planet.is_in_group("moon"):
+#			#var parent = planet.get_parent().get_parent()
+#			#var moons = parent.get_moons()
+#			var moons = ship.get_tree().get_nodes_in_group("moon")
+#			id = moons.find(planet)
+#			moon = true
+#			#id = planets.find(parent)
+#		else:
+#			id = planets.find(planet)
 		
 	func update(delta):
 		
@@ -927,3 +937,55 @@ class MineState:
 					ship.target = object.get_global_position()
 				
 		# NPC ship resource_picked handles the switch to refit
+
+# more originals
+class LandState:
+	var ship
+	var param # for previous state
+	var planet_
+	
+	func _init(shp, planet):
+		ship = shp
+		param = planet
+		planet_ = planet
+		
+	func update(delta):
+		var id = 1
+		if not planet_:
+			print("No param given for land state")
+			# default
+			# should probably go for colonized planet
+			#ship.ship.get_colonized_planet() is a node, not id
+		else:
+			#print("Setting id to target " + str(param))
+			id = planet_
+		
+		# did we lose the id somehow?
+		if id == null:
+			print("We want to orbit colonized planet")
+			ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
+			return
+			
+		# refresh target position
+		# id is the real id+1 to avoid problems with state param being 0 (= null)
+		ship.target = ship.get_tree().get_nodes_in_group("planets")[id-1].get_global_position()
+		#print("ID" + str(id) + " tg: " + str(ship.target))
+		# steering behavior
+		var steer = ship.get_steering_seek(ship.target)
+		# avoid the sun
+		if 'close_to_sun' in ship.ship:
+			if ship.ship.close_to_sun():
+				var sun = ship.get_tree().get_nodes_in_group("star")[0].get_global_position()
+				# TODO: this should be weighted to avoid negating the seek completely
+				steer = steer + ship.get_steering_avoid(sun, ship.ship.get_rotation())
+			
+			
+		# normal case
+		ship.vel += steer
+	
+		ship.ship.move_AI(ship.vel, delta)
+		
+		
+		if ship.get_global_position().distance_to(ship.target) < 50:
+			# land
+			print("We're on top of the target, landing...")
