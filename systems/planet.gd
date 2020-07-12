@@ -87,7 +87,7 @@ func setup(angle=0, dis=0, mas=0):
 		mass = mas
 	# calculate from density and radius
 	else:
-		if not is_in_group("moon"):
+		if not is_in_group("moon") and is_in_group("aster_named"):
 			# 1.38 is average density for C-type asteroid, e.g. Ceres
 			# centaurs are said to be similar to Ceres
 			# radius of 25 km in Earth radii (6371 km)
