@@ -14,6 +14,7 @@ var wormhole = preload("res://blackhole2D.tscn")
 var proc_system = preload("res://systems/star system.tscn")
 var sol = preload("res://systems/Sol system.tscn")
 var trappist = preload("res://systems/Trappist system.tscn")
+var proxima = preload("res://systems/Proxima Centauri system.tscn")
 
 # game core
 var core = preload("res://game_core.tscn")
@@ -27,6 +28,8 @@ func spawn_system(system="proc"):
 		sys = sol
 	elif system == "trappist":
 		sys = trappist
+	elif system == "proxima":
+		sys = proxima
 		
 	var system_inst = sys.instance()
 	add_child(system_inst)
@@ -174,6 +177,8 @@ func spawn_enemy_starbase(system, p_ind):
 	
 	if system == "Sol":
 		p = get_tree().get_nodes_in_group("planets")[1] # Venus
+	elif system == "proxima":
+		p = get_tree().get_nodes_in_group("planets")[2]
 	else:
 		p = get_tree().get_nodes_in_group("planets")[3]
 
@@ -210,6 +215,11 @@ func spawn_enemy(pos, p_ind):
 
 func spawn_wormhole(p_ind, planet_id):
 	var wh = wormhole.instance()
+	
+	# fix for smaller systems
+	if planet_id > get_tree().get_nodes_in_group("planets").size():
+		return
+	
 	var p = get_tree().get_nodes_in_group("planets")[planet_id]
 	
 	# random factor

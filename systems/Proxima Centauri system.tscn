@@ -14,9 +14,9 @@
 ]]
 position = Vector2( 500, 500 )
 script = ExtResource( 6 )
-orbit_rate = 0.1
-star_radius_factor = 0.25
-zoom_scale = 6
+star_radius_factor = 0.125
+luminosity = 0.002
+zoom_scale = 24
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 9.92185
@@ -40,6 +40,7 @@ __meta__ = {
 position = Vector2( 0, 100 )
 z_index = 2
 planet_rad_factor = 0.2
+mass = 0.3
 hydro = 0.0
 tidally_locked = true
 
@@ -79,10 +80,10 @@ text = "Proxima b"
 scale = Vector2( 0.2, 0.2 )
 
 [node name="planet3" parent="planet_holder" instance=ExtResource( 7 )]
-position = Vector2( 0, 16800 )
+position = Vector2( 0, 17880 )
 z_index = 2
 planet_rad_factor = 0.2
-mass = 1.4
+mass = 7.0
 hydro = 0.0
 tidally_locked = true
 

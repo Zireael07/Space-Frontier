@@ -94,7 +94,7 @@ func setup(angle=0, dis=0, mas=0):
 			mass = get_mass(1.38, 0.00392)
 			#print("Calculated mass: " + str(mass))
 			#mass = 2.679466e-07 # hand calculated
-		else:
+		elif is_in_group("moon"):
 			# moons without mass defined default to Earth's moon's mass
 			mass = game.MOON_MASS #in Earth masses
 	
