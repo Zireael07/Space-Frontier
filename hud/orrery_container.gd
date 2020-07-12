@@ -98,7 +98,10 @@ func _ready():
 	# set map view stuff
 	if self.get_name() == "map view":
 		get_child(0).set_cntr(Vector2(80,80))
-		zoom_scale = stars[0].custom_orrery_scale*1.6
+		if stars[0].custom_orrery_scale != 0:
+			zoom_scale = stars[0].custom_orrery_scale*1.6
+		else:
+			zoom_scale = stars[0].zoom_scale*2
 		
 		ship_sprite = TextureRect.new()
 		ship_sprite.set_texture(ship)
