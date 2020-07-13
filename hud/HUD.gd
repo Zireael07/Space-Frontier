@@ -192,6 +192,10 @@ func _process(_delta):
 	# move direction labels to proper places
 	for i in range(planets.size()):
 		var planet = planets[i]
+		# paranoia
+		if not planet: 
+			return
+			
 		var rel_loc = planet.get_global_position() - player.get_child(0).get_global_position()
 		#print(rel_loc)
 

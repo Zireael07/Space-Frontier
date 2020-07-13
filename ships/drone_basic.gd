@@ -99,6 +99,10 @@ func get_friendly_base():
 				return b
 
 func simple_dock(refit_target):
+	# paranoia
+	if not refit_target:
+		return
+		
 	# reparent			
 	get_parent().get_parent().remove_child(get_parent())
 	# refit target needs to be a node because here

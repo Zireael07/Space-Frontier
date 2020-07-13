@@ -112,6 +112,10 @@ func _ready():
 		update_ship_pos()
 
 func update_ship_pos():
+	# paranoia
+	if not stars[0]:
+		return
+		
 	var rel_loc = game.player.get_global_position() - stars[0].get_global_position()
 	var off = 9
 	ship_sprite.set_position(Vector2((rel_loc.x/zoom_scale)+center.x-off, (rel_loc.y/zoom_scale)+center.y-off))
@@ -132,6 +136,10 @@ func _process(_delta):
 #
 
 	for i in range(planets.size()):
+		# paranoia
+		if not planets[i]:
+			return
+			
 		# the minimap doesn't rotate
 		var rel_loc = planets[i].get_global_position() - stars[0].get_global_position()
 		#var rel_loc = stars[0].get_global_transform().xform_inv(planets[i].get_global_transform().origin)

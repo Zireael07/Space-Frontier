@@ -276,6 +276,10 @@ func _process(_delta):
 #	# Update game logic here.
 
 	for i in range(stars.size()):
+		# paranoia
+		if not stars[i]:
+			return
+			
 		# the minimap doesn't rotate
 		var rel_loc = stars[i].get_global_position() - player.get_child(0).get_global_position()
 		#var rel_loc = player.get_global_transform().xform_inv(stars[i].get_global_transform().origin)
@@ -322,6 +326,10 @@ func _process(_delta):
 	
 	# ships/etc. (dynamic sprites) start here
 	for i in range(starbases.size()):
+		# paranoia
+		if not starbases[i]:
+			return
+			
 		# the minimap doesn't rotate
 		var rel_loc = starbases[i].get_global_position() - player.get_child(0).get_global_position()
 		starbase_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))

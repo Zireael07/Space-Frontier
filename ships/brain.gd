@@ -473,7 +473,8 @@ class IdleState:
 		#ship.move_generic(delta)
 		
 		# handle floating colonies
-		if ship.ship.is_target_floating_colony(ship.target):
+		if 'is_target_floating_colony' in ship.ship and \
+		ship.ship.is_target_floating_colony(ship.target):
 			if ship.ship.kind_id == ship.ship.kind.friendly:
 				
 				ship.move_generic(delta)
@@ -519,9 +520,16 @@ class OrbitState:
 		ship = shp
 		param = planet
 		planet_ = planet
+		# paranoia
+		if not planet_:
+			return
 		tg_orbit = ship.ship.random_point_on_orbit(planet_.planet_rad_factor)
 		
 	func update(delta):
+		# paranoia
+		if not planet_:
+			return
+			
 		# update target location
 		ship.target = planet_.get_global_position()
 		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
@@ -593,9 +601,10 @@ class AttackState:
 				ship.ship.shoot_wrapper()
 			else:
 				# approach any orbiting or enemies close to our planet
-				var rad_f = ship.ship.get_colonized_planet().planet_rad_factor
-				if (('orbiting' in enemy and enemy.orbiting) or enemy.get_global_position().distance_to(ship.ship.get_colonized_planet().get_global_position()) < 350*rad_f):
-					pass
+				if ship.ship.get_colonized_planet() != null:
+					var rad_f = ship.ship.get_colonized_planet().planet_rad_factor
+					if (('orbiting' in enemy and enemy.orbiting) or enemy.get_global_position().distance_to(ship.ship.get_colonized_planet().get_global_position()) < 350*rad_f):
+						pass
 				# don't attack if enemy is too far
 				else:
 					if ship.prev_state[0] != STATE_IDLE:
@@ -771,6 +780,11 @@ class PlanetState:
 		ship = shp
 		param = planet
 		
+		# paranoia
+		if not planet:
+			print("Planet is null!")
+			return 
+		
 		var data = planet.convert_planetnode_to_id()
 		id = data[0]
 		moon = data[1]
@@ -787,6 +801,9 @@ class PlanetState:
 #			id = planets.find(planet)
 		
 	func update(delta):
+		# paranoia
+		if not id:
+			return
 		
 		# refresh target position
 		var group = ship.get_tree().get_nodes_in_group("planets")
@@ -811,15 +828,16 @@ class PlanetState:
 	
 		ship.ship.move_AI(ship.vel, delta)
 		
-		# if close, orbit
-		# distances are experimentally picked
-		var rad_f = param.planet_rad_factor
-		var dist = 300*rad_f
-		if moon:
-			dist = 150*rad_f
-			
-		if (ship.target - ship.get_global_position()).length() < dist:
-			ship.set_state(STATE_ORBIT, param)
+		if param:
+			# if close, orbit
+			# distances are experimentally picked
+			var rad_f = param.planet_rad_factor
+			var dist = 300*rad_f
+			if moon:
+				dist = 150*rad_f
+				
+			if (ship.target - ship.get_global_position()).length() < dist:
+				ship.set_state(STATE_ORBIT, param)
 
 # completely original	
 class MineState:
