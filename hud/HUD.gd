@@ -72,6 +72,7 @@ func _ready():
 
 	# headers
 	var label = Label.new()
+	label.set_name("Headers")
 	label.set_text("name       type")
 	label.set_position(Vector2(10,0))
 	nav_list.add_child(label)
@@ -84,9 +85,31 @@ func _ready():
 	# didn't want to show up when attached to header, so it's attached to the whole listing instead
 	nav_list.set_tooltip(tooltip)
 	
+	create_planet_listing()
+	
+	var dir_label
+	for i in range (planets.size()):
+		var p = planets[i]
+		# direction labels
+		dir_label = Label.new()
+		dir_label.set_text(p.get_node("Label").get_text())
+		dir_label.set_position(Vector2(20, 100))
+		$"Control3".add_child(dir_label)
+		dir_labels.append(dir_label)
+		
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
+	cursor.set_position(Vector2(0, 15))
+
+	# force modulate the initial color
+	$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
+	$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
+	$"Control/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
+
+func create_planet_listing():
+	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control"
 	# star
 	var s = get_tree().get_nodes_in_group("star")[0]
-	label = Label.new()
+	var label = Label.new()
 	var s_type = ""
 	if "star_type" in s:
 		s_type = str(s.get_star_type(s.star_type))
@@ -97,7 +120,7 @@ func _ready():
 	label.set_self_modulate(Color(0.5,0.5, 0.5))
 
 	# planets
-	var dir_label
+
 	var y = 30
 	for i in range (planets.size()):
 		var p = planets[i]
@@ -164,23 +187,16 @@ func _ready():
 				y += 15
 
 		#nav_list.get_v_scroll().set_max(y)
-		
 
-		# direction labels
-		dir_label = Label.new()
-		dir_label.set_text(p.get_node("Label").get_text())
-		dir_label.set_position(Vector2(20, 100))
-		$"Control3".add_child(dir_label)
-		dir_labels.append(dir_label)
-		
-	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
-	cursor.set_position(Vector2(0, 15))
+func clear_planet_listing():
+	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control"
+	
+	for i in range(1, nav_list.get_child_count()-1):
+		if nav_list.get_child(i).get_name() == "Headers":
+			continue # skip headers
+		nav_list.get_child(i).queue_free()
 
-	# force modulate the initial color
-	$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
-	$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
-	$"Control/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
-
+#----------------------------------
 func _process(_delta):
 	# show player speed
 	if player != null and player.is_inside_tree():

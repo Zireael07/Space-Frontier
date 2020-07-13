@@ -263,6 +263,9 @@ func update_HUD():
 	var orr = mmap.get_parent().get_node("orrery")
 	orr._ready()
 
+	# force update planet listing
+	game.player.HUD.planets = get_tree().get_nodes_in_group("planets")
+	game.player.HUD.create_planet_listing()
 
 func change_system(system="proxima"):
 	# despawn current system
@@ -281,6 +284,9 @@ func change_system(system="proxima"):
 	for i in range(1, orr.get_child_count()-1):
 		orr.get_child(i).queue_free()
 	orr.cleanup()
+	
+	# clear hud planet listing
+	game.player.HUD.clear_planet_listing()
 	
 	# spawn new system
 	var data = spawn_system(system)
