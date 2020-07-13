@@ -34,7 +34,7 @@ func spawn_system(system="proc"):
 	var system_inst = sys.instance()
 	add_child(system_inst)
 	
-	return system
+	return [system, system_inst]
 	
 func spawn_core():
 	var cor = core.instance()
@@ -46,8 +46,9 @@ func spawn_core():
 func _ready():
 	print("Main init")
 	
-	var system = spawn_system("Sol")
-	spawn_core()
+	var data = spawn_system("Sol") # this is always child #2 (#0 is parallax bg and #1 is a timer)
+	var system = data[0]
+	spawn_core() 
 	
 	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
 	print("Player index: " + str(p_ind))
@@ -239,3 +240,57 @@ func spawn_wormhole(p_ind, planet_id):
 	print("Spawned a wormhole at " + str(wh.get_global_position()))
 
 	#return wh.get_global_position()
+
+func move_player():
+	# move player
+	#var place = get_tree().get_nodes_in_group("planets")[1] 
+	var place = get_tree().get_nodes_in_group("star")[0]
+	print("Place: " + str(place.get_global_position()))
+	game.player.get_parent().set_global_position(place.get_global_position())
+	game.player.set_position(Vector2(0,0))
+
+	#call_deferred("update_HUD")
+	
+func update_HUD():
+	# force update minimap
+	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	#mmap._ready()
+	mmap.get_system_bodies()
+	mmap.add_system_bodies()
+	mmap.move_player_sprite()
+	
+	# force update orrery
+	var orr = mmap.get_parent().get_node("orrery")
+	orr._ready()
+
+
+func change_system(system="proxima"):
+	# despawn current system
+	get_child(2).queue_free()
+	
+	# clean minimap
+	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	for i in range(2, mmap.get_child_count()-1):
+		if mmap.get_child(i).get_name() == "player":
+			continue # skip player	
+		mmap.get_child(i).queue_free()
+	mmap.cleanup()
+	
+	# clean orrery
+	var orr = mmap.get_parent().get_node("orrery")
+	for i in range(1, orr.get_child_count()-1):
+		orr.get_child(i).queue_free()
+	orr.cleanup()
+	
+	# spawn new system
+	var data = spawn_system(system)
+	move_child(data[1], 2)
+	
+	# timer
+	get_node("Timer").start()
+	
+	call_deferred("move_player")
+
+
+func _on_Timer_timeout():
+	update_HUD()

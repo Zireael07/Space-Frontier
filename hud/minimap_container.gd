@@ -54,21 +54,7 @@ func _ready():
 	# Initialization here
 	print("Minimap init")
 	
-	stars = get_tree().get_nodes_in_group("star")
-	
-	# set zoom scale
-	zoom_scale = stars[0].zoom_scale
-	
-	
-	planets = get_tree().get_nodes_in_group("planets")
-	# treat moons as planets
-	var moons = get_tree().get_nodes_in_group("moon")
-	for m in moons:
-		planets.append(m)
-	
-	asteroids = get_tree().get_nodes_in_group("asteroid")
-	
-	wormholes = get_tree().get_nodes_in_group("wormhole")
+	get_system_bodies()
 	
 	player = get_tree().get_nodes_in_group("player")[0]
 	friendlies = get_tree().get_nodes_in_group("friendly")
@@ -91,6 +77,57 @@ func _ready():
 			starbases.remove(starbases.find(sb))
 			sb_enemies.append(sb)
 	
+	add_system_bodies()
+	
+	# ships/etc.
+	for f in friendlies:
+		var friendly_sprite = TextureRect.new()
+		friendly_sprite.set_texture(friendly)
+		friendly_sprites.append(friendly_sprite)
+		add_child(friendly_sprite)
+	
+	for h in hostiles:
+		var hostile_sprite = TextureRect.new()
+		hostile_sprite.set_texture(hostile)
+		hostile_sprites.append(hostile_sprite)
+		add_child(hostile_sprite)
+		
+	for sb in starbases:
+		var starbase_sprite = TextureRect.new()
+		starbase_sprite.set_texture(starbase)
+		starbase_sprite.set_scale(Vector2(0.5, 0.5))
+		starbase_sprites.append(starbase_sprite)
+		add_child(starbase_sprite)
+	
+	for sb in sb_enemies:
+		var sb_sprite = TextureRect.new()
+		sb_sprite.set_texture(sb_enemy)
+		sb_sprite.set_scale(Vector2(0.5, 0.5))
+		sb_enemy_sprites.append(sb_sprite)
+		add_child(sb_sprite)
+	
+	move_player_sprite()
+
+# ---------------
+# those are necessary for the HUD to update after a system change
+func get_system_bodies():
+	stars = get_tree().get_nodes_in_group("star")
+	
+	# set zoom scale
+	zoom_scale = stars[0].zoom_scale
+	
+	
+	planets = get_tree().get_nodes_in_group("planets")
+	# treat moons as planets
+	var moons = get_tree().get_nodes_in_group("moon")
+	for m in moons:
+		planets.append(m)
+	
+	asteroids = get_tree().get_nodes_in_group("asteroid")
+	
+	wormholes = get_tree().get_nodes_in_group("wormhole")
+
+func add_system_bodies():
 	for s in stars:
 		var star_sprite = TextureRect.new()
 		star_sprite.set_texture(star)
@@ -147,8 +184,6 @@ func _ready():
 		label.set_position(siz)
 		con.add_child(label)
 			
-		
-		
 	
 	for a in asteroids:
 		var asteroid_sprite = TextureRect.new()
@@ -164,38 +199,14 @@ func _ready():
 		wormhole_sprite.set_modulate(Color(0.2, 0.2, 0.2)) # gray-ish instead of black for a black hole
 		wormhole_sprites.append(wormhole_sprite)
 		add_child(wormhole_sprite)
-	
-	# ships/etc.
-	for f in friendlies:
-		var friendly_sprite = TextureRect.new()
-		friendly_sprite.set_texture(friendly)
-		friendly_sprites.append(friendly_sprite)
-		add_child(friendly_sprite)
-	
-	for h in hostiles:
-		var hostile_sprite = TextureRect.new()
-		hostile_sprite.set_texture(hostile)
-		hostile_sprites.append(hostile_sprite)
-		add_child(hostile_sprite)
-		
-	for sb in starbases:
-		var starbase_sprite = TextureRect.new()
-		starbase_sprite.set_texture(starbase)
-		starbase_sprite.set_scale(Vector2(0.5, 0.5))
-		starbase_sprites.append(starbase_sprite)
-		add_child(starbase_sprite)
-	
-	for sb in sb_enemies:
-		var sb_sprite = TextureRect.new()
-		sb_sprite.set_texture(sb_enemy)
-		sb_sprite.set_scale(Vector2(0.5, 0.5))
-		sb_enemy_sprites.append(sb_sprite)
-		add_child(sb_sprite)
-	
+
+func move_player_sprite():
 	# make sure player is the last child (to be drawn last)
 	move_child($"player", get_child_count()-1) #stars.size()+planets.size()+asteroids.size()+friendlies.size()+hostiles.size()+starbases.size()+2)
 	center = Vector2($"player".get_position().x, $"player".get_position().y)
 	set_clip_contents(true)
+
+# ---------------------------
 
 func _on_friendly_ship_spawned(ship):
 	print("On ship spawned")
@@ -368,4 +379,10 @@ func _process(_delta):
 			hostiles.remove(i)
 			hostile_sprites.remove(i)
 
-			
+# called when leaving a system
+func cleanup():
+	print("Minimap cleanup...")
+	star_sprites = []
+	planet_sprites = []
+	asteroid_sprites = []
+	wormhole_sprites = []

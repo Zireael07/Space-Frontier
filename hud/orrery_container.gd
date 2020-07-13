@@ -143,3 +143,10 @@ func _process(_delta):
 		# the minimap doesn't rotate
 		var rel_loc = asteroids[i].get_global_position() - stars[0].get_global_position()
 		asteroid_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+
+# called when leaving a system
+func cleanup():
+	print("Orrery cleanup...")
+	star_sprites = []
+	planet_sprites = []
+	asteroid_sprites = []
