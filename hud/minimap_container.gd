@@ -40,7 +40,9 @@ var starbase_sprites = []
 var sb_enemy_sprites = []
 var colony_sprites = []
 
+# direction arrows
 var star_arrow
+var wh_arrow
 
 #var center = Vector2(get_size().x/2-5, get_size().y/2-5)
 var center = Vector2()
@@ -203,6 +205,18 @@ func add_system_bodies():
 		wormhole_sprite.set_modulate(Color(0.2, 0.2, 0.2)) # gray-ish instead of black for a black hole
 		wormhole_sprites.append(wormhole_sprite)
 		add_child(wormhole_sprite)
+		
+		# add an arrow pointing to wormhole
+		wh_arrow = TextureRect.new()
+		wh_arrow.set_texture(arrow_star)
+		#wh_arrow.set_modulate(Color(0.2, 0.2, 0.2))
+		wh_arrow.set_name("wormholearrow")
+		add_child(wh_arrow)
+		# center it
+		wh_arrow.set_pivot_offset(wh_arrow.get_size()/2)
+		wh_arrow.set_visible(false)
+		
+		print(wh_arrow.get_name())
 
 func move_player_sprite():
 	# make sure player is the last child (to be drawn last)
@@ -255,6 +269,17 @@ func _on_wormhole_spawned(wormhole):
 	add_child(wormhole_sprite)
 	wormholes.append(wormhole)
 
+	# add an arrow pointing to wormhole
+	wh_arrow = TextureRect.new()
+	wh_arrow.set_texture(arrow_star)
+	wh_arrow.set_modulate(Color(0.4, 0.4, 0.4))
+	wh_arrow.set_name("wormholearrow")
+	add_child(wh_arrow)
+	# center it
+	wh_arrow.set_pivot_offset(wh_arrow.get_size()/2)
+	wh_arrow.set_visible(false)
+	
+	print(wh_arrow.get_name())
 
 func _on_colony_picked(colony):
 	print("On colony picked")
@@ -327,6 +352,24 @@ func _process(_delta):
 		var rel_loc = wormholes[i].get_global_position() - player.get_child(0).get_global_position()
 		wormhole_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 		
+		var dist = Vector2(rel_loc.x, rel_loc.y).length()
+		#print ("Px to wh: " + str(dist))
+
+		# if close to a wormhole
+		if dist < (100*zoom_scale): # experimentally determined value
+			# indicate wormhole
+			wh_arrow.set_visible(true)
+			var pos = Vector2(rel_loc.x/2, rel_loc.y/2)  #.clamped((100*zoom_scale)-75) # experimentally determined value
+			var a = atan2(rel_loc.x, rel_loc.y)
+			
+			#print("Pos: " + str(pos) + " for rel_pos" + str(rel_loc))
+			wh_arrow.set_position(Vector2(pos.x/zoom_scale+center.x, pos.y/zoom_scale+center.y))
+			
+			# add 180 deg because we want the arrow to point at the wormhole, not away
+			wh_arrow.set_rotation((-a+3.141593))
+			
+		else:
+			wh_arrow.set_visible(false)
 	
 	# ships/etc. (dynamic sprites) start here
 	for i in range(starbases.size()):
@@ -398,3 +441,6 @@ func cleanup():
 	planet_sprites = []
 	asteroid_sprites = []
 	wormhole_sprites = []
+	
+	# as a bonus, hide the wormhole arrow
+	wh_arrow.hide()
