@@ -40,6 +40,10 @@ func _draw():
 	var fudge = 0 #2.5
 	# draw orbits
 	for p in get_parent().planets:
+		# paranoia
+		if not p:
+			return
+			
 		#var fudge = 36*p.planet_rad_factor*0.2
 		#print(str(fudge))
 		draw_empty_circle(make_circle(center, 24, int(p.dist/get_parent().zoom_scale) +fudge), Color(1,0,0))
