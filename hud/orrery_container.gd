@@ -41,7 +41,11 @@ func _ready():
 	for s in stars:
 		var star_sprite = TextureRect.new()
 		star_sprite.set_texture(star)
-		star_sprite.set_scale(Vector2(s.star_radius_factor, s.star_radius_factor))
+		var sc = Vector2(s.star_radius_factor, s.star_radius_factor)
+		# fix scale for very small radius stars
+		if s.star_radius_factor < 0.25:
+			sc = Vector2(s.star_radius_factor*2, s.star_radius_factor*2)
+		star_sprite.set_scale(sc)
 		star_sprites.append(star_sprite)
 		add_child(star_sprite)
 	
