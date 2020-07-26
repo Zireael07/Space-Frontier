@@ -785,8 +785,9 @@ class PlanetState:
 			return 
 		
 		var data = planet.convert_planetnode_to_id()
-		id = data[0]
+		id = data[0]+1 # to avoid it being 0 (=null) for e.g. Moon
 		moon = data[1]
+		#print("Id " + str(id) + " moon " + str(moon))
 #		var planets = ship.get_tree().get_nodes_in_group("planets")
 #
 #		if planet.is_in_group("moon"):
@@ -801,7 +802,7 @@ class PlanetState:
 		
 	func update(delta):
 		# paranoia (mostly for after changing systems)
-		if not id and not moon:
+		if not id:
 			#print("No planet id!")
 			return
 		
@@ -811,7 +812,7 @@ class PlanetState:
 			group = ship.get_tree().get_nodes_in_group("moon")
 		#else:
 		
-		ship.target = group[id].get_global_position()
+		ship.target = group[id-1].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
 		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
 		# steering behavior

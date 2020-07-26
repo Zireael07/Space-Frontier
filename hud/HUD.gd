@@ -628,7 +628,11 @@ func _on_ButtonShip_pressed():
 				task += " " + str(p.get_node("Label").get_text() ) 
 			if target.brain.curr_state == 6:
 				var id = target.brain.get_state_obj().id
+				var moon = target.brain.get_state_obj().moon
 				var p = get_tree().get_nodes_in_group("planets")[id-1]
+				if moon:
+					p = get_tree().get_nodes_in_group("moon")[id-1]
+					
 				task += " " + str(p.get_node("Label").get_text()) 
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(task)
 		else:
