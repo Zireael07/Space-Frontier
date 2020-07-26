@@ -180,14 +180,15 @@ func task_orbiting(timer_count, conquer_tg):
 								else:
 									var try_mine = _go_mine()
 									# moon test
-#									#if not try_mine:
-#									if ship.get_colonized_planet().has_moon():
-#										var moon = ship.get_colonized_planet().get_moons()[0]
-#										ship.deorbit()
-#										set_state(STATE_GO_PLANET, moon)
-											# random chance to head for a moon
-											#randomize()
-											#if randi() % 20 > 10:
+									if not try_mine:
+										# random chance to head for a moon
+											randomize()
+											if randi() % 20 > 10:
+												if ship.get_colonized_planet().has_moon():
+													var moon = ship.get_colonized_planet().get_moons()[0]
+													ship.deorbit()
+													set_state(STATE_GO_PLANET, moon)
+											
 											#	brain.target = get_colonized_planet().get_moon().get_global_position()
 											#else:
 											
@@ -201,18 +202,16 @@ func task_orbiting(timer_count, conquer_tg):
 								_colonize(conquer_tg, src_planet)
 						# AI cadet
 						else:
-							#var try_mine = _go_mine()
 							# moon test
-							#if not try_mine:
-							if ship.get_colonized_planet().has_moon():
-								var moon = ship.get_colonized_planet().get_moons()[0]
-								ship.deorbit()
-								set_state(STATE_GO_PLANET, moon)
-									# random chance to head for a moon
-									#randomize()
-									#if randi() % 20 > 10:
-									#	brain.target = get_colonized_planet().get_moon().get_global_position()
-									#else:
+							# random chance to head for a moon
+							randomize()
+							if randi() % 20 > 10:
+								if ship.get_colonized_planet().has_moon():
+									var moon = ship.get_colonized_planet().get_moons()[0]
+									ship.deorbit()
+									set_state(STATE_GO_PLANET, moon)
+							else:
+								var try_mine = _go_mine()
 									
 								# orbit again
 							#	set_state(STATE_ORBIT, ship.get_colonized_planet())
@@ -801,8 +800,9 @@ class PlanetState:
 #			id = planets.find(planet)
 		
 	func update(delta):
-		# paranoia
-		if not id:
+		# paranoia (mostly for after changing systems)
+		if not id and not moon:
+			#print("No planet id!")
 			return
 		
 		# refresh target position
