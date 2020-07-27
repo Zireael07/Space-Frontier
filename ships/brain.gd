@@ -249,8 +249,9 @@ func _on_task_timer_timeout(timer_count):
 					
 					if timer_count > 2:
 						# go back to planet
-						set_state(STATE_GO_PLANET, ship.get_colonized_planet())
-						
+						#set_state(STATE_GO_PLANET, ship.get_colonized_planet())
+						var data = ship.get_colonized_planet().convert_planetnode_to_id()
+						set_state(STATE_LAND, data[0]+1)
 		else:
 			# if we somehow picked up a colony and aren't colonizing, offload it first
 			if ship.get_colony_in_dock() != null and not (get_state() == STATE_COLONIZE):
@@ -1007,4 +1008,6 @@ class LandState:
 		
 		if ship.get_global_position().distance_to(ship.target) < 50:
 			# land
-			print("We're on top of the target, landing...")
+			if not ship.ship.landed:
+				#print("We're on top of the target, landing...")
+				ship.ship.land(ship.get_tree().get_nodes_in_group("planets")[id-1])

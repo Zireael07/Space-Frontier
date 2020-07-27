@@ -1,6 +1,7 @@
 extends "drone_basic.gd"
 
 # Declare member variables here. Examples:
+var landed = false
 # AI specific stuff
 var brain
 onready var task_timer = $"task_timer"
@@ -206,3 +207,24 @@ func _on_task_timer_timeout():
 		$"task_timer".wait_time = 2.0
 	
 	brain._on_task_timer_timeout(timer_count)
+
+func land(pl):
+	#print("Landing...")
+	get_parent().get_node("AnimationPlayer").play("landing")
+	# landing happens only when the animation is done
+
+	# reparent
+	get_parent().get_parent().remove_child(get_parent())
+	pl.get_node("orbit_holder").add_child(get_parent())
+	get_parent().set_position(Vector2(0,0))
+	set_position(Vector2(0,0))
+	pos = Vector2(0,0)
+	# nuke velocities
+	acc = Vector2(0,0)
+	vel = Vector2(0,0)
+
+func _on_AnimationPlayer_animation_finished(_anim_name):
+	print("Animation finished")
+	# toggle the landing state
+	if not landed:
+		landed = true
