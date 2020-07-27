@@ -60,7 +60,7 @@ func _on_debris_area_entered(area):
 		
 		get_parent().queue_free()
 		
-	if area.is_in_group("friendly"):
+	if area.is_in_group("friendly") and not area.is_in_group("drone") and not area.landed:
 		print("Debris entered by " + area.get_name())
 		
 		#TODO: upgrade NPC ship
