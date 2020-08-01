@@ -934,7 +934,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	var format_grav = "%.2f g" % planet.gravity
 	var format_temp = "%d K" % planet.temp
 	var format_tempC = "(%d C)" % (planet.temp-273.15)
-	var format_atm = "%.2f atm" % planet.atm
+	var format_atm = "%.3f atm" % planet.atm
 	var format_greenhouse = "%d " % planet.greenhouse_diff()
 	# format mass depending on what body we're looking at
 	var format_mass = "%.3f Earth masses" % (planet.mass)
