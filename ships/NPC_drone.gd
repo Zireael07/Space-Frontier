@@ -224,7 +224,28 @@ func land(pl):
 	vel = Vector2(0,0)
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
-	print("Animation finished")
+	#print("Animation finished")
 	# toggle the landing state
 	if not landed:
 		landed = true
+	else:
+		landed = false
+		
+	# set AI timeout
+	timer_count = 0
+
+func launch():
+	get_parent().get_node("AnimationPlayer").play_backwards("landing")
+
+	# reparent
+	var root = get_node("/root/Control")
+	var gl = get_global_position()
+			
+	get_parent().get_parent().remove_child(get_parent())
+	root.add_child(get_parent())
+			
+	get_parent().set_global_position(gl)
+	set_position(Vector2(0,0))
+	pos = Vector2(0,0)
+			
+	set_global_rotation(get_global_rotation())

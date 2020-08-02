@@ -239,19 +239,29 @@ func _on_task_timer_timeout(timer_count):
 
 	else:
 		if ship.is_in_group("drone"):
-			print("Drone task timeout")
+			#print("Drone task timeout")
 			if get_state() == STATE_REFIT:
 				if not ship.docked:
 					return
 				# if we're docked
 				else:
-					print("Drone is docked")
+					#print("Drone is docked")
 					
 					if timer_count > 2:
 						# go back to planet
 						#set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 						var data = ship.get_colonized_planet().convert_planetnode_to_id()
 						set_state(STATE_LAND, data[0]+1)
+			elif get_state() == STATE_LAND:
+				if timer_count > 2:
+					if ship.landed:
+						ship.launch()
+						# base
+						var base = ship.get_friendly_base()
+						target = base.get_global_position()
+						set_state(STATE_REFIT, base)
+				
+		# not a drone
 		else:
 			# if we somehow picked up a colony and aren't colonizing, offload it first
 			if ship.get_colony_in_dock() != null and not (get_state() == STATE_COLONIZE):
@@ -371,7 +381,7 @@ func set_state(new_state, param=null):
 	# if we need to clean up
 	#state.exit()
 	
-	if get_state() in [STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE, STATE_GO_PLANET]:
+	if get_state() in [STATE_ATTACK, STATE_REFIT, STATE_ORBIT, STATE_COLONIZE, STATE_GO_PLANET, STATE_LAND]:
 		prev_state = [ get_state(), state.param ]
 	# make sure we remember the correct count
 	elif get_state() == STATE_MINE:
