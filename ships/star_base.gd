@@ -32,6 +32,7 @@ enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
 
 #Methane = CH4, carborundum (silicon carbide) = SiC
 # plastics are chains of (C2H4)n
+# carbons covers all allotropes of carbon, such as diamonds, graphene, graphite... 
 enum processed { METHANE, CARBORUNDUM, PLASTICS } 
 var storage = {}
 

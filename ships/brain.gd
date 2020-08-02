@@ -1021,3 +1021,25 @@ class LandState:
 			if not ship.ship.landed:
 				#print("We're on top of the target, landing...")
 				ship.ship.land(ship.get_tree().get_nodes_in_group("planets")[id-1])
+				
+				
+				# prevent crash if nothing in cargo
+				if ship.ship.cargo.size() < 1:
+					return
+					
+				for c_id in ship.ship.cargo.keys():
+#					if ship.ship.get_parent().get_parent().get_parent().storage.has(c_id):
+#						print("Before sale: " + str(ship.ship.get_parent().get_parent().get_parent().storage[c_id]))
+#					else:
+#						print("Before sale: nothing in storage")
+						
+					if ship.ship.cargo[c_id] > 0:
+						ship.ship.cargo[c_id] -= 1
+				
+						# add cargo to planet
+						if not ship.ship.get_parent().get_parent().get_parent().storage.has(c_id):
+							ship.ship.get_parent().get_parent().get_parent().storage[c_id] = 1
+						else:
+							ship.ship.get_parent().get_parent().get_parent().storage[c_id] += 1
+
+						#print("After sale: " + str(ship.ship.get_parent().get_parent().get_parent().storage[c_id]))
