@@ -696,6 +696,7 @@ position = Vector2( 0, 900 )
 mass = 0.022509
 hydro = 0.0
 ice = 0.08
+atm = 1.45
 
 [node name="Sprite" parent="planet_holder/planet9/orbit_holder/Node2D6" index="0"]
 modulate = Color( 0.996078, 0.701961, 0.00784314, 1 )

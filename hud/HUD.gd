@@ -854,8 +854,12 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, -7))
 			
 			if planet.is_in_group("moon"):
-				# hide shadow
-				$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
+				# hide shadow for moons if they don't have atmo
+				if planet.atm < 0.001:
+					$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
+				else:
+					sc2 = Vector2(0.18*0.86, 0.18*0.86) # experimental (for Titan)
+					$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(sc2)
 	# why the eff do the asteroid/moon crosses/dwarf planets seem not to have material?
 	else:
 		if planet.is_in_group("moon") or planet.is_in_group("aster_named"):
