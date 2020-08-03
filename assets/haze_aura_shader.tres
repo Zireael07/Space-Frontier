@@ -1,0 +1,32 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+uniform vec4 aura_color : hint_color;
+
+void fragment()
+{
+	vec4 col = texture(TEXTURE, UV);
+	
+	//COLOR.rgba = vec4(aura_color.rgb, col.a);
+	//float al = clamp(col.a, 0.4, 0.99);
+	
+	//COLOR = mix(col, aura_color, col.a);
+	//COLOR = col/col;
+	
+	vec4 haze = vec4(aura_color.rgb, col.a);
+	COLOR = haze;
+	vec4 outline = (haze/haze); //it outlines the whole planet shape w/o transparent outside
+	outline.a = clamp(outline.a, 0.01, 0.99); //get rid of weird dark tint outside
+	//COLOR = outline;
+	vec4 aura = mix(outline, aura_color, outline.a);
+	float al = clamp(outline.a, 0.0, 0.9);
+	COLOR = vec4(aura.rgb, al);
+
+}"
+custom_defines = ""
+
+[resource]
+shader = SubResource( 4 )
+shader_param/aura_color = Color( 0.737255, 0.592157, 0.0196078, 1 )
