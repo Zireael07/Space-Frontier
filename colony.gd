@@ -109,7 +109,7 @@ func is_floating():
 	if not tractor and not is_in_groups(get_parent().get_parent(), groups) \
 	and not get_parent().get_parent().get_parent().is_in_group("player"):
 		ret = true
-	#print("Is floating: " + str(ret))
+	#print("Colony is floating: " + str(ret))
 	return ret
 
 func get_closest_enemy():
@@ -205,7 +205,7 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 
 func _on_distress_called(target):
 	for n in get_tree().get_nodes_in_group("friendly"):
-		if not n.is_in_group("starbase"):
+		if not n.is_in_group("starbase") and not n.is_in_group("drone"):
 			#if target.cloaked:
 			#	return
 				

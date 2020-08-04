@@ -479,12 +479,17 @@ class IdleState:
 		# deorbit
 		if ship.ship.orbiting:
 			ship.ship.deorbit()
+			
+		if ship.ship.is_in_group("drone"):
+			ship.move_generic(delta)
+			return
 		
 		#ship.move_generic(delta)
 		
 		# handle floating colonies
-		if 'is_target_floating_colony' in ship.ship and \
-		ship.ship.is_target_floating_colony(ship.target):
+		#if 'is_target_floating_colony' in ship.ship and \
+		if ship.ship.is_target_floating_colony(ship.target):
+			#print("Idle: floating colony handling")
 			if ship.ship.kind_id == ship.ship.kind.friendly:
 				
 				ship.move_generic(delta)
