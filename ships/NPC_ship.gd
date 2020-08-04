@@ -492,9 +492,17 @@ func _on_shield_changed(data):
 	if effect:
 		$"shield_effect".show()
 		$"shield_timer".start()
-	# if shield falls low, go away	
-		
-	if data[0] < 40:
+	
+	# how many enemies around?
+	var enemies = get_enemies_in_range()
+	#print("Enemies around: " + str(enemies.size()))
+	
+	var flee_threshold = 40
+	if enemies.size() > 2:
+		flee_threshold = 60
+	
+	# if shield falls low, go away
+	if data[0] < flee_threshold:
 		#print("Flee because of low shields")
 		if orbiting:
 			deorbit()

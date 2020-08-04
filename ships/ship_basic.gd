@@ -219,7 +219,7 @@ func get_friendly_base():
 				#print(b.get_name() + " is enemy")
 				return b
 
-func get_closest_enemy():
+func get_enemies():
 	var nodes = []
 
 	if is_in_group("enemy"):
@@ -241,6 +241,11 @@ func get_closest_enemy():
 			nodes.append(player)
 	else:	
 		nodes = get_tree().get_nodes_in_group("enemy")
+		
+	return nodes
+
+func get_closest_enemy():
+	var nodes = get_enemies()
 	
 	var dists = []
 	var targs = []
@@ -282,6 +287,30 @@ func get_closest_friendly():
 			#print("Target is : " + t[1].get_parent().get_name())
 			
 			return t[1]
+
+func get_enemies_in_range():
+	var nodes = get_enemies()
+	
+	var dists = []
+	var targs = []
+	
+	for t in nodes:
+		var dist = t.get_global_position().distance_to(get_global_position())
+		dists.append(dist)
+		targs.append([dist, t])
+	
+	# remove those who are far away
+	var to_rem = []
+	for t in targs:
+		# for comparison, most planets are 300 px across
+		# and AI shoot range is 150
+		if t[0] > 300: 
+			to_rem.append(t[1]) 
+		
+	for r in to_rem:
+		nodes.remove(nodes.find(r))
+		
+	return nodes
 
 func get_closest_asteroid():
 	var nodes = get_tree().get_nodes_in_group("asteroid")

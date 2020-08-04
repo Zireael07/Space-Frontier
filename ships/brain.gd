@@ -471,12 +471,9 @@ class InitialState:
 		if not ship.target:
 			ship.select_initial_target()
 	
-
 		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
 		#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))	
-		
 		#ship.set_state(STATE_IDLE)
-		
 		
 class IdleState:
 	var ship
@@ -517,6 +514,20 @@ class IdleState:
 						
 			# if enemy AI, shoot it instead
 			else:
+				# retreat if enemies close by (a floating colony isn't worth it)
+				if ship.ship.get_enemies_in_range().size() > 2:
+					# head to a friendly base for protection
+					# get the base
+					var base = ship.ship.get_friendly_base()
+					if base != null:
+						#print(base.get_name())
+						#print("Fleeing to our base")
+						ship.target = base.get_global_position()
+						ship.set_state(STATE_REFIT, base)
+					
+					# go back to a planet
+					#ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
+				
 				# steering behavior
 				var steer = ship.get_steering_arrive(ship.target)	
 				var t_dist = ship.get_global_position().distance_to(ship.target)
