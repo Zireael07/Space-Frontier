@@ -1,6 +1,7 @@
 extends "ship_basic.gd"
 
 # class member variables go here, for example:
+var landed = false
 # AI specific stuff
 var brain
 onready var task_timer = $"task_timer"
