@@ -39,20 +39,23 @@ func _ready():
 
 # is run as part of initial setup
 func select_initial_target():
-	if get_tree().get_nodes_in_group("asteroid").size() > 3:
-		if ship.get_colonized_planet() != null:
-			set_state(STATE_ORBIT, ship.get_colonized_planet())
-			print("Set orbit state for " + ship.get_parent().get_name())
-		else:
-			target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
-			set_state(STATE_IDLE)
+	if ship.is_in_group("drone"):
+		set_state(STATE_ORBIT, ship.get_colonized_planet())
 	else:
-		if ship.kind_id == ship.kind.friendly:
-			#target = ship.get_colonized_planet().get_global_position()
-			set_state(STATE_ORBIT, ship.get_colonized_planet())
+		if get_tree().get_nodes_in_group("asteroid").size() > 3:
+			if ship.get_colonized_planet() != null:
+				set_state(STATE_ORBIT, ship.get_colonized_planet())
+				print("Set orbit state for " + ship.get_parent().get_name())
+			else:
+				target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
+				set_state(STATE_IDLE)
 		else:
-			target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
-			set_state(STATE_IDLE)
+			if ship.kind_id == ship.kind.friendly:
+				#target = ship.get_colonized_planet().get_global_position()
+				set_state(STATE_ORBIT, ship.get_colonized_planet())
+			else:
+				target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
+				set_state(STATE_IDLE)
 
 
 func move_generic(delta):
@@ -140,7 +143,7 @@ func _go_mine():
 func task_orbiting(timer_count, conquer_tg):
 	# check for enemies orbiting
 	#var hostile = null
-	if timer_count > 1:
+	if timer_count > 1 and not ship.is_in_group("drone"):
 		if ship.kind_id == ship.kind.friendly:
 			var hostile = ship.get_colonized_planet().get_hostile_orbiter()
 			if hostile:
@@ -153,7 +156,7 @@ func task_orbiting(timer_count, conquer_tg):
 	
 	# prevent too short orbiting
 	if timer_count > 2:
-		# if not drone
+		# if a drone
 		if ship.is_in_group("drone"):
 			print("Drone should be deorbiting")
 			# deorbit
@@ -162,6 +165,7 @@ func task_orbiting(timer_count, conquer_tg):
 			var base = ship.get_friendly_base()
 			target = base.get_global_position()
 			set_state(STATE_REFIT, base)
+		# if not drone
 		else:
 			# if player-specified colony target is not colonized
 			# or we have a colonize target (planet w/o colony)
@@ -240,6 +244,14 @@ func _on_task_timer_timeout(timer_count):
 	else:
 		if ship.is_in_group("drone"):
 			#print("Drone task timeout")
+			
+			# paranoia
+			if get_state() == STATE_IDLE:
+				# base
+				var base = ship.get_friendly_base()
+				target = base.get_global_position()
+				set_state(STATE_REFIT, base)
+
 			if get_state() == STATE_REFIT:
 				if not ship.docked:
 					return
