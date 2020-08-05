@@ -26,13 +26,14 @@ signal distress_called
 var targetables = []
 var shoot_target = null
 var shoot_rel_pos = Vector2()
+var shoot_range = 500
 
 # see asteroid.gd and debris_resource.gd
 enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
+# carbon covers all allotropes of carbon, such as diamonds, graphene, graphite... 
 
 #Methane = CH4, carborundum (silicon carbide) = SiC
 # plastics are chains of (C2H4)n
-# carbons covers all allotropes of carbon, such as diamonds, graphene, graphite... 
 enum processed { METHANE, CARBORUNDUM, PLASTICS } 
 var storage = {}
 
@@ -48,8 +49,8 @@ func _ready():
 	# it's static so we don't need to do it in process()
 	target = get_parent().get_position() + Vector2(200, -200)
 	
-	if is_in_group("enemy"):
-		targetables.append(get_tree().get_nodes_in_group("player")[0].get_child(0))
+	#if is_in_group("enemy"):
+	#	targetables.append(get_tree().get_nodes_in_group("player")[0].get_child(0))
 	
 	connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
 
@@ -65,28 +66,45 @@ func _process(delta):
 
 	#print("Target: " + str(target))
 	# select target
+	targetables = get_enemies()
+	
+	# one target case (this avoids the sort by distance)
 	if targetables.size() > 0 and targetables.size() < 2:
 		#print("Get targetables")
 		var dist = get_global_transform().xform_inv(targetables[0].get_global_position()).length()
-		if shoot_target == null and dist < 500:
-			if targetables[0].cloaked:
+		if shoot_target == null and dist < shoot_range:
+			if 'cloaked' in targetables[0] and targetables[0].cloaked:
 				return
 			shoot_target = targetables[0]
-			# will have to be changed when other ships will become targetables
-			targetables[0].targeted_by.append(self)
-			emit_signal("target_acquired_AI", self)
-			print("AI acquired target")
+			# signal player being attacked if it's the case
+			if targetables[0].get_parent().is_in_group("player"):
+				targetables[0].targeted_by.append(self)
+				emit_signal("target_acquired_AI", self)
+				print("AI acquired target")
+	else:
+		var closest = get_closest_enemy()
+		var dist = get_global_transform().xform_inv(closest.get_global_position()).length()
+		if shoot_target == null and dist < shoot_range:
+			if 'cloaked' in closest and closest.cloaked:
+				return
+			shoot_target = closest
+			# signal player being attacked if it's the case
+			if closest.get_parent().is_in_group("player"):
+				closest.targeted_by.append(self)
+				emit_signal("target_acquired_AI", self)
+				print("AI acquired target")
 	
 	if shoot_target != null:
 		shoot_rel_pos = get_global_transform().xform_inv(shoot_target.get_global_position())
 	
-		if shoot_rel_pos.length() < 500:
+		if shoot_rel_pos.length() < shoot_range:
 			if gun_timer.get_time_left() == 0:
 				shoot()
 		else:
-			shoot_target.targeted_by.remove(shoot_target.targeted_by.find(self))
-			if shoot_target.targeted_by.size() < 1:
-				emit_signal("target_lost_AI", self)
+			if shoot_target.get_parent().is_in_group("player"):
+				shoot_target.targeted_by.remove(shoot_target.targeted_by.find(self))
+				if shoot_target.targeted_by.size() < 1:
+					emit_signal("target_lost_AI", self)
 			shoot_target = null
 			print("AI lost target")
 			
@@ -169,6 +187,53 @@ func _on_distress_called(target):
 				n.brain.target = target.get_global_position()
 				n.brain.set_state(n.brain.STATE_IDLE)
 				print("Targeting " + str(target.get_parent().get_name()) + " in response to distress call")
+
+# these two functions are repeated from ship_basic.gd
+func get_enemies():
+	var nodes = []
+
+	if is_in_group("enemy"):
+		nodes = get_tree().get_nodes_in_group("friendly")
+		
+		# more foolproof removing
+		var to_rem = []
+		for n in nodes:
+			if n.is_in_group("drone"):
+				to_rem.append(n)
+				#nodes.remove(nodes.find(n))
+		
+		for r in to_rem:
+			nodes.remove(nodes.find(r))
+		
+		var player = get_tree().get_nodes_in_group("player")[0].get_child(0)
+		if not player.cloaked:
+			# add player
+			nodes.append(player)
+	else:	
+		nodes = get_tree().get_nodes_in_group("enemy")
+		
+	return nodes
+
+func get_closest_enemy():
+	var nodes = get_enemies()
+	
+	var dists = []
+	var targs = []
+	
+	for t in nodes:
+		var dist = t.get_global_position().distance_to(get_global_position())
+		dists.append(dist)
+		targs.append([dist, t])
+
+	dists.sort()
+	#print("Dists sorted: " + str(dists))
+	
+	for t in targs:
+		if t[0] == dists[0]:
+			#print("Target is : " + t[1].get_parent().get_name())
+			
+			return t[1]
+
 
 func starbase_listing():
 	# update listing
