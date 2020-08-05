@@ -312,6 +312,15 @@ func get_enemies_in_range():
 		
 	return nodes
 
+func is_enemy_a_starbase(enemies):
+	var ret = false
+	for e in enemies:
+		if e.is_in_group("starbase"):
+			ret = true
+			break
+
+	return ret
+
 func get_closest_asteroid():
 	var nodes = get_tree().get_nodes_in_group("asteroid")
 	
@@ -332,7 +341,7 @@ func get_closest_asteroid():
 			
 			return t[1]
 
-
+# ------------------------------------
 func get_closest_floating_colony():
 	var colonies = []
 	var nodes = []

@@ -498,8 +498,9 @@ func _on_shield_changed(data):
 	#print("Enemies around: " + str(enemies.size()))
 	
 	var flee_threshold = 40
-	if enemies.size() > 2:
+	if enemies.size() > 2 or is_enemy_a_starbase(enemies):
 		flee_threshold = 60
+		print("Many enemies or starbase enemy detected!")
 	
 	# if shield falls low, go away
 	if data[0] < flee_threshold:
