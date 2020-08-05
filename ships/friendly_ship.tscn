@@ -38,7 +38,7 @@ shape = SubResource( 1 )
 [node name="bullet_container" type="Node" parent="Area2D_ship_f"]
 
 [node name="muzzle" type="Position2D" parent="Area2D_ship_f"]
-position = Vector2( 0, -70 )
+position = Vector2( 0, -30 )
 
 [node name="gun_timer" type="Timer" parent="Area2D_ship_f"]
 wait_time = 0.5

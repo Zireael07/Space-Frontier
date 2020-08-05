@@ -127,7 +127,7 @@ current = true
 [node name="bullet_container" type="Node" parent="Area2D"]
 
 [node name="muzzle" type="Position2D" parent="Area2D"]
-position = Vector2( 0, -70 )
+position = Vector2( 0, -30 )
 
 [node name="gun_timer" type="Timer" parent="Area2D"]
 wait_time = 0.5
