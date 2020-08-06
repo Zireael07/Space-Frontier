@@ -77,7 +77,8 @@ func _on_bullet_area_entered( area ):
 			# kill the AI
 			area.get_parent().queue_free()
 			# update census
-			area.emit_signal("ship_killed", area)
+			if area.has_user_signal("ship_killed"):
+				area.emit_signal("ship_killed", area)
 
 			# untarget it
 			game.player.HUD.target = null

@@ -50,14 +50,17 @@ func _on_bullet_area_entered( area ):
 				# kill the AI
 				area.get_parent().queue_free()
 				
-			
 			# kill the player
-			# reenable when it doesn't destroy the game
-			#area.get_parent().queue_free()
+			elif area.get_parent().is_in_group("player"):
+				# reenable when it doesn't destroy the game
+				#area.get_parent().queue_free()
+				# starbases don't have this signal (yet)
+				if area.has_user_signal("target_killed"):
+					get_parent().get_parent().emit_signal("target_killed", area)
 			
-			get_parent().get_parent().emit_signal("target_killed", area)
 			# update census
-			area.emit_signal("ship_killed", area)
+			if area.has_user_signal("ship_killed"):
+				area.emit_signal("ship_killed", area)
 	
 			# explosion
 			if "explosion" in area:
