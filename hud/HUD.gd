@@ -621,6 +621,12 @@ func display_task(target):
 		task += " " + str(p.get_node("Label").get_text()) 
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(task)
 
+func starbase_update_status(target):
+	var status = "status: idle"
+	if target.shoot_target != null:
+		status = "status: attacking " + target.shoot_target.get_parent().get_name()
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(status)
+
 func _on_ButtonShip_pressed():
 	if target != null and (target.is_in_group("friendly") or target.is_in_group("enemy")):
 		# correctly name starbases
@@ -629,10 +635,7 @@ func _on_ButtonShip_pressed():
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text("REAR ADM.")
 			
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".show()
-			var status = "status: idle"
-			if target.shoot_target != null:
-				status = "status: attacking " + target.shoot_target.get_parent().get_name()
-			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(status)
+			starbase_update_status(target)
 
 		else:
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
@@ -668,6 +671,10 @@ func _on_ButtonShip_pressed():
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".show()
+
+func is_ship_view_open():
+	return $"Control2/Panel_rightHUD/PanelInfo/ShipInfo".is_visible()
+	
 
 func switch_to_refit():
 	# get the correct data

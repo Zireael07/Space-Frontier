@@ -101,14 +101,22 @@ func _process(delta):
 		if shoot_rel_pos.length() < shoot_range:
 			if gun_timer.get_time_left() == 0:
 				shoot()
+		
+			# update target HUD panel if open and we're the target 
+			if game.player.HUD.is_ship_view_open() and game.player.HUD.target == self:
+				game.player.HUD.starbase_update_status(self)		
+		
 		else:
 			if shoot_target.get_parent().is_in_group("player"):
 				shoot_target.targeted_by.remove(shoot_target.targeted_by.find(self))
 				if shoot_target.targeted_by.size() < 1:
 					emit_signal("target_lost_AI", self)
+
 			shoot_target = null
 			print("AI lost target")
-			
+			# update target HUD panel if open and we're the target 
+			if game.player.HUD.is_ship_view_open() and game.player.HUD.target == self:
+				game.player.HUD.starbase_update_status(self)
 	
 	
 	#print(shoot_rel_pos)
