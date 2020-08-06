@@ -601,42 +601,54 @@ func _on_ButtonCensus_pressed():
 	var flt2 = "Fleet 2	" + str(game.fleet2[0]) + "		" + str(game.fleet2[1]) + "	" + str(game.fleet2[2])
 	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label2".set_text(flt2)
 
+func display_task(target):
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".show()
+	var task = "Task: " + str(target.brain.tasks[target.brain.curr_state])
+	if target.brain.curr_state == 2:
+		var p = target.brain.get_state_obj().planet_
+		task += " " + str(p.get_node("Label").get_text() )
+	if target.brain.curr_state == 5:
+		var id = target.brain.get_state_obj().planet_
+		var p = get_tree().get_nodes_in_group("planets")[id-1]
+		task += " " + str(p.get_node("Label").get_text() ) 
+	if target.brain.curr_state == 6:
+		var id = target.brain.get_state_obj().id
+		var moon = target.brain.get_state_obj().moon
+		var p = get_tree().get_nodes_in_group("planets")[id-1]
+		if moon:
+			p = get_tree().get_nodes_in_group("moon")[id-1]
+			
+		task += " " + str(p.get_node("Label").get_text()) 
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(task)
+
 func _on_ButtonShip_pressed():
 	if target != null and (target.is_in_group("friendly") or target.is_in_group("enemy")):
 		# correctly name starbases
 		if target.is_in_group("starbase"):
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Starbase")
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text("REAR ADM.")
+			
+			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".show()
+			var status = "status: idle"
+			if target.shoot_target != null:
+				status = "status: attacking " + target.shoot_target.get_parent().get_name()
+			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(status)
+
 		else:
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
 		
 			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text(game.ranks.keys()[target.rank])
+		
+			display_task(target)
+		
 		# no modules for AI yet
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".hide()
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".hide()
 		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".hide()
 		
-		if target.is_in_group("friendly"):
-			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".show()
-			var task = "Task: " + str(target.brain.tasks[target.brain.curr_state])
-			if target.brain.curr_state == 2:
-				var p = target.brain.get_state_obj().planet_
-				task += " " + str(p.get_node("Label").get_text() )
-			if target.brain.curr_state == 5:
-				var id = target.brain.get_state_obj().planet_
-				var p = get_tree().get_nodes_in_group("planets")[id-1]
-				task += " " + str(p.get_node("Label").get_text() ) 
-			if target.brain.curr_state == 6:
-				var id = target.brain.get_state_obj().id
-				var moon = target.brain.get_state_obj().moon
-				var p = get_tree().get_nodes_in_group("planets")[id-1]
-				if moon:
-					p = get_tree().get_nodes_in_group("moon")[id-1]
-					
-				task += " " + str(p.get_node("Label").get_text()) 
-			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(task)
-		else:
-			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".hide()
+		#if target.is_in_group("friendly"):
+#		else:
+#			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".hide()
 		
 	else:
 		# get the correct data
