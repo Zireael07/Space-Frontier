@@ -83,16 +83,17 @@ func _process(delta):
 				print("AI acquired target")
 	else:
 		var closest = get_closest_enemy()
-		var dist = get_global_transform().xform_inv(closest.get_global_position()).length()
-		if shoot_target == null and dist < shoot_range:
-			if 'cloaked' in closest and closest.cloaked:
-				return
-			shoot_target = closest
-			# signal player being attacked if it's the case
-			if closest.get_parent().is_in_group("player"):
-				closest.targeted_by.append(self)
-				emit_signal("target_acquired_AI", self)
-				print("AI acquired target")
+		if closest != null:
+			var dist = get_global_transform().xform_inv(closest.get_global_position()).length()
+			if shoot_target == null and dist < shoot_range:
+				if 'cloaked' in closest and closest.cloaked:
+					return
+				shoot_target = closest
+				# signal player being attacked if it's the case
+				if closest.get_parent().is_in_group("player"):
+					closest.targeted_by.append(self)
+					emit_signal("target_acquired_AI", self)
+					print("AI acquired target")
 	
 	if shoot_target != null:
 		shoot_rel_pos = get_global_transform().xform_inv(shoot_target.get_global_position())
