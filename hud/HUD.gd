@@ -804,9 +804,9 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	# reset
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(Vector2(0.15, 0.15))
-	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(83, 1)) 
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(83, 11)) 
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(Vector2(0.15, 0.15))
-	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(83, 1))
+	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(83, 11))
 	# show planet sprite
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(planet.get_node("Sprite").get_material())
@@ -847,11 +847,11 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
 
 			# move to the right to not overlap the text
-			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(95, 1)) 
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(95, 11)) 
 			var sc2 = Vector2(0.15*0.86, 0.15*0.86 ) #0.86 is the ratio of the procedural planet's shadow to the usual's (0.43/0.5)
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(sc2)
 			# experimentally determined values
-			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, -7))
+			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, 3))
 			
 			if planet.is_in_group("moon"):
 				# hide shadow for moons if they don't have atmo
@@ -869,7 +869,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 			$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
 		
 	# set label
-	var txt = "Planet: " + str(planet.get_node("Label").get_text())
+	var txt = "Destination: " + str(planet.get_node("Label").get_text())
 	var label = $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/LabelName"
 
 	label.set_text(txt)
@@ -887,9 +887,9 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	var text = ""
 	# first, list things the player is likely to be immediately interested in
 	if planet.is_habitable():
-		text = " Habitable"
+		text = "Habitable"
 	if planet.tidally_locked:
-		text = text + "\n" + " Tidally locked"
+		text = text + "\n" + "Tidally locked"
 	
 	var format_habitability = "%d" % (planet.calculate_habitability() * 100.0)
 	# linebreak because planet graphic
@@ -943,13 +943,13 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		format_atm = "%.3f atm" % planet.atm
 	var format_greenhouse = "%d " % planet.greenhouse_diff()
 	# format mass depending on what body we're looking at
-	var format_mass = "%.3f Earth masses" % (planet.mass)
+	var format_mass = "%.3f M Earth" % (planet.mass)
 	if planet.is_in_group("moon") or planet.get_node("Label").get_text() == "Ceres":
-		format_mass = "%.4f Moon masses" % (planet.mass/game.MOON_MASS)
+		format_mass = "%.4f M Moon" % (planet.mass/game.MOON_MASS)
 	# otherwise the numbers would be vanishingly small
 	if planet.is_in_group("aster_named") and planet.get_node("Label").get_text() != "Ceres":
 		var Ceres = 0.0128*game.MOON_MASS
-		format_mass = "%.4f Ceres masses (1 = 0.0128 Moon masses)" % (planet.mass/Ceres) 
+		format_mass = "%.4f M Ceres  (1 = 0.0128 M Moon)" % (planet.mass/Ceres) 
 
 	# linebreak because of planet graphic on the right
 	#var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
