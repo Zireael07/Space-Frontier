@@ -615,16 +615,24 @@ func get_closest_planet():
 
 func get_closest_target():
 	var t = get_closest_enemy()
-	#t[1].targetted = true
-	t.emit_signal("AI_targeted", t)
-	# redraw 
-	t.update()
+	# paranoia
+	if t != null:
+		#t[1].targetted = true
+		t.emit_signal("AI_targeted", t)
+		# redraw 
+		t.update()
+		# redraw minimap
+		self.HUD._minimap_update_outline(t)
 
 func get_closest_friendly_target():
 	var t = get_closest_friendly()
-	t.emit_signal("AI_targeted", t)
-	# redraw 
-	t.update()
+	# paranoia
+	if t != null:
+		t.emit_signal("AI_targeted", t)
+		# redraw 
+		t.update()
+		# redraw minimap
+		self.HUD._minimap_update_outline(t)
 
 func _draw():
 	if not warping:

@@ -51,6 +51,8 @@ var player
 
 var zoom_scale = 12
 
+var sprite_script = load("res://hud/minimap_sprite.gd")
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -91,6 +93,9 @@ func _ready():
 	for h in hostiles:
 		var hostile_sprite = TextureRect.new()
 		hostile_sprite.set_texture(hostile)
+		# enable red outlines
+		hostile_sprite.set_script(sprite_script)
+		hostile_sprite.type_id = 0
 		hostile_sprites.append(hostile_sprite)
 		add_child(hostile_sprite)
 		
@@ -98,6 +103,9 @@ func _ready():
 		var starbase_sprite = TextureRect.new()
 		starbase_sprite.set_texture(starbase)
 		starbase_sprite.set_scale(Vector2(0.5, 0.5))
+		# enable red outlines
+		starbase_sprite.set_script(sprite_script)
+		starbase_sprite.type_id = 1
 		starbase_sprites.append(starbase_sprite)
 		add_child(starbase_sprite)
 	
@@ -105,6 +113,9 @@ func _ready():
 		var sb_sprite = TextureRect.new()
 		sb_sprite.set_texture(sb_enemy)
 		sb_sprite.set_scale(Vector2(0.5, 0.5))
+		# enable red outlines
+		sb_sprite.set_script(sprite_script)
+		sb_sprite.type_id = 1
 		sb_enemy_sprites.append(sb_sprite)
 		add_child(sb_sprite)
 	
@@ -216,7 +227,7 @@ func add_system_bodies():
 		wh_arrow.set_pivot_offset(wh_arrow.get_size()/2)
 		wh_arrow.set_visible(false)
 		
-		print(wh_arrow.get_name())
+		#print(wh_arrow.get_name())
 
 func move_player_sprite():
 	# make sure player is the last child (to be drawn last)
@@ -238,6 +249,9 @@ func _on_enemy_ship_spawned(ship):
 	print("On enemy ship spawned")
 	var enemy_sprite = TextureRect.new()
 	enemy_sprite.set_texture(hostile)
+	# enable red outlines
+	enemy_sprite.set_script(sprite_script)
+	enemy_sprite.type_id = 0
 	hostile_sprites.append(enemy_sprite)
 	add_child(enemy_sprite)
 	hostiles.append(ship)
@@ -256,6 +270,9 @@ func _on_enemy_starbase_spawned(starbase):
 	var sb_sprite = TextureRect.new()
 	sb_sprite.set_texture(sb_enemy)
 	sb_sprite.set_scale(Vector2(0.5, 0.5))
+	# enable red outlines
+	sb_sprite.set_script(sprite_script)
+	sb_sprite.type_id = 1
 	sb_enemy_sprites.append(sb_sprite)
 	add_child(sb_sprite)
 	sb_enemies.append(starbase)
@@ -299,6 +316,28 @@ func _on_colony_colonized(colony):
 		remove_child(spr)
 		colonies.remove(colonies.find(colony))
 		colony_sprites.remove(colony_sprites.find(spr))
+
+# ----------------------------
+func clear_outline():
+	for h in hostile_sprites:
+		h.targeted = false
+	for s in sb_enemy_sprites:
+		s.targeted = false
+
+func update_outline(target):
+	# before doing anything, clear any old ones
+	clear_outline()
+	
+	var i = null
+	if target in hostiles:
+		i = hostiles.find(target)
+		hostile_sprites[i].targeted = true
+		hostile_sprites[i].update()
+		
+	if target in sb_enemies:
+		i = sb_enemies.find(target)
+		sb_enemy_sprites[i].targeted = true
+		sb_enemy_sprites[i].update()
 
 func _process(_delta):
 #	# Called every frame. Delta is time since last frame.

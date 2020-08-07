@@ -546,6 +546,10 @@ func _on_colony_colonized(colony):
 	# pass to correct node
 	$"Control2/Panel_rightHUD/minimap"._on_colony_colonized(colony)
 	
+func _minimap_update_outline(target):
+	#print("Target to update for: " + str(target.get_name()))
+	# pass to correct node
+	$"Control2/Panel_rightHUD/minimap".update_outline(target)
 
 
 func _on_target_acquired_by_AI(_AI):

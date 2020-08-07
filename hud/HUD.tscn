@@ -490,6 +490,9 @@ script = ExtResource( 2 )
 [node name="Panel" type="Panel" parent="Control2/Panel_rightHUD/minimap"]
 margin_right = 200.0
 margin_bottom = 200.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="player" type="TextureRect" parent="Control2/Panel_rightHUD/minimap"]
 margin_left = 92.0
