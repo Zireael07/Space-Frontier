@@ -551,7 +551,7 @@ func _minimap_update_outline(target):
 	# pass to correct node
 	$"Control2/Panel_rightHUD/minimap".update_outline(target)
 
-
+# those signals fire only for player and are only for the status light
 func _on_target_acquired_by_AI(_AI):
 	$"Control2/status_light".set_modulate(Color(1,0,0))
 	print("On target_acquired, pausing...")
@@ -908,6 +908,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		label.set_self_modulate(Color(1,1,1))
 
 	var text = ""
+	# actual text begins here
 	# first, list things the player is likely to be immediately interested in
 	if planet.is_habitable():
 		text = "Habitable"
@@ -931,7 +932,14 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		
 	if col:
 		# linebreak because of planet graphic
-		text = text + "\n" + " Population: " + "\n" + str(format_pop)
+		text = text + "\n" + "Population: " + "\n" + str(format_pop)
+		var allegiance = ""
+		if col == "colony":
+			allegiance = "Terran"
+		elif col == "enemy_col":
+			allegiance = "enemy"
+		# linebreak because of planet graphic on the right
+		text = text + "\n" + "under " + allegiance + "\n" + " control"
 	
 	var dist = planet.dist
 	# two significant digits is enough for planets
@@ -981,20 +989,23 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	var format_ices = "%d" % (planet.ice * 100)
 
 	# set text
-	# this comes first because most other parameters are determined by orbital parameters
+	# this comes first after name/habitability (and some line breaks for clarity)
+	# because most other parameters are determined by orbital parameters
 	# lots of linebreaks because of planet graphic on the right
-	text = text + "\n" + "Orbital radius: " + "\n" + str(format_AU) + "\n" + "period: " + "\n" + str(format_days)
+	text = text + "\n \n \n" + "Orbital radius: " + "\n" + str(format_AU) + "\n" + "period: " + "\n" + str(format_days)
 	# those parameters have been present in the original game
 	text = text + "\n" + "Mass: " + str(format_mass) + "\n" + \
 	"Pressure: " + str(format_atm) + "\n" + \
 	"Gravity: " + str(format_grav) + "\n" + \
-	"Temperature: " + str(format_temp) + " " + str(format_tempC) + " \n"
+	"Temperature: " + "\n" + str(format_temp) + " " + str(format_tempC) + " \n"
 	# this is new
 	text = text + "Greenhouse effect: " + str(format_greenhouse) + "\n"
 	# this was present in the original game
 	text = text + "Hydro: " + str(planet.hydro) + "\n"
 	# this is new
 	text = text + "Ice cover: " + str(format_ices) + "%"
+	# layout fix
+	text = text + "\n"
 
 	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 
