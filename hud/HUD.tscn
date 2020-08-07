@@ -784,11 +784,17 @@ text = "SYSTEM MAP"
 align = 1
 valign = 1
 
-[node name="pause_panel" type="Panel" parent="."]
+[node name="pause_panel" type="Control" parent="."]
 visible = false
 modulate = Color( 1, 1, 1, 0.624314 )
 margin_right = 1024.0
 margin_bottom = 602.0
+
+[node name="Panel" type="Panel" parent="pause_panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="pause_panel"]
 margin_left = 416.0
@@ -796,6 +802,17 @@ margin_top = 249.0
 margin_right = 456.0
 margin_bottom = 263.0
 text = "PAUSED"
+
+[node name="Label2" type="Label" parent="pause_panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -144.0
+margin_top = -27.0
+margin_right = 44.0
+margin_bottom = -13.0
+text = "Press Z to toggle orders mode"
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonCensus" to="." method="_on_ButtonCensus_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonPlanet" to="." method="_on_ButtonPlanet_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonShip" to="." method="_on_ButtonShip_pressed"]
