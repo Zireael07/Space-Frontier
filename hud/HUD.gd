@@ -9,6 +9,9 @@ var dir_labels = []
 var planets = null
 var center = Vector2(450,450)
 
+# for orders mode
+onready var orders_control = preload("res://hud/OrdersControl.tscn")
+
 func _ready():
 	player = game.player
 	#player = get_tree().get_nodes_in_group("player")[0].get_child(0)
@@ -329,6 +332,20 @@ func _input(_event):
 		else:
 			$"pause_panel/Label".set_text("ORDERS MODE")
 
+			#print("Player pos: " + str(game.player.get_global_position()))
+			#print("Cam pos: " + str(game.player.get_node("Camera2D").get_global_position()))
+			# player and camera positions are the same, soo....
+			# test
+			var clicky = orders_control.instance() #TextureButton.new()
+			# center of the viewport, i.e. half of display/window/size settings
+			var cntr = Vector2(1024/2, 300)
+			# ship is roughly 100x100 and we need to block clicks
+			var off = Vector2(-50,-50)
+			var pos = cntr + off + Vector2(0,0)
+			clicky.set_position(pos)
+			#clicky.set_normal_texture(load("res://assets/hud/grey_panel.png"))
+			#clicky.set_pause_mode(PAUSE_MODE_PROCESS) # the clou of this whole thing
+			$"pause_panel".add_child(clicky)
 
 # --------------------
 # signals
