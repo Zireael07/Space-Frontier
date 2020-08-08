@@ -328,6 +328,30 @@ func get_enemies_in_range():
 		nodes.remove(nodes.find(r))
 		
 	return nodes
+	
+func get_friendlies_in_range():
+	var nodes = get_friendlies()
+	
+	var dists = []
+	var targs = []
+	
+	for t in nodes:
+		var dist = t.get_global_position().distance_to(get_global_position())
+		dists.append(dist)
+		targs.append([dist, t])
+	
+	# remove those who are far away
+	var to_rem = []
+	for t in targs:
+		# for comparison, most planets are 300 px across
+		# and AI shoot range is 150
+		if t[0] > 300: 
+			to_rem.append(t[1]) 
+		
+	for r in to_rem:
+		nodes.remove(nodes.find(r))
+		
+	return nodes
 
 func is_enemy_a_starbase(enemies):
 	var ret = false

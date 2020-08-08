@@ -346,6 +346,8 @@ func _input(_event):
 				# test
 				var pos = cntr + off + Vector2(0,0)
 				spawn_orders_control(pos)
+				# AI
+				spawn_AI_orders_controls()
 
 			else:
 				orders = false
@@ -358,6 +360,16 @@ func spawn_orders_control(pos):
 	#clicky.set_normal_texture(load("res://assets/hud/grey_panel.png"))
 	#clicky.set_pause_mode(PAUSE_MODE_PROCESS) # the clou of this whole thing
 	$"pause_panel".add_child(clicky)
+	
+func spawn_AI_orders_controls():
+	# this is where the player ship is, see comment line 337
+	var cntr = Vector2(1024/2, 300)
+	# ship is roughly 100x100 and we need to block clicks
+	var off = Vector2(-50,-50)
+	for f in game.player.get_friendlies_in_range():
+		var rel_pos = f.get_global_position() - player.get_child(0).get_global_position()
+		var pos = cntr + off + rel_pos
+		spawn_orders_control(pos)
 
 func remove_orders_controls():
 	for n in get_tree().get_nodes_in_group("orders_control"):
