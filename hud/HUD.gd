@@ -248,15 +248,7 @@ func _process(_delta):
 
 
 func _input(_event):
-	if Input.is_action_pressed("ui_cancel"):
-		paused = not paused
-		#print("Pressed pause, paused is " + str(paused))
-		get_tree().set_pause(paused)
-		if paused:
-			$"pause_panel".show() #(not paused)
-		else:
-			$"pause_panel".hide()
-	
+	# map panel
 	if Input.is_action_pressed("open_map"):
 		# pause, as a kindness to the player
 		paused = not paused
@@ -328,6 +320,20 @@ func _input(_event):
 		if get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
 			_on_BackButton_pressed()
 	
+	# pausing/orders
+	if Input.is_action_pressed("ui_cancel"):
+		paused = not paused
+		#print("Pressed pause, paused is " + str(paused))
+		get_tree().set_pause(paused)
+		if paused:
+			$"pause_panel".show() #(not paused)
+		else:
+			$"pause_panel".hide()
+			# switch off orders mode
+			orders = false
+			$"pause_panel/Label".set_text("PAUSED")
+			remove_orders_controls()
+	
 	if Input.is_action_pressed("orders"):
 		if not paused:
 			return
@@ -340,12 +346,12 @@ func _input(_event):
 	
 				# center of the viewport, i.e. half of display/window/size settings
 				# this is where the player ship is, see comment three lines up
-				var cntr = Vector2(1024/2, 300)
-				# ship is roughly 50x x 70y and we need to block clicks
-				var off = Vector2(-35,-25)
-				# test
-				var pos = cntr + off + Vector2(0,0)
-				spawn_orders_control(pos)
+#				var cntr = Vector2(1024/2, 300)
+#				# ship is roughly 50x x 70y and we need to block clicks
+#				var off = Vector2(-35,-25)
+#				# test
+#				var pos = cntr + off + Vector2(0,0)
+#				spawn_orders_control(pos)
 				# AI
 				spawn_AI_orders_controls()
 
