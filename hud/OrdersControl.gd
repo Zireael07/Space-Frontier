@@ -21,7 +21,19 @@ func _ready():
 
 
 func _on_TextureButton_pressed():
-	print("Control pressed")
+	#print("Control pressed")
 	get_node("VBoxContainer").set_position(Vector2(60, 60))
-	#get_node("VBoxContainer").show()
+	get_node("VBoxContainer").show()
 
+
+
+func _on_Button_pressed():
+	if get_node("VBoxContainer/Button").visible:
+		var area = game.player.HUD.ship_to_control[self]
+		print("Issuing order 1 to ship " + area.get_parent().get_name())
+		# actually issue order
+		var brain = area.get_node("brain")
+		brain.target = game.player.get_child(0).get_global_position()
+		brain.set_state(brain.STATE_IDLE)
+		
+	#pass # Replace with function body.

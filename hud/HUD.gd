@@ -10,6 +10,7 @@ var planets = null
 var center = Vector2(450,450)
 # orders mode
 var orders = false
+var ship_to_control = {}
 
 # for orders mode
 onready var orders_control = preload("res://hud/OrdersControl.tscn")
@@ -360,12 +361,15 @@ func _input(_event):
 				$"pause_panel/Label".set_text("PAUSED")
 				remove_orders_controls()
 
-func spawn_orders_control(pos):
+func spawn_orders_control(pos, ship):
 	var clicky = orders_control.instance() #TextureButton.new()
 	clicky.set_position(pos)
 	#clicky.set_normal_texture(load("res://assets/hud/grey_panel.png"))
 	#clicky.set_pause_mode(PAUSE_MODE_PROCESS) # the clou of this whole thing
 	$"pause_panel".add_child(clicky)
+	# map controls to ships
+	ship_to_control[clicky] = ship
+	
 	
 func spawn_AI_orders_controls():
 	# this is where the player ship is, see comment line 337
@@ -375,13 +379,13 @@ func spawn_AI_orders_controls():
 	for f in game.player.get_friendlies_in_range():
 		var rel_pos = f.get_global_position() - player.get_child(0).get_global_position()
 		var pos = cntr + off + rel_pos
-		spawn_orders_control(pos)
+		spawn_orders_control(pos, f)
 
 func remove_orders_controls():
 	for n in get_tree().get_nodes_in_group("orders_control"):
 		#print("Removing..." + n.get_name())
 		n.free()
-	
+	ship_to_control.clear()
 
 # --------------------
 # signals

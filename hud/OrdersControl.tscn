@@ -46,3 +46,4 @@ margin_right = 89.0
 margin_bottom = 20.0
 text = "Test order 1"
 [connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]
