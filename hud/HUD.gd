@@ -341,8 +341,8 @@ func _input(_event):
 				# center of the viewport, i.e. half of display/window/size settings
 				# this is where the player ship is, see comment three lines up
 				var cntr = Vector2(1024/2, 300)
-				# ship is roughly 100x100 and we need to block clicks
-				var off = Vector2(-50,-50)
+				# ship is roughly 50x x 70y and we need to block clicks
+				var off = Vector2(-35,-25)
 				# test
 				var pos = cntr + off + Vector2(0,0)
 				spawn_orders_control(pos)
@@ -364,8 +364,8 @@ func spawn_orders_control(pos):
 func spawn_AI_orders_controls():
 	# this is where the player ship is, see comment line 337
 	var cntr = Vector2(1024/2, 300)
-	# ship is roughly 100x100 and we need to block clicks
-	var off = Vector2(-50,-50)
+	# ship is roughly 50x x 70y and we need to block clicks
+	var off = Vector2(-35,-25)
 	for f in game.player.get_friendlies_in_range():
 		var rel_pos = f.get_global_position() - player.get_child(0).get_global_position()
 		var pos = cntr + off + rel_pos
