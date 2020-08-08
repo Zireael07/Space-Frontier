@@ -219,21 +219,38 @@ func get_friendly_base():
 				#print(b.get_name() + " is enemy")
 				return b
 
+# we need to filter out drones
+func get_friendlies():
+	var nodes = get_tree().get_nodes_in_group("friendly")
+		
+	# more foolproof removing
+	var to_rem = []
+	for n in nodes:
+		if n.is_in_group("drone"):
+			to_rem.append(n)
+			#nodes.remove(nodes.find(n))
+	
+	for r in to_rem:
+		nodes.remove(nodes.find(r))
+		
+	return nodes
+
 func get_enemies():
 	var nodes = []
 
 	if is_in_group("enemy"):
-		nodes = get_tree().get_nodes_in_group("friendly")
-		
-		# more foolproof removing
-		var to_rem = []
-		for n in nodes:
-			if n.is_in_group("drone"):
-				to_rem.append(n)
-				#nodes.remove(nodes.find(n))
-		
-		for r in to_rem:
-			nodes.remove(nodes.find(r))
+		nodes = get_friendlies()
+#		nodes = get_tree().get_nodes_in_group("friendly")
+#
+#		# more foolproof removing
+#		var to_rem = []
+#		for n in nodes:
+#			if n.is_in_group("drone"):
+#				to_rem.append(n)
+#				#nodes.remove(nodes.find(n))
+#
+#		for r in to_rem:
+#			nodes.remove(nodes.find(r))
 		
 		var player = get_tree().get_nodes_in_group("player")[0].get_child(0)
 		if not player.cloaked:
