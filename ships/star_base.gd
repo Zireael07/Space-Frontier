@@ -28,6 +28,10 @@ var shoot_target = null
 var shoot_rel_pos = Vector2()
 var shoot_range = 500
 
+export(int) var kind_id = 0
+
+enum kind { enemy, friendly}
+
 # see asteroid.gd and debris_resource.gd
 enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
 # carbon covers all allotropes of carbon, such as diamonds, graphene, graphite... 
@@ -99,7 +103,9 @@ func _process(delta):
 		shoot_rel_pos = get_global_transform().xform_inv(shoot_target.get_global_position())
 	
 		# visual effect
-		var color = Color(1,0,1)
+		var color = Color(1,0,0)
+		if kind_id == kind.friendly:
+			color = Color(0,0,1)
 		get_child(0).get_material().set_shader_param("flash_color", color)
 	
 		if shoot_rel_pos.length() < shoot_range:
