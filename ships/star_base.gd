@@ -98,6 +98,10 @@ func _process(delta):
 	if shoot_target != null:
 		shoot_rel_pos = get_global_transform().xform_inv(shoot_target.get_global_position())
 	
+		# visual effect
+		var color = Color(1,0,1)
+		get_child(0).get_material().set_shader_param("flash_color", color)
+	
 		if shoot_rel_pos.length() < shoot_range:
 			if gun_timer.get_time_left() == 0:
 				shoot()
@@ -114,6 +118,8 @@ func _process(delta):
 
 			shoot_target = null
 			print("AI lost target")
+			# remove effect
+			get_child(0).get_material().set_shader_param("flash_color", Color(1,1,1))
 			# update target HUD panel if open and we're the target 
 			if game.player.HUD.is_ship_view_open() and game.player.HUD.target == self:
 				game.player.HUD.starbase_update_status(self)

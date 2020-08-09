@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+uniform vec4 flash_color : hint_color;
+
+void fragment() {
+	vec4 col = texture(TEXTURE, UV);
+	
+	if (col.b > 0.8 && col.g > 0.9)
+	{
+		COLOR.rgba = vec4(flash_color.rgb, col.a);
+	}
+	else
+	{
+		COLOR.rgba = col.rgba; //+ vec3(1,0,0);
+	}
+}"
+custom_defines = ""
+
+[resource]
+shader = SubResource( 1 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
