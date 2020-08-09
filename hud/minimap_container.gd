@@ -81,6 +81,19 @@ func _ready():
 			starbases.remove(starbases.find(sb))
 			sb_enemies.append(sb)
 	
+	colonies = get_tree().get_nodes_in_group("colony")
+	
+	var to_rem = []
+	for i in range(colonies.size()):
+		var col = colonies[i]
+		print(col.get_name())
+		# skip colonies on planets
+		if not col.get_child(0).is_floating():
+			to_rem.append(col)
+		
+	for r in to_rem:	
+		colonies.remove(to_rem.find(r))
+	
 	add_system_bodies()
 	
 	# ships/etc.
@@ -118,6 +131,14 @@ func _ready():
 		sb_sprite.type_id = 1
 		sb_enemy_sprites.append(sb_sprite)
 		add_child(sb_sprite)
+	
+	for c in colonies:
+		var col_sprite = TextureRect.new()
+		col_sprite.set_texture(colony_tex)
+		col_sprite.set_scale(Vector2(0.25, 0.25))
+		colony_sprites.append(col_sprite)
+		add_child(col_sprite)
+		colony_map[c] = col_sprite
 	
 	move_player_sprite()
 
@@ -298,6 +319,7 @@ func _on_wormhole_spawned(wormhole):
 	
 	print(wh_arrow.get_name())
 
+# this takes the node that has colony group. i.e. parent of actual colony area
 func _on_colony_picked(colony):
 	print("On colony picked")
 	var col_sprite = TextureRect.new()

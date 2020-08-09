@@ -12,11 +12,9 @@
 position = Vector2( 2014, 676 )
 z_index = 5
 
-[node name="float_colony" parent="." groups=[
-"colony",
-] instance=ExtResource( 4 )]
-position = Vector2( 600, 1250 )
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 7 )]
+
+[node name="float_colony" parent="." instance=ExtResource( 4 )]
+position = Vector2( 600, 1250 )

@@ -587,7 +587,7 @@ func do_colonize(area):
 			# rank up!
 			area.to_reward.rank = area.to_reward.rank + 1
 			
-		# it wants the top node, not the area itself
+		# this signal wants the top node, not the area itself
 		area.emit_signal("colony_colonized", area.get_parent())
 		print("Adding colony to planet")
 		# add colony to planet
