@@ -69,6 +69,8 @@ func _ready():
 	connect("target_killed", self, "_on_target_killed")
 	
 	connect("ship_killed", game.player.HUD, "_on_ship_killed")
+	
+	connect("colony_picked", game.player.HUD, "_on_colony_picked")
 
 	brain = get_node("brain")
 	# register ourselves with brain

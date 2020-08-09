@@ -58,8 +58,6 @@ func _ready():
 	player.connect("planet_landed", self, "_on_planet_landed")
 
 	player.connect("colony_picked", self, "_on_colony_picked")
-	for f in get_tree().get_nodes_in_group("friendly"):
-		f.connect("colony_picked", self, "_on_colony_picked")
 
 #	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
 
