@@ -78,7 +78,13 @@ func _ready():
 	# register brain with move visualizer
 	get_node("vis").source = brain
 	#print(str(brain.ship.get_name()))
-		
+
+func _process(delta):
+	# fix label rotation when orbiting
+	if orbiting:
+		# label rotation
+		$"Label".set_rotation(-get_global_rotation())
+
 #--------------------------------		
 
 func get_colonized_planet():
@@ -354,6 +360,9 @@ func orbit_planet(planet):
 	# we're rotated compared to what look_at uses, so it handily makes the AI face the correct direction...
 	look_at(planet.get_global_position())
 	#vel = brain.set_heading(brain.target).clamped(2)
+	
+	# label rotation
+	$"Label".set_rotation(-get_global_rotation())
 	
 	# task timer allows the AI to deorbit after some time passed
 	task_timer.start()
