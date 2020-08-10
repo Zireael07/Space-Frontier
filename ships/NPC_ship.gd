@@ -27,11 +27,14 @@ export(int) var kind_id = 0
 enum kind { enemy, friendly}
 
 var ship_name = ""
+var labl_loc = Vector2()
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	get_parent().set_z_index(game.SHIP_Z)
+	
+	labl_loc = $"Label".get_position()
 	
 	# slow down AI shield recharge
 	shield_recharge = 2
@@ -84,6 +87,15 @@ func _process(delta):
 	if orbiting:
 		# label rotation
 		$"Label".set_rotation(-get_global_rotation())
+		
+	# get the label to stay in one place from player POV
+	# this is the same as in planet.gd line 386
+	# TODO: is there a better solution (less calls)?
+	var angle = -get_global_rotation() + deg2rad(45) # because the label is located at 45 deg angle...
+	# effectively inverse of atan2()
+	var angle_loc = Vector2(cos(angle), sin(angle))
+	#Controls don't have transforms so we have to manually set position
+	$"Label"._set_position(angle_loc*labl_loc.length())
 
 #--------------------------------		
 
