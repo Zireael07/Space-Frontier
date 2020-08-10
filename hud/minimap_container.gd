@@ -101,7 +101,12 @@ func _ready():
 		var friendly_sprite = TextureRect.new()
 		friendly_sprite.set_texture(friendly)
 		friendly_sprites.append(friendly_sprite)
+		var label = Label.new()
+		label.set_text(f.get_node("Label").get_text())
+		label.set_modulate(Color(0,1,1)) # cyan
+		label.set_position(Vector2(10,10))
 		add_child(friendly_sprite)
+		friendly_sprite.add_child(label)
 	
 	for h in hostiles:
 		var hostile_sprite = TextureRect.new()
@@ -263,7 +268,12 @@ func _on_friendly_ship_spawned(ship):
 	var friendly_sprite = TextureRect.new()
 	friendly_sprite.set_texture(friendly)
 	friendly_sprites.append(friendly_sprite)
+	var label = Label.new()
+	label.set_text(ship.get_node("Label").get_text())
+	label.set_position(Vector2(10,10))
+	label.set_modulate(Color(0,1,1)) # cyan
 	add_child(friendly_sprite)
+	friendly_sprite.add_child(label)
 	friendlies.append(ship)
 	
 func _on_enemy_ship_spawned(ship):
