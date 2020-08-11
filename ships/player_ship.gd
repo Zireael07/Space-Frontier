@@ -573,6 +573,9 @@ func player_heading(target, delta):
 		heading = null
 		# reset cruise
 		cruise = true
+		# disable cruise if too close, to avoid overshooting close targets
+		if rel_pos.length() < 150 and spd > 0.15:
+			cruise = false
 	
 	if a < 0:
 		rot -= rot_speed*delta
@@ -596,6 +599,10 @@ func player_orbit(pl):
 			txt += " Fuel replenished. Press J to request a colony"
 			# fill up the engine/fuel
 			engine = 1000 
+			# restore power
+			power = 100
+			# restore some shields
+			shields = 50
 		
 		emit_signal("officer_message", txt)
 			
@@ -814,7 +821,7 @@ func _on_conquer_pressed(id):
 	conquer_target = id+1 # to avoid problems with state's parameter being 0 (= null)
 
 
-
+# ----------------------------
 func refresh_cargo():
 	if 'storage' in get_parent().get_parent():
 		HUD.update_cargo_listing(cargo, get_parent().get_parent().storage)
