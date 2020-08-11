@@ -31,6 +31,7 @@ var warp_target = null
 var cruise = false
 
 var auto_orbit = false
+var planet_to_orbit = null
 
 var tractored = false
 var refit_target = false
@@ -116,12 +117,19 @@ func _process(delta):
 			rot += rot_speed*delta
 	
 	if Input.is_action_pressed("move_down"):
+		if auto_orbit:
+			auto_orbit = false
+			
 		if cruise:
-			warp_target == null
+			warp_target = null
 			cruise = false
 	
 	# thrust
 	if Input.is_action_pressed("move_up"):
+		if auto_orbit:
+			auto_orbit = false
+		
+		
 		boost = true
 		# QoL feature - launch
 		if landed:
@@ -283,9 +291,20 @@ func _process(delta):
 	
 	# approach to orbit
 	if auto_orbit and warp_target == null:
-		if not heading and cruise:
+		if not heading: #and cruise:
 			var pl = get_closest_planet()
-			if pl[0] > 200 and pl[0] < 300:
+			
+			# bug fix
+			if pl[1] != planet_to_orbit:
+				# abort if we approached something else!
+				# stop warp timer
+				warp_timer.stop()
+				cruise = false
+				heading = null
+				auto_orbit = false
+				planet_to_orbit = null
+			
+			if pl[0] > 200*pl[1].planet_rad_factor and pl[0] < 300*pl[1].planet_rad_factor:
 				# stop warp timer
 				warp_timer.stop()
 				# auto-orbit
@@ -373,7 +392,10 @@ func _input(_event):
 			# approach
 			auto_orbit = true
 			heading = pl[1].get_global_position()
-			cruise = true
+			planet_to_orbit = pl[1] # remember what we want to orbit
+			# if we are too close, don't fire the engines
+			if pl[0] > 150:
+				cruise = true
 			# reuse the 1s warp timer
 			warp_timer.start()
 			
