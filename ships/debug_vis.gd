@@ -70,7 +70,7 @@ func _physics_process(_delta):
 	update()
 
 # -------------------------
-func get_steering_avoid(target, rotat, cap=((0.5*400)/4)):
+func get_steering_avoid(target, _rotat, cap=((0.5*400)/4)):
 	var steering = Vector2(0,0)
 	desired = get_global_position() - target
 	

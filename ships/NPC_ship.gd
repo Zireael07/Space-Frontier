@@ -63,17 +63,18 @@ func _ready():
 		add_to_group("friendly")
 		
 #	print("Groups: " + str(get_groups()))
+	var _conn
 	
-	connect("shield_changed", self, "_on_shield_changed")
-	connect("AI_hit", self, "_on_AI_hit")
+	_conn = connect("shield_changed", self, "_on_shield_changed")
+	_conn = connect("AI_hit", self, "_on_AI_hit")
 	
-	connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
+	_conn = connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
 	
-	connect("target_killed", self, "_on_target_killed")
+	_conn = connect("target_killed", self, "_on_target_killed")
 	
-	connect("ship_killed", game.player.HUD, "_on_ship_killed")
+	_conn = connect("ship_killed", game.player.HUD, "_on_ship_killed")
 	
-	connect("colony_picked", game.player.HUD, "_on_colony_picked")
+	_conn = connect("colony_picked", game.player.HUD, "_on_colony_picked")
 
 	brain = get_node("brain")
 	# register ourselves with brain

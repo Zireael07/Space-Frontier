@@ -24,9 +24,10 @@ signal distress_called
 
 
 func _ready():
+	var _conn = null
 	get_parent().add_to_group("colony")
-	connect("colony_colonized", self, "_on_colony_colonized")
-	connect("distress_called", self, "_on_distress_called")
+	_conn = connect("colony_colonized", self, "_on_colony_colonized")
+	_conn = connect("distress_called", self, "_on_distress_called")
 
 # using this because we don't need physics
 func _process(delta):

@@ -79,7 +79,7 @@ func set_heading(target):
 
 	return steering
 
-func get_steering_avoid(target, rotat, cap=(max_vel/4)):
+func get_steering_avoid(target, _rotat, cap=(max_vel/4)):
 	var steering = Vector2(0,0)
 	desired = get_global_position() - target
 	

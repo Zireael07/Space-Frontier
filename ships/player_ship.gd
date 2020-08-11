@@ -61,7 +61,7 @@ func _ready():
 	#get_parent().set_z_index(game.PLAYER_Z)
 	set_z_index(game.PLAYER_Z)
 	
-	connect("shield_changed", self, "_on_shield_changed")
+	var _conn = connect("shield_changed", self, "_on_shield_changed")
 	
 	# spawn somewhere interesting
 	var planet = get_tree().get_nodes_in_group("planets")[2] #2 Earth

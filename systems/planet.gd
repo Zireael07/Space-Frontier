@@ -55,8 +55,9 @@ var storage = {}
 func _ready():
 	#print("Planet init")
 	set_z_index(game.PLANET_Z)
-	connect("planet_orbited", self, "_on_planet_orbited")
-	connect("planet_deorbited", self, "_on_planet_deorbited")
+	var _conn
+	_conn = connect("planet_orbited", self, "_on_planet_orbited")
+	_conn = connect("planet_deorbited", self, "_on_planet_deorbited")
 	
 	labl_loc = $"Label".get_position()
 	

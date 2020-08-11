@@ -44,7 +44,10 @@ var storage = {}
 func _ready():
 	set_z_index(game.BASE_Z)
 	
-	connect("distress_called", self, "_on_distress_called")
+	var _conn
+	
+	_conn = connect("distress_called", self, "_on_distress_called")
+	_conn = connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
 	#add_to_group("enemy")
 	
 	randomize_storage()
@@ -55,8 +58,7 @@ func _ready():
 	
 	#if is_in_group("enemy"):
 	#	targetables.append(get_tree().get_nodes_in_group("player")[0].get_child(0))
-	
-	connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
+
 
 func randomize_storage():
 	randomize()
