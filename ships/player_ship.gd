@@ -117,6 +117,9 @@ func _process(delta):
 			rot += rot_speed*delta
 	
 	if Input.is_action_pressed("move_down"):
+		if orbiting:
+			deorbit()
+		
 		if auto_orbit:
 			auto_orbit = false
 			
@@ -602,7 +605,8 @@ func player_orbit(pl):
 			# restore power
 			power = 100
 			# restore some shields
-			shields = 50
+			if shields < 50:
+				shields = 50
 		
 		emit_signal("officer_message", txt)
 			
