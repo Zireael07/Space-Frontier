@@ -17,6 +17,7 @@ size_flags_vertical = 0
 script = ExtResource( 2 )
 
 [node name="TextureButton" type="TextureButton" parent="."]
+modulate = Color( 1, 1, 1, 0.117647 )
 margin_right = 40.0
 margin_bottom = 40.0
 rect_scale = Vector2( 0.75, 0.5 )
