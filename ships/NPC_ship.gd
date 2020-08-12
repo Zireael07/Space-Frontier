@@ -515,8 +515,12 @@ func _on_shield_changed(data):
 		effect = true
 	if effect:
 		$"shield_effect".show()
-		$"shield_timer".start()
-	
+		# fix occasional problem
+		if $"shield_timer".is_inside_tree():
+			$"shield_timer".start()
+		else:
+			$"shield_timer".call_deferred("start")
+				
 	# how many enemies around?
 	var enemies = get_enemies_in_range()
 	#print("Enemies around: " + str(enemies.size()))
