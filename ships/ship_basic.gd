@@ -152,6 +152,16 @@ func orbit_planet(planet):
 	orbiting = planet.get_node("orbit_holder")
 			
 	# placement is handled by the planet in the signal
+
+func deorbit_reparent(root, gl):
+	get_parent().get_parent().remove_child(get_parent())
+	root.add_child(get_parent())
+			
+	get_parent().set_global_position(gl)
+	set_position(Vector2(0,0))
+	pos = Vector2(0,0)
+			
+	set_global_rotation(get_global_rotation())
 	
 func deorbit():
 	# paranoia
@@ -171,17 +181,12 @@ func deorbit():
 	#print("Deorbiting, " + str(get_global_position()) + str(get_parent().get_global_position()))
 			
 	# reparent
+	# defer to avoid occasional "can't change state while flushing queries" error
+	
 	var root = get_node("/root/Control")
 	var gl = get_global_position()
-			
-	get_parent().get_parent().remove_child(get_parent())
-	root.add_child(get_parent())
-			
-	get_parent().set_global_position(gl)
-	set_position(Vector2(0,0))
-	pos = Vector2(0,0)
-			
-	set_global_rotation(get_global_rotation())
+	
+	call_deferred("deorbit_reparent", root, gl)
 
 
 func is_overheating():
