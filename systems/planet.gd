@@ -363,6 +363,7 @@ func place(angle,dist):
 #func getDist():
 #	return dist
 
+# --------------------------------
 #	# Called every frame. Delta is time since last frame.
 func _process(delta):
 	# rotate around our axis
@@ -611,7 +612,9 @@ func do_colonize(area):
 
 func _on_planet_orbited(ship):
 	orbiter = ship
-	orbiters.append(orbiter)
+	# avoid double-adding
+	if !orbiters.has(orbiter):
+		orbiters.append(orbiter)
 	print("Planet orbited " + str(get_node("Label").get_text()) + "; orbiter: " + str(orbiter.get_parent().get_name()))
 
 	var rel_pos = get_node("orbit_holder").get_global_transform().xform_inv(orbiter.get_global_position())
