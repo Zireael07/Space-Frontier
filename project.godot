@@ -23,6 +23,10 @@ config/icon="res://icon.png"
 
 game="*res://game.gd"
 
+[debug]
+
+gdscript/warnings/unused_signal=false
+
 [gdnative]
 
 singletons=[  ]
