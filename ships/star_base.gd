@@ -144,7 +144,7 @@ func _process(delta):
 	vel += steer
 
 
-	var a = fix_atan(vel.x,vel.y)
+	var _a = fix_atan(vel.x,vel.y)
 
 #	# effects
 #	if vel.length() > 40:

@@ -270,7 +270,7 @@ func _input(_event):
 		if get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
 			var planet_name = planet_name_from_view()
 			var planet = get_named_planet(planet_name)
-			var planets = get_tree().get_nodes_in_group("planets")
+			#var planets = get_tree().get_nodes_in_group("planets")
 			var id = planets.find(planet)
 			if id == -1:
 #				var moons = get_tree().get_nodes_in_group("moon")
@@ -292,7 +292,7 @@ func _input(_event):
 		if get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
 			var planet_name = planet_name_from_view()
 			var planet = get_named_planet(planet_name)
-			var planets = get_tree().get_nodes_in_group("planets")
+			#var planets = get_tree().get_nodes_in_group("planets")
 			var id = planets.find(planet)
 			if id == -1:
 #				var moons = get_tree().get_nodes_in_group("moon")
@@ -601,10 +601,10 @@ func _on_colony_colonized(colony):
 	# pass to correct node
 	$"Control2/Panel_rightHUD/minimap"._on_colony_colonized(colony)
 	
-func _minimap_update_outline(target):
+func _minimap_update_outline(pl_target):
 	#print("Target to update for: " + str(target.get_name()))
 	# pass to correct node
-	$"Control2/Panel_rightHUD/minimap".update_outline(target)
+	$"Control2/Panel_rightHUD/minimap".update_outline(pl_target)
 
 # those signals fire only for player and are only for the status light
 func _on_target_acquired_by_AI(_AI):
@@ -660,19 +660,19 @@ func _on_ButtonCensus_pressed():
 	var flt2 = "Fleet 2	" + str(game.fleet2[0]) + "		" + str(game.fleet2[1]) + "	" + str(game.fleet2[2])
 	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label2".set_text(flt2)
 
-func display_task(target):
+func display_task(target_AI):
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".show()
-	var task = "Task: " + str(target.brain.tasks[target.brain.curr_state])
-	if target.brain.curr_state == 2:
-		var p = target.brain.get_state_obj().planet_
+	var task = "Task: " + str(target_AI.brain.tasks[target_AI.brain.curr_state])
+	if target_AI.brain.curr_state == 2:
+		var p = target_AI.brain.get_state_obj().planet_
 		task += " " + str(p.get_node("Label").get_text() )
-	if target.brain.curr_state == 5:
-		var id = target.brain.get_state_obj().planet_
+	if target_AI.brain.curr_state == 5:
+		var id = target_AI.brain.get_state_obj().planet_
 		var p = get_tree().get_nodes_in_group("planets")[id-1]
 		task += " " + str(p.get_node("Label").get_text() ) 
-	if target.brain.curr_state == 6:
-		var id = target.brain.get_state_obj().id
-		var moon = target.brain.get_state_obj().moon
+	if target_AI.brain.curr_state == 6:
+		var id = target_AI.brain.get_state_obj().id
+		var moon = target_AI.brain.get_state_obj().moon
 		var p = get_tree().get_nodes_in_group("planets")[id-1]
 		if moon:
 			p = get_tree().get_nodes_in_group("moon")[id-1]
@@ -680,10 +680,10 @@ func display_task(target):
 		task += " " + str(p.get_node("Label").get_text()) 
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(task)
 
-func starbase_update_status(target):
+func starbase_update_status(target_sb):
 	var status = "status: idle"
-	if target.shoot_target != null:
-		status = "status: attacking " + target.shoot_target.get_parent().get_name()
+	if target_sb.shoot_target != null:
+		status = "status: attacking " + target_sb.shoot_target.get_parent().get_name()
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(status)
 
 func _on_ButtonShip_pressed():
@@ -849,7 +849,7 @@ func _on_ButtonView_pressed():
 		var line = cursor.get_position().y + nav_list.get_v_scroll()
 		var select_id = (line - 30) / 15
 		var skips = []
-		var planets = get_tree().get_nodes_in_group("planets")
+		#var planets = get_tree().get_nodes_in_group("planets")
 		for i in range(planets.size()):
 			if planets[i].has_moon():
 				skips.append(i)
@@ -1111,7 +1111,7 @@ func planet_name_from_view():
 func get_named_planet(planet_name):
 	var ret = null
 	# convert planet name to planet node ref
-	var planets = get_tree().get_nodes_in_group("planets")
+	#var planets = get_tree().get_nodes_in_group("planets")
 	for p in planets:
 		if p.has_node("Label"):
 			var nam = p.get_node("Label").get_text()
@@ -1260,9 +1260,9 @@ func _on_ButtonBuy_pressed():
 
 	player.buy_cargo(select_id)	
 
-func get_base_storage(player):
-	if 'storage' in player.get_parent().get_parent():
-		return player.get_parent().get_parent().storage
+func get_base_storage(playr):
+	if 'storage' in playr.get_parent().get_parent():
+		return playr.get_parent().get_parent().storage
 	else:
 		return []
 

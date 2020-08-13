@@ -83,7 +83,7 @@ func _ready():
 	get_node("vis").source = brain
 	#print(str(brain.ship.get_name()))
 
-func _process(delta):
+func _process(_delta):
 	# fix label rotation when orbiting
 	if orbiting:
 		# label rotation

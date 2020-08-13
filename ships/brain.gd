@@ -373,7 +373,7 @@ func _on_task_timer_timeout(timer_count):
 							set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 					
 
-func _on_target_killed(target):
+func _on_target_killed(_target):
 	print("State is: " + str(get_state()))
 	
 	if get_state() == STATE_ATTACK:
@@ -605,7 +605,7 @@ class AttackState:
 		# target is a Node here
 		if is_instance_valid(target):
 			#print("Tg pos: " + str(target.get_global_position()))
-			var rel_pos = ship.get_global_transform().xform_inv(target.get_global_position())
+			var _rel_pos = ship.get_global_transform().xform_inv(target.get_global_position())
 			#print("Rel pos: " + str(rel_pos))
 			var dist = ship.get_global_position().distance_to(target.get_global_position())
 			if dist < 150:

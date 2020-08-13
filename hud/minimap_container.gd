@@ -296,7 +296,7 @@ func _on_starbase_spawned(sb):
 	add_child(starbase_sprite)
 	starbases.append(sb)
 
-func _on_enemy_starbase_spawned(starbase):
+func _on_enemy_starbase_spawned(sb):
 	#print("On enemy starbase spawned")
 	var sb_sprite = TextureRect.new()
 	sb_sprite.set_texture(sb_enemy)
@@ -306,7 +306,7 @@ func _on_enemy_starbase_spawned(starbase):
 	sb_sprite.type_id = 1
 	sb_enemy_sprites.append(sb_sprite)
 	add_child(sb_sprite)
-	sb_enemies.append(starbase)
+	sb_enemies.append(sb)
 
 func _on_wormhole_spawned(wormhole):
 	var wormhole_sprite = TextureRect.new()

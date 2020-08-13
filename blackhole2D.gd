@@ -16,7 +16,7 @@ func _ready():
 #	pass
 
 
-func _on_Area2D_area_entered(area):
+func _on_Area2D_area_entered(_area):
 	if not entered:
 		print("Wormhole entered")
 		entered = true

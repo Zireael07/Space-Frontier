@@ -218,6 +218,6 @@ func _on_distress_called(target):
 	var player = game.player
 	player.emit_signal("officer_message", "Colony is under attack!") # TODO: original game had a press key to respond functionality
 
-func _on_colony_colonized(colony):
+func _on_colony_colonized(_colony):
 	get_node("Label").hide()
 

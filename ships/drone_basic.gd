@@ -36,8 +36,8 @@ func orbit_planet(planet):
 	acc = Vector2(0,0)
 				
 	#var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
-	var rel_pos = planet.get_node("orbit_holder").get_global_transform().xform_inv(get_global_position())
-	var dist = planet.get_global_position().distance_to(get_global_position())
+	var _rel_pos = planet.get_node("orbit_holder").get_global_transform().xform_inv(get_global_position())
+	var _dist = planet.get_global_position().distance_to(get_global_position())
 #	print("Dist: " + str(dist))
 #	print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
 	
@@ -56,7 +56,7 @@ func deorbit():
 	if not orbiting:
 		return 
 		
-	var rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
+	var _rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
 	#print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
 	
 	orbiting.get_parent().emit_signal("planet_deorbited", self)
