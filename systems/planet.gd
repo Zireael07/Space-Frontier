@@ -100,7 +100,7 @@ func setup(angle=0, dis=0, mas=0):
 			mass = game.MOON_MASS #in Earth masses
 	
 	dist = get_position().length()
-	var ls = dist/game.LIGHT_SEC
+	var _ls = dist/game.LIGHT_SEC
 	#print("Dist to parent star: " + str(dist) + " " + str(ls) + " ls, " + str(ls/game.LS_TO_AU) + " AU")
 	
 	# moon fix
@@ -215,7 +215,7 @@ func calculate_temperature(inc_greenhouse=true):
 	
 	
 	var dist_t = self.dist # to avoid overwriting
-	var greenhouse = self.greenhouse # to be able to fake 0 effect if needed
+	var green = self.greenhouse # to be able to fake 0 effect if needed
 	var star = get_parent().get_parent()
 	# if we're a moon, look up the star and take distance of our parent
 	if get_parent().get_parent().is_in_group("planets"):
@@ -236,7 +236,7 @@ func calculate_temperature(inc_greenhouse=true):
 	
 	# http://phl.upr.edu/library/notes/surfacetemperatureofplanets
 	# T = 273*((L(1-a)) / D2*(1-g))
-	var t = star.luminosity*(1-albedo) / (pow(axis,2) * (1-greenhouse))
+	var t = star.luminosity*(1-albedo) / (pow(axis,2) * (1-green))
 	var T = 273 * pow(t, 0.25)
 	return T
 
@@ -245,7 +245,7 @@ func calculate_radius(type="rocky"):
 	randomize()
 	# <= 2 masses of Earth
 	if type == "rocky":
-		var radius = pow(mass, 0.28)
+		radius = pow(mass, 0.28)
 		# fudge
 		var max_dev = radius*0.04 # 4% max spread
 		radius = rand_range(radius-max_dev, radius+max_dev)
@@ -268,18 +268,18 @@ func calculate_radius(type="rocky"):
 		return 1 # dummy
 
 # if we have mass and radius, we get gravity as a bonus
-func calculate_gravity(mass, radius):
+func calculate_gravity(mass, rad):
 	# measured in multiplies of Earth's mass and radius and therefore gravity
 	# g = m/r^2 
-	return mass/pow(radius, 2)
+	return mass/pow(rad, 2)
 
 # d = m/V; V = (4/3) π R3
-func get_density(mass, radius):
-	var vol = (4/3)*PI*pow(radius, 3)
+func get_density(mass, rad):
+	var vol = (4/3)*PI*pow(rad, 3)
 	return mass/vol
 
 # inverse of the above, needed for those small bodies that don't have mass data
-func get_mass(density, radius):
+func get_mass(density, _radius):
 	#var tst = PI*pow(radius,3)
 	#var po = 6.4e-08 # 0.004^3
 	var tst = 2.0096e-07 # hand calculated for above po and radius
@@ -290,9 +290,9 @@ func get_mass(density, radius):
 
 # so many things from mass and radius!
 # sqrt(G * M / r)
-func get_cosmic_vel(mass, radius):
+func get_cosmic_vel(mass, rad):
 	var G = 0.0000000000667
-	var vel = sqrt(G*mass/radius)
+	var vel = sqrt(G*mass/rad)
 	return vel # value relative to the Earth's cosmic vel since mass & radius are expressed as relative
 	
 
@@ -627,7 +627,7 @@ func _on_planet_orbited(ship):
 	#print("Rel pos: " + str(rel_pos))
 	orbiter.set_position(rel_pos)
 	
-	var a = atan2(rel_pos.x, rel_pos.y)
+	var _a = atan2(rel_pos.x, rel_pos.y)
 #	var a = atan2(200,0)
 
 	#print("Initial angle " + str(a))
@@ -772,5 +772,5 @@ func convert_planetnode_to_id():
 	else:
 		id = planets.find(self)
 		
-	print("For " + get_node("Label").get_text() + " ID is " + str(id))
+	#print("For " + get_node("Label").get_text() + " ID is " + str(id))
 	return [id, moon]

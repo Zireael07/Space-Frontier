@@ -37,9 +37,9 @@ func fix_atan(x,y):
 	
 # AI - steering behaviors
 # seek
-func get_steering_seek(target, cap=(max_vel/4)):
+func get_steering_seek(tg, cap=(max_vel/4)):
 	var steering = Vector2(0,0)
-	desired = target - get_global_position()
+	desired = tg - get_global_position()
 	
 	# do nothing if very close to target
 	#if desired.length() < 50:
@@ -51,9 +51,9 @@ func get_steering_seek(target, cap=(max_vel/4)):
 	
 	
 # arrive
-func get_steering_arrive(target):
+func get_steering_arrive(tg):
 	var steering = Vector2(0,0)
-	desired = target - get_global_position()
+	desired = tg - get_global_position()
 	
 	var dist = desired.length()
 	desired = desired.normalized()
@@ -67,9 +67,9 @@ func get_steering_arrive(target):
 	return steering
 	
 
-func set_heading(target):
+func set_heading(tg):
 	var steering = Vector2(0,0)
-	desired = target - get_global_position()
+	desired = tg - get_global_position()
 	
 	# slow down to almost zero
 	desired = desired.normalized() * 0.01
@@ -79,9 +79,9 @@ func set_heading(target):
 
 	return steering
 
-func get_steering_avoid(target, _rotat, cap=(max_vel/4)):
+func get_steering_avoid(tg, _rotat, cap=(max_vel/4)):
 	var steering = Vector2(0,0)
-	desired = get_global_position() - target
+	desired = get_global_position() - tg
 	
 	var dist = desired.length()
 	#desired = Vector2(to_target.x, 0)
