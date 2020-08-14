@@ -102,6 +102,13 @@ func is_in_groups(node, groups):
 	
 	#print("In groups " + str(ret))
 	return ret
+
+func is_on_planet():
+	var ret = false
+	var groups = ["planets", "moon"]
+	if is_in_groups(get_parent().get_parent(), groups):
+		ret = true
+	return ret
 			
 func is_floating():
 	var ret = false

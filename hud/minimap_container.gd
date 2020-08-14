@@ -88,11 +88,11 @@ func _ready():
 		var col = colonies[i]
 		print(col.get_name())
 		# skip colonies on planets
-		if not col.get_child(0).is_floating():
+		if col.get_child(0).is_on_planet():
 			to_rem.append(col)
 		
 	for r in to_rem:	
-		colonies.remove(to_rem.find(r))
+		colonies.remove(colonies.find(r))
 	
 	add_system_bodies()
 	
