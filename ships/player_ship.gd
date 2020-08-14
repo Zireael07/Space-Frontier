@@ -243,6 +243,9 @@ func _process(delta):
 		set_position(pos)
 		
 		if dist < 50 and not docked:
+			# switch off cruise if any
+			cruise = false
+			
 			# reparent			
 			get_parent().get_parent().remove_child(get_parent())
 			# refit target needs to be a node because here
@@ -868,7 +871,7 @@ func sell_cargo(id):
 
 func buy_cargo(id):
 	if not docked:
-		print("We cannot sell if we're not docked")
+		print("We cannot buy if we're not docked")
 		return
 	
 	if not get_parent().get_parent().storage.keys().size() > 0:
