@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://colony.gd" type="Script" id=1]
 [ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ships/ufoBlue.png" type="Texture" id=3]
+[ext_resource path="res://assets/ships/ufo_shade.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 23.0021
@@ -14,6 +15,13 @@ radius = 23.0021
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource( 1 )
 bullet = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="Area2D"]
+visible = false
+modulate = Color( 0.32549, 0.32549, 0.32549, 1 )
+show_behind_parent = true
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 4 )
 
 [node name="blue_colony" type="Sprite" parent="Area2D"]
 scale = Vector2( 0.6, 0.6 )

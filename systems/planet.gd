@@ -64,6 +64,8 @@ func _ready():
 	# if colonized, give some storage
 	if has_colony():
 		randomize_storage()
+		# show colony hub's shadow on planet
+		get_colony().get_child(0).show_shadow()
 	
 	# debug old positions
 #	dist = get_position().length()
@@ -518,7 +520,10 @@ func reparent(area):
 
 func reposition(area):
 	area.get_parent().set_position(Vector2(0,0))
-	area.get_child(0).set_z_index(1)
+	# make them visible
+	area.get_node("blue_colony").set_z_index(1)
+	if area.has_node("Sprite"):
+		area.get_node("Sprite").set_z_index(1)
 
 func _on_Area2D_area_entered(area):
 	if area.get_parent().is_in_group("colony"):
@@ -551,6 +556,7 @@ func _on_Area2D_area_entered(area):
 
 		else:
 			print("Colony is already ours")
+			#pass
 
 # 'gg' stands for gas giant, but also for 'good game' (ironically)
 func oops_gg(area):
@@ -590,7 +596,7 @@ func do_colonize(area):
 			area.to_reward.rank = area.to_reward.rank + 1
 			
 		# this signal wants the top node, not the area itself
-		area.emit_signal("colony_colonized", area.get_parent())
+		area.emit_signal("colony_colonized", area.get_parent(), self)
 		print("Adding colony to planet")
 		# add colony to planet
 		# prevent crash
@@ -659,6 +665,12 @@ func get_hostile_orbiter():
 			break
 	
 	return ret
+
+#  ----------------------
+func get_colony():
+	for c in get_children():
+		if c.is_in_group("colony"):
+			return c
 
 func has_colony():
 	var ret = false

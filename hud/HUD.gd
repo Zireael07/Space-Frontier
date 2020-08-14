@@ -592,7 +592,7 @@ func _on_colony_picked(colony):
 	# pass to correct node
 	$"Control2/Panel_rightHUD/minimap"._on_colony_picked(colony)
 
-func _on_colony_colonized(colony):
+func _on_colony_colonized(colony, planet):
 	print("Colony colonized HUD")
 	
 	# update census

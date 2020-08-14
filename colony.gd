@@ -204,6 +204,9 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		# redraw
 		update()
 
+func show_shadow():
+	get_node("Sprite").show()
+
 func _on_distress_called(target):
 	for n in get_tree().get_nodes_in_group("friendly"):
 		if not n.is_in_group("starbase") and not n.is_in_group("drone"):
@@ -218,6 +221,9 @@ func _on_distress_called(target):
 	var player = game.player
 	player.emit_signal("officer_message", "Colony is under attack!") # TODO: original game had a press key to respond functionality
 
-func _on_colony_colonized(_colony):
+func _on_colony_colonized(_colony, planet):
 	get_node("Label").hide()
+	# don't show hub shadow for very small planets
+	if planet.planet_rad_factor > 0.2 and not planet.is_in_group("aster_named"):
+		show_shadow()
 
