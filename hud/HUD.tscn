@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=1]
 [ext_resource path="res://hud/minimap_container.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://hud/orrery_panel.gd" type="Script" id=11]
 [ext_resource path="res://assets/HUD ship outline.tres" type="Material" id=12]
 [ext_resource path="res://assets/hud/grey_panel.png" type="Texture" id=13]
+[ext_resource path="res://hud/HUD_right.gd" type="Script" id=14]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 13 )
@@ -33,6 +34,10 @@ __meta__ = {
 margin_left = 825.0
 margin_right = 865.0
 margin_bottom = 40.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel_rightHUD" type="Panel" parent="Control2"]
 margin_right = 202.0
