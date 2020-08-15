@@ -642,7 +642,9 @@ func _on_planet_orbited(ship):
 	update()
 
 func remove_orbiter(ship):
-	orbiters.remove(orbiters.find(ship))
+	var sh = orbiters.find(ship)
+	if sh != -1:
+		orbiters.remove(sh)
 
 func _on_planet_deorbited(ship):
 	remove_orbiter(ship)

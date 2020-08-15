@@ -162,6 +162,8 @@ func deorbit_reparent(root, gl):
 			
 	set_global_rotation(get_global_rotation())
 	
+	orbiting = null
+	
 func deorbit():
 	# paranoia
 	if not orbiting:
@@ -171,11 +173,6 @@ func deorbit():
 	#print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
 	
 	orbiting.get_parent().emit_signal("planet_deorbited", self)
-	
-	# remove from list of a planet's orbiters
-	#orbiting.get_parent().remove_orbiter(self)
-	
-	orbiting = null
 			
 	#print("Deorbiting, " + str(get_global_position()) + str(get_parent().get_global_position()))
 			
