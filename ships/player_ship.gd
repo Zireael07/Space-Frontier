@@ -628,7 +628,7 @@ func shoot():
 	gun_timer.start()
 	var b = bullet.instance()
 	bullet_container.add_child(b)
-	b.start_at(get_rotation(), $"muzzle".get_global_position())
+	b.start_at(get_global_rotation(), $"muzzle".get_global_position())
 
 # ---------------------
 func get_closest_planet():
