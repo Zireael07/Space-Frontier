@@ -817,7 +817,11 @@ func _on_recharge_timer_timeout():
 func _on_engine_timer_timeout():
 	# give back a small amount of engine when we're not boosting it
 	if engine < 1000:
-		engine += 1
+		if can_scoop():
+			print("Scooping...")
+			engine += 20
+		else:
+			engine += 5
 		emit_signal("engine_changed", engine)
 
 	

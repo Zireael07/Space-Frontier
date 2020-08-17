@@ -200,7 +200,16 @@ func close_to_sun():
 	if dist < 650* star.star_radius_factor and not warping:
 		return true
 	else:
-		return false		
+		return false
+		
+func can_scoop():
+	var star = get_tree().get_nodes_in_group("star")[0]
+	var dist = star.get_global_position().distance_to(get_global_position())
+	# some margin compared to is_overheating
+	if dist < 750* star.star_radius_factor and not warping:
+		return true
+	else:
+		return false	
 
 # ----------------------	
 func get_friendly_base():
