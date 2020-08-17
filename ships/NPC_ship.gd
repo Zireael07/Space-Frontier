@@ -386,8 +386,8 @@ func deorbit():
 	if not (brain.get_state() in [brain.STATE_ATTACK]):
 		# force change state
 		brain.set_state(brain.STATE_IDLE)
-	
-		_on_task_timer_timeout()
+
+		_timer_stuff(true)
 	
 		# we should fire the task timer timeout, but since it goes to mining 90% of the time, just pretend it does so too...
 #		if get_tree().get_nodes_in_group("asteroid").size() > 3:
@@ -551,14 +551,27 @@ func _on_shield_changed(data):
 func _on_shield_timer_timeout():
 	$"shield_effect".hide()
 
-
-func _on_task_timer_timeout():
+func _timer_stuff(forced=false):
+	if forced:
+		print("Forced timer stuff")
+		# fake for refit on shields hit to work
+		orbiting = false
+		
+	
+	# paranoia
+	if !self.is_inside_tree():
+		call_deferred("_on_task_timer_timeout")
+		return
+	
 	#print("Task timer timeout")
 	timer_count += 1
 	if timer_count == 1:
 		$"task_timer".wait_time = 2.0
 	
 	brain._on_task_timer_timeout(timer_count)
+	
+func _on_task_timer_timeout():
+	_timer_stuff()
 	
 func _on_target_killed(target):
 	print("Killed target " + str(target.get_parent().get_name()))

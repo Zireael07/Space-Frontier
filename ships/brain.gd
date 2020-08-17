@@ -237,7 +237,14 @@ func task_orbiting(timer_count, conquer_tg):
 
 # timer count is governed by ship
 func _on_task_timer_timeout(timer_count):
-	var conquer_tg = get_tree().get_nodes_in_group("player")[0].get_child(0).conquer_target 
+	# paranoia
+	var tree = null
+	if !self.is_inside_tree():
+		tree = ship.get_tree()
+	else: 
+		tree = get_tree()
+	
+	var conquer_tg = tree.get_nodes_in_group("player")[0].get_child(0).conquer_target 
 	if ship.orbiting:
 		task_orbiting(timer_count, conquer_tg)
 
