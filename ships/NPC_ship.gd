@@ -75,6 +75,10 @@ func _ready():
 	_conn = connect("ship_killed", game.player.HUD, "_on_ship_killed")
 	
 	_conn = connect("colony_picked", game.player.HUD, "_on_colony_picked")
+	
+	# targeting signals (for status light)
+	_conn = connect("target_acquired_AI", game.player.HUD, "_on_target_acquired_by_AI")
+	_conn = connect("target_lost_AI", game.player.HUD, "_on_target_lost_by_AI")
 
 	brain = get_node("brain")
 	# register ourselves with brain

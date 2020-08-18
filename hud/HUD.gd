@@ -23,19 +23,6 @@ func _ready():
 	planets = get_tree().get_nodes_in_group("planets")
 
 	# connect the signals
-
-	# targeting signals
-	for e in get_tree().get_nodes_in_group("enemy"):
-		#e.connect("AI_targeted", self, "_on_AI_targeted")
-
-		#if "target_acquired_AI" in e.get_signal_list():
-		for s in e.get_signal_list():
-			if s.name == "target_acquired_AI":
-				print("Connecting target acquired for " + str(e.get_parent().get_name()))
-				e.connect("target_acquired_AI", self, "_on_target_acquired_by_AI")
-				e.connect("target_lost_AI", self, "_on_target_lost_by_AI")
-
-
 	for p in planets:
 		p.connect("planet_targeted", self, "_on_planet_targeted")
 		p.connect("planet_colonized", self, "_on_planet_colonized")

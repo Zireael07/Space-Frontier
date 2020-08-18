@@ -59,7 +59,7 @@ func _on_bullet_area_entered( area ):
 					get_parent().get_parent().emit_signal("target_killed", area)
 			
 			# update census
-			if area.has_user_signal("ship_killed"):
+			if area.has_signal("ship_killed"):
 				area.emit_signal("ship_killed", area)
 	
 			# explosion
