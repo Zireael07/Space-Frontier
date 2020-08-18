@@ -58,7 +58,18 @@ func _on_bullet_area_entered( area ):
 		if sb:
 			area.emit_signal("distress_called", get_parent().get_parent())
 		
+			# explosion hint when starbase is hit
+			if "explosion" in area:
+				var expl = area.explosion.instance()
+				#print(get_parent().get_parent().get_parent().get_name())
+				get_parent().get_parent().get_parent().add_child(expl)
+				# A->B = B-A
+				var h_pos = pos+((get_global_position()-pos).clamped(50))
+				expl.set_global_position(h_pos) # our position, not base's
+				expl.set_scale(Vector2(0.5,0.5))
+				expl.play()
 		
+		# shields dropped
 		if area.shields <= 0:
 			# status light update
 			if 'targeted_by' in get_parent().get_parent():
