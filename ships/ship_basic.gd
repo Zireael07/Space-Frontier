@@ -296,7 +296,8 @@ func get_closest_friendly():
 	if is_in_group("enemy"):
 		nodes = get_tree().get_nodes_in_group("enemy")
 	else:	
-		nodes = get_tree().get_nodes_in_group("friendly")
+		#nodes = get_tree().get_nodes_in_group("friendly")
+		nodes = get_friendlies()
 	
 	var dists = []
 	var targs = []
