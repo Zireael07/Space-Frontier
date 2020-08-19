@@ -440,6 +440,10 @@ func set_state(new_state, param=null):
 	
 	emit_signal("state_changed", self)
 	
+	# update target HUD panel if open and we're the target 
+	if game.player.HUD.is_ship_view_open() and game.player.HUD.target == self.ship:
+		game.player.HUD.display_task(self.ship)
+	
 	#print(get_name() + " setting state to " + str(new_state))
 
 func get_state():
@@ -606,7 +610,7 @@ class AttackState:
 			print("No target?!")
 			# this way, we also pass the parameters
 			ship.set_state(ship.prev_state[0], ship.prev_state[1])
-			print("Set state to: " + str(ship.get_state()))
+			#print("Set state to: " + str(ship.get_state()))
 			return
 		
 		# target is a Node here
