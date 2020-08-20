@@ -187,16 +187,8 @@ func clear_planet_listing():
 			continue # skip headers
 		nav_list.get_child(i).queue_free()
 
-#----------------------------------
-func _process(_delta):
-	# show player speed
-	if player != null and player.is_inside_tree():
-		var format = "%0.2f" % player.spd
-		get_node("Control/Panel/Label").set_text(format + " c")
-		
-		get_node("Control/Panel/Label_rank").set_text(game.ranks.keys()[player.rank])
 
-	# move direction labels to proper places
+func handle_direction_labels():
 	for i in range(planets.size()):
 		var planet = planets[i]
 		# paranoia
@@ -231,7 +223,17 @@ func _process(_delta):
 		else:
 			dir_labels[i].hide()
 
+#----------------------------------
+func _process(_delta):
+	# show player speed
+	if player != null and player.is_inside_tree():
+		var format = "%0.2f" % player.spd
+		get_node("Control/Panel/Label").set_text(format + " c")
+		
+		get_node("Control/Panel/Label_rank").set_text(game.ranks.keys()[player.rank])
 
+	# move direction labels to proper places
+	handle_direction_labels()
 
 func _input(_event):
 	# map panel
