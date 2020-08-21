@@ -45,6 +45,12 @@ __meta__ = {
 [node name="Button" type="Button" parent="VBoxContainer"]
 margin_right = 89.0
 margin_bottom = 20.0
-text = "Test order 1"
+text = "Go to me"
+
+[node name="Button2" type="Button" parent="VBoxContainer"]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Attack"
 [connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="_on_Button2_pressed"]
