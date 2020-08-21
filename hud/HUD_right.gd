@@ -49,8 +49,48 @@ func _onButtonCensus_pressed():
 	var flt2 = "Fleet 2	" + str(game.fleet2[0]) + "		" + str(game.fleet2[1]) + "	" + str(game.fleet2[2])
 	$"Panel_rightHUD/PanelInfo/CensusInfo/Label2".set_text(flt2)
 	
-#func _on_ButtonShip_pressed():
+func _onButtonShip_pressed(target):
+	if target != null and (target.is_in_group("friendly") or target.is_in_group("enemy")):
+		# correctly name starbases
+		if target.is_in_group("starbase"):
+			$"Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Starbase")
+			$"Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text("REAR ADM.")
+			
+			$"Panel_rightHUD/PanelInfo/ShipInfo/Task".show()
+			# stayed in HUD.gd because called from starbase script
+			get_parent().starbase_update_status(target)
 
+		else:
+			$"Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
+		
+			$"Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text(game.ranks.keys()[target.rank])
+			# stayed in HUD.gd because called from brain.gd
+			get_parent().display_task(target)
+		
+		# no modules for AI yet
+		$"Panel_rightHUD/PanelInfo/ShipInfo/Power".hide()
+		$"Panel_rightHUD/PanelInfo/ShipInfo/Engine".hide()
+		$"Panel_rightHUD/PanelInfo/ShipInfo/Shields".hide()
+		
+	# no target, show player's own data	
+	else:
+		# get the correct data
+		$"Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
+		# want our own ship's data
+		$"Panel_rightHUD/PanelInfo/ShipInfo/Power".show()
+		$"Panel_rightHUD/PanelInfo/ShipInfo/Power".set_text("Power: " + str(player.power_level))
+		$"Panel_rightHUD/PanelInfo/ShipInfo/Engine".show()
+		$"Panel_rightHUD/PanelInfo/ShipInfo/Engine".set_text("Engine: " + str(player.engine_level))
+		$"Panel_rightHUD/PanelInfo/ShipInfo/Shields".show()
+		$"Panel_rightHUD/PanelInfo/ShipInfo/Shields".set_text("Shields: " + str(player.shield_level))
+	
+	# show ship panel
+	$"Panel_rightHUD/PanelInfo/CensusInfo".hide()
+	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
+	$"Panel_rightHUD/PanelInfo/RefitInfo".hide()
+	$"Panel_rightHUD/PanelInfo/CargoInfo".hide()
+	$"Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Panel_rightHUD/PanelInfo/ShipInfo".show()
 
 func switch_to_refit():
 	# get the correct data

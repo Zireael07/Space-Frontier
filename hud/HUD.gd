@@ -618,6 +618,7 @@ func _on_ButtonPlanet_pressed():
 func _on_ButtonCensus_pressed():
 	get_node("Control2")._onButtonCensus_pressed()
 
+# those two are called from starbase.gd and brain.gd, not just HUD
 func display_task(target_AI):
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".show()
 	var task = "Task: " + str(target_AI.brain.tasks[target_AI.brain.curr_state])
@@ -645,47 +646,8 @@ func starbase_update_status(target_sb):
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".set_text(status)
 
 func _on_ButtonShip_pressed():
-	#get_node("Control2")._onButtonShip_pressed()
-	if target != null and (target.is_in_group("friendly") or target.is_in_group("enemy")):
-		# correctly name starbases
-		if target.is_in_group("starbase"):
-			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Starbase")
-			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text("REAR ADM.")
-			
-			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Task".show()
-			starbase_update_status(target)
-
-		else:
-			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
-		
-			$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text(game.ranks.keys()[target.rank])
-		
-			display_task(target)
-		
-		# no modules for AI yet
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".hide()
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".hide()
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".hide()
-		
-		
-	else:
-		# get the correct data
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
-		# for now, assume we want our own ship's data
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".show()
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Power".set_text("Power: " + str(player.power_level))
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".show()
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".set_text("Engine: " + str(player.engine_level))
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".show()
-		$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Shields".set_text("Shields: " + str(player.shield_level))
+	get_node("Control2")._onButtonShip_pressed(target)
 	
-	# show ship panel
-	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo".hide()
-	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
-	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
-	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
-	$"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".hide()
-	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".show()
 
 func is_ship_view_open():
 	return $"Control2/Panel_rightHUD/PanelInfo/ShipInfo".is_visible()
