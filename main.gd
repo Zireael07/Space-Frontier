@@ -7,6 +7,7 @@ var drone = preload("res://ships//friendly_drone.tscn")
 
 var enemy = preload("res://ships/enemy_ship.tscn")
 var enemy_starbase = preload("res://ships/enemy_starbase.tscn")
+var pirate_starbase = preload("res://ships/pirate_starbase.tscn")
 
 var asteroid_processor = preload("res://ships/asteroid_processor.tscn")
 
@@ -71,6 +72,7 @@ func _ready():
 	spawn_wormhole(p_ind, 11)
 	
 	spawn_asteroid_processor(p_ind, system)
+	spawn_pirate_base(p_ind, system)
 	
 	# update census
 	var flt1 = "Fleet 1	" + str(game.fleet1[0]) + "		" + str(game.fleet1[1]) + "	" + str(game.fleet1[2])
@@ -240,6 +242,27 @@ func spawn_asteroid_processor(p_ind, system):
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_starbase_spawned(ap.get_child(0))
 
+func spawn_pirate_base(p_ind, system):
+	if system != "Sol":
+		return
+		
+	var p = get_tree().get_nodes_in_group("aster_belt")[0]
+	
+	var ap = pirate_starbase.instance()
+	# random factor
+	randomize()
+	var offset = Vector2(rand_range(800, 1600), rand_range(200, 400))
+	# asteroid belt's position is 0,0 so we have to add radius
+	ap.set_global_position(p.get_global_position()+Vector2(0,p.radius*game.AU) + offset)
+	
+	ap.set_name("pirate_base")
+	get_child(3).add_child(ap)
+	get_child(3).move_child(ap, p_ind+1)
+	
+	# give minimap icon
+	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	mmap._on_starbase_spawned(ap.get_child(0))
+
 func spawn_wormhole(p_ind, planet_id):
 	var wh = wormhole.instance()
 	
@@ -298,6 +321,19 @@ func update_HUD():
 func change_system(system="proxima"):
 	# despawn current system
 	get_child(2).queue_free()
+	
+	# despawn all ships and starbases
+	var sb = get_tree().get_nodes_in_group("starbase")
+	for s in sb:
+		s.get_parent().queue_free()
+
+	var f = get_tree().get_nodes_in_group("friendly")
+	for s in f:
+		s.get_parent().queue_free()
+
+	var e = get_tree().get_nodes_in_group("enemy")
+	for s in e:
+		s.get_parent().queue_free()
 	
 	# clean minimap
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]

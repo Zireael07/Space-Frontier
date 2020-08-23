@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://ships/star_base.gd" type="Script" id=1]
+[ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=2]
+[ext_resource path="res://bullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/ships/spaceStation_005.png" type="Texture" id=4]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+uniform vec4 flash_color : hint_color;
+
+void fragment() {
+	vec4 col = texture(TEXTURE, UV);
+	
+	if (col.b > 0.8 && col.g > 0.9)
+	{
+		COLOR.rgba = vec4(flash_color.rgb, col.a);
+	}
+	else
+	{
+		COLOR.rgba = col.rgba; //+ vec3(1,0,0);
+	}
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 47.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Area2D_starbase" type="Area2D" parent="." groups=[
+"starbase",
+]]
+position = Vector2( 0, 1 )
+script = ExtResource( 1 )
+bullet = ExtResource( 3 )
+kind_id = 1
+
+[node name="star_base" type="Sprite" parent="Area2D_starbase"]
+material = SubResource( 2 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_starbase"]
+shape = SubResource( 3 )
+
+[node name="bullet_container" type="Node" parent="Area2D_starbase"]
+
+[node name="muzzle" type="Position2D" parent="Area2D_starbase"]
+
+[node name="gun_timer" type="Timer" parent="Area2D_starbase"]
+wait_time = 0.5
+one_shot = true
+
+[node name="vis" type="Node2D" parent="Area2D_starbase"]
+script = ExtResource( 2 )
+
+[node name="produce_timer" type="Timer" parent="Area2D_starbase"]
+wait_time = 5.0
+autostart = true
+[connection signal="input_event" from="Area2D_starbase" to="Area2D_starbase" method="_on_Area2D_input_event"]
+[connection signal="timeout" from="Area2D_starbase/produce_timer" to="Area2D_starbase" method="_on_produce_timer_timeout"]
