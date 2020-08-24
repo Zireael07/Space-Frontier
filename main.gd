@@ -261,7 +261,7 @@ func spawn_pirate_base(p_ind, system):
 	
 	# give minimap icon
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
-	mmap._on_starbase_spawned(ap.get_child(0))
+	mmap._on_pirate_starbase_spawned(ap.get_child(0))
 
 func spawn_wormhole(p_ind, planet_id):
 	var wh = wormhole.instance()

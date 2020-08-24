@@ -14,6 +14,7 @@ onready var colony_tex = preload("res://assets/hud/blue_button06.png")
 
 onready var starbase = preload("res://assets/hud/blue_boxTick.png")
 onready var sb_enemy = preload("res://assets/hud/red_boxTick.png")
+onready var sb_pirate = preload("res://assets/hud/green_boxTick.png")
 
 
 var stars
@@ -25,6 +26,7 @@ var friendlies
 var hostiles
 var starbases
 var sb_enemies = []
+var sb_pirates = []
 
 var colony_map = {}
 var colonies = []
@@ -38,6 +40,7 @@ var friendly_sprites = []
 var hostile_sprites = []
 var starbase_sprites = []
 var sb_enemy_sprites = []
+var sb_pirate_sprites = []
 var colony_sprites = []
 
 # direction arrows
@@ -308,6 +311,18 @@ func _on_enemy_starbase_spawned(sb):
 	add_child(sb_sprite)
 	sb_enemies.append(sb)
 
+func _on_pirate_starbase_spawned(sb):
+	#print("On enemy starbase spawned")
+	var sb_sprite = TextureRect.new()
+	sb_sprite.set_texture(sb_pirate)
+	sb_sprite.set_scale(Vector2(0.5, 0.5))
+	# enable red outlines
+	sb_sprite.set_script(sprite_script)
+	sb_sprite.type_id = 1
+	sb_pirate_sprites.append(sb_sprite)
+	add_child(sb_sprite)
+	sb_pirates.append(sb)
+
 func _on_wormhole_spawned(wormhole):
 	var wormhole_sprite = TextureRect.new()
 	wormhole_sprite.set_texture(planet)
@@ -463,6 +478,19 @@ func _process(_delta):
 			remove_child(sb_enemy_sprites[i])
 			sb_enemies.remove(i)
 			sb_enemy_sprites.remove(i)
+	
+	for sb in sb_pirates:
+		var i = sb_pirates.find(sb)
+		if is_instance_valid(sb):
+			# the minimap doesn't rotate
+			var rel_loc = sb_pirates[i].get_global_position() - player.get_child(0).get_global_position()
+			sb_pirate_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))			
+		else:
+			# remove all references to killed starbase
+			remove_child(sb_pirate_sprites[i])
+			sb_pirates.remove(i)
+			sb_pirate_sprites.remove(i)
+	
 	
 	# draw colonies before ships
 	for c in colonies:
