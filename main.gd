@@ -8,6 +8,7 @@ var drone = preload("res://ships//friendly_drone.tscn")
 var enemy = preload("res://ships/enemy_ship.tscn")
 var enemy_starbase = preload("res://ships/enemy_starbase.tscn")
 var pirate_starbase = preload("res://ships/pirate_starbase.tscn")
+var pirate_ship = preload("res://ships/pirate_ship.tscn")
 
 var asteroid_processor = preload("res://ships/asteroid_processor.tscn")
 
@@ -72,7 +73,9 @@ func _ready():
 	spawn_wormhole(p_ind, 11)
 	
 	spawn_asteroid_processor(p_ind, system)
-	spawn_pirate_base(p_ind, system)
+	var pirate = spawn_pirate_base(p_ind, system)
+	for i in range(3):
+		spawn_pirate(pirate, p_ind)
 	
 	# update census
 	var flt1 = "Fleet 1	" + str(game.fleet1[0]) + "		" + str(game.fleet1[1]) + "	" + str(game.fleet1[2])
@@ -253,7 +256,8 @@ func spawn_pirate_base(p_ind, system):
 	randomize()
 	var offset = Vector2(rand_range(800, 1600), rand_range(200, 400))
 	# asteroid belt's position is 0,0 so we have to add radius
-	ap.set_global_position(p.get_global_position()+Vector2(0,p.radius*game.AU) + offset)
+	var pos = p.get_global_position()+Vector2(0,p.radius*game.AU) + offset
+	ap.set_global_position(pos)
 	
 	ap.set_name("pirate_base")
 	get_child(3).add_child(ap)
@@ -262,6 +266,24 @@ func spawn_pirate_base(p_ind, system):
 	# give minimap icon
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_pirate_starbase_spawned(ap.get_child(0))
+	
+	return pos
+
+func spawn_pirate(pos, p_ind):
+	var sp = pirate_ship.instance()
+	# random factor
+	randomize()
+	var offset = Vector2(rand_range(50, 100), rand_range(50, 100))
+	sp.set_global_position(pos + offset)
+	print("Spawning pirate @ : " + str(pos + offset))
+	sp.get_child(0).set_position(Vector2(0,0))
+	sp.set_name("pirate") #+str(i))
+	get_child(3).add_child(sp)
+	get_child(3).move_child(sp, p_ind+1)
+	
+	# give minimap icon
+	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	mmap._on_enemy_ship_spawned(sp.get_child(0))
 
 func spawn_wormhole(p_ind, planet_id):
 	var wh = wormhole.instance()
