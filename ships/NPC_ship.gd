@@ -24,7 +24,7 @@ signal ship_killed
 
 export(int) var kind_id = 0
 
-enum kind { enemy, friendly}
+enum kind { enemy, friendly, pirate }
 
 var ship_name = ""
 var labl_loc = Vector2()
@@ -45,13 +45,17 @@ func _ready():
 	var time = randf()
 	$"task_timer".start(2.0+time)
 	
-	if kind_id == kind.enemy:
+	# enemies and pirates share name lists
+	if kind_id == kind.enemy or kind_id == kind.pirate:
 		var id = randi() % game.enemy_names.size() # return between 0 and size -1
 		ship_name = game.enemy_names[id]
 		$"Label".set_text(ship_name)
 		# tint red
 		$"Label".set_self_modulate(Color(1, 0, 0))
+	if kind_id == kind.enemy:
 		add_to_group("enemy")
+	elif kind_id == kind.pirate:
+		add_to_group("pirate")
 	elif kind_id == kind.friendly and has_node("Label"):
 		var id = randi() % game.friendly_names.size() # return between 0 and size-1
 		ship_name = game.friendly_names[id]

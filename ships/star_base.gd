@@ -30,7 +30,7 @@ var shoot_range = 500
 
 export(int) var kind_id = 0
 
-enum kind { enemy, friendly}
+enum kind { enemy, friendly, pirate }
 
 # see asteroid.gd and debris_resource.gd
 enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
@@ -73,6 +73,8 @@ func _process(delta):
 	#print("Target: " + str(target))
 	# select target
 	targetables = get_enemies()
+	if kind_id == kind.pirate:
+		targetables = []
 	
 	# one target case (this avoids the sort by distance)
 	if targetables.size() > 0 and targetables.size() < 2:
@@ -108,7 +110,10 @@ func _process(delta):
 		var color = Color(1,0,0)
 		if kind_id == kind.friendly:
 			color = Color(0,0,1)
-		get_child(0).get_material().set_shader_param("flash_color", color)
+			
+		# some starbases don't have material
+		if get_child(0).get_material() != null and get_child(0).get_material().get_shader().has_param("flash_color"):
+			get_child(0).get_material().set_shader_param("flash_color", color)
 	
 		if shoot_rel_pos.length() < shoot_range:
 			if gun_timer.get_time_left() == 0:

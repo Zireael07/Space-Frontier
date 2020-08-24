@@ -228,6 +228,10 @@ func get_friendly_base():
 			if b.is_in_group("enemy"):
 				#print(b.get_name() + " is enemy")
 				return b
+	elif is_in_group("pirate"):
+		for b in bases:
+			if b.is_in_group("pirate"):
+				return b
 
 # we need to filter out drones
 func get_friendlies():

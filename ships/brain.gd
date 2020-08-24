@@ -43,9 +43,13 @@ func select_initial_target():
 		set_state(STATE_ORBIT, ship.get_colonized_planet())
 	else:
 		if get_tree().get_nodes_in_group("asteroid").size() > 3:
-			if ship.get_colonized_planet() != null:
+			if ship.get_colonized_planet() != null and ship.kind_id != ship.kind.pirate:
 				set_state(STATE_ORBIT, ship.get_colonized_planet())
 				print("Set orbit state for " + ship.get_parent().get_name())
+			elif ship.kind_id == ship.kind.pirate:
+				var base = ship.get_friendly_base()
+				target = base.get_global_position() + Vector2(100,100)
+				set_state(STATE_IDLE)
 			else:
 				target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 				set_state(STATE_IDLE)
@@ -53,9 +57,13 @@ func select_initial_target():
 			if ship.kind_id == ship.kind.friendly:
 				#target = ship.get_colonized_planet().get_global_position()
 				set_state(STATE_ORBIT, ship.get_colonized_planet())
-			else:
+			elif ship.kind_id == ship.kind.enemy:
 				target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
 				set_state(STATE_IDLE)
+			elif ship.kind_id == ship.kind.pirate:
+				target = ship.ship.get_friendly_base().get_global_position() + Vector2(100,100)
+				set_state(STATE_IDLE)
+				
 
 
 func move_generic(delta):
@@ -371,7 +379,7 @@ func _on_task_timer_timeout(timer_count):
 						#print("Prev state params: " + str(prev_state[1]))
 						set_state(prev_state[0], prev_state[1])
 				# if task timeout happened and we're still idling, quit it
-				if timer_count > 3:
+				if timer_count > 3 and not ship.is_in_group("pirate"):
 					# target NOT a floating colony
 					if not ship.is_target_floating_colony(target):
 						# if we're on top of our target

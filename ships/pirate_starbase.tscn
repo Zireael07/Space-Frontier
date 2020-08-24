@@ -32,35 +32,36 @@ radius = 47.0
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Area2D_starbase" type="Area2D" parent="." groups=[
+[node name="Area2D_starbase_pirate" type="Area2D" parent="." groups=[
+"pirate",
 "starbase",
 ]]
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
 bullet = ExtResource( 3 )
-kind_id = 1
+kind_id = 2
 
-[node name="star_base" type="Sprite" parent="Area2D_starbase"]
+[node name="star_base" type="Sprite" parent="Area2D_starbase_pirate"]
 material = SubResource( 2 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_starbase"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_starbase_pirate"]
 shape = SubResource( 3 )
 
-[node name="bullet_container" type="Node" parent="Area2D_starbase"]
+[node name="bullet_container" type="Node" parent="Area2D_starbase_pirate"]
 
-[node name="muzzle" type="Position2D" parent="Area2D_starbase"]
+[node name="muzzle" type="Position2D" parent="Area2D_starbase_pirate"]
 
-[node name="gun_timer" type="Timer" parent="Area2D_starbase"]
+[node name="gun_timer" type="Timer" parent="Area2D_starbase_pirate"]
 wait_time = 0.5
 one_shot = true
 
-[node name="vis" type="Node2D" parent="Area2D_starbase"]
+[node name="vis" type="Node2D" parent="Area2D_starbase_pirate"]
 script = ExtResource( 2 )
 
-[node name="produce_timer" type="Timer" parent="Area2D_starbase"]
+[node name="produce_timer" type="Timer" parent="Area2D_starbase_pirate"]
 wait_time = 5.0
 autostart = true
-[connection signal="input_event" from="Area2D_starbase" to="Area2D_starbase" method="_on_Area2D_input_event"]
-[connection signal="timeout" from="Area2D_starbase/produce_timer" to="Area2D_starbase" method="_on_produce_timer_timeout"]
+[connection signal="input_event" from="Area2D_starbase_pirate" to="Area2D_starbase_pirate" method="_on_Area2D_input_event"]
+[connection signal="timeout" from="Area2D_starbase_pirate/produce_timer" to="Area2D_starbase_pirate" method="_on_produce_timer_timeout"]
