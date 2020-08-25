@@ -9,6 +9,7 @@ onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
 
 onready var friendly = preload("res://assets/hud/arrow.png")
 onready var hostile = preload("res://assets/hud/red_arrow.png")
+onready var pirate = preload("res://assets/hud/green_arrow.png")
 
 onready var colony_tex = preload("res://assets/hud/blue_button06.png")
 
@@ -24,6 +25,7 @@ var wormholes
 
 var friendlies
 var hostiles
+var pirates = []
 var starbases
 var sb_enemies = []
 var sb_pirates = []
@@ -38,6 +40,7 @@ var wormhole_sprites = []
 
 var friendly_sprites = []
 var hostile_sprites = []
+var pirate_sprites = []
 var starbase_sprites = []
 var sb_enemy_sprites = []
 var sb_pirate_sprites = []
@@ -290,6 +293,17 @@ func _on_enemy_ship_spawned(ship):
 	add_child(enemy_sprite)
 	hostiles.append(ship)
 
+func _on_pirate_ship_spawned(ship):
+	#print("On enemy ship spawned")
+	var pirate_sprite = TextureRect.new()
+	pirate_sprite.set_texture(pirate)
+	# enable red outlines
+	pirate_sprite.set_script(sprite_script)
+	pirate_sprite.type_id = 0
+	pirate_sprites.append(pirate_sprite)
+	add_child(pirate_sprite)
+	pirates.append(ship)
+
 func _on_starbase_spawned(sb):
 	print("On starbase spawned")
 	var starbase_sprite = TextureRect.new()
@@ -532,6 +546,19 @@ func _process(_delta):
 			remove_child(hostile_sprites[i])
 			hostiles.remove(i)
 			hostile_sprites.remove(i)
+
+	for p in pirates:
+		var i = pirates.find(p)
+		if is_instance_valid(p):
+			# the minimap doesn't rotate
+			var rel_loc = p.get_global_position() - player.get_child(0).get_global_position()
+			pirate_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+		else:
+			#print("Removing i: " + str(i))
+			# remove all references to the killed ship and its minimap icon
+			remove_child(pirate_sprites[i])
+			pirates.remove(i)
+			pirate_sprites.remove(i)
 
 # called when leaving a system
 func cleanup():

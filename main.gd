@@ -283,7 +283,7 @@ func spawn_pirate(pos, p_ind):
 	
 	# give minimap icon
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
-	mmap._on_enemy_ship_spawned(sp.get_child(0))
+	mmap._on_pirate_ship_spawned(sp.get_child(0))
 
 func spawn_wormhole(p_ind, planet_id):
 	var wh = wormhole.instance()
