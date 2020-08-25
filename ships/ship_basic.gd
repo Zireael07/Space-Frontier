@@ -211,27 +211,73 @@ func can_scoop():
 	else:
 		return false	
 
-# ----------------------	
-func get_friendly_base():
+# ----------------------
+func get_friendly_bases():
 	var bases = get_tree().get_nodes_in_group("starbase")
 	
-	if is_in_group("friendly") or get_parent().is_in_group("player"):	
-	#	print(str(bases))
+	var friendly_bases = []
+	if is_in_group("friendly") or get_parent().is_in_group("player"):
 		for b in bases:
-			#print(b.get_name())
-			if not b.is_in_group("enemy"):
-				#print(b.get_name() + " is not enemy")
-				return b
+			if not b.is_in_group("enemy") and not b.is_in_group("pirate"):
+				friendly_bases.append(b)
 	elif is_in_group("enemy"):
 		for b in bases:
 			#print(b.get_name())
 			if b.is_in_group("enemy"):
 				#print(b.get_name() + " is enemy")
-				return b
+				friendly_bases.append(b)
 	elif is_in_group("pirate"):
 		for b in bases:
 			if b.is_in_group("pirate"):
-				return b
+				friendly_bases.append(b)
+
+	return friendly_bases
+	
+func get_friendly_base():
+	var bases = get_tree().get_nodes_in_group("starbase")
+	
+	var friendly_bases = get_friendly_bases()
+	#print("Friendly bases: ", friendly_bases)
+	
+	if friendly_bases.size() < 2:
+		return friendly_bases[0]
+	else:
+		# sort by dist
+		var dists = []
+		var targs = []
+	
+		for t in friendly_bases:
+			var dist = t.get_global_position().distance_to(get_global_position())
+			dists.append(dist)
+			targs.append([dist, t])
+	
+		dists.sort()
+		#print("Dists sorted: " + str(dists))
+		#print("Targets: " + str(targs))
+		
+		for t in targs:
+			if t[0] == dists[0]:
+				print("Target is : " + t[1].get_parent().get_name())
+				
+				return t[1]
+	
+#	if is_in_group("friendly") or get_parent().is_in_group("player"):	
+#	#	print(str(bases))
+#		for b in bases:
+#			#print(b.get_name())
+#			if not b.is_in_group("enemy"):
+#				#print(b.get_name() + " is not enemy")
+#				return b
+#	elif is_in_group("enemy"):
+#		for b in bases:
+#			#print(b.get_name())
+#			if b.is_in_group("enemy"):
+#				#print(b.get_name() + " is enemy")
+#				return b
+#	elif is_in_group("pirate"):
+#		for b in bases:
+#			if b.is_in_group("pirate"):
+#				return b
 
 # we need to filter out drones
 func get_friendlies():
