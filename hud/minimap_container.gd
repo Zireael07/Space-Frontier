@@ -151,7 +151,7 @@ func _ready():
 		add_child(col_sprite)
 		colony_map[c] = col_sprite
 	
-	move_player_sprite()
+	#move_player_sprite()
 
 # ---------------
 # those are necessary for the HUD to update after a system change

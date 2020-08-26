@@ -57,25 +57,28 @@ func _ready():
 	
 	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
 	print("Player index: " + str(p_ind))
+	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	
 	for i in range(4):
-		spawn_friendly(i, p_ind)
+		spawn_friendly(i, p_ind, mmap)
 	
 	for i in range(4):
 		spawn_friendly_drone(i, p_ind)
 	
-	spawn_starbase(system, p_ind)
-	var pos = spawn_enemy_starbase(system, p_ind)
+	spawn_starbase(system, p_ind, mmap)
+	var pos = spawn_enemy_starbase(system, p_ind, mmap)
 
-	spawn_enemy(pos, p_ind)
+	spawn_enemy(pos, p_ind, mmap)
 	
 	# test
-	spawn_wormhole(p_ind, 11)
+	spawn_wormhole(p_ind, 11, mmap)
 	
-	spawn_asteroid_processor(p_ind, system)
-	var pirate = spawn_pirate_base(p_ind, system)
+	spawn_asteroid_processor(p_ind, system, mmap)
+	var pirate = spawn_pirate_base(p_ind, system, mmap)
 	for i in range(3):
-		spawn_pirate(pirate, p_ind)
+		spawn_pirate(pirate, p_ind, mmap)
+		
+	mmap.move_player_sprite()
 	
 	# update census
 	var flt1 = "Fleet 1	" + str(game.fleet1[0]) + "		" + str(game.fleet1[1]) + "	" + str(game.fleet1[2])
@@ -102,7 +105,7 @@ func get_colonized_planet():
 		return null
 
 # all spawn functions spawn at node at system+1 index
-func spawn_friendly(i, p_ind):
+func spawn_friendly(i, p_ind, mmap):
 	var p = get_colonized_planet()
 	if p:
 		var sp = friendly.instance()
@@ -119,7 +122,7 @@ func spawn_friendly(i, p_ind):
 		#add_child_below_node(get_tree().get_nodes_in_group("player")[0], sp)
 		
 		# give minimap icon
-		var mmap = get_tree().get_nodes_in_group("minimap")[0]
+		#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 		mmap._on_friendly_ship_spawned(sp.get_child(0))
 		
 		# give higher ranks if any left
@@ -131,7 +134,7 @@ func spawn_friendly(i, p_ind):
 		# add to fleet census
 		game.fleet1[1] += 1
 
-func spawn_starbase(system, p_ind):
+func spawn_starbase(system, p_ind, mmap):
 	var p = get_colonized_planet()
 	
 	if p:
@@ -162,7 +165,7 @@ func spawn_starbase(system, p_ind):
 		get_child(3).move_child(sb, p_ind+1)
 		
 		# give minimap icon
-		var mmap = get_tree().get_nodes_in_group("minimap")[0]
+		#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 		mmap._on_starbase_spawned(sb.get_child(0))
 
 func spawn_friendly_drone(i, p_ind):
@@ -181,7 +184,9 @@ func spawn_friendly_drone(i, p_ind):
 		# doesn't work for some reason
 		#add_child_below_node(get_tree().get_nodes_in_group("player")[0], sp)
 		
-func spawn_enemy_starbase(system, p_ind):
+		# drones don't have minimap icons
+		
+func spawn_enemy_starbase(system, p_ind, mmap):
 	var p
 	
 	var sb = enemy_starbase.instance()
@@ -203,12 +208,12 @@ func spawn_enemy_starbase(system, p_ind):
 	get_child(3).move_child(sb, p_ind+1)
 	
 	# give minimap icon
-	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_enemy_starbase_spawned(sb.get_child(0))
 	
 	return sb.get_global_position()
 
-func spawn_enemy(pos, p_ind):
+func spawn_enemy(pos, p_ind, mmap):
 	var sp = enemy.instance()
 	# random factor
 	randomize()
@@ -221,10 +226,10 @@ func spawn_enemy(pos, p_ind):
 	get_child(3).move_child(sp, p_ind+1)
 	
 	# give minimap icon
-	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_enemy_ship_spawned(sp.get_child(0))
 
-func spawn_asteroid_processor(p_ind, system):
+func spawn_asteroid_processor(p_ind, system, mmap):
 	if system != "Sol":
 		return
 		
@@ -242,10 +247,10 @@ func spawn_asteroid_processor(p_ind, system):
 	get_child(3).move_child(ap, p_ind+1)
 	
 	# give minimap icon
-	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_starbase_spawned(ap.get_child(0))
 
-func spawn_pirate_base(p_ind, system):
+func spawn_pirate_base(p_ind, system, mmap):
 	if system != "Sol":
 		return
 		
@@ -264,12 +269,12 @@ func spawn_pirate_base(p_ind, system):
 	get_child(3).move_child(ap, p_ind+1)
 	
 	# give minimap icon
-	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_pirate_starbase_spawned(ap.get_child(0))
 	
 	return pos
 
-func spawn_pirate(pos, p_ind):
+func spawn_pirate(pos, p_ind, mmap):
 	var sp = pirate_ship.instance()
 	# random factor
 	randomize()
@@ -282,10 +287,10 @@ func spawn_pirate(pos, p_ind):
 	get_child(3).move_child(sp, p_ind+1)
 	
 	# give minimap icon
-	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_pirate_ship_spawned(sp.get_child(0))
 
-func spawn_wormhole(p_ind, planet_id):
+func spawn_wormhole(p_ind, planet_id, mmap):
 	var wh = wormhole.instance()
 	
 	# fix for smaller systems
@@ -305,13 +310,14 @@ func spawn_wormhole(p_ind, planet_id):
 	get_child(2).move_child(wh, p_ind+1)
 	
 	# give minimap icon
-	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_wormhole_spawned(wh)
 	
 	print("Spawned a wormhole at " + str(wh.get_global_position()))
 
 	#return wh.get_global_position()
 
+# -------------------------------------
 func move_player():
 	# move player
 	#var place = get_tree().get_nodes_in_group("planets")[1] 
