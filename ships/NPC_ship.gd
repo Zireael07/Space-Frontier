@@ -404,14 +404,18 @@ func deorbit():
 
 func random_point_on_orbit(rad_f):
 	# randomize the point the AI aims for
+	return random_point_at_dist_from_tg(250*rad_f)
+			
+func random_point_at_dist_from_tg(dist):
+	# randomize the point the AI aims for
 	randomize()
 	var rand1 = randf()
 	#var rand2 = randf()
-	var offset = Vector2(0, 1).normalized()*(250*rad_f)
+	var offset = Vector2(0, 1).normalized()*(dist)
 	offset = offset.rotated(rand1)
 	print("Offset: " + str(offset))
-	var tg_orbit = brain.target + offset
-	return tg_orbit
+	var point = brain.target + offset
+	return point
 			
 func resource_picked():
 	# paranoia

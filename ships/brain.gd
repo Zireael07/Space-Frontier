@@ -48,7 +48,9 @@ func select_initial_target():
 				print("Set orbit state for " + ship.get_parent().get_name())
 			elif ship.kind_id == ship.kind.pirate:
 				var base = ship.get_friendly_base()
-				target = base.get_global_position() + Vector2(100,100)
+				target = base.get_global_position() #+ Vector2(100,100)
+				# this relies on brain target being already set
+				target = ship.random_point_at_dist_from_tg(200)
 				set_state(STATE_IDLE)
 			else:
 				target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
