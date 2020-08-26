@@ -451,7 +451,7 @@ func _input(_event):
 			#print("Undocked")
 			
 	if Input.is_action_pressed("nav"):
-		self.HUD.switch_to_navi()
+		self.HUD.get_node("Control2").switch_to_navi()
 		
 	if Input.is_action_pressed("go_planet"):
 		# no warping if we are hauling a colony
