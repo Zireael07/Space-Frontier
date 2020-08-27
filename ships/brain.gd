@@ -134,7 +134,11 @@ func _go_mine():
 		var amt = 4
 		target = closest.get_global_position()
 		# get the base
-		var base = ship.get_friendly_base()
+		# try the processor first
+		var base = ship.get_asteroid_processor()
+		if base == null:
+			base = ship.get_friendly_base()
+		# paranoia
 		if base != null:
 			var dist = target.distance_to(base.get_global_position())
 			#print("Dist: " + str(dist))

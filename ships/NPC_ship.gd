@@ -417,6 +417,10 @@ func random_point_at_dist_from_tg(dist):
 	var point = brain.target + offset
 	return point
 			
+func get_asteroid_processor():
+	var processor = get_tree().get_nodes_in_group("processor")[0]
+	return processor
+			
 func resource_picked():
 	# paranoia
 	if not 'cnt' in brain.state:

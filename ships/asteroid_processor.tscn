@@ -11,6 +11,7 @@ extents = Vector2( 60, 20 )
 [node name="Node2D" type="Node2D"]
 
 [node name="Area2D_aster_processor" type="Area2D" parent="." groups=[
+"processor",
 "starbase",
 ]]
 position = Vector2( 0, 1 )
