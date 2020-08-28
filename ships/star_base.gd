@@ -62,8 +62,12 @@ func _ready():
 
 func randomize_storage():
 	randomize()
-	for e in elements:
-		storage[e] = int(rand_range(8.0, 20.0))
+	if is_in_group("processor"):
+		for e in elements:
+			storage[e] = int(rand_range(3.0, 10.0))
+	else:
+		for e in elements:
+			storage[e] = int(rand_range(8.0, 20.0))
 
 # using this because we don't need physics
 func _process(delta):
