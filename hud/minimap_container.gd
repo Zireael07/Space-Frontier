@@ -227,6 +227,13 @@ func add_system_bodies():
 					label.set_text(e)
 					break
 		
+		# tint depending on owning fleet/faction
+		var col = p.has_colony()
+		#print(p.get_name() + " has colony " + str(col))
+		if col and col == "colony":
+			# tint cyan
+			label.set_self_modulate(Color(0, 1, 1))
+		
 		planet_sprites.append(con)
 		con.add_child(planet_sprite)
 		
