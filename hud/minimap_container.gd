@@ -376,7 +376,7 @@ func _on_colony_picked(colony):
 	colonies.append(colony)
 	colony_map[colony] = col_sprite
 
-func _on_colony_colonized(colony):
+func _on_colony_colonized(colony, planet):
 	print("Removing colony from minimap...")
 	# paranoia
 	if colony in colony_map:
@@ -384,6 +384,12 @@ func _on_colony_colonized(colony):
 		remove_child(spr)
 		colonies.remove(colonies.find(colony))
 		colony_sprites.remove(colony_sprites.find(spr))
+	
+	var id = planets.find(planet)
+	var spr = planet_sprites[id]
+	var label = spr.get_child(1)	
+	# tint cyan
+	label.set_self_modulate(Color(0, 1, 1))
 
 # ----------------------------
 func clear_outline():

@@ -576,7 +576,7 @@ func _on_colony_colonized(colony, planet):
 	game.fleet1[0] += 1
 	
 	# pass to correct node
-	$"Control2/Panel_rightHUD/minimap"._on_colony_colonized(colony)
+	$"Control2/Panel_rightHUD/minimap"._on_colony_colonized(colony, planet)
 	
 func _minimap_update_outline(pl_target):
 	#print("Target to update for: " + str(target.get_name()))
