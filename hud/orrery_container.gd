@@ -10,6 +10,7 @@ onready var ship = preload("res://assets/hud/arrow.png")
 var stars
 var planets
 var asteroids
+var star_main # main star of the system
 
 var star_sprites = []
 var planet_sprites = []
@@ -27,11 +28,15 @@ func _ready():
 	
 	stars = get_tree().get_nodes_in_group("star")
 	
+	star_main = stars[0]
+	if stars.size() > 1:
+		star_main = stars[1]
+	
 	# set zoom scale
-	zoom_scale = stars[0].zoom_scale*2 # usually the zoom scale for orrery is twice of the normal minimap
+	zoom_scale = star_main.zoom_scale*2 # usually the zoom scale for orrery is twice of the normal minimap
 	# unless we have a custom zoom specified
-	if stars[0].custom_orrery_scale != 0:
-		zoom_scale = stars[0].custom_orrery_scale
+	if star_main.custom_orrery_scale != 0:
+		zoom_scale = star_main.custom_orrery_scale
 	
 	planets = get_tree().get_nodes_in_group("planets")
 	# given the scale, it doesn't make sense to show moons
@@ -41,16 +46,24 @@ func _ready():
 	for s in stars:
 		var star_sprite = TextureRect.new()
 		star_sprite.set_texture(star)
-		var sc = Vector2(s.star_radius_factor, s.star_radius_factor)
-		# fix scale for very small radius stars
-		if s.star_radius_factor < 0.25:
-			sc = Vector2(s.star_radius_factor*2, s.star_radius_factor*2)
+		var sc = Vector2(1,1)
+		# paranoia
+		if 'star_radius_factor' in s:
+			sc = Vector2(s.star_radius_factor, s.star_radius_factor)
+			# fix scale for very small radius stars
+			if s.star_radius_factor < 0.25:
+				sc = Vector2(s.star_radius_factor*2, s.star_radius_factor*2)
 		star_sprite.set_scale(sc)
 		star_sprites.append(star_sprite)
 		add_child(star_sprite)
 	
-	# adjust center offset based on star scale
-	star_center = center - Vector2(16*stars[0].star_radius_factor,16*stars[0].star_radius_factor)
+	# adjust center offset based on central star scale
+	var adj = 1
+	# paranoia
+	if 'star_radius_factor' in stars[0]:
+		adj = stars[0].star_radius_factor
+	
+	star_center = center - Vector2(16*adj,16*adj)
 	
 	# star 1 is the center
 	star_sprites[0].set_position(star_center)
@@ -85,7 +98,7 @@ func _ready():
 		planet_sprites.append(con)
 		con.add_child(planet_sprite)
 		
-		label.set_position(Vector2(36*stars[0].star_radius_factor*0.5,36*stars[0].star_radius_factor*0.5))
+		label.set_position(Vector2(36*adj*0.5,36*adj*0.5))
 		con.add_child(label)
 		
 	
@@ -102,10 +115,10 @@ func _ready():
 	# set map view stuff
 	if self.get_name() == "map view":
 		get_child(0).set_cntr(Vector2(80,80))
-		if stars[0].custom_orrery_scale != 0:
-			zoom_scale = stars[0].custom_orrery_scale*1.6
+		if star_main.custom_orrery_scale != 0:
+			zoom_scale = star_main.custom_orrery_scale*1.6
 		else:
-			zoom_scale = stars[0].zoom_scale*2
+			zoom_scale = star_main.zoom_scale*2
 		
 		ship_sprite = TextureRect.new()
 		ship_sprite.set_texture(ship)

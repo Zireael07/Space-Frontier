@@ -49,6 +49,6 @@ func _draw():
 		draw_empty_circle(make_circle(center, 24, int(p.dist/get_parent().zoom_scale) +fudge), Color(1,0,0))
 	
 	# draw star hz
-	var star = get_parent().stars[0]
+	var star = get_parent().star_main
 	draw_empty_circle(make_circle(center, 24, int((star.hz_inner*game.AU)/get_parent().zoom_scale) + fudge), Color(0,1,0))
 	draw_empty_circle(make_circle(center, 24, int((star.hz_outer*game.AU)/get_parent().zoom_scale) + fudge), Color(0,1,0))

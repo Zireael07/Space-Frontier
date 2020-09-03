@@ -159,7 +159,8 @@ func get_system_bodies():
 	stars = get_tree().get_nodes_in_group("star")
 	
 	# set zoom scale
-	zoom_scale = stars[0].zoom_scale
+	var star_main = get_parent().get_node("orrery").star_main
+	zoom_scale = star_main.zoom_scale
 	
 	
 	planets = get_tree().get_nodes_in_group("planets")
@@ -176,10 +177,13 @@ func add_system_bodies():
 	for s in stars:
 		var star_sprite = TextureRect.new()
 		star_sprite.set_texture(star)
-		var sc = Vector2(s.star_radius_factor*1.5, s.star_radius_factor*1.5)
-		# fix scale for very small radius stars
-		if s.star_radius_factor < 0.25:
-			sc = Vector2(s.star_radius_factor*3, s.star_radius_factor*3)
+		var sc = Vector2(1,1)
+		# paranoia
+		if 'star_radius_factor' in s:
+			sc = Vector2(s.star_radius_factor*1.5, s.star_radius_factor*1.5)
+			# fix scale for very small radius stars
+			if s.star_radius_factor < 0.25:
+				sc = Vector2(s.star_radius_factor*3, s.star_radius_factor*3)
 		star_sprite.set_scale(sc)
 		star_sprites.append(star_sprite)
 		add_child(star_sprite)

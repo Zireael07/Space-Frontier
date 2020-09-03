@@ -19,6 +19,7 @@ var proc_system = preload("res://systems/star system.tscn")
 var sol = preload("res://systems/Sol system.tscn")
 var trappist = preload("res://systems/Trappist system.tscn")
 var proxima = preload("res://systems/Proxima Centauri system.tscn")
+var alpha = preload("res://systems/Alpha Centauri system.tscn")
 
 # game core
 var core = preload("res://game_core.tscn")
@@ -34,6 +35,8 @@ func spawn_system(system="proc"):
 		sys = trappist
 	elif system == "proxima":
 		sys = proxima
+	elif system == "alphacen":
+		sys = alpha
 		
 	var system_inst = sys.instance()
 	add_child(system_inst)
@@ -50,7 +53,7 @@ func spawn_core():
 func _ready():
 	print("Main init")
 	
-	var data = spawn_system("Sol")
+	var data = spawn_system("alphacen") #("Sol")
 	# the system is always child #2 (#0 is parallax bg and #1 is a timer)
 	var system = data[0]
 	spawn_core() 
@@ -75,8 +78,9 @@ func _ready():
 	
 	spawn_asteroid_processor(p_ind, system, mmap)
 	var pirate = spawn_pirate_base(p_ind, system, mmap)
-	for i in range(3):
-		spawn_pirate(pirate, p_ind, mmap)
+	if pirate != null:
+		for i in range(3):
+			spawn_pirate(pirate, p_ind, mmap)
 		
 	mmap.move_player_sprite()
 	
@@ -195,8 +199,10 @@ func spawn_enemy_starbase(system, p_ind, mmap):
 		p = get_tree().get_nodes_in_group("planets")[1] # Venus
 	elif system == "proxima":
 		p = get_tree().get_nodes_in_group("planets")[2]
+	elif system == "trappist":
+		p = get_tree().get_nodes_in_group("planets")[3]	
 	else:
-		p = get_tree().get_nodes_in_group("planets")[3]
+		p = get_tree().get_nodes_in_group("planets")[0]
 
 	# random factor
 	randomize()
