@@ -60,7 +60,9 @@ func select_initial_target():
 				#target = ship.get_colonized_planet().get_global_position()
 				set_state(STATE_ORBIT, ship.get_colonized_planet())
 			elif ship.kind_id == ship.kind.enemy:
-				target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
+				target = get_tree().get_nodes_in_group("planets")[0].get_global_position()
+				if get_tree().get_nodes_in_group("planets").size() > 3:
+					target = get_tree().get_nodes_in_group("planets")[2].get_global_position()
 				set_state(STATE_IDLE)
 			elif ship.kind_id == ship.kind.pirate:
 				target = ship.ship.get_friendly_base().get_global_position() + Vector2(100,100)

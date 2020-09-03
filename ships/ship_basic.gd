@@ -187,6 +187,9 @@ func deorbit():
 
 func is_overheating():
 	var star = get_tree().get_nodes_in_group("star")[0]
+	# paranoia
+	if not 'star_radius_factor' in star:
+		return false
 	var dist = star.get_global_position().distance_to(get_global_position())
 	if dist < 550* star.star_radius_factor and not warping:
 		return true
@@ -195,6 +198,10 @@ func is_overheating():
 
 func close_to_sun():
 	var star = get_tree().get_nodes_in_group("star")[0]
+	# paranoia
+	if not 'star_radius_factor' in star:
+		return false
+		
 	var dist = star.get_global_position().distance_to(get_global_position())
 	# some margin compared to is_overheating to have time to react
 	if dist < 650* star.star_radius_factor and not warping:
@@ -204,6 +211,10 @@ func close_to_sun():
 		
 func can_scoop():
 	var star = get_tree().get_nodes_in_group("star")[0]
+	# paranoia
+	if not 'star_radius_factor' in star:
+		return false
+	
 	var dist = star.get_global_position().distance_to(get_global_position())
 	# some margin compared to is_overheating
 	if dist < 750* star.star_radius_factor and not warping:
