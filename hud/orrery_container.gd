@@ -124,6 +124,11 @@ func _ready():
 			zoom_scale = star_main.custom_orrery_scale*1.6
 		else:
 			zoom_scale = star_main.zoom_scale*2
+			
+		if star_main.custom_map_scale != 0:
+			zoom_scale = star_main.custom_map_scale
+			
+		get_child(0).zoom_scale = zoom_scale
 		
 		ship_sprite = TextureRect.new()
 		ship_sprite.set_texture(ship)

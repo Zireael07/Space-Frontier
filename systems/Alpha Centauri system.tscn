@@ -36,7 +36,8 @@ position = Vector2( 0, 210840 )
 script = ExtResource( 2 )
 star_radius_factor = 0.8
 luminosity = 0.5
-custom_orrery_scale = 480
+custom_orrery_scale = 30
+custom_map_scale = 768
 
 [node name="Sprite" type="Sprite" parent="B"]
 scale = Vector2( 0.25, 0.25 )
