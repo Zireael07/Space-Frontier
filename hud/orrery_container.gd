@@ -38,6 +38,8 @@ func _ready():
 	if star_main.custom_orrery_scale != 0:
 		zoom_scale = star_main.custom_orrery_scale
 	
+	get_child(0).zoom_scale = zoom_scale
+	
 	planets = get_tree().get_nodes_in_group("planets")
 	# given the scale, it doesn't make sense to show moons
 	asteroids = get_tree().get_nodes_in_group("asteroid")
@@ -65,8 +67,11 @@ func _ready():
 	
 	star_center = center - Vector2(16*adj,16*adj)
 	
-	# star 1 is the center
-	star_sprites[0].set_position(star_center)
+	# main star is the center
+	if star_main == stars[1]:
+		star_sprites[1].set_position(star_center)
+	else:
+		star_sprites[0].set_position(star_center)
 		
 	for p in planets:
 		# so that the icon and label have a common parent
@@ -133,7 +138,7 @@ func update_ship_pos():
 	if not stars[0]:
 		return
 		
-	var rel_loc = game.player.get_global_position() - stars[0].get_global_position()
+	var rel_loc = game.player.get_global_position() - star_main.get_global_position()
 	var off = 9
 	ship_sprite.set_position(Vector2((rel_loc.x/zoom_scale)+center.x-off, (rel_loc.y/zoom_scale)+center.y-off))
 
@@ -141,16 +146,20 @@ func _process(_delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 
-#	for i in range(stars.size()):
-#		# the minimap doesn't rotate
-#		var rel_loc = stars[i].get_global_position() - player.get_child(0).get_global_position()
-#		#var rel_loc = player.get_global_transform().xform_inv(stars[i].get_global_transform().origin)
-#		#star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale))
-#		star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
-#
-#		var dist = Vector2(rel_loc.x, rel_loc.y).length()
-#		#print ("Px to star: " + str(dist))
-#
+	for i in range(stars.size()):
+		# skip main star
+		if stars[i] == star_main:
+			continue
+			
+		# the minimap doesn't rotate
+		var rel_loc = stars[i].get_global_position() - star_main.get_global_position()
+		#var rel_loc = player.get_global_transform().xform_inv(stars[i].get_global_transform().origin)
+		#star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale))
+		star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+
+		var dist = Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale).length()
+		#print ("Px to star: " + str(dist))
+
 
 	for i in range(planets.size()):
 		# paranoia
@@ -158,7 +167,7 @@ func _process(_delta):
 			return
 			
 		# the minimap doesn't rotate
-		var rel_loc = planets[i].get_global_position() - stars[0].get_global_position()
+		var rel_loc = planets[i].get_global_position() - star_main.get_global_position()
 		#var rel_loc = stars[0].get_global_transform().xform_inv(planets[i].get_global_transform().origin)
 		var off = 36*planets[i].planet_rad_factor*0.25
 		var map_pos = Vector2((rel_loc.x/zoom_scale)+center.x-off, (rel_loc.y/zoom_scale)+center.y-off)
@@ -166,7 +175,7 @@ func _process(_delta):
 
 	for i in range(asteroids.size()):
 		# the minimap doesn't rotate
-		var rel_loc = asteroids[i].get_global_position() - stars[0].get_global_position()
+		var rel_loc = asteroids[i].get_global_position() - star_main.get_global_position()
 		asteroid_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 
 # called when leaving a system

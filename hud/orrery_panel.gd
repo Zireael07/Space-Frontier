@@ -4,7 +4,7 @@ extends Panel
 # Declare member variables here
 var cntr = Vector2(80,80)
 var center = cntr + Vector2(1,2)
-
+var zoom_scale
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -32,8 +32,11 @@ func make_circle(center, segments, radius):
 func draw_empty_circle(circle, color):
 	draw_polyline(circle, color, 2.0)
 
+# note: orbits are drawn relative to parent (main) star
 func _draw():
 	if not is_visible():
+		return
+	if not zoom_scale:
 		return
 	
 	#draw_circle(center, 24, Color(1,0,0))
@@ -46,9 +49,9 @@ func _draw():
 			
 		#var fudge = 36*p.planet_rad_factor*0.2
 		#print(str(fudge))
-		draw_empty_circle(make_circle(center, 24, int(p.dist/get_parent().zoom_scale) +fudge), Color(1,0,0))
+		draw_empty_circle(make_circle(center, 24, int(p.dist/zoom_scale) +fudge), Color(1,0,0))
 	
 	# draw star hz
 	var star = get_parent().star_main
-	draw_empty_circle(make_circle(center, 24, int((star.hz_inner*game.AU)/get_parent().zoom_scale) + fudge), Color(0,1,0))
-	draw_empty_circle(make_circle(center, 24, int((star.hz_outer*game.AU)/get_parent().zoom_scale) + fudge), Color(0,1,0))
+	draw_empty_circle(make_circle(center, 24, int((star.hz_inner*game.AU)/zoom_scale) + fudge), Color(0,1,0))
+	draw_empty_circle(make_circle(center, 24, int((star.hz_outer*game.AU)/zoom_scale) + fudge), Color(0,1,0))

@@ -17,6 +17,7 @@ onready var starbase = preload("res://assets/hud/blue_boxTick.png")
 onready var sb_enemy = preload("res://assets/hud/red_boxTick.png")
 onready var sb_pirate = preload("res://assets/hud/green_boxTick.png")
 
+var star_main
 
 var stars
 var planets
@@ -159,7 +160,7 @@ func get_system_bodies():
 	stars = get_tree().get_nodes_in_group("star")
 	
 	# set zoom scale
-	var star_main = get_parent().get_node("orrery").star_main
+	star_main = get_parent().get_node("orrery").star_main
 	zoom_scale = star_main.zoom_scale
 	
 	
@@ -188,12 +189,13 @@ func add_system_bodies():
 		star_sprites.append(star_sprite)
 		add_child(star_sprite)
 		
-		star_arrow = TextureRect.new()
-		star_arrow.set_texture(arrow_star)
-		add_child(star_arrow)
-		# center it
-		star_arrow.set_pivot_offset(star_arrow.get_size()/2)
-		star_arrow.set_visible(false)
+		if s == star_main:
+			star_arrow = TextureRect.new()
+			star_arrow.set_texture(arrow_star)
+			add_child(star_arrow)
+			# center it
+			star_arrow.set_pivot_offset(star_arrow.get_size()/2)
+			star_arrow.set_visible(false)
 		
 	for p in planets:
 		# so that the icon and label have a common parent
@@ -432,25 +434,26 @@ func _process(_delta):
 		#star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale))
 		star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 		
-		var dist = Vector2(rel_loc.x, rel_loc.y).length()
-		#print ("Px to star: " + str(dist))
-		
-		# if star is so far away that it is outside of the minimap area
-		if dist > (100*zoom_scale): # experimentally determined value
-			# indicate distant stars
-			#print("Star out of minimap area")
-			star_arrow.set_visible(true)
-			var pos = Vector2(rel_loc.x, rel_loc.y).clamped((100*zoom_scale)-50) # experimentally determined value
-			var a = atan2(rel_loc.x, rel_loc.y)
+		if stars[i] == star_main:
+			var dist = Vector2(rel_loc.x, rel_loc.y).length()
+			#print ("Px to star: " + str(dist))
 			
-			#print("Pos: " + str(pos) + " for rel_pos" + str(rel_loc))
-			star_arrow.set_position(Vector2(pos.x/zoom_scale+center.x, pos.y/zoom_scale+center.y))
-			
-			# add 180 deg because we want the arrow to point at the star, not away
-			star_arrow.set_rotation((-a+3.141593))
-			
-		else:
-			star_arrow.set_visible(false)
+			# if star is so far away that it is outside of the minimap area
+			if dist > (100*zoom_scale): # experimentally determined value
+				# indicate distant stars
+				#print("Star out of minimap area")
+				star_arrow.set_visible(true)
+				var pos = Vector2(rel_loc.x, rel_loc.y).clamped((100*zoom_scale)-50) # experimentally determined value
+				var a = atan2(rel_loc.x, rel_loc.y)
+				
+				#print("Pos: " + str(pos) + " for rel_pos" + str(rel_loc))
+				star_arrow.set_position(Vector2(pos.x/zoom_scale+center.x, pos.y/zoom_scale+center.y))
+				
+				# add 180 deg because we want the arrow to point at the star, not away
+				star_arrow.set_rotation((-a+3.141593))
+				
+			else:
+				star_arrow.set_visible(false)
 		
 
 	for i in range(planets.size()):
