@@ -789,6 +789,23 @@ text = "SYSTEM MAP"
 align = 1
 valign = 1
 
+[node name="ButtonPlus" type="Button" parent="Control4/map view"]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonMinus" type="Button" parent="Control4/map view"]
+margin_left = 20.0
+margin_right = 37.0
+margin_bottom = 20.0
+text = "-"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="pause_panel" type="Control" parent="."]
 visible = false
 modulate = Color( 1, 1, 1, 0.624314 )
@@ -835,3 +852,5 @@ text = "Press Z to toggle orders mode"
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/NavInfo/ButtonView" to="." method="_on_ButtonView_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/NavInfo/ButtonDown2" to="." method="_on_ButtonDown2_pressed"]
 [connection signal="timeout" from="Control3/officer_timer" to="." method="_on_officer_timer_timeout"]
+[connection signal="pressed" from="Control4/map view/ButtonPlus" to="Control4/map view" method="_on_ButtonPlus_pressed"]
+[connection signal="pressed" from="Control4/map view/ButtonMinus" to="Control4/map view" method="_on_ButtonMinus_pressed"]
