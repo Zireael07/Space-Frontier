@@ -274,6 +274,16 @@ func _input(_event):
 					get_node("Control2")._on_prev_pressed(m_id, parent_id)
 				else:
 					get_node("Control2")._on_prev_pressed(id, -1)
+			else:
+				# if we're in a multiple star system
+				var stars = get_tree().get_nodes_in_group("star")
+				if stars.size() > 1:
+					var star = get_named_star(planet_name)
+					var id = stars.find(star)
+					if id > 0:
+						var n_star = stars[id-1]
+						get_node("Control2").make_star_view(n_star, id-1)
+				
 		# cargo panel
 		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
 			_on_ButtonUp3_pressed()
@@ -297,6 +307,16 @@ func _input(_event):
 					get_node("Control2")._on_next_pressed(m_id, parent_id)
 				else:
 					get_node("Control2")._on_next_pressed(id, -1)
+			else:
+				# if we're in a multiple star system
+				var stars = get_tree().get_nodes_in_group("star")
+				if stars.size() > 1:
+					var star = get_named_star(planet_name)
+					var id = stars.find(star)
+					if id < stars.size()-1:
+						var n_star = stars[id+1]
+						get_node("Control2").make_star_view(n_star, id+1)
+				
 		# cargo panel
 		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
 			_on_ButtonDown3_pressed()
@@ -719,9 +739,20 @@ func get_named_planet(planet_name):
 				if planet_name == nam:
 					ret = m
 					break
-				
 	return ret
 
+func get_named_star(star_name):
+	# convert star name to planet node ref
+	var ret = null
+	var stars = get_tree().get_nodes_in_group("star")
+	for s in stars:
+		if s.has_node("Label"):
+			var nam = s.get_node("Label").get_text()
+			if star_name == nam:
+				ret = s
+				break
+				
+	return ret
 
 func _on_ButtonUp2_pressed():
 	get_node("Control2")._onButtonUp2_pressed()

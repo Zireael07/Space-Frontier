@@ -179,26 +179,8 @@ func _on_ButtonView_pressed():
 		var select_id = (line - 15)/15
 		print("Star select id ", select_id)
 		var star = get_tree().get_nodes_in_group("star")[select_id]
-		$"Panel_rightHUD/PanelInfo/NavInfo".hide()
-		$"Panel_rightHUD/PanelInfo/PlanetInfo".show()
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(star.get_node("Sprite").get_material())
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(star.get_node("Sprite").get_texture())
-
-		# set label
-		var txt = "Star: " + str(star.get_node("Label").get_text())
-		var label = $"Panel_rightHUD/PanelInfo/PlanetInfo/LabelName"
-
-		label.set_text(txt)
-
-		# set text
-		var text = ""
-		# paranoia
-		if 'luminosity' in star:
-			text = "Luminosity: " + str(star.luminosity) + "\n" + \
-		"Habitable zone: " + str(star.hz_inner) + "-" + str(star.hz_outer)
-
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
+		
+		make_star_view(star, select_id)
 
 		return
 	# any futher entry is not a star
@@ -229,6 +211,30 @@ func _on_ButtonView_pressed():
 			
 		var planet = get_tree().get_nodes_in_group("planets")[select_id]
 		make_planet_view(planet, select_id)
+
+func make_star_view(star, select_id):
+	print("Making view for star...", star.get_node("Label").get_text() )
+	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
+	$"Panel_rightHUD/PanelInfo/PlanetInfo".show()
+		
+	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
+	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(star.get_node("Sprite").get_material())
+	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(star.get_node("Sprite").get_texture())
+
+	# set label
+	var txt = "Star: " + str(star.get_node("Label").get_text())
+	var label = $"Panel_rightHUD/PanelInfo/PlanetInfo/LabelName"
+
+	label.set_text(txt)
+
+	# set text
+	var text = ""
+	# paranoia
+	if 'luminosity' in star:
+		text = "Luminosity: " + str(star.luminosity) + "\n" + \
+	"Habitable zone: " + str(star.hz_inner) + "-" + str(star.hz_outer)
+
+	$"Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 
 func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# richtextlabel scrollbar
