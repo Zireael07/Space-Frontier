@@ -69,6 +69,6 @@ texture = ExtResource( 4 )
 rotation = 3.4641e-07
 
 [node name="Label" parent="B/planet_holder/planet2" index="2"]
-text = "BA"
+text = "Bb"
 
 [editable path="B/planet_holder/planet2"]
