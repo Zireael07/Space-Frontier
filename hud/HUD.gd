@@ -263,16 +263,17 @@ func _input(_event):
 			var planet_name = planet_name_from_view()
 			var planet = get_named_planet(planet_name)
 			#var planets = get_tree().get_nodes_in_group("planets")
-			var id = planets.find(planet)
-			if id == -1:
-#				var moons = get_tree().get_nodes_in_group("moon")
-#				var moon = moons.find(planet)
-				var parent = planet.get_parent().get_parent()
-				var parent_id = planets.find(parent)
-				var m_id = parent.get_moons().find(planet)
-				get_node("Control2")._on_prev_pressed(m_id, parent_id)
-			else:
-				get_node("Control2")._on_prev_pressed(id, -1)
+			if planet:
+				var id = planets.find(planet)
+				if id == -1:
+	#				var moons = get_tree().get_nodes_in_group("moon")
+	#				var moon = moons.find(planet)
+					var parent = planet.get_parent().get_parent()
+					var parent_id = planets.find(parent)
+					var m_id = parent.get_moons().find(planet)
+					get_node("Control2")._on_prev_pressed(m_id, parent_id)
+				else:
+					get_node("Control2")._on_prev_pressed(id, -1)
 		# cargo panel
 		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
 			_on_ButtonUp3_pressed()
@@ -285,16 +286,17 @@ func _input(_event):
 			var planet_name = planet_name_from_view()
 			var planet = get_named_planet(planet_name)
 			#var planets = get_tree().get_nodes_in_group("planets")
-			var id = planets.find(planet)
-			if id == -1:
-#				var moons = get_tree().get_nodes_in_group("moon")
-#				var moon = moons.find(planet)
-				var parent = planet.get_parent().get_parent()
-				var parent_id = planets.find(parent)
-				var m_id = parent.get_moons().find(planet)
-				get_node("Control2")._on_next_pressed(m_id, parent_id)
-			else:
-				get_node("Control2")._on_next_pressed(id, -1)
+			if planet:
+				var id = planets.find(planet)
+				if id == -1:
+	#				var moons = get_tree().get_nodes_in_group("moon")
+	#				var moon = moons.find(planet)
+					var parent = planet.get_parent().get_parent()
+					var parent_id = planets.find(parent)
+					var m_id = parent.get_moons().find(planet)
+					get_node("Control2")._on_next_pressed(m_id, parent_id)
+				else:
+					get_node("Control2")._on_next_pressed(id, -1)
 		# cargo panel
 		if $"Control2/Panel_rightHUD/PanelInfo/CargoInfo".is_visible():
 			_on_ButtonDown3_pressed()
