@@ -98,25 +98,28 @@ func _ready():
 
 func create_planet_listing():
 	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control"
-	# star
-	var s = get_tree().get_nodes_in_group("star")[0]
-	var label = Label.new()
-	var s_type = ""
-	if "star_type" in s:
-		s_type = str(s.get_star_type(s.star_type))
-	label.set_text(s.get_node("Label").get_text() + " " + s_type)
-	label.set_position(Vector2(10,15))
-	nav_list.add_child(label)
-	# tint gray
-	label.set_self_modulate(Color(0.5,0.5, 0.5))
+	# stars
+	var y = 15
+	var stars = get_tree().get_nodes_in_group("star")
+	for s in stars:	
+	#var s = get_tree().get_nodes_in_group("star")[0]
+		var label = Label.new()
+		var s_type = ""
+		if "star_type" in s:
+			s_type = str(s.get_star_type(s.star_type))
+		label.set_text(s.get_node("Label").get_text() + " " + s_type)
+		label.set_position(Vector2(10,y))
+		nav_list.add_child(label)
+		# tint gray
+		label.set_self_modulate(Color(0.5,0.5, 0.5))
+		y += 15
 
 	# planets
-
-	var y = 30
+	y = 15 * (stars.size()+1)
 	for i in range (planets.size()):
 		var p = planets[i]
 		# labels for right panel
-		label = Label.new()
+		var label = Label.new()
 		var txt = p.get_node("Label").get_text()
 		# mark habitable planets
 		if p.is_habitable():

@@ -169,10 +169,16 @@ func _onButtonUpgrade_pressed():
 # show planet/star descriptions
 func _on_ButtonView_pressed():
 	var cursor = $"Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
-
+	var nav_list = $"Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
+			
+	var stars = get_tree().get_nodes_in_group("star")
+	
 	# if we are pointing at first entry (a star), show star description instead
-	if cursor.get_position().y < 30:
-		var star = get_tree().get_nodes_in_group("star")[0]
+	if cursor.get_position().y < 15 * (stars.size()+1):
+		var line = cursor.get_position().y + nav_list.get_v_scroll()
+		var select_id = (line - 15)/15
+		print("Star select id ", select_id)
+		var star = get_tree().get_nodes_in_group("star")[select_id]
 		$"Panel_rightHUD/PanelInfo/NavInfo".hide()
 		$"Panel_rightHUD/PanelInfo/PlanetInfo".show()
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
@@ -186,7 +192,10 @@ func _on_ButtonView_pressed():
 		label.set_text(txt)
 
 		# set text
-		var text = "Luminosity: " + str(star.luminosity) + "\n" + \
+		var text = ""
+		# paranoia
+		if 'luminosity' in star:
+			text = "Luminosity: " + str(star.luminosity) + "\n" + \
 		"Habitable zone: " + str(star.hz_inner) + "-" + str(star.hz_outer)
 
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
@@ -194,9 +203,8 @@ func _on_ButtonView_pressed():
 		return
 	# any futher entry is not a star
 	else:
-		var nav_list = $"Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
 		var line = cursor.get_position().y + nav_list.get_v_scroll()
-		var select_id = (line - 30) / 15
+		var select_id = (line - 15 * (stars.size()+1)) / 15
 		var skips = []
 		#var planets = get_tree().get_nodes_in_group("planets")
 		for i in range(planets.size()):
@@ -491,8 +499,9 @@ func _onButtonUp2_pressed():
 func _onButtonDown2_pressed():
 	var cursor = $"Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
 	var num_list = get_tree().get_nodes_in_group("planets").size()-1
+	var stars = get_tree().get_nodes_in_group("star")
 	
-	var max_y = 15*(num_list+2) #because of star and header
+	var max_y = 15*(num_list+stars.size()+1) #because of header
 	for p in get_tree().get_nodes_in_group("planets"):
 		if p.has_moon():
 			for m in p.get_moons():
