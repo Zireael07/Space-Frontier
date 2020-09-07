@@ -44,8 +44,21 @@ func _ready():
 	# given the scale, it doesn't make sense to show moons
 	asteroids = get_tree().get_nodes_in_group("asteroid")
 	
+	# adjust center offset based on central star scale
+	var adj = 1
+	# paranoia
+	if 'star_radius_factor' in stars[0]:
+		adj = stars[0].star_radius_factor
+	
+	var star_name = stars[0].get_node("Label").get_text()
+	if star_name.ends_with(" A"):
+		star_name = star_name.trim_suffix(" A")
+	#print("Star name: ", star_name)
 	
 	for s in stars:
+		# so that the icon and label have a common parent
+		var con = Control.new()
+		add_child(con)
 		var star_sprite = TextureRect.new()
 		star_sprite.set_texture(star)
 		var sc = Vector2(1,1)
@@ -56,15 +69,28 @@ func _ready():
 			if s.star_radius_factor < 0.25:
 				sc = Vector2(s.star_radius_factor*2, s.star_radius_factor*2)
 		star_sprite.set_scale(sc)
-		star_sprites.append(star_sprite)
-		add_child(star_sprite)
+		star_sprites.append(con)
+		con.add_child(star_sprite)
+		
+		# label
+		var label = Label.new()
+		
+		var txt = s.get_node("Label").get_text()
+		label.set_text(txt) # default
+		
+		# if the names end in star name + A, B etc., show just the letter to save space
+		# the planet listing does show us the full name, after all
+		if txt.find(star_name) != -1:
+			var ends = ["A", "B"]
+			for e in ends:
+				if txt.ends_with(e):
+					label.set_text(e)
+					break
+					
+		label.set_position(Vector2(36*adj*0.75,36*adj*0.75))
+		con.add_child(label)
 	
-	# adjust center offset based on central star scale
-	var adj = 1
-	# paranoia
-	if 'star_radius_factor' in stars[0]:
-		adj = stars[0].star_radius_factor
-	
+	# center offset based on central star
 	star_center = center - Vector2(16*adj,16*adj)
 	
 	# main star is the center
@@ -92,7 +118,6 @@ func _ready():
 		label.set_text(txt) # default
 		
 		# if the names end in star name + a,b,c, etc., show just the letter to save space
-		var star_name = stars[0].get_node("Label").get_text()
 		if txt.find(star_name) != -1:
 			var ends = ["a", "b", "c", "d", "e"]
 			for e in ends:
