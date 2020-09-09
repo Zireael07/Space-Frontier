@@ -93,6 +93,10 @@ func _onButtonShip_pressed(target):
 	$"Panel_rightHUD/PanelInfo/ShipInfo".show()
 
 func switch_to_refit():
+	if not player.docked:
+		$"Panel_rightHUD/PanelInfo/RefitInfo/Label".hide()
+		$"Panel_rightHUD/PanelInfo/RefitInfo/Cursor".hide()
+	
 	# get the correct data
 	$"Panel_rightHUD/PanelInfo/RefitInfo/Power".set_text("Power: " + str(player.engine_level))
 	$"Panel_rightHUD/PanelInfo/RefitInfo/Engine".set_text("Engine: " + str(player.power_level))
