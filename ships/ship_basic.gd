@@ -251,6 +251,9 @@ func get_friendly_base():
 	#print("Friendly bases: ", friendly_bases)
 	
 	if friendly_bases.size() < 2:
+		if friendly_bases.size() == 0:
+			return
+			
 		return friendly_bases[0]
 	else:
 		# sort by dist

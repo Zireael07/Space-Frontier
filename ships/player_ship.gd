@@ -415,6 +415,10 @@ func _input(_event):
 		print("Want to refit")
 		
 		var base = get_friendly_base()
+		if not base:
+			emit_signal("officer_message", "No friendly base found in system!")
+			return
+			
 		heading = base.get_global_position()
 		refit_target = base
 	
