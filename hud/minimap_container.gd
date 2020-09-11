@@ -17,7 +17,7 @@ onready var starbase = preload("res://assets/hud/blue_boxTick.png")
 onready var sb_enemy = preload("res://assets/hud/red_boxTick.png")
 onready var sb_pirate = preload("res://assets/hud/green_boxTick.png")
 
-var star_main
+var star_main = null
 
 var stars
 var planets
@@ -157,12 +157,16 @@ func _ready():
 # ---------------
 # those are necessary for the HUD to update after a system change
 func get_system_bodies():
+	#print("Getting system bodies")
 	stars = get_tree().get_nodes_in_group("star")
 	
 	# set zoom scale
+	#print("Star main: ", get_parent().get_node("orrery").star_main)
 	star_main = get_parent().get_node("orrery").star_main
-	zoom_scale = star_main.zoom_scale
-	
+	if star_main != null:
+		zoom_scale = star_main.zoom_scale
+	else:
+		print("Error! Star main is null!")
 	
 	planets = get_tree().get_nodes_in_group("planets")
 	# treat moons as planets
@@ -369,7 +373,7 @@ func _on_wormhole_spawned(wormhole):
 	wh_arrow.set_pivot_offset(wh_arrow.get_size()/2)
 	wh_arrow.set_visible(false)
 	
-	print(wh_arrow.get_name())
+	#print(wh_arrow.get_name())
 
 # this takes the node that has colony group. i.e. parent of actual colony area
 func _on_colony_picked(colony):
@@ -587,6 +591,15 @@ func cleanup():
 	planet_sprites = []
 	asteroid_sprites = []
 	wormhole_sprites = []
+	
+	# without cleaning those, we get a very weird debugger crash involving Variants...
+	friendly_sprites = []
+	hostile_sprites = []
+	pirate_sprites = []
+	starbase_sprites = []
+	sb_enemy_sprites = []
+	sb_pirate_sprites = []
+	colony_sprites = []
 	
 	# as a bonus, hide the wormhole arrow
 	wh_arrow.hide()

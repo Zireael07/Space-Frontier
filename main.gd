@@ -357,6 +357,14 @@ func change_system(system="proxima"):
 	# despawn current system
 	get_child(2).queue_free()
 	
+	# clean minimap
+	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	for i in range(2, mmap.get_child_count()-1):
+		if mmap.get_child(i).get_name() == "player":
+			continue # skip player	
+		mmap.get_child(i).queue_free()
+	mmap.cleanup()
+	
 	# despawn all ships and starbases
 	var sb = get_tree().get_nodes_in_group("starbase")
 	for s in sb:
@@ -369,14 +377,6 @@ func change_system(system="proxima"):
 	var e = get_tree().get_nodes_in_group("enemy")
 	for s in e:
 		s.get_parent().queue_free()
-	
-	# clean minimap
-	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
-	for i in range(2, mmap.get_child_count()-1):
-		if mmap.get_child(i).get_name() == "player":
-			continue # skip player	
-		mmap.get_child(i).queue_free()
-	mmap.cleanup()
 	
 	# clean orrery
 	var orr = mmap.get_parent().get_node("orrery")
