@@ -10,7 +10,7 @@ onready var ship = preload("res://assets/hud/arrow.png")
 var stars
 var planets
 var asteroids
-var star_main # main star of the system
+var star_main = null # main star of the system
 
 var star_sprites = []
 var planet_sprites = []
@@ -26,6 +26,9 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	
+	setup()
+
+func setup():
 	stars = get_tree().get_nodes_in_group("star")
 	
 	star_main = stars[0]
@@ -38,7 +41,8 @@ func _ready():
 	if star_main.custom_orrery_scale != 0:
 		zoom_scale = star_main.custom_orrery_scale
 	
-	get_child(0).zoom_scale = zoom_scale
+	if 'zoom_scale' in get_child(0):
+		get_child(0).zoom_scale = zoom_scale
 	
 	planets = get_tree().get_nodes_in_group("planets")
 	# given the scale, it doesn't make sense to show moons
@@ -94,7 +98,7 @@ func _ready():
 	star_center = center - Vector2(16*adj,16*adj)
 	
 	# main star is the center
-	if star_main == stars[1]:
+	if stars.size() > 1 and star_main == stars[1]:
 		star_sprites[1].set_position(star_center)
 	else:
 		star_sprites[0].set_position(star_center)
@@ -162,7 +166,7 @@ func _ready():
 		
 		# doesn't need to be updated in process() because at scales the map is displayed at, we won't see it move anyway
 		update_ship_pos()
-
+		
 func update_ship_pos():
 	# paranoia
 	if not stars[0]:

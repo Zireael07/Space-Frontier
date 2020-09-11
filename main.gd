@@ -335,18 +335,17 @@ func move_player():
 	#call_deferred("update_HUD")
 	
 func update_HUD():
+	# force update orrery
+	var orr = mmap.get_parent().get_node("orrery")
+	orr.setup()
+	# show the panel again
+	orr.get_node("Panel").show()
 	# force update minimap
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	#mmap._ready()
 	mmap.get_system_bodies()
 	mmap.add_system_bodies()
 	mmap.move_player_sprite()
-	
-	# force update orrery
-	var orr = mmap.get_parent().get_node("orrery")
-	orr._ready()
-	# show the panel again
-	orr.get_node("Panel").show()
 
 	# force update planet listing
 	game.player.HUD.planets = get_tree().get_nodes_in_group("planets")
