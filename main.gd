@@ -27,6 +27,8 @@ var core = preload("res://game_core.tscn")
 # how many higher ranks to assign to (friendly) AI
 var rank_list = [1,1]
 
+var mmap
+
 func spawn_system(system="proc"):
 	var sys = proc_system
 	if system == "Sol":
@@ -60,7 +62,7 @@ func _ready():
 	
 	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
 	print("Player index: " + str(p_ind))
-	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	mmap = get_tree().get_nodes_in_group("minimap")[0]
 	
 	for i in range(4):
 		spawn_friendly(i, p_ind, mmap)
@@ -340,8 +342,8 @@ func update_HUD():
 	orr.setup()
 	# show the panel again
 	orr.get_node("Panel").show()
+	
 	# force update minimap
-	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	#mmap._ready()
 	mmap.get_system_bodies()
 	mmap.add_system_bodies()
@@ -369,7 +371,7 @@ func change_system(system="proxima"):
 		s.get_parent().queue_free()
 	
 	# clean minimap
-	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	for i in range(2, mmap.get_child_count()-1):
 		if mmap.get_child(i).get_name() == "player":
 			continue # skip player	
