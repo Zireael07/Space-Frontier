@@ -1,10 +1,6 @@
 extends Node2D
 
 var entered = false
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,10 +14,14 @@ func _ready():
 
 func _on_Area2D_area_entered(_area):
 	if not entered:
-		print("Wormhole entered")
+		var system = get_tree().get_nodes_in_group("main")[0].curr_system
+		print("Wormhole entered in system: ", system)
 		entered = true
 		
 		# change the system
-		get_tree().get_nodes_in_group("main")[0].change_system()
+		if system == "Sol":
+			get_tree().get_nodes_in_group("main")[0].change_system()
+		if system == "proxima":
+			get_tree().get_nodes_in_group("main")[0].change_system("alphacen")
 		
 		

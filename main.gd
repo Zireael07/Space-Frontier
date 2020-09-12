@@ -27,6 +27,7 @@ var core = preload("res://game_core.tscn")
 # how many higher ranks to assign to (friendly) AI
 var rank_list = [1,1]
 
+var curr_system = null
 var mmap
 
 func spawn_system(system="proc"):
@@ -57,7 +58,7 @@ func _ready():
 	
 	var data = spawn_system("alphacen") #("Sol")
 	# the system is always child #2 (#0 is parallax bg and #1 is a timer)
-	var system = data[0]
+	curr_system = data[0]
 	spawn_core() 
 	
 	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
@@ -70,16 +71,19 @@ func _ready():
 	for i in range(4):
 		spawn_friendly_drone(i, p_ind)
 	
-	spawn_starbase(system, p_ind, mmap)
-	var pos = spawn_enemy_starbase(system, p_ind, mmap)
+	spawn_starbase(curr_system, p_ind, mmap)
+	var pos = spawn_enemy_starbase(curr_system, p_ind, mmap)
 
 	spawn_enemy(pos, p_ind, mmap)
 	
-	# test
-	spawn_wormhole(p_ind, 11, mmap)
+	# wormhole
+	if curr_system == "Sol":
+		spawn_wormhole(p_ind, 11, mmap)
+	if curr_system == "proxima":
+		spawn_wormhole(p_ind, 1, mmap)
 	
-	spawn_asteroid_processor(p_ind, system, mmap)
-	var pirate = spawn_pirate_base(p_ind, system, mmap)
+	spawn_asteroid_processor(p_ind, curr_system, mmap)
+	var pirate = spawn_pirate_base(p_ind, curr_system, mmap)
 	if pirate != null:
 		for i in range(3):
 			spawn_pirate(pirate, p_ind, mmap)
@@ -391,7 +395,9 @@ func change_system(system="proxima"):
 	
 	# spawn new system
 	var data = spawn_system(system)
+	curr_system = data[0]
 	move_child(data[1], 2)
+	print("System after change: ", curr_system)
 	
 	# timer
 	get_node("Timer").start()
