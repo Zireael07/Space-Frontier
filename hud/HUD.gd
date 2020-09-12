@@ -185,7 +185,7 @@ func create_planet_listing():
 func clear_planet_listing():
 	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control"
 	
-	for i in range(1, nav_list.get_child_count()-1):
+	for i in range(1, nav_list.get_child_count()):
 		if nav_list.get_child(i).get_name() == "Headers":
 			continue # skip headers
 		nav_list.get_child(i).queue_free()

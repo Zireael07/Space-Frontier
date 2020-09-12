@@ -22,7 +22,7 @@ var star_main = null
 var stars
 var planets
 var asteroids
-var wormholes
+var wormholes = []
 
 var friendlies
 var hostiles
@@ -49,7 +49,7 @@ var colony_sprites = []
 
 # direction arrows
 var star_arrow
-var wh_arrow
+var wh_arrow = null
 
 #var center = Vector2(get_size().x/2-5, get_size().y/2-5)
 var center = Vector2()
@@ -601,5 +601,6 @@ func cleanup():
 	sb_pirate_sprites = []
 	colony_sprites = []
 	
+	wh_arrow = null
 	# as a bonus, hide the wormhole arrow
-	wh_arrow.hide()
+	#wh_arrow.hide()

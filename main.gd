@@ -302,7 +302,7 @@ func spawn_pirate(pos, p_ind, mmap):
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_pirate_ship_spawned(sp.get_child(0))
 
-func spawn_wormhole(p_ind, planet_id, mmap):
+func spawn_wormhole(p_ind, planet_id, mmap, need_icon=true):
 	var wh = wormhole.instance()
 	
 	# fix for smaller systems
@@ -323,17 +323,22 @@ func spawn_wormhole(p_ind, planet_id, mmap):
 	
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
-	mmap._on_wormhole_spawned(wh)
+	if need_icon:
+		mmap._on_wormhole_spawned(wh)
 	
 	print("Spawned a wormhole at " + str(wh.get_global_position()))
 
 	#return wh.get_global_position()
 
 # -------------------------------------
-func move_player():
+func move_player(system):
+	var place = null
 	# move player
+	if system == "proxima":
 	#var place = get_tree().get_nodes_in_group("planets")[1] 
-	var place = get_tree().get_nodes_in_group("star")[0]
+		place = get_tree().get_nodes_in_group("star")[0]
+	if system == "alphacen":
+		place = get_tree().get_nodes_in_group("star")[1]
 	print("Place: " + str(place.get_global_position()))
 	game.player.get_parent().set_global_position(place.get_global_position())
 	game.player.set_position(Vector2(0,0))
@@ -355,6 +360,7 @@ func update_HUD():
 
 	# force update planet listing
 	game.player.HUD.planets = get_tree().get_nodes_in_group("planets")
+	game.player.HUD.get_node("Control2").planets = get_tree().get_nodes_in_group("planets")
 	game.player.HUD.create_planet_listing()
 
 func change_system(system="proxima"):
@@ -399,10 +405,17 @@ func change_system(system="proxima"):
 	move_child(data[1], 2)
 	print("System after change: ", curr_system)
 	
+	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
+	print("Player index: " + str(p_ind))
+	
+	# wormhole
+	if system == "proxima":
+		spawn_wormhole(p_ind, 1, mmap, false)
+	
 	# timer
 	get_node("Timer").start()
 	
-	call_deferred("move_player")
+	call_deferred("move_player", system)
 
 
 func _on_Timer_timeout():
