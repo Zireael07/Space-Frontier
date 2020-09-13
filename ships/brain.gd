@@ -284,9 +284,10 @@ func _on_task_timer_timeout(timer_count):
 					
 					if timer_count > 2:
 						# go back to planet
+						if ship.get_colonized_planet() != null:
 						#set_state(STATE_GO_PLANET, ship.get_colonized_planet())
-						var data = ship.get_colonized_planet().convert_planetnode_to_id()
-						set_state(STATE_LAND, data[0]+1)
+							var data = ship.get_colonized_planet().convert_planetnode_to_id()
+							set_state(STATE_LAND, data[0]+1)
 			elif get_state() == STATE_LAND:
 				if timer_count > 2:
 					if ship.landed:
