@@ -362,6 +362,8 @@ func update_HUD():
 	game.player.HUD.planets = get_tree().get_nodes_in_group("planets")
 	game.player.HUD.get_node("Control2").planets = get_tree().get_nodes_in_group("planets")
 	game.player.HUD.create_planet_listing()
+	# force update direction labels
+	game.player.HUD.create_direction_labels()
 
 func change_system(system="proxima"):
 	# despawn current system
@@ -374,6 +376,12 @@ func change_system(system="proxima"):
 			continue # skip player	
 		mmap.get_child(i).queue_free()
 	mmap.cleanup()
+	
+	# clean direction labels
+	# 0 and 1 are used for officer messages
+	for i in range(2, game.player.HUD.get_node("Control3").get_child_count()):
+		game.player.HUD.get_node("Control3").get_child(i).queue_free()
+	game.player.HUD.dir_labels = []
 	
 	# despawn all ships and starbases
 	var sb = get_tree().get_nodes_in_group("starbase")

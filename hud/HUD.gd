@@ -78,6 +78,17 @@ func _ready():
 	
 	create_planet_listing()
 	
+	create_direction_labels()
+		
+	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
+	cursor.set_position(Vector2(0, 15))
+
+	# force modulate the initial color
+	$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
+	$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
+	$"Control/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
+
+func create_direction_labels():
 	var dir_label
 	for i in range (planets.size()):
 		var p = planets[i]
@@ -87,14 +98,6 @@ func _ready():
 		dir_label.set_position(Vector2(20, 100))
 		$"Control3".add_child(dir_label)
 		dir_labels.append(dir_label)
-		
-	var cursor = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/Cursor2"
-	cursor.set_position(Vector2(0, 15))
-
-	# force modulate the initial color
-	$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
-	$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
-	$"Control/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
 
 func create_planet_listing():
 	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control"
