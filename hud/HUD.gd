@@ -202,32 +202,37 @@ func handle_direction_labels():
 			return
 			
 		var rel_loc = planet.get_global_position() - player.get_child(0).get_global_position()
-		#print(rel_loc)
+		#print(planet.get_node("Label").get_text() + " : " + str(rel_loc))
 
 		# show labels if planets are offscreen
 		# numbers hardcoded for 1024x600 screen
-		if abs(rel_loc.x) > 400 or abs(rel_loc.y) > 375:
-
-			# calculate clamped positions that "stick" labels to screen edges
-			var clamp_x = rel_loc.x
-			var clamp_y = 575
-			if abs(rel_loc.x) > 400:
-				clamp_x = clamp(rel_loc.x, 0, 300)
-				if rel_loc.x < 0:
-					clamp_x = clamp(rel_loc.x, -400, 0)
-
-			if abs(rel_loc.y) > 375:
-				clamp_y = clamp(rel_loc.y, 0, 575)
-				if rel_loc.y < 0:
-					clamp_y = 0
-
-			var clamped = Vector2(center.x+clamp_x, clamp_y)
-
-			dir_labels[i].set_position(clamped)
-			if not dir_labels[i].is_visible():
-				dir_labels[i].show()
-		else:
+		# if planets are very far away, hide
+		if abs(rel_loc.y) > 300000 or abs(rel_loc.x) > 300000:
 			dir_labels[i].hide()
+		else:
+			#print(planet.get_node("Label").get_text() + " : " + str(rel_loc))
+			if abs(rel_loc.x) > 400 or abs(rel_loc.y) > 375:
+	
+				# calculate clamped positions that "stick" labels to screen edges
+				var clamp_x = rel_loc.x
+				var clamp_y = 575
+				if abs(rel_loc.x) > 400:
+					clamp_x = clamp(rel_loc.x, 0, 300)
+					if rel_loc.x < 0:
+						clamp_x = clamp(rel_loc.x, -400, 0)
+	
+				if abs(rel_loc.y) > 375:
+					clamp_y = clamp(rel_loc.y, 0, 575)
+					if rel_loc.y < 0:
+						clamp_y = 0
+	
+				var clamped = Vector2(center.x+clamp_x, clamp_y)
+	
+				dir_labels[i].set_position(clamped)
+				if not dir_labels[i].is_visible():
+					dir_labels[i].show()
+			else:
+				dir_labels[i].hide()
 
 #----------------------------------
 func _process(_delta):
