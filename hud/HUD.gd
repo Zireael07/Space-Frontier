@@ -203,14 +203,18 @@ func handle_direction_labels():
 			
 		var rel_loc = planet.get_global_position() - player.get_child(0).get_global_position()
 		#print(planet.get_node("Label").get_text() + " : " + str(rel_loc))
-
-		# show labels if planets are offscreen
-		# numbers hardcoded for 1024x600 screen
+		
 		# if planets are very far away, hide
 		if abs(rel_loc.y) > 300000 or abs(rel_loc.x) > 300000:
 			dir_labels[i].hide()
+		# hide even earlier for asteroids
+		elif planet.is_in_group("aster_named") and abs(rel_loc.y) > 10000 or abs(rel_loc.x) > 10000:
+			dir_labels[i].hide()
 		else:
 			#print(planet.get_node("Label").get_text() + " : " + str(rel_loc))
+			
+			# show labels if planets are offscreen
+			# numbers hardcoded for 1024x600 screen
 			if abs(rel_loc.x) > 400 or abs(rel_loc.y) > 375:
 	
 				# calculate clamped positions that "stick" labels to screen edges
