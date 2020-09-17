@@ -96,6 +96,9 @@ func create_direction_labels():
 		dir_label = Label.new()
 		dir_label.set_text(p.get_node("Label").get_text())
 		dir_label.set_position(Vector2(20, 100))
+		# tint for asteroids
+		if p.is_in_group("aster_named"):
+			dir_label.set_self_modulate(Color(0.75,0.75, 0.75))
 		$"Control3".add_child(dir_label)
 		dir_labels.append(dir_label)
 
