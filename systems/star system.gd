@@ -40,7 +40,7 @@ func _ready():
 				if c.has_node("Label"):
 					var nam = c.get_node("Label").get_text()
 					if line[0] == nam:
-						print("Name fits, setup @ " + str(line[1]) + " d: " + str(line[2]) + " m:" + str(line[3]))
+						#print("Name fits, setup @ " + str(line[1]) + " d: " + str(line[2]) + " m:" + str(line[3]))
 						# for planets, distance is given in AU
 						# the measure of mass varies by type
 						# by default, plain Earth masses
@@ -61,7 +61,7 @@ func _ready():
 						var nam = m.get_node("Label").get_text()
 						if line[0] == nam:
 							# for moons, distance is absolute
-							print("Name fits, setup @ " + str(line[1]) + " d: " + str(line[2]))
+							#print("Name fits, setup @ " + str(line[1]) + " d: " + str(line[2]))
 							var mas = 0
 							# if we have a mass and our type is moon
 							if line[3] != " moon" and line[4] == " moon":

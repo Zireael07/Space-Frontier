@@ -87,7 +87,7 @@ func _process(delta):
 				# all local positions relative to the immediate parent
 				get_parent().set_position(tractor.get_node("dock").get_position()+Vector2(0,20))
 				set_position(Vector2(0,0))
-				print("Adding colony as tractoring ship's child")
+				#print("Adding colony as tractoring ship's child")
 				# switch off tractor
 				tractor = null
 				get_parent().get_parent().tractor = null

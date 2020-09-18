@@ -321,7 +321,7 @@ func _on_task_timer_timeout(timer_count):
 							if dist < 500:
 								target = close_col.get_global_position()
 								set_state(STATE_IDLE)
-								print("Floating colony close by")
+								#print("Floating colony close by")
 						
 			if get_state() == STATE_REFIT:
 				if not ship.docked:
