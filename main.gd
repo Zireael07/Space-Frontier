@@ -302,7 +302,7 @@ func spawn_pirate(pos, p_ind, mmap):
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_pirate_ship_spawned(sp.get_child(0))
 
-func spawn_wormhole(p_ind, planet_id, mmap, need_icon=true):
+func spawn_wormhole(p_ind, planet_id, mmap, target_system=null, need_icon=true):
 	var wh = wormhole.instance()
 	
 	# fix for smaller systems
@@ -318,6 +318,9 @@ func spawn_wormhole(p_ind, planet_id, mmap, need_icon=true):
 	wh.set_global_position(p.get_global_position() + offset)
 	
 	wh.set_name("wormhole")
+	if target_system != null:
+		wh.target_system = target_system
+	
 	get_child(2).add_child(wh)
 	get_child(2).move_child(wh, p_ind+1)
 	
@@ -334,7 +337,7 @@ func spawn_wormhole(p_ind, planet_id, mmap, need_icon=true):
 func move_player(system):
 	var place = null
 	# move player
-	if system == "proxima":
+	if system == "proxima" or system == "Sol":
 	#var place = get_tree().get_nodes_in_group("planets")[1] 
 		place = get_tree().get_nodes_in_group("star")[0]
 	if system == "alphacen":
@@ -418,7 +421,8 @@ func change_system(system="proxima"):
 	
 	# wormhole
 	if system == "proxima":
-		spawn_wormhole(p_ind, 1, mmap, false)
+		spawn_wormhole(p_ind, 1, mmap, null, false)
+		spawn_wormhole(p_ind, 0, mmap, "Sol", false)
 	
 	# timer
 	get_node("Timer").start()
