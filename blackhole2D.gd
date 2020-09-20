@@ -3,6 +3,7 @@ extends Node2D
 var entered = false
 var active = false
 var target_system = null
+var ly = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,8 +27,12 @@ func _on_Area2D_area_entered(_area):
 			
 		# change the system
 		if system == "Sol":
-			get_tree().get_nodes_in_group("main")[0].change_system()
+			ly = 4.24
+			print("Distance: ", ly, " light years")
+			get_tree().get_nodes_in_group("main")[0].change_system("proxima")
 		if system == "proxima":
+			ly = 0.21 # between Proxima and Alpha Centauri
+			print("Distance: ", ly, " light years")
 			get_tree().get_nodes_in_group("main")[0].change_system("alphacen")
 		
 		
