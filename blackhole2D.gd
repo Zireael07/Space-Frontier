@@ -22,18 +22,29 @@ func _on_Area2D_area_entered(_area):
 		entered = true
 		
 		if target_system != null:
-			get_tree().get_nodes_in_group("main")[0].change_system(target_system)
+			var time = 0.5
+			if target_system == "Sol":
+				ly = 4.24
+				print("Distance: ", ly, " light years")
+				time = ly/game.WORMHOLE_SPEED # fraction of a year
+			
+			time = time * 12 # because one month is 1/12 of a year
+			get_tree().get_nodes_in_group("main")[0].change_system(target_system, time)
 			return 
 			
 		# change the system
 		if system == "Sol":
 			ly = 4.24
 			print("Distance: ", ly, " light years")
-			get_tree().get_nodes_in_group("main")[0].change_system("proxima")
+			var time = ly/game.WORMHOLE_SPEED # fraction of a year
+			time = time * 12 # because one month is 1/12 of a year
+			get_tree().get_nodes_in_group("main")[0].change_system("proxima", time)
 		if system == "proxima":
 			ly = 0.21 # between Proxima and Alpha Centauri
+			var time = ly/game.WORMHOLE_SPEED
+			time = time * 12 # because one month is 1/12 of a year
 			print("Distance: ", ly, " light years")
-			get_tree().get_nodes_in_group("main")[0].change_system("alphacen")
+			get_tree().get_nodes_in_group("main")[0].change_system("alphacen", time)
 		
 		
 

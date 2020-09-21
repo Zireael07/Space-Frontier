@@ -334,7 +334,7 @@ func spawn_wormhole(p_ind, planet_id, mmap, target_system=null, need_icon=true):
 	#return wh.get_global_position()
 
 # -------------------------------------
-func move_player(system):
+func move_player(system, travel=0.0):
 	var place = null
 	# move player
 	if system == "proxima" or system == "Sol":
@@ -347,6 +347,14 @@ func move_player(system):
 	game.player.set_position(Vector2(0,0))
 
 	#call_deferred("update_HUD")
+	
+	# officer message
+	var travel_months = int(floor(travel))
+	# for convenience, assume a month has 30 days
+	var format_travel = "%d months %d days" % [travel_months, (travel-travel_months)*30]
+	var msg = str("Welcome to ", system, " we arrived: ", format_travel, " after departure")
+	print(str(travel) + " months, " + str((travel-travel_months)*30) + " days ")
+	game.player.emit_signal("officer_message", msg)
 	
 func update_HUD():
 	# force update orrery
@@ -368,7 +376,7 @@ func update_HUD():
 	# force update direction labels
 	game.player.HUD.create_direction_labels()
 
-func change_system(system="proxima"):
+func change_system(system="proxima", time=0.0):
 	# despawn current system
 	get_child(2).queue_free()
 	
@@ -427,7 +435,7 @@ func change_system(system="proxima"):
 	# timer
 	get_node("Timer").start()
 	
-	call_deferred("move_player", system)
+	call_deferred("move_player", system, time)
 
 
 func _on_Timer_timeout():
