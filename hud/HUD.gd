@@ -495,10 +495,11 @@ func _on_module_level_changed(module, level):
 		refit.get_node("Engine").set_text("Engine: " + str(level))
 		#$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/Engine".set_text("Engine: " + str(level))
 
-func _on_officer_messaged(message):
+func _on_officer_messaged(message, time=3.0):
 	$"Control3/Officer".show()
 	$"Control3/Officer".set_text("1st Officer>: " + str(message))
 	# start the hide timer
+	$"Control3/officer_timer".wait_time = time
 	$"Control3/officer_timer".start()
 
 func _on_kill_gained(num):

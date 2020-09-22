@@ -54,6 +54,10 @@ signal planet_landed
 # for AI orders
 var conquer_target = null
 
+func welcome():
+	# give start date
+	emit_signal("officer_message", "Welcome to the space frontier! The date is 05-05-2155", 5.0);
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -71,6 +75,8 @@ func _ready():
 	var offset = Vector2(0,0) #Vector2(50,50)
 	get_parent().set_global_position(planet.get_global_position() + offset)
 	set_position(Vector2(0,0))
+	
+	call_deferred("welcome")
 	
 #----------------------------------
 # input (spread across process and fixed_process)
