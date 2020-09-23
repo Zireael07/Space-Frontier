@@ -351,9 +351,14 @@ func move_player(system, travel=0.0):
 	# officer message
 	var travel_months = int(floor(travel))
 	# for convenience, assume a month has 30 days
-	var format_travel = "%d months %d days" % [travel_months, (travel-travel_months)*30]
-	var msg = str("Welcome to ", system, " we arrived: ", format_travel, " after departure")
-	print(str(travel) + " months, " + str((travel-travel_months)*30) + " days ")
+	var days = (travel-travel_months)*30
+	var format_travel = "%d months %d days" % [travel_months, days]
+	# add them to date
+	game.increment_date(int(floor(days)), travel_months)
+	#game.date = [game.date[0]+int(floor(days)), game.date[1]+travel_months, game.date[2]]
+	var format_date = "%02d-%02d-%d" % [game.date[0], game.date[1], game.date[2]]
+	var msg = str("Welcome to ", system, " we arrived: ", format_travel, " after departure. The current date is: ", format_date);
+	print(str(travel) + " months, " + str(days) + " days ")
 	game.player.emit_signal("officer_message", msg)
 	
 func update_HUD():

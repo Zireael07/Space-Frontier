@@ -9,6 +9,9 @@ const AU = LS_TO_AU*LIGHT_SEC #12000
 const MOON_MASS = 0.0123 #Earth masses
 const WORMHOLE_SPEED = 5.00 # in c
 
+const start_date = [05, 05, 2155]
+var date = start_date
+
 # ship name lists here for consistency
 # highly US themed names and some mythological animals
 var friendly_names = ["Victorious", "Notorious", "Triumphant", "Courageous", "Reliant", "Privateer", "Providence", "Constellation", \
@@ -39,6 +42,14 @@ func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
 	pass
+
+func increment_date(days, months):
+	# add them to date
+	game.date = [game.date[0]+int(floor(days)), game.date[1]+months, game.date[2]]
+	var month = game.date[1]
+	if month > 12:
+		game.date[1] = month-12
+		game.date[2] += 1 # increment year
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

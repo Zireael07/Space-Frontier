@@ -56,7 +56,8 @@ var conquer_target = null
 
 func welcome():
 	# give start date
-	emit_signal("officer_message", "Welcome to the space frontier! The date is 05-05-2155", 5.0);
+	var msg = "Welcome to the space frontier! The date is %02d-%02d-%d" % [game.start_date[0], game.start_date[1], game.start_date[2]]
+	emit_signal("officer_message", msg, 5.0);
 
 func _ready():
 	# Called every time the node is added to the scene.
