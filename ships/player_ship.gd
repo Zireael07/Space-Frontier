@@ -17,6 +17,7 @@ var boost = false
 
 var has_cloak = false
 var cloaked = false
+var has_tractor = true
 
 onready var warp_effect = preload("res://warp_effect.tscn")
 onready var warp_timer = $"warp_correct_timer"
@@ -362,6 +363,10 @@ func _input(_event):
 		get_closest_friendly_target()
 	
 	if Input.is_action_pressed("join"):
+		# can't pick up colonies if we don't have the tractor/dock module
+		if not has_tractor:
+			return
+		
 		if not orbiting:
 			print("Not orbiting")
 		else:
@@ -431,6 +436,10 @@ func _input(_event):
 	
 	# tractor
 	if Input.is_action_pressed("tractor"):
+		# if no tractor module, abort
+		if has_tractor == false:
+			return
+			
 		# toggle
 		if not tractor:
 			var col = get_closest_floating_colony()

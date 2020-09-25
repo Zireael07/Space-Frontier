@@ -103,8 +103,10 @@ func switch_to_refit():
 	$"Panel_rightHUD/PanelInfo/RefitInfo/Shields".set_text("Shields: " + str(player.shield_level))
 	# others
 	var txt_others = ""
+	if player.has_tractor:
+		txt_others = "Tractor"
 	if player.has_cloak:
-		txt_others = "Cloak"
+		txt_others += "\nCloak"
 	$"Panel_rightHUD/PanelInfo/RefitInfo/Others".set_text(txt_others)
 
 	# disable button if not docked
@@ -140,7 +142,7 @@ func _onButtonCargo_pressed():
 
 func _onButtonDown_pressed():
 	var cursor = $"Panel_rightHUD/PanelInfo/RefitInfo/Cursor"
-	if cursor.get_position().y < 60:
+	if cursor.get_position().y < 90:
 		# down a line
 		cursor.set_position(cursor.get_position() + Vector2(0, 15))
 		
@@ -168,6 +170,19 @@ func _onButtonUpgrade_pressed():
 		if select_id == 2:
 			player.shield_level += 1
 			player.credits -= 50
+
+
+func _on_ButtonSell_pressed():
+	if player.docked:
+		var cursor = $"Panel_rightHUD/PanelInfo/RefitInfo/Cursor"
+		var select_id = ((cursor.get_position().y-30) / 15)
+		
+		if select_id == 3:
+			print("Pressed sell addons")
+			player.credits += 100
+			player.has_tractor = false
+			# force update
+			switch_to_refit()
 
 # navigation panel
 # show planet/star descriptions
@@ -578,3 +593,4 @@ func _onButtonDown3_pressed():
 	if cursor.get_position().y < max_y:
 		# down a line
 		cursor.set_position(cursor.get_position() + Vector2(0,15))
+
