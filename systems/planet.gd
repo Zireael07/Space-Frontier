@@ -433,6 +433,24 @@ func get_planet_class():
 	else:
 		return "gas giant"
 
+# http://spaceengine.org/news/blog170924/
+# temperature cutoffs based on physical properties of substances
+func get_temp_desc():
+	if temp < 90:
+		return "frigid"
+	elif temp < 170:
+		return "cold"
+	elif temp < 250:
+		return "chilly" # "cool" in SE, which is too visually similar to cold
+	elif temp < 330:
+		return "temperate"
+	elif temp < 500:
+		return "warm"
+	elif temp < 1000:
+		return "hot"
+	else:
+		return "scorched" #"torrid" in SE
+
 # 'interesting' planets have significant ice or water content
 func is_interesting():
 	var ret = false

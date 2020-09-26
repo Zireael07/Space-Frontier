@@ -357,8 +357,8 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	text = text + "\n" + "Habitability:" + "\n" + format_habitability+"%"
 	#text = text + "\n" + "Habitability: " + "\n" + str(planet.calculate_habitability())
 	
-	# planet class
-	text = text + "\n" + "Class: " + planet.get_planet_class()
+	# planet temp & class
+	text = text + "\n" + "Class: " + planet.get_temp_desc() + " \n" + planet.get_planet_class()
 		
 	# formatting
 	var format_pop = "%.2fK" % (planet.population * 1000)
