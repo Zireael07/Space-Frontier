@@ -451,6 +451,19 @@ func get_temp_desc():
 	else:
 		return "scorched" #"torrid" in SE
 
+# http://spaceengine.org/news/blog170924/
+func get_volatiles_desc():
+	# 1013250100 nanobar in 1 atm => 1 nanobar is 9.869e-10 atm
+	if atm < 9.869e-10:
+		return "airless"
+	else:
+		if hydro < 0.01:
+			return "desertic"
+		if hydro > 0.2: # "a significant amount of [a liquid substance]"
+			return "marine"
+		if hydro > 0.8:
+			return "oceanic"
+
 # 'interesting' planets have significant ice or water content
 func is_interesting():
 	var ret = false
