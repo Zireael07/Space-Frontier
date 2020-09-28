@@ -18,3 +18,4 @@ Those projects allowed me to implement procedural stars and planets, citing astr
 
 * [Pioneer](https://github.com/pioneerspacesim/pioneer)
 * [Stellar Dream](https://github.com/irskep/stellardream)
+* [Accrete](https://github.com/zakski/accrete-starform-stargen)

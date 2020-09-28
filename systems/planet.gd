@@ -141,6 +141,16 @@ func setup(angle=0, dis=0, mas=0):
 			m.temp = m.calculate_temperature()
 			m.calculate_orbit_period()
 
+	# debug
+	if atm > 0.01:
+		var mol = molecule_limit()
+		print("Smallest molecule planet holds: ", mol)
+		var exo_tmp = get_exospheric_temp()
+		
+#		var gases = ["H2", "He", "CH4", "NH3", "H2O", "Ne", "CO", "O2", "H2S", "CO2", "O3", "SO2"]
+#		for g in gases:
+#			print("Gas retention for ", g, " : ", has_gas_retention(g, exo_tmp))
+
 # Kepler's Third Law:
 # The square of the period of any planet is proportional to the cube of the semi-major axis of its orbit.
 # t^2 = au^3 if period is in years and axis is in AU
@@ -292,11 +302,79 @@ func get_mass(density, _radius):
 
 # so many things from mass and radius!
 # sqrt(G * M / r)
+# this is the first cosmic velocity, the one to orbit
 func get_cosmic_vel(mass, rad):
 	var G = 0.0000000000667
-	var vel = sqrt(G*mass/rad)
+	var vel = sqrt((G*mass)/rad)
+	#print("Cosmic vel: ", vel)
 	return vel # value relative to the Earth's cosmic vel since mass & radius are expressed as relative
 	
+# escape velocity aka 2nd cosmic velocity
+# At a given height, the escape velocity is sqrt(2) times the speed in a circular orbit... - wikipedia
+# relative to Earth escape vel
+func get_escape_vel(mass, rad):
+	var G = 0.0000000000667
+	var vel = sqrt((2*G*mass)/rad)
+	var fudge = 1/0.000012 # for some reason, we're getting values this much smaller than IRL
+	return vel*fudge # relative to Earth's escape vel
+	#return sqrt(2)*get_cosmic_vel(mass, radius)
+
+# calculations from Accrete/Starform
+func get_exospheric_temp():
+	# calculation from Starform/Accrete, the C versions, wants orbital radius in AU
+	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
+	# Earth's exosphere temp is 1273.0  # degrees Kelvin
+	var ret = 1273.0 / pow(axis, 2) 
+		
+	#print("Exospheric temp: ", ret, " K")
+	return ret
+
+# calculations from Accrete/Starform
+func rms_molecule(molecule, exo_temp):
+	# from Dole's book "Habitable Planets for Man", p. 38 
+	var weights = { "H": 1.0, "H2": 2.0, "He": 4.0, "N":14.0, "O": 16.0, "CH4":16.0, 
+	"NH3":17.0, "H2O":18.0, "Ne":20.2, "N2":28.0, "CO":28.0, "NO":30.0, "O2": 32.0,
+	"H2S":34.1, "Ar":39.9, "CO2":44.0, "N2O":44.0, "NO2":46.0, "O3":48.0, 
+	"SO2": 64.1, "SO3":80.1, "Kr":83.8, "Xe":131.3 }
+	
+	return sqrt((3.0 * 8314.41 * exo_temp) / weights[molecule]) # in cm/s
+
+func has_gas_retention(molecule, exo_temp):
+	var esc_vel = get_escape_vel(mass, radius) # relative to Earth escape vel
+	#esc_vel *= 1118600 # in cm/s
+	#print("Esc vel: ", esc_vel, " of Earth escape vel")
+	#print("Escape vel: ", esc_vel*1118600, " cm/s")
+	
+	
+	var rms_vel = rms_molecule(molecule, exo_temp)
+	return ((esc_vel*1118600) / rms_vel) >= 6.0
+
+
+# Smallest molecular weight retained, useful for determining atmo
+# calculation comes from well known Starform/Accrete program which references Fogg here
+func molecule_limit():
+	var escape_vel = get_escape_vel(mass, radius) ##*1118.6
+	#print("Esc vel: ", escape_vel, " of Earth escape vel")
+	#print("Escape vel: ", escape_vel*1118600, " cm/s")
+	
+	# 6.0 is the gas_retention_threshold
+	# MOLAR_GAS_CONST = 8314.41  # units: g*m2/(sec2*K*mol)
+	# Earth's exosphere temp is 1273.0  # degrees Kelvin
+	
+	#print("Exospheric temp: ", get_exospheric_temp(), " K")
+	
+	var gas = pow(6.0 * 100.0, 2.0) 
+	var tmp  = 8314.41 * get_exospheric_temp()
+	# Earth escape vel is 11.186 km/s, give it in cm/s as Accrete wants
+	var esc = pow((escape_vel*1118600), 2.0)
+	
+	return (3.0 * (gas * tmp)) / esc
+	#return((3.0 * gas * 1273.0) / pow(escape_vel*1118.6, 2.0));
+	
+	
+	
+	#return ((3.0 * 8314.41 * get_exospheric_temp()) /
+	#		(pow((escape_vel*1118.6 / 6.0) / 100.0, 2)))
 
 # for now, this is just the ESI (Earth Similarity Index)
 # http://www.extrasolar.de/en/cosmopedia/planets.0011.esi
