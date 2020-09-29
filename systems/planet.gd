@@ -319,7 +319,8 @@ func get_escape_vel(mass, rad):
 	return vel*fudge # relative to Earth's escape vel
 	#return sqrt(2)*get_cosmic_vel(mass, radius)
 
-# calculations from Accrete/Starform
+# --------------------------
+# atmosphere - mostly calculations from Accrete/Starform
 func get_exospheric_temp():
 	# calculation from Starform/Accrete, the C versions, wants orbital radius in AU
 	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
@@ -345,10 +346,110 @@ func has_gas_retention(molecule, exo_temp):
 	#print("Esc vel: ", esc_vel, " of Earth escape vel")
 	#print("Escape vel: ", esc_vel*1118600, " cm/s")
 	
-	
 	var rms_vel = rms_molecule(molecule, exo_temp)
+	# 6.0 seems to be based on https://cseligman.com/text/planets/retention.htm
+	# "over 10 billion years if the ratio is 6"
+	#About 100 million years if the ratio of escape velocity to average particle velocity is 5.
+	#Well under 1 million years if the ratio is 4 (since there are more particles in the high-velocity tail).
+	#Well under 10 thousand years if the ratio is 3
+	# And well over 1 trillion years if the ratio is 7
 	return ((esc_vel*1118600) / rms_vel) >= 6.0
 
+# based on Keris's starform (an Accrete variant)
+func atmosphere_gases():
+	var weights = { "H": 1.0, "H2": 2.0, "He": 4.0, "N":14.0, "O": 16.0, "CH4":16.0, 
+	"NH3":17.0, "H2O":18.0, "Ne":20.2, "N2":28.0, "CO":28.0, "NO":30.0, "O2": 32.0,
+	"H2S":34.1, "Ar":39.9, "CO2":44.0, "N2O":44.0, "NO2":46.0, "O3":48.0, 
+	"SO2": 64.1, "SO3":80.1, "Kr":83.8, "Xe":131.3 }
+	
+	# "solar abundances" from Keris, no source given
+	var abunds = {"H": 27925.4, "He": 2722.4, "N":3.1333, "O":23.8232, "O2":23.8232, "Ne":3.4435e-5,
+	"NH3": 0.0001, "H2O":0.001, "CO2": 0.0005, "O3":0.000001, "CH4":0.0001}
+	
+	var reactivity = { "He": 0.0, "N": 0.0, "Ne": 0.0, "H2O":0.0, "CO2":0.0,
+	"O": 10.0, "O2":10.0, # resulted in too little oxygen around
+	#"O": 2.0, "O2": 2.0,
+	 "NH3":1.0, "O3":2.0, "CH4":1.0}
+	
+	var exo_temp = get_exospheric_temp()
+	var esc_vel = get_escape_vel(mass, radius)*1118600
+	
+	var pressure = (atm*1.01325) # in bars
+	
+	var total_amount = 0
+	var gases_tmp = []
+	# 5.0 is a placeholder for the star's age, in bilions of years
+	# 1e9 is 1 billion (a thousand million to be extremely clear, aka "miliard" in some EU languages
+	var star_age = 5.0
+	
+	var gases = ["H2", "He", "N", "CH4", "NH3", "H2O", "Ne", "O2", "CO2", "O3"]
+	for g in gases:
+		var molecule = weights[g]
+		if molecule >= molecule_limit(): 
+			# no idea what exactly this is, except it is connected to rms
+			var pvrms = pow(1 / (1 + rms_molecule(g, exo_temp) / esc_vel), star_age)
+			var abund = abunds[g]
+			# dummies
+			var react = 1.0
+			var fract = 1.0
+			var pres2 = 1.0
+			
+			# gas-specific stuff
+			if g == "Ar":
+				react = .15 * (star_age/4.0);
+			elif g == "He":
+				# wants pressure in bars
+				pres2 = (0.75 + pressure)
+				react = pow(1 / (1 + reactivity[g]), 
+								star_age/2.0 * pres2)
+			elif g == "O" or g == "O2":
+				# if too cold, no oxygen around (simplified from Keris)
+				if temp < 270:
+					react = 0.0
+					print("Too cold! React: ", react)
+				else:
+					# wants pressure in bars
+					pres2 = (0.65 + pressure/2)
+					#pres2 = (0.89 + pressure/4)
+
+					# this react calculation is based on Keris Starform
+					#print("Fact: ", 1 / (1 + reactivity[g]))
+					#print("Exp: ", (pow(star_age/2.0, 0.25) * pres2))
+					# fractional exponents are funny
+					react = pow(1 / (1 + reactivity[g]), 
+									(pow(star_age/2.0, 0.25) * pres2))
+
+			elif g == "CO2":
+				pres2 = (0.75 + pressure)
+				react = pow(1 / (1 + reactivity[g]), 
+								pow(star_age/2.0, 0.5) * pres2)
+				react *= 1.5;
+			else:
+				pres2 = (0.75 + pressure)
+				react = pow(1 / (1 + reactivity[g]), 
+								star_age/2.0 * pres2)
+				
+			fract = (1 - (molecule_limit() / molecule))
+			print("Gas ", g, ": ", str(abund*pvrms), " fract:", fract, " react: ", react)
+			var amount = abund * pvrms * react * fract
+			total_amount = total_amount + amount
+			gases_tmp.append([g, amount])
+	
+	var gases_atm = []
+	gases_atm.clear()
+	# needs to be a separate loop so that we calculate relative to the total
+	for g in gases_tmp:
+		#var g = gases_tmp[i]
+		var amount = g[1]
+		# pressure exerted by our gas
+		var ratio = amount/total_amount
+		var gas_pressure = atm * ratio # since atm is in atmospheres, this is necessarily so, too
+		print("Gas " , g[0], " pressure: ", gas_pressure, " atm ")
+		# how much % of atmosphere is the gas
+		var atm_fraction = 100 * (gas_pressure / atm)
+		gases_atm.append([g[0], atm_fraction])
+			
+	return gases_atm
 
 # Smallest molecular weight retained, useful for determining atmo
 # calculation comes from well known Starform/Accrete program which references Fogg here
@@ -371,10 +472,11 @@ func molecule_limit():
 	return (3.0 * (gas * tmp)) / esc
 	#return((3.0 * gas * 1273.0) / pow(escape_vel*1118.6, 2.0));
 	
-	
-	
 	#return ((3.0 * 8314.41 * get_exospheric_temp()) /
 	#		(pow((escape_vel*1118.6 / 6.0) / 100.0, 2)))
+
+
+
 
 # for now, this is just the ESI (Earth Similarity Index)
 # http://www.extrasolar.de/en/cosmopedia/planets.0011.esi

@@ -440,7 +440,11 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# this was present in the original game
 	text = text + "Hydro: " + str(planet.hydro) + "\n"
 	# this is new
-	text = text + "Ice cover: " + str(format_ices) + "%"
+	text = text + "Ice cover: " + str(format_ices) + "%" + "\n"
+	
+	if planet.atm > 0.01:
+		text = text + "Atmosphere: \n" + str(planet.atmosphere_gases())
+	
 	# layout fix
 	text = text + "\n"
 
