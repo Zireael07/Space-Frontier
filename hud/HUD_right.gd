@@ -35,6 +35,9 @@ func switch_to_navi():
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Panel_rightHUD/PanelInfo/NavInfo".show()
 	
+	# grab the f&cking focus
+	$"Panel_rightHUD/PanelInfo/NavInfo/ButtonView".grab_focus()
+	
 func _onButtonCensus_pressed():
 	$"Panel_rightHUD/PanelInfo/CensusInfo".show()
 	$"Panel_rightHUD/PanelInfo/ShipInfo".hide()
