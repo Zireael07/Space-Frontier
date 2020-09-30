@@ -443,7 +443,17 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	text = text + "Ice cover: " + str(format_ices) + "%" + "\n"
 	
 	if planet.atm > 0.01:
-		text = text + "Atmosphere: \n" + str(planet.atmosphere_gases())
+		# pretty formatting for atmosphere data
+		var atm_text = ""
+		for i in range(planet.atmosphere_gases().size()):
+			var g = planet.atmosphere_gases()[i]
+			var format_g = "%s %d" % [g[0], g[1]]
+			if i == 0:
+				atm_text = str(format_g)+"%"
+			else:
+				atm_text = atm_text + ", " + str(format_g)+"%"
+		
+		text = text + "Atmosphere: \n" + atm_text #str(planet.atmosphere_gases())
 	
 	# layout fix
 	text = text + "\n"

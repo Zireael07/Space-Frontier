@@ -355,6 +355,13 @@ func has_gas_retention(molecule, exo_temp):
 	# And well over 1 trillion years if the ratio is 7
 	return ((esc_vel*1118600) / rms_vel) >= 6.0
 
+# sort
+class MyCustomSorter:
+	static func sort_atm_fraction(a, b):
+		if a[1] > b[1]:
+			return true
+		return false
+
 # based on Keris's starform (an Accrete variant)
 func atmosphere_gases():
 	var weights = { "H": 1.0, "H2": 2.0, "He": 4.0, "N":14.0, "O": 16.0, "CH4":16.0, 
@@ -436,7 +443,6 @@ func atmosphere_gases():
 			gases_tmp.append([g, amount])
 	
 	var gases_atm = []
-	gases_atm.clear()
 	# needs to be a separate loop so that we calculate relative to the total
 	for g in gases_tmp:
 		#var g = gases_tmp[i]
@@ -448,6 +454,12 @@ func atmosphere_gases():
 		# how much % of atmosphere is the gas
 		var atm_fraction = 100 * (gas_pressure / atm)
 		gases_atm.append([g[0], atm_fraction])
+	
+	# custom sort
+	gases_atm.sort_custom(MyCustomSorter, "sort_atm_fraction")
+
+
+	
 			
 	return gases_atm
 
