@@ -396,7 +396,8 @@ func atmosphere_gases():
 				
 			# no idea what exactly this is, except it is connected to rms
 			var pvrms = pow(1 / (1 + rms_molecule(g, exo_temp) / esc_vel), star_age)
-			var abund = chem.abunds[g]
+			#var abund = chem.abunds[g]
+			var abund = chem.abundance[g] # more realistic abundance values
 			# dummies
 			var react = 1.0
 			var fract = 1.0
@@ -417,13 +418,16 @@ func atmosphere_gases():
 					print("Too cold! React: ", react)
 				else:
 					# wants pressure in bars
-					pres2 = (0.65 + pressure/2)
-					#pres2 = (0.89 + pressure/4)
+					#pres2 = (0.65 + pressure/2)
+					pres2 = (0.89 + pressure/4)
 
 					# this react calculation is based on Keris Starform
 					#print("Fact: ", 1 / (1 + reactivity[g]))
-					#print("Exp: ", (pow(star_age/2.0, 0.25) * pres2))
 					# fractional exponents are funny
+					# inverse relation to both star age and pressure
+					# older or higher pressure = less react
+					#print("Exp: ", (pow(star_age/2.0, 0.5) * pres2))
+					
 					react = pow(1 / (1 + chem.reactivity[g]), 
 									(pow(star_age/2.0, 0.25) * pres2))
 
@@ -431,15 +435,38 @@ func atmosphere_gases():
 				pres2 = (0.75 + pressure)
 				react = pow(1 / (1 + chem.reactivity[g]), 
 								pow(star_age/2.0, 0.5) * pres2)
-				react *= 1.5;
+				#react *= 1.5;
+				react /= 2;
+				
+			# 2020 hacks for Ne/N to work with realistic abundances
+			elif g == "Ne":
+				pres2 = (0.75 + pressure)
+				# pretend there is less of it around (vast majority gets dissipated in the solar wind)
+				abund /= 100;
+
+				react = pow(1 / (1 + chem.reactivity[g]), 
+								star_age/2.0 * pres2)
+			elif g == "N":
+				abund *= 2 # nitrogen from plants/ground contributes most likely
+				pres2 = (0.75 + pressure)
+				react = pow(1 / (1 + chem.reactivity[g]), 
+								star_age/2.0 * pres2)
 			else:
 				pres2 = (0.75 + pressure)
 				react = pow(1 / (1 + chem.reactivity[g]), 
 								star_age/2.0 * pres2)
+			
+			# if we're not a gas on the surface, but we are in exosphere, only allow limited amounts
+			if g in chem.boil and temp < chem.boil[g] and exo_temp > chem.boil[g]:
+				print("Limiting quantities of ", g, " because it's a liquid on the surface @", str(temp), "K")
+				react = min(react, 0.01)
+			
 				
 			fract = (1 - (molecule_limit() / molecule))
 			print("Gas ", g, ": ", str(abund*pvrms), " fract:", fract, " react: ", react)
 			var amount = abund * pvrms * react * fract
+			if amount > 0:
+				print("Gas ", g, " amt: ", amount)
 			total_amount = total_amount + amount
 			gases_tmp.append([g, amount])
 	
