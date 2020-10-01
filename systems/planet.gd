@@ -337,13 +337,7 @@ func get_exospheric_temp():
 
 # calculations from Accrete/Starform
 func rms_molecule(molecule, exo_temp):
-	# from Dole's book "Habitable Planets for Man", p. 38 
-	var weights = { "H": 1.0, "H2": 2.0, "He": 4.0, "N":14.0, "O": 16.0, "CH4":16.0, 
-	"NH3":17.0, "H2O":18.0, "Ne":20.2, "N2":28.0, "CO":28.0, "NO":30.0, "O2": 32.0,
-	"H2S":34.1, "Ar":39.9, "CO2":44.0, "N2O":44.0, "NO2":46.0, "O3":48.0, 
-	"SO2": 64.1, "SO3":80.1, "Kr":83.8, "Xe":131.3 }
-	
-	return sqrt((3.0 * 8314.41 * exo_temp) / weights[molecule]) # in cm/s
+	return sqrt((3.0 * 8314.41 * exo_temp) / chem.weights[molecule]) # in cm/s
 
 func has_gas_retention(molecule, exo_temp):
 	var esc_vel = get_escape_vel(mass, radius) # relative to Earth escape vel
@@ -360,6 +354,15 @@ func has_gas_retention(molecule, exo_temp):
 	# And well over 1 trillion years if the ratio is 7
 	return ((esc_vel*1118600) / rms_vel) >= 6.0
 
+# from Accrete, refs Fogg's eq.21
+func boiling_point():
+	var pressure = (atm*1.01325) # in bars
+	# 373 is water's boiling point, hardcoded, and -273 is to convert to Celsius 
+	var boil_pt = pow(log(pressure) / -5050.5 + 1.0 / 373.0, -1) - 273
+	print("Boiling point of water: ", boil_pt, "C")
+	return boil_pt
+
+
 # sort
 class MyCustomSorter:
 	static func sort_atm_fraction(a, b):
@@ -370,22 +373,6 @@ class MyCustomSorter:
 # based on Keris's starform (an Accrete variant)
 func atmosphere_gases():
 	#print("Atmo gases...")
-	var weights = { "H": 1.0, "H2": 2.0, "He": 4.0, "N":14.0, "O": 16.0, "CH4":16.0, 
-	"NH3":17.0, "H2O":18.0, "Ne":20.2, "N2":28.0, "CO":28.0, "NO":30.0, "O2": 32.0,
-	"H2S":34.1, "Ar":39.9, "CO2":44.0, "N2O":44.0, "NO2":46.0, "O3":48.0, 
-	"SO2": 64.1, "SO3":80.1, "Kr":83.8, "Xe":131.3 }
-	
-	# "solar abundances" from Keris's elements.dat, no source given
-	var abunds = {"H": 27925.4, "H2":27925.4, "He": 2722.4, "N":3.1333, "O":23.8232, "O2":23.8232, "Ne":3.4435e-5,
-	"NH3": 0.0001, "H2O":0.001, "CO2": 0.0005, "O3":0.000001, "CH4":0.0001}
-	
-	var reactivity = { "He": 0.0, "N": 0.0, "Ne": 0.0, "H2O":0.0, "CO2":0.0,
-	"O": 10.0, "O2":10.0,
-	 "NH3":1.0, "O3":2.0, "CH4":1.0, "H": 1.0, "H2":1.0}
-	
-	# from Keris's elements.dat
-	var boil = {"H": 20.40, "H2":20.40, "O": 90.20, "O2": 90.20, 
-	"H2O": 373.15, "CH4":109.15, "NH3":239.66, "CO2":194.66, "O3": 161.15}
 	
 	var exo_temp = get_exospheric_temp()
 	var esc_vel = get_escape_vel(mass, radius)*1118600
@@ -400,16 +387,16 @@ func atmosphere_gases():
 	
 	var gases = ["N", "CH4", "NH3", "H2O", "Ne", "O2", "CO2", "O3"] # remove hydrogen from the list, as we are looking at rocky planets
 	for g in gases:
-		var molecule = weights[g]
+		var molecule = chem.weights[g]
 		if molecule >= molecule_limit():
 			# if we're not a gas, skip
-			if g in boil and exo_temp < boil[g]:
+			if g in chem.boil and exo_temp < chem.boil[g]:
 				print("Skipping ", g, " because it's not a gas @ ", str(exo_temp) + "K")
 				continue
 				
 			# no idea what exactly this is, except it is connected to rms
 			var pvrms = pow(1 / (1 + rms_molecule(g, exo_temp) / esc_vel), star_age)
-			var abund = abunds[g]
+			var abund = chem.abunds[g]
 			# dummies
 			var react = 1.0
 			var fract = 1.0
@@ -421,7 +408,7 @@ func atmosphere_gases():
 			elif g == "He":
 				# wants pressure in bars
 				pres2 = (0.75 + pressure)
-				react = pow(1 / (1 + reactivity[g]), 
+				react = pow(1 / (1 + chem.reactivity[g]), 
 								star_age/2.0 * pres2)
 			elif g == "O" or g == "O2":
 				# if too cold, no oxygen around (simplified from Keris)
@@ -437,17 +424,17 @@ func atmosphere_gases():
 					#print("Fact: ", 1 / (1 + reactivity[g]))
 					#print("Exp: ", (pow(star_age/2.0, 0.25) * pres2))
 					# fractional exponents are funny
-					react = pow(1 / (1 + reactivity[g]), 
+					react = pow(1 / (1 + chem.reactivity[g]), 
 									(pow(star_age/2.0, 0.25) * pres2))
 
 			elif g == "CO2":
 				pres2 = (0.75 + pressure)
-				react = pow(1 / (1 + reactivity[g]), 
+				react = pow(1 / (1 + chem.reactivity[g]), 
 								pow(star_age/2.0, 0.5) * pres2)
 				react *= 1.5;
 			else:
 				pres2 = (0.75 + pressure)
-				react = pow(1 / (1 + reactivity[g]), 
+				react = pow(1 / (1 + chem.reactivity[g]), 
 								star_age/2.0 * pres2)
 				
 			fract = (1 - (molecule_limit() / molecule))
