@@ -142,6 +142,10 @@ func get_closest_enemy():
 			return t[1]
 
 func shoot():
+	# paranoia
+	if not bullet:
+		return
+		 
 	gun_timer.start()
 	var b = bullet.instance()
 	# scale until smaller gfx is found
