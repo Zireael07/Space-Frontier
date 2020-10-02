@@ -15,7 +15,8 @@ var asteroid_processor = preload("res://ships/asteroid_processor.tscn")
 var wormhole = preload("res://blackhole2D.tscn")
 
 # star systems
-var proc_system = preload("res://systems/star system.tscn")
+var handmade_system = preload("res://systems/star system.tscn")
+var proc_system = preload("res://systems//proc star system.tscn")
 var sol = preload("res://systems/Sol system.tscn")
 var trappist = preload("res://systems/Trappist system.tscn")
 var proxima = preload("res://systems/Proxima Centauri system.tscn")
