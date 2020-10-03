@@ -33,7 +33,7 @@ func _ready():
 	
 	if data != null:
 		for line in data:
-			# line is [name, angle, dist, (mass), type]
+			# line is [name, angle, dist, (mass), (radius), type]
 			print(str(line))
 			# match rows to planets
 			for c in get_node("planet_holder").get_children():
@@ -53,8 +53,12 @@ func _ready():
 						#print(str(Ceres))
 						if line[4] == " asteroid":
 							mas = float(line[3])*Ceres
+						
+						var rad = 0
+						if line.size() > 4:
+							rad = float(line[4])
 							
-						c.setup(int(line[1]), float(line[2])*game.AU, mas)
+						c.setup(int(line[1]), float(line[2])*game.AU, mas, rad)
 				# moons
 				if c.has_node("orbit_holder"):
 					for m in c.get_node("orbit_holder").get_children():

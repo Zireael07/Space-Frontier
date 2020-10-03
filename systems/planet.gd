@@ -80,8 +80,8 @@ func randomize_storage():
 		storage[e] = int(rand_range(8.0, 20.0))
 
 
-func setup(angle=0, dis=0, mas=0):
-	print("Setup: " + str(angle) + ", " + str(dis) + ", m: " + str(mas))
+func setup(angle=0, dis=0, mas=0, rad=0):
+	print("Setup: " + str(angle) + ", " + str(dis) + ", m: " + str(mas) + ", R:" +str(rad))
 	if angle != 0 or dis !=0:
 		# place
 		place(angle, dis)
@@ -118,9 +118,13 @@ func setup(angle=0, dis=0, mas=0):
 	# type is the parameter
 	if mass > 300:
 		radius = calculate_radius("jovian")
-	else:
+	elif rad == 0:
 		# default. i.e. rocky
 		radius = calculate_radius()
+	else:
+		# load from data
+		radius = rad
+		
 	gravity = calculate_gravity(mass, radius)
 	
 	if not is_habitable():

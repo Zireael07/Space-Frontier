@@ -1,9 +1,9 @@
-name,angle,dist,mass, type
-Mercury,0,0.4,0.055, planet
-Venus,0,0.7,0.815, planet
-Earth,0,1,1.0, planet
+name,angle,dist,mass,radius, type
+Mercury,0,0.4,0.055,0.38, planet
+Venus,0,0.7,0.815,0.94, planet
+Earth,0,1,1.0,1.0, planet
 Moon,0,300,1.0, moon
-Mars,0,1.5,0.107, planet
+Mars,0,1.5,0.107,0.53, planet
 Deimos,-30,169,0.0000000201, moon
 Phobos,30,158,0.000000145, moon
 Ceres,0,2.77,0.0128, dwarf_planet
