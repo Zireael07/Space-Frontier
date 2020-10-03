@@ -421,6 +421,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	if planet.is_in_group("aster_named") and planet.get_node("Label").get_text() != "Ceres":
 		var Ceres = 0.0128*game.MOON_MASS
 		format_mass = "%.4f M Ceres  (1 = 0.0128 M Moon)" % (planet.mass/Ceres) 
+	var format_radius = "%.2f R Earth" % planet.radius
 
 	# linebreak because of planet graphic on the right
 	#var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
@@ -436,8 +437,13 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# those parameters have been present in the original game
 	text = text + "\n" + "Mass: " + str(format_mass) + "\n" + \
 	"Pressure: " + str(format_atm) + "\n" + \
-	"Gravity: " + str(format_grav) + "\n" + \
-	"Temperature: " + "\n" + str(format_temp) + " " + str(format_tempC) + " \n"
+	"Gravity: " + str(format_grav) + "\n"
+	# radius was not present, but we might as well add it in
+	# don't show it for moons and asteroids or gas giants
+	if not planet.is_in_group("moon") and not planet.is_in_group("aster_named") and planet.get_planet_class() == "rocky":
+		text = text + "Radius: " + str(format_radius) + "\n"
+	# was in the original game
+	text = text + "Temperature: " + "\n" + str(format_temp) + " " + str(format_tempC) + " \n"
 	# this is new
 	text = text + "Greenhouse effect: " + str(format_greenhouse) + "\n"
 	# this was present in the original game
