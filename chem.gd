@@ -34,7 +34,8 @@ var abundance = {"H":0.75, "He":0.23, "O":0.01, #1%
  "Ar":0.0002, #0.002%
 
 # molecules copied from abunds above because no actual data could be found
-"NH3": 0.0001, "H2O":0.001, "CO2": 0.0005, "O3":0.000001, "CH4":0.0001,
+"NH3": 0.0001, "H2O":0.001, "CO2": 0.0005, # CO is the most common molecule in universe, it follows that CO2 would be common too
+"O3":0.000001, "CH4":0.0001,
 }
 
 # Called when the node enters the scene tree for the first time.

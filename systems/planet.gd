@@ -416,10 +416,16 @@ func atmosphere_gases():
 				react = pow(1 / (1 + chem.reactivity[g]), 
 								star_age/2.0 * pres2)
 			elif g == "O" or g == "O2":
+				var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
 				# if too cold, no oxygen around (simplified from Keris)
 				if temp < 270:
 					react = 0.0
 					print("Too cold! React: ", react)
+				# if planet. check for solar wind, which reaches at least Venus @ 0.70 AU
+				# and is powerful enough to strip it of any oxygen
+				elif axis < 0.72 and not is_in_group("moon"):
+					print("Solar wind stripped us of oxygen")
+					react = 0.0
 				else:
 					# wants pressure in bars
 					#pres2 = (0.65 + pressure/2)
@@ -461,6 +467,7 @@ func atmosphere_gases():
 								star_age/2.0 * pres2)
 			
 			# if we're not a gas on the surface, but we are in exosphere, only allow limited amounts
+			# e.g. H2O on Earth
 			if g in chem.boil and temp < chem.boil[g] and exo_temp > chem.boil[g]:
 				print("Limiting quantities of ", g, " because it's a liquid on the surface @", str(temp), "K")
 				react = min(react, 0.01)
