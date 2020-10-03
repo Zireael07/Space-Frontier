@@ -1,6 +1,8 @@
 extends Node
 
 # class member variables go here, for example:
+const MOLAR_GAS_CONST = 8314.41  # units: g*m2/(sec2*K*mol)
+
 # from Dole's book "Habitable Planets for Man", p. 38 
 var weights = { "H": 1.0, "H2": 2.0, "He": 4.0, "N":14.0, "O": 16.0, "CH4":16.0, 
 	"NH3":17.0, "H2O":18.0, "Ne":20.2, "N2":28.0, "CO":28.0, "NO":30.0, "O2": 32.0,

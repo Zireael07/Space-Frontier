@@ -341,7 +341,7 @@ func get_exospheric_temp():
 
 # calculations from Accrete/Starform
 func rms_molecule(molecule, exo_temp):
-	return sqrt((3.0 * 8314.41 * exo_temp) / chem.weights[molecule]) # in cm/s
+	return sqrt((3.0 * chem.MOLAR_GAS_CONST * exo_temp) / chem.weights[molecule]) # in cm/s
 
 func has_gas_retention(molecule, exo_temp):
 	var esc_vel = get_escape_vel(mass, radius) # relative to Earth escape vel
@@ -489,10 +489,7 @@ func atmosphere_gases():
 	
 	# custom sort
 	gases_atm.sort_custom(MyCustomSorter, "sort_atm_fraction")
-
-
 	
-			
 	return gases_atm
 
 # Smallest molecular weight retained, useful for determining atmo
@@ -503,13 +500,9 @@ func molecule_limit():
 	#print("Escape vel: ", escape_vel*1118600, " cm/s")
 	
 	# 6.0 is the gas_retention_threshold
-	# MOLAR_GAS_CONST = 8314.41  # units: g*m2/(sec2*K*mol)
-	# Earth's exosphere temp is 1273.0  # degrees Kelvin
-	
-	#print("Exospheric temp: ", get_exospheric_temp(), " K")
 	
 	var gas = pow(6.0 * 100.0, 2.0) 
-	var tmp  = 8314.41 * get_exospheric_temp()
+	var tmp  = chem.MOLAR_GAS_CONST * get_exospheric_temp()
 	# Earth escape vel is 11.186 km/s, give it in cm/s as Accrete wants
 	var esc = pow((escape_vel*1118600), 2.0)
 	
@@ -521,8 +514,6 @@ func molecule_limit():
 	
 	#return ((3.0 * 8314.41 * get_exospheric_temp()) /
 	#		(pow((escape_vel*1118.6 / 6.0) / 100.0, 2)))
-
-
 
 
 # for now, this is just the ESI (Earth Similarity Index)
