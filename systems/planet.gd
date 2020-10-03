@@ -248,7 +248,7 @@ func calculate_temperature(inc_greenhouse=true):
 	# where L = star luminosity
 	
 	if inc_greenhouse == false:
-		greenhouse = 0
+		green = 0
 	
 	# http://phl.upr.edu/library/notes/surfacetemperatureofplanets
 	# T = 273*((L(1-a)) / D2*(1-g))
