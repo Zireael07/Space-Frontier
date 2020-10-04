@@ -146,10 +146,10 @@ func setup(angle=0, dis=0, mas=0, rad=0):
 			m.calculate_orbit_period()
 
 	# debug
-	if atm > 0.01:
-		var mol = molecule_limit()
-		print("Smallest molecule planet holds: ", mol)
-		var exo_tmp = get_exospheric_temp()
+#	if atm > 0.01:
+#		var mol = molecule_limit()
+#		print("Smallest molecule planet holds: ", mol)
+#		var exo_tmp = get_exospheric_temp()
 		
 #		var gases = ["H2", "He", "CH4", "NH3", "H2O", "Ne", "CO", "O2", "H2S", "CO2", "O3", "SO2"]
 #		for g in gases:
@@ -327,14 +327,17 @@ func get_escape_vel(mass, rad):
 # atmosphere - mostly calculations from Accrete/Starform
 func get_exospheric_temp():
 	var dist_t = self.dist
+	var star = get_parent().get_parent()
 	# if we're a moon, look up the star and take distance of our parent
 	if get_parent().get_parent().is_in_group("planets"):
 		dist_t = self.dist + get_parent().get_parent().dist
+		star = get_parent().get_parent().get_parent().get_parent()
 	
 	# calculation from Starform/Accrete, the C versions, wants orbital radius in AU
 	var axis = (dist_t/game.LIGHT_SEC)/game.LS_TO_AU
 	# Earth's exosphere temp is 1273.0  # degrees Kelvin
-	var ret = 1273.0 / pow(axis, 2) 
+	# multiply by star's luminosity to make it work for stars other than the sun
+	var ret = star.luminosity * (1273.0 / pow(axis, 2))
 		
 	#print("Exospheric temp: ", ret, " K")
 	return ret
