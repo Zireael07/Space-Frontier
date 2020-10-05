@@ -61,11 +61,22 @@ func _ready():
 		# random mass
 		var m = rand_range(0.5,5) # upper bound of super-Earth is 10 Earth masses, but we don't have art yet
 		p.mass = m
+		
+		var mol = p.molecule_limit()
+		print("Smallest molecule planet holds: ", mol)
+		
 		# more stuff
-		if p.is_habitable():
-			p.hydro = rand_range(0.1, 0.45)
+		# if it can hold to at least nitrogen
+		if mol >= 14.0:
 			p.atm = rand_range(0.01, 1.5)
-			p.greenhouse = rand_range(0.2, 0.99)
+			p.greenhouse = rand_range(0.2, 0.7)
+			if mol > 18.0:
+				p.hydro = rand_range(0.1, 0.45)
+
+#		if p.is_habitable():
+#			p.hydro = rand_range(0.1, 0.45)
+#			p.atm = rand_range(0.01, 1.5)
+#			p.greenhouse = rand_range(0.2, 0.99)
 
 func get_star_type(sel):
 	# swap the dictionary around
