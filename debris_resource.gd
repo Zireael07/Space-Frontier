@@ -38,6 +38,10 @@ func _on_debris_area_entered(area):
 	if area.get_groups().has("friendly") or area.get_groups().has("enemy"):
 		#print("debris entered by " + area.get_parent().get_name())
 		
+		# paranoia
+		if not 'cargo' in area:
+			return
+		
 		var res_id = elements.keys()[resource]
 		print("1 unit of " + str(res_id))
 		
