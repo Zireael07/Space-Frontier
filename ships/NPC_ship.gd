@@ -418,8 +418,10 @@ func random_point_at_dist_from_tg(dist):
 	return point
 			
 func get_asteroid_processor():
-	var processor = get_tree().get_nodes_in_group("processor")[0]
-	return processor
+	var processors = get_tree().get_nodes_in_group("processor")
+	if processors.size() > 0:
+		return processors[0]
+	return null
 			
 func resource_picked():
 	# paranoia
