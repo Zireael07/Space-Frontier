@@ -9,8 +9,6 @@
 [ext_resource path="res://colony.tscn" type="PackedScene" id=7]
 [ext_resource path="res://asteroid.tscn" type="PackedScene" id=8]
 
-
-
 [sub_resource type="StyleBoxFlat" id=1]
 
 [node name="star" type="Node2D" groups=[
@@ -19,12 +17,13 @@
 position = Vector2( 500, 500 )
 script = ExtResource( 1 )
 orbit_rate = 0.02
-star_radius_factor = 0.487451
-luminosity = 0.0269786
+star_radius_factor = 0.283136
+luminosity = 0.00917075
+forced_type = 0
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 9.92185
-scale = Vector2( 0.487451, 0.487451 )
+scale = Vector2( 0.283136, 0.283136 )
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
@@ -51,6 +50,7 @@ text = "Kepler 1443b"
 [node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -1594, 427 )
 mass = 1.29197
+population = 0.1
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 texture = ExtResource( 4 )
@@ -66,6 +66,7 @@ text = "Kepler 1443c"
 [node name="planet3" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( 1692.5, -148 )
 mass = 1.57812
+population = 0.1
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
 texture = ExtResource( 6 )

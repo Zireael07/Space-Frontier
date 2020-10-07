@@ -5,6 +5,7 @@ extends "star system.gd"
 var star_types = { RED_DWARF = 0, YELLOW = 1}
 var star_chances = []
 var star_type
+export var forced_type = -1
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -19,6 +20,11 @@ func _ready():
 	# select star type
 	star_type = select_random()
 #	print("Selected: " + str(selected))
+	
+	# force if any
+	if forced_type != -1:
+		star_type = forced_type
+	
 	# human-readable
 	var rev = get_star_type(star_type)
 	print(str(rev))
