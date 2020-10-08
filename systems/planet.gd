@@ -688,7 +688,7 @@ func get_volatiles_desc():
 		if hydro < 0.01:
 			return "desertic"
 		if hydro < 0.2:
-			return "hydrated" # Space Engine uses "lacustrine"
+			return "semi-arid" # Space Engine uses "lacustrine"
 		if hydro > 0.2: # "a significant amount of [a liquid substance]"
 			return "marine"
 		if hydro > 0.8:
