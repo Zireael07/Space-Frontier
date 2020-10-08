@@ -35,6 +35,13 @@ func _ready():
 		for line in data:
 			# line is [name, angle, dist, (mass), (radius), type]
 			print(str(line))
+			
+			if line[4] == "star":
+				# reuse column 1 as luminosity
+				luminosity = float(line[1])
+				print("Set luminosity to ", luminosity)
+				continue
+			
 			# match rows to planets
 			for c in get_node("planet_holder").get_children():
 				if c.has_node("Label"):
