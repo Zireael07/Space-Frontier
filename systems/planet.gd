@@ -127,7 +127,10 @@ func setup(angle=0, dis=0, mas=0, rad=0):
 		
 	gravity = calculate_gravity(mass, radius)
 	
-	if not is_habitable():
+	# water freezes
+	if temp < game.ZEROC_IN_K-1:
+		print("Water freezes on ", get_node("Label").get_text())
+		ice = hydro
 		hydro = 0.0
 	
 	# set population for planets that start colonized

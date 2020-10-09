@@ -6,6 +6,8 @@ var player
 const LIGHT_SEC = 400	# must match LIGHT_SPEED for realism
 const LS_TO_AU = 30 #500 realistic value
 const AU = LS_TO_AU*LIGHT_SEC #12000
+const ZEROC_IN_K = 273.15
+
 const MOON_MASS = 0.0123 #Earth masses
 const WORMHOLE_SPEED = 5.00 # in c
 

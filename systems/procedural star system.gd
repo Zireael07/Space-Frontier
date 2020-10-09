@@ -78,6 +78,11 @@ func _ready():
 			p.greenhouse = rand_range(0.2, 0.7)
 			if mol > 18.0:
 				p.hydro = rand_range(0.1, 0.45)
+				# water freezes
+				if p.temp < game.ZEROC_IN_K-1:
+					print("Water freezes on ", p.get_node("Label").get_text())
+					p.ice = p.hydro
+					p.hydro = 0.0
 
 #		if p.is_habitable():
 #			p.hydro = rand_range(0.1, 0.45)
