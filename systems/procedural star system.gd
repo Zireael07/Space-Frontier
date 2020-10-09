@@ -69,11 +69,11 @@ func _ready():
 		p.mass = m
 		
 		var mol = p.molecule_limit()
-		print("Smallest molecule planet holds: ", mol)
+		print("Smallest molecule planet ", p.get_node("Label").get_text(), " holds: ", mol)
 		
 		# more stuff
-		# if it can hold to at least nitrogen
-		if mol >= 14.0:
+		# if it can hold to at least CO2
+		if mol <= 44.0:
 			p.atm = rand_range(0.01, 1.5)
 			p.greenhouse = rand_range(0.2, 0.7)
 			if mol > 18.0:
