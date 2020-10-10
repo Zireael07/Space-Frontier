@@ -70,7 +70,10 @@ func _ready():
 	var _conn = connect("shield_changed", self, "_on_shield_changed")
 	
 	# spawn somewhere interesting
-	var planet = get_tree().get_nodes_in_group("planets")[2] #2 Earth
+	var planet = get_tree().get_nodes_in_group("planets")[0]
+	
+	if get_tree().get_nodes_in_group("planets").size() > 3: 
+		planet = get_tree().get_nodes_in_group("planets")[2] #2 Earth # 11 Neptune
 	print("Location of planet " + str(planet) + " : " + str(planet.get_global_position()))
 	
 	# fudge
