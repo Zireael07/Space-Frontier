@@ -80,7 +80,7 @@ func randomize_storage():
 		storage[e] = int(rand_range(8.0, 20.0))
 
 
-func setup(angle=0, dis=0, mas=0, rad=0):
+func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 	print("Setup: " + str(angle) + ", " + str(dis) + ", m: " + str(mas) + ", R:" +str(rad))
 	if angle != 0 or dis !=0:
 		# place
@@ -126,6 +126,19 @@ func setup(angle=0, dis=0, mas=0, rad=0):
 		radius = rad
 		
 	gravity = calculate_gravity(mass, radius)
+	
+	if gen_atm:
+		#print("Gen_atm:", gen_atm)
+		var mol = molecule_limit()
+		print("Smallest molecule planet ", get_node("Label").get_text(), " holds: ", mol)
+		
+		# more stuff
+		# if it can hold to at least CO2
+		if mol <= 44.0:
+			atm = rand_range(0.01, 1.5)
+			greenhouse = rand_range(0.2, 0.7)
+			if mol > 18.0:
+				hydro = rand_range(0.1, 0.45)
 	
 	# water freezes
 	if temp < game.ZEROC_IN_K-1:

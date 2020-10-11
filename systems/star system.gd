@@ -30,13 +30,17 @@ func _ready():
 	print("[Star system] Star system init")
 	# load data
 	data = load_data(get_name())
+	var sol = get_name().find("Sol")
+	#print("Star system is sol: ", sol)
+	var atm = sol != 0
+	#print("Atm is:", atm);
 	
 	if data != null:
 		for line in data:
 			# line is [name, angle, dist, (mass), (radius), type]
 			print(str(line))
 			
-			if line[4] == "star":
+			if line.size() > 4 and line[4] == "star":
 				# reuse column 1 as luminosity
 				luminosity = float(line[1])
 				print("Set luminosity to ", luminosity)
@@ -55,17 +59,19 @@ func _ready():
 						# for moons or dwarf planets, Moon masses
 						if line[4] == " dwarf_planet":
 							mas = float(line[3])*game.MOON_MASS
+							atm = false
 						# asteroids are given in Ceres masses (because otherwise the numbers'd be vanishingly small)
 						var Ceres = 0.0128*game.MOON_MASS
 						#print(str(Ceres))
 						if line[4] == " asteroid":
 							mas = float(line[3])*Ceres
+							atm = false
 						
 						var rad = 0
 						if line.size() > 4:
 							rad = float(line[4])
 							
-						c.setup(int(line[1]), float(line[2])*game.AU, mas, rad)
+						c.setup(int(line[1]), float(line[2])*game.AU, mas, rad, atm)
 				# moons
 				if c.has_node("orbit_holder"):
 					for m in c.get_node("orbit_holder").get_children():
