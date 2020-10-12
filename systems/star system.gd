@@ -92,10 +92,10 @@ func _ready():
 		print("[Star system] No csv..")
 		for c in get_node("planet_holder").get_children():
 			if c.is_in_group("planets"):
-				c.setup()
+				c.setup(0,0,0,0,true)
 				# moons
 				for m in c.get_node("orbit_holder").get_children():
-					m.setup()
+					m.setup(0,0,0,0,false)
 	
 	var hzs = calculate_hz(luminosity)
 	hz_inner = hzs[0]
