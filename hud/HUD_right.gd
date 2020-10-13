@@ -427,6 +427,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	#var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
 	var format_days = "%.1f days, \n%.2f year(s)" % [(period/86400), (period/yr)]
 
+	var format_hydro = "%d" % (planet.hydro * 100)
 	var format_ices = "%d" % (planet.ice * 100)
 
 	# set text
@@ -447,7 +448,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# this is new
 	text = text + "Greenhouse effect: " + str(format_greenhouse) + "\n"
 	# this was present in the original game
-	text = text + "Hydro: " + str(planet.hydro) + "\n"
+	text = text + "Hydro: " + str(format_hydro) + "%\n"
 	# this is new
 	text = text + "Ice cover: " + str(format_ices) + "%" + "\n"
 	
