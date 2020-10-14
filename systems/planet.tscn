@@ -12,6 +12,7 @@ radius = 150.0
 "planets",
 ]]
 position = Vector2( 1852.92, 1297.43 )
+z_index = 2
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]

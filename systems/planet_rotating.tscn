@@ -29,10 +29,10 @@ void fragment()
 shader = SubResource( 1 )
 shader_param/aura_color = Color( 1, 0.706604, 0.0117188, 1 )
 
-[sub_resource type="StyleBoxFlat" id=3]
-
 [sub_resource type="CircleShape2D" id=4]
 radius = 150.0
+
+[sub_resource type="StyleBoxFlat" id=3]
 
 [node name="Node2D" type="Node2D"]
 z_index = 2
@@ -48,6 +48,11 @@ material = SubResource( 2 )
 scale = Vector2( 0.43, 0.43 )
 texture = ExtResource( 3 )
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 4 )
+
 [node name="Label" type="Label" parent="."]
 margin_left = 150.0
 margin_top = 150.0
@@ -56,12 +61,9 @@ margin_bottom = 164.0
 custom_styles/normal = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Emerald"
-
-[node name="Area2D" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="orbit_holder" type="Node2D" parent="."]
 
@@ -73,5 +75,6 @@ autostart = true
 wait_time = 20.0
 autostart = true
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
 [connection signal="timeout" from="pop_timer" to="." method="_on_pop_timer_timeout"]
 [connection signal="timeout" from="module_timer" to="." method="_on_module_timer_timeout"]
