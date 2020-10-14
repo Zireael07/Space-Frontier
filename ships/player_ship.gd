@@ -545,6 +545,15 @@ func _input(_event):
 			else:
 				get_child(0).set_modulate(Color(1,1,1))	
 
+	if Input.is_action_pressed("scan"):
+		if HUD.target != null and HUD.target != self:
+			if 'scanned' in HUD.target:
+				if not HUD.target.scanned:
+					print("Scanning...")
+					HUD.target.scanned = true
+				else:
+					print("Already scanned")
+			
 
 
 # -------------------------

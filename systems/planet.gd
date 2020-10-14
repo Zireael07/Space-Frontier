@@ -40,6 +40,8 @@ signal planet_colonized
 
 onready var module = preload("res://debris_enemy.tscn")
 
+var scanned = false
+
 var labl_loc = Vector2()
 
 # see asteroid.gd and debris_resource.gd
