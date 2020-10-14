@@ -355,14 +355,17 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	if planet.tidally_locked:
 		text = text + "\n" + "Tidally locked"
 	
-	var format_habitability = "%d" % (planet.calculate_habitability() * 100.0)
+	var format_habitability = "%d" % (planet.calculate_habitability() * 100.0) if planet.scanned else " ?? "
 	# linebreak because planet graphic
 	text = text + "\n" + "Habitability:" + "\n" + format_habitability+"%"
 	#text = text + "\n" + "Habitability: " + "\n" + str(planet.calculate_habitability())
 	
 	# planet temp & class
-	text = text + "\n" + "Class: " + planet.get_temp_desc() + " \n" + planet.get_volatiles_desc() + " " + planet.get_planet_class()
-		
+	if planet.scanned:
+		text = text + "\n" + "Class: " + planet.get_temp_desc() + " \n" + planet.get_volatiles_desc() + " " + planet.get_planet_class()
+	else:
+		text = text + "\n" + "Class: ?? \n ?? ??"
+	
 	# formatting
 	var format_pop = "%.2fK" % (planet.population * 1000)
 	if planet.population > 1.0:
@@ -412,7 +415,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	var format_atm = "%.2f atm" % planet.atm
 	if planet.is_in_group("moon"):
 		format_atm = "%.3f atm" % planet.atm
-	var format_greenhouse = "%d " % planet.greenhouse_diff()
+	var format_greenhouse = "%d " % planet.greenhouse_diff() if planet.scanned else " ?? "
 	# format mass depending on what body we're looking at
 	var format_mass = "%.3f M Earth" % (planet.mass)
 	if planet.is_in_group("moon") or planet.get_node("Label").get_text() == "Ceres":
@@ -427,8 +430,8 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	#var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
 	var format_days = "%.1f days, \n%.2f year(s)" % [(period/86400), (period/yr)]
 
-	var format_hydro = "%d" % (planet.hydro * 100)
-	var format_ices = "%d" % (planet.ice * 100)
+	var format_hydro = "%d" % (planet.hydro * 100) if planet.scanned else "??"
+	var format_ices = "%d" % (planet.ice * 100) if planet.scanned else "??"
 
 	# set text
 	# this comes first after name/habitability (and some line breaks for clarity)
@@ -452,7 +455,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# this is new
 	text = text + "Ice cover: " + str(format_ices) + "%" + "\n"
 	
-	if planet.atm > 0.01:
+	if planet.atm > 0.01 and planet.scanned:
 		# pretty formatting for atmosphere data
 		var atm_text = ""
 		var gases = planet.atmosphere_gases()
