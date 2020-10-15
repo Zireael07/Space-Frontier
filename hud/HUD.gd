@@ -601,6 +601,11 @@ func _on_planet_targeted(planet):
 	for n in $"Control/Panel2".get_children():
 		n.hide()
 
+	
+	# show the planet in right hud
+	var id = planets.find(planet)
+	get_node("Control2").make_planet_view(planet, id)
+
 func _on_planet_colonized(planet):
 	$"Control2"._on_planet_colonized(planet)
 
