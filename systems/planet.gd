@@ -759,8 +759,9 @@ func _draw():
 		# because we're a tool script and tool scripts can't use autoloads
 		if targetted:
 			var tr = get_child(0)
-			var rc_h = tr.get_texture().get_height() * tr.get_scale().x
-			var rc_w = tr.get_texture().get_height() * tr.get_scale().y
+			# fix to work with shadered (rotating) planets
+			var rc_h = tr.get_rect().size.x * tr.get_scale().x
+			var rc_w = tr.get_rect().size.y * tr.get_scale().y
 			var rect = Rect2(Vector2(-rc_w/2, -rc_h/2), Vector2(rc_w, rc_h))
 			
 			#var rect = Rect2(Vector2(-26, -26),	Vector2(91*0.6, 91*0.6))
