@@ -550,6 +550,7 @@ func _input(_event):
 			if 'scanned' in HUD.target:
 				if not HUD.target.scanned:
 					print("Scanning...")
+					HUD.target.get_node("AnimationPlayer").play("scanning")
 					HUD.target.scanned = true
 				else:
 					print("Already scanned")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/planet_rotating_material.tres" type="Material" id=1]
 [ext_resource path="res://assets/bodies/Sol textures/texture_earth.png" type="Texture" id=2]
@@ -29,10 +29,37 @@ void fragment()
 shader = SubResource( 1 )
 shader_param/aura_color = Color( 1, 0.706604, 0.0117188, 1 )
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=6]
 radius = 150.0
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=4]
+
+[sub_resource type="Animation" id=5]
+resource_name = "scanning"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0.623529, 1, 0.729412 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite_shadow:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
 
 [node name="Node2D" type="Node2D"]
 z_index = 2
@@ -51,14 +78,15 @@ texture = ExtResource( 3 )
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 4 )
+visible = false
+shape = SubResource( 6 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = 150.0
 margin_top = 150.0
 margin_right = 202.0
 margin_bottom = 164.0
-custom_styles/normal = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Emerald"
 __meta__ = {
@@ -74,6 +102,9 @@ autostart = true
 [node name="module_timer" type="Timer" parent="."]
 wait_time = 20.0
 autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/scanning = SubResource( 5 )
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
 [connection signal="timeout" from="pop_timer" to="." method="_on_pop_timer_timeout"]
