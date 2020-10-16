@@ -499,6 +499,10 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 			$"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".disconnect("pressed", player, "_on_conquer_pressed")
 		get_node("Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton").connect("pressed", player, "_on_conquer_pressed", [select_id])
 
+	if $"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".is_connected("pressed", player, "_on_scan_pressed"):
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".disconnect("pressed", player, "_on_scan_pressed")
+	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton").connect("pressed", player, "_on_scan_pressed", [planet])
+
 	# prev/next button
 	if $"Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton".is_connected("pressed", self, "_on_prev_pressed"):
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton".disconnect("pressed", self, "_on_prev_pressed")
@@ -508,6 +512,10 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	if $"Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".is_connected("pressed", self, "_on_next_pressed"):
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".disconnect("pressed", self, "_on_next_pressed")
 	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/NextButton").connect("pressed", self, "_on_next_pressed", [select_id, parent_id])
+
+func scan_toggle():
+	$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".show()
+	$"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".hide()
 
 # UI signals
 func _on_prev_pressed(id, parent_id):

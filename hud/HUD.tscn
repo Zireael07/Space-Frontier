@@ -108,7 +108,6 @@ __meta__ = {
 }
 
 [node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
-visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
@@ -194,6 +193,14 @@ text = ">"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ScanButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+visible = false
+margin_left = 110.0
+margin_top = 180.0
+margin_right = 122.0
+margin_bottom = 200.0
+text = "Scan"
 
 [node name="ShipInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 visible = false

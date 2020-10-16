@@ -548,12 +548,7 @@ func _input(_event):
 	if Input.is_action_pressed("scan"):
 		if HUD.target != null and HUD.target != self:
 			if 'scanned' in HUD.target:
-				if not HUD.target.scanned:
-					print("Scanning...")
-					HUD.target.get_node("AnimationPlayer").play("scanning")
-					HUD.target.scanned = true
-				else:
-					print("Already scanned")
+				scan(HUD.target)
 			
 
 
@@ -662,6 +657,14 @@ func shoot():
 	var b = bullet.instance()
 	bullet_container.add_child(b)
 	b.start_at(get_global_rotation(), $"muzzle".get_global_position())
+	
+func scan(planet):
+	if not planet.scanned:
+		print("Scanning...")
+		planet.get_node("AnimationPlayer").play("scanning")
+		planet.scanned = true
+	else:
+		print("Already scanned")
 
 # ---------------------
 func get_closest_planet():
@@ -785,7 +788,9 @@ func _on_goto_pressed(planet):
 	warp_target = planet.get_global_position()
 	heading = warp_target
 	on_warping()
-	
+
+func _on_scan_pressed(planet):	
+	scan(planet)
 	
 func on_warping():
 	if orbiting:
