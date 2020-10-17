@@ -672,7 +672,7 @@ func get_planet_class():
 	if is_in_group("aster_named"):
 		return "asteroid"
 	
-	if hydro > 0.25:
+	if hydro > 0.25 and self.scanned:
 		return "terrestrial"
 	if mass < 5:
 		return "rocky"
