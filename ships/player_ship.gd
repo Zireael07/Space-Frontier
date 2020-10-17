@@ -660,11 +660,14 @@ func shoot():
 	
 func scan(planet):
 	if not planet.scanned:
-		print("Scanning...")
+		var msg = "Scanning planet " + str(planet.get_node("Label").get_text())
+		emit_signal("officer_message", msg)
 		planet.get_node("AnimationPlayer").play("scanning")
 		planet.scanned = true
+		# update planet view if open
+		HUD.update_planet_view(planet)
 	else:
-		print("Already scanned")
+		emit_signal("officer_message", "Already scanned planet.")
 
 # ---------------------
 func get_closest_planet():

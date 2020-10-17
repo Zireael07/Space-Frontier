@@ -516,7 +516,11 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 func scan_toggle():
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".show()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".hide()
-
+	
+func scan_off(): 
+	$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".set_disabled(true)
+	$"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".hide()
+	
 # UI signals
 func _on_prev_pressed(id, parent_id):
 	if parent_id == -1:

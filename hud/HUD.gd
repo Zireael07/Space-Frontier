@@ -586,6 +586,15 @@ func _on_target_armor_changed(armor):
 	else:
 		$"Control/Panel2/Label_arm".set_text("Armor: " + str(armor))
 
+func is_planet_view_open():
+	return $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".is_visible()
+
+func update_planet_view(planet):
+	if is_planet_view_open():
+		var id = planets.find(planet)
+		get_node("Control2").make_planet_view(planet, id)
+		get_node("Control2").scan_off()
+
 func _on_planet_targeted(planet):
 	var prev_target = null
 	if target != null:
