@@ -762,7 +762,8 @@ func _draw():
 			# fix to work with shadered (rotating) planets
 			var rc_h = tr.get_rect().size.x * tr.get_scale().x
 			var rc_w = tr.get_rect().size.y * tr.get_scale().y
-			var rect = Rect2(Vector2(-rc_w/2, -rc_h/2), Vector2(rc_w, rc_h))
+			# add a tiny margin to avoid obscuring drawn atmo effect
+			var rect = Rect2(Vector2(int(-rc_w/2)-2, int(-rc_h/2)-2), Vector2(int(rc_w)+4, int(rc_h)+4))
 			
 			#var rect = Rect2(Vector2(-26, -26),	Vector2(91*0.6, 91*0.6))
 	
