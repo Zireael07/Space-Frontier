@@ -513,7 +513,9 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".disconnect("pressed", self, "_on_next_pressed")
 	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/NextButton").connect("pressed", self, "_on_next_pressed", [select_id, parent_id])
 
-func scan_toggle():
+func scan_toggle(planet):
+	if planet.scanned:
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".set_disabled(true)
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".show()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".hide()
 	
