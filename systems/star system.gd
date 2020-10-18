@@ -72,6 +72,9 @@ func _ready():
 							rad = float(line[4])
 							
 						c.setup(int(line[1]), float(line[2])*game.AU, mas, rad, atm)
+						# Planets in solar system start pre-scanned
+						if sol == 0:
+							c.scanned = true
 				# moons
 				if c.has_node("orbit_holder"):
 					for m in c.get_node("orbit_holder").get_children():
@@ -85,6 +88,9 @@ func _ready():
 								mas = float(line[3])*game.MOON_MASS
 								
 							m.setup(int(line[1]), int(line[2]), mas)
+							# Planets in solar system start pre-scanned
+							if sol == 0:
+								c.scanned = true
 					
 			#if data[3] == "planet":
 	# if no csv
