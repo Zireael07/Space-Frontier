@@ -367,16 +367,30 @@ visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
+[node name="Heading" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
+margin_left = 10.0
+margin_right = 109.0
+margin_bottom = 14.0
+text = "Cargo listing:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
 margin_left = 10.0
+margin_top = 15.0
 margin_right = 192.0
-margin_bottom = 186.0
+margin_bottom = 181.0
 bbcode_text = "Cargo"
 text = "Cargo"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Cursor3" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
+margin_top = 15.0
 margin_right = 40.0
-margin_bottom = 14.0
+margin_bottom = 29.0
 text = ">"
 
 [node name="ButtonUp3" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]

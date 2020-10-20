@@ -604,13 +604,13 @@ func _onBackButton_pressed():
 # ---------------------------------
 func _onButtonSell_pressed():
 	var cursor = $"Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
-	var select_id = (cursor.get_position().y / 15)
+	var select_id = ((cursor.get_position().y-15) / 15)
 
 	player.sell_cargo(select_id)
 
 func _onButtonBuy_pressed():
 	var cursor = $"Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
-	var select_id = (cursor.get_position().y / 15)
+	var select_id = ((cursor.get_position().y-15) / 15)
 
 	player.buy_cargo(select_id)	
 
@@ -622,7 +622,7 @@ func get_base_storage(playr):
 
 func _onButtonUp3_pressed():
 	var cursor = $"Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
-	if cursor.get_position().y > 0:
+	if cursor.get_position().y > 15:
 		# up a line
 		cursor.set_position(cursor.get_position() - Vector2(0,15))
 		
@@ -631,7 +631,7 @@ func _onButtonDown3_pressed():
 	var num_list = player.cargo.size()-1
 	if player.cargo_empty(player.cargo):
 		num_list = get_base_storage(player).size()-1
-	var max_y = 15*num_list
+	var max_y = 15+15*num_list
 	if cursor.get_position().y < max_y:
 		# down a line
 		cursor.set_position(cursor.get_position() + Vector2(0,15))

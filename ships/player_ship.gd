@@ -877,11 +877,14 @@ func _on_conquer_pressed(id):
 func refresh_cargo():
 	if 'storage' in get_parent().get_parent():
 		HUD.update_cargo_listing(cargo, get_parent().get_parent().storage)
+		HUD.update_cargo_heading("Cargo storage for base")
 	elif 'storage' in get_parent().get_parent().get_parent(): # planet
 		HUD.update_cargo_listing(cargo, get_parent().get_parent().get_parent().storage)
+		HUD.update_cargo_heading("Cargo storage for: " + get_parent().get_parent().get_parent().get_node("Label").get_text())
 	
 	else:
 		HUD.update_cargo_listing(cargo)
+		HUD.update_cargo_heading("Cargo storage")
 
 func cargo_empty(cargo):
 	var ret = false

@@ -798,6 +798,8 @@ func _on_BackButton_pressed():
 func _on_ConquerButton_pressed():
 	pass # Replace with function body.
 
+func update_cargo_heading(heading):
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/Heading".set_text(heading)
 
 func update_cargo_listing(cargo, base_storage=null):
 	# update listing
