@@ -617,6 +617,8 @@ func _onButtonBuy_pressed():
 func get_base_storage(playr):
 	if 'storage' in playr.get_parent().get_parent():
 		return playr.get_parent().get_parent().storage
+	elif 'storage' in playr.get_parent().get_parent().get_parent(): # planet
+		return playr.get_parent().get_parent().get_parent().storage
 	else:
 		return []
 
