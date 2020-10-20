@@ -587,6 +587,13 @@ func launch():
 			
 	set_global_rotation(get_global_rotation())
 	
+	on_launch()
+	
+func on_launch():
+	# close cargo view if open
+	if HUD.get_node("Control2/Panel_rightHUD/PanelInfo/CargoInfo").is_visible():
+		HUD.get_node("Control2/Panel_rightHUD/PanelInfo/CargoInfo").hide()
+	
 
 func _on_landing_timeout_timeout():
 	can_land = true
