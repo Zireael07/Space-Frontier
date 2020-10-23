@@ -458,9 +458,12 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	if planet.atm > 0.01 and planet.scanned:
 		# pretty formatting for atmosphere data
 		var atm_text = ""
-		var gases = planet.atmosphere_gases()
-		for i in range(gases.size()):
-			var g = gases[i]
+		var gases = planet.atm_gases
+		if not gases:
+			gases = planet.atmosphere_gases()
+		# gases[1] is sorted for display purposes
+		for i in range(gases[1].size()):
+			var g = gases[1][i]
 			var format_g = "%s %d" % [g[0], g[1]]
 			if i == 0:
 				atm_text = str(format_g)+"%"

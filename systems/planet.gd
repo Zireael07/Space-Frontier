@@ -41,6 +41,7 @@ signal planet_colonized
 onready var module = preload("res://debris_enemy.tscn")
 
 var scanned = false
+var atm_gases
 
 var labl_loc = Vector2()
 
@@ -405,7 +406,7 @@ func atmosphere_gases():
 	var pressure = (atm*1.01325) # in bars
 	
 	var total_amount = 0
-	var gases_tmp = []
+	var gases_kinds = []
 	# 5.0 is a placeholder for the star's age, in bilions of years
 	# 1e9 is 1 billion (a thousand million to be extremely clear, aka "miliard" in some EU languages
 	var star_age = 5.0
@@ -500,12 +501,13 @@ func atmosphere_gases():
 			if amount > 0:
 				print("Gas ", g, " amt: ", amount)
 			total_amount = total_amount + amount
-			gases_tmp.append([g, amount])
+			#gases_kinds[g] = amount
+			gases_kinds.append([g, amount])
 	
-	var gases_atm = []
+	var gases_atm = {}
+	var gases_disp = []
 	# needs to be a separate loop so that we calculate relative to the total
-	for g in gases_tmp:
-		#var g = gases_tmp[i]
+	for g in gases_kinds:
 		var amount = g[1]
 		# pressure exerted by our gas
 		var ratio = amount/total_amount
@@ -513,12 +515,13 @@ func atmosphere_gases():
 		print("Gas " , g[0], " pressure: ", gas_pressure, " atm ")
 		# how much % of atmosphere is the gas
 		var atm_fraction = 100 * (gas_pressure / atm)
-		gases_atm.append([g[0], atm_fraction])
+		gases_atm[g[0]] = gas_pressure
+		gases_disp.append([g[0], atm_fraction])
 	
 	# custom sort
-	gases_atm.sort_custom(MyCustomSorter, "sort_atm_fraction")
+	gases_disp.sort_custom(MyCustomSorter, "sort_atm_fraction")
 	
-	return gases_atm
+	return [gases_atm, gases_disp]
 
 # Smallest molecular weight retained, useful for determining atmo
 # calculation comes from well known Starform/Accrete program which references Fogg here
