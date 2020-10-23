@@ -139,9 +139,18 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 		# if it can hold to at least CO2
 		if mol <= 44.0:
 			atm = rand_range(0.01, 1.5)
-			greenhouse = rand_range(0.2, 0.7)
+			#greenhouse = rand_range(0.2, 0.7)
 			if mol > 18.0:
 				hydro = rand_range(0.1, 0.45)
+	
+			atm_gases = atmosphere_gases()
+			if atm_gases[0].has("CO2"):
+				print("Planet ", get_node("Label").get_text(), " has ", atm_gases[0]["CO2"], " atm CO2")
+				# match atm of CO2 to greenhouse effect
+				# 91 atm of CO2 is 0.975 greenhouse effect (data for Venus)
+				# hence 93,3 atm is 1.0 effect
+				greenhouse = lerp(0.0, 1.0, atm_gases[0]["CO2"]/93.3)
+				print("Greenhouse from ", atm_gases[0]["CO2"], " atm CO2 is ", greenhouse)
 	
 	# water freezes
 	if temp < game.ZEROC_IN_K-1:
