@@ -421,6 +421,12 @@ func change_system(system="proxima", time=0.0):
 	# hide the orrery panel temporarily (preventing drawing of orbits)
 	orr.get_node("Panel").hide()
 	
+	# close planet view/listing
+	if game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
+		game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").hide()
+	if game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
+		game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").hide()
+		
 	# clear hud planet listing
 	game.player.HUD.clear_planet_listing()
 	
