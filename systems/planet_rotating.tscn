@@ -29,7 +29,7 @@ void fragment()
 shader = SubResource( 1 )
 shader_param/aura_color = Color( 1, 0.706604, 0.0117188, 1 )
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=3]
 radius = 150.0
 
 [sub_resource type="StyleBoxFlat" id=4]
@@ -79,7 +79,7 @@ texture = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visible = false
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 
 [node name="Label" type="Label" parent="."]
 margin_left = 150.0
@@ -106,6 +106,7 @@ autostart = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/scanning = SubResource( 5 )
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
 [connection signal="timeout" from="pop_timer" to="." method="_on_pop_timer_timeout"]
 [connection signal="timeout" from="module_timer" to="." method="_on_module_timer_timeout"]

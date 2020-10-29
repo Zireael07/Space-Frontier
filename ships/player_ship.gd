@@ -14,6 +14,7 @@ var engine = 1000 # in reality, it represents fuel, call it engine for simplicit
 var engine_draw = 50 # how fast our engine wears out when boosting
 signal engine_changed
 var boost = false
+var scooping = false
 
 var has_cloak = false
 var cloaked = false
@@ -868,6 +869,9 @@ func _on_engine_timer_timeout():
 		if can_scoop():
 			print("Scooping...")
 			engine += 20
+		if scooping:
+			print("Scooping from gas giant...")
+			engine += 30 # because gas giant is more dense than a star's corona
 		else:
 			engine += 5
 		emit_signal("engine_changed", engine)

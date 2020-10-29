@@ -806,6 +806,13 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		update()
 
 # --------------------
+
+func _on_Area2D_area_exited(area):
+	if area == game.player and not has_solid_surface():
+		game.player.scooping = false
+		print("No longer scooping")
+
+
 # colonies
 func reparent(area):
 	area.get_parent().get_parent().remove_child(area.get_parent())
@@ -819,6 +826,13 @@ func reposition(area):
 		area.get_node("Sprite").set_z_index(1)
 
 func _on_Area2D_area_entered(area):
+	if area == game.player:
+		#print("Player entered planet area")
+		if not has_solid_surface():
+			print("Player can scoop from gas giant ", get_node("Label").get_text())
+			game.player.scooping = true
+			
+	# colonies
 	if area.get_parent().is_in_group("colony"):
 		#print("Colony entered planet space")
 		# prevents looping (area collisions don't exclude children!)
