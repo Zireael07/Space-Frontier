@@ -519,6 +519,8 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 func scan_toggle(planet):
 	if planet.scanned:
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".set_disabled(true)
+	else:
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".set_disabled(false)
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".show()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".hide()
 	
