@@ -804,6 +804,10 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 			
 		# redraw
 		update()
+		
+		# officer message
+		if not self.scanned:
+			game.player.emit_signal("officer_message", "Planet targeted. Press S to scan")
 
 # --------------------
 
