@@ -22,10 +22,7 @@ func _ready():
 
 	planets = get_tree().get_nodes_in_group("planets")
 
-	# connect the signals
-	for p in planets:
-		p.connect("planet_targeted", self, "_on_planet_targeted")
-		p.connect("planet_colonized", self, "_on_planet_colonized")
+	connect_planet_signals(planets)
 
 	for c in get_tree().get_nodes_in_group("colony"):
 		# "colony" is a group of the parent of colony itself
@@ -87,6 +84,12 @@ func _ready():
 	$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
 	$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
 	$"Control/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
+
+func connect_planet_signals(planets):
+	# connect the signals
+	for p in planets:
+		p.connect("planet_targeted", self, "_on_planet_targeted")
+		p.connect("planet_colonized", self, "_on_planet_colonized")
 
 func create_direction_labels():
 	var dir_label
@@ -610,6 +613,7 @@ func _on_planet_targeted(planet):
 	for n in $"Control/Panel2".get_children():
 		n.hide()
 
+	print("Planet targeted: ", planet.get_node("Label").get_text())
 	
 	# show the planet in right hud
 	var id = planets.find(planet)

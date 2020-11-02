@@ -381,6 +381,10 @@ func update_HUD():
 	game.player.HUD.create_planet_listing()
 	# force update direction labels
 	game.player.HUD.create_direction_labels()
+	
+	# connect planet signals
+	game.player.HUD.connect_planet_signals(get_tree().get_nodes_in_group("planets"))
+	
 
 func change_system(system="proxima", time=0.0):
 	# despawn current system
