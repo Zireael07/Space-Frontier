@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/bodies/Planet14.png" type="Texture" id=1]
 [ext_resource path="res://systems/planet.gd" type="Script" id=2]
@@ -7,6 +7,33 @@
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 150.0
+
+[sub_resource type="Animation" id=3]
+resource_name = "scanning"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0.623529, 1, 0.729412 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite_shadow:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
 
 [node name="planet" type="Node2D" groups=[
 "planets",
@@ -34,5 +61,18 @@ text = "Emerald"
 shape = SubResource( 2 )
 
 [node name="orbit_holder" type="Node2D" parent="."]
+
+[node name="pop_timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="module_timer" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/scanning = SubResource( 3 )
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
+[connection signal="timeout" from="pop_timer" to="." method="_on_pop_timer_timeout"]
+[connection signal="timeout" from="module_timer" to="." method="_on_module_timer_timeout"]
