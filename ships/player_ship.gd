@@ -670,7 +670,8 @@ func scan(planet):
 	if not planet.scanned:
 		var msg = "Scanning planet " + str(planet.get_node("Label").get_text())
 		emit_signal("officer_message", msg)
-		planet.get_node("AnimationPlayer").play("scanning")
+		if planet.has_node("AnimationPlayer"):
+			planet.get_node("AnimationPlayer").play("scanning")
 		planet.scanned = true
 		# update planet view if open
 		HUD.update_planet_view(planet)
