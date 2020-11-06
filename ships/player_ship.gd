@@ -549,7 +549,13 @@ func _input(_event):
 	if Input.is_action_pressed("scan"):
 		if HUD.target != null and HUD.target != self:
 			if 'scanned' in HUD.target:
-				scan(HUD.target)
+				if scan(HUD.target):
+					# reward points
+					points += 3
+					emit_signal("points_gained", points)
+					# rank up if we exceeded a multiple of 10!
+					if points > 10 and points % 10 > 0:
+						rank = rank + 1
 			
 
 
@@ -675,9 +681,11 @@ func scan(planet):
 		planet.scanned = true
 		# update planet view if open
 		HUD.update_planet_view(planet)
+		return true
 	else:
 		emit_signal("officer_message", "Already scanned planet.")
-
+		return false
+		
 # ---------------------
 func get_closest_planet():
 	var planets = get_tree().get_nodes_in_group("planets")
@@ -802,7 +810,13 @@ func _on_goto_pressed(planet):
 	on_warping()
 
 func _on_scan_pressed(planet):	
-	scan(planet)
+	if scan(planet):
+		# reward points
+		points += 3
+		emit_signal("points_gained", points)
+		# rank up if we exceeded a multiple of 10!
+		if points > 0 and points % 10 == 0:
+			rank = rank + 1
 	
 func on_warping():
 	if orbiting:
