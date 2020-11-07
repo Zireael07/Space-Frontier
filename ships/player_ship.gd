@@ -56,6 +56,9 @@ signal planet_landed
 # for AI orders
 var conquer_target = null
 
+# better ships
+var destroyer = load("res://ships/player_ship_destroyer.tscn")
+
 func welcome():
 	# give start date
 	var msg = "Welcome to the space frontier! The date is %02d-%02d-%d" % [game.start_date[0], game.start_date[1], game.start_date[2]]
@@ -67,9 +70,12 @@ func _ready():
 	game.player = self
 	#get_parent().set_z_index(game.PLAYER_Z)
 	set_z_index(game.PLAYER_Z)
+	get_parent().add_to_group("player")
 	
 	var _conn = connect("shield_changed", self, "_on_shield_changed")
-	
+
+
+func spawn():
 	# spawn somewhere interesting
 	var planet = get_tree().get_nodes_in_group("planets")[0]
 	
@@ -119,6 +125,29 @@ func _process(delta):
 			#print("Tractor active on: " + str(tractor.get_name()) + " " + str(dist))
 			tractor.get_child(0).tractor = self
 
+	# upgrade
+	if Input.is_action_pressed("ui_back"):
+		if docked:
+			#print("Trying to upgrade...")
+			# upgrade the ship!
+			var ship = destroyer.instance()
+			ship.set_name("player")
+			
+			var old_HUD = HUD
+			#print(old_HUD.get_name())
+			get_parent().get_parent().add_child(ship)
+
+			#update all the refs			
+			# we need the Area2D, not the topmost node
+			game.player = ship.get_child(0)
+			game.player.HUD = old_HUD
+			HUD.player = game.player
+			var mmap = get_tree().get_nodes_in_group("minimap")[0]
+			mmap.player = game.player
+			
+			# remove the old ship
+			get_parent().queue_free()
+			return
 
 	# rotations
 	if Input.is_action_pressed("move_left"):
@@ -299,7 +328,10 @@ func _process(delta):
 			tractored = false
 			docked = true
 			# officer message
-			emit_signal("officer_message", "Docking successful")
+			var msg = "Docking successful"
+			if rank >= 2:
+				msg = msg + ". Press backspace to upgrade your ship"
+			emit_signal("officer_message", msg)
 			# show refit screen
 			self.HUD.switch_to_refit()
 			

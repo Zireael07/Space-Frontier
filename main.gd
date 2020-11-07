@@ -50,7 +50,8 @@ func spawn_system(system="proc"):
 func spawn_core():
 	var cor = core.instance()
 	add_child(cor)
-
+	# spawn player
+	get_tree().get_nodes_in_group("player")[0].get_child(0).spawn()
 
 
 # Called when the node enters the scene tree for the first time.
