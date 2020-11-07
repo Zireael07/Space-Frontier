@@ -607,6 +607,7 @@ func _on_planet_targeted(planet):
 	target = planet
 
 	if prev_target:
+		prev_target.targetted = false
 		prev_target.update()
 
 	# hide panel info if any
