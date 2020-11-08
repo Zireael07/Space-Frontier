@@ -130,24 +130,7 @@ func _process(delta):
 		if docked:
 			#print("Trying to upgrade...")
 			# upgrade the ship!
-			var ship = destroyer.instance()
-			ship.set_name("player")
-			
-			var old_HUD = HUD
-			#print(old_HUD.get_name())
-			get_parent().get_parent().add_child(ship)
-
-			#update all the refs			
-			# we need the Area2D, not the topmost node
-			game.player = ship.get_child(0)
-			game.player.HUD = old_HUD
-			HUD.player = game.player
-			HUD.connect_player_signals(game.player)
-			var mmap = get_tree().get_nodes_in_group("minimap")[0]
-			mmap.player = game.player
-			
-			# remove the old ship
-			get_parent().queue_free()
+			upgrade_ship()
 			return
 
 	# rotations
@@ -292,35 +275,8 @@ func _process(delta):
 			get_parent().get_parent().remove_child(get_parent())
 			# refit target needs to be a node because here
 			refit_target.add_child(get_parent())
-			# set better z so that we don't overlap parent ship
-			set_z_index(-1)
-			#set_z_index(game.BASE_Z-1)
 			
-			# nuke any velocity left
-			vel = Vector2(0,0)
-			acc = Vector2(0,0)
-			
-			var friend_docked = false
-			# 6 is the default, so only check if we have more
-			if get_parent().get_parent().get_child_count() > 6:
-				for ch in get_parent().get_parent().get_children():
-					if ch is Node2D and ch.get_index() > 5:
-						if ch.get_child_count() > 0 and ch.get_child(0).is_in_group("friendly"):
-#							print(ch.get_child(0).get_name())
-#							print(str(ch.get_child(0).is_in_group("friendly")))
-							print("Friendly docked with the starbase")
-							friend_docked = true
-							break
-			
-			# all local positions relative to the immediate parent
-			if friend_docked:
-				get_parent().set_position(Vector2(-25,50))
-			else:
-				get_parent().set_position(Vector2(0,50))
-			set_position(Vector2(0,0))
-			pos = Vector2(0,0)
-			
-			#print("Adding player as tractoring ship's child")
+			dock()
 			
 			# arrived
 			refit_target = null
@@ -593,6 +549,57 @@ func _input(_event):
 
 
 # -------------------------
+func upgrade_ship():
+	var ship = destroyer.instance()
+	ship.set_name("player")
+	
+	var old_HUD = HUD
+	#print(old_HUD.get_name())
+	get_parent().get_parent().add_child(ship)
+
+	#update all the refs			
+	# we need the Area2D, not the topmost node
+	game.player = ship.get_child(0)
+	game.player.HUD = old_HUD
+	HUD.player = game.player
+	HUD.connect_player_signals(game.player)
+	var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	mmap.player = game.player
+	
+	# remove the old ship
+	get_parent().queue_free()
+
+func dock():
+	# set better z so that we don't overlap parent ship
+	set_z_index(-1)
+	#set_z_index(game.BASE_Z-1)
+	
+	# nuke any velocity left
+	vel = Vector2(0,0)
+	acc = Vector2(0,0)
+	
+	var friend_docked = false
+	# 6 is the default, so only check if we have more
+	if get_parent().get_parent().get_child_count() > 6:
+		for ch in get_parent().get_parent().get_children():
+			if ch is Node2D and ch.get_index() > 5:
+				if ch.get_child_count() > 0 and ch.get_child(0).is_in_group("friendly"):
+#							print(ch.get_child(0).get_name())
+#							print(str(ch.get_child(0).is_in_group("friendly")))
+					print("Friendly docked with the starbase")
+					friend_docked = true
+					break
+	
+	# all local positions relative to the immediate parent
+	if friend_docked:
+		get_parent().set_position(Vector2(-25,50))
+	else:
+		get_parent().set_position(Vector2(0,50))
+	set_position(Vector2(0,0))
+	pos = Vector2(0,0)
+	
+	#print("Adding player as tractoring ship's child")
+
 func _on_AnimationPlayer_animation_finished(_anim_name):
 	print("Animation finished")
 	# toggle the landing state
