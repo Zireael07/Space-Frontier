@@ -126,10 +126,14 @@ current = true
 
 [node name="bullet_container" type="Node" parent="Area2D"]
 
-[node name="muzzle" type="Position2D" parent="Area2D"]
+[node name="muzzle" type="Position2D" parent="Area2D" groups=[
+"muzzle",
+]]
 position = Vector2( -25, 0 )
 
-[node name="muzzle2" type="Position2D" parent="Area2D"]
+[node name="muzzle2" type="Position2D" parent="Area2D" groups=[
+"muzzle",
+]]
 position = Vector2( 25, 0 )
 
 [node name="gun_timer" type="Timer" parent="Area2D"]

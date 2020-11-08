@@ -686,23 +686,46 @@ func player_orbit(pl):
 				shields = 50
 		
 		emit_signal("officer_message", txt)
-			
+
+
+func get_num_guns():
+	var num = 0
+	for c in get_children():
+		if c.is_in_group("muzzle"):
+			num = num + 1
+	return num
+
+func get_guns():
+	var guns = []
+	for c in get_children():
+		if c.is_in_group("muzzle"):
+			guns.append(c)
+	return guns
+
+# this one shoots *ALL* the guns/tubes/muzzles/whatever you want to call them	
 func shoot():
 	if warping:
 		return
 	
-	if power <= shoot_power_draw:
+	var num = get_num_guns()
+	var draw = shoot_power_draw*num
+	#print("Num guns: ", num, " pwr draw: ", draw, " pwr: ", power)
+	
+	if power <= draw:
 		emit_signal("officer_message", "Weapons systems offline!")
 		return
 		
-	power -= shoot_power_draw
+	power -= draw
 	emit_signal("power_changed", power)
 	recharge_timer.start()
 	
+	# a single timer for now
 	gun_timer.start()
-	var b = bullet.instance()
-	bullet_container.add_child(b)
-	b.start_at(get_global_rotation(), $"muzzle".get_global_position())
+	for g in get_guns():
+		var b = bullet.instance()
+		bullet_container.add_child(b)
+		b.start_at(get_global_rotation(), g.get_global_position())
+
 	
 func scan(planet):
 	if not planet.scanned:
