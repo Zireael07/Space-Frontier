@@ -142,6 +142,7 @@ func _process(delta):
 			game.player = ship.get_child(0)
 			game.player.HUD = old_HUD
 			HUD.player = game.player
+			HUD.connect_player_signals(game.player)
 			var mmap = get_tree().get_nodes_in_group("minimap")[0]
 			mmap.player = game.player
 			

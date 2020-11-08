@@ -30,18 +30,7 @@ func _ready():
 		# because colonies don't have HUD info yet
 		c.get_child(0).connect("colony_targeted", self, "_on_planet_targeted")
 
-	player.connect("shield_changed", self, "_on_shield_changed")
-	player.connect("module_level_changed", self, "_on_module_level_changed")
-	player.connect("power_changed", self, "_on_power_changed")
-	player.connect("engine_changed", self, "_on_engine_changed")
-
-	player.connect("officer_message", self, "_on_officer_messaged")
-	player.connect("kill_gained", self, "_on_kill_gained")
-	player.connect("points_gained", self, "_on_points_gained")
-
-	player.connect("planet_landed", self, "_on_planet_landed")
-
-	player.connect("colony_picked", self, "_on_colony_picked")
+	connect_player_signals(player)
 
 #	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
 
@@ -90,6 +79,21 @@ func connect_planet_signals(planets):
 	for p in planets:
 		p.connect("planet_targeted", self, "_on_planet_targeted")
 		p.connect("planet_colonized", self, "_on_planet_colonized")
+
+func connect_player_signals(player):
+	player.connect("shield_changed", self, "_on_shield_changed")
+	player.connect("module_level_changed", self, "_on_module_level_changed")
+	player.connect("power_changed", self, "_on_power_changed")
+	player.connect("engine_changed", self, "_on_engine_changed")
+
+	player.connect("officer_message", self, "_on_officer_messaged")
+	player.connect("kill_gained", self, "_on_kill_gained")
+	player.connect("points_gained", self, "_on_points_gained")
+
+	player.connect("planet_landed", self, "_on_planet_landed")
+
+	player.connect("colony_picked", self, "_on_colony_picked")
+
 
 func create_direction_labels():
 	var dir_label
