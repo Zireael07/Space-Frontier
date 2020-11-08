@@ -110,6 +110,8 @@ func _process(delta):
 	if Input.is_action_pressed("shoot"):
 		if gun_timer.get_time_left() == 0 and not landed:
 			shoot()
+		else:
+			emit_signal("officer_message", "Guns not ready yet!")
 
 	# tractor
 	if tractor:
@@ -131,6 +133,8 @@ func _process(delta):
 			#print("Trying to upgrade...")
 			# upgrade the ship!
 			upgrade_ship()
+			# new ship has to be docked, too
+			game.player.dock()
 			return
 
 	# rotations
@@ -551,7 +555,6 @@ func _input(_event):
 # -------------------------
 func upgrade_ship():
 	var ship = destroyer.instance()
-	ship.set_name("player")
 	
 	var old_HUD = HUD
 	#print(old_HUD.get_name())
@@ -566,8 +569,14 @@ func upgrade_ship():
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap.player = game.player
 	
+	# make the transition slightly less jarring
+	# TODO: a flashy effect to further cover the camera change
+	get_parent().hide()
+	get_node("Camera2D")._set_current(false)
 	# remove the old ship
 	get_parent().queue_free()
+	
+	ship.set_name("player")
 
 func dock():
 	# set better z so that we don't overlap parent ship
