@@ -136,7 +136,21 @@ func _process(delta):
 			# new ship has to be docked, too
 			game.player.dock()
 			return
-
+			
+	# camera
+	# just_pressed means it does it in steps, like the original game did
+	if Input.is_action_just_pressed("zoom_in"):
+		var cam = get_node("Camera2D")
+		if cam.zoom.x > 0.5:
+			cam.zoom.x = cam.zoom.x - 0.1
+			cam.zoom.y = cam.zoom.y - 0.1
+		
+	if Input.is_action_just_pressed("zoom_out"):
+		var cam = get_node("Camera2D")
+		if cam.zoom.x < 1.5:
+			cam.zoom.x = cam.zoom.x + 0.1
+			cam.zoom.y = cam.zoom.y + 0.1 
+		
 	# rotations
 	if Input.is_action_pressed("move_left"):
 		if warping == false:
