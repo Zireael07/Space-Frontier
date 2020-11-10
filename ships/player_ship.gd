@@ -301,7 +301,7 @@ func _process(delta):
 			#print("No refit target anymore")
 			# disable tractor
 			tractored = false
-			docked = true
+			#docked = true
 			# officer message
 			var msg = "Docking successful"
 			if rank >= 2:
@@ -601,6 +601,7 @@ func upgrade_ship():
 	call_deferred("enable_cam")
 
 func dock():
+	docked = true
 	# set better z so that we don't overlap parent ship
 	set_z_index(-1)
 	#set_z_index(game.BASE_Z-1)
