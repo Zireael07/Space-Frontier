@@ -122,7 +122,6 @@ texture = ExtResource( 2 )
 shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="Area2D"]
-current = true
 
 [node name="bullet_container" type="Node" parent="Area2D"]
 

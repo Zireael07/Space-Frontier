@@ -567,6 +567,10 @@ func _input(_event):
 
 
 # -------------------------
+func enable_cam():
+	game.player.get_node("Camera2D")._set_current(true)
+	game.player.get_node("Camera2D").align()
+
 func upgrade_ship():
 	var ship = destroyer.instance()
 	
@@ -583,14 +587,18 @@ func upgrade_ship():
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap.player = game.player
 	
-	# make the transition slightly less jarring
-	# TODO: a flashy effect to further cover the camera change
+	# make the transition less jarring by hiding 
+	# TODO: a flashy effect here
 	get_parent().hide()
 	get_node("Camera2D")._set_current(false)
+
 	# remove the old ship
 	get_parent().queue_free()
 	
 	ship.set_name("player")
+	
+	# fix the camera jank by deferring active camera change
+	call_deferred("enable_cam")
 
 func dock():
 	# set better z so that we don't overlap parent ship
