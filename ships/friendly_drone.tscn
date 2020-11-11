@@ -3,7 +3,7 @@
 [ext_resource path="res://ships/brain.gd" type="Script" id=1]
 [ext_resource path="res://ships/NPC_drone.gd" type="Script" id=2]
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=3]
-[ext_resource path="res://assets/ships/playerShip2_blue.png" type="Texture" id=5]
+[ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture" id=4]
 [ext_resource path="res://assets/fire11.png" type="Texture" id=6]
 [ext_resource path="res://assets/shield_Edit.png" type="Texture" id=7]
 
@@ -93,7 +93,7 @@ script = ExtResource( 2 )
 
 [node name="playerShip2_blue" type="Sprite" parent="Area2D_ship_f"]
 scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_ship_f"]
 shape = SubResource( 1 )
