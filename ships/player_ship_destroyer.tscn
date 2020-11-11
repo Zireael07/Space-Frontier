@@ -128,12 +128,12 @@ shape = SubResource( 1 )
 [node name="muzzle" type="Position2D" parent="Area2D" groups=[
 "muzzle",
 ]]
-position = Vector2( -25, 0 )
+position = Vector2( -15, -5 )
 
 [node name="muzzle2" type="Position2D" parent="Area2D" groups=[
 "muzzle",
 ]]
-position = Vector2( 25, 0 )
+position = Vector2( 15, -5 )
 
 [node name="gun_timer" type="Timer" parent="Area2D"]
 wait_time = 0.5
