@@ -144,12 +144,29 @@ func _process(delta):
 		if cam.zoom.x > 0.5:
 			cam.zoom.x = cam.zoom.x - 0.1
 			cam.zoom.y = cam.zoom.y - 0.1
+		# keep the shield indicator roughly the same apparent size when zoomed in
+		if cam.zoom.x < 1:
+			var val = abs(cam.zoom.x-1)
+			var sc = lerp(1, 0.5, val)
+			#print("lerp: ", val, " sc: ", sc)
+			get_node("shield_indicator").set_scale(Vector2(sc, sc))
+		else:
+			get_node("shield_indicator").set_scale(Vector2(1,1))
+		
 		
 	if Input.is_action_just_pressed("zoom_out"):
 		var cam = get_node("Camera2D")
 		if cam.zoom.x < 1.5:
 			cam.zoom.x = cam.zoom.x + 0.1
 			cam.zoom.y = cam.zoom.y + 0.1 
+		# keep the shield indicator roughly the same apparent size when zoomed in
+		if cam.zoom.x < 1:
+			var val = abs(cam.zoom.x-1)
+			var sc = lerp(1, 0.5, val)
+			get_node("shield_indicator").set_scale(Vector2(sc, sc))
+		else:
+			get_node("shield_indicator").set_scale(Vector2(1,1))	
+		
 		
 	# rotations
 	if Input.is_action_pressed("move_left"):
