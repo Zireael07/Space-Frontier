@@ -52,6 +52,10 @@ func spawn_core():
 	add_child(cor)
 	# spawn player
 	get_tree().get_nodes_in_group("player")[0].get_child(0).spawn()
+	# send position to parallax background
+	get_node("ParallaxBackground").init_pos = get_tree().get_nodes_in_group("player")[0].get_global_position()
+	#print("Init pos: ", get_node("ParallaxBackground").init_pos)
+
 
 
 # Called when the node enters the scene tree for the first time.
