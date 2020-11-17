@@ -11,6 +11,7 @@ var pirate_starbase = preload("res://ships/pirate_starbase.tscn")
 var pirate_ship = preload("res://ships/pirate_ship.tscn")
 
 var asteroid_processor = preload("res://ships/asteroid_processor.tscn")
+var cycler = preload("res://ships/cycler.tscn")
 
 var wormhole = preload("res://blackhole2D.tscn")
 
@@ -89,6 +90,8 @@ func _ready():
 		spawn_wormhole(p_ind, 1, mmap)
 	
 	spawn_asteroid_processor(p_ind, curr_system, mmap)
+	spawn_cycler(p_ind, curr_system, mmap)
+	
 	var pirate = spawn_pirate_base(p_ind, curr_system, mmap)
 	if pirate != null:
 		for i in range(3):
@@ -246,6 +249,27 @@ func spawn_enemy(pos, p_ind, mmap):
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_enemy_ship_spawned(sp.get_child(0))
+
+func spawn_cycler(p_ind, system, mmap):
+	if system != "Sol":
+		return
+	
+	var e = get_tree().get_nodes_in_group("planets")[2]
+	var m = get_tree().get_nodes_in_group("planets")[3]
+	
+	# B-A = A->B
+	var offset = m.get_global_position()-e.get_global_position()
+	
+	var castle = cycler.instance()
+	castle.set_global_position(e.get_global_position()+(offset/2))
+	castle.set_name("cycler")
+	get_child(3).add_child(castle)
+	get_child(3).move_child(castle, p_ind+1)
+	
+	# give minimap icon
+	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	mmap._on_starbase_spawned(castle.get_child(0))
+
 
 func spawn_asteroid_processor(p_ind, system, mmap):
 	if system != "Sol":
