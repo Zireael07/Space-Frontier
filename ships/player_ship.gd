@@ -628,6 +628,7 @@ func dock():
 	acc = Vector2(0,0)
 	
 	var friend_docked = false
+	# get_parent().get_parent() is the refit_target/starbase
 	# 6 is the default, so only check if we have more
 	if get_parent().get_parent().get_child_count() > 6:
 		for ch in get_parent().get_parent().get_children():
@@ -643,7 +644,10 @@ func dock():
 	if friend_docked:
 		get_parent().set_position(Vector2(-25,50))
 	else:
-		get_parent().set_position(Vector2(0,50))
+		if get_parent().get_parent().get_name().find("cycler"):
+			get_parent().set_position(Vector2(25, 50))
+		else:
+			get_parent().set_position(Vector2(0,50))
 	set_position(Vector2(0,0))
 	pos = Vector2(0,0)
 	
