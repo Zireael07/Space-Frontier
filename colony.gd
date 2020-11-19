@@ -176,7 +176,7 @@ func fix_atan(x,y):
 
 # draw a red rectangle around the target
 func _draw():
-	if game.player.HUD.target == self:
+	if game.player and game.player.HUD.target == self:
 	#if targetted:
 		var rect = Rect2(Vector2(-26, -26),	Vector2(91*0.6, 91*0.6))
 

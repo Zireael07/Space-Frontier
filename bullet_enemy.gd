@@ -54,6 +54,15 @@ func _on_bullet_area_entered( area ):
 			elif area.get_parent().is_in_group("player"):
 				# reenable when it doesn't destroy the game
 				#area.get_parent().queue_free()
+				
+				# just hide instead
+				area.hide()
+				# block (effectively disconnect) player HUD signals
+				area.set_block_signals(true)
+				area.dead = true
+				# remove player arrow from minimap
+				game.player.HUD.get_node("Control2/Panel_rightHUD/minimap").player_killed()
+				
 				# starbases don't have this signal (yet)
 				if area.has_user_signal("target_killed"):
 					get_parent().get_parent().emit_signal("target_killed", area)

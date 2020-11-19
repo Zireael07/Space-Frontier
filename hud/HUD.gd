@@ -252,7 +252,9 @@ func handle_direction_labels():
 func _process(_delta):
 	# show player speed
 	if player != null and player.is_inside_tree():
-		var format = "%0.2f" % player.spd
+		var format = "0.0"		
+		if not player.dead:
+			format = "%0.2f" % player.spd
 		get_node("Control/Panel/Label").set_text(format + " c")
 		
 		get_node("Control/Panel/Label_rank").set_text(game.ranks.keys()[player.rank])

@@ -604,3 +604,6 @@ func cleanup():
 	wh_arrow = null
 	# as a bonus, hide the wormhole arrow
 	#wh_arrow.hide()
+
+func player_killed():
+	get_node("player").hide()

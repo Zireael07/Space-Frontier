@@ -56,6 +56,9 @@ signal planet_landed
 # for AI orders
 var conquer_target = null
 
+# player only
+var dead = false
+
 # better ships
 var destroyer = load("res://ships/player_ship_destroyer.tscn")
 
@@ -94,6 +97,11 @@ func spawn():
 # input (spread across process and fixed_process)
 # using this instead of fixed_process because we don't need physics
 func _process(delta):
+	# skip iter if dead
+	if dead:
+		return
+	
+	
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 	# were we boosting last tick?
@@ -384,6 +392,10 @@ func _process(delta):
 	
 # those functions that need physics
 func _input(_event):
+	# skip iter if dead
+	if dead:
+		return
+	
 	if Input.is_action_pressed("closest_target"):
 		get_closest_target()
 	

@@ -327,7 +327,7 @@ func get_enemies():
 #			nodes.remove(nodes.find(r))
 		
 		var player = get_tree().get_nodes_in_group("player")[0].get_child(0)
-		if not player.cloaked:
+		if not player.cloaked and not player.dead:
 			# add player
 			nodes.append(player)
 	else:	
