@@ -16,7 +16,6 @@ void fragment() {
 		COLOR.rgba = col.rgba; //+ vec3(1,0,0);
 	}
 }"
-custom_defines = ""
 
 [resource]
 shader = SubResource( 1 )

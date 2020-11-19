@@ -38,7 +38,7 @@ var axis_rot = 0.0
 
 signal planet_colonized
 
-onready var module = preload("res://debris_enemy.tscn")
+onready var module = preload("res://debris_friendly.tscn")
 
 var scanned = false
 var atm_gases
