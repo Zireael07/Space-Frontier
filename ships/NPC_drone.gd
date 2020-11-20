@@ -249,3 +249,16 @@ func launch():
 	pos = Vector2(0,0)
 			
 	set_global_rotation(get_global_rotation())
+
+func dodge_effect():
+	self.modulate = Color(1,1,1, 0.5) # semi-transparent
+	$"shield_effect".show()
+	# fix occasional problem
+	if $"shield_timer".is_inside_tree():
+		$"shield_timer".start()
+	else:
+		$"shield_timer".call_deferred("start")
+		
+func _on_shield_timer_timeout():
+	$"shield_effect".hide()
+	self.modulate = Color(1,1,1,1)

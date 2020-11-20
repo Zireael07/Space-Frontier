@@ -31,6 +31,8 @@ func _on_bullet_area_entered( area ):
 
 		# do nothing if we hit a drone
 		if not 'shields' in area:
+			# show a visual effect
+			area.dodge_effect()
 			return
 
 		# prevent negative shields
