@@ -87,6 +87,12 @@ func _onButtonShip_pressed(target):
 		$"Panel_rightHUD/PanelInfo/ShipInfo/Shields".show()
 		$"Panel_rightHUD/PanelInfo/ShipInfo/Shields".set_text("Shields: " + str(player.shield_level))
 	
+		# others
+		var txt_others = ""
+		if player.has_cloak:
+			txt_others += "Cloak"
+			$"Panel_rightHUD/PanelInfo/ShipInfo/Others".set_text(txt_others)
+	
 	# show ship panel
 	$"Panel_rightHUD/PanelInfo/CensusInfo".hide()
 	$"Panel_rightHUD/PanelInfo/NavInfo".hide()

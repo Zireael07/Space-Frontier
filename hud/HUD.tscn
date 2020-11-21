@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=1]
 [ext_resource path="res://hud/minimap_container.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://assets/HUD ship outline.tres" type="Material" id=12]
 [ext_resource path="res://assets/hud/grey_panel.png" type="Texture" id=13]
 [ext_resource path="res://hud/HUD_right.gd" type="Script" id=14]
+[ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture" id=15]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 13 )
@@ -233,7 +234,7 @@ margin_left = 80.0
 margin_top = 1.0
 margin_right = 192.0
 margin_bottom = 76.0
-texture = ExtResource( 6 )
+texture = ExtResource( 15 )
 
 [node name="ShipName" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
 margin_right = 40.0
@@ -266,11 +267,18 @@ margin_right = 62.0
 margin_bottom = 89.0
 text = "Shields: 1"
 
+[node name="Others" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
+margin_top = 90.0
+margin_right = 62.0
+margin_bottom = 104.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Task" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
-visible = false
-margin_top = 100.0
+margin_top = 110.0
 margin_right = 40.0
-margin_bottom = 114.0
+margin_bottom = 124.0
 text = "Task:"
 
 [node name="RefitInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
