@@ -53,6 +53,8 @@ enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
 enum processed { METHANE, CARBORUNDUM, PLASTICS } 
 var storage = {}
 
+var deb_chances = []
+
 # Called when the node is added to the scene for the first time.
 # Initialization here
 func _ready():
@@ -64,8 +66,9 @@ func _ready():
 	
 	labl_loc = $"Label".get_position()
 	
-	# if colonized, give some storage
+	# if colonized, give some storage and a module table
 	if has_colony():
+		set_debris_table()
 		randomize_storage()
 		# show colony hub's shadow on planet
 		get_colony().get_child(0).show_shadow()
@@ -895,6 +898,10 @@ func do_colonize(area):
 		population = area.population # in millions
 		#population = 50/1000.0 # in milions
 		emit_signal("planet_colonized", self)
+		
+		# set modules table
+		set_debris_table()
+		
 		# reward if there's someone to be rewarded
 		if area.to_reward != null:
 			# currently to_reward is player-only
@@ -908,7 +915,7 @@ func do_colonize(area):
 			
 		# this signal wants the top node, not the area itself
 		area.emit_signal("colony_colonized", area.get_parent(), self)
-		print("Adding colony to planet")
+		#print("Adding colony to planet")
 		# add colony to planet
 		# prevent crash
 		call_deferred("reparent", area)
@@ -1038,6 +1045,51 @@ func _on_pop_timer_timeout():
 #	else:
 #		print("No colony?")
 
+# ----------------------
+func set_debris_table():
+	# randomizing is done here and not in debris because planet-spawned debris has different chances
+	deb_chances.append(["cloak", 30])
+	deb_chances.append(["shields", 70])
+
+# TODO: those are used at least in 4 spots (here and in asteroids and in proc star system, unify?
+func get_chance_roll_table(chances, pad=false):
+	var num = -1
+	var chance_roll = []
+	for chance in chances:
+		#print(chance)
+		var old_num = num + 1
+		num += 1 + chance[1]
+		# clip top number to 100
+		if num > 100:
+			num = 100
+		chance_roll.append([chance[0], old_num, num])
+
+	if pad:
+		# pad out to 100
+		print("Last number is " + str(num))
+		# print "Last number is " + str(num)
+		chance_roll.append(["None", num, 100])
+
+	return chance_roll
+
+# wants a table of chances [[name, low, upper]]
+func random_choice_table(table):
+	var roll = randi() % 101 # between 0 and 100
+	print("Roll: " + str(roll))
+	
+	for row in table:
+		if roll >= row[1] and roll <= row[2]:
+			print("Random roll picked: " + str(row[0]))
+			return row[0]
+
+# random select from a table
+func select_random_module():
+	var chance_roll_table = get_chance_roll_table(deb_chances)
+	print(chance_roll_table)
+	
+	var res = random_choice_table(chance_roll_table)
+	print("Module res: " + str(res))
+	return res
 
 func enough_modules():
 	var enough = true
@@ -1074,7 +1126,12 @@ func _on_module_timer_timeout():
 		#print("Module timer")
 		var pos = get_global_position()
 		var mo = module.instance()
-		mo.get_child(0).module = 3 # cloak
+		
+		# randomize
+		var sel = select_random_module()
+		mo.get_child(0).module = mo.get_child(0).match_string(sel)
+		
+		#mo.get_child(0).module = 3 # cloak
 		get_parent().add_child(mo)
 		# slight offset
 		var offset = Vector2(10,10)

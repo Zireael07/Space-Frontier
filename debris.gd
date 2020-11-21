@@ -15,7 +15,7 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
-var lookup_table = {"shields" : modules.shields, "engine" : modules.engine, "power" : modules.power}
+var lookup_table = {"shields" : modules.shields, "engine" : modules.engine, "power" : modules.power, "cloak" : modules.cloak}
 func match_string(string):
 	if lookup_table.has(string):
 		return lookup_table[string]
