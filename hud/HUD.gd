@@ -622,6 +622,13 @@ func _on_planet_targeted(planet):
 
 	print("Planet targeted: ", planet.get_node("Label").get_text())
 	
+	# hide any other HUD panel
+	$"Control2/Panel_rightHUD/PanelInfo/CensusInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
+	
 	# show the planet in right hud
 	var id = planets.find(planet)
 	get_node("Control2").make_planet_view(planet, id)
