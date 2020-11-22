@@ -26,10 +26,15 @@ func match_string(string):
 
 func _on_debris_area_entered(area):
 	if area.get_parent().is_in_group("player") and not area.warping:
-		print("debris entered by " + area.get_parent().get_name())
+		print("player entered debris")
 		
 		# upgrade
 		if module == modules.shields:
+			if area.shield_level == 2:
+				if area.get_parent().is_in_group("player"):
+					area.emit_signal("officer_message", "Shields 2 cannot be upgraded to shields 2")
+				return
+			
 			print("Upgrading shields")
 			area.shields = 150
 			area.shield_level = 2
