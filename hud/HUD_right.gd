@@ -74,6 +74,7 @@ func _onButtonShip_pressed(target):
 		$"Panel_rightHUD/PanelInfo/ShipInfo/Power".hide()
 		$"Panel_rightHUD/PanelInfo/ShipInfo/Engine".hide()
 		$"Panel_rightHUD/PanelInfo/ShipInfo/Shields".hide()
+		$"Panel_rightHUD/PanelInfo/ShipInfo/Others".hide()
 		
 	# no target, show player's own data	
 	else:
