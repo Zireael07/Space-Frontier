@@ -509,9 +509,13 @@ func _input(_event):
 			col.set_global_position(get_node("dock").get_global_position() + Vector2(0, 20))
 			
 			#print("Undocked")
-			
+	
+	# panel keybinds
 	if Input.is_action_pressed("nav"):
 		self.HUD.get_node("Control2").switch_to_navi()
+	if Input.is_action_pressed("ship_view"):
+		# switch to ship panel
+		self.HUD._on_ButtonShip_pressed()
 		
 	if Input.is_action_pressed("go_planet"):
 		# no warping if we are hauling a colony
