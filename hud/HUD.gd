@@ -628,6 +628,7 @@ func _on_planet_targeted(planet):
 	$"Control2/Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/NavInfo".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/HelpInfo".hide()
 	
 	# show the planet in right hud
 	var id = planets.find(planet)

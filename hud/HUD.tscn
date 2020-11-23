@@ -516,6 +516,37 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="HelpInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/HelpInfo"]
+margin_right = 191.0
+margin_bottom = 177.0
+text = "F1 to open this help
+Space - shoot
+Arrows - move
+
+A - target closest enemy
+T - tractor a target
+/ - release the tractored entity
+R - refit
+Backspace - upgrade a ship if docked
+C - cloak (if you have it)
+O - orbit a planet
+L - land on a planet
+S - scan a planet
++ and - - zoom main view in or out
+M - open fullscreen map view
+
+N - switch panel to planet listing
+Shift+S - switch panel to ship info
+P - switch panel to census (player listing)
+G - go to a selected planet
+< and > - move cursor up/down or select previous/next entry
+PgUp and PgDown - move cursor up/down a page in long list"
+
 [node name="orrery" type="Control" parent="Control2/Panel_rightHUD"]
 margin_left = 20.0
 margin_top = 240.0

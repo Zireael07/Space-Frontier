@@ -33,6 +33,7 @@ func switch_to_navi():
 	$"Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Panel_rightHUD/PanelInfo/HelpInfo".hide()
 	$"Panel_rightHUD/PanelInfo/NavInfo".show()
 	
 	# grab the f&cking focus
@@ -44,6 +45,7 @@ func _onButtonCensus_pressed():
 	$"Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Panel_rightHUD/PanelInfo/HelpInfo".hide()
 	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
 
 	# update
@@ -100,6 +102,7 @@ func _onButtonShip_pressed(target):
 	$"Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Panel_rightHUD/PanelInfo/HelpInfo".hide()
 	$"Panel_rightHUD/PanelInfo/ShipInfo".show()
 
 func switch_to_refit():
@@ -131,13 +134,16 @@ func switch_to_refit():
 	$"Panel_rightHUD/PanelInfo/ShipInfo".hide()
 	$"Panel_rightHUD/PanelInfo/CargoInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Panel_rightHUD/PanelInfo/HelpInfo".hide()
 	$"Panel_rightHUD/PanelInfo/RefitInfo".show()
 
 func switch_to_cargo():
 	$"Panel_rightHUD/PanelInfo/CensusInfo".hide()
 	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
+	$"Panel_rightHUD/PanelInfo/ShipInfo".hide()
 	$"Panel_rightHUD/PanelInfo/RefitInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Panel_rightHUD/PanelInfo/HelpInfo".hide()
 	$"Panel_rightHUD/PanelInfo/CargoInfo".show()
 	
 func _onButtonCargo_pressed():
@@ -650,3 +656,12 @@ func _onButtonDown3_pressed():
 		# down a line
 		cursor.set_position(cursor.get_position() + Vector2(0,15))
 
+# --------------------------
+func switch_to_help():
+	$"Panel_rightHUD/PanelInfo/CensusInfo".hide()
+	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
+	$"Panel_rightHUD/PanelInfo/ShipInfo".hide()
+	$"Panel_rightHUD/PanelInfo/RefitInfo".hide()
+	$"Panel_rightHUD/PanelInfo/PlanetInfo".hide()
+	$"Panel_rightHUD/PanelInfo/HelpInfo".show()
+	$"Panel_rightHUD/PanelInfo/CargoInfo".hide()

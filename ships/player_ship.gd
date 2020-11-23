@@ -516,6 +516,10 @@ func _input(_event):
 	if Input.is_action_pressed("ship_view"):
 		# switch to ship panel
 		self.HUD._on_ButtonShip_pressed()
+	if Input.is_action_pressed("players_list"):
+		self.HUD.get_node("Control2")._onButtonCensus_pressed()
+	if Input.is_action_pressed("help"):
+		self.HUD.get_node("Control2").switch_to_help()
 		
 	if Input.is_action_pressed("go_planet"):
 		# no warping if we are hauling a colony
