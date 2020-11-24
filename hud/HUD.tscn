@@ -543,6 +543,7 @@ M - open fullscreen map view
 N - switch panel to planet listing
 Shift+S - switch panel to ship info
 P - switch panel to census (player listing)
+Shift+C - switch panel to cargo info
 G - go to a selected planet
 < and > - move cursor up/down or select previous/next entry
 PgUp and PgDown - move cursor up/down a page in long list"

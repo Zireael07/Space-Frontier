@@ -520,6 +520,8 @@ func _input(_event):
 		self.HUD.get_node("Control2")._onButtonCensus_pressed()
 	if Input.is_action_pressed("help"):
 		self.HUD.get_node("Control2").switch_to_help()
+	if Input.is_action_pressed("cargo_panel"):
+		self.HUD.switch_to_cargo()
 		
 	if Input.is_action_pressed("go_planet"):
 		# no warping if we are hauling a colony
