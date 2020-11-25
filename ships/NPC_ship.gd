@@ -562,6 +562,14 @@ func _on_shield_changed(data):
 			brain.target = base.get_global_position()
 			brain.set_state(brain.STATE_REFIT, base)
 		
+		# update player status light if needed
+		if self in game.player.targeted_by:
+			var find = game.player.targeted_by.find(self)
+			if find != -1:
+				game.player.targeted_by.remove(find)
+			if game.player.targeted_by.size() < 1:
+				emit_signal("target_lost_AI", self)
+		
 #		if get_tree().get_nodes_in_group("asteroid").size() > 3:
 #			brain.target = get_tree().get_nodes_in_group("asteroid")[2].get_global_position()
 #			brain.set_state(brain.STATE_MINE, get_tree().get_nodes_in_group("asteroid")[2])
