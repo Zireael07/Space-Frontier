@@ -43,6 +43,9 @@ var targeted_by = []
 var HUD = null
 signal officer_message
 
+var armor = 50
+signal armor_changed
+
 var credits = 0
 var kills = 0
 var points = 0

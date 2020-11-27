@@ -85,6 +85,7 @@ func connect_player_signals(player):
 	player.connect("module_level_changed", self, "_on_module_level_changed")
 	player.connect("power_changed", self, "_on_power_changed")
 	player.connect("engine_changed", self, "_on_engine_changed")
+	player.connect("armor_changed", self, "_on_armor_changed")
 
 	player.connect("officer_message", self, "_on_officer_messaged")
 	player.connect("kill_gained", self, "_on_kill_gained")
@@ -491,7 +492,12 @@ func _on_engine_changed(engine):
 		$"Control/Panel/ProgressBar_en".value = perc
 	else:
 		$"Control/Panel/ProgressBar_en".value = 0
-	
+
+func _on_armor_changed(armor):
+	if armor >= 0:
+		$"Control/Panel/Label_arm".set_text("Armor: " + str(armor))
+	else:
+		$"Control/Panel/Label_arm".set_text("Armor: " + str(armor))	
 
 func _on_module_level_changed(module, level):
 	var info = $"Control2/Panel_rightHUD/PanelInfo/ShipInfo/"

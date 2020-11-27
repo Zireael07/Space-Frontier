@@ -739,6 +739,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label_arm" type="Label" parent="Control/Panel"]
+margin_left = 325.0
+margin_top = 121.0
+margin_right = 397.0
+margin_bottom = 135.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
+text = "Armor: 50"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Panel2" type="Panel" parent="Control"]
 margin_left = 215.0
 margin_right = 650.0

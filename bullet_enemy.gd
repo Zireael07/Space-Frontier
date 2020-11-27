@@ -35,11 +35,19 @@ func _on_bullet_area_entered( area ):
 			area.dodge_effect()
 			return
 
-		# prevent negative shields
-		if area.shields > 0:
-			area.shields -= 10
-			# emit signal
-			area.emit_signal("shield_changed", [area.shields])
+		# go through armor first
+		if 'armor' in area and area.armor > 0:
+			# armor absorbs some of the damage
+			var ar = int(floor(10/2))
+			#print(str(ar))
+			area.armor -= ar 
+			area.emit_signal("armor_changed", area.armor)
+		else:
+			# prevent negative shields
+			if area.shields > 0:
+				area.shields -= 10
+				# emit signal
+				area.emit_signal("shield_changed", [area.shields])
 		
 		if area.shields <= 0:
 			if area.get_groups().has("friendly"):
