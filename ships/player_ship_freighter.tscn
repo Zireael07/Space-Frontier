@@ -113,6 +113,7 @@ z_as_relative = false
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource( 7 )
 bullet = ExtResource( 1 )
+has_armor = true
 
 [node name="playerShip2_blue" type="Sprite" parent="Area2D"]
 scale = Vector2( 0.6, 0.6 )

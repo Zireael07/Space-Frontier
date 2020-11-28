@@ -43,6 +43,7 @@ var targeted_by = []
 var HUD = null
 signal officer_message
 
+export var has_armor = false
 var armor = 50
 signal armor_changed
 
@@ -79,6 +80,10 @@ func _ready():
 	get_parent().add_to_group("player")
 	
 	var _conn = connect("shield_changed", self, "_on_shield_changed")
+	
+	if not has_armor:
+		armor = 0
+		#hiding HUD in HUD.gd
 
 
 func spawn():

@@ -31,6 +31,10 @@ func _ready():
 		c.get_child(0).connect("colony_targeted", self, "_on_planet_targeted")
 
 	connect_player_signals(player)
+	
+	# hide armor label if needed
+	if not player.has_armor:
+		get_node("Control/Panel/Label_arm").hide()
 
 #	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
 
