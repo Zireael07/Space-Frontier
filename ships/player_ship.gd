@@ -85,7 +85,10 @@ func _ready():
 	if not has_armor:
 		armor = 0
 		#hiding HUD in HUD.gd
-
+	else:
+		# armor makes us heavier (=slows down)
+		max_vel = 0.35 * LIGHT_SPEED
+		thrust = 0.1 * LIGHT_SPEED
 
 func spawn():
 	# spawn somewhere interesting
@@ -624,7 +627,9 @@ func upgrade_ship():
 	# set armor
 	has_armor = true
 	armor = 50
-	
+	# armor makes us heavier (=slows down)
+	max_vel = 0.35 * LIGHT_SPEED
+	thrust = 0.1 * LIGHT_SPEED
 	
 	if self.rank > game.ranks.SCLT: 
 		ship = destroyer.instance()
