@@ -64,6 +64,7 @@ var conquer_target = null
 var dead = false
 
 # better ships
+var freighter = load("res://ships/player_ship_freighter.tscn")
 var destroyer = load("res://ships/player_ship_destroyer.tscn")
 
 func welcome():
@@ -619,7 +620,14 @@ func enable_cam():
 	game.player.get_node("Camera2D").align()
 
 func upgrade_ship():
-	var ship = destroyer.instance()
+	var ship = freighter.instance()
+	# set armor
+	has_armor = true
+	armor = 50
+	
+	
+	if self.rank > game.ranks.SCLT: 
+		ship = destroyer.instance()
 	
 	var old_HUD = HUD
 	#print(old_HUD.get_name())
@@ -631,6 +639,7 @@ func upgrade_ship():
 	game.player.HUD = old_HUD
 	HUD.player = game.player
 	HUD.connect_player_signals(game.player)
+	HUD.toggle_armor_label()
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap.player = game.player
 	

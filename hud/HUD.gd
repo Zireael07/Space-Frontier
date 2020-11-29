@@ -99,6 +99,12 @@ func connect_player_signals(player):
 
 	player.connect("colony_picked", self, "_on_colony_picked")
 
+func toggle_armor_label():
+	# hide armor label if needed
+	if not player.has_armor:
+		get_node("Control/Panel/Label_arm").hide()
+	else:
+		get_node("Control/Panel/Label_arm").show()
 
 func create_direction_labels():
 	var dir_label
