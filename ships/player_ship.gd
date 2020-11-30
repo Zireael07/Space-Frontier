@@ -64,6 +64,8 @@ var conquer_target = null
 var dead = false
 
 # better ships
+enum ship_class {SCOUT, FREIGHTER, DESTROYER}
+export(int) var class_id = 0
 var freighter = load("res://ships/player_ship_freighter.tscn")
 var destroyer = load("res://ships/player_ship_destroyer.tscn")
 
