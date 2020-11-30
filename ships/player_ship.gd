@@ -66,6 +66,7 @@ var dead = false
 # better ships
 enum ship_class {SCOUT, FREIGHTER, DESTROYER}
 export(int) var class_id = 0
+var scout = load("res://ships/player_ship.tscn")
 var freighter = load("res://ships/player_ship_freighter.tscn")
 var destroyer = load("res://ships/player_ship_destroyer.tscn")
 
@@ -150,7 +151,7 @@ func _process(delta):
 			tractor.get_child(0).tractor = self
 
 	# upgrade
-	if Input.is_action_pressed("ui_back"):
+	if Input.is_action_just_pressed("ui_back"):
 		if docked:
 			#print("Trying to upgrade...")
 			# upgrade the ship!
@@ -625,13 +626,15 @@ func enable_cam():
 	game.player.get_node("Camera2D").align()
 
 func upgrade_ship():
-	var ship = freighter.instance()
-	# set armor
-	has_armor = true
-	armor = 50
-	# armor makes us heavier (=slows down)
-	max_vel = 0.35 * LIGHT_SPEED
-	thrust = 0.1 * LIGHT_SPEED
+	var ship = scout.instance() # the default
+	if class_id < 1:
+		ship = freighter.instance()
+		# set armor
+		has_armor = true
+		armor = 50
+		# armor makes us heavier (=slows down)
+		max_vel = 0.35 * LIGHT_SPEED
+		thrust = 0.1 * LIGHT_SPEED
 	
 	if self.rank > game.ranks.SCLT: 
 		ship = destroyer.instance()
