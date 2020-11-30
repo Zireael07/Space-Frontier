@@ -158,6 +158,7 @@ func _process(delta):
 			upgrade_ship()
 			# new ship has to be docked, too
 			game.player.dock()
+			game.player.HUD.get_node("Control2").update_ship_name()
 			return
 			
 	# camera
@@ -648,6 +649,7 @@ func upgrade_ship():
 	game.player = ship.get_child(0)
 	game.player.HUD = old_HUD
 	HUD.player = game.player
+	HUD.get_node("Control2").player = game.player
 	HUD.connect_player_signals(game.player)
 	HUD.toggle_armor_label()
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]

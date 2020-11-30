@@ -106,6 +106,9 @@ func _onButtonShip_pressed(target):
 	$"Panel_rightHUD/PanelInfo/ShipInfo".show()
 
 func switch_to_refit():
+	# update class line
+	$"Panel_rightHUD/PanelInfo/RefitInfo/ShipName".set_text(player.ship_class.keys()[player.class_id].capitalize())
+	
 	if not player.docked:
 		$"Panel_rightHUD/PanelInfo/RefitInfo/Label".hide()
 		$"Panel_rightHUD/PanelInfo/RefitInfo/Cursor".hide()
@@ -136,6 +139,11 @@ func switch_to_refit():
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".hide()
 	$"Panel_rightHUD/PanelInfo/HelpInfo".hide()
 	$"Panel_rightHUD/PanelInfo/RefitInfo".show()
+
+func update_ship_name():
+	# update class line
+	$"Panel_rightHUD/PanelInfo/RefitInfo/ShipName".set_text(player.ship_class.keys()[player.class_id].capitalize())
+
 
 func switch_to_cargo():
 	$"Panel_rightHUD/PanelInfo/CensusInfo".hide()
