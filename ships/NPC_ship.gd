@@ -297,6 +297,7 @@ func shoot_wrapper():
 		shoot()
 
 func shoot():
+	# TODO: implement power draw for AI ships
 	gun_timer.start()
 	var b = bullet.instance()
 	bullet_container.add_child(b)
@@ -484,7 +485,7 @@ func refit_tractor(refit_target):
 					#print("Player docked with the starbase")
 					friend_docked = true
 					break
-				if ch.get_child_count() > 0 and ch.get_child(0).is_in_group("friendly"):
+				if ch.get_child_count() > 0 and ch.get_child(0).is_in_group("friendly") and not ch.get_child(0).is_in_group("drone"):
 					#print("Friendly docked with the starbase")
 					friend_docked = true
 					break

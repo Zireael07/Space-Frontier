@@ -684,7 +684,7 @@ func dock():
 	if get_parent().get_parent().get_child_count() > 6:
 		for ch in get_parent().get_parent().get_children():
 			if ch is Node2D and ch.get_index() > 5:
-				if ch.get_child_count() > 0 and ch.get_child(0).is_in_group("friendly"):
+				if ch.get_child_count() > 0 and ch.get_child(0).is_in_group("friendly") and not ch.get_child(0).is_in_group("drone"):
 #							print(ch.get_child(0).get_name())
 #							print(str(ch.get_child(0).is_in_group("friendly")))
 					print("Friendly docked with the starbase")
