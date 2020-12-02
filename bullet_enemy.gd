@@ -84,7 +84,7 @@ func _on_bullet_area_entered( area ):
 			# explosion
 			if "explosion" in area:
 				var expl = area.explosion.instance()
-				get_parent().get_parent().add_child(expl)
+				get_parent().get_parent().get_parent().add_child(expl)
 				expl.set_global_position(pos)
 				expl.play()
 			
