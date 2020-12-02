@@ -10,7 +10,7 @@ func _ready():
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	#
 	# send parallax offset to shader
 	var parallax = get_scroll_offset()*get_scroll_base_scale()*get_node("ParallaxLayer").get_motion_scale()

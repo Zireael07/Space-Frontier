@@ -255,7 +255,7 @@ func _on_ButtonView_pressed():
 		var planet = get_tree().get_nodes_in_group("planets")[select_id]
 		make_planet_view(planet, select_id)
 
-func make_star_view(star, select_id):
+func make_star_view(star, _select_id):
 	print("Making view for star...", star.get_node("Label").get_text() )
 	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".show()
@@ -274,8 +274,9 @@ func make_star_view(star, select_id):
 	var text = ""
 	# paranoia
 	if 'luminosity' in star:
+		var fmt_AU = "%.3f AU"
 		text = "Luminosity: " + str(star.luminosity) + "\n" + \
-	"Habitable zone: " + str(star.hz_inner) + "-" + str(star.hz_outer)
+	"Habitable zone: " + "\n" + str(fmt_AU % star.hz_inner) + "-" + str(fmt_AU % star.hz_outer)
 
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 
