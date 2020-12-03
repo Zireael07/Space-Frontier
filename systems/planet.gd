@@ -68,6 +68,9 @@ func _ready():
 	
 	# if colonized, give some storage and a module table
 	if has_colony():
+		# tint label cyan
+		# TODO: ideally just the text would be cyan, but that works too, and is easier
+		get_node("Label").set_self_modulate(Color(0, 1, 1))
 		set_debris_table()
 		randomize_storage()
 		# show colony hub's shadow on planet
@@ -898,6 +901,8 @@ func do_colonize(area):
 		population = area.population # in millions
 		#population = 50/1000.0 # in milions
 		emit_signal("planet_colonized", self)
+		# tint label cyan
+		get_node("Label").set_self_modulate(Color(0, 1, 1))
 		
 		# set modules table
 		set_debris_table()
