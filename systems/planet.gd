@@ -75,6 +75,16 @@ func _ready():
 		randomize_storage()
 		# show colony hub's shadow on planet
 		get_colony().get_child(0).show_shadow()
+		
+		# tint us gray to represent pollution
+		if atm > 0.01:
+			# thresholds are completely arbitrary
+			if population > 8000.0:
+				get_node("Sprite").set_modulate(Color(0.75, 0.75, 0.75, 1.0))
+			if population > 3000.0:
+				get_node("Sprite").set_modulate(Color(0.65, 0.65, 0.65, 1.0))
+			if population > 500.0: # 0.5B or 500M
+				get_node("Sprite").set_modulate(Color(0.5, 0.5, 0.5, 1.0)) # tint light gray
 	
 	# debug old positions
 #	dist = get_position().length()
@@ -1047,6 +1057,18 @@ func _on_pop_timer_timeout():
 	if population > 51/1000.0: # in milions
 		update_HUD_colony_pop(self, true)
 
+	# tint us gray to represent pollution
+	if atm > 0.01:
+		# thresholds are completely arbitrary
+		if population > 8000.0:
+			get_node("Sprite").set_modulate(Color(0.75, 0.75, 0.75, 1.0))
+		if population > 3000.0:
+			get_node("Sprite").set_modulate(Color(0.65, 0.65, 0.65, 1.0))
+		if population > 500.0: # 0.5B or 500M
+			get_node("Sprite").set_modulate(Color(0.5, 0.5, 0.5, 1.0)) # tint light gray
+		
+		
+		
 #	else:
 #		print("No colony?")
 
