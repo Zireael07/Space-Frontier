@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
-[sub_resource type="Shader" id=4]
+[sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
 uniform vec4 aura_color : hint_color;
@@ -25,8 +25,7 @@ void fragment()
 	COLOR = vec4(aura.rgb, al);
 
 }"
-custom_defines = ""
 
 [resource]
-shader = SubResource( 4 )
+shader = SubResource( 1 )
 shader_param/aura_color = Color( 0.737255, 0.592157, 0.0196078, 1 )
