@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=1]
 [ext_resource path="res://hud/minimap_container.gd" type="Script" id=2]
 [ext_resource path="res://hud/HUD.gd" type="Script" id=3]
 [ext_resource path="res://assets/Planet-shadow_only.png" type="Texture" id=4]
 [ext_resource path="res://hud/orrery_container.gd" type="Script" id=5]
-[ext_resource path="res://assets/ships/playerShip2_blue.png" type="Texture" id=6]
 [ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=7]
 [ext_resource path="res://assets/bottom_bar_style.tres" type="StyleBox" id=8]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=9]
@@ -626,7 +625,7 @@ margin_left = -2.0
 margin_top = 26.0
 margin_right = 110.0
 margin_bottom = 126.0
-texture = ExtResource( 6 )
+texture = ExtResource( 15 )
 stretch_mode = 4
 
 [node name="Label" type="Label" parent="Control/Panel"]

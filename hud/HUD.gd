@@ -569,6 +569,11 @@ func _on_AI_targeted(AI):
 		target.emit_signal("armor_changed", target.armor)
 		
 	# ship info
+	if target.is_in_group("enemy"):
+		$"Control/Panel2/target_outline".flip_v = false #set_rotation_degrees(180)
+	else:
+		$"Control/Panel2/target_outline".flip_v = true #set_rotation_degrees(0)
+	
 	# assume sprite is always the first child of the ship
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/TextureRect2".set_texture(AI.get_child(0).get_texture())
 	# switch to ship panel
