@@ -706,6 +706,11 @@ func _on_ship_killed(ship):
 		var flt2 = "Fleet 2	" + str(game.fleet2[0]) + "		" + str(game.fleet2[1]) + "	" + str(game.fleet2[2])
 		$"Control2/Panel_rightHUD/PanelInfo/CensusInfo/Label2".set_text(flt2)
 
+# -------------
+func update_panel_sprite():
+	$"Control/Panel/player_outline".set_texture(player.get_child(0).get_texture())
+
+
 #----------------------------------------------------------------------------
 # operate the right HUD
 func _on_ButtonPlanet_pressed():

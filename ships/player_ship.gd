@@ -652,6 +652,7 @@ func upgrade_ship():
 	HUD.get_node("Control2").player = game.player
 	HUD.connect_player_signals(game.player)
 	HUD.toggle_armor_label()
+	HUD.update_panel_sprite()
 	var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap.player = game.player
 	
