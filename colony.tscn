@@ -2,7 +2,7 @@
 
 [ext_resource path="res://colony.gd" type="Script" id=1]
 [ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ships/ufoBlue.png" type="Texture" id=3]
+[ext_resource path="res://assets/ships/ufoBlue_ed.png" type="Texture" id=3]
 [ext_resource path="res://assets/ships/ufo_shade.png" type="Texture" id=4]
 [ext_resource path="res://assets/dome_city_ed_002.png" type="Texture" id=5]
 
@@ -29,6 +29,7 @@ scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
 
 [node name="dome" type="Sprite" parent="Area2D"]
+visible = false
 position = Vector2( 0, -20 )
 scale = Vector2( 1.5, 3 )
 texture = ExtResource( 5 )
