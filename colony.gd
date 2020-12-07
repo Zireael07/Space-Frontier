@@ -217,6 +217,12 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 
 func show_shadow():
 	get_node("Sprite").show()
+	# piggyback
+	get_node("dome").show()
+	
+func show_dome():
+	# piggyback
+	get_node("dome").show()
 
 func _on_distress_called(target):
 	for n in get_tree().get_nodes_in_group("friendly"):
@@ -237,4 +243,6 @@ func _on_colony_colonized(_colony, planet):
 	# don't show hub shadow for very small planets
 	if planet.planet_rad_factor > 0.2 and not planet.is_in_group("aster_named"):
 		show_shadow()
+	else:
+		show_dome()
 

@@ -73,8 +73,9 @@ func _ready():
 		get_node("Label").set_self_modulate(Color(0, 1, 1))
 		set_debris_table()
 		randomize_storage()
-		# show colony hub's shadow on planet
-		get_colony().get_child(0).show_shadow()
+		# don't show hub shadow for very small planets
+		if planet_rad_factor > 0.2 and not is_in_group("aster_named"):
+			get_colony().get_child(0).show_shadow()
 		
 		# tint us gray to represent pollution
 		if atm > 0.01:
