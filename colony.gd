@@ -218,11 +218,11 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 func show_shadow():
 	get_node("Sprite").show()
 	# piggyback
-	get_node("dome").show()
+	get_child(1).get_node("dome").show()
 	
 func show_dome():
 	# piggyback
-	get_node("dome").show()
+	get_child(1).get_node("dome").show()
 
 func _on_distress_called(target):
 	for n in get_tree().get_nodes_in_group("friendly"):

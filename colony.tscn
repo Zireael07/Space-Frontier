@@ -28,8 +28,11 @@ texture = ExtResource( 4 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
 
-[node name="dome" type="Sprite" parent="Area2D"]
+[node name="dome" type="Node2D" parent="Area2D/blue_colony"]
 visible = false
+scale = Vector2( 1.66667, 1.66667 )
+
+[node name="dome" type="Sprite" parent="Area2D/blue_colony/dome"]
 position = Vector2( 0, -20 )
 scale = Vector2( 1.5, 3 )
 texture = ExtResource( 5 )

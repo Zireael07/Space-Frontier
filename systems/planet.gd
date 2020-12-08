@@ -681,6 +681,10 @@ func _process(delta):
 			#print("Angle to star: "+ str(angle_to_star))
 			
 			$"Sprite_shadow".set_global_rotation(angle_to_star)
+		# straighten out the dome sprite if any
+		if has_colony():
+			var dome = get_colony().get_child(0).get_child(1).get_node("dome")
+			dome.set_rotation(-get_parent().get_rotation())
 	
 	if not Engine.is_editor_hint():
 		# planets handle orbiting now	
