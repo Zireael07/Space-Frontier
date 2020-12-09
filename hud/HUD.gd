@@ -641,6 +641,11 @@ func _on_planet_targeted(planet):
 	for n in $"Control/Panel2".get_children():
 		n.hide()
 
+	# paranoia
+	if planet.get_parent().is_in_group("colony"):
+		print("We're a colony, elevate the signal to actual planet")
+		planet = planet.get_parent().get_parent()
+
 	print("Planet targeted: ", planet.get_node("Label").get_text())
 	
 	# hide any other HUD panel
