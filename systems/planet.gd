@@ -1188,3 +1188,14 @@ func convert_planetnode_to_id():
 		
 	#print("For " + get_node("Label").get_text() + " ID is " + str(id))
 	return [id, moon]
+
+
+func toggle_shadow_anim():
+	if is_in_group("moon"):
+		get_node("AnimationPlayer").get_animation("scanning").track_set_enabled(1, false)
+	else:
+		get_node("AnimationPlayer").get_animation("scanning").track_set_enabled(1, true)
+
+func _on_AnimationPlayer_animation_finished(_anim_name):
+	if is_in_group("moon"):
+		get_node("Sprite_shadow").hide()

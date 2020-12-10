@@ -845,6 +845,7 @@ func scan(planet):
 		var msg = "Scanning planet " + str(planet.get_node("Label").get_text())
 		emit_signal("officer_message", msg)
 		if planet.has_node("AnimationPlayer"):
+			planet.toggle_shadow_anim()
 			planet.get_node("AnimationPlayer").play("scanning")
 		planet.scanned = true
 		# update planet view if open
