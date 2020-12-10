@@ -629,22 +629,24 @@ func _on_planet_targeted(planet):
 	var prev_target = null
 	if target != null:
 		prev_target = target
-	# draw the red outline
-	planet.targetted = true
-	target = planet
-
-	if prev_target:
-		prev_target.targetted = false
-		prev_target.update()
-
-	# hide panel info if any
-	for n in $"Control/Panel2".get_children():
-		n.hide()
 
 	# paranoia
 	if planet.get_parent().is_in_group("colony"):
 		print("We're a colony, elevate the signal to actual planet")
 		planet = planet.get_parent().get_parent()
+
+	if prev_target:
+		prev_target.targetted = false
+		prev_target.update()
+
+	# draw the red outline
+	planet.targetted = true
+	target = planet
+
+	# hide panel info if any
+	for n in $"Control/Panel2".get_children():
+		n.hide()
+
 
 	print("Planet targeted: ", planet.get_node("Label").get_text())
 	
