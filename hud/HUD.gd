@@ -627,8 +627,13 @@ func update_planet_view(planet):
 
 func _on_planet_targeted(planet):
 	var prev_target = null
+	
 	if target != null:
 		prev_target = target
+
+	if prev_target == planet:
+		print("Early exit")
+		return # exit early because we're the same
 
 	# paranoia
 	if planet.get_parent().is_in_group("colony"):
@@ -641,12 +646,12 @@ func _on_planet_targeted(planet):
 
 	# draw the red outline
 	planet.targetted = true
+	planet.update()
 	target = planet
-
+	
 	# hide panel info if any
 	for n in $"Control/Panel2".get_children():
 		n.hide()
-
 
 	print("Planet targeted: ", planet.get_node("Label").get_text())
 	

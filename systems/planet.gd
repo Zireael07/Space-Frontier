@@ -823,8 +823,8 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		#else:
 		#	targetted = false
 			
-		# redraw
-		update()
+#		# redraw
+#		update()
 		
 		# officer message
 		if not self.scanned:
