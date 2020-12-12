@@ -21,6 +21,9 @@ signal AI_targeted
 signal target_acquired_AI
 signal target_lost_AI
 
+# tells us we killed the target, whatever it was
+signal target_killed
+
 signal distress_called
 
 var targetables = []
@@ -47,6 +50,7 @@ func _ready():
 	var _conn
 	
 	_conn = connect("distress_called", self, "_on_distress_called")
+	_conn = connect("target_killed", self, "_on_target_killed")
 	_conn = connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
 	#add_to_group("enemy")
 	
@@ -219,6 +223,10 @@ func _on_distress_called(target):
 				n.brain.target = target.get_global_position()
 				n.brain.set_state(n.brain.STATE_IDLE)
 				print("Targeting " + str(target.get_parent().get_name()) + " in response to distress call")
+
+func _on_target_killed(target):
+	print("Starbase killed target")
+	shoot_target = null
 
 # these two functions are repeated from ship_basic.gd
 func get_enemies():

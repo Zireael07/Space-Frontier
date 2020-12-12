@@ -73,9 +73,7 @@ func _on_bullet_area_entered( area ):
 				# remove player arrow from minimap
 				game.player.HUD.get_node("Control2/Panel_rightHUD/minimap").player_killed()
 				
-				# starbases don't have this signal (yet)
-				if area.has_user_signal("target_killed"):
-					get_parent().get_parent().emit_signal("target_killed", area)
+				get_parent().get_parent().emit_signal("target_killed", area)
 			
 			# update census
 			if area.has_signal("ship_killed"):
