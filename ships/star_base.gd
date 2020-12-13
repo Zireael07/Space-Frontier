@@ -31,6 +31,9 @@ var shoot_target = null
 var shoot_rel_pos = Vector2()
 var shoot_range = 500
 
+var target_p = Vector2()
+var move_out = false # flag
+
 export(int) var kind_id = 0
 
 enum kind { enemy, friendly, pirate }
@@ -58,7 +61,12 @@ func _ready():
 	
 	#target
 	# it's static so we don't need to do it in process()
-	target = get_parent().get_position() + Vector2(200, -200)
+	target_p = get_parent().get_position() + Vector2(200, -200)
+	target = target_p
+	
+	if is_in_group("enemy"):
+		armor *= 2
+		shields = 200 
 	
 	#if is_in_group("enemy"):
 	#	targetables.append(get_tree().get_nodes_in_group("player")[0].get_child(0))
@@ -152,7 +160,18 @@ func _process(delta):
 	#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
 
 	# steering behavior
-	var steer = get_steering_arrive(target)
+	var steer = Vector2(0,0)
+	if move_out:
+		#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
+		steer = get_steering_flee(target)
+		#print("Steer", steer)
+		target = get_global_position() # dummy
+		move_out = false # reset
+	else:
+		steer = get_steering_arrive(target)
+		#print("Arrive: ", steer)
+	
+	
 	# normal case
 	vel += steer
 
@@ -213,18 +232,24 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		# redraw
 		update()
 
-func _on_distress_called(target):
+func _on_distress_called(tgt):
+	# if hit by another starbase
+	if tgt.is_in_group("starbase"):
+		print("Hit by a starbase")
+		target = tgt.get_global_position()
+		move_out = true
+	
 	if is_in_group("enemy"):
 		for n in get_tree().get_nodes_in_group("enemy"):
 			if not n.is_in_group("starbase"):
 				#if target.cloaked:
 				#	return
 					
-				n.brain.target = target.get_global_position()
+				n.brain.target = tgt.get_global_position()
 				n.brain.set_state(n.brain.STATE_IDLE)
-				print("Targeting " + str(target.get_parent().get_name()) + " in response to distress call")
+				print("Targeting " + str(tgt.get_parent().get_name()) + " in response to distress call")
 
-func _on_target_killed(target):
+func _on_target_killed(tgt):
 	print("Starbase killed target")
 	shoot_target = null
 

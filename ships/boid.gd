@@ -100,3 +100,11 @@ func get_steering_avoid(tg, _rotat, cap=(max_vel/4)):
 	steering = (desired - vel).clamped(cap)
 	
 	return steering
+
+func get_steering_flee(tg):
+	var steering = Vector2(0,0)
+	desired = get_global_position() - tg
+	
+	desired = desired.normalized() * max_speed
+	steering = (desired - vel).clamped(max_vel/2)
+	return steering
