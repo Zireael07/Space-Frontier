@@ -6,7 +6,7 @@
 [ext_resource path="res://assets/ships/ufoRed.png" type="Texture" id=4]
 [ext_resource path="res://assets/starbase_shader.tres" type="Material" id=5]
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=1]
 radius = 47.0
 
 [node name="Node2D" type="Node2D"]
@@ -24,7 +24,7 @@ material = ExtResource( 5 )
 texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_starbase_e"]
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="bullet_container" type="Node" parent="Area2D_starbase_e"]
 
@@ -36,4 +36,7 @@ one_shot = true
 
 [node name="vis" type="Node2D" parent="Area2D_starbase_e"]
 script = ExtResource( 2 )
+
+[node name="move_timer" type="Timer" parent="Area2D_starbase_e"]
 [connection signal="input_event" from="Area2D_starbase_e" to="Area2D_starbase_e" method="_on_Area2D_input_event"]
+[connection signal="timeout" from="Area2D_starbase_e/move_timer" to="Area2D_starbase_e" method="_on_move_timer_timeout"]

@@ -21,7 +21,6 @@ void fragment() {
 		COLOR.rgba = col.rgba; //+ vec3(1,0,0);
 	}
 }"
-custom_defines = ""
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
@@ -63,5 +62,7 @@ script = ExtResource( 2 )
 [node name="produce_timer" type="Timer" parent="Area2D_starbase_pirate"]
 wait_time = 5.0
 autostart = true
+
+[node name="move_timer" type="Timer" parent="Area2D_starbase_pirate"]
 [connection signal="input_event" from="Area2D_starbase_pirate" to="Area2D_starbase_pirate" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D_starbase_pirate/produce_timer" to="Area2D_starbase_pirate" method="_on_produce_timer_timeout"]

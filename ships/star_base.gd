@@ -29,10 +29,11 @@ signal distress_called
 var targetables = []
 var shoot_target = null
 var shoot_rel_pos = Vector2()
-var shoot_range = 500
+var shoot_range = 450
 
 var target_p = Vector2()
 var move_out = false # flag
+var move_timer
 
 export(int) var kind_id = 0
 
@@ -58,6 +59,8 @@ func _ready():
 	#add_to_group("enemy")
 	
 	randomize_storage()
+	
+	move_timer = get_node("move_timer")
 	
 	#target
 	# it's static so we don't need to do it in process()
@@ -165,8 +168,6 @@ func _process(delta):
 		#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
 		steer = get_steering_flee(target)
 		#print("Steer", steer)
-		target = get_global_position() # dummy
-		move_out = false # reset
 	else:
 		steer = get_steering_arrive(target)
 		#print("Arrive: ", steer)
@@ -237,6 +238,7 @@ func _on_distress_called(tgt):
 	if tgt.is_in_group("starbase"):
 		print("Hit by a starbase")
 		target = tgt.get_global_position()
+		move_timer.start()
 		move_out = true
 	
 	if is_in_group("enemy"):
@@ -320,7 +322,7 @@ func add_to_storage(id):
 		storage[id] += 1
 
 func _on_produce_timer_timeout():
-	print("Produce timer timed out!")
+	#print("Produce timer timed out!")
 	# space wizard needs carbon badly!
 	if storage["CARBON"] > 0:
 		# prioritize plastics since they need more H
@@ -344,3 +346,8 @@ func _on_produce_timer_timeout():
 				add_to_storage("CARBORUNDUM")
 				storage["CARBON"] -= 1
 				storage["SILICON"] -= 1
+
+
+func _on_move_timer_timeout():
+	target = get_global_position() # dummy
+	move_out = false # reset
