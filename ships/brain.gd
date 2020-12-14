@@ -78,7 +78,7 @@ func move_generic(delta):
 	
 	ship.move_AI(vel, delta)
 
-func handle_enemy():
+func handle_enemy(max_dist=150):
 	# paranoia
 	if not ship.has_method("get_closest_enemy"):
 		return
@@ -87,7 +87,7 @@ func handle_enemy():
 	if enemy and (not 'warping' in enemy or not enemy.warping): #starbases don't have warp/Q-drive capability
 		var dist = get_global_position().distance_to(enemy.get_global_position())
 		#print(str(dist))
-		if dist < 150:
+		if dist < max_dist:
 			#print("We are close to an enemy " + str(enemy.get_parent().get_name()) + " switching")
 			set_state(STATE_ATTACK, enemy)
 			# signal player being attacked if it's the case
@@ -801,6 +801,8 @@ class ColonizeState:
 		# id is the real id+1 to avoid problems with state param being 0 (= null)
 		ship.target = ship.get_tree().get_nodes_in_group("planets")[id-1].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
+		
+		# doesn't use q-drive because the colony makes us too heavy to engage it
 		# steering behavior
 		var steer = ship.get_steering_seek(ship.target)
 		# avoid the sun
@@ -882,6 +884,9 @@ class PlanetState:
 		ship.target = group[id-1].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
 		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
+		
+		# TODO: use the q-drive!
+		
 		# steering behavior
 		var steer = ship.get_steering_seek(ship.target)
 		
@@ -895,6 +900,9 @@ class PlanetState:
 		ship.vel += steer
 	
 		ship.ship.move_AI(ship.vel, delta)
+		
+		# handle enemies
+		ship.handle_enemy(200)
 		
 		if param:
 			# if close, orbit
