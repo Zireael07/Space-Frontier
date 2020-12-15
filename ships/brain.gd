@@ -701,7 +701,8 @@ class RefitState:
 		base = sb
 	
 	func update(delta):
-		ship.move_generic(delta)
+		if not ship.ship.docked:
+			ship.move_generic(delta)
 		
 		# if close, do tractor effect
 		if ship.get_global_position().distance_to(ship.target) < 50 and not ship.ship.docked:

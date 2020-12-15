@@ -257,7 +257,8 @@ func move_AI(vel, delta):
 		$"engine_flare".set_emitting(false)
 	
 	# undock
-	if docked:
+	if docked and vel != Vector2(0,0):
+		print("Undocking... " + get_parent().get_name())
 		# restore original z
 		set_z_index(0)
 		docked = false
@@ -501,6 +502,16 @@ func refit_tractor(refit_target):
 	#print("Adding ship as tractoring ship's child")
 
 	docked = true
+	
+	#fix visuals
+	var a = brain.fix_atan(vel.x,vel.y)
+	$"engine_flare".set_emitting(false)
+	# rotation
+	set_rotation(-a)
+	
+	# straighten out labels
+	#if has_node("Label"):
+	$"Label".set_rotation(a)
 
 # draw a red rectangle around the target
 func _draw():
