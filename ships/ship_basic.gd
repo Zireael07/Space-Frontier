@@ -271,7 +271,7 @@ func get_friendly_base():
 		
 		for t in targs:
 			if t[0] == dists[0]:
-				print("Target is : " + t[1].get_parent().get_name())
+				#print("Target is : " + t[1].get_parent().get_name())
 				
 				return t[1]
 	

@@ -374,6 +374,7 @@ func orbit_planet(planet):
 	
 	# AI specific
 	# reset everything just to be super safe
+	brain.vel = Vector2(0,0)
 	brain.steer = Vector2(0,0)
 	brain.desired = Vector2(0,0)
 	brain.target = planet.get_global_position()
@@ -512,6 +513,10 @@ func refit_tractor(refit_target):
 	# straighten out labels
 	#if has_node("Label"):
 	$"Label".set_rotation(a)
+	
+	brain.vel = Vector2(0,0)
+	brain.desired = Vector2(0,0)
+	brain.steer = Vector2(0,0)
 
 # draw a red rectangle around the target
 func _draw():
