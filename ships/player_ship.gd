@@ -681,10 +681,10 @@ func dock():
 	
 	var friend_docked = false
 	# get_parent().get_parent() is the refit_target/starbase
-	# 6 is the default, so only check if we have more
-	if get_parent().get_parent().get_child_count() > 6:
+	# 7 is the default, so only check if we have more
+	if get_parent().get_parent().get_child_count() > 7:
 		for ch in get_parent().get_parent().get_children():
-			if ch is Node2D and ch.get_index() > 5:
+			if ch is Node2D and ch.get_index() > 6:
 				if ch.get_child_count() > 0 and ch.get_child(0).is_in_group("friendly") and not ch.get_child(0).is_in_group("drone"):
 #							print(ch.get_child(0).get_name())
 #							print(str(ch.get_child(0).is_in_group("friendly")))
