@@ -81,7 +81,8 @@ func _ready():
 	spawn_starbase(curr_system, p_ind, mmap)
 	var pos = spawn_enemy_starbase(curr_system, p_ind, mmap)
 
-	spawn_enemy(pos, p_ind, mmap)
+	for i in range(3):
+		spawn_enemy(pos, i, p_ind, mmap)
 	
 	# wormhole
 	if curr_system == "Sol":
@@ -234,7 +235,7 @@ func spawn_enemy_starbase(system, p_ind, mmap):
 	
 	return sb.get_global_position()
 
-func spawn_enemy(pos, p_ind, mmap):
+func spawn_enemy(pos, i, p_ind, mmap):
 	var sp = enemy.instance()
 	# random factor
 	randomize()
@@ -242,13 +243,16 @@ func spawn_enemy(pos, p_ind, mmap):
 	sp.set_global_position(pos + offset)
 	print("Spawning enemy @ : " + str(pos + offset))
 	sp.get_child(0).set_position(Vector2(0,0))
-	sp.set_name("enemy") #+str(i))
+	sp.set_name("enemy"+str(i))
 	get_child(3).add_child(sp)
 	get_child(3).move_child(sp, p_ind+1)
 	
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	mmap._on_enemy_ship_spawned(sp.get_child(0))
+	
+	# add to fleet census
+	game.fleet2[1] += 1
 
 func spawn_cycler(p_ind, system, mmap):
 	if system != "Sol":
