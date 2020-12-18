@@ -118,11 +118,16 @@ func _ready():
 	for h in hostiles:
 		var hostile_sprite = TextureRect.new()
 		hostile_sprite.set_texture(hostile)
+		var label = Label.new()
+		label.set_text(h.get_node("Label").get_text())
+		label.set_position(Vector2(10,10))
+		label.set_modulate(Color(1,0,0)) # red
 		# enable red outlines
 		hostile_sprite.set_script(sprite_script)
 		hostile_sprite.type_id = 0
 		hostile_sprites.append(hostile_sprite)
 		add_child(hostile_sprite)
+		hostile_sprite.add_child(label)
 		
 	for sb in starbases:
 		var starbase_sprite = TextureRect.new()
@@ -303,11 +308,16 @@ func _on_enemy_ship_spawned(ship):
 	print("On enemy ship spawned")
 	var enemy_sprite = TextureRect.new()
 	enemy_sprite.set_texture(hostile)
+	var label = Label.new()
+	label.set_text(ship.get_node("Label").get_text())
+	label.set_position(Vector2(10,10))
+	label.set_modulate(Color(1,0,0)) # red
 	# enable red outlines
 	enemy_sprite.set_script(sprite_script)
 	enemy_sprite.type_id = 0
 	hostile_sprites.append(enemy_sprite)
 	add_child(enemy_sprite)
+	enemy_sprite.add_child(label)
 	hostiles.append(ship)
 
 func _on_pirate_ship_spawned(ship):
