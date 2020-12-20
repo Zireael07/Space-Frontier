@@ -4,7 +4,7 @@
 [ext_resource path="res://bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/ships/ufoBlue_ed.png" type="Texture" id=3]
 [ext_resource path="res://assets/ships/ufo_shade.png" type="Texture" id=4]
-[ext_resource path="res://assets/dome_city_ed_002.png" type="Texture" id=5]
+[ext_resource path="res://assets/dome_edit.png" type="Texture" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -84,8 +84,7 @@ scale = Vector2( 1.66667, 1.66667 )
 
 [node name="dome" type="Sprite" parent="Area2D/blue_colony/dome"]
 material = SubResource( 2 )
-position = Vector2( 0, -20 )
-scale = Vector2( 1.5, 3 )
+scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
