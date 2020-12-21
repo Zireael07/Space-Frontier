@@ -328,8 +328,10 @@ func move_orbit(delta, planet):
 			var tg_orbit = brain.get_state_obj().tg_orbit
 			#print("Tg_orbit: " + str(tg_orbit))
 			var steer = brain.get_steering_arrive(tg_orbit)
+			brain.steer = steer
 			# normal case
 			vel += steer
+			brain.vel = vel
 	# 300 is experimentally picked
 	elif (brain.target - get_global_position()).length() < orbit_dist:
 		if not orbiting:
@@ -342,8 +344,20 @@ func move_orbit(delta, planet):
 	# if too far away, go to planet
 	else:
 		if not orbiting:
-			#pass
-			brain.set_state(brain.STATE_GO_PLANET, planet)
+			if (brain.target - get_global_position()).length() < orbit_dist*2:
+				var tg_orbit = brain.get_state_obj().tg_orbit
+				#print("Rel pos: ", brain.rel_pos)
+				#print("Tg_orbit: " + str(tg_orbit))
+				
+				var steer = brain.get_steering_arrive(tg_orbit)
+				#var steer = brain.set_heading(tg_orbit)
+				brain.steer = steer
+				# normal case
+				vel += steer
+				brain.vel = vel
+				#pass
+			else:
+				brain.set_state(brain.STATE_GO_PLANET, planet)
 		else:
 			pass
 	

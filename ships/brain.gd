@@ -911,10 +911,11 @@ class PlanetState:
 		if param:
 			# if close, orbit
 			# distances are experimentally picked
+			# need to be larger than distances in NPC_ship.gd l. 318 for offsets to work
 			var rad_f = param.planet_rad_factor
-			var dist = 300*rad_f
+			var dist = 400*rad_f
 			if moon:
-				dist = 150*rad_f
+				dist = 200*rad_f
 				
 			if (ship.target - ship.get_global_position()).length() < dist:
 				ship.set_state(STATE_ORBIT, param)
