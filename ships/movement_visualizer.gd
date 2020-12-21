@@ -39,6 +39,9 @@ func _draw():
 	draw_vector(source.vel, Vector2(), colors['YELLOW'])
 
 	#draw_vector(parent.forward_vec, Vector2(), colors['WHITE'])
+	
+	if 'draw_tg' in source:
+		draw_circle(to_local(source.draw_tg), 5.0, colors['PINK'])
 
 
 func draw_vector(vector, offset, _color):

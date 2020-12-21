@@ -432,6 +432,7 @@ func set_state(new_state, param=null):
 	
 	# reset ship's timer count
 	self.ship.timer_count = 0
+	self.draw_tg = Vector2(0,0)
 	
 	# set the debugging helper var
 	curr_state = new_state
@@ -589,7 +590,9 @@ class OrbitState:
 		# paranoia
 		if not planet_:
 			return
+		ship.target = planet_.get_global_position()
 		tg_orbit = ship.ship.random_point_on_orbit(planet_.planet_rad_factor)
+		ship.draw_tg = tg_orbit
 		
 	func update(delta):
 		# paranoia
