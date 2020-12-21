@@ -20,6 +20,7 @@ var target = Vector2()
 var rel_pos = Vector2()
 var steer = Vector2(0,0)
 var desired = Vector2(0,0)
+var draw_tg = Vector2(0,0)
 
 # AI
 # atan2(0,-1) returns 180 degrees in 3.0, we want 0

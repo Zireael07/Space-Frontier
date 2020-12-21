@@ -245,7 +245,7 @@ func get_friendly_bases():
 	return friendly_bases
 	
 func get_friendly_base():
-	var bases = get_tree().get_nodes_in_group("starbase")
+	#var bases = get_tree().get_nodes_in_group("starbase")
 	
 	var friendly_bases = get_friendly_bases()
 	#print("Friendly bases: ", friendly_bases)
