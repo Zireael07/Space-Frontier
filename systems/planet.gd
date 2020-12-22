@@ -959,7 +959,8 @@ func _on_planet_orbited(ship):
 	# avoid double-adding
 	if !orbiters.has(orbiter):
 		orbiters.append(orbiter)
-	print("Planet orbited " + str(get_node("Label").get_text()) + "; orbiter: " + str(orbiter.get_parent().get_name()))
+	if not ship.is_in_group("drone"):
+		print("Planet orbited " + str(get_node("Label").get_text()) + "; orbiter: " + str(orbiter.get_parent().get_name()))
 
 	var rel_pos = get_node("orbit_holder").get_global_transform().xform_inv(orbiter.get_global_position())
 	
@@ -988,7 +989,8 @@ func _on_planet_deorbited(ship):
 	remove_orbiter(ship)
 	# redraw (debugging)
 	update()
-	print("Ship " + ship.get_parent().get_name() + " deorbited: " + get_node("Label").get_text())
+	if not ship.is_in_group("drone"):
+		print("Ship " + ship.get_parent().get_name() + " deorbited: " + get_node("Label").get_text())
 	# give (enemy) ship a dummy target so that it doesn't idle towards the planet
 	if 'kind_id' in ship and ship.kind_id == ship.kind.enemy:
 		var offset = Vector2(400,400)

@@ -337,7 +337,8 @@ func move_orbit(delta, planet):
 		if not orbiting:
 			#print("In orbit range: " + str((brain.target - get_global_position()).length()) + " " + str((300*rad_f)))
 			##orbit
-			print("NPC " + get_parent().get_name() + " wants to orbit: " + planet.get_node("Label").get_text()) 
+			if not is_in_group("drone"):
+				print("NPC " + get_parent().get_name() + " wants to orbit: " + planet.get_node("Label").get_text()) 
 			orbit_planet(planet)
 			# nuke steer
 			brain.steer = Vector2(0,0)
