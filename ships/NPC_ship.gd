@@ -43,12 +43,16 @@ func _ready():
 	
 	# slight randomization of the task timer
 	var time = randf()
-	$"task_timer".start(2.0+time)
+	var t = 2.0+(time*2)
+	#print(get_name() + " timer: " + str(t))
+	$"task_timer".start(t)
 	
 	# enemies and pirates share name lists
 	if kind_id == kind.enemy or kind_id == kind.pirate:
 		var id = randi() % game.enemy_names.size() # return between 0 and size -1
 		ship_name = game.enemy_names[id]
+		# remove name that was already used
+		game.enemy_names.remove(id)
 		$"Label".set_text(ship_name)
 		# tint red
 		$"Label".set_self_modulate(Color(1, 0, 0))
