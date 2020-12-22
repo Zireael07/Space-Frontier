@@ -808,7 +808,10 @@ func _draw():
 		if orbiters.size() > 0:
 			for o in orbiters:
 				var tg = get_global_transform().xform_inv(o.get_global_position())
-				draw_line(Vector2(0,0), tg, Color(1,0,0), 6.0, true)
+				if not o.is_in_group("drone"):
+					draw_line(Vector2(0,0), tg, Color(1,0,0), 6.0, true)
+				else:
+					draw_line(Vector2(0,0), tg, Color(0,0,1), 3.0, true)
 		else:
 			pass
 
