@@ -973,7 +973,10 @@ func _on_planet_orbited(ship):
 	orbiter.pos = Vector2(0,0)
 
 	#print("Rel pos: " + str(rel_pos))
-	orbiter.set_position(rel_pos)
+	
+	# fix offset due to drone scale
+	#print("Scale:" + str(orbiter.get_parent().scale))
+	orbiter.set_position(rel_pos*(Vector2(1,1)/orbiter.get_parent().scale))
 	
 	var _a = atan2(rel_pos.x, rel_pos.y)
 #	var a = atan2(200,0)
