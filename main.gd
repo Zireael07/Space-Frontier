@@ -125,7 +125,7 @@ func get_colonized_planet():
 		return null
 
 # all spawn functions spawn at node at system+1 index
-func spawn_friendly(i, p_ind, mmap):
+func spawn_friendly(i, p_ind, m_map):
 	var p = get_colonized_planet()
 	if p:
 		var sp = friendly.instance()
@@ -143,7 +143,7 @@ func spawn_friendly(i, p_ind, mmap):
 		
 		# give minimap icon
 		#var mmap = get_tree().get_nodes_in_group("minimap")[0]
-		mmap._on_friendly_ship_spawned(sp.get_child(0))
+		m_map._on_friendly_ship_spawned(sp.get_child(0))
 		
 		# give higher ranks if any left
 		if rank_list.size() > 0:
@@ -154,7 +154,7 @@ func spawn_friendly(i, p_ind, mmap):
 		# add to fleet census
 		game.fleet1[1] += 1
 
-func spawn_starbase(system, p_ind, mmap):
+func spawn_starbase(system, p_ind, m_map):
 	var p = get_colonized_planet()
 	
 	if p:
@@ -186,7 +186,7 @@ func spawn_starbase(system, p_ind, mmap):
 		
 		# give minimap icon
 		#var mmap = get_tree().get_nodes_in_group("minimap")[0]
-		mmap._on_starbase_spawned(sb.get_child(0))
+		m_map._on_starbase_spawned(sb.get_child(0))
 
 func spawn_friendly_drone(i, p_ind):
 	var p = get_colonized_planet()
@@ -206,7 +206,7 @@ func spawn_friendly_drone(i, p_ind):
 		
 		# drones don't have minimap icons
 		
-func spawn_enemy_starbase(system, p_ind, mmap):
+func spawn_enemy_starbase(system, p_ind, m_map):
 	var p
 	
 	var sb = enemy_starbase.instance()
@@ -231,11 +231,11 @@ func spawn_enemy_starbase(system, p_ind, mmap):
 	
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
-	mmap._on_enemy_starbase_spawned(sb.get_child(0))
+	m_map._on_enemy_starbase_spawned(sb.get_child(0))
 	
 	return sb.get_global_position()
 
-func spawn_enemy(pos, i, p_ind, mmap):
+func spawn_enemy(pos, i, p_ind, m_map):
 	var sp = enemy.instance()
 	# random factor
 	randomize()
@@ -249,12 +249,12 @@ func spawn_enemy(pos, i, p_ind, mmap):
 	
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
-	mmap._on_enemy_ship_spawned(sp.get_child(0))
+	m_map._on_enemy_ship_spawned(sp.get_child(0))
 	
 	# add to fleet census
 	game.fleet2[1] += 1
 
-func spawn_cycler(p_ind, system, mmap):
+func spawn_cycler(p_ind, system, m_map):
 	if system != "Sol":
 		return
 	
@@ -272,10 +272,10 @@ func spawn_cycler(p_ind, system, mmap):
 	
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
-	mmap._on_starbase_spawned(castle.get_child(0))
+	m_map._on_starbase_spawned(castle.get_child(0))
 
 
-func spawn_asteroid_processor(p_ind, system, mmap):
+func spawn_asteroid_processor(p_ind, system, m_map):
 	if system != "Sol":
 		return
 		
@@ -294,9 +294,9 @@ func spawn_asteroid_processor(p_ind, system, mmap):
 	
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
-	mmap._on_starbase_spawned(ap.get_child(0))
+	m_map._on_starbase_spawned(ap.get_child(0))
 
-func spawn_pirate_base(p_ind, system, mmap):
+func spawn_pirate_base(p_ind, system, m_map):
 	if system != "Sol":
 		return
 		
@@ -316,11 +316,11 @@ func spawn_pirate_base(p_ind, system, mmap):
 	
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
-	mmap._on_pirate_starbase_spawned(ap.get_child(0))
+	m_map._on_pirate_starbase_spawned(ap.get_child(0))
 	
 	return pos
 
-func spawn_pirate(pos, p_ind, mmap):
+func spawn_pirate(pos, p_ind, m_map):
 	var sp = pirate_ship.instance()
 	# random factor
 	randomize()
@@ -334,9 +334,9 @@ func spawn_pirate(pos, p_ind, mmap):
 	
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
-	mmap._on_pirate_ship_spawned(sp.get_child(0))
+	m_map._on_pirate_ship_spawned(sp.get_child(0))
 
-func spawn_wormhole(p_ind, planet_id, mmap, target_system=null, need_icon=true):
+func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, need_icon=true):
 	var wh = wormhole.instance()
 	
 	# fix for smaller systems
@@ -361,7 +361,7 @@ func spawn_wormhole(p_ind, planet_id, mmap, target_system=null, need_icon=true):
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	if need_icon:
-		mmap._on_wormhole_spawned(wh)
+		m_map._on_wormhole_spawned(wh)
 	
 	print("Spawned a wormhole at " + str(wh.get_global_position()))
 

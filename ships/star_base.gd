@@ -251,7 +251,7 @@ func _on_distress_called(tgt):
 				n.brain.set_state(n.brain.STATE_IDLE)
 				print("Targeting " + str(tgt.get_parent().get_name()) + " in response to distress call")
 
-func _on_target_killed(tgt):
+func _on_target_killed(_tgt):
 	print("Starbase killed target")
 	shoot_target = null
 
