@@ -707,20 +707,29 @@ class RefitState:
 		if not ship.ship.docked:
 			ship.move_generic(delta)
 		
-		# if close, do tractor effect
-		if ship.get_global_position().distance_to(ship.target) < 50 and not ship.ship.docked:
-			#print("Should be tractoring")
-			if ship.ship.is_in_group("drone"):
-				ship.ship.simple_dock(base)
-			else:
-				ship.ship.refit_tractor(base)
-			
-			# dummy
-			ship.target = ship.get_global_position()
-			
+		if not ship.ship.docked:
+			# if close, do tractor effect
+			if ship.get_global_position().distance_to(base.get_global_position()) < 50:
+				#print("Should be tractoring")
+				if ship.ship.is_in_group("drone"):
+					ship.ship.simple_dock(base)
+				else:
+					if base.has_free_docks():
+						ship.ship.refit_tractor(base)
 				
+				# dummy
+				ship.target = ship.get_global_position()
+			
 				# pretend it's docked immediately
 				#ship.ship.docked = true
+				
+			if ship.get_global_position().distance_to(base.get_global_position()) < 150:
+				if !base.has_free_docks() and !ship.ship.is_in_group("drone"):
+					print("Base ", base.get_name(), " has no free docks!")
+					# this relies on brain target being already set
+					ship.target = ship.ship.random_point_at_dist_from_tg(150)
+					# idle
+					ship.set_state(STATE_IDLE)
 		
 		# ship is docked
 		if ship.ship.docked:

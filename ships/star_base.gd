@@ -255,6 +255,15 @@ func _on_target_killed(_tgt):
 	print("Starbase killed target")
 	shoot_target = null
 
+func has_free_docks():
+	# 7 is the default, and we have two docks so far
+	if get_child_count() > 9:
+		return false
+	else:
+		return true
+		
+
+
 # these two functions are repeated from ship_basic.gd
 func get_enemies():
 	var nodes = []
