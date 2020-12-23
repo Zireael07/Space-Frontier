@@ -510,6 +510,10 @@ func refit_tractor(refit_target):
 					#print("Friendly docked with the starbase")
 					friend_docked = true
 					break
+				if ch.get_child_count() > 0 and ch.get_child(0).is_in_group("enemy") and ch.get_child(0).docked and ch != get_parent() and self.is_in_group("enemy"):
+					#print("Other ship docked with the starbase.. " + ch.get_name())
+					friend_docked = true
+					break
 	
 	# all local positions relative to the immediate parent
 	if friend_docked:
