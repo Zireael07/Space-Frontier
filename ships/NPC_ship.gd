@@ -435,7 +435,7 @@ func random_point_at_dist_from_tg(dist):
 	#var rand2 = randf()
 	var offset = Vector2(0, 1).normalized()*(dist)
 	offset = offset.rotated(rand1)
-	print("Offset: " + str(offset))
+	#print("Offset: " + str(offset))
 	var point = brain.target + offset
 	return point
 			
@@ -589,10 +589,17 @@ func _on_shield_changed(data):
 		#print("Many enemies or starbase enemy detected!")
 	
 	# if shield falls low, go away
-	if data[0] < flee_threshold:
+	if data[0] < flee_threshold and effect:
 		#print("Flee because of low shields")
 		if orbiting:
 			deorbit()
+			
+		# TODO: flee first, then head to a base	
+		
+		# early return
+		if brain.get_state() == brain.STATE_REFIT:
+			return
+		
 		# head to a friendly base for protection
 		# get the base
 		var base = get_friendly_base()
