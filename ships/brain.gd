@@ -45,7 +45,7 @@ func select_initial_target():
 		if get_tree().get_nodes_in_group("asteroid").size() > 3:
 			if ship.get_colonized_planet() != null and ship.kind_id != ship.kind.pirate:
 				set_state(STATE_ORBIT, ship.get_colonized_planet())
-				print("Set orbit state for " + ship.get_parent().get_name())
+				#print("Set orbit state for " + ship.get_parent().get_name())
 			elif ship.kind_id == ship.kind.pirate:
 				var base = ship.get_friendly_base()
 				target = base.get_global_position() #+ Vector2(100,100)
@@ -145,7 +145,7 @@ func _go_mine():
 			var dist = target.distance_to(base.get_global_position())
 			#print("Dist: " + str(dist))
 			amt = int(round(dist/400))
-			print("Calculated amount to return at " + str(amt))
+			#print("Calculated amount to return at " + str(amt))
 			
 		# deorbit
 		if ship.orbiting:
@@ -174,7 +174,7 @@ func task_orbiting(timer_count, conquer_tg):
 	if timer_count > 2:
 		# if a drone
 		if ship.is_in_group("drone"):
-			print("Drone should be deorbiting")
+			#print("Drone should be deorbiting")
 			# deorbit
 			ship.deorbit()
 			# base
@@ -582,6 +582,7 @@ class OrbitState:
 	var param # for previous state
 	var planet_
 	var tg_orbit
+	var system
 	
 	func _init(shp, planet):
 		ship = shp
@@ -590,9 +591,13 @@ class OrbitState:
 		# paranoia
 		if not planet_:
 			return
+		
+		system = ship.ship.get_tree().get_nodes_in_group("main")[0].curr_system
+		
 		ship.target = planet_.get_global_position()
 		tg_orbit = ship.ship.random_point_on_orbit(planet_.planet_rad_factor)
 		ship.draw_tg = tg_orbit
+		
 		
 	func update(delta):
 		# paranoia
@@ -603,7 +608,7 @@ class OrbitState:
 		ship.target = planet_.get_global_position()
 		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
 		
-		ship.ship.move_orbit(delta, planet_)
+		ship.ship.move_orbit(delta, planet_, system)
 		
 		# handle enemies
 		ship.handle_enemy()

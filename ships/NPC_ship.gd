@@ -310,7 +310,7 @@ func shoot():
 
 
 # AI moves to orbit a planet
-func move_orbit(delta, planet):
+func move_orbit(delta, planet, system):
 	# paranoia
 	if not planet:
 		planet = get_colonized_planet()
@@ -351,6 +351,9 @@ func move_orbit(delta, planet):
 		if not orbiting:
 			if (brain.target - get_global_position()).length() < orbit_dist*2:
 				var tg_orbit = brain.get_state_obj().tg_orbit
+				# recalculate for trappist as it orbits very fast
+				if system == "trappist":
+					tg_orbit = random_point_on_orbit(planet.planet_rad_factor)
 				#print("Rel pos: ", brain.rel_pos)
 				#print("Tg_orbit: " + str(tg_orbit))
 				

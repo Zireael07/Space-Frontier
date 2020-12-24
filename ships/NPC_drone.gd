@@ -109,7 +109,7 @@ func get_colonized_planet():
 # -------------------------------
 
 # AI moves to orbit a planet
-func move_orbit(delta, planet):
+func move_orbit(delta, planet, system):
 	if not planet:
 		planet = get_colonized_planet()
 	var rad_f = planet.planet_rad_factor
