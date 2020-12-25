@@ -65,14 +65,15 @@ func _on_bullet_area_entered( area ):
 				# reenable when it doesn't destroy the game
 				#area.get_parent().queue_free()
 				
-				# just hide instead
-				area.hide()
-				# block (effectively disconnect) player HUD signals
-				area.set_block_signals(true)
-				area.dead = true
-				# remove player arrow from minimap
-				game.player.HUD.get_node("Control2/Panel_rightHUD/minimap").player_killed()
-				
+				if not area.god:
+					# just hide instead
+					area.hide()
+					# block (effectively disconnect) player HUD signals
+					area.set_block_signals(true)
+					# remove player arrow from minimap
+					game.player.HUD.get_node("Control2/Panel_rightHUD/minimap").player_killed()
+					area.dead = true
+					
 				get_parent().get_parent().emit_signal("target_killed", area)
 			
 			# update census

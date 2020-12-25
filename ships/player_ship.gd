@@ -62,6 +62,7 @@ var conquer_target = null
 
 # player only
 var dead = false
+var god = true
 
 # better ships
 enum ship_class {SCOUT, FREIGHTER, DESTROYER}
@@ -92,6 +93,11 @@ func _ready():
 		# armor makes us heavier (=slows down)
 		max_vel = 0.35 * LIGHT_SPEED
 		thrust = 0.1 * LIGHT_SPEED
+		
+		
+	# godmode confers cloak
+	if god:
+		has_cloak = true
 
 func spawn():
 	# spawn somewhere interesting
