@@ -243,7 +243,7 @@ func _on_distress_called(tgt):
 	
 	if is_in_group("enemy"):
 		for n in get_tree().get_nodes_in_group("enemy"):
-			if not n.is_in_group("starbase"):
+			if not n.is_in_group("starbase") and not n.docked:
 				#if target.cloaked:
 				#	return
 					
