@@ -75,13 +75,15 @@ func move_AI(vel, delta):
 
 #--------------------------------		
 
+# this version needs the planet NOT to be blockaded
 func get_colonized_planet():
 	var ps = []
 	var planets = get_tree().get_nodes_in_group("planets")
 	for p in planets:
 		# is it colonized?
 		var col = p.has_colony()
-		if col and col == "colony":
+		# is NOT blockaded
+		if col and col == "colony" and p.get_hostile_orbiter() == null:
 			ps.append(p)
 
 	var dists = []
