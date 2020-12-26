@@ -80,7 +80,7 @@ func set_heading(tg):
 
 	return steering
 
-func get_steering_avoid(tg, _rotat, cap=(max_vel/4)):
+func get_steering_avoid(tg, max_range=600, cap=(max_vel/4)):
 	var steering = Vector2(0,0)
 	desired = get_global_position() - tg
 	
@@ -94,7 +94,7 @@ func get_steering_avoid(tg, _rotat, cap=(max_vel/4)):
 	
 	desired = desired.normalized()*2
 	
-	var m = range_lerp(dist, 600, 0, 0, max_speed) # 100 is our max speed?
+	var m = range_lerp(dist, max_range, 0, 0, max_speed) # 100 is our max speed?
 	desired = desired * m
 	
 	#steering = Vector2(0,0)

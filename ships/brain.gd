@@ -710,7 +710,23 @@ class RefitState:
 	
 	func update(delta):
 		if not ship.ship.docked:
-			ship.move_generic(delta)
+			#ship.move_generic(delta)
+			# TODO: use q-drive if far enough
+			
+			# steering behavior
+			var steer = ship.get_steering_arrive(ship.target)
+			
+			# avoid enemy starbase
+			if ship.ship.get_enemy_base() != null:
+				var e_base = ship.ship.get_enemy_base().get_global_position()
+				if ship.get_global_position().distance_to(e_base) < 500:
+					# TODO: this should be weighted to avoid negating the seek completely
+					steer = steer + ship.get_steering_avoid(e_base, 1000)
+			
+			# normal case
+			ship.vel += steer
+	
+			ship.ship.move_AI(ship.vel, delta)
 		
 		if not ship.ship.docked:
 			# if close, do tractor effect
@@ -827,7 +843,7 @@ class ColonizeState:
 		if ship.ship.close_to_sun():
 			var sun = ship.get_tree().get_nodes_in_group("star")[0].get_global_position()
 			# TODO: this should be weighted to avoid negating the seek completely
-			steer = steer + ship.get_steering_avoid(sun, ship.ship.get_rotation())
+			steer = steer + ship.get_steering_avoid(sun)
 			
 			
 		# normal case
@@ -912,8 +928,10 @@ class PlanetState:
 		if ship.ship.has_method("close_to_sun") and ship.ship.close_to_sun():
 			var sun = ship.get_tree().get_nodes_in_group("star")[0].get_global_position()
 			# TODO: this should be weighted to avoid negating the seek completely
-			steer = steer + ship.get_steering_avoid(sun, ship.ship.get_rotation())
-		#else:
+			steer = steer + ship.get_steering_avoid(sun)
+		
+		# avoid enemy starbase
+		
 		# normal case
 		ship.vel += steer
 	
@@ -1090,8 +1108,14 @@ class LandState:
 			if ship.ship.close_to_sun():
 				var sun = ship.get_tree().get_nodes_in_group("star")[0].get_global_position()
 				# TODO: this should be weighted to avoid negating the seek completely
-				steer = steer + ship.get_steering_avoid(sun, ship.ship.get_rotation())
-			
+				steer = steer + ship.get_steering_avoid(sun)
+		
+		# avoid enemy starbase
+		if ship.ship.get_enemy_base() != null:
+			var e_base = ship.ship.get_enemy_base().get_global_position()
+			if ship.get_global_position().distance_to(e_base) < 500:
+				# TODO: this should be weighted to avoid negating the seek completely
+				steer = steer + ship.get_steering_avoid(e_base, 1000)	
 			
 		# normal case
 		ship.vel += steer

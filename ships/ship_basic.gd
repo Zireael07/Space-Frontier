@@ -293,6 +293,58 @@ func get_friendly_base():
 #			if b.is_in_group("pirate"):
 #				return b
 
+func get_enemy_bases():
+	var bases = get_tree().get_nodes_in_group("starbase")
+	
+	var enemy_bases = []
+	if is_in_group("friendly") or get_parent().is_in_group("player"):
+		for b in bases:
+			if b.is_in_group("enemy") or b.is_in_group("pirate"):
+				enemy_bases.append(b)
+	elif is_in_group("enemy"):
+		for b in bases:
+			#print(b.get_name())
+			if b.is_in_group("friendly"):
+				#print(b.get_name() + " is enemy")
+				enemy_bases.append(b)
+	elif is_in_group("pirate"):
+		for b in bases:
+			if b.is_in_group("friendly"):
+				enemy_bases.append(b)
+
+	return enemy_bases
+	
+func get_enemy_base():
+	#var bases = get_tree().get_nodes_in_group("starbase")
+	
+	var enemy_bases = get_enemy_bases()
+	#print("Enemy bases: ", enemy_bases)
+	
+	if enemy_bases.size() < 2:
+		if enemy_bases.size() == 0:
+			return
+			
+		return enemy_bases[0]
+	else:
+		# sort by dist
+		var dists = []
+		var targs = []
+	
+		for t in enemy_bases:
+			var dist = t.get_global_position().distance_to(get_global_position())
+			dists.append(dist)
+			targs.append([dist, t])
+	
+		dists.sort()
+		#print("Dists sorted: " + str(dists))
+		#print("Targets: " + str(targs))
+		
+		for t in targs:
+			if t[0] == dists[0]:
+				#print("Target is : " + t[1].get_parent().get_name())
+				
+				return t[1]
+
 # we need to filter out drones
 func get_friendlies():
 	var nodes = get_tree().get_nodes_in_group("friendly")
@@ -380,7 +432,7 @@ func get_closest_friendly():
 			
 			return t[1]
 
-func get_enemies_in_range():
+func get_enemies_in_range(rad=300):
 	var nodes = get_enemies()
 	
 	var dists = []
@@ -396,7 +448,7 @@ func get_enemies_in_range():
 	for t in targs:
 		# for comparison, most planets are 300 px across
 		# and AI shoot range is 150
-		if t[0] > 300: 
+		if t[0] > rad: 
 			to_rem.append(t[1]) 
 		
 	for r in to_rem:
