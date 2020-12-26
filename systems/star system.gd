@@ -38,7 +38,7 @@ func _ready():
 	if data != null:
 		for line in data:
 			# line is [name, angle, dist, (mass), (radius), type]
-			print(str(line))
+			#print(str(line))
 			
 			if line.size() > 4 and line[4] == "star":
 				# reuse column 1 as luminosity

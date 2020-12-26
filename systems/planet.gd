@@ -441,6 +441,7 @@ func atmosphere_gases():
 	for g in gases:
 		var molecule = chem.weights[g]
 		if molecule >= molecule_limit():
+			#print("Considering gas...", g)
 			# if we're not a gas, skip
 			if g in chem.boil and exo_temp < chem.boil[g]:
 				print("Skipping ", g, " because it's not a gas @ ", str(exo_temp) + "K")
@@ -522,7 +523,7 @@ func atmosphere_gases():
 			
 				
 			fract = (1 - (molecule_limit() / molecule))
-			print("Gas ", g, ": ", str(abund*pvrms), " fract:", fract, " react: ", react)
+			#print("Gas ", g, ": ", str(abund*pvrms), " fract:", fract, " react: ", react)
 			var amount = abund * pvrms * react * fract
 			if amount > 0:
 				print("Gas ", g, " amt: ", amount)
