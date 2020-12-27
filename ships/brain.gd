@@ -714,14 +714,20 @@ class RefitState:
 			# TODO: use q-drive if far enough
 			
 			# steering behavior
-			var steer = ship.get_steering_arrive(ship.target)
+			# weighted
+			var d = ship.get_global_position().distance_to(ship.target)
+			var w = range_lerp(d, 50, d, 2, 1)
+			var steer_seek = ship.get_steering_arrive(ship.target)*w #1 
+			var steer = steer_seek
 			
 			# avoid enemy starbase
 			if ship.ship.get_enemy_base() != null:
 				var e_base = ship.ship.get_enemy_base().get_global_position()
-				if ship.get_global_position().distance_to(e_base) < 500:
-					# TODO: this should be weighted to avoid negating the seek completely
-					steer = steer + ship.get_steering_avoid(e_base, 1000)
+				var dist = ship.get_global_position().distance_to(e_base) 
+				if dist < 500:
+					#weighted
+					var weight = range_lerp(dist, 50, 600, 2.5, 0.01)
+					steer = steer + ship.get_steering_avoid(e_base, 500)*weight #*1.5
 			
 			# normal case
 			ship.vel += steer
@@ -1101,8 +1107,13 @@ class LandState:
 		# id is the real id+1 to avoid problems with state param being 0 (= null)
 		ship.target = ship.get_tree().get_nodes_in_group("planets")[id-1].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
+		
 		# steering behavior
-		var steer = ship.get_steering_seek(ship.target)
+		# weighted
+		var d = ship.get_global_position().distance_to(ship.target)
+		var w = range_lerp(d, 50, d, 2, 1)
+		var steer_seek = ship.get_steering_seek(ship.target)*w #1
+		var steer = steer_seek
 		# avoid the sun
 		if 'close_to_sun' in ship.ship:
 			if ship.ship.close_to_sun():
@@ -1113,9 +1124,13 @@ class LandState:
 		# avoid enemy starbase
 		if ship.ship.get_enemy_base() != null:
 			var e_base = ship.ship.get_enemy_base().get_global_position()
-			if ship.get_global_position().distance_to(e_base) < 500:
-				# TODO: this should be weighted to avoid negating the seek completely
-				steer = steer + ship.get_steering_avoid(e_base, 1000)	
+			var dist = ship.get_global_position().distance_to(e_base) 
+			if dist < 500:
+				#weighted
+				var weight = range_lerp(dist, 50, 600, 2.5, 0.01)
+				steer = steer + ship.get_steering_avoid(e_base, 500)*weight #*1.5
+				# keep a minimum velocity
+				#steer = steer + ship.match_velocity_length(steer_seek.length())
 			
 		# normal case
 		ship.vel += steer

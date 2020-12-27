@@ -94,7 +94,7 @@ func get_steering_avoid(tg, max_range=600, cap=(max_vel/4)):
 	
 	desired = desired.normalized()*2
 	
-	var m = range_lerp(dist, max_range, 0, 0, max_speed) # 100 is our max speed?
+	var m = range_lerp(dist, max_range, 0, 10, max_speed) # 100 is our max speed?
 	desired = desired * m
 	
 	#steering = Vector2(0,0)
