@@ -2,8 +2,9 @@
 
 [ext_resource path="res://ships/star_base.gd" type="Script" id=1]
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=2]
-[ext_resource path="res://bullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://guns/bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/ships/spaceStation_005.png" type="Texture" id=4]
+
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;

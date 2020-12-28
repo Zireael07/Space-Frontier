@@ -201,6 +201,11 @@ func _process(delta):
 
 func shoot():
 	gun_timer.start()
+	
+	# kill any remaining lasers
+#	for c in bullet_container.get_children():
+#		c.queue_free()
+	
 	var b = bullet.instance()
 	# scale until we find a way to make it a line
 	b.set_scale(Vector2(3, 1))

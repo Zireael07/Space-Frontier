@@ -5,8 +5,9 @@
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=3]
 [ext_resource path="res://assets/fire11.png" type="Texture" id=4]
 [ext_resource path="res://assets/shield_Edit.png" type="Texture" id=5]
-[ext_resource path="res://bullet_enemy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://guns/bullet_enemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/ships/enemyGreen1.png" type="Texture" id=7]
+
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 23.0021

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://guns/laser_enemy.gd" type="Script" id=1]
+[ext_resource path="res://assets/laserBlue13.png" type="Texture" id=2]
+
+[node name="laser" type="RayCast2D"]
+enabled = true
+cast_to = Vector2( 100, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 54, 0 )
+rotation = 1.5708
+scale = Vector2( 1, 2 )
+texture = ExtResource( 2 )
+
+[node name="lifetime" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+[connection signal="timeout" from="lifetime" to="." method="_on_lifetime_timeout"]
