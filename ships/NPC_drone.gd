@@ -20,7 +20,7 @@ func _ready():
 	
 	# slight randomization of the task timer
 	var time = randf()
-	$"task_timer".start(2.0+time)
+	$"task_timer".start(0.5+time)
 	
 	
 	brain = get_node("brain")
