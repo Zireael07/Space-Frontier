@@ -5,7 +5,7 @@
 
 [node name="laser" type="RayCast2D"]
 enabled = true
-cast_to = Vector2( 100, 0 )
+cast_to = Vector2( 105, 0 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
