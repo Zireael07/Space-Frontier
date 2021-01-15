@@ -63,7 +63,14 @@ func spawn_core():
 func _ready():
 	print("Main init")
 	
-	var data = spawn_system("alphacen") #("Sol")
+	var syst = "trappist"
+	
+	if game.start != null:
+		var lookup_system = {1: "Sol", 2: "trappist"}
+		syst = lookup_system[game.start]
+		
+	var data = spawn_system(syst)
+	
 	# the system is always child #2 (#0 is parallax bg and #1 is a timer)
 	curr_system = data[0]
 	spawn_core() 
@@ -80,7 +87,7 @@ func _ready():
 	
 	spawn_starbase(curr_system, p_ind, mmap)
 	var pos = spawn_enemy_starbase(curr_system, p_ind, mmap)
-
+	# spawn related to enemy starbase
 	for i in range(3):
 		spawn_enemy(pos, i, p_ind, mmap)
 	
@@ -212,7 +219,7 @@ func spawn_enemy_starbase(system, p_ind, m_map):
 	var sb = enemy_starbase.instance()
 	
 	if system == "Sol":
-		p = get_tree().get_nodes_in_group("planets")[1] # Venus
+		p = get_tree().get_nodes_in_group("planets")[1] # Venus # TODO: should be Saturn instead
 	elif system == "proxima":
 		p = get_tree().get_nodes_in_group("planets")[2]
 	elif system == "trappist":
