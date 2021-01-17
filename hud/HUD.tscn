@@ -1089,3 +1089,4 @@ text = "Press Z to toggle orders mode"
 [connection signal="timeout" from="Control3/officer_timer" to="." method="_on_officer_timer_timeout"]
 [connection signal="pressed" from="Control4/map view/ButtonPlus" to="Control4/map view" method="_on_ButtonPlus_pressed"]
 [connection signal="pressed" from="Control4/map view/ButtonMinus" to="Control4/map view" method="_on_ButtonMinus_pressed"]
+[connection signal="gui_input" from="Control4/star map/Panel" to="." method="_on_Panel_gui_input"]

@@ -430,6 +430,9 @@ func change_system(system="proxima", time=0.0):
 	# despawn current system
 	get_child(2).queue_free()
 	
+	# close starmap
+	game.player.HUD.hide_starmap()
+	
 	# clean minimap
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	for i in range(2, mmap.get_child_count()-1):

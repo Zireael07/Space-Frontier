@@ -436,6 +436,13 @@ func remove_orders_controls():
 	ship_to_control.clear()
 
 # --------------------
+func show_starmap():
+	$"Control4/star map".show() 
+
+func hide_starmap():
+	$"Control4/star map".hide() 
+
+# --------------------------
 # signals
 func _on_shield_changed(data):
 	var shield = data[0]
@@ -908,3 +915,10 @@ func _on_ButtonDown3_pressed():
 func _on_officer_timer_timeout():
 	$"Control3/Officer".hide()
 
+
+func _on_Panel_gui_input(event):
+	if event is InputEventMouseButton:
+		print("Clicked in starmap")
+		# trigger jump
+		game.player.w_hole.jump()
+	#pass # Replace with function body.
