@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=1]
 [ext_resource path="res://hud/minimap_container.gd" type="Script" id=2]
 [ext_resource path="res://hud/HUD.gd" type="Script" id=3]
 [ext_resource path="res://assets/Planet-shadow_only.png" type="Texture" id=4]
 [ext_resource path="res://hud/orrery_container.gd" type="Script" id=5]
+[ext_resource path="res://assets/hud/yellow_circle.png" type="Texture" id=6]
 [ext_resource path="res://assets/ships/enemyRed5.png" type="Texture" id=7]
 [ext_resource path="res://assets/bottom_bar_style.tres" type="StyleBox" id=8]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=9]
@@ -14,6 +15,7 @@
 [ext_resource path="res://assets/hud/grey_panel.png" type="Texture" id=13]
 [ext_resource path="res://hud/HUD_right.gd" type="Script" id=14]
 [ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture" id=15]
+[ext_resource path="res://assets/hud/red_circle.png" type="Texture" id=16]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 13 )
@@ -27,7 +29,9 @@ margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 3 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_horizontal_guides_": [ 262.046 ],
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 403.457 ]
 }
 
 [node name="Control2" type="Control" parent="."]
@@ -899,6 +903,142 @@ text = "-"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="star map" type="Control" parent="Control4"]
+visible = false
+margin_right = 805.0
+margin_bottom = 525.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Control4/star map"]
+margin_right = 805.0
+margin_bottom = 525.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control4/star map"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_right = 20.0
+margin_bottom = 14.0
+text = "STAR MAP"
+align = 1
+valign = 1
+
+[node name="Control" type="Control" parent="Control4/star map"]
+margin_left = 382.5
+margin_top = 242.5
+margin_right = 422.5
+margin_bottom = 282.5
+
+[node name="Control" type="Control" parent="Control4/star map/Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 20, 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Control4/star map/Control/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 20, 20 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control4/star map/Control/Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_right = 20.0
+margin_bottom = 14.0
+text = "Sol"
+align = 1
+
+[node name="Control2" type="Control" parent="Control4/star map/Control"]
+margin_left = 90.0
+margin_top = 100.0
+margin_right = 130.0
+margin_bottom = 140.0
+rect_pivot_offset = Vector2( 20, 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="Control4/star map/Control/Control2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 20, 20 )
+texture = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control4/star map/Control/Control2"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -26.5
+margin_top = -20.0
+margin_right = 26.5
+margin_bottom = 11.0
+text = "Proxima
+Centauri"
+
+[node name="Control3" type="Control" parent="Control4/star map/Control"]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 140.0
+margin_bottom = 140.0
+rect_pivot_offset = Vector2( 20, 20 )
+
+[node name="TextureRect3" type="TextureRect" parent="Control4/star map/Control/Control3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 20, 20 )
+texture = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control4/star map/Control/Control3"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -11.0
+margin_right = 33.0
+margin_bottom = 20.0
+text = "Alpha
+Centauri"
+align = 1
 
 [node name="pause_panel" type="Control" parent="."]
 visible = false
