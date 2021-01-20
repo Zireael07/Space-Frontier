@@ -1153,7 +1153,7 @@ func enough_materials():
 	if storage.keys().size() < 1:
 		enough = false
 	else:
-		if "CARBORUNDUM" in storage and storage["CARBORUNDUM"] >= 2 and storage["PLASTICS"] >= 2:
+		if "CARBORUNDUM" in storage and storage["CARBORUNDUM"] >= 2 and "PLASTICS" in storage and storage["PLASTICS"] >= 2:
 			enough = true
 		
 	return enough
