@@ -437,7 +437,20 @@ func remove_orders_controls():
 
 # --------------------
 func show_starmap():
-	$"Control4/star map".show() 
+	$"Control4/star map".show()
+	# update marker position
+	var system = get_tree().get_nodes_in_group("main")[0].curr_system
+	var marker = get_tree().get_nodes_in_group("starmap_marker")[0]
+	if system == "Sol":
+		marker.get_parent().remove_child(marker)
+		$"Control4/star map/Control/Sol".add_child(marker)
+	if system == "proxima":
+		marker.get_parent().remove_child(marker)
+		$"Control4/star map/Control/proxima".add_child(marker)
+	if system == "alphacen":
+		$"Control4/star map/Control/alphacen".add_child(marker)
+	
+	marker.set_position(Vector2(0,0))
 
 func hide_starmap():
 	$"Control4/star map".hide() 

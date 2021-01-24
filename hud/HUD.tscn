@@ -935,7 +935,7 @@ margin_top = 242.5
 margin_right = 422.5
 margin_bottom = 282.5
 
-[node name="Control" type="Control" parent="Control4/star map/Control"]
+[node name="Sol" type="Control" parent="Control4/star map/Control"]
 margin_right = 40.0
 margin_bottom = 40.0
 rect_pivot_offset = Vector2( 20, 20 )
@@ -943,7 +943,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="Control4/star map/Control/Control"]
+[node name="TextureRect" type="TextureRect" parent="Control4/star map/Control/Sol"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -959,7 +959,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Control4/star map/Control/Control"]
+[node name="Label" type="Label" parent="Control4/star map/Control/Sol"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -20.0
@@ -968,7 +968,7 @@ margin_bottom = 14.0
 text = "Sol"
 align = 1
 
-[node name="Control2" type="Control" parent="Control4/star map/Control"]
+[node name="proxima" type="Control" parent="Control4/star map/Control"]
 margin_left = 90.0
 margin_top = 100.0
 margin_right = 130.0
@@ -978,7 +978,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect2" type="TextureRect" parent="Control4/star map/Control/Control2"]
+[node name="TextureRect2" type="TextureRect" parent="Control4/star map/Control/proxima"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -994,7 +994,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Control4/star map/Control/Control2"]
+[node name="Label" type="Label" parent="Control4/star map/Control/proxima"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -26.5
@@ -1004,14 +1004,14 @@ margin_bottom = 11.0
 text = "Proxima
 Centauri"
 
-[node name="Control3" type="Control" parent="Control4/star map/Control"]
+[node name="alphacen" type="Control" parent="Control4/star map/Control"]
 margin_left = 100.0
 margin_top = 100.0
 margin_right = 140.0
 margin_bottom = 140.0
 rect_pivot_offset = Vector2( 20, 20 )
 
-[node name="TextureRect3" type="TextureRect" parent="Control4/star map/Control/Control3"]
+[node name="TextureRect3" type="TextureRect" parent="Control4/star map/Control/alphacen"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1027,7 +1027,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Control4/star map/Control/Control3"]
+[node name="Label" type="Label" parent="Control4/star map/Control/alphacen"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -1039,6 +1039,16 @@ margin_bottom = 20.0
 text = "Alpha
 Centauri"
 align = 1
+
+[node name="marker" type="TextureRect" parent="Control4/star map/Control" groups=[
+"starmap_marker",
+]]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="pause_panel" type="Control" parent="."]
 visible = false
