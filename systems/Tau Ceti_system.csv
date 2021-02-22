@@ -1,0 +1,6 @@
+name,angle,dist,mass, type
+Tau Ceti, 0.052, 0, 0,star
+Tau Ceti g,0,0.133,1.75,planet
+Tau Ceti h,180,0.243,1.83,planet
+Tau Ceti e,45,0.538,3.93,planet
+Tau Ceti f,0,1.334,3.94,planet

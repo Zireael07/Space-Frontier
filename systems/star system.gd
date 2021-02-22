@@ -27,7 +27,7 @@ var data = []
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	print("[Star system] Star system init")
+	print("[Star system] Star system init: ", get_name())
 	# load data
 	data = load_data(get_name())
 	var sol = get_name().find("Sol")
