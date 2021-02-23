@@ -1,0 +1,186 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/hud/red_circle.png" type="Texture" id=1]
+[ext_resource path="res://assets/hud/arrow.png" type="Texture" id=2]
+[ext_resource path="res://assets/hud/yellow_circle.png" type="Texture" id=3]
+
+[node name="star map" type="Control"]
+margin_right = 805.0
+margin_bottom = 525.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 805.0
+margin_bottom = 525.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_right = 20.0
+margin_bottom = 14.0
+text = "STAR MAP"
+align = 1
+valign = 1
+
+[node name="Control" type="Control" parent="."]
+margin_left = 382.5
+margin_top = 242.5
+margin_right = 422.5
+margin_bottom = 282.5
+
+[node name="Sol" type="Control" parent="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 20, 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Control/Sol"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 20, 20 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control/Sol"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_right = 20.0
+margin_bottom = 14.0
+text = "Sol"
+align = 1
+
+[node name="tau ceti" type="Control" parent="Control"]
+margin_left = -100.0
+margin_top = -10.0
+margin_right = -60.0
+margin_bottom = 30.0
+rect_pivot_offset = Vector2( 20, 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Control/tau ceti"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 20, 20 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control/tau ceti"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_right = 20.0
+margin_bottom = 14.0
+text = "Tau Ceti"
+align = 1
+
+[node name="proxima" type="Control" parent="Control"]
+margin_left = 90.0
+margin_top = 100.0
+margin_right = 130.0
+margin_bottom = 140.0
+rect_pivot_offset = Vector2( 20, 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="Control/proxima"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 20, 20 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control/proxima"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -26.5
+margin_top = -20.0
+margin_right = 26.5
+margin_bottom = 11.0
+text = "Proxima
+Centauri"
+
+[node name="alphacen" type="Control" parent="Control"]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 140.0
+margin_bottom = 140.0
+rect_pivot_offset = Vector2( 20, 20 )
+
+[node name="TextureRect3" type="TextureRect" parent="Control/alphacen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 20, 20 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control/alphacen"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -11.0
+margin_right = 33.0
+margin_bottom = 20.0
+text = "Alpha
+Centauri"
+align = 1
+
+[node name="marker" type="TextureRect" parent="Control" groups=[
+"starmap_marker",
+]]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

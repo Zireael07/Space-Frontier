@@ -929,9 +929,10 @@ func _on_officer_timer_timeout():
 	$"Control3/Officer".hide()
 
 
-func _on_Panel_gui_input(event):
+
+func _on_star_map_gui_input(event):
+	print("event")
 	if event is InputEventMouseButton:
 		print("Clicked in starmap")
 		# trigger jump
 		game.player.w_hole.jump()
-	#pass # Replace with function body.
