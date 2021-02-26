@@ -29,6 +29,55 @@ text = "STAR MAP"
 align = 1
 valign = 1
 
+[node name="Legend" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Legend"]
+margin_right = 164.0
+margin_bottom = 14.0
+text = "10 px = 1 parsec = 3.26 ly"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Legend"]
+margin_left = 730.0
+margin_right = 838.0
+margin_bottom = 14.0
+text = "^ Spinward
+(towards 
+Cygnus)"
+
+[node name="Label3" type="Label" parent="Legend"]
+margin_left = 730.0
+margin_top = 500.0
+margin_right = 800.0
+margin_bottom = 514.0
+text = "V Trailing"
+
+[node name="Label4" type="Label" parent="Legend"]
+margin_top = 250.0
+margin_right = 40.0
+margin_bottom = 264.0
+text = "< Rimward"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="Legend"]
+margin_left = 700.0
+margin_top = 250.0
+margin_right = 767.0
+margin_bottom = 264.0
+text = "> Galactic Core"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Control" type="Control" parent="."]
 margin_left = 382.5
 margin_top = 242.5
