@@ -117,6 +117,12 @@ margin_bottom = 14.0
 text = "Sol"
 align = 1
 
+[node name="Label2" type="Label" parent="Control/Sol"]
+margin_top = 25.0
+margin_right = 51.0
+margin_bottom = 39.0
+text = "Z: 0.0 ly"
+
 [node name="tau ceti" type="Control" parent="Control"]
 margin_left = -170.0
 margin_top = -20.0
@@ -151,6 +157,12 @@ margin_right = 20.0
 margin_bottom = 14.0
 text = "Tau Ceti"
 align = 1
+
+[node name="Label2" type="Label" parent="Control/tau ceti"]
+margin_top = 25.0
+margin_right = 60.0
+margin_bottom = 39.0
+text = "Z: -11.4 ly"
 
 [node name="barnards" type="Control" parent="Control"]
 margin_left = 250.0
@@ -189,6 +201,12 @@ text = "Barnard's
 Star"
 align = 1
 
+[node name="Label2" type="Label" parent="Control/barnards"]
+margin_top = 25.0
+margin_right = 51.0
+margin_bottom = 39.0
+text = "Z: 1.4 ly"
+
 [node name="wolf 359" type="Control" parent="Control"]
 margin_left = -95.0
 margin_top = 195.0
@@ -223,6 +241,12 @@ margin_right = 43.0
 margin_bottom = 31.0
 text = "Wolf 359"
 align = 1
+
+[node name="Label2" type="Label" parent="Control/wolf 359"]
+margin_top = 25.0
+margin_right = 40.0
+margin_bottom = 39.0
+text = "Z: 6.5 ly"
 
 [node name="proxima" type="Control" parent="Control"]
 margin_left = 145.0
@@ -259,6 +283,13 @@ margin_right = 26.5
 margin_bottom = 11.0
 text = "Proxima
 Centauri"
+
+[node name="Label2" type="Label" parent="Control/proxima"]
+margin_left = -40.0
+margin_top = 15.0
+margin_right = 11.0
+margin_bottom = 29.0
+text = "Z: 0.1 ly"
 
 [node name="alphacen" type="Control" parent="Control"]
 margin_left = 150.0
