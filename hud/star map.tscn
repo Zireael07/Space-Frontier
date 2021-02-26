@@ -39,7 +39,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Legend"]
 margin_right = 164.0
 margin_bottom = 14.0
-text = "10 px = 1 parsec = 3.26 ly"
+text = "1 ly = 50 px"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -118,10 +118,10 @@ text = "Sol"
 align = 1
 
 [node name="tau ceti" type="Control" parent="Control"]
-margin_left = -100.0
-margin_top = -10.0
-margin_right = -60.0
-margin_bottom = 30.0
+margin_left = -170.0
+margin_top = -20.0
+margin_right = -130.0
+margin_bottom = 20.0
 rect_pivot_offset = Vector2( 20, 20 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -153,10 +153,10 @@ text = "Tau Ceti"
 align = 1
 
 [node name="barnards" type="Control" parent="Control"]
-margin_left = 150.0
-margin_top = -90.0
-margin_right = 190.0
-margin_bottom = -50.0
+margin_left = 250.0
+margin_top = -155.0
+margin_right = 290.0
+margin_bottom = -115.0
 rect_pivot_offset = Vector2( 20, 20 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -190,10 +190,10 @@ Star"
 align = 1
 
 [node name="wolf 359" type="Control" parent="Control"]
-margin_left = -66.0
-margin_top = 120.0
-margin_right = -26.0
-margin_bottom = 160.0
+margin_left = -95.0
+margin_top = 195.0
+margin_right = -55.0
+margin_bottom = 235.0
 rect_pivot_offset = Vector2( 20, 20 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -225,10 +225,10 @@ text = "Wolf 359"
 align = 1
 
 [node name="proxima" type="Control" parent="Control"]
-margin_left = 90.0
-margin_top = 100.0
-margin_right = 130.0
-margin_bottom = 140.0
+margin_left = 145.0
+margin_top = 155.0
+margin_right = 185.0
+margin_bottom = 195.0
 rect_pivot_offset = Vector2( 20, 20 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -261,10 +261,10 @@ text = "Proxima
 Centauri"
 
 [node name="alphacen" type="Control" parent="Control"]
-margin_left = 100.0
-margin_top = 100.0
-margin_right = 140.0
-margin_bottom = 140.0
+margin_left = 150.0
+margin_top = 155.0
+margin_right = 190.0
+margin_bottom = 195.0
 rect_pivot_offset = Vector2( 20, 20 )
 
 [node name="TextureRect3" type="TextureRect" parent="Control/alphacen"]
@@ -278,7 +278,7 @@ margin_right = 20.0
 margin_bottom = 20.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 20, 20 )
-texture = ExtResource( 1 )
+texture = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
