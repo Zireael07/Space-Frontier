@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/hud/red_circle.png" type="Texture" id=1]
 [ext_resource path="res://assets/hud/arrow.png" type="Texture" id=2]
 [ext_resource path="res://assets/hud/yellow_circle.png" type="Texture" id=3]
+[ext_resource path="res://assets/hud/grey_circle.png" type="Texture" id=4]
 
 [node name="star map" type="Control"]
 margin_right = 805.0
@@ -134,6 +135,7 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Control/tau ceti"]
+self_modulate = Color( 1, 1, 1, 0.501961 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -144,7 +146,7 @@ margin_right = 20.0
 margin_bottom = 20.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 20, 20 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -157,6 +159,11 @@ margin_right = 20.0
 margin_bottom = 14.0
 text = "Tau Ceti"
 align = 1
+
+[node name="Line2D" type="Line2D" parent="Control/tau ceti"]
+points = PoolVector2Array( 18, 18, 18, 550 )
+width = 5.0
+default_color = Color( 0.4, 0.501961, 1, 1 )
 
 [node name="Label2" type="Label" parent="Control/tau ceti"]
 margin_top = 25.0
@@ -175,6 +182,7 @@ __meta__ = {
 }
 
 [node name="TextureRect2" type="TextureRect" parent="Control/barnards"]
+self_modulate = Color( 1, 1, 1, 0.501961 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -183,6 +191,26 @@ margin_left = -20.0
 margin_top = -20.0
 margin_right = 20.0
 margin_bottom = 20.0
+rect_scale = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 20, 20 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D" type="Line2D" parent="Control/barnards"]
+points = PoolVector2Array( 18, -75, 18, 18 )
+width = 5.0
+
+[node name="TextureRect3" type="TextureRect" parent="Control/barnards"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -113.0
+margin_right = 20.0
+margin_bottom = -73.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 20, 20 )
 texture = ExtResource( 1 )
@@ -194,14 +222,18 @@ __meta__ = {
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -26.5
-margin_top = -20.0
-margin_right = 26.5
-margin_bottom = 11.0
+margin_top = -75.0
+margin_right = 36.5
+margin_bottom = -44.0
 text = "Barnard's 
 Star"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label2" type="Label" parent="Control/barnards"]
+visible = false
 margin_top = 25.0
 margin_right = 51.0
 margin_bottom = 39.0
@@ -218,6 +250,7 @@ __meta__ = {
 }
 
 [node name="TextureRect2" type="TextureRect" parent="Control/wolf 359"]
+self_modulate = Color( 1, 1, 1, 0.501961 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -228,6 +261,31 @@ margin_right = 20.0
 margin_bottom = 20.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 20, 20 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2D" type="Line2D" parent="Control/wolf 359"]
+points = PoolVector2Array( 18, 18, 18, -325 )
+width = 5.0
+
+[node name="Label2" type="Label" parent="Control/wolf 359"]
+visible = false
+margin_top = 25.0
+margin_right = 40.0
+margin_bottom = 39.0
+text = "Z: 6.5 ly"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Control/wolf 359"]
+margin_left = 9.0
+margin_top = -325.0
+margin_right = 49.0
+margin_bottom = -285.0
+rect_scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -237,16 +295,11 @@ __meta__ = {
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -20.0
+margin_top = -335.0
 margin_right = 43.0
-margin_bottom = 31.0
+margin_bottom = -304.0
 text = "Wolf 359"
 align = 1
-
-[node name="Label2" type="Label" parent="Control/wolf 359"]
-margin_top = 25.0
-margin_right = 40.0
-margin_bottom = 39.0
-text = "Z: 6.5 ly"
 
 [node name="proxima" type="Control" parent="Control"]
 margin_left = 145.0
