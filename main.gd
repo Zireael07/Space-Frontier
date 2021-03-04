@@ -22,6 +22,8 @@ var sol = preload("res://systems/Sol system.tscn")
 var trappist = preload("res://systems/Trappist system.tscn")
 var proxima = preload("res://systems/Proxima Centauri system.tscn")
 var alpha = preload("res://systems/Alpha Centauri system.tscn")
+var barnards = preload("res://systems/Barnard's star system.tscn")
+var wolf = preload("res://systems/Wolf 359 system.tscn")
 
 # game core
 var core = preload("res://game_core.tscn")
@@ -42,6 +44,10 @@ func spawn_system(system="proc"):
 		sys = proxima
 	elif system == "alphacen":
 		sys = alpha
+	elif system == "barnards":
+		sys = barnards
+	elif system == "wolf359":
+		sys = wolf
 		
 	var system_inst = sys.instance()
 	add_child(system_inst)
@@ -94,6 +100,9 @@ func _ready():
 	# wormhole
 	if curr_system == "Sol":
 		spawn_wormhole(p_ind, 11, mmap)
+		# second wormhole to Barnard's
+		spawn_wormhole(p_ind, 11, mmap, "barnards", Vector2(-1500,0))
+		#spawn_wormhole(p_ind, 12, mmap, "wolf359")
 	if curr_system == "proxima":
 		spawn_wormhole(p_ind, 1, mmap)
 	
@@ -343,7 +352,7 @@ func spawn_pirate(pos, p_ind, m_map):
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	m_map._on_pirate_ship_spawned(sp.get_child(0))
 
-func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, need_icon=true):
+func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(0,0), need_icon=true):
 	var wh = wormhole.instance()
 	
 	# fix for smaller systems
@@ -354,9 +363,9 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, need_icon=true)
 	
 	# random factor
 	randomize()
-	var offset = Vector2(rand_range(250, 300), rand_range(250, 300))
+	var r_offset = Vector2(rand_range(250, 300), rand_range(250, 300))
 	
-	wh.set_global_position(p.get_global_position() + offset)
+	wh.set_global_position(p.get_global_position() + offset + r_offset)
 	
 	wh.set_name("wormhole")
 	if target_system != null:
@@ -370,7 +379,10 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, need_icon=true)
 	if need_icon:
 		m_map._on_wormhole_spawned(wh)
 	
-	print("Spawned a wormhole at " + str(wh.get_global_position()))
+	if target_system != null:
+		print("Spawned a wormhole to " + str(target_system) + " at " + str(wh.get_global_position()))
+	else:
+		print("Spawned a wormhole at " + str(wh.get_global_position()))
 
 	#return wh.get_global_position()
 
@@ -378,7 +390,7 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, need_icon=true)
 func move_player(system, travel=0.0):
 	var place = null
 	# move player
-	if system == "proxima" or system == "Sol":
+	if system == "proxima" or system == "Sol" or system == "barnards":
 	#var place = get_tree().get_nodes_in_group("planets")[1] 
 		place = get_tree().get_nodes_in_group("star")[0]
 	if system == "alphacen":
@@ -488,8 +500,8 @@ func change_system(system="proxima", time=0.0):
 	
 	# wormhole
 	if system == "proxima":
-		spawn_wormhole(p_ind, 1, mmap, null, false)
-		spawn_wormhole(p_ind, 0, mmap, "Sol", false)
+		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
+		spawn_wormhole(p_ind, 0, mmap, "Sol", Vector2(0,0), false)
 	
 	# timer
 	get_node("Timer").start()

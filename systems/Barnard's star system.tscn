@@ -11,7 +11,7 @@
 ]]
 position = Vector2( 500, 500 )
 script = ExtResource( 5 )
-orbit_rate = 0.1
+orbit_rate = 0.004
 star_radius_factor = 0.8
 luminosity = 0.003
 zoom_scale = 6
