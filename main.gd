@@ -102,7 +102,7 @@ func _ready():
 		spawn_wormhole(p_ind, 11, mmap)
 		# second wormhole to Barnard's
 		spawn_wormhole(p_ind, 11, mmap, "barnards", Vector2(-1500,0))
-		#spawn_wormhole(p_ind, 12, mmap, "wolf359")
+		spawn_wormhole(p_ind, 11, mmap, "wolf359", Vector2(-1500, 500))
 	if curr_system == "proxima":
 		spawn_wormhole(p_ind, 1, mmap)
 	
@@ -390,7 +390,7 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 func move_player(system, travel=0.0):
 	var place = null
 	# move player
-	if system == "proxima" or system == "Sol" or system == "barnards":
+	if system == "proxima" or system == "Sol" or system == "barnards" or system == "wolf359":
 	#var place = get_tree().get_nodes_in_group("planets")[1] 
 		place = get_tree().get_nodes_in_group("star")[0]
 	if system == "alphacen":

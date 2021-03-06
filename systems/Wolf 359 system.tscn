@@ -40,7 +40,7 @@ tracks/1/keys = {
 ]]
 position = Vector2( 500, 500 )
 script = ExtResource( 1 )
-orbit_rate = 0.1
+orbit_rate = 0.05
 star_radius_factor = 0.8
 luminosity = 0.001
 zoom_scale = 6
@@ -67,7 +67,7 @@ __meta__ = {
 position = Vector2( 0, 216 )
 planet_rad_factor = 0.2
 mass = 3.8
-atm = 1.30354
+atm = 0.773834
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
 scale = Vector2( 0.1, 0.1 )
@@ -87,7 +87,7 @@ scale = Vector2( 0.2, 0.2 )
 position = Vector2( 0, 22140 )
 planet_rad_factor = 0.2
 mass = 40.0
-atm = 1.30354
+atm = 0.642538
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 scale = Vector2( 0.1, 0.1 )
