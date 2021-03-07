@@ -23,7 +23,9 @@ var trappist = preload("res://systems/Trappist system.tscn")
 var proxima = preload("res://systems/Proxima Centauri system.tscn")
 var alpha = preload("res://systems/Alpha Centauri system.tscn")
 var barnards = preload("res://systems/Barnard's star system.tscn")
+var uvceti = preload("res://systems/Luyten 726-8 system.tscn")
 var wolf = preload("res://systems/Wolf 359 system.tscn")
+
 
 # game core
 var core = preload("res://game_core.tscn")
@@ -48,6 +50,8 @@ func spawn_system(system="proc"):
 		sys = barnards
 	elif system == "wolf359":
 		sys = wolf
+	elif system == "luyten726-8":
+		sys = uvceti
 		
 	var system_inst = sys.instance()
 	add_child(system_inst)
@@ -102,6 +106,8 @@ func _ready():
 		spawn_wormhole(p_ind, 11, mmap)
 		# second wormhole to Barnard's
 		spawn_wormhole(p_ind, 11, mmap, "barnards", Vector2(-1500,0))
+		# some more...
+		spawn_wormhole(p_ind, 11, mmap, "luyten726-8", Vector2(-1500, -750))
 		spawn_wormhole(p_ind, 11, mmap, "wolf359", Vector2(-1500, 500))
 	if curr_system == "proxima":
 		spawn_wormhole(p_ind, 1, mmap)
@@ -390,7 +396,7 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 func move_player(system, travel=0.0):
 	var place = null
 	# move player
-	if system == "proxima" or system == "Sol" or system == "barnards" or system == "wolf359":
+	if system == "proxima" or system == "Sol" or system == "barnards" or system == "wolf359" or system == "luyten726-8":
 	#var place = get_tree().get_nodes_in_group("planets")[1] 
 		place = get_tree().get_nodes_in_group("star")[0]
 	if system == "alphacen":
