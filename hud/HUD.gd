@@ -931,7 +931,7 @@ func _on_officer_timer_timeout():
 
 
 func _on_star_map_gui_input(event):
-	print("event")
+	#print("event")
 	if event is InputEventMouseButton:
 		print("Clicked in starmap")
 		# trigger jump

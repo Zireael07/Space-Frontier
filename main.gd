@@ -24,6 +24,7 @@ var proxima = preload("res://systems/Proxima Centauri system.tscn")
 var alpha = preload("res://systems/Alpha Centauri system.tscn")
 var barnards = preload("res://systems/Barnard's star system.tscn")
 var uvceti = preload("res://systems/Luyten 726-8 system.tscn")
+var tauceti = preload("res://systems/Tau Ceti system.tscn")
 var wolf = preload("res://systems/Wolf 359 system.tscn")
 
 
@@ -52,6 +53,8 @@ func spawn_system(system="proc"):
 		sys = wolf
 	elif system == "luyten726-8":
 		sys = uvceti
+	elif system == "tauceti":
+		sys = tauceti
 		
 	var system_inst = sys.instance()
 	add_child(system_inst)
@@ -111,6 +114,8 @@ func _ready():
 		spawn_wormhole(p_ind, 11, mmap, "wolf359", Vector2(-1500, 500))
 	if curr_system == "proxima":
 		spawn_wormhole(p_ind, 1, mmap)
+		
+	# UV Ceti has a manually added wormhole...
 	
 	spawn_asteroid_processor(p_ind, curr_system, mmap)
 	spawn_cycler(p_ind, curr_system, mmap)
@@ -396,7 +401,8 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 func move_player(system, travel=0.0):
 	var place = null
 	# move player
-	if system == "proxima" or system == "Sol" or system == "barnards" or system == "wolf359" or system == "luyten726-8":
+	var first_star = ["proxima", "Sol", "barnards", "wolf359", "luyten726-8", "tauceti"]
+	if system in first_star:
 	#var place = get_tree().get_nodes_in_group("planets")[1] 
 		place = get_tree().get_nodes_in_group("star")[0]
 	if system == "alphacen":
@@ -480,7 +486,7 @@ func change_system(system="proxima", time=0.0):
 	
 	# clean orrery
 	var orr = mmap.get_parent().get_node("orrery")
-	for i in range(1, orr.get_child_count()-1):
+	for i in range(1, orr.get_child_count()):
 		orr.get_child(i).queue_free()
 	orr.cleanup()
 	# hide the orrery panel temporarily (preventing drawing of orbits)

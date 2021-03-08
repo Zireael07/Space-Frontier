@@ -16,7 +16,7 @@
 ]]
 position = Vector2( 500, 500 )
 script = ExtResource( 2 )
-orbit_rate = 0.1
+orbit_rate = 0.05
 star_radius_factor = 0.8
 luminosity = 0.052
 zoom_scale = 6
@@ -27,9 +27,9 @@ scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 6 )
 
 [node name="Label" type="Label" parent="."]
-margin_top = 100.0
+margin_top = 200.0
 margin_right = 72.0
-margin_bottom = 116.0
+margin_bottom = 216.0
 custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Tau Ceti"
@@ -43,8 +43,8 @@ __meta__ = {
 position = Vector2( -6.97634e-05, 1596 )
 planet_rad_factor = 0.2
 mass = 1.75
-hydro = 0.296893
-atm = 1.43429
+hydro = 0.418849
+atm = 1.01356
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
@@ -65,7 +65,7 @@ position = Vector2( 3.4773e-05, -2916 )
 planet_rad_factor = 0.2
 mass = 1.83
 hydro = 0.144642
-atm = 1.21679
+atm = 0.812722
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
@@ -87,7 +87,7 @@ position = Vector2( -4565.08, 4565.08 )
 planet_rad_factor = 0.2
 mass = 3.93
 hydro = 0.26302
-atm = 1.15688
+atm = 0.0848253
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
@@ -110,7 +110,7 @@ position = Vector2( -0.000699732, 16008 )
 planet_rad_factor = 0.3
 mass = 3.94
 hydro = 0.0
-atm = 0.189738
+atm = 0.318486
 population = 0.1
 
 [node name="Sprite" parent="planet_holder/planet4" index="0"]

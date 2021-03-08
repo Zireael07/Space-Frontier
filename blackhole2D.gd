@@ -40,7 +40,12 @@ func jump():
 		time = time * 12 # because one month is 1/12 of a year
 		print("Distance: ", ly, " light years")
 		get_tree().get_nodes_in_group("main")[0].change_system("alphacen", time)
-
+	if system == "luyten726-8":
+		ly = 3.38 # between UV Ceti and Tau Ceti
+		var time = ly/game.WORMHOLE_SPEED
+		time = time * 12 # because one month is 1/12 of a year
+		print("Distance: ", ly, " light years")
+		get_tree().get_nodes_in_group("main")[0].change_system("tauceti", time)
 
 
 func _on_Area2D_area_entered(_area):
