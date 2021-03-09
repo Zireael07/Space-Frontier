@@ -448,7 +448,20 @@ func show_starmap():
 		marker.get_parent().remove_child(marker)
 		$"Control4/star map/Control/proxima".add_child(marker)
 	if system == "alphacen":
+		marker.get_parent().remove_child(marker)
 		$"Control4/star map/Control/alphacen".add_child(marker)
+	if system == "luyten726-8":
+		marker.get_parent().remove_child(marker)
+		$"Control4/star map/Control/Luyten 726-8".add_child(marker)
+	if system == "tauceti":
+		marker.get_parent().remove_child(marker)
+		$"Control4/star map/Control/tau ceti".add_child(marker)
+	if system == "barnards":
+		marker.get_parent().remove_child(marker)
+		$"Control4/star map/Control/Barnard's Star".add_child(marker)
+	if system == "wolf359":
+		marker.get_parent().remove_child(marker)
+		$"Control4/star map/Control/Wolf 359".add_child(marker)
 	
 	marker.set_position(Vector2(0,0))
 
