@@ -50,3 +50,29 @@ func load_data():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func update_marker(marker):
+	# update marker position
+	var system = get_tree().get_nodes_in_group("main")[0].curr_system
+
+	if system == "Sol":
+		marker.get_parent().remove_child(marker)
+		$"Control/Sol".add_child(marker)
+	if system == "proxima":
+		marker.get_parent().remove_child(marker)
+		$"Control/proxima".add_child(marker)
+	if system == "alphacen":
+		marker.get_parent().remove_child(marker)
+		$"Control/alphacen".add_child(marker)
+	if system == "luyten726-8":
+		marker.get_parent().remove_child(marker)
+		$"Control/Luyten 726-8".add_child(marker)
+	if system == "tauceti":
+		marker.get_parent().remove_child(marker)
+		$"Control/tau ceti".add_child(marker)
+	if system == "barnards":
+		marker.get_parent().remove_child(marker)
+		$"Control/Barnard's Star".add_child(marker)
+	if system == "wolf359":
+		marker.get_parent().remove_child(marker)
+		$"Control/Wolf 359".add_child(marker)

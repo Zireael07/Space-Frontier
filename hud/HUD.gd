@@ -438,31 +438,10 @@ func remove_orders_controls():
 # --------------------
 func show_starmap():
 	$"Control4/star map".show()
-	# update marker position
-	var system = get_tree().get_nodes_in_group("main")[0].curr_system
-	var marker = get_tree().get_nodes_in_group("starmap_marker")[0]
-	if system == "Sol":
-		marker.get_parent().remove_child(marker)
-		$"Control4/star map/Control/Sol".add_child(marker)
-	if system == "proxima":
-		marker.get_parent().remove_child(marker)
-		$"Control4/star map/Control/proxima".add_child(marker)
-	if system == "alphacen":
-		marker.get_parent().remove_child(marker)
-		$"Control4/star map/Control/alphacen".add_child(marker)
-	if system == "luyten726-8":
-		marker.get_parent().remove_child(marker)
-		$"Control4/star map/Control/Luyten 726-8".add_child(marker)
-	if system == "tauceti":
-		marker.get_parent().remove_child(marker)
-		$"Control4/star map/Control/tau ceti".add_child(marker)
-	if system == "barnards":
-		marker.get_parent().remove_child(marker)
-		$"Control4/star map/Control/Barnard's Star".add_child(marker)
-	if system == "wolf359":
-		marker.get_parent().remove_child(marker)
-		$"Control4/star map/Control/Wolf 359".add_child(marker)
 	
+	# update marker position
+	var marker = get_tree().get_nodes_in_group("starmap_marker")[0]
+	$"Control4/star map".update_marker(marker)
 	marker.set_position(Vector2(0,0))
 
 func hide_starmap():
