@@ -402,6 +402,7 @@ func move_player(system, travel=0.0):
 	var place = null
 	# move player
 	var first_star = ["proxima", "Sol", "barnards", "wolf359", "luyten726-8", "tauceti"]
+	# FIXME: doesn't really place correctly?
 	if system in first_star:
 	#var place = get_tree().get_nodes_in_group("planets")[1] 
 		place = get_tree().get_nodes_in_group("star")[0]
@@ -414,6 +415,9 @@ func move_player(system, travel=0.0):
 	#call_deferred("update_HUD")
 	
 	# officer message
+	# get actual system name
+	var system_name = get_child(2).get_name()
+	
 	var travel_months = int(floor(travel))
 	# for convenience, assume a month has 30 days
 	var days = (travel-travel_months)*30
@@ -422,7 +426,7 @@ func move_player(system, travel=0.0):
 	game.increment_date(int(floor(days)), travel_months)
 	#game.date = [game.date[0]+int(floor(days)), game.date[1]+travel_months, game.date[2]]
 	var format_date = "%02d-%02d-%d" % [game.date[0], game.date[1], game.date[2]]
-	var msg = str("Welcome to ", system, " we arrived: ", format_travel, " after departure. The current date is: ", format_date);
+	var msg = str("Welcome to ", system_name, " we arrived: ", format_travel, " after departure. The current date is: ", format_date);
 	print(str(travel) + " months, " + str(days) + " days ")
 	game.player.emit_signal("officer_message", msg)
 	
