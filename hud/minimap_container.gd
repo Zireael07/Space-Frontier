@@ -215,6 +215,8 @@ func add_system_bodies():
 		planet_sprite.set_texture(planet)
 		if p.planet_rad_factor < 0.5:
 			planet_sprite.set_scale(Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2))
+		elif p.planet_rad_factor > 1.75:
+			planet_sprite.set_scale(Vector2(p.planet_rad_factor*0.75, p.planet_rad_factor*0.75))
 		else:
 			planet_sprite.set_scale(Vector2(p.planet_rad_factor, p.planet_rad_factor))
 		
@@ -252,7 +254,11 @@ func add_system_bodies():
 		planet_sprites.append(con)
 		con.add_child(planet_sprite)
 		
-		label.set_position(siz)
+		#hackfix for giant planet's labels
+		if planet_sprite.get_scale().x > 1:
+			label.set_position(siz/2)
+		else:
+			label.set_position(siz)
 		con.add_child(label)
 			
 	
