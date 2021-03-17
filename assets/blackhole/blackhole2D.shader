@@ -3,6 +3,7 @@ shader_type canvas_item;
 // Be gentle on this one
 uniform float strength = 0.01;
 uniform float black_radius = 0.85;
+uniform vec4 hole_color = vec4(0,0,0,0.5);
 
 void fragment() {
 
@@ -21,6 +22,6 @@ void fragment() {
 	// Output pixels from the screen using distorted UVs
 	//vec3 col = texscreen(uv);
 	vec3 col = texture(SCREEN_TEXTURE, uv).rgb;
-	COLOR.rgb = mix(col, vec3(0,0,0), smoothstep(black_radius-0.01, black_radius+0.01, f));
+	COLOR.rgba = mix(vec4(col, 1), hole_color, smoothstep(black_radius-0.01, black_radius+0.01, f));
 	//COLOR.rgb = vec3(f, 0, 0);
 }
