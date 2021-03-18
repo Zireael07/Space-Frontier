@@ -13,7 +13,7 @@ var pirate_ship = preload("res://ships/pirate_ship.tscn")
 var asteroid_processor = preload("res://ships/asteroid_processor.tscn")
 var cycler = preload("res://ships/cycler.tscn")
 
-var wormhole = preload("res://blackhole2D.tscn")
+var wormhole = preload("res://wormhole2D.tscn")
 
 # star systems
 var handmade_system = preload("res://systems/star system.tscn")

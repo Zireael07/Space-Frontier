@@ -2,29 +2,189 @@
 
 [ext_resource path="res://blackhole2D.gd" type="Script" id=1]
 [ext_resource path="res://assets/blackhole/blackhole2D.shader" type="Shader" id=2]
-[ext_resource path="res://2d_wormhole.tres" type="Shader" id=3]
 [ext_resource path="res://Nebula.gd" type="Script" id=4]
-
-[sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 3 )
-shader_param/offset = [ 98.6251, 20.3695 ]
-shader_param/scale = 0.0295243
-shader_param/density = 0.14611
-shader_param/falloff = 3.7615
-shader_param/color = Vector3( 0.927996, 0.423023, 0.885045 )
-shader_param/color2 = Vector3( 0.160538, 0.635826, 0.370876 )
-
-[sub_resource type="ImageTexture" id=2]
-size = Vector2( 50, 50 )
 
 [sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 2 )
 shader_param/strength = 0.01
 shader_param/black_radius = 0.65
-shader_param/hole_color = Plane( 0, 0, 0, 0.75 )
+shader_param/hole_color = Plane( 0, 0, 0, 1 )
 
 [sub_resource type="ImageTexture" id=4]
 size = Vector2( 200, 200 )
+
+[sub_resource type="Shader" id=6]
+code = "shader_type canvas_item;
+
+uniform vec2 offset;
+uniform float scale;
+
+uniform float density;
+uniform float falloff;
+uniform vec3 color;
+
+uniform vec3 color2;
+
+// GLSL textureless classic 2D noise \"cnoise\",
+// with an RSL-style periodic variant \"pnoise\".
+// Author:  Stefan Gustavson (stefan.gustavson@liu.se)
+// Version: 2011-08-22
+//
+// Many thanks to Ian McEwan of Ashima Arts for the
+// ideas for permutation and gradient selection.
+//
+// Copyright (c) 2011 Stefan Gustavson. All rights reserved.
+// Distributed under the MIT license. See LICENSE file.
+// https://github.com/stegu/webgl-noise
+//
+
+vec4 mod289(vec4 x) {
+    return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 permute(vec4 x) {
+    return mod289(((x * 34.0) + 1.0) * x);
+}
+
+vec4 taylorInvSqrt(vec4 r) {
+    return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+vec2 fade(vec2 t) {
+    return t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
+}
+
+// Classic Perlin noise
+float cnoise(vec2 P) {
+    vec4 Pi = floor(vec4(P, P)) + vec4(0.0, 0.0, 1.0, 1.0);
+    vec4 Pf = fract(vec4(P, P)) - vec4(0.0, 0.0, 1.0, 1.0);
+    Pi = mod289(Pi); // To avoid truncation effects in permutation
+    vec4 ix = Pi.xzxz;
+    vec4 iy = Pi.yyww;
+    vec4 fx = Pf.xzxz;
+    vec4 fy = Pf.yyww;
+
+    vec4 i = permute(permute(ix) + iy);
+
+    vec4 gx = fract(i * (1.0 / 41.0)) * 2.0 - 1.0 ;
+    vec4 gy = abs(gx) - 0.5 ;
+    vec4 tx = floor(gx + 0.5);
+    gx = gx - tx;
+
+    vec2 g00 = vec2(gx.x,gy.x);
+    vec2 g10 = vec2(gx.y,gy.y);
+    vec2 g01 = vec2(gx.z,gy.z);
+    vec2 g11 = vec2(gx.w,gy.w);
+    
+    vec4 norm = taylorInvSqrt(vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)));
+    g00 *= norm.x;
+    g01 *= norm.y;
+    g10 *= norm.z;
+    g11 *= norm.w;
+    
+    float n00 = dot(g00, vec2(fx.x, fy.x));
+    float n10 = dot(g10, vec2(fx.y, fy.y));
+    float n01 = dot(g01, vec2(fx.z, fy.z));
+    float n11 = dot(g11, vec2(fx.w, fy.w));
+    
+    vec2 fade_xy = fade(Pf.xy);
+    vec2 n_x = mix(vec2(n00, n01), vec2(n10, n11), fade_xy.x);
+    float n_xy = mix(n_x.x, n_x.y, fade_xy.y);
+    return 2.3 * n_xy;
+}
+
+// Classic Perlin noise, periodic variant
+float pnoise(vec2 P, vec2 rep) {
+    vec4 Pi = floor(vec4(P, P)) + vec4(0.0, 0.0, 1.0, 1.0);
+    vec4 Pf = fract(vec4(P, P)) - vec4(0.0, 0.0, 1.0, 1.0);
+    Pi = mod(Pi, vec4(rep, rep)); // To create noise with explicit period
+    Pi = mod289(Pi); // To avoid truncation effects in permutation
+    vec4 ix = Pi.xzxz;
+    vec4 iy = Pi.yyww;
+    vec4 fx = Pf.xzxz;
+    vec4 fy = Pf.yyww;
+    
+    vec4 i = permute(permute(ix) + iy);
+    
+    vec4 gx = fract(i * (1.0 / 41.0)) * 2.0 - 1.0 ;
+    vec4 gy = abs(gx) - 0.5 ;
+    vec4 tx = floor(gx + 0.5);
+    gx = gx - tx;
+    
+    vec2 g00 = vec2(gx.x,gy.x);
+    vec2 g10 = vec2(gx.y,gy.y);
+    vec2 g01 = vec2(gx.z,gy.z);
+    vec2 g11 = vec2(gx.w,gy.w);
+    
+    vec4 norm = taylorInvSqrt(vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)));
+    g00 *= norm.x;
+    g01 *= norm.y;
+    g10 *= norm.z;
+    g11 *= norm.w;
+
+    float n00 = dot(g00, vec2(fx.x, fy.x));
+    float n10 = dot(g10, vec2(fx.y, fy.y));
+    float n01 = dot(g01, vec2(fx.z, fy.z));
+    float n11 = dot(g11, vec2(fx.w, fy.w));
+    
+    vec2 fade_xy = fade(Pf.xy);
+    vec2 n_x = mix(vec2(n00, n01), vec2(n10, n11), fade_xy.x);
+    float n_xy = mix(n_x.x, n_x.y, fade_xy.y);
+    return 2.3 * n_xy;
+}
+
+float normalnoise(vec2 p) {
+     return cnoise(p) * 0.5 + 0.5;
+}
+
+float noise(vec2 p) {
+    p += offset;
+    int steps = 5;
+    float n_scale = pow(2.0, float(steps));
+    float displace = 0.0;
+    for (int i = 0; i < steps; i++) {
+        displace = normalnoise(p * n_scale + displace);
+        n_scale *= 0.5;
+    }
+    return normalnoise(p + displace);
+}
+
+
+void fragment() {
+	//tyro
+	//float n = noise(UV*scale*1.0);
+	float or_n = noise(FRAGCOORD.xy*scale *1.0);
+	float n = pow(or_n + density, falloff);
+	
+	float col_n = noise(FRAGCOORD.xy*scale*0.5);
+	
+	vec3 col = mix(color, color2, col_n);
+	//vec3 col = color + color2;
+	
+	//COLOR.rgb = col;
+	float mixi = n;
+	//float mixi = 1.0-(pow(n, density));
+	//for aesthetic reasons, black (background) must not be a minority but be noticeable
+	COLOR.rgb = mix(vec3(0.0), col, mixi);
+	
+	//blackhole
+	//COLOR.rgb = mix(col, vec3(0,0,0), smoothstep(black_radius-0.01, black_radius+0.01, f));
+	
+    //COLOR.rgb = vec3(or_n);
+}"
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = SubResource( 6 )
+shader_param/offset = [ 15.5263, 13.5694 ]
+shader_param/scale = 0.0205683
+shader_param/density = 0.0859543
+shader_param/falloff = 4.3068
+shader_param/color = Vector3( 0.813923, 0.930906, 0.818049 )
+shader_param/color2 = Vector3( 0.354177, 0.630256, 0.993001 )
+
+[sub_resource type="ImageTexture" id=2]
+size = Vector2( 65, 65 )
 
 [sub_resource type="CircleShape2D" id=5]
 radius = 30.0
@@ -36,15 +196,15 @@ z_index = 20
 z_as_relative = false
 script = ExtResource( 1 )
 
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 3 )
+texture = SubResource( 4 )
+
 [node name="Sprite2" type="Sprite" parent="."]
 material = SubResource( 1 )
 texture = SubResource( 2 )
 script = ExtResource( 4 )
-seede = 1556460602
-
-[node name="Sprite" type="Sprite" parent="."]
-material = SubResource( 3 )
-texture = SubResource( 4 )
+seede = 957132332
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
