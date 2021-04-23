@@ -76,7 +76,7 @@ func spawn_core():
 func _ready():
 	print("Main init")
 	
-	var syst = "trappist"
+	var syst = "Sol"
 	
 	if game.start != null:
 		var lookup_system = {1: "Sol", 2: "trappist"}
@@ -116,6 +116,9 @@ func _ready():
 		spawn_wormhole(p_ind, 1, mmap)
 		
 	# UV Ceti has a manually added wormhole...
+	
+	if curr_system == "wolf359":
+		spawn_wormhole(p_ind, 1, mmap)
 	
 	spawn_asteroid_processor(p_ind, curr_system, mmap)
 	spawn_cycler(p_ind, curr_system, mmap)
