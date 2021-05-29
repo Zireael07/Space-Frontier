@@ -10,6 +10,7 @@
 [node name="star map" type="Control"]
 margin_right = 805.0
 margin_bottom = 525.0
+rect_clip_content = true
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -28,6 +29,7 @@ margin_top = -138.0
 margin_right = 805.0
 margin_bottom = 527.0
 rect_clip_content = true
+mouse_filter = 2
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false,
