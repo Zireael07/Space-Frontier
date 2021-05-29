@@ -199,6 +199,8 @@ func _process(_delta):
 		# paranoia
 		if not planets[i]:
 			return
+		if not is_instance_valid(planets[i]):
+			return
 			
 		# the minimap doesn't rotate
 		var rel_loc = planets[i].get_global_position() - star_main.get_global_position()

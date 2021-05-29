@@ -447,6 +447,8 @@ func _process(_delta):
 		# paranoia
 		if not stars[i]:
 			return
+		if not is_instance_valid(stars[i]):
+			return
 			
 		# the minimap doesn't rotate
 		var rel_loc = stars[i].get_global_position() - player.get_child(0).get_global_position()
@@ -514,6 +516,9 @@ func _process(_delta):
 	# ships/etc. (dynamic sprites) start here
 	for i in range(starbases.size()):
 		# paranoia
+		if starbase_sprites.size() < 1:
+			return
+		
 		if not starbases[i] or not starbase_sprites[i]:
 			return
 			

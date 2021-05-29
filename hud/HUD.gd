@@ -219,7 +219,11 @@ func handle_direction_labels():
 	for i in range(planets.size()):
 		var planet = planets[i]
 		# paranoia
-		if not planet: 
+		if not planet or planet == null:
+			#print("Null planet")
+			return
+		if not is_instance_valid(planet):
+			#print("Invalid planet")
 			return
 			
 		var rel_loc = planet.get_global_position() - player.get_child(0).get_global_position()
