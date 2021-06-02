@@ -76,3 +76,21 @@ func update_marker(marker):
 	if system == "wolf359":
 		marker.get_parent().remove_child(marker)
 		$"Control/Wolf 359".add_child(marker)
+
+	# show target on map (tint cyan)
+	for c in get_node("Control").get_children():
+		c.get_node("Label").set_self_modulate(Color(1,1,1))
+	
+	
+	var lookup = {"luyten726-8": "Luyten 726-8", "barnards":"Barnard's Star", "wolf359":"Wolf 359"}	
+	
+	if game.player.w_hole.target_system:
+		print("Target system: ", game.player.w_hole.target_system)
+		get_node("Control").get_node(lookup[game.player.w_hole.target_system]).get_node("Label").set_self_modulate(Color(0,1,1))
+	else:
+		if system == "Sol":
+			$"Control/proxima/Label".set_self_modulate(Color(0,1,1))
+		if system == "proxima":
+			$"Control/alphacen/Label".set_self_modulate(Color(0,1,1))
+		if system == "luyten726-8":
+			$"Control/tau ceti/Label".set_self_modulate(Color(0,1,1))
