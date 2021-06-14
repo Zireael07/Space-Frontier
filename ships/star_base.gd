@@ -123,7 +123,9 @@ func _process(delta):
 					emit_signal("target_acquired_AI", self)
 					print("AI acquired target")
 	
-	if shoot_target != null:
+	if shoot_target == null or !is_instance_valid(shoot_target):
+		return
+	else:
 		shoot_rel_pos = get_global_transform().xform_inv(shoot_target.get_global_position())
 	
 		# visual effect
