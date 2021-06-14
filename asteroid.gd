@@ -1,10 +1,11 @@
 extends Node2D
 
 # class member variables go here, for example:
-var elements = { CARBON = 0, IRON = 1, MAGNESIUM = 2, SILICON = 3, HYDROGEN = 4 }
+var elements = { CARBON = 0, IRON = 1, MAGNESIUM = 2, SILICON = 3, HYDROGEN = 4, NICKEL = 5, SILVER = 6, PLATINUM = 7, GOLD = 8 }
 var contains = []
 var resource_debris = preload("res://debris_resource.tscn")
-var types = { S = 0, C = 1 }
+# C = 75%, C+S = 92% (i.e. S = 17%), M = 8%
+var types = { S = 0, C = 1, M = 2 }
 export (int) var type = 1 
 
 
@@ -29,6 +30,16 @@ func _ready():
 		contains.append([elements.IRON, 67])
 		contains.append([elements.SILICON, 22])
 		contains.append([elements.HYDROGEN, 3])
+	
+	elif type == types.M:
+		# https://www.universetoday.com/37425/what-are-asteroids-made-of/
+		contains.append([elements.IRON, 80])
+		# "20% a mixture of nickel, iridium, palladium, platinum, gold, magnesium and other precious metals such as osmium, ruthenium and rhodium"
+		contains.append([elements.NICKEL, 8])
+		contains.append([elements.SILVER, 2])
+		contains.append([elements.PLATINUM, 3])
+		contains.append([elements.GOLD, 5])
+		contains.append([elements.MAGNESIUM, 2])
 
 
 func get_chance_roll_table(chances, pad=false):
