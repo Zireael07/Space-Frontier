@@ -40,6 +40,10 @@ func _ready():
 		contains.append([elements.PLATINUM, 3])
 		contains.append([elements.GOLD, 5])
 		contains.append([elements.MAGNESIUM, 2])
+		
+		# visual
+		# reddish due to high iron content (iron oxide on surface)
+		get_child(0).set_modulate(Color(0.66, 0.33, 0.33))
 
 
 func get_chance_roll_table(chances, pad=false):

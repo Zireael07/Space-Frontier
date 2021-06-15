@@ -27,6 +27,13 @@ func _ready():
 		var ast_type = select_random()
 		ast.type = ast_type
 		
+		#print(str(num) + " .. " + str(i))
+		
+		# hack - force some to be metallic
+		if i > int(num*0.75)-2 and i < int(num*0.75)+2:
+			#print(str(num) + " .. " + str(i) + " is metallic ")
+			ast.type = types.M
+		
 		add_child(ast)
 		
 		# place one on the left, one on the right
@@ -70,7 +77,7 @@ func get_chance_roll_table(chances, pad=false):
 
 	if pad:
 		# pad out to 100
-		print("Last number is " + str(num))
+		#print("Last number is " + str(num))
 		# print "Last number is " + str(num)
 		chance_roll.append(["None", num, 100])
 
@@ -79,18 +86,18 @@ func get_chance_roll_table(chances, pad=false):
 # wants a table of chances [[name, low, upper]]
 func random_choice_table(table):
 	var roll = randi() % 101 # between 0 and 100
-	print("Roll: " + str(roll))
+	#print("Roll: " + str(roll))
 	
 	for row in table:
 		if roll >= row[1] and roll <= row[2]:
-			print("Random roll picked: " + str(row[0]))
+			#print("Random roll picked: " + str(row[0]))
 			return row[0]
 
 # random select from a table
 func select_random():
 	var chance_roll_table = get_chance_roll_table(ast_chances)
-	print(chance_roll_table)
+	#print(chance_roll_table)
 	
 	var res = random_choice_table(chance_roll_table)
-	print("Res: " + str(res))
+	#print("Res: " + str(res))
 	return res
