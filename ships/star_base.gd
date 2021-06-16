@@ -39,14 +39,15 @@ export(int) var kind_id = 0
 
 enum kind { enemy, friendly, pirate }
 
+# note: any changes made here need to be copied to cycler.gd, too
 # see asteroid.gd and debris_resource.gd
-enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
+enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN, NICKEL, SILVER, PLATINUM, GOLD}
 # carbon covers all allotropes of carbon, such as diamonds, graphene, graphite... 
 
 #Methane = CH4, carborundum (silicon carbide) = SiC
 # plastics are chains of (C2H4)n
 # electronics are made out of Si + Al/Cu; durable variant (for higher temps & pressures) - SiC + Au/Ag/Pl
-enum processed { METHANE, CARBORUNDUM, PLASTICS, ELECTRONICS } 
+enum processed { METHANE, CARBORUNDUM, PLASTICS, ELECTRONICS, DURABLE_ELECTRONICS } 
 var storage = {}
 
 func _ready():
@@ -338,6 +339,7 @@ func add_to_storage(id):
 	else:
 		storage[id] += 1
 
+# note: any changes made here need to be copied to cycler.gd, too
 func _on_produce_timer_timeout():
 	#print("Produce timer timed out!")
 	# space wizard needs carbon badly!
@@ -363,6 +365,22 @@ func _on_produce_timer_timeout():
 				add_to_storage("CARBORUNDUM")
 				storage["CARBON"] -= 1
 				storage["SILICON"] -= 1
+	else:
+		# we're out of carbon, so try making things that don't need C
+		if storage["SILICON"] >= 2:
+			add_to_storage("ELECTRONICS")
+			storage["SILICON"] -= 2
+			# copper or aluminium components
+
+		if storage["CARBORUNDUM"] >= 2 and (storage["SILVER"] > 0 or storage["GOLD"] > 0 or storage["PLATINUM"] > 0):
+			add_to_storage("DURABLE_ELECTRONICS")
+			storage["CARBORUNDUM"] -= 2
+			if storage["SILVER"] > 0:
+				storage["SILVER"] -= 1
+			elif storage["GOLD"] > 0:
+				storage["GOLD"] -= 1
+			elif storage["PLATINUM"] > 0:
+				storage["PLATINUM"] -= 1
 
 
 func _on_move_timer_timeout():
