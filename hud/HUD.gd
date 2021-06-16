@@ -906,6 +906,9 @@ func update_cargo_listing(cargo, base_storage=null):
 
 func set_cargo_listing(text):
 	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".set_text(text)
+	# make scrollbar visible
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".scroll_to_line(0)
+	$"Control2/Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".get_v_scroll().set_scale(Vector2(2, 1))
 
 func _on_ButtonSell_pressed():
 	get_node("Control2")._onButtonSell_pressed()
