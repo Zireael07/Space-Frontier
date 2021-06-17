@@ -884,19 +884,19 @@ func update_cargo_listing(cargo, base_storage=null):
 	if player.cargo_empty(cargo):
 		if base_storage != null:
 			for i in range(0, base_storage.keys().size()):
-				list.append(" base: " + str(base_storage.keys()[i]) + ": " + str(base_storage[base_storage.keys()[i]]))
+				list.append(" base: " + str(base_storage.keys()[i]).replace("_", " ") + ": " + str(base_storage[base_storage.keys()[i]]))
 		else:
 			return
 		
 	else:	
 		#print(str(cargo.keys()))
 		for i in range(0, cargo.keys().size()):
-			list.append(str(cargo.keys()[i]) + ": " + str(cargo[cargo.keys()[i]]))
+			list.append(str(cargo.keys()[i]).replace("_", " ") + ": " + str(cargo[cargo.keys()[i]]))
 		
 			if base_storage != null:
 			#print(str(base_storage))
 				if cargo.keys()[i] in base_storage:
-					list[i] = list[i] + "/ base: " + str(base_storage[cargo.keys()[i]])
+					list[i] = list[i] + "/ base: " + str(base_storage[cargo.keys()[i]]).replace("_", " ")
 			
 	var listing = str(list).lstrip("[").rstrip("]").replace(", ", "\n")
 	# this would end up in a different orders than the ids
