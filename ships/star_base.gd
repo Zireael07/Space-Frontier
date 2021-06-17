@@ -339,6 +339,17 @@ func add_to_storage(id):
 	else:
 		storage[id] += 1
 
+func try_dur_electronics():
+	if storage["CARBORUNDUM"] >= 2 and (storage["SILVER"] > 0 or storage["GOLD"] > 0 or storage["PLATINUM"] > 0):
+		add_to_storage("DURABLE_ELECTRONICS")
+		storage["CARBORUNDUM"] -= 2
+		if storage["SILVER"] > 0:
+			storage["SILVER"] -= 1
+		elif storage["GOLD"] > 0:
+			storage["GOLD"] -= 1
+		elif storage["PLATINUM"] > 0:
+			storage["PLATINUM"] -= 1
+
 # note: any changes made here need to be copied to cycler.gd, too
 func _on_produce_timer_timeout():
 	#print("Produce timer timed out!")
@@ -359,28 +370,24 @@ func _on_produce_timer_timeout():
 					add_to_storage("CARBORUNDUM")
 					storage["CARBON"] -= 1
 					storage["SILICON"] -= 1
+				else:
+					try_dur_electronics()
 		# out of hydrogen, try something else
 		else:
 			if storage["SILICON"] > 0:
 				add_to_storage("CARBORUNDUM")
 				storage["CARBON"] -= 1
 				storage["SILICON"] -= 1
+			else:
+				try_dur_electronics()
 	else:
 		# we're out of carbon, so try making things that don't need C
 		if storage["SILICON"] >= 2:
 			add_to_storage("ELECTRONICS")
 			storage["SILICON"] -= 2
 			# copper or aluminium components
-
-		if storage["CARBORUNDUM"] >= 2 and (storage["SILVER"] > 0 or storage["GOLD"] > 0 or storage["PLATINUM"] > 0):
-			add_to_storage("DURABLE_ELECTRONICS")
-			storage["CARBORUNDUM"] -= 2
-			if storage["SILVER"] > 0:
-				storage["SILVER"] -= 1
-			elif storage["GOLD"] > 0:
-				storage["GOLD"] -= 1
-			elif storage["PLATINUM"] > 0:
-				storage["PLATINUM"] -= 1
+		else:
+			try_dur_electronics()
 
 
 func _on_move_timer_timeout():
