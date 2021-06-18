@@ -661,10 +661,18 @@ func _onButtonDown3_pressed():
 	if player.cargo_empty(player.cargo):
 		num_list = get_base_storage(player).size()-1
 	var max_y = 15+15*num_list
+
+	if cursor.get_position().y > 150 and cursor.get_position().y < max_y:
+		#var scroll = $"Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".get_child(0).value
+		if $"Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".get_child(0).value == 0:
+			$"Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".get_child(0).value = 15
+		else: 
+			$"Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".get_child(0).value = $"Panel_rightHUD/PanelInfo/CargoInfo/RichTextLabel".get_child(0).value + 15 
+		return
 	if cursor.get_position().y < max_y:
 		# down a line
 		cursor.set_position(cursor.get_position() + Vector2(0,15))
-
+		
 # --------------------------
 func switch_to_help():
 	$"Panel_rightHUD/PanelInfo/CensusInfo".hide()
