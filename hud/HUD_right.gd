@@ -228,7 +228,7 @@ func _on_ButtonView_pressed():
 		return
 	# any futher entry is not a star
 	else:
-		var line = cursor.get_position().y + nav_list.get_v_scroll()
+		var line = cursor.get_position().y + nav_list.get_v_scroll().value
 		var select_id = (line - 15 * (stars.size()+1)) / 15
 		var skips = []
 		#var planets = get_tree().get_nodes_in_group("planets")
@@ -586,8 +586,10 @@ func _onButtonUp2_pressed():
 	# do we scroll?
 	if cursor.get_position().y < 30:
 		var nav_list = $"Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
-		if nav_list.get_v_scroll() > 0:
-			nav_list.set_v_scroll(nav_list.get_v_scroll()-15)
+		if nav_list.get_v_scroll().value > 0:
+			nav_list.get_child(0).value = (nav_list.get_v_scroll().value-15)
+			# manually "scroll"
+			nav_list.get_node("Control")._set_position(Vector2(0,-nav_list.get_child(0).value))
 			print("Scrolling up...")
 			
 func _onButtonDown2_pressed():
@@ -603,15 +605,23 @@ func _onButtonDown2_pressed():
 				
 	# do we scroll?
 	var nav_list = $"Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
-	var line = cursor.get_position().y + nav_list.get_v_scroll()
+	var line = cursor.get_position().y + nav_list.get_child(0).value #nav_list.get_v_scroll()
 	if cursor.get_position().y > 150 and line < max_y:
-		if nav_list.get_v_scroll() == 0:
-			print("Scrolling list down..")
+		if nav_list.get_child(0).value == 0: #get_v_scroll() == 0:
 			# scroll the list
-			nav_list.set_v_scroll(15)
-		elif nav_list.get_v_scroll() % 15 == 0:
-			var curr = nav_list.get_v_scroll()
-			nav_list.set_v_scroll(curr+15)
+			nav_list.get_child(0).value = 15
+			# manually "scroll"
+			nav_list.get_node("Control")._set_position(Vector2(0,-nav_list.get_child(0).value))
+			print("Scrolling list down..")
+		else:
+		#elif int(nav_list.get_child(0).value) % 15 == 0: #nav_list.get_v_scroll() % 15 == 0:
+			var curr = nav_list.get_child(0).value #nav_list.get_v_scroll()
+			nav_list.get_child(0).value = curr+15
+			#print("Scroll further ", nav_list.get_child(0).value)
+			# manually "scroll"
+			nav_list.get_node("Control")._set_position(Vector2(0,-nav_list.get_child(0).value))
+			#nav_list.set_v_scroll(curr+15)
+			#nav_list.scroll_vertical = (curr+15)
 		
 		return
 		

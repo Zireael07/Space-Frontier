@@ -42,14 +42,20 @@ func _ready():
 	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
 	
 	# scroll container scrollbar
-	nav_list.set_v_scroll(0)
+	nav_list.scroll_to_line(0)
+	#nav_list.set_v_scroll(0)
 	# fix for max being stuck at 100
-	nav_list.get_node("_v_scroll").set_max(300)
+	nav_list.get_child(0).max_value = 300
+	# hack fix
+	nav_list.get_child(0).set_allow_greater(true)
+	#nav_list.get_node("_v_scroll").set_max(300)
 	# prevent any off values for scrolling
-	nav_list.get_node("_v_scroll").set_step(15)
+	nav_list.get_child(0).set_step(15)
+	#nav_list.get_node("_v_scroll").set_step(15)
 
 
 	nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control"
+	nav_list._set_size(Vector2(get_size().x, 300))
 
 	# headers
 	var label = Label.new()

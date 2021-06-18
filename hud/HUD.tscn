@@ -441,19 +441,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlanetList" type="ScrollContainer" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
+[node name="PlanetList" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
 margin_right = 190.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 190, 170 )
-scroll_horizontal_enabled = false
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_editor_description_": "dummy because ScrollContainer stopped working for some reason (caching values and not taking new ones)"
 }
 
 [node name="Control" type="Control" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"]
 margin_right = 190.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 190, 180 )
+mouse_filter = 2
 
 [node name="Cursor2" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
 margin_right = 40.0
@@ -936,6 +937,7 @@ margin_top = -27.0
 margin_right = 44.0
 margin_bottom = -13.0
 text = "Press Z to toggle orders mode"
+
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonCensus" to="." method="_on_ButtonCensus_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonPlanet" to="." method="_on_ButtonPlanet_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonShip" to="." method="_on_ButtonShip_pressed"]
