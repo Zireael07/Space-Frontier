@@ -607,8 +607,10 @@ func hide_target_panel():
 		n.hide()
 	# default ship panel back to player sprite
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/TextureRect2".set_texture(player.get_child(0).get_texture())
-	# switch away from ship panel
-	_on_ButtonPlanet_pressed()
+	
+	if $"Control2/Panel_rightHUD/PanelInfo/ShipInfo".is_visible():
+		# switch away from ship panel
+		_on_ButtonPlanet_pressed()
 
 func _on_target_shield_changed(shield):
 	#print("Shields from signal is " + str(shield))
