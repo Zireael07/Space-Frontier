@@ -159,14 +159,19 @@ func _process(delta):
 
 	# upgrade
 	if Input.is_action_just_pressed("ui_back"):
+		# don't upgrade if cargo screen open
 		if docked:
-			#print("Trying to upgrade...")
-			# upgrade the ship!
-			upgrade_ship()
-			# new ship has to be docked, too
-			game.player.dock()
-			game.player.HUD.get_node("Control2").update_ship_name()
-			return
+			if not game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/CargoInfo").is_visible():
+				#print("Trying to upgrade...")
+				# upgrade the ship!
+				upgrade_ship()
+				# new ship has to be docked, too
+				game.player.dock()
+				game.player.HUD.get_node("Control2").update_ship_name()
+				return
+			else:
+				# sell stuff
+				game.player.HUD.get_node("Control2")._onButtonSell_pressed()
 			
 	# camera
 	# just_pressed means it does it in steps, like the original game did

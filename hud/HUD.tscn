@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=1]
 [ext_resource path="res://hud/minimap_container.gd" type="Script" id=2]
@@ -21,6 +21,20 @@ texture = ExtResource( 13 )
 region_rect = Rect2( 0, 0, 100, 100 )
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
+
+[sub_resource type="InputEventKey" id=2]
+pressed = true
+scancode = 16777220
+
+[sub_resource type="ShortCut" id=3]
+shortcut = SubResource( 2 )
+
+[sub_resource type="InputEventKey" id=4]
+pressed = true
+scancode = 71
+
+[sub_resource type="ShortCut" id=5]
+shortcut = SubResource( 4 )
 
 [node name="Control" type="Control"]
 pause_mode = 2
@@ -415,6 +429,7 @@ margin_left = 45.0
 margin_top = 180.0
 margin_right = 85.0
 margin_bottom = 200.0
+shortcut = SubResource( 3 )
 text = "Sell"
 
 [node name="ButtonBuy" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
@@ -422,6 +437,7 @@ margin_left = 95.0
 margin_top = 180.0
 margin_right = 135.0
 margin_bottom = 200.0
+shortcut = SubResource( 5 )
 text = "Buy"
 __meta__ = {
 "_edit_use_anchors_": false
