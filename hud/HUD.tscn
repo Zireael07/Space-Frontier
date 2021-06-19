@@ -391,6 +391,7 @@ margin_left = 10.0
 margin_top = 15.0
 margin_right = 192.0
 margin_bottom = 181.0
+mouse_filter = 2
 bbcode_text = "Cargo"
 text = "Cargo"
 __meta__ = {
@@ -412,14 +413,14 @@ text = "< Up"
 [node name="ButtonSell" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
 margin_left = 45.0
 margin_top = 180.0
-margin_right = 80.0
+margin_right = 85.0
 margin_bottom = 200.0
 text = "Sell"
 
 [node name="ButtonBuy" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
-margin_left = 85.0
+margin_left = 95.0
 margin_top = 180.0
-margin_right = 121.0
+margin_right = 135.0
 margin_bottom = 200.0
 text = "Buy"
 __meta__ = {
@@ -427,9 +428,9 @@ __meta__ = {
 }
 
 [node name="ButtonDown3" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/CargoInfo"]
-margin_left = 125.0
+margin_left = 135.0
 margin_top = 180.0
-margin_right = 185.0
+margin_right = 195.0
 margin_bottom = 200.0
 text = "> Down"
 
@@ -455,6 +456,9 @@ margin_right = 190.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 190, 180 )
 mouse_filter = 2
+__meta__ = {
+"_editor_description_": "we don't use a RichText since there are colors and indents all over the place"
+}
 
 [node name="Cursor2" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/NavInfo"]
 margin_right = 40.0
@@ -556,6 +560,7 @@ margin_left = 20.0
 margin_top = 240.0
 margin_right = 180.0
 margin_bottom = 400.0
+mouse_filter = 2
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false

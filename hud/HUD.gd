@@ -43,6 +43,7 @@ func _ready():
 	
 	# scroll container scrollbar
 	nav_list.scroll_to_line(0)
+	nav_list.get_v_scroll().set_scale(Vector2(2, 1))
 	#nav_list.set_v_scroll(0)
 	# fix for max being stuck at 100
 	nav_list.get_child(0).max_value = 300
