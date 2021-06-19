@@ -897,16 +897,29 @@ func update_cargo_listing(cargo, base_storage=null):
 		else:
 			return
 		
-	else:	
-		#print(str(cargo.keys()))
-		for i in range(0, cargo.keys().size()):
-			list.append(str(cargo.keys()[i]).replace("_", " ") + ": " + str(cargo[cargo.keys()[i]]))
+	else:
+		# if we're docked, keep showing base storage
+		if base_storage != null:
+			for i in range(0, base_storage.keys().size()):
+				var entry = " base: " + str(base_storage.keys()[i]).replace("_", " ") + ": " + str(base_storage[base_storage.keys()[i]])
+				# show the amount we have in cargo
+				for j in range(0, cargo.keys().size()):
+					if cargo.keys()[j] == base_storage.keys()[i]:
+						entry = str(cargo.keys()[j]).replace("_", " ") + ": " + str(cargo[cargo.keys()[j]]) + entry
+				list.append(entry)
+		else:
+			#print(str(cargo.keys()))
+			# no base, just show our cargo
+			for i in range(0, cargo.keys().size()):
+				list.append(str(cargo.keys()[i]).replace("_", " ") + ": " + str(cargo[cargo.keys()[i]]))
 		
-			if base_storage != null:
-			#print(str(base_storage))
-				if cargo.keys()[i] in base_storage:
-					list[i] = list[i] + "/ base: " + str(base_storage[cargo.keys()[i]]).replace("_", " ")
-			
+			#if base_storage != null:
+			#print(str(base_storage))			
+			#	if cargo.keys()[i] in base_storage:
+			#		list[i] = list[i] + "/ base: " + str(base_storage[cargo.keys()[i]]).replace("_", " ")
+
+				
+				
 	var listing = str(list).lstrip("[").rstrip("]").replace(", ", "\n")
 	# this would end up in a different orders than the ids
 	#var listing = str(cargo).lstrip("{").rstrip("}").replace("(", "").replace(")", "").replace(", ", "\n")

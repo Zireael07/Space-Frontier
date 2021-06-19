@@ -667,9 +667,10 @@ func _onButtonUp3_pressed():
 		
 func _onButtonDown3_pressed():
 	var cursor = $"Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
-	var num_list = player.cargo.size()-1
-	if player.cargo_empty(player.cargo):
-		num_list = get_base_storage(player).size()-1
+	#var num_list = player.cargo.size()-1
+	#if player.cargo_empty(player.cargo):
+	#	num_list = get_base_storage(player).size()-1
+	var num_list = get_base_storage(player).size()-1
 	var max_y = 15+15*num_list
 
 	if cursor.get_position().y > 150 and cursor.get_position().y < max_y:

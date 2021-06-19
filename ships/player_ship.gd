@@ -1113,15 +1113,20 @@ func sell_cargo(id):
 	if not cargo.keys().size() > 0:
 		return
 	
+	# with starting inventory, the base should have the thing we want to sell
+	# HUD.gd 886, we now display base storage so the id refers to base storage...
+	var key = get_parent().get_parent().storage.keys()[id]
+	#print(get_parent().get_parent().storage[get_parent().get_parent().storage.keys()[id]] > 0:
+	print("Want to sell: " + key)
 	
-	if cargo[cargo.keys()[id]] > 0:
-		cargo[cargo.keys()[id]] -= 1
+	if key in cargo and cargo[key] > 0:
+		cargo[key] -= 1
 		credits += 50
 		# add cargo to starbase
-		if not get_parent().get_parent().storage.has(cargo.keys()[id]):
-			get_parent().get_parent().storage[cargo.keys()[id]] = 1
+		if not get_parent().get_parent().storage.has(key):
+			get_parent().get_parent().storage[key] = 1
 		else:
-			get_parent().get_parent().storage[cargo.keys()[id]] += 1
+			get_parent().get_parent().storage[key] += 1
 		HUD.update_cargo_listing(cargo, get_parent().get_parent().storage)
 
 func buy_cargo(id):
