@@ -158,7 +158,7 @@ func _process(delta):
 			tractor.get_child(0).tractor = self
 
 	# upgrade
-	if Input.is_action_just_pressed("ui_back"):
+	if Input.is_action_just_pressed("upgrade"):
 		# don't upgrade if cargo screen open
 		if docked:
 			if not game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/CargoInfo").is_visible():
@@ -549,7 +549,8 @@ func _input(_event):
 	if Input.is_action_pressed("help"):
 		self.HUD.get_node("Control2").switch_to_help()
 	if Input.is_action_pressed("cargo_panel"):
-		self.HUD.switch_to_cargo()
+		self.HUD._on_ButtonCargo_pressed()
+		#self.HUD.switch_to_cargo()
 		
 	if Input.is_action_pressed("go_planet"):
 		# no warping if we are hauling a colony
@@ -1108,10 +1109,10 @@ func cargo_empty(cargo):
 func sell_cargo(id):
 	if not docked:
 		print("We cannot sell if we're not docked")
-		return
+		return false
 	
 	if not cargo.keys().size() > 0:
-		return
+		return false
 	
 	# with starting inventory, the base should have the thing we want to sell
 	# HUD.gd 886, we now display base storage so the id refers to base storage...
@@ -1128,14 +1129,17 @@ func sell_cargo(id):
 		else:
 			get_parent().get_parent().storage[key] += 1
 		HUD.update_cargo_listing(cargo, get_parent().get_parent().storage)
+		return true
+	else:
+		return false
 
 func buy_cargo(id):
 	if not docked:
 		print("We cannot buy if we're not docked")
-		return
+		return false
 	
 	if not get_parent().get_parent().storage.keys().size() > 0:
-		return
+		return false
 	
 	
 	if get_parent().get_parent().storage[get_parent().get_parent().storage.keys()[id]] > 0:
@@ -1147,7 +1151,9 @@ func buy_cargo(id):
 		else:
 			cargo[get_parent().get_parent().storage.keys()[id]] += 1
 		HUD.update_cargo_listing(cargo, get_parent().get_parent().storage)	
-
+		return true
+	else:
+		return false
 
 # atan2(0,-1) returns 180 degrees in 3.0, we want 0
 # this counts in radians

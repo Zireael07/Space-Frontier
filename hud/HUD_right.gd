@@ -163,6 +163,8 @@ func _onButtonCargo_pressed():
 	else:
 		$"Panel_rightHUD/PanelInfo/CargoInfo/ButtonSell".set_disabled(false)
 	switch_to_cargo()
+	# grab the f#$cking focus
+	$"Panel_rightHUD/PanelInfo/CargoInfo/ButtonBuy".grab_focus()
 
 func _onButtonDown_pressed():
 	var cursor = $"Panel_rightHUD/PanelInfo/RefitInfo/Cursor"
@@ -644,12 +646,19 @@ func _onButtonSell_pressed():
 	var select_id = ((cursor.get_position().y-15) / 15)
 
 	player.sell_cargo(select_id)
+	
+	#TODO: disable sell if we no longer have this cargo in hold?
+	
+	# grab the f#$cking focus
+	$"Panel_rightHUD/PanelInfo/CargoInfo/ButtonBuy".grab_focus()
 
 func _onButtonBuy_pressed():
 	var cursor = $"Panel_rightHUD/PanelInfo/CargoInfo/Cursor3"
 	var select_id = ((cursor.get_position().y-15) / 15)
 
-	player.buy_cargo(select_id)	
+	if player.buy_cargo(select_id):
+		# if we bought anything, enable the sell button
+		$"Panel_rightHUD/PanelInfo/CargoInfo/ButtonSell".set_disabled(false)
 
 func get_base_storage(playr):
 	if 'storage' in playr.get_parent().get_parent():
