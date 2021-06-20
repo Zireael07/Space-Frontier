@@ -611,7 +611,8 @@ func _input(_event):
 		else:
 			launch()
 	
-	if Input.is_action_pressed("cloak"):
+	# hack fix: don't engage cloak if cargo view open
+	if Input.is_action_pressed("cloak") and not HUD.get_node("Control2/Panel_rightHUD/PanelInfo/CargoInfo").is_visible():
 		if has_cloak:
 			# toggle
 			cloaked = not cloaked
