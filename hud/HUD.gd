@@ -905,7 +905,8 @@ func update_cargo_listing(cargo, base_storage=null):
 				# show the amount we have in cargo
 				for j in range(0, cargo.keys().size()):
 					if cargo.keys()[j] == base_storage.keys()[i]:
-						entry = str(cargo.keys()[j]).replace("_", " ") + ": " + str(cargo[cargo.keys()[j]]) + entry
+						#entry = entry + # str(cargo.keys()[j]).replace("_", " ") + 
+						entry = entry + "/ " + str(cargo[cargo.keys()[j]])
 				list.append(entry)
 		else:
 			#print(str(cargo.keys()))

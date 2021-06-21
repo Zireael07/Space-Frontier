@@ -46,11 +46,12 @@ var atm_gases
 var labl_loc = Vector2()
 
 # see asteroid.gd and debris_resource.gd
-enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN}
+enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN, NICKEL, SILVER, PLATINUM, GOLD}
 
 #Methane = CH4, carborundum (silicon carbide) = SiC
 # plastics are chains of (C2H4)n
-enum processed { METHANE, CARBORUNDUM, PLASTICS } 
+# electronics are made out of Si + Al/Cu; durable variant (for higher temps & pressures) - SiC + Au/Ag/Pl
+enum processed { METHANE, CARBORUNDUM, PLASTICS, ELECTRONICS, DURABLE_ELECTRONICS } 
 var storage = {}
 
 var deb_chances = []
