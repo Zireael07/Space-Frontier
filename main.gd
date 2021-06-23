@@ -98,8 +98,11 @@ func _ready():
 	for i in range(4):
 		spawn_friendly_drone(i, p_ind)
 	
-	spawn_starbase(curr_system, p_ind, mmap)
-	var pos = spawn_enemy_starbase(curr_system, p_ind, mmap)
+	var pos = spawn_starbase(curr_system, p_ind, mmap)
+	for i in range(3):
+		spawn_friendly_drone_pos(i, p_ind, pos)
+	
+	pos = spawn_enemy_starbase(curr_system, p_ind, mmap)
 	# spawn related to enemy starbase
 	for i in range(3):
 		spawn_enemy(pos, i, p_ind, mmap)
@@ -120,8 +123,12 @@ func _ready():
 	if curr_system == "wolf359":
 		spawn_wormhole(p_ind, 1, mmap)
 	
-	spawn_asteroid_processor(p_ind, curr_system, mmap)
-	spawn_cycler(p_ind, curr_system, mmap)
+	pos = spawn_asteroid_processor(p_ind, curr_system, mmap)
+	for i in range(2):
+		spawn_friendly_drone_pos(i, p_ind, pos)
+	pos = spawn_cycler(p_ind, curr_system, mmap)
+	for i in range(2):
+		spawn_friendly_drone_pos(i, p_ind, pos)
 	
 	var pirate = spawn_pirate_base(p_ind, curr_system, mmap)
 	if pirate != null:
@@ -217,6 +224,8 @@ func spawn_starbase(system, p_ind, m_map):
 		# give minimap icon
 		#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 		m_map._on_starbase_spawned(sb.get_child(0))
+		
+		return sb.get_global_position()
 
 func spawn_friendly_drone(i, p_ind):
 	var p = get_colonized_planet()
@@ -235,7 +244,21 @@ func spawn_friendly_drone(i, p_ind):
 		#add_child_below_node(get_tree().get_nodes_in_group("player")[0], sp)
 		
 		# drones don't have minimap icons
-		
+
+# used to spawn at a starbase		
+func spawn_friendly_drone_pos(i, p_ind, pos):
+	var sp = drone.instance()
+	# random factor
+	randomize()
+	var offset = Vector2(rand_range(50, 150), rand_range(50, 150))
+	sp.set_global_position(pos + offset)
+	#print("Spawning @ : " + str(p.get_global_position() + offset))
+	sp.get_child(0).set_position(Vector2(0,0))
+	sp.set_name("friend_drone"+str(i))
+	get_child(3).add_child(sp)
+	get_child(3).move_child(sp, p_ind+1)
+	# drones don't have minimap icons
+	
 func spawn_enemy_starbase(system, p_ind, m_map):
 	var p
 	
@@ -304,6 +327,7 @@ func spawn_cycler(p_ind, system, m_map):
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	m_map._on_starbase_spawned(castle.get_child(0))
 
+	return castle.get_global_position()
 
 func spawn_asteroid_processor(p_ind, system, m_map):
 	if system != "Sol":
@@ -325,6 +349,8 @@ func spawn_asteroid_processor(p_ind, system, m_map):
 	# give minimap icon
 	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	m_map._on_starbase_spawned(ap.get_child(0))
+	
+	return ap.get_global_position()
 
 func spawn_pirate_base(p_ind, system, m_map):
 	if system != "Sol":
