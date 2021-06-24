@@ -40,7 +40,14 @@ func _ready():
 # is run as part of initial setup
 func select_initial_target():
 	if ship.is_in_group("drone"):
-		set_state(STATE_ORBIT, ship.get_colonized_planet())
+		if ship.is_in_group("station_drone"):
+			# base
+			#var base = ship.get_friendly_base()
+			#target = base.get_global_position()
+			#set_state(STATE_REFIT, base)
+			set_state(STATE_IDLE)
+		else:
+			set_state(STATE_ORBIT, ship.get_colonized_planet())
 	else:
 		if get_tree().get_nodes_in_group("asteroid").size() > 3:
 			if ship.get_colonized_planet() != null and ship.kind_id != ship.kind.pirate:
@@ -751,7 +758,7 @@ class RefitState:
 				#ship.ship.docked = true
 				
 			if ship.get_global_position().distance_to(base.get_global_position()) < 150:
-				if !base.has_free_docks() and !ship.ship.is_in_group("drone"):
+				if "has_free_docks" in base and !base.has_free_docks() and !ship.ship.is_in_group("drone"):
 					print("Base ", base.get_name(), " has no free docks!")
 					# this relies on brain target being already set
 					ship.target = ship.ship.random_point_at_dist_from_tg(150)

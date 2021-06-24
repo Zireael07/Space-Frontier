@@ -259,6 +259,9 @@ func spawn_friendly_drone_pos(i, p_ind, pos):
 	get_child(3).move_child(sp, p_ind+1)
 	# drones don't have minimap icons
 	
+	# flag to set the correct state
+	sp.get_child(0).add_to_group("station_drone")
+	
 func spawn_enemy_starbase(system, p_ind, m_map):
 	var p
 	
