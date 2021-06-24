@@ -380,7 +380,7 @@ func _input(_event):
 			_on_BackButton_pressed()
 	
 	# pausing/orders
-	if Input.is_action_pressed("ui_cancel"):
+	if Input.is_action_pressed("pause"):
 		paused = not paused
 		#print("Pressed pause, paused is " + str(paused))
 		get_tree().set_pause(paused)
