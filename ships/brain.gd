@@ -1119,10 +1119,22 @@ class LandState:
 			print("Landing, but we want to orbit colonized planet")
 			ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
 			return
+		
+		# is the planet blockaded now?
+		# id is the real id+1 to avoid problems with state param being 0 (= null)
+		var pl = ship.get_tree().get_nodes_in_group("planets")[id-1]
+		
+		# if yes, go back to what we were previously doing
+		if pl.get_hostile_orbiter() != null:
+			print(ship.get_parent().get_parent().get_name() + ": planet " + pl.get_node("Label").get_text() + " is blockaded!")
+			if ship.prev_state[0] == STATE_REFIT:
+				ship.target = ship.prev_state[1].get_global_position()
+			ship.set_state(ship.prev_state[0], ship.prev_state[1])
+			print("New state: " + str(ship.tasks[ship.get_state()]))
+			return
 			
 		# refresh target position
-		# id is the real id+1 to avoid problems with state param being 0 (= null)
-		ship.target = ship.get_tree().get_nodes_in_group("planets")[id-1].get_global_position()
+		ship.target = pl.get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
 		
 		# steering behavior
