@@ -290,13 +290,20 @@ func _on_task_timer_timeout(timer_count):
 					#print("Drone is docked")
 					
 					if timer_count > 2:
-						# go back to planet
+						# go back to planet if no hostile ships blockading it
+						# see NPC_drone.gd line 78
 						if ship.get_colonized_planet() != null:
 						#set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 							var data = ship.get_colonized_planet().convert_planetnode_to_id()
 							set_state(STATE_LAND, data[0]+1)
 			elif get_state() == STATE_LAND:
 				if timer_count > 2:
+					# we can't launch if hostiles blockade the planet
+					# id is the real id+1 to avoid problems with state param being 0 (= null)
+					var planet = ship.get_tree().get_nodes_in_group("planets")[get_state_obj().planet_-1]
+					if planet.get_hostile_orbiter() != null:
+						return
+						
 					if ship.landed:
 						ship.launch()
 						# base
@@ -443,6 +450,9 @@ func set_state(new_state, param=null):
 	
 	# set the debugging helper var
 	curr_state = new_state
+	
+#	if new_state == STATE_REFIT and !self.ship.is_in_group("drone") and self.ship.is_in_group("enemy"):
+#		print(self.ship.get_name(), " refit!!!")
 	
 	if new_state == STATE_INITIAL:
 		state = InitialState.new(self)
@@ -1106,7 +1116,7 @@ class LandState:
 		
 		# did we lose the id somehow?
 		if id == null:
-			print("We want to orbit colonized planet")
+			print("Landing, but we want to orbit colonized planet")
 			ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
 			return
 			
