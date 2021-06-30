@@ -84,6 +84,7 @@ func get_colonized_planet():
 		var col = p.has_colony()
 		# is NOT blockaded
 		if col and col == "colony" and p.get_hostile_orbiter() == null:
+			#print("Planet " + p.get_node("Label").get_text() + " not blockaded")
 			ps.append(p)
 
 	var dists = []

@@ -1124,8 +1124,8 @@ class LandState:
 		# id is the real id+1 to avoid problems with state param being 0 (= null)
 		var pl = ship.get_tree().get_nodes_in_group("planets")[id-1]
 		
-		# if yes, go back to what we were previously doing
-		if pl.get_hostile_orbiter() != null:
+		# if yes, go back to what we were previously doing unless we're close enough to land
+		if pl.get_hostile_orbiter() != null and ship.get_global_position().distance_to(pl.get_global_position()) > 50:
 			print(ship.get_parent().get_parent().get_name() + ": planet " + pl.get_node("Label").get_text() + " is blockaded!")
 			if ship.prev_state[0] == STATE_REFIT:
 				ship.target = ship.prev_state[1].get_global_position()

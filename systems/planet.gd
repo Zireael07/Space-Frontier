@@ -1011,7 +1011,7 @@ func get_hostile_orbiter():
 		#print(o.get_parent().get_name())
 		if o.is_in_group("enemy"):
 			ret = o
-			print("Found hostile orbiter: " + str(o.get_parent().get_name()))
+			#print("Found hostile orbiter: " + str(o.get_parent().get_name()))
 			break
 	
 	return ret
