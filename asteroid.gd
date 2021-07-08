@@ -1,7 +1,7 @@
 extends Node2D
 
 # class member variables go here, for example:
-var elements = { CARBON = 0, IRON = 1, MAGNESIUM = 2, SILICON = 3, HYDROGEN = 4, NICKEL = 5, SILVER = 6, PLATINUM = 7, GOLD = 8 }
+var elements = { CARBON = 0, IRON = 1, MAGNESIUM = 2, SILICON = 3, HYDROGEN = 4, NICKEL = 5, SILVER = 6, PLATINUM = 7, GOLD = 8, SULFUR = 9 }
 var contains = []
 var resource_debris = preload("res://debris_resource.tscn")
 # C = 75%, C+S = 92% (i.e. S = 17%), M = 8%
@@ -19,7 +19,8 @@ func _ready():
 		contains.append([elements.CARBON, 10]) # boosted to be noticeable to the player
 		contains.append([elements.SILICON, 33])
 		contains.append([elements.IRON, 25])
-		contains.append([elements.MAGNESIUM, 24])
+		contains.append([elements.MAGNESIUM, 24]) # 92
+		contains.append([elements.SULFUR, 4]) # boosted to be noticeable
 		
 		# visual
 		get_child(0).set_modulate(Color(0.66, 0.66, 0.66)) # darken it

@@ -41,11 +41,12 @@ enum kind { enemy, friendly, pirate }
 
 # note: any changes made here need to be copied to cycler.gd, too
 # see asteroid.gd and debris_resource.gd
-enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN, NICKEL, SILVER, PLATINUM, GOLD}
+enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN, NICKEL, SILVER, PLATINUM, GOLD, SULFUR}
 # carbon covers all allotropes of carbon, such as diamonds, graphene, graphite... 
 
 #Methane = CH4, carborundum (silicon carbide) = SiC
 # plastics are chains of (C2H4)n
+# space equivalent of concrete is made out of regolith/rocks and sulfur (because water is too precious)
 # electronics are made out of Si + Al/Cu; durable variant (for higher temps & pressures) - SiC + Au/Ag/Pl
 enum processed { METHANE, CARBORUNDUM, PLASTICS, ELECTRONICS, DURABLE_ELECTRONICS } 
 var storage = {}
