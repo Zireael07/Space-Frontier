@@ -562,6 +562,11 @@ func send_pop_from_planet(planet):
 		planet.update_HUD_colony_pop(planet, false)
 		return null
 
+	# check for resources (sulfur? lunarcrete?)
+	# amount eyeballed
+	if not "SULFUR" in planet.storage or planet.storage["SULFUR"] < 5:
+		return null
+
 	var pop = 1.0
 
 	# decrease planet pop

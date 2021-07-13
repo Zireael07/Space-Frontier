@@ -46,7 +46,7 @@ var atm_gases
 var labl_loc = Vector2()
 
 # see asteroid.gd and debris_resource.gd
-enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN, NICKEL, SILVER, PLATINUM, GOLD}
+enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN, NICKEL, SILVER, PLATINUM, GOLD, SULFUR}
 
 #Methane = CH4, carborundum (silicon carbide) = SiC
 # plastics are chains of (C2H4)n
@@ -99,7 +99,13 @@ func randomize_storage():
 	randomize()
 	for e in processed:
 		storage[e] = int(rand_range(8.0, 20.0))
-
+	for e in elements:
+		if e != "SULFUR":
+			storage[e] = int(rand_range(2.0, 6.0))
+		# hack to have enough resources for some initial colonies
+		else:
+			storage[e] = int(rand_range(5.0, 15.0))
+	
 
 func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 	print("Setup: " + str(angle) + ", " + str(dis) + ", m: " + str(mas) + ", R:" +str(rad))
