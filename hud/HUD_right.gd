@@ -496,6 +496,12 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		
 		text = text + "Atmosphere: \n" + atm_text #str(planet.atmosphere_gases())
 	
+	# planet storage (only if ours)
+	if col and col == "colony":
+		var store = str(planet.storage).replace("{", "").replace("}", "")
+		text = text + "\n" + "Storage: \n" + store
+	
+	
 	# layout fix
 	text = text + "\n"
 
