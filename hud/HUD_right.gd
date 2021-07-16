@@ -284,7 +284,7 @@ func make_star_view(star, _select_id):
 
 func make_planet_view(planet, select_id=-1, parent_id=-1):
 	var rtl = $"Panel_rightHUD/PanelInfo/PlanetInfo".get_child(1)
-	# allow identifying what planet we are for from code (needed for scrollbar)
+	# allow identifying what planet we are for from code (needed for scrollbar response)
 	rtl.set_name("RichTextLabel#"+str(select_id)+">"+str(parent_id))
 	# richtextlabel scrollbar
 	rtl.scroll_to_line(0)
@@ -576,22 +576,23 @@ func _on_view_scroll_changed(val):
 		# make sprite transparent if we scrolled down
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".self_modulate = Color(1,1,1, 0.5)
 		# hide because otherwise it obscures the text
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".self_modulate = Color(1,1,1,0.75)
 	else:
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".self_modulate = Color(1,1,1, 1)
-		# get planet, again
-		var planet = null
-		var spl = $"Panel_rightHUD/PanelInfo/PlanetInfo".get_child(1).get_name().split("#")
-		print("ID: ", spl[1])
-		var id = spl[1].split(">")
-		if int(id[1]) == -1: # parent_id
-			planet = get_tree().get_nodes_in_group("planets")[int(id[0])]
-		else:
-			var parent = get_tree().get_nodes_in_group("planets")[int(id[1])]
-			planet = parent.get_moons()[int(id[0])]
-		# restore shadow if we have to
-		if not planet.no_shadow:
-			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".show()
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".self_modulate = Color(1,1,1, 1)
+#		# get planet, again
+#		var planet = null
+#		var spl = $"Panel_rightHUD/PanelInfo/PlanetInfo".get_child(1).get_name().split("#")
+#		print("ID: ", spl[1])
+#		var id = spl[1].split(">")
+#		if int(id[1]) == -1: # parent_id
+#			planet = get_tree().get_nodes_in_group("planets")[int(id[0])]
+#		else:
+#			var parent = get_tree().get_nodes_in_group("planets")[int(id[1])]
+#			planet = parent.get_moons()[int(id[0])]
+#		# restore shadow if we have to
+#		if not planet.no_shadow:
+#			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".show()
 
 func _on_prev_pressed(id, parent_id):
 	if parent_id == -1:
