@@ -283,9 +283,12 @@ func make_star_view(star, _select_id):
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
 
 func make_planet_view(planet, select_id=-1, parent_id=-1):
+	var rtl = $"Panel_rightHUD/PanelInfo/PlanetInfo".get_child(1)
+	# allow identifying what planet we are for from code (needed for scrollbar)
+	rtl.set_name("RichTextLabel#"+str(select_id)+">"+str(parent_id))
 	# richtextlabel scrollbar
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".scroll_to_line(0)
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".get_v_scroll().set_scale(Vector2(2, 1))
+	rtl.scroll_to_line(0)
+	rtl.get_v_scroll().set_scale(Vector2(2, 1))
 	
 	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".show()
@@ -299,6 +302,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(planet.get_node("Sprite").get_material())
 	# show shadow if planet has one
 	if planet.has_node("Sprite_shadow") and planet.get_node("Sprite_shadow").is_visible():
+		planet.no_shadow = false
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".show()
 		# add shader if one is used
 		if planet.get_node("Sprite_shadow").get_material().is_class("ShaderMaterial"):
@@ -309,6 +313,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 				var aura_col = planet.get_node("Sprite_shadow").get_material().get_shader_param("aura_color")
 				$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".get_material().set_shader_param("aura_color", aura_col)	
 	else:
+		planet.no_shadow = true
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
 	
 	# apply any modulate effects
@@ -343,6 +348,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 			if planet.is_in_group("moon"):
 				# hide shadow for moons if they don't have atmo
 				if planet.atm < 0.001:
+					planet.no_shadow = true
 					$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
 				else:
 					sc2 = Vector2(0.18*0.86, 0.18*0.86) # experimental (for Titan)
@@ -350,6 +356,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# why the eff do the asteroid/moon crosses/dwarf planets seem not to have material?
 	else:
 		if planet.is_in_group("moon") or planet.is_in_group("aster_named"):
+			planet.no_shadow = true
 			var sc = Vector2(1, 1)
 			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
 			# hide shadow
@@ -505,7 +512,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# layout fix
 	text = text + "\n"
 
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
+	rtl.set_text(text)
 
 	# tooltip
 	var tool_dist = game.player.get_global_position().distance_to(planet.get_global_position())
@@ -521,6 +528,10 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".set_tooltip(travel_time)
 	else:
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".set_tooltip("")
+	
+	# connected from script because the scrollbar of the RichTextLabel is created at runtime
+	rtl.get_child(0).connect("value_changed", self, "_on_view_scroll_changed") #, [value, no_shadow])
+	
 		
 	# connected from script because they rely on ID of the planet
 	if $"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".is_connected("pressed", player, "_on_goto_pressed"):
@@ -559,6 +570,29 @@ func scan_off():
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".hide()
 	
 # UI signals
+func _on_view_scroll_changed(val):
+	#print("Scroll val" + str(val))
+	if val > 5:
+		# make sprite transparent if we scrolled down
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".self_modulate = Color(1,1,1, 0.5)
+		# hide because otherwise it obscures the text
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
+	else:
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".self_modulate = Color(1,1,1, 1)
+		# get planet, again
+		var planet = null
+		var spl = $"Panel_rightHUD/PanelInfo/PlanetInfo".get_child(1).get_name().split("#")
+		print("ID: ", spl[1])
+		var id = spl[1].split(">")
+		if int(id[1]) == -1: # parent_id
+			planet = get_tree().get_nodes_in_group("planets")[int(id[0])]
+		else:
+			var parent = get_tree().get_nodes_in_group("planets")[int(id[1])]
+			planet = parent.get_moons()[int(id[0])]
+		# restore shadow if we have to
+		if not planet.no_shadow:
+			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".show()
+
 func _on_prev_pressed(id, parent_id):
 	if parent_id == -1:
 		if id-1 >= 0:	
@@ -641,7 +675,8 @@ func _onButtonDown2_pressed():
 func _onBackButton_pressed():
 	var nav_list = $"Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
 	# scroll container scrollbar
-	nav_list.set_v_scroll(0)
+	#nav_list.set_v_scroll(0)
+	#nav_list.get_child(0).value = 0
 	switch_to_navi()
 
 

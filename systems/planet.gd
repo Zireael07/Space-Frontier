@@ -44,6 +44,7 @@ var scanned = false
 var atm_gases
 
 var labl_loc = Vector2()
+var no_shadow = false # for HUD display
 
 # see asteroid.gd and debris_resource.gd
 enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN, NICKEL, SILVER, PLATINUM, GOLD, SULFUR}
