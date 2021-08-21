@@ -1,0 +1,216 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://systems/star system.gd" type="Script" id=1]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
+[ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=3]
+[ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=4]
+[ext_resource path="res://assets/aura shader.tres" type="Material" id=5]
+[ext_resource path="res://systems/planet.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/bodies/Planet9.png" type="Texture" id=7]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+[sub_resource type="Animation" id=2]
+resource_name = "scanning"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0.623529, 1, 0.729412 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite_shadow:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "scanning"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0.623529, 1, 0.729412 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite_shadow:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
+
+[node name="L 98-59" type="Node2D" groups=[
+"star",
+]]
+position = Vector2( 500, 500 )
+script = ExtResource( 1 )
+star_radius_factor = 0.125
+luminosity = 0.002
+zoom_scale = 24
+
+[node name="Sprite" type="Sprite" parent="."]
+rotation = 9.92185
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_top = 100.0
+margin_right = 72.0
+margin_bottom = 116.0
+custom_styles/normal = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "L 98-59"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="planet_holder" type="Node2D" parent="."]
+
+[node name="planet" parent="planet_holder" instance=ExtResource( 6 )]
+position = Vector2( 0, 252 )
+planet_rad_factor = 0.2
+mass = 0.4
+hydro = 0.0
+tidally_locked = true
+
+[node name="Sprite" parent="planet_holder/planet" index="0"]
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 7 )
+
+[node name="Label" parent="planet_holder/planet" index="1"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 82.0
+margin_bottom = 44.0
+text = "b"
+
+[node name="Area2D" parent="planet_holder/planet" index="2"]
+scale = Vector2( 0.2, 0.2 )
+
+[node name="planet2" parent="planet_holder" instance=ExtResource( 6 )]
+position = Vector2( 0, 360 )
+planet_rad_factor = 0.2
+mass = 2.22
+hydro = 0.395842
+atm = 1.00787
+tidally_locked = true
+
+[node name="Sprite" parent="planet_holder/planet2" index="0"]
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+
+[node name="Label" parent="planet_holder/planet2" index="1"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 82.0
+margin_bottom = 44.0
+text = "c"
+
+[node name="CollisionShape2D" parent="planet_holder/planet2/Area2D" index="0"]
+scale = Vector2( 0.2, 0.2 )
+
+[node name="planet3" parent="planet_holder" instance=ExtResource( 6 )]
+position = Vector2( 0, 576 )
+planet_rad_factor = 0.2
+mass = 1.94
+hydro = 0.0
+atm = 1.05868
+tidally_locked = true
+
+[node name="Sprite" parent="planet_holder/planet3" index="0"]
+material = ExtResource( 5 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 3 )
+
+[node name="Label" parent="planet_holder/planet3" index="1"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 109.0
+margin_bottom = 44.0
+text = "d"
+
+[node name="CollisionShape2D" parent="planet_holder/planet3/Area2D" index="0"]
+scale = Vector2( 0.2, 0.2 )
+
+[node name="planet4" parent="planet_holder" instance=ExtResource( 6 )]
+position = Vector2( 0, 840 )
+planet_rad_factor = 0.2
+mass = 3.1
+hydro = 0.0
+atm = 1.05619
+tidally_locked = true
+
+[node name="Sprite" parent="planet_holder/planet4" index="0"]
+material = ExtResource( 5 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 3 )
+
+[node name="Label" parent="planet_holder/planet4" index="1"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 109.0
+margin_bottom = 44.0
+text = "e"
+
+[node name="CollisionShape2D" parent="planet_holder/planet4/Area2D" index="0"]
+scale = Vector2( 0.2, 0.2 )
+
+[node name="AnimationPlayer" parent="planet_holder/planet4" index="6"]
+anims/scanning = SubResource( 2 )
+
+[node name="planet5" parent="planet_holder" instance=ExtResource( 6 )]
+position = Vector2( 0, 1200 )
+planet_rad_factor = 0.2
+mass = 2.5
+hydro = 0.0
+atm = 0.377249
+tidally_locked = true
+
+[node name="Sprite" parent="planet_holder/planet5" index="0"]
+material = ExtResource( 5 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 3 )
+
+[node name="Label" parent="planet_holder/planet5" index="1"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 109.0
+margin_bottom = 44.0
+text = "f"
+
+[node name="CollisionShape2D" parent="planet_holder/planet5/Area2D" index="0"]
+scale = Vector2( 0.2, 0.2 )
+
+[node name="AnimationPlayer" parent="planet_holder/planet5" index="6"]
+anims/scanning = SubResource( 3 )
+
+[editable path="planet_holder/planet"]
+[editable path="planet_holder/planet2"]
+[editable path="planet_holder/planet3"]
+[editable path="planet_holder/planet4"]
+[editable path="planet_holder/planet5"]
