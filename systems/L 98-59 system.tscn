@@ -69,7 +69,7 @@ tracks/1/keys = {
 ]]
 position = Vector2( 500, 500 )
 script = ExtResource( 1 )
-star_radius_factor = 0.125
+star_radius_factor = 0.3
 luminosity = 0.002
 zoom_scale = 24
 
