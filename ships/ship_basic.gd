@@ -191,6 +191,8 @@ func is_overheating():
 	if not 'star_radius_factor' in star:
 		return false
 	var dist = star.get_global_position().distance_to(get_global_position())
+	# star textures are 1024x1024, and the star takes up roughly half of that
+	# so 500-ish means we're on top of the graphic
 	if dist < 550* star.star_radius_factor and not warping:
 		return true
 	else:
@@ -217,6 +219,9 @@ func can_scoop():
 	
 	var dist = star.get_global_position().distance_to(get_global_position())
 	# some margin compared to is_overheating
+	# fuel scoop scoops up plasma from the corona, which extends to roughly 11 solar radii out
+	# but the further out, the thinner the plasma, the more wispy (at some point it becomes solar wind)
+	# this is only around 2 visible radii out but remember that the visual distances aren't exactly to scale
 	if dist < 750* star.star_radius_factor and not warping:
 		return true
 	else:
