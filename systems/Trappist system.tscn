@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://colony.tscn" type="PackedScene" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
@@ -8,29 +8,43 @@
 [ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=6]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=7]
 [ext_resource path="res://assets/aura shader.tres" type="Material" id=8]
+[ext_resource path="res://assets/bodies/3_special_effect_blurred.png" type="Texture" id=9]
+[ext_resource path="res://assets/bodies/4_special_effect_blurred.png" type="Texture" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
-[node name="Trappist" type="Node2D" groups=[
-"star",
-]]
+[node name="Trappist" type="Node2D" groups=["star"]]
 position = Vector2( 500, 500 )
 script = ExtResource( 2 )
 orbit_rate = 0.1
 star_radius_factor = 0.25
+luminosity = 0.00055
 zoom_scale = 6
+
+[node name="flare2" type="Sprite" parent="."]
+self_modulate = Color( 0.996078, 0.447059, 0.00784314, 1 )
+position = Vector2( -100, 40 )
+rotation = -3.14159
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 10 )
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 9.92185
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 6 )
 
+[node name="flare" type="Sprite" parent="."]
+self_modulate = Color( 0.996078, 0.447059, 0.00784314, 1 )
+position = Vector2( 105, -55 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 9 )
+
 [node name="Label" type="Label" parent="."]
 margin_top = 100.0
 margin_right = 72.0
 margin_bottom = 116.0
-custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
 text = "TRAPPIST-1"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -40,10 +54,10 @@ __meta__ = {
 
 [node name="planet" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -6.1161e-06, 139.92 )
-z_index = 2
 planet_rad_factor = 0.2
 mass = 1.017
-hydro = 0.0
+hydro = 0.409586
+atm = 1.42418
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
@@ -61,10 +75,10 @@ scale = Vector2( 0.2, 0.2 )
 
 [node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( 2.14648e-06, -180 )
-z_index = 2
 planet_rad_factor = 0.2
 mass = 1.156
-hydro = 0.0
+hydro = 0.255253
+atm = 0.0612605
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
@@ -83,10 +97,10 @@ scale = Vector2( 0.2, 0.2 )
 
 [node name="planet3" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -189.476, 189.476 )
-z_index = 2
 planet_rad_factor = 0.2
 mass = 0.297
-hydro = 0.0
+hydro = 0.196332
+atm = 0.15045
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
@@ -109,6 +123,7 @@ position = Vector2( -1.5264e-05, 349.2 )
 planet_rad_factor = 0.3
 mass = 0.772
 hydro = 0.0
+atm = 0.596288
 population = 0.1
 tidally_locked = true
 
@@ -120,6 +135,7 @@ rotation = 4.33803e-07
 scale = Vector2( 0.15, 0.15 )
 
 [node name="Label" parent="planet_holder/planet4" index="2"]
+self_modulate = Color( 0, 1, 1, 1 )
 margin_left = 40.0
 margin_top = 40.0
 margin_right = 119.0
@@ -132,9 +148,6 @@ scale = Vector2( 0.3, 0.3 )
 [node name="colony2" parent="planet_holder/planet4" instance=ExtResource( 1 )]
 
 [editable path="planet_holder/planet"]
-
 [editable path="planet_holder/planet2"]
-
 [editable path="planet_holder/planet3"]
-
 [editable path="planet_holder/planet4"]
