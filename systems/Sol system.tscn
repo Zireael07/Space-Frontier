@@ -263,6 +263,10 @@ text = "Sol"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 "anims/New Anim" = SubResource( 15 )
 anims/RESET = SubResource( 16 )
+__meta__ = {
+"_editor_description_": "https://spacemath.gsfc.nasa.gov/news/8Page44.pdf
+1 flare per month, so 12 of them in one orbit of Earth"
+}
 
 [node name="planet_holder" type="Node2D" parent="."]
 
