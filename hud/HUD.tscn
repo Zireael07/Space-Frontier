@@ -86,13 +86,13 @@ text = "Census"
 
 [node name="ButtonPlanet" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
 margin_left = 62.0
-margin_right = 121.0
+margin_right = 118.0
 margin_bottom = 20.0
-text = "Planets"
+text = "Bodies"
 
 [node name="ButtonShip" type="Button" parent="Control2/Panel_rightHUD/HBoxContainer"]
-margin_left = 125.0
-margin_right = 164.0
+margin_left = 122.0
+margin_right = 161.0
 margin_bottom = 20.0
 text = "Ship"
 
@@ -590,9 +590,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="minimap" type="Control" parent="Control2/Panel_rightHUD" groups=[
-"minimap",
-]]
+[node name="minimap" type="Control" parent="Control2/Panel_rightHUD" groups=["minimap"]]
 margin_left = 2.0
 margin_top = 400.0
 margin_right = 202.0
