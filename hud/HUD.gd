@@ -7,7 +7,7 @@ var target = null
 # for direction indicators
 var dir_labels = []
 var planets = null
-var center = Vector2(450,450)
+var center = Vector2(450,450) # experimentally determined for design res, i.e. 1024x600
 # orders mode
 var orders = false
 var ship_to_control = {}
@@ -15,7 +15,12 @@ var ship_to_control = {}
 # for orders mode
 onready var orders_control = preload("res://hud/OrdersControl.tscn")
 
+var viewport_factor = Vector2(1,1)
+
 func _ready():
+	# listen to root viewport size changes in case the player resizes the screen
+	get_node("/root").connect("size_changed", self, "_on_view_size_changed")
+	
 	player = game.player
 	#player = get_tree().get_nodes_in_group("player")[0].get_child(0)
 	player.HUD = self
@@ -248,18 +253,18 @@ func handle_direction_labels():
 			
 			# show labels if planets are offscreen
 			# numbers hardcoded for 1024x600 screen
-			if abs(rel_loc.x) > 400 or abs(rel_loc.y) > 375:
+			if abs(rel_loc.x) > 400*viewport_factor.x or abs(rel_loc.y) > 375*viewport_factor.y:
 	
 				# calculate clamped positions that "stick" labels to screen edges
 				var clamp_x = rel_loc.x
-				var clamp_y = 575
-				if abs(rel_loc.x) > 400:
-					clamp_x = clamp(rel_loc.x, 0, 300)
+				var clamp_y = 575*viewport_factor.y
+				if abs(rel_loc.x) > 400*viewport_factor.x:
+					clamp_x = clamp(rel_loc.x, 0, 300*viewport_factor.x)
 					if rel_loc.x < 0:
-						clamp_x = clamp(rel_loc.x, -400, 0)
+						clamp_x = clamp(rel_loc.x, -400*viewport_factor.x, 0)
 	
-				if abs(rel_loc.y) > 375:
-					clamp_y = clamp(rel_loc.y, 0, 575)
+				if abs(rel_loc.y) > 375*viewport_factor.y:
+					clamp_y = clamp(rel_loc.y, 0, 575*viewport_factor.y)
 					if rel_loc.y < 0:
 						clamp_y = 0
 	
@@ -433,7 +438,7 @@ func spawn_orders_control(pos, ship):
 	
 func spawn_AI_orders_controls():
 	# this is where the player ship is, see comment line 337
-	var cntr = Vector2(1024/2, 300)
+	var cntr = Vector2(1024*viewport_factor.x/2, 300*viewport_factor.y)
 	# ship is roughly 50x x 70y and we need to block clicks
 	var off = Vector2(-35,-25)
 	for f in game.player.get_friendlies_in_range():
@@ -959,3 +964,10 @@ func _on_star_map_gui_input(event):
 		print("Clicked in starmap")
 		# trigger jump
 		game.player.w_hole.jump()
+
+func _on_view_size_changed():
+	print("Viewport size changed to: ", get_node("/root").size)
+	viewport_factor = get_node("/root").size/Vector2(1024,600)
+	print("Factor: ", viewport_factor)
+
+	center = center*viewport_factor
