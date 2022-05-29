@@ -16,6 +16,8 @@ It is not an exact port, rather, it aims for the spirit while modernizing the us
 
 Those projects allowed me to implement procedural stars and planets, citing astronomy sources:
 
-* [Pioneer](https://github.com/pioneerspacesim/pioneer)
+* [Pioneer](https://github.com/pioneerspacesim/pioneer) - note, none of their code or assets is actually used so I don't need to license this under GPL
 * [Stellar Dream](https://github.com/irskep/stellardream)
 * [Accrete](https://github.com/zakski/accrete-starform-stargen)
+
+License: MIT
