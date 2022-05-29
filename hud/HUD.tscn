@@ -38,8 +38,9 @@ shortcut = SubResource( 4 )
 
 [node name="Control" type="Control"]
 pause_mode = 2
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 262.046 ],
@@ -48,8 +49,10 @@ __meta__ = {
 }
 
 [node name="Control2" type="Control" parent="."]
-margin_left = 825.0
-margin_right = 865.0
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -204.0
+margin_right = -164.0
 margin_bottom = 40.0
 script = ExtResource( 14 )
 __meta__ = {
@@ -630,13 +633,18 @@ margin_bottom = 14.0
 wait_time = 3.0
 
 [node name="Control" type="Control" parent="."]
-margin_top = 525.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -80.0
 margin_right = 40.0
-margin_bottom = 565.0
+margin_bottom = -40.0
 
 [node name="Panel" type="Panel" parent="Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -40.0
 margin_right = 435.0
-margin_bottom = 149.0
+margin_bottom = 109.0
 rect_scale = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
@@ -774,9 +782,12 @@ __meta__ = {
 }
 
 [node name="Panel2" type="Panel" parent="Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
 margin_left = 215.0
+margin_top = -40.0
 margin_right = 650.0
-margin_bottom = 149.0
+margin_bottom = 109.0
 rect_scale = Vector2( 0.5, 0.5 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
@@ -873,8 +884,15 @@ custom_colors/font_color = Color( 0.12549, 0.580392, 0, 1 )
 text = "Armor: 100"
 
 [node name="Control4" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -300.0
+margin_right = -472.0
+margin_bottom = -260.0
 mouse_filter = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -930,8 +948,8 @@ visible = false
 [node name="pause_panel" type="Control" parent="."]
 visible = false
 modulate = Color( 1, 1, 1, 0.624314 )
-margin_right = 1024.0
-margin_bottom = 602.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="Panel" type="Panel" parent="pause_panel"]
 anchor_right = 1.0
@@ -940,10 +958,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="pause_panel"]
-margin_left = 416.0
-margin_top = 249.0
-margin_right = 456.0
-margin_bottom = 263.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -84.0
+margin_top = -47.0
+margin_right = -32.9999
+margin_bottom = -33.0
 text = "PAUSED"
 
 [node name="Label2" type="Label" parent="pause_panel"]
