@@ -34,7 +34,7 @@ func _ready():
 	
 	# hide armor label if needed
 	if not player.has_armor:
-		get_node("Control/Panel/Label_arm").hide()
+		get_node("Control_bottom/Panel/Label_arm").hide()
 
 #	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
 
@@ -81,9 +81,9 @@ func _ready():
 	cursor.set_position(Vector2(0, 15))
 
 	# force modulate the initial color
-	$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
-	$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
-	$"Control/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
+	$"Control_bottom/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
+	$"Control_bottom/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
+	$"Control_bottom/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
 
 func connect_planet_signals(planets):
 	# connect the signals
@@ -109,9 +109,9 @@ func connect_player_signals(player):
 func toggle_armor_label():
 	# hide armor label if needed
 	if not player.has_armor:
-		get_node("Control/Panel/Label_arm").hide()
+		get_node("Control_bottom/Panel/Label_arm").hide()
 	else:
-		get_node("Control/Panel/Label_arm").show()
+		get_node("Control_bottom/Panel/Label_arm").show()
 
 func create_direction_labels():
 	var dir_label
@@ -124,7 +124,8 @@ func create_direction_labels():
 		# tint for asteroids
 		if p.is_in_group("aster_named"):
 			dir_label.set_self_modulate(Color(0.75,0.75, 0.75))
-		$"Control3".add_child(dir_label)
+		# this element is anchored to center of the screen
+		$"Control".add_child(dir_label)
 		dir_labels.append(dir_label)
 
 func create_planet_listing():
@@ -277,9 +278,9 @@ func _process(_delta):
 		var format = "0.0"		
 		if not player.dead:
 			format = "%0.2f" % player.spd
-		get_node("Control/Panel/Label").set_text(format + " c")
+		get_node("Control_bottom/Panel/Label").set_text(format + " c")
 		
-		get_node("Control/Panel/Label_rank").set_text(game.ranks.keys()[player.rank])
+		get_node("Control_bottom/Panel/Label_rank").set_text(game.ranks.keys()[player.rank])
 
 	# move direction labels to proper places
 	handle_direction_labels()
@@ -473,18 +474,18 @@ func _on_shield_changed(data):
 	
 	# matches the player-specific indicator in player_ship.gd l560
 	if perc > 70:
-		$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
+		$"Control_bottom/Panel/ProgressBar_sh".set_modulate(Color(0.41, 0.98, 0.02))
 	elif perc > 50:
-		$"Control/Panel/ProgressBar_sh".set_modulate(Color(1.0, 1.0, 0))
+		$"Control_bottom/Panel/ProgressBar_sh".set_modulate(Color(1.0, 1.0, 0))
 	elif perc > 25:
-		$"Control/Panel/ProgressBar_sh".set_modulate(Color(1.0, 0, 0))
+		$"Control_bottom/Panel/ProgressBar_sh".set_modulate(Color(1.0, 0, 0))
 	else:
-		$"Control/Panel/ProgressBar_sh".set_modulate(Color(0.35, 0, 0)) # dark red
+		$"Control_bottom/Panel/ProgressBar_sh".set_modulate(Color(0.35, 0, 0)) # dark red
 
 	if perc >= 0:
-		$"Control/Panel/ProgressBar_sh".value = perc
+		$"Control_bottom/Panel/ProgressBar_sh".value = perc
 	else:
-		$"Control/Panel/ProgressBar_sh".value = 0
+		$"Control_bottom/Panel/ProgressBar_sh".value = 0
 
 func _on_power_changed(power):
 	# original max is 100
@@ -495,16 +496,16 @@ func _on_power_changed(power):
 	#print("Perc: " + str(perc))
 	
 	if perc > 70:
-		$"Control/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
+		$"Control_bottom/Panel/ProgressBar_po".set_modulate(Color(0.41, 0.98, 0.02))
 	elif perc > 40:
-		$"Control/Panel/ProgressBar_po".set_modulate(Color(1.0, 1.0, 0))
+		$"Control_bottom/Panel/ProgressBar_po".set_modulate(Color(1.0, 1.0, 0))
 	else:
-		$"Control/Panel/ProgressBar_po".set_modulate(Color(1.0, 0, 0))
+		$"Control_bottom/Panel/ProgressBar_po".set_modulate(Color(1.0, 0, 0))
 
 	if perc >= 0:
-		$"Control/Panel/ProgressBar_po".value = perc
+		$"Control_bottom/Panel/ProgressBar_po".value = perc
 	else:
-		$"Control/Panel/ProgressBar_po".value = 0
+		$"Control_bottom/Panel/ProgressBar_po".value = 0
 
 func _on_engine_changed(engine):
 	# original max is 1000
@@ -515,22 +516,22 @@ func _on_engine_changed(engine):
 	#print("Perc: " + str(perc))
 	
 	if perc > 70:
-		$"Control/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
+		$"Control_bottom/Panel/ProgressBar_en".set_modulate(Color(0.41, 0.98, 0.02))
 	elif perc > 40:
-		$"Control/Panel/ProgressBar_en".set_modulate(Color(1.0, 1.0, 0))
+		$"Control_bottom/Panel/ProgressBar_en".set_modulate(Color(1.0, 1.0, 0))
 	else:
-		$"Control/Panel/ProgressBar_en".set_modulate(Color(1.0, 0, 0))
+		$"Control_bottom/Panel/ProgressBar_en".set_modulate(Color(1.0, 0, 0))
 
 	if perc >= 0:
-		$"Control/Panel/ProgressBar_en".value = perc
+		$"Control_bottom/Panel/ProgressBar_en".value = perc
 	else:
-		$"Control/Panel/ProgressBar_en".value = 0
+		$"Control_bottom/Panel/ProgressBar_en".value = 0
 
 func _on_armor_changed(armor):
 	if armor >= 0:
-		$"Control/Panel/Label_arm".set_text("Armor: " + str(armor))
+		$"Control_bottom/Panel/Label_arm".set_text("Armor: " + str(armor))
 	else:
-		$"Control/Panel/Label_arm".set_text("Armor: " + str(armor))	
+		$"Control_bottom/Panel/Label_arm".set_text("Armor: " + str(armor))	
 
 func _on_module_level_changed(module, level):
 	var info = $"Control2/Panel_rightHUD/PanelInfo/ShipInfo/"
@@ -551,10 +552,10 @@ func _on_officer_messaged(message, time=3.0):
 	$"Control3/officer_timer".start()
 
 func _on_kill_gained(num):
-	$"Control/Panel/Label_kill".set_text("Kills: " + str(num))
+	$"Control_bottom/Panel/Label_kill".set_text("Kills: " + str(num))
 
 func _on_points_gained(num):
-	$"Control/Panel/Label_points".set_text("Points: " + str(num))
+	$"Control_bottom/Panel/Label_points".set_text("Points: " + str(num))
 
 # called when a player target an AI ship
 func _on_AI_targeted(AI):
@@ -574,13 +575,13 @@ func _on_AI_targeted(AI):
 			prev_target.disconnect("armor_changed", self, "_on_target_armor_changed")
 
 	# assume sprite is always the first child of the ship
-	$"Control/Panel2/target_outline".set_texture(AI.get_child(0).get_texture())
+	$"Control_bottom/Panel2/target_outline".set_texture(AI.get_child(0).get_texture())
 
 	# bottom panel
-	for n in $"Control/Panel2".get_children():
+	for n in $"Control_bottom/Panel2".get_children():
 		n.show()
 		if not 'armor' in AI:
-			$"Control/Panel2/Label_arm".hide()
+			$"Control_bottom/Panel2/Label_arm".hide()
 
 
 	target.connect("shield_changed", self, "_on_target_shield_changed")
@@ -593,9 +594,9 @@ func _on_AI_targeted(AI):
 		
 	# ship info
 	if target.is_in_group("enemy"):
-		$"Control/Panel2/target_outline".flip_v = false #set_rotation_degrees(180)
+		$"Control_bottom/Panel2/target_outline".flip_v = false #set_rotation_degrees(180)
 	else:
-		$"Control/Panel2/target_outline".flip_v = true #set_rotation_degrees(0)
+		$"Control_bottom/Panel2/target_outline".flip_v = true #set_rotation_degrees(0)
 	
 	# assume sprite is always the first child of the ship
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/TextureRect2".set_texture(AI.get_child(0).get_texture())
@@ -604,7 +605,7 @@ func _on_AI_targeted(AI):
 
 func hide_target_panel():
 	# hide panel info if any
-	for n in $"Control/Panel2".get_children():
+	for n in $"Control_bottom/Panel2".get_children():
 		n.hide()
 	# default ship panel back to player sprite
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/TextureRect2".set_texture(player.get_child(0).get_texture())
@@ -624,22 +625,22 @@ func _on_target_shield_changed(shield):
 	#print("Perc: " + str(perc))
 	
 	if perc > 70:
-		$"Control/Panel2/ProgressBar_sh2".set_modulate(Color(0.41, 0.98, 0.02))
+		$"Control_bottom/Panel2/ProgressBar_sh2".set_modulate(Color(0.41, 0.98, 0.02))
 	elif perc > 40:
-		$"Control/Panel2/ProgressBar_sh2".set_modulate(Color(1.0, 1.0, 0))
+		$"Control_bottom/Panel2/ProgressBar_sh2".set_modulate(Color(1.0, 1.0, 0))
 	else:
-		$"Control/Panel2/ProgressBar_sh2".set_modulate(Color(1.0, 0, 0))
+		$"Control_bottom/Panel2/ProgressBar_sh2".set_modulate(Color(1.0, 0, 0))
 
 	if perc >= 0:
-		$"Control/Panel2/ProgressBar_sh2".value = perc
+		$"Control_bottom/Panel2/ProgressBar_sh2".value = perc
 	else:
-		$"Control/Panel2/ProgressBar_sh2".value = 0
+		$"Control_bottom/Panel2/ProgressBar_sh2".value = 0
 
 func _on_target_armor_changed(armor):
 	if armor >= 0:
-		$"Control/Panel2/Label_arm".set_text("Armor: " + str(armor))
+		$"Control_bottom/Panel2/Label_arm".set_text("Armor: " + str(armor))
 	else:
-		$"Control/Panel2/Label_arm".set_text("Armor: " + str(armor))
+		$"Control_bottom/Panel2/Label_arm".set_text("Armor: " + str(armor))
 
 func is_planet_view_open():
 	return $"Control2/Panel_rightHUD/PanelInfo/PlanetInfo".is_visible()
@@ -675,7 +676,7 @@ func _on_planet_targeted(planet):
 	target = planet
 	
 	# hide panel info if any
-	for n in $"Control/Panel2".get_children():
+	for n in $"Control_bottom/Panel2".get_children():
 		n.hide()
 
 	print("Planet targeted: ", planet.get_node("Label").get_text())
@@ -745,7 +746,7 @@ func _on_ship_killed(ship):
 
 # -------------
 func update_panel_sprite():
-	$"Control/Panel/player_outline".set_texture(player.get_child(0).get_texture())
+	$"Control_bottom/Panel/player_outline".set_texture(player.get_child(0).get_texture())
 
 
 #----------------------------------------------------------------------------
