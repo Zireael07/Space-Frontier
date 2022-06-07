@@ -2,12 +2,12 @@
 
 [ext_resource path="res://systems/procedural star system.gd" type="Script" id=1]
 [ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
-[ext_resource path="res://systems/planet_new.tscn" type="PackedScene" id=3]
+[ext_resource path="res://bodies/planet_new.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=4]
 [ext_resource path="res://colony_enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/bodies/Planet-only1.png" type="Texture" id=6]
 [ext_resource path="res://colony.tscn" type="PackedScene" id=7]
-[ext_resource path="res://asteroid.tscn" type="PackedScene" id=8]
+[ext_resource path="res://bodies/asteroid.tscn" type="PackedScene" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -33,56 +33,60 @@ margin_right = -328.0
 margin_bottom = 366.0
 custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Kepler 1443"
+text = "Kepler 1564"
 
 [node name="planet_holder" type="Node2D" parent="."]
 
 [node name="planet" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -1200, -500 )
-mass = 1.76558
+mass = 1.25397
+hydro = 0.0
 
 [node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
-rotation = 2.35619
+rotation = 1.96559
 
 [node name="Label" parent="planet_holder/planet" index="2"]
-text = "Kepler 1443b"
+text = "Kepler 1564b"
 
 [node name="planet2" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -1594, 427 )
-mass = 1.29197
+mass = 3.7371
+hydro = 0.0
 population = 0.1
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 texture = ExtResource( 4 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet2" index="1"]
-rotation = 1.65324
+rotation = 1.30906
 
 [node name="Label" parent="planet_holder/planet2" index="2"]
-text = "Kepler 1443c"
+text = "Kepler 1564c"
 
 [node name="colony2" parent="planet_holder/planet2" instance=ExtResource( 5 )]
 
 [node name="planet3" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( 1692.5, -148 )
-mass = 1.57812
+mass = 4.31796
+hydro = 0.0
 population = 0.1
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
 texture = ExtResource( 6 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
-rotation = -0.626209
+rotation = 4.62517
 
 [node name="Label" parent="planet_holder/planet3" index="2"]
-text = "Kepler 1443d"
+text = "Kepler 1564d"
 
 [node name="colony2" parent="planet_holder/planet3" instance=ExtResource( 7 )]
 position = Vector2( 0.0300293, -0.0780029 )
 
 [node name="planet4" parent="planet_holder" instance=ExtResource( 3 )]
 position = Vector2( -6.85395e-05, 1568 )
-mass = 1.13881
+mass = 3.88587
+hydro = 0.0
 
 [node name="asteroid" parent="planet_holder" instance=ExtResource( 8 )]
 position = Vector2( 580, 764 )

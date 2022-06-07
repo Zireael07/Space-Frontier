@@ -2,8 +2,8 @@
 
 [ext_resource path="res://colony.tscn" type="PackedScene" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
-[ext_resource path="res://systems/planet.tscn" type="PackedScene" id=3]
-[ext_resource path="res://systems/planet_new.tscn" type="PackedScene" id=4]
+[ext_resource path="res://bodies/planet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://bodies/planet_new.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=5]
 [ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=6]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=7]

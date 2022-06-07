@@ -1,9 +1,8 @@
 [gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://systems/planet.gd" type="Script" id=1]
+[ext_resource path="res://bodies/planet.gd" type="Script" id=1]
 [ext_resource path="res://assets/planet_noise_procedural.shader" type="Shader" id=2]
 [ext_resource path="res://assets/Planet-shadow_only.png" type="Texture" id=3]
-
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
@@ -11,6 +10,9 @@ shader_param/rotate_perc = 0.0
 shader_param/cut_off = 0.519
 shader_param/color_land = Color( 0.027451, 0.313726, 0.027451, 1 )
 shader_param/color_sea = Color( 0.117647, 0.631373, 0.113725, 1 )
+shader_param/cloud_col = Color( 0.9, 0.9, 0.9, 0.9 )
+shader_param/cloud_intensity = 0.25
+shader_param/cloud_noise_scale = Vector2( 2, 8 )
 
 [sub_resource type="OpenSimplexNoise" id=2]
 
@@ -47,9 +49,7 @@ shader_param/aura_color = Color( 1, 0.706604, 0.0117188, 1 )
 [sub_resource type="CircleShape2D" id=7]
 radius = 150.0
 
-[node name="planet" type="Node2D" groups=[
-"planets",
-]]
+[node name="planet" type="Node2D" groups=["planets"]]
 z_index = 2
 script = ExtResource( 1 )
 
@@ -69,8 +69,8 @@ margin_left = 150.0
 margin_top = 150.0
 margin_right = 202.0
 margin_bottom = 164.0
-custom_styles/normal = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 6 )
 text = "Emerald"
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -88,6 +88,7 @@ autostart = true
 [node name="module_timer" type="Timer" parent="."]
 wait_time = 20.0
 autostart = true
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
 [connection signal="timeout" from="pop_timer" to="." method="_on_pop_timer_timeout"]

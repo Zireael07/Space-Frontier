@@ -8,7 +8,7 @@ export var angle_inc = 15 # for small distances < 0.2 AU
 var ast_chances = []
 var types = { S = 0, C = 1, M = 2 }
 
-var asteroid_s = preload("res://asteroid.tscn")
+var asteroid_s = preload("res://bodies/asteroid.tscn")
 
 
 # Called when the node enters the scene tree for the first time.

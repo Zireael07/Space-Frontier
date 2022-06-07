@@ -2,8 +2,8 @@
 
 [ext_resource path="res://colony.tscn" type="PackedScene" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
-[ext_resource path="res://systems/planet.tscn" type="PackedScene" id=3]
-[ext_resource path="res://systems/planet_rotating.tscn" type="PackedScene" id=4]
+[ext_resource path="res://bodies/planet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://bodies/planet_rotating.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/bodies/asteroids/a10001.png" type="Texture" id=5]
 [ext_resource path="res://assets/bodies/asteroids/a10000.png" type="Texture" id=6]
 [ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=7]
@@ -115,7 +115,7 @@ shader_param/aura_color = Color( 0, 0, 0, 1 )
 [sub_resource type="ShaderMaterial" id=4]
 shader = ExtResource( 28 )
 shader_param/rotate_angle = 0.0
-shader_param/time = 1.87361
+shader_param/time = 1.02491
 shader_param/has_lights = true
 shader_param/vectors = ExtResource( 29 )
 

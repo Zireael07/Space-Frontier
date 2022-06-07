@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://blackhole2D.gd" type="Script" id=1]
-[ext_resource path="res://assets/blackhole/blackhole2D.shader" type="Shader" id=2]
-[ext_resource path="res://Nebula.gd" type="Script" id=4]
+[ext_resource path="res://assets/blackhole/blackhole2D.shader" type="Shader" id=1]
+[ext_resource path="res://bodies/blackhole2D.gd" type="Script" id=2]
+[ext_resource path="res://Nebula.gd" type="Script" id=3]
 
 [sub_resource type="ShaderMaterial" id=3]
-shader = ExtResource( 2 )
+shader = ExtResource( 1 )
 shader_param/strength = 0.01
 shader_param/black_radius = 0.65
 shader_param/hole_color = Plane( 0, 0, 0, 1 )
@@ -189,12 +189,10 @@ size = Vector2( 65, 65 )
 [sub_resource type="CircleShape2D" id=5]
 radius = 30.0
 
-[node name="Node2D" type="Node2D" groups=[
-"wormhole",
-]]
+[node name="Node2D" type="Node2D" groups=["wormhole"]]
 z_index = 20
 z_as_relative = false
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 3 )
@@ -203,7 +201,7 @@ texture = SubResource( 4 )
 [node name="Sprite2" type="Sprite" parent="."]
 material = SubResource( 1 )
 texture = SubResource( 2 )
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 seede = 957132332
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -215,5 +213,6 @@ shape = SubResource( 5 )
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 autostart = true
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

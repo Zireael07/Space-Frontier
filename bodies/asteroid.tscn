@@ -1,0 +1,44 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://bodies/asteroid.gd" type="Script" id=1]
+[ext_resource path="res://assets/bodies/asteroids/a10004.png" type="Texture" id=2]
+[ext_resource path="res://assets/bodies/asteroids/a10003.png" type="Texture" id=3]
+[ext_resource path="res://assets/bodies/asteroids/a10000.png" type="Texture" id=4]
+[ext_resource path="res://assets/bodies/asteroids/a10002.png" type="Texture" id=5]
+[ext_resource path="res://assets/bodies/asteroids/a10005.png" type="Texture" id=6]
+[ext_resource path="res://assets/bodies/asteroids/a10006.png" type="Texture" id=7]
+[ext_resource path="res://assets/bodies/asteroids/a10015.png" type="Texture" id=8]
+[ext_resource path="res://assets/bodies/asteroids/a10014.png" type="Texture" id=9]
+[ext_resource path="res://assets/bodies/asteroids/a10013.png" type="Texture" id=10]
+[ext_resource path="res://assets/bodies/asteroids/a10007.png" type="Texture" id=11]
+[ext_resource path="res://assets/bodies/asteroids/a10008.png" type="Texture" id=12]
+[ext_resource path="res://assets/bodies/asteroids/a10001.png" type="Texture" id=13]
+[ext_resource path="res://assets/bodies/asteroids/a10009.png" type="Texture" id=14]
+[ext_resource path="res://assets/bodies/asteroids/a10011.png" type="Texture" id=15]
+[ext_resource path="res://assets/bodies/asteroids/a10010.png" type="Texture" id=16]
+[ext_resource path="res://assets/bodies/asteroids/a10012.png" type="Texture" id=17]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 13 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 17 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 30.0
+
+[node name="asteroid" type="Node2D" groups=["asteroid"]]
+z_as_relative = false
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+frame = 10
+playing = true
+
+[node name="Area2D_aster" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_aster"]
+shape = SubResource( 2 )
