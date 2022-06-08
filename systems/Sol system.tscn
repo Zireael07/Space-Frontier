@@ -26,7 +26,7 @@
 [ext_resource path="res://assets/bodies/Sol textures/enceladus_rgb_cyl_www.jpg" type="Texture" id=24]
 [ext_resource path="res://assets/bodies/Sol textures/tethys_rgb_cyl_www.jpg" type="Texture" id=25]
 [ext_resource path="res://assets/bodies/Sol textures/dione_rgb_cyl_www.jpg" type="Texture" id=26]
-[ext_resource path="res://assets/haze_aura_shader.tres" type="Material" id=27]
+[ext_resource path="res://assets/planets/haze_aura_shader.tres" type="Material" id=27]
 [ext_resource path="res://assets/bodies/planet_rotating.shader" type="Shader" id=28]
 [ext_resource path="res://assets/bodies/texture_template.png" type="Texture" id=29]
 [ext_resource path="res://assets/bodies/4_special_effect_blurred.png" type="Texture" id=30]

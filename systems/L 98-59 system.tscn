@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=3]
 [ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=4]
-[ext_resource path="res://assets/aura shader.tres" type="Material" id=5]
+[ext_resource path="res://assets/planets/aura shader.tres" type="Material" id=5]
 [ext_resource path="res://bodies/planet.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/bodies/Planet9.png" type="Texture" id=7]
 

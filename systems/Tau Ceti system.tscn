@@ -7,7 +7,7 @@
 [ext_resource path="res://bodies/planet.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=6]
 [ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=7]
-[ext_resource path="res://assets/aura shader.tres" type="Material" id=8]
+[ext_resource path="res://assets/planets/aura shader.tres" type="Material" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
 

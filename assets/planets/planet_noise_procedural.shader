@@ -7,6 +7,10 @@ uniform float cut_off : hint_range(0,1) = 0.45;
 uniform vec4 color_land : hint_color = vec4(0.0, 1.0, 0.0, 1.0);
 uniform vec4 color_sea : hint_color = vec4(0.0, 1.0, 1.0, 1.0);
 
+uniform vec4 cloud_col: hint_color = vec4(0.9, 0.9, 0.9, 0.9);
+uniform float cloud_intensity: hint_range(0,1) = 0.25;
+uniform vec2 cloud_noise_scale = vec2(2,8);
+
 mat2 rotate2d(float _angle) {
     return mat2(vec2(cos(_angle), -sin(_angle)), vec2(sin(_angle), cos(_angle)));
 }
@@ -59,7 +63,17 @@ void fragment(){
 	//output to screen
 	//COLOR = vec4(height);
 	// mix in some height/shading
-	COLOR = mix(vec4(col_planet.rgb, planet), vec4(0.0, 0.0, 0.0, planet), height);
+	vec4 colr = mix(vec4(col_planet.rgb, planet), vec4(0.0, 0.0, 0.0, planet), height);
 	//COLOR = vec4(col_planet.rgb, planet);
 	
+	//added some clouds based on https://github.com/Zarkonnen/GenGen
+	vec4 cloud_noise = texture(TEXTURE, UV*cloud_noise_scale);
+	float cloudN = max(0.0, cloud_noise.r);
+	//vec4 clouds_clr = cloudiness * (1.0-cloudN) + cloud_col * cloudN;
+	vec4 clouds_clr = cloud_col * (1.0 - cloudN) + cloud_intensity * cloudN;
+	
+	//colr = colr * clouds_clr;
+	colr = mix(colr, clouds_clr, min(planet, clouds_clr.a));
+	
+	COLOR = colr;
 }

@@ -6,6 +6,6 @@
 [resource]
 shader = ExtResource( 2 )
 shader_param/rotate_angle = 0.0
-shader_param/time = 0.46553
+shader_param/time = 1.352
 shader_param/has_lights = false
 shader_param/vectors = ExtResource( 1 )
