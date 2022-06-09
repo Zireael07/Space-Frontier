@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/temp_gradient.tres" type="Gradient" id=1]
+[ext_resource path="res://assets/procedural_planet_better_shader.tres" type="Shader" id=2]
+
+[sub_resource type="GradientTexture" id=1]
+gradient = ExtResource( 1 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 2 )
+shader_param/NoiseScale1 = Vector2( 4, 3 )
+shader_param/NoiseScale2 = Vector2( 35, 35 )
+shader_param/NoiseScale3 = Vector2( 17, 17 )
+shader_param/uTemperature = 0.0
+shader_param/uWaterLevel = 0.33
+shader_param/uCold = Color( 0.2, 0.4, 0.39, 1 )
+shader_param/uOcean = Color( 0.01, 0.81, 1, 1 )
+shader_param/uTemperate = Color( 0.3, 0.42, 0.26, 1 )
+shader_param/uWarm = Color( 0.46, 0.55, 0.32, 1 )
+shader_param/uHot = Color( 0.87, 0.75, 0.58, 1 )
+shader_param/gradient = SubResource( 1 )
+
+[sub_resource type="OpenSimplexNoise" id=3]
+octaves = 1
+period = 216.0
+
+[sub_resource type="NoiseTexture" id=4]
+width = 1024
+noise = SubResource( 3 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 2 )
+texture = SubResource( 4 )
