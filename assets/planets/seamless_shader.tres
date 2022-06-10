@@ -1,0 +1,32 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform float fadeWidth;
+
+//https://www.shadertoy.com/view/MdySR1
+void fragment() {
+	
+	vec2 offsetuv = UV*vec2(1.0-fadeWidth, 1.0 - fadeWidth);
+    
+    float scaling = 1.0 - fadeWidth;
+    float vBlend = clamp((UV.x-scaling)/fadeWidth, 0.0, 1.0);
+    
+    float q1Blend = (1.0-vBlend);
+    vec2 q1Sample;
+    q1Sample.x = fract(offsetuv.x + fadeWidth);
+    q1Sample.y = fract(offsetuv.y + fadeWidth);
+    vec4 tex1 = texture(TEXTURE, q1Sample); 
+    vec4 q1Col = q1Blend * tex1;
+
+    float q2Blend = vBlend;
+    vec2 q2Sample;
+    q2Sample.x = fract(offsetuv.x + (fadeWidth * 2.0));
+    q2Sample.y = fract(offsetuv.y + fadeWidth);
+    vec4 tex2 = texture(TEXTURE, q2Sample);
+    vec4 q2Col = q2Blend * tex2;
+    
+	COLOR = q1Col + q2Col;
+	
+}"
