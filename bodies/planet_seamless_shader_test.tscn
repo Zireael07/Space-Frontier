@@ -8,6 +8,9 @@ shader = ExtResource( 2 )
 shader_param/fadeWidth = 0.05
 shader_param/rotate_angle = null
 shader_param/time = 0.0
+shader_param/cut_off = 0.45
+shader_param/color_land = Color( 0, 1, 0, 1 )
+shader_param/color_sea = Color( 0, 1, 1, 1 )
 shader_param/vectors = ExtResource( 1 )
 
 [sub_resource type="OpenSimplexNoise" id=2]

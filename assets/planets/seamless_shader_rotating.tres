@@ -12,6 +12,10 @@ uniform float rotate_angle;
 //2.0 is a full rotation
 uniform float time : hint_range(0,2.0) = 1.0;
 
+uniform float cut_off : hint_range(0,1) = 0.45;
+uniform vec4 color_land : hint_color = vec4(0.0, 1.0, 0.0, 1.0);
+uniform vec4 color_sea : hint_color = vec4(0.0, 1.0, 1.0, 1.0);
+
 mat2 rotate2d(float _angle) {
     return mat2(vec2(cos(_angle), -sin(_angle)), vec2(sin(_angle), cos(_angle)));
 }
@@ -65,9 +69,29 @@ void fragment() {
   }
   else {
 	//vec4 col = vec4(1.0, 0.0, 0.0, 1.0);
-		
-	vec4 clr = texture_seamless_horizontal(TEXTURE, planet_coords, fadeWidth);
+	vec2 uv = planet_coords;	
+	vec4 col_noise = texture_seamless_horizontal(TEXTURE, uv, fadeWidth);
 	//vec4 col = texture(TEXTURE, planet_coords);
-	COLOR = clr;
+	
+	// add some shadow
+	//vec2 height_uv = uv;
+	float height = col_noise.r;
+	
+	//colorize the CPU noise
+	//vec4 col_noise = texture(TEXTURE, uv);
+	vec4 col_planet = vec4(1.0);
+	if (col_noise.b > cut_off) {
+		col_planet = color_land;
+	}
+	else {
+		col_planet = color_sea;
+	}
+	
+	//output to screen
+	//COLOR = vec4(height);
+	// mix in some height/shading
+	vec4 colr = mix(vec4(col_planet.rgb, 1.0), vec4(0.0, 0.0, 0.0, 1.0), height);
+	
+	COLOR = colr;
   }
 }"
