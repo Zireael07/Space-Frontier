@@ -7,7 +7,7 @@ uniform float fadeWidth;
 
 uniform sampler2D temp_gradient: hint_black;
 uniform sampler2D land_gradient;
-uniform float uTemperature = 0.0;
+uniform float temperature = 10.0; //temperature in degrees Celsius; default equals IRL Earth temperature
 
 //uniform vec4 uCold: hint_color = vec4(0.2, 0.4, 0.39, 1.0);
 //uniform vec4 uOcean: hint_color = vec4(0.01, 0.81, 1.0, 1.0);
@@ -22,8 +22,8 @@ uniform float rotate_angle;
 //2.0 is a full rotation
 uniform float time : hint_range(0,2.0) = 1.0;
 
-uniform float uWaterLevel : hint_range(0,1) = 0.45;
-uniform vec4 color_land : hint_color = vec4(0.0, 1.0, 0.0, 1.0);
+uniform float waterLevel : hint_range(0,1) = 0.45;
+//uniform vec4 color_land : hint_color = vec4(0.0, 1.0, 0.0, 1.0);
 uniform vec4 color_sea : hint_color = vec4(0.0, 1.0, 1.0, 1.0);
 
 float map(float value, float inMin, float inMax, float outMin, float outMax) {
@@ -58,9 +58,31 @@ vec4 texture_seamless_horizontal(sampler2D tex, vec2 uv, float fadeW) {
 	return q1Col + q2Col;
 }
 
-vec4 biome_color_simple(vec2 uv) {
+vec4 biome_color_simple(vec2 uv, float n) {
+	float n3 = n * 5.;
+	//temp gradient goes from smallest UV (at the top) through the middle to the highest (bottom) so equator is at 0.5
 	float temp = texture(temp_gradient, vec2(uv.y, 0.0)).r;
+	
+	//mix in some noise
+	temp = temp + (n3 *0.1) * n * 0.3;
+	
+	//lower exponent values push lower values higher and higher values pull lower
+	//float expon = 10.0-(9.0-uTemperature);
+	//temp = pow(temp, expon);
+	
+	//minimum and maximum hand-calculated so that they're real life Celsius values
+	//10 Celsius (average Earth temperature) will give a temp_factor of 0
+	float temp_factor = map(temperature, -50., 70.0, -1., 1.);
+	
+	//temp_factor only really works in a range of -1 to 1
+	temp = temp + temp_factor;
+
 	//gradient goes from 0 to 1
+	//float val = temp;
+	
+	//visualize temp
+	//vec4 biome_col = mix(vec4(0.0, 0.0, 1.0, 1.0), vec4(1.0, 0.0, 0.0, 1.0), temp);
+	
 	vec4 biome_col = texture(land_gradient, vec2(temp, 0.0));
 	return biome_col;
 }
@@ -101,9 +123,9 @@ void fragment() {
 	//colorize the CPU noise
 	//vec4 col_noise = texture(TEXTURE, uv);
 	vec4 col_planet = vec4(1.0);
-	if (col_noise.b > uWaterLevel) {
+	if (col_noise.b > waterLevel) {
 		//vec4 land_col = biome_color(uv, col_noise.r);
-		vec4 land_col = biome_color_simple(uv);
+		vec4 land_col = biome_color_simple(uv, col_noise.r);
 		col_planet = land_col;
 		//col_planet = color_land;
 	}
@@ -114,9 +136,9 @@ void fragment() {
 	//output to screen
 	//COLOR = vec4(height);
 	// mix in some height/shading
-	vec4 colr = mix(vec4(col_planet.rgb, 1.0), vec4(0.2, 0.2, 0.2, 1.0), height);
+	//vec4 colr = mix(vec4(col_planet.rgb, 1.0), vec4(0.2, 0.2, 0.2, 1.0), height);
 	
-	//vec4 colr = vec4(col_planet.rgb, 1.0);
+	vec4 colr = vec4(col_planet.rgb, 1.0);
 	
 	COLOR = colr;
   }
