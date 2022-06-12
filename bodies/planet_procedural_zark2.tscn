@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/temp_gradient.tres" type="Gradient" id=1]
-[ext_resource path="res://assets/procedural_planet_better_shader.tres" type="Shader" id=2]
+[ext_resource path="res://assets/planets/temp_gradient.tres" type="Gradient" id=1]
+[ext_resource path="res://assets/planets/procedural_planet_better_shader.tres" type="Shader" id=2]
 
 [sub_resource type="GradientTexture" id=1]
 gradient = ExtResource( 1 )

@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/bodies/texture_template.png" type="Texture" id=1]
-[ext_resource path="res://assets/temp_gradient.tres" type="Gradient" id=2]
+[ext_resource path="res://assets/planets/temp_gradient.tres" type="Gradient" id=2]
 [ext_resource path="res://assets/planets/seamless_shader_better.tres" type="Shader" id=3]
 [ext_resource path="res://assets/biome_gradient.tres" type="Gradient" id=4]
 
