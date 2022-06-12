@@ -1,0 +1,16 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform sampler2D gradient: hint_black;
+
+void fragment() {
+	//simple gradient shader from GDQuest: https://www.youtube.com/watch?v=i7VljTl4I3w
+	//vec4 input_color = texture(TEXTURE, UV);
+	//vec3 sampled_color = texture(gradient, vec2(input_color.r, 0.0)).rgb;
+	
+	vec3 sampled_color = texture(gradient, vec2(UV.y, 0.0)).rgb;
+	
+	COLOR = vec4(sampled_color, 1.0);
+}"
