@@ -322,7 +322,8 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	
 	if planet.get_node("Sprite").get_material() != null:
 		#print("Shader: " + str(planet.get_node("Sprite").get_material().is_class("ShaderMaterial")))
-		var is_rot = planet.get_node("Sprite").get_material().get_shader().has_param("time")
+		var is_rot = planet.get_node("Sprite").get_material().get_shader().has_param("time") \
+		and not planet.get_node("Sprite").texture is NoiseTexture
 		#print("is rotating: " + str(is_rot))
 		if is_rot:
 			var sc = Vector2(0.15/2, 0.15)
@@ -339,7 +340,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
 
 			# move to the right to not overlap the text
-			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(95, 11)) 
+			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(97, 12)) 
 			var sc2 = Vector2(0.15*0.86, 0.15*0.86 ) #0.86 is the ratio of the procedural planet's shadow to the usual's (0.43/0.5)
 			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(sc2)
 			# experimentally determined values
@@ -353,6 +354,16 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 				else:
 					sc2 = Vector2(0.18*0.86, 0.18*0.86) # experimental (for Titan)
 					$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(sc2)
+		else:
+			# this should be always true down this path, but just in case
+			if planet.get_node("Sprite").texture is NoiseTexture:
+				# experimentally determined
+				var sc = Vector2(0.35,0.35)
+				$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
+				# move to the right to not overlap the text
+				$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(95, 11))
+				$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, 3)) 
+				
 	# why the eff do the asteroid/moon crosses/dwarf planets seem not to have material?
 	else:
 		if planet.is_in_group("moon") or planet.is_in_group("aster_named"):
@@ -448,6 +459,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		format_atm = "%.3f atm" % planet.atm
 	var format_greenhouse = "%d " % planet.greenhouse_diff() if planet.scanned else " ?? "
 	# format mass depending on what body we're looking at
+	# FIXME: this would really benefit from special symbols
 	var format_mass = "%.3f M Earth" % (planet.mass)
 	if planet.is_in_group("moon") or planet.get_node("Label").get_text() == "Ceres":
 		format_mass = "%.4f M Moon" % (planet.mass/game.MOON_MASS)
