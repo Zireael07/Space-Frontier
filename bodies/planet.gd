@@ -66,6 +66,8 @@ func _ready():
 	_conn = connect("planet_orbited", self, "_on_planet_orbited")
 	_conn = connect("planet_deorbited", self, "_on_planet_deorbited")
 	
+	# FIXME: set Label position on basis of planet scale factor
+	
 	labl_loc = $"Label".get_position()
 	
 	# if colonized, give some storage and a module table
@@ -75,9 +77,10 @@ func _ready():
 		get_node("Label").set_self_modulate(Color(0, 1, 1))
 		set_debris_table()
 		randomize_storage()
-		# don't show hub shadow for very small planets
-		if planet_rad_factor > 0.2 and not is_in_group("aster_named"):
-			get_colony().get_child(0).show_shadow()
+		if !Engine.is_editor_hint():
+			# don't show hub shadow for very small planets
+			if planet_rad_factor > 0.2 and not is_in_group("aster_named"):
+				get_colony().get_child(0).show_shadow()
 		
 		# tint us gray to represent pollution
 		if atm > 0.01:
@@ -182,6 +185,12 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 		print("Water freezes on ", get_node("Label").get_text())
 		ice = hydro
 		hydro = 0.0
+		
+	# send temperature to shader if procedural planet
+	if $Sprite.texture is NoiseTexture:
+		# send temp in Celsius to the shader
+		get_node("Sprite").get_material().set_shader_param("temperature", (temp-game.ZEROC_IN_K))
+		print("Sending temp ", (temp-game.ZEROC_IN_K), " to shader")
 	
 	# set population for planets that start colonized
 	# if we set population from editor, don't change it

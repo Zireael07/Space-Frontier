@@ -99,5 +99,6 @@ margin_top = 100.0
 margin_right = 50.0
 margin_bottom = 120.0
 text = "START"
+
 [connection signal="item_selected" from="Control/Control1/OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="pressed" from="Control/Button" to="." method="_on_Button_pressed"]

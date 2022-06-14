@@ -124,11 +124,13 @@ func _ready():
 		spawn_wormhole(p_ind, 1, mmap)
 	
 	pos = spawn_asteroid_processor(p_ind, curr_system, mmap)
-	for i in range(2):
-		spawn_friendly_drone_pos(i, p_ind, pos)
+	if pos != null:
+		for i in range(2):
+			spawn_friendly_drone_pos(i, p_ind, pos)
 	pos = spawn_cycler(p_ind, curr_system, mmap)
-	for i in range(2):
-		spawn_friendly_drone_pos(i, p_ind, pos)
+	if pos != null:
+		for i in range(2):
+			spawn_friendly_drone_pos(i, p_ind, pos)
 	
 	var pirate = spawn_pirate_base(p_ind, curr_system, mmap)
 	if pirate != null:
