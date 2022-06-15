@@ -220,7 +220,7 @@ func _on_ButtonView_pressed():
 	
 	# if we are pointing at first entry (a star), show star description instead
 	if cursor.get_position().y < 15 * (stars.size()+1):
-		var line = cursor.get_position().y + nav_list.get_v_scroll()
+		var line = cursor.get_position().y + nav_list.get_v_scroll().value
 		var select_id = (line - 15)/15
 		print("Star select id ", select_id)
 		var star = get_tree().get_nodes_in_group("star")[select_id]
@@ -261,10 +261,21 @@ func make_star_view(star, _select_id):
 	print("Making view for star...", star.get_node("Label").get_text() )
 	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".show()
-		
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(star.get_node("Sprite").get_material())
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(star.get_node("Sprite").get_texture())
+	
+	var view = $"Panel_rightHUD/PanelInfo/PlanetInfo/ViewportContainer"
+	# scale to achieve roughly 110 px size
+	var siz = Vector2(750,750)
+	view.get_child(0).size = siz
+	view.set_scale(Vector2(0.15, 0.15))
+	view._set_position(Vector2(90, 0))
+	# place view in center
+	view.get_node("Viewport/Node2D").position = Vector2(siz.x/2, siz.y/2)
+	# add the nodes
+	view.get_node("Viewport/Node2D").add_child(star.get_node("Sprite").duplicate())	
+
+	#$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
+	#$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(star.get_node("Sprite").get_material())
+	#$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(star.get_node("Sprite").get_texture())
 
 	# set label
 	var txt = "Star: " + str(star.get_node("Label").get_text())
@@ -280,7 +291,9 @@ func make_star_view(star, _select_id):
 		text = "Luminosity: " + str(star.luminosity) + "\n" + \
 	"Habitable zone: " + "\n" + str(fmt_AU % star.hz_inner) + "-" + str(fmt_AU % star.hz_outer)
 
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/RichTextLabel".set_text(text)
+	var rtl = $"Panel_rightHUD/PanelInfo/PlanetInfo".get_child(1)
+	rtl.set_name("RichTextLabel")
+	rtl.set_text(text)
 
 func make_planet_view(planet, select_id=-1, parent_id=-1):
 	var rtl = $"Panel_rightHUD/PanelInfo/PlanetInfo".get_child(1)
@@ -293,85 +306,25 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	# reset
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(Vector2(0.15, 0.15))
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(83, 11)) 
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(Vector2(0.15, 0.15))
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(83, 11))
-	# show planet sprite
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(planet.get_node("Sprite").get_texture())
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(planet.get_node("Sprite").get_material())
-	# show shadow if planet has one
-	if planet.has_node("Sprite_shadow") and planet.get_node("Sprite_shadow").is_visible():
-		planet.no_shadow = false
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".show()
-		# add shader if one is used
-		if planet.get_node("Sprite_shadow").get_material().is_class("ShaderMaterial"):
-			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_material(planet.get_node("Sprite_shadow").get_material())
-			# set color
-			var has_aura = planet.get_node("Sprite_shadow").get_material().get_shader().has_param("shader_param/aura_color")
-			if has_aura:
-				var aura_col = planet.get_node("Sprite_shadow").get_material().get_shader_param("aura_color")
-				$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".get_material().set_shader_param("aura_color", aura_col)	
-	else:
-		planet.no_shadow = true
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
-	
-	# apply any modulate effects
-	var modu = planet.get_node("Sprite").get_modulate()
-	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_modulate(modu)
-	
-	if planet.get_node("Sprite").get_material() != null:
-		#print("Shader: " + str(planet.get_node("Sprite").get_material().is_class("ShaderMaterial")))
-		var is_rot = planet.get_node("Sprite").get_material().get_shader().has_param("time") \
-		and not planet.get_node("Sprite").texture is NoiseTexture
-		#print("is rotating: " + str(is_rot))
-		if is_rot:
-			var sc = Vector2(0.15/2, 0.15)
-			# Saturn's texture is 1800px instead of 1000px
-			if planet.get_node("Label").get_text() == "Saturn":
-				sc = Vector2(sc.x*0.55, sc.y*0.55) 
-			# Rhea texture is very low-res (360px)
-			if planet.get_node("Label").get_text() == "Rhea":
-				sc = Vector2(sc.x*3, sc.y*3)
-#			if planet.get_node("Label").get_text() == "Mimas":
-#				sc = Vector2(sc.x*0.5, sc.y*0.5)
-
-			#print("sc: " + str(sc))
-			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
-
-			# move to the right to not overlap the text
-			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(97, 12)) 
-			var sc2 = Vector2(0.15*0.86, 0.15*0.86 ) #0.86 is the ratio of the procedural planet's shadow to the usual's (0.43/0.5)
-			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(sc2)
-			# experimentally determined values
-			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, 3))
-			
-			if planet.is_in_group("moon"):
-				# hide shadow for moons if they don't have atmo
-				if planet.atm < 0.001:
-					planet.no_shadow = true
-					$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
-				else:
-					sc2 = Vector2(0.18*0.86, 0.18*0.86) # experimental (for Titan)
-					$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".set_scale(sc2)
-		else:
-			# this should be always true down this path, but just in case
-			if planet.get_node("Sprite").texture is NoiseTexture:
-				# experimentally determined
-				var sc = Vector2(0.35,0.35)
-				$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
-				# move to the right to not overlap the text
-				$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect"._set_position(Vector2(95, 11))
-				$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2"._set_position(Vector2(88, 3)) 
-				
-	# why the eff do the asteroid/moon crosses/dwarf planets seem not to have material?
-	else:
-		if planet.is_in_group("moon") or planet.is_in_group("aster_named"):
-			planet.no_shadow = true
-			var sc = Vector2(1, 1)
-			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_scale(sc)
-			# hide shadow
-			$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
+	for c in $"Panel_rightHUD/PanelInfo/PlanetInfo/ViewportContainer/Viewport/Node2D".get_children():
+		c.queue_free()
+	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".hide()
+	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
+	# use viewport instead of hacking to replicate planet looks
+	var view = $"Panel_rightHUD/PanelInfo/PlanetInfo/ViewportContainer"
+	# 0.35 scale to achieve roughly 110 px size from 300px sized viewport for a planet
+	var siz = Vector2(300,300)
+	view.get_child(0).size = siz
+	view.set_scale(Vector2(0.35, 0.35))
+	#if planet.is_in_group("moon") or planet.is_in_group("aster_named"):
+	#	view.set_scale(Vector2(1,1))
+	view._set_position(Vector2(80, 0))
+	# place view in center
+	view.get_node("Viewport/Node2D").position = Vector2(siz.x/2, siz.y/2)
+	# add the nodes
+	view.get_node("Viewport/Node2D").add_child(planet.get_node("Sprite").duplicate())
+	if planet.has_node("Sprite_shadow"):
+		view.get_node("Viewport/Node2D").add_child(planet.get_node("Sprite_shadow").duplicate())
 		
 	# set label
 	var txt = "Destination: " + str(planet.get_node("Label").get_text())

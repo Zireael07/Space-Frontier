@@ -156,7 +156,31 @@ Temperature:
 Hydro:
 "
 
+[node name="ViewportContainer" type="ViewportContainer" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+margin_left = 83.0
+margin_top = 1.0
+margin_right = 191.0
+margin_bottom = 109.0
+rect_min_size = Vector2( 108, 108 )
+rect_scale = Vector2( 0.35, 0.35 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="Viewport" type="Viewport" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ViewportContainer"]
+size = Vector2( 300, 300 )
+transparent_bg = true
+handle_input_locally = false
+disable_3d = true
+usage = 0
+render_target_update_mode = 0
+
+[node name="Node2D" type="Node2D" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo/ViewportContainer/Viewport"]
+position = Vector2( 150, 150 )
+
 [node name="TextureRect" type="TextureRect" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+visible = false
 margin_left = 83.0
 margin_top = 1.0
 margin_right = 803.0
@@ -164,8 +188,12 @@ margin_bottom = 721.0
 rect_scale = Vector2( 0.15, 0.15 )
 mouse_filter = 2
 texture = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TextureRect2" type="TextureRect" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+visible = false
 margin_left = 83.0
 margin_top = 1.0
 margin_right = 803.0
