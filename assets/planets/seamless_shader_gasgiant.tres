@@ -1,0 +1,147 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform float fadeWidth;
+uniform float size = 10.0;
+
+uniform vec4 storm_color: hint_color = vec4(1.0,0.1,0.1, 1.0);
+uniform sampler2D gasgiant_gradient;
+
+//based on https://github.com/meric/renderplanet
+const float M_PI = 3.1415926535897932384626433832795;
+uniform sampler2D vectors; //orthographic projection
+uniform float rotate_angle;
+//2.0 is a full rotation
+uniform float time : hint_range(0,2.0) = 1.0;
+
+float map(float value, float inMin, float inMax, float outMin, float outMax) {
+  return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);
+}
+
+mat2 rotate2d(float _angle) {
+    return mat2(vec2(cos(_angle), -sin(_angle)), vec2(sin(_angle), cos(_angle)));
+}
+
+//from RedBlobGames https://www.redblobgames.com/maps/terrain-from-noise/
+float ridgenoise(float noise) {
+  return 2. * (0.5 - abs(0.5 - noise));
+}
+// by Leukbaars from https://www.shadertoy.com/view/4tK3zR
+float circleNoise(vec2 uv) {
+    float uv_y = floor(uv.y);
+    uv.x += uv_y*.31;
+    vec2 f = fract(uv);
+	float h = 0.7;
+	//float h = rand(vec2(floor(uv.x),floor(uv_y)));
+    float m = (length(f-0.25-(h*0.5)));
+    float r = h*0.25;
+    return m = smoothstep(r-.10*r,r,m);
+}
+
+float storm(vec2 uv) {
+	float c = 1.0;
+	// i controls the number of storms in a line
+	for (int i = 0; i < 1; i++) {
+		c *= circleNoise((uv * size) + (float(i+1)+10.));
+	}
+	return 1.0 - c;
+}
+
+//https://www.shadertoy.com/view/MdySR1
+vec4 texture_seamless_horizontal(sampler2D tex, vec2 uv, float fadeW) {
+	vec2 offsetuv = uv*vec2(1.0-fadeW, 1.0 - fadeW);
+    
+    float scaling = 1.0 - fadeWidth;
+    float vBlend = clamp((uv.x-scaling)/fadeWidth, 0.0, 1.0);
+    
+    float q1Blend = (1.0-vBlend);
+    vec2 q1Sample;
+    q1Sample.x = fract(offsetuv.x + fadeWidth);
+    q1Sample.y = fract(offsetuv.y + fadeWidth);
+    vec4 tex1 = texture(tex, q1Sample); 
+    vec4 q1Col = q1Blend * tex1;
+
+    float q2Blend = vBlend;
+    vec2 q2Sample;
+    q2Sample.x = fract(offsetuv.x + (fadeWidth * 2.0));
+    q2Sample.y = fract(offsetuv.y + fadeWidth);
+    vec4 tex2 = texture(tex, q2Sample);
+    vec4 q2Col = q2Blend * tex2;
+    
+	return q1Col + q2Col;
+}
+
+
+void fragment() {	
+	//rotating planet shader based on meric
+	mat2 rotate_planet_matrix;
+
+    rotate_planet_matrix = rotate2d(rotate_angle);
+
+  vec2 rotated_coords = rotate_planet_matrix * (UV-vec2(0.5));
+  rotated_coords += vec2(0.5);
+  vec4 vector = texture(vectors, rotated_coords );
+
+  // Retrieve planet texture pixel
+  vec2 planet_coords;
+  planet_coords.x = (vector.r + vector.g/255.0 + time)/2.0;
+  planet_coords.y = vector.b + vector.a/255.0;
+  if (planet_coords.x > 1.0) {
+    planet_coords.x =  planet_coords.x - 1.0;
+  }
+
+  //clip to a circle
+  if (distance(rotated_coords, vec2(0.5, 0.5)) > 0.5) {
+    //return vector;
+	COLOR = vector;
+  }
+  else {
+	//vec4 col = vec4(1.0, 0.0, 0.0, 1.0);
+	vec2 uv = planet_coords;	
+	vec4 col_noise = texture_seamless_horizontal(TEXTURE, uv, fadeWidth);
+	//vec4 col = texture(TEXTURE, planet_coords);
+	
+	//colorize the CPU noise
+	//vec4 col_noise = texture(TEXTURE, uv);
+	vec4 col_planet = vec4(1.0);
+	
+	float n = col_noise.r;
+	
+	//visualize noise
+	vec3 giant = vec3(n);
+	
+	//partially based on Seed of Andromeda
+	//http://web.archive.org/web/20171103103435/https://www.seedofandromeda.com/blogs/49-procedural-gas-giant-rendering-with-gpu-noise
+	
+	float n2 = ridgenoise(n) - 0.05;
+	n = n + n2;
+	
+	// Preturb texture coordinate with noise
+    float gradient_coord = uv.y + n * 0.02;
+	vec2 coords = vec2(gradient_coord, uv.x);
+    // Lookup the gradient
+    giant = texture(gasgiant_gradient, coords).rgb;
+	
+	//visualize gradient
+	//giant = texture(gasgiant_gradient, vec2(uv.y, uv.x)).rgb;
+	
+	//storms
+	float s = 0.3;
+	float t1 = n - s;
+	//giant = vec3(t1);
+	
+	float storm_fact = storm(uv);
+	//noise masks out some of the storms
+	float tresh = step(mix(storm_fact, 0.1, t1), 0.0);
+	//giant = vec3(tresh);
+
+	giant = mix(giant, storm_color.rgb, tresh);//storm_fact);
+	
+	//output to screen
+	vec4 colr = vec4(giant, 1.0);
+	
+	COLOR = colr;
+  }
+}"
