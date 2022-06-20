@@ -1,17 +1,86 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=2]
+[ext_resource path="res://bodies/planet_rotating_procedural.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/planets/seamless_shader_better.tres" type="Shader" id=2]
+[ext_resource path="res://assets/bodies/texture_template.png" type="Texture" id=3]
 [ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=4]
-[ext_resource path="res://assets/planets/aura shader.tres" type="Material" id=5]
+[ext_resource path="res://assets/planets/biome_gradient.tres" type="Gradient" id=5]
 [ext_resource path="res://systems/star system.gd" type="Script" id=6]
-[ext_resource path="res://bodies/planet.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=8]
+[ext_resource path="res://assets/planets/temp_gradient.tres" type="Gradient" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
-[node name="Proxima" type="Node2D" groups=[
-"star",
-]]
+[sub_resource type="GradientTexture" id=5]
+gradient = ExtResource( 5 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = ExtResource( 7 )
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 2 )
+shader_param/fadeWidth = 0.05
+shader_param/temperature = 286.054
+shader_param/rotate_angle = null
+shader_param/time = 0.501827
+shader_param/waterLevel = 0.45
+shader_param/color_sea = Color( 0, 1, 1, 1 )
+shader_param/temp_gradient = SubResource( 4 )
+shader_param/land_gradient = SubResource( 5 )
+shader_param/vectors = ExtResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 2 )
+shader_param/fadeWidth = 0.05
+shader_param/temperature = 286.054
+shader_param/rotate_angle = null
+shader_param/time = 1.55534
+shader_param/waterLevel = 0.45
+shader_param/color_sea = Color( 0, 1, 1, 1 )
+shader_param/temp_gradient = SubResource( 4 )
+shader_param/land_gradient = SubResource( 5 )
+shader_param/vectors = ExtResource( 3 )
+
+[sub_resource type="Animation" id=2]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite_shadow:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = ExtResource( 2 )
+shader_param/fadeWidth = 0.05
+shader_param/temperature = 286.054
+shader_param/rotate_angle = null
+shader_param/time = 1.73886
+shader_param/waterLevel = 0.45
+shader_param/color_sea = Color( 0, 1, 1, 1 )
+shader_param/temp_gradient = SubResource( 4 )
+shader_param/land_gradient = SubResource( 5 )
+shader_param/vectors = ExtResource( 3 )
+
+[sub_resource type="Animation" id=3]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite_shadow:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
+
+[node name="Proxima" type="Node2D" groups=["star"]]
 position = Vector2( 500, 500 )
 script = ExtResource( 6 )
 star_radius_factor = 0.125
@@ -27,8 +96,8 @@ texture = ExtResource( 4 )
 margin_top = 100.0
 margin_right = 72.0
 margin_bottom = 116.0
-custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
 text = "Proxima Centauri"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -36,74 +105,81 @@ __meta__ = {
 
 [node name="planet_holder" type="Node2D" parent="."]
 
-[node name="planet" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="planet" parent="planet_holder" groups=["planets"] instance=ExtResource( 1 )]
 position = Vector2( 0, 100 )
-z_index = 2
 planet_rad_factor = 0.2
 mass = 0.3
 hydro = 0.0
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
-scale = Vector2( 0.1, 0.1 )
+material = SubResource( 6 )
+scale = Vector2( 0.25, 0.25 )
 
-[node name="Label" parent="planet_holder/planet" index="1"]
+[node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
+rotation = 3.4641e-07
+scale = Vector2( 0.108, 0.108 )
+
+[node name="Label" parent="planet_holder/planet" index="3"]
 margin_left = 30.0
 margin_top = 30.0
-margin_right = 82.0
+margin_right = 94.0
 margin_bottom = 44.0
 text = "Proxima d"
 
-[node name="Area2D" parent="planet_holder/planet" index="2"]
-scale = Vector2( 0.2, 0.2 )
-
-[node name="planet2" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="planet2" parent="planet_holder" groups=["planets"] instance=ExtResource( 1 )]
 position = Vector2( 0, 600 )
-z_index = 2
 planet_rad_factor = 0.2
 mass = 1.18
 hydro = 0.0
+atm = 1.01156
+greenhouse = 0.000100357
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 8 )
+material = SubResource( 7 )
+scale = Vector2( 0.25, 0.25 )
 
-[node name="Label" parent="planet_holder/planet2" index="1"]
+[node name="Sprite_shadow" parent="planet_holder/planet2" index="1"]
+rotation = 3.4641e-07
+scale = Vector2( 0.108, 0.108 )
+
+[node name="Label" parent="planet_holder/planet2" index="3"]
 margin_left = 30.0
 margin_top = 30.0
-margin_right = 82.0
+margin_right = 94.0
 margin_bottom = 44.0
 text = "Proxima b"
 
-[node name="CollisionShape2D" parent="planet_holder/planet2/Area2D" index="0"]
-scale = Vector2( 0.2, 0.2 )
+[node name="AnimationPlayer" parent="planet_holder/planet2" index="7"]
+anims/scanning = SubResource( 2 )
 
-[node name="planet3" parent="planet_holder" instance=ExtResource( 7 )]
+[node name="planet3" parent="planet_holder" groups=["planets"] instance=ExtResource( 1 )]
 position = Vector2( 0, 17880 )
-z_index = 2
 planet_rad_factor = 0.2
 mass = 7.0
 hydro = 0.0
+atm = 0.334487
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
-material = ExtResource( 5 )
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 2 )
+material = SubResource( 8 )
+scale = Vector2( 0.25, 0.25 )
 
-[node name="Label" parent="planet_holder/planet3" index="1"]
+[node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
+rotation = 3.4641e-07
+scale = Vector2( 0.108, 0.108 )
+
+[node name="Label" parent="planet_holder/planet3" index="3"]
 margin_left = 30.0
 margin_top = 30.0
-margin_right = 109.0
+margin_right = 94.0
 margin_bottom = 44.0
 text = "Proxima c"
 
-[node name="CollisionShape2D" parent="planet_holder/planet3/Area2D" index="0"]
-scale = Vector2( 0.2, 0.2 )
+[node name="AnimationPlayer" parent="planet_holder/planet3" index="7"]
+anims/scanning = SubResource( 3 )
 
 [editable path="planet_holder/planet"]
-
 [editable path="planet_holder/planet2"]
-
 [editable path="planet_holder/planet3"]

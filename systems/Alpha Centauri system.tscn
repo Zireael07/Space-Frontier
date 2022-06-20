@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
-[ext_resource path="res://bodies/planet_new.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=4]
+[ext_resource path="res://bodies/planet_rotating_procedural.tscn" type="PackedScene" id=3]
 [ext_resource path="res://systems/star.gd" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -11,9 +10,7 @@
 [node name="Alpha Centauri" type="Node2D"]
 position = Vector2( 500, 500 )
 
-[node name="A" type="Node2D" parent="." groups=[
-"star",
-]]
+[node name="A" type="Node2D" parent="." groups=["star"]]
 script = ExtResource( 5 )
 star_radius_factor = 1.2
 luminosity = 1.5
@@ -26,16 +23,14 @@ texture = ExtResource( 1 )
 margin_top = 100.0
 margin_right = 109.0
 margin_bottom = 116.0
-custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
 text = "Alpha Centauri A"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="B" type="Node2D" parent="." groups=[
-"star",
-]]
+[node name="B" type="Node2D" parent="." groups=["star"]]
 position = Vector2( 0, 210840 )
 script = ExtResource( 2 )
 star_radius_factor = 0.8
@@ -51,8 +46,8 @@ texture = ExtResource( 1 )
 margin_top = 100.0
 margin_right = 109.0
 margin_bottom = 116.0
-custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
 text = "Alpha Centauri B"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -60,19 +55,16 @@ __meta__ = {
 
 [node name="planet_holder" type="Node2D" parent="B"]
 
-[node name="planet2" parent="B/planet_holder" instance=ExtResource( 3 )]
+[node name="planet" parent="B/planet_holder" groups=["planets"] instance=ExtResource( 3 )]
 position = Vector2( 0, 1692 )
 planet_rad_factor = 0.2
 mass = 0.3
 hydro = 0.0
 
-[node name="Sprite" parent="B/planet_holder/planet2" index="0"]
-texture = ExtResource( 4 )
-
-[node name="Sprite_shadow" parent="B/planet_holder/planet2" index="1"]
+[node name="Sprite_shadow" parent="B/planet_holder/planet" index="1"]
 rotation = 3.4641e-07
 
-[node name="Label" parent="B/planet_holder/planet2" index="2"]
+[node name="Label" parent="B/planet_holder/planet" index="3"]
 text = "Bb"
 
-[editable path="B/planet_holder/planet2"]
+[editable path="B/planet_holder/planet"]
