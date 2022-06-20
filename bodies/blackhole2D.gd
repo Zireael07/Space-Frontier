@@ -50,7 +50,7 @@ func jump():
 
 func _on_Area2D_area_entered(_area):
 	if _area.get_parent().get_groups().has("player"):
-		if not entered and active:
+		if active and not entered:
 			var system = get_tree().get_nodes_in_group("main")[0].curr_system
 			print("Wormhole entered in system: ", system)
 			entered = true

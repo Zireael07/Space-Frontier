@@ -171,6 +171,8 @@ func update_ship_pos():
 	# paranoia
 	if not stars[0]:
 		return
+	if star_main == null:
+		return
 		
 	var rel_loc = game.player.get_global_position() - star_main.get_global_position()
 	var off = 9

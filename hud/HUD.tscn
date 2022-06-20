@@ -920,7 +920,6 @@ __meta__ = {
 }
 
 [node name="Control4" type="Control" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -931,7 +930,8 @@ margin_right = -472.0
 margin_bottom = -260.0
 mouse_filter = 1
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_editor_description_": "Needs to be visible for starmap to work"
 }
 
 [node name="map view" type="Control" parent="Control4"]
