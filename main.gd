@@ -471,6 +471,8 @@ func update_HUD():
 	# show the panel again
 	orr.get_node("Panel").show()
 	
+	game.player.HUD.get_node("Control4/map view").setup()
+	
 	# force update minimap
 	#mmap._ready()
 	mmap.get_system_bodies()
@@ -529,6 +531,14 @@ func change_system(system="proxima", time=0.0):
 	orr.cleanup()
 	# hide the orrery panel temporarily (preventing drawing of orbits)
 	orr.get_node("Panel").hide()
+	
+	# do the same to map view
+	game.player.HUD.get_node("Control4/map view").hide()
+	# because the first 4 are GUI elements
+	for i in range(4, game.player.HUD.get_node("Control4/map view").get_child_count()):
+		game.player.HUD.get_node("Control4/map view").get_child(i).queue_free()
+	game.player.HUD.get_node("Control4/map view").cleanup()
+	
 	
 	# close planet view/listing
 	if game.player.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo").is_visible():
