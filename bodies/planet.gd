@@ -188,9 +188,19 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 		
 	# send temperature to shader if procedural planet
 	if $Sprite.texture is NoiseTexture:
-		# send temp in Celsius to the shader
-		get_node("Sprite").get_material().set_shader_param("temperature", (temp-game.ZEROC_IN_K))
-		print("Sending temp ", (temp-game.ZEROC_IN_K), " to shader")
+		#if temp > 400 Celsius then change graphics to lava planet
+		# roughly 670 K iirc?
+		if (temp-game.ZEROC_IN_K) > 400:
+			print("Hot lava planet")
+			var lava = preload("res://bodies/planet_lava_test.tscn")
+			var tmp = lava.instance()
+			get_node("Sprite").set_material(tmp.get_node("Sprite").material)
+			# prevent mem leak
+			tmp.queue_free()
+		else:
+			# send temp in Celsius to the shader
+			get_node("Sprite").get_material().set_shader_param("temperature", (temp-game.ZEROC_IN_K))
+			print("Sending temp ", (temp-game.ZEROC_IN_K), " to shader")
 	
 	# set population for planets that start colonized
 	# if we set population from editor, don't change it
