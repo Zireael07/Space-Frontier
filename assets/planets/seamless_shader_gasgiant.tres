@@ -125,19 +125,36 @@ void fragment() {
     giant = texture(gasgiant_gradient, coords).rgb;
 	
 	//visualize gradient
-	//giant = texture(gasgiant_gradient, vec2(uv.y, uv.x)).rgb;
+	giant = texture(gasgiant_gradient, vec2(uv.y, uv.x)).rgb;
 	
 	//storms
-	float s = 0.3;
-	float t1 = n - s;
+	float storminess = 0.0;
+
+	//test drawing several spots
+	for (int i = 0; i < 4; i++) {
+		//some random
+		vec2 rnd_coords = vec2(float(i)/50.0*5., float(i)/float(4)*15.5);
+		vec3 rnd = texture(TEXTURE, rnd_coords).rgb;
+		//test. 0.5, 0.5 is center of planet
+		vec2 pos = vec2(0.3, 0.4);
+		//TODO: need to be spaced out per row (UV.y is the row)
+		pos = vec2(rnd.x-0.25, rnd.y);
+		//pos = vec2(rnd.x, clamp(0.2, 0.9, rnd.y*0.5-fract(rnd.y)*2.));
+		//pos = vec2(clamp(0.2, 0.9, rnd.x+(fract(rnd.x)*3.)), rnd.y*0.5);
+		storminess += step(distance(uv, pos), 0.02) //*vec2(0.5, 0.95));
+	}
+	
+	giant = mix(giant, storm_color.rgb, storminess);
+
+	//float s = 0.3;
+	//float t1 = n - s;
 	//giant = vec3(t1);
 	
-	float storm_fact = storm(uv);
+	//float storm_fact = storm(uv);
 	//noise masks out some of the storms
-	float tresh = step(mix(storm_fact, 0.1, t1), 0.0);
+	//float tresh = step(mix(storm_fact, 0.1, t1), 0.0);
 	//giant = vec3(tresh);
-
-	giant = mix(giant, storm_color.rgb, tresh);//storm_fact);
+	//giant = mix(giant, storm_color.rgb, tresh);//storm_fact);
 	
 	//output to screen
 	vec4 colr = vec4(giant, 1.0);
