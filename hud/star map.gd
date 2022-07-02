@@ -16,7 +16,7 @@ func _ready():
 	for line in data:
 		# name, x, y, z, color
 		print(line)
-		if line[0] == "Barnard's Star" or line[0] == "Wolf 359" or line[0] == "Luyten 726-8":
+		if line[0] != "Sol" and line[0] != "Tau Ceti":
 			var ic = icon.instance()
 			ic.named = str(line[0])
 			ic.x = float(line[1])
