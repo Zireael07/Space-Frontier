@@ -19,14 +19,22 @@ func _ready():
 		if line[0] != "Sol" and line[0] != "Tau Ceti":
 			var ic = icon.instance()
 			ic.named = str(line[0])
-			ic.x = float(line[1])
-			ic.y = float(line[2])
-			ic.depth = float(line[3])
+			# strip units
+			ic.x = strip_units(str(line[1]))
+			#ic.x = float(line[1])
+			ic.y = strip_units(str(line[2]))
+			ic.depth = strip_units(str(line[3]))
 			
 			get_node("Control").add_child(ic)
 	
 	
-	#pass # Replace with function body.
+func strip_units(entry):
+	var num = 0.0
+	if "ly" in entry:
+		num = float(entry.rstrip("ly"))
+	elif "pc" in entry:
+		num = float(entry.rstrip("pc"))
+	return num
 
 func load_data():
 	var file = File.new()

@@ -1,7 +1,7 @@
-name, X, Y, Z, color
+name, winchellX, -winchellY, winchellZ, color
 Sol, 0, 0, 0, yellow
-Barnard's Star, 5.0, -3.0, 1.4, red
-Wolf 359, -1.9, 3.9, 6.5, red
-Luyten 726-8, -2.1, -0.2, -8.5, red
-Tau Ceti, -3.4, -0.4, -11.4, yellow
+Barnard's Star, 5.0ly, -3.0ly, 1.4ly, red
+Wolf 359, -1.9ly, 3.9ly, 6.5ly, red
+Luyten 726-8, -2.1ly, -0.2ly, -8.5ly, red
+Tau Ceti, -3.4ly, -0.4ly, -11.4ly, yellow
 
