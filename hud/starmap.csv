@@ -1,6 +1,6 @@
-name, winchellX, -winchellY, winchellZ, color
+name, winchellX, -winchellY, winchellZ, color, ra, dec, dist-Sol
 Sol, 0, 0, 0, yellow
-Barnard's Star, 5.0ly, -3.0ly, 1.4ly, red
+Barnard's Star, 5.0ly, -3.0ly, 1.4ly, red, 17.96h, 4.7, 5.95
 Wolf 359, -1.9ly, 3.9ly, 6.5ly, red
 Luyten 726-8, -2.1ly, -0.2ly, -8.5ly, red
 Tau Ceti, -3.4ly, -0.4ly, -11.4ly, yellow
