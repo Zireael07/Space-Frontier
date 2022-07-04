@@ -1,3 +1,5 @@
+# map emulates the look of http://www.projectrho.com/public_html/rocket/images/spacemaps/RECONSmap.jpg
+
 tool
 extends Control
 
@@ -19,22 +21,36 @@ func _ready():
 		if line[0] != "Sol" and line[0] != "Tau Ceti":
 			var ic = icon.instance()
 			ic.named = str(line[0])
-			# strip units
-			ic.x = strip_units(str(line[1]))
-			#ic.x = float(line[1])
-			ic.y = strip_units(str(line[2]))
-			ic.depth = strip_units(str(line[3]))
+			if line[1] != "-":
+				# strip units
+				ic.x = strip_units(str(line[1]))
+				#ic.x = float(line[1])
+				ic.y = strip_units(str(line[2]))
+				ic.depth = strip_units(str(line[3]))
 			
 			# test ra-dec conversion
-			if line[5] != "" and line[6] != "" and line[7] != "":
+			if line.size() > 5 and line[5] != "" and line[6] != "" and line[7] != "":
+				var ra_deg = 0
+				var dec = 0
 				if "h" in line[5] and not "m" in line[5]:
 					# if no minutes specified, we assume decimal hours
 					# 15 degrees in an hour (360/24) 
-					var ra_deg = float(15*float(line[5].rstrip("h")))
+					ra_deg = float(15*float(line[5].rstrip("h")))
 					# for now, assume degrees are given in decimal degrees
-					var dec = float(line[6])
-					galactic_from_ra_dec(ra_deg, dec, float(line[7]))
-					# we need to minus the y coordinate for our uses for some reason?
+					dec = float(line[6])
+				elif "h" in line[5] and "m" in line[5]:
+					# http://voyages.sdss.org/preflight/locating-objects/ra-dec/
+					# 0,25 (1/4) degree in a minute since it takes 4 minutes for a degree (60/15)
+					var parts = line[5].split("h")
+					ra_deg = float(15*float(parts[0].rstrip("h")))
+					ra_deg += float(0.25*float(parts[1].rstrip("m")))
+				if "d" in line[6] and "m" in line[6]:
+					var parts = line[6].split("d")
+					dec = float(parts[0].rstrip("d"))
+					dec += float(parts[1].rstrip("m"))/60
+				
+				galactic_from_ra_dec(ra_deg, dec, float(line[7]))
+				# we need to minus the y coordinate for our uses for some reason?
 			
 			get_node("Control").add_child(ic)
 	
