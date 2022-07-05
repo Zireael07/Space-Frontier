@@ -14,7 +14,8 @@ export var named = ""
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# positioning the stuff
-	set_position(Vector2(x*LY_TO_PX, y*LY_TO_PX))
+	# in Godot, +Y goes down so we need to minus the Y we get from data
+	set_position(Vector2(x*LY_TO_PX, -y*LY_TO_PX))
 	
 	# positive depth (above the plane) is negative y
 	var ab = (y*LY_TO_PX - depth*LY_TO_PX)

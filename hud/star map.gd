@@ -17,7 +17,7 @@ func _ready():
 	data = load_data()
 	for line in data:
 		# name, x, y, z, color
-		print(line)
+		#print(line)
 		if line[0] != "Sol" and line[0] != "Tau Ceti":
 			var ic = icon.instance()
 			ic.named = str(line[0])
@@ -29,29 +29,31 @@ func _ready():
 				ic.depth = strip_units(str(line[3]))
 			
 			# test ra-dec conversion
-			if line.size() > 5 and line[5] != "" and line[6] != "" and line[7] != "":
+			if line.size() > 6 and line[6] != "" and line[7] != "" and line[8] != "":
 				var ra_deg = 0
 				var dec = 0
-				if "h" in line[5] and not "m" in line[5]:
+				if "h" in line[6] and not "m" in line[6]:
 					# if no minutes specified, we assume decimal hours
 					# 15 degrees in an hour (360/24) 
-					ra_deg = float(15*float(line[5].rstrip("h")))
+					ra_deg = float(15*float(line[6].rstrip("h")))
 					# for now, assume degrees are given in decimal degrees
-					dec = float(line[6])
-				elif "h" in line[5] and "m" in line[5]:
+					dec = float(line[7])
+				elif "h" in line[6] and "m" in line[6]:
 					# http://voyages.sdss.org/preflight/locating-objects/ra-dec/
 					# 0,25 (1/4) degree in a minute since it takes 4 minutes for a degree (60/15)
-					var parts = line[5].split("h")
+					var parts = line[6].split("h")
 					ra_deg = float(15*float(parts[0].rstrip("h")))
 					ra_deg += float(0.25*float(parts[1].rstrip("m")))
-				if "d" in line[6] and "m" in line[6]:
-					var parts = line[6].split("d")
+				if "d" in line[7] and "m" in line[7]:
+					var parts = line[7].split("d")
 					dec = float(parts[0].rstrip("d"))
 					dec += float(parts[1].rstrip("m"))/60
 				
-				galactic_from_ra_dec(ra_deg, dec, float(line[7]))
-				# we need to minus the y coordinate for our uses for some reason?
-			
+				var data = galactic_from_ra_dec(ra_deg, dec, float(line[8]))
+				# assign calculated values - no need to strip units as it's always
+				ic.x = data[0]
+				ic.y = data[1]
+				ic.depth = data[2]
 			get_node("Control").add_child(ic)
 	
 	
@@ -66,6 +68,7 @@ func strip_units(entry):
 # based on Winchell Chung's Star3D spreadsheet and 
 # http://starmap.whitten.org/files/src/gal_pl.txt
 # input in degrees by default!!!
+# output is in whatever unit dist used (light years in my case)
 func galactic_from_ra_dec(ra, dec, dist):
 	# Find Equatorial cartesian coordinates
 	ra = deg2rad(ra)

@@ -399,9 +399,7 @@ text = "Alpha
 Centauri"
 align = 1
 
-[node name="marker" type="TextureRect" parent="Control" groups=[
-"starmap_marker",
-]]
+[node name="marker" type="TextureRect" parent="Control" groups=["starmap_marker"]]
 margin_right = 40.0
 margin_bottom = 40.0
 texture = ExtResource( 2 )
