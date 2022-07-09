@@ -5,6 +5,9 @@ export var x = 0.0
 export var y = 0.0
 export var depth = 0.0
 export var named = ""
+export var planets = false
+var snapped = false
+
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -15,9 +18,14 @@ export var named = ""
 func _ready():
 	# set name first so that debugging knows what we're dealing with
 	set_name(named)
-	get_node("Label").set_text(named)
+	var txt = named
+	if planets:
+		txt += "*"
 	
-	# positioning the stuff
+	get_node("Label").set_text(txt)
+	
+	
+	# positioning the shadow icon
 	# in Godot, +Y goes down so we need to minus the Y we get from data
 	set_position(Vector2(x*LY_TO_PX, -y*LY_TO_PX))
 	
@@ -25,6 +33,7 @@ func _ready():
 	var depth_s = sign(-depth)
 	var end = -depth*LY_TO_PX
 
+	# star icon positioned according to the depth
 	# 18 is the height of the star icon
 	get_node("TextureRect3").rect_position = Vector2(0, end+18*depth_s) 
 	
@@ -42,24 +51,29 @@ func _ready():
 		# so just zero the y and add what we need
 		get_node("TextureRect3").rect_position = Vector2(0, abs(-get_position().y+230))
 		# make icon semi-transparent
-		get_node("TextureRect3").set_modulate(Color(1,1,1,0.5))
+		get_node("TextureRect3").set_modulate(Color(1,1,1,0.75))
+		# force labels
+		snapped = true
+		get_node("Label2").rect_position = Vector2(-6.5, get_node("TextureRect3").get_position().y+25)
+		get_node("Label2").set_text("Z: " + str(depth) + " ly")
+		get_node("Label2").show()
 	
 	var y_pos = get_node("TextureRect3").get_position().y
-	get_node("Line2D").points[0] = Vector2(18, y_pos+18*depth_s)
+	get_node("Line2D").points[0] = Vector2(18, y_pos+20) #*depth_s)
 	
 	# name label
 	# above the plane (place next to star icon)
-	if depth_s < 0:
+	if depth_s < 0 or snapped:
 		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
 	# below the plane (place next to "shadow" icon)
 	else:
 		get_node("Label").rect_position = Vector2(0, 0)
 	
 	# Z axis label if needed
-	if abs(depth) > 8:
+	if abs(depth) > 8 and not snapped:
 		# above the plane (place next to star icon)
 		if depth_s < 0:
-			get_node("Label2").rect_position = Vector2(-6.5, y_pos+18)	
+			get_node("Label2").rect_position = Vector2(-6.5, y_pos+25)	
 		else:
 			# place next to shadow icon for below the plane
 			get_node("Label2").rect_position = Vector2(0, 25)

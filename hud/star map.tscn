@@ -131,7 +131,7 @@ anchor_right = 0.5
 margin_left = -20.0
 margin_right = 20.0
 margin_bottom = 14.0
-text = "Sol"
+text = "Sol*"
 align = 1
 
 [node name="Label2" type="Label" parent="Control/Sol"]
@@ -173,7 +173,7 @@ anchor_right = 0.5
 margin_left = -20.0
 margin_right = 20.0
 margin_bottom = 14.0
-text = "Tau Ceti"
+text = "Tau Ceti*"
 align = 1
 
 [node name="Line2D" type="Line2D" parent="Control/tau ceti"]
@@ -354,7 +354,7 @@ margin_top = -20.0
 margin_right = 26.5
 margin_bottom = 11.0
 text = "Proxima
-Centauri"
+Centauri*"
 
 [node name="Label2" type="Label" parent="Control/proxima"]
 margin_left = -40.0
@@ -396,7 +396,7 @@ margin_top = -11.0
 margin_right = 33.0
 margin_bottom = 20.0
 text = "Alpha
-Centauri"
+Centauri*"
 align = 1
 
 [node name="marker" type="TextureRect" parent="Control" groups=["starmap_marker"]]
