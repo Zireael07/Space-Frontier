@@ -27,33 +27,40 @@ func _ready():
 				#ic.x = float(line[1])
 				ic.y = strip_units(str(line[2]))
 				ic.depth = strip_units(str(line[3]))
+				# does the star have planets?
+				ic.planets = false
+				if "yes" in line[5]:
+					ic.planets = true
 			
 			# test ra-dec conversion
-			if line.size() > 6 and line[6] != "" and line[7] != "" and line[8] != "":
-				var ra_deg = 0
-				var dec = 0
-				if "h" in line[6] and not "m" in line[6]:
-					# if no minutes specified, we assume decimal hours
-					# 15 degrees in an hour (360/24) 
-					ra_deg = float(15*float(line[6].rstrip("h")))
-					# for now, assume degrees are given in decimal degrees
-					dec = float(line[7])
-				elif "h" in line[6] and "m" in line[6]:
-					# http://voyages.sdss.org/preflight/locating-objects/ra-dec/
-					# 0,25 (1/4) degree in a minute since it takes 4 minutes for a degree (60/15)
-					var parts = line[6].split("h")
-					ra_deg = float(15*float(parts[0].rstrip("h")))
-					ra_deg += float(0.25*float(parts[1].rstrip("m")))
-				if "d" in line[7] and "m" in line[7]:
-					var parts = line[7].split("d")
-					dec = float(parts[0].rstrip("d"))
-					dec += float(parts[1].rstrip("m"))/60
-				
-				var data = galactic_from_ra_dec(ra_deg, dec, float(line[8]))
-				# assign calculated values - no need to strip units as it's always
-				ic.x = data[0]
-				ic.y = data[1]
-				ic.depth = data[2]
+			if line.size() > 7:
+				var ra = line[7]
+				var de = line[8] 
+				if ra != "" and de != "" and line[9] != "":
+					var ra_deg = 0
+					var dec = 0
+					if "h" in ra and not "m" in ra:
+						# if no minutes specified, we assume decimal hours
+						# 15 degrees in an hour (360/24) 
+						ra_deg = float(15*float(ra.rstrip("h")))
+						# for now, assume degrees are given in decimal degrees
+						dec = float(line[7])
+					elif "h" in ra and "m" in ra:
+						# http://voyages.sdss.org/preflight/locating-objects/ra-dec/
+						# 0,25 (1/4) degree in a minute since it takes 4 minutes for a degree (60/15)
+						var parts = ra.split("h")
+						ra_deg = float(15*float(parts[0].rstrip("h")))
+						ra_deg += float(0.25*float(parts[1].rstrip("m")))
+					if "d" in de and "m" in de:
+						var parts = de.split("d")
+						dec = float(parts[0].rstrip("d"))
+						dec += float(parts[1].rstrip("m"))/60
+					
+					var data = galactic_from_ra_dec(ra_deg, dec, float(line[9]))
+					# assign calculated values - no need to strip units as it's always
+					ic.x = data[0]
+					ic.y = data[1]
+					ic.depth = data[2]
 			get_node("Control").add_child(ic)
 	
 	
