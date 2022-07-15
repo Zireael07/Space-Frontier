@@ -406,3 +406,44 @@ texture = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="PopupPanel" type="Panel" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 58.0
+margin_bottom = 46.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupPanel"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonConfirm" type="Button" parent="PopupPanel/VBoxContainer"]
+margin_right = 62.0
+margin_bottom = 20.0
+text = "Confirm"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonAbort" type="Button" parent="PopupPanel/VBoxContainer"]
+margin_top = 24.0
+margin_right = 62.0
+margin_bottom = 44.0
+text = "Abort"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="PopupPanel/VBoxContainer/ButtonConfirm" to="." method="_on_ButtonConfirm_pressed"]
+[connection signal="pressed" from="PopupPanel/VBoxContainer/ButtonAbort" to="." method="_on_ButtonAbort_pressed"]

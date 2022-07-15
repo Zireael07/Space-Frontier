@@ -145,11 +145,11 @@ func update_marker(marker):
 		marker.get_parent().remove_child(marker)
 		$"Control/Wolf 359".add_child(marker)
 
-	# show target on map (tint cyan)
+	# clear any previous tint
 	for c in get_node("Control").get_children():
 		c.get_node("Label").set_self_modulate(Color(1,1,1))
 	
-	
+	# show target on map (tint cyan)	
 	var lookup = {"luyten726-8": "Luyten 726-8", "barnards":"Barnard's Star", "wolf359":"Wolf 359"}	
 	
 	if game.player.w_hole.target_system:
@@ -162,3 +162,11 @@ func update_marker(marker):
 			$"Control/alphacen/Label".set_self_modulate(Color(0,1,1))
 		if system == "luyten726-8":
 			$"Control/tau ceti/Label".set_self_modulate(Color(0,1,1))
+
+
+func _on_ButtonConfirm_pressed():
+	game.player.w_hole.jump()
+
+
+func _on_ButtonAbort_pressed():
+	game.player.HUD.hide_starmap()

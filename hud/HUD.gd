@@ -463,6 +463,9 @@ func show_starmap():
 
 func hide_starmap():
 	$"Control4/star map".hide() 
+	
+func starmap_menu_show():
+	$"Control4/star map/PopupPanel".show()
 
 # --------------------------
 # signals
@@ -962,8 +965,9 @@ func _on_star_map_gui_input(event):
 	#print("event")
 	if event is InputEventMouseButton:
 		print("Clicked in starmap")
+		starmap_menu_show()
 		# trigger jump
-		game.player.w_hole.jump()
+		#game.player.w_hole.jump()
 
 func _on_view_size_changed():
 	print("Viewport size changed to: ", get_node("/root").size)
