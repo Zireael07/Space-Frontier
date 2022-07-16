@@ -1,5 +1,6 @@
 extends Control
 
+# Declare member variables here. Examples:
 const LY_TO_PX = 50;
 export var x = 0.0
 export var y = 0.0
@@ -7,11 +8,6 @@ export var depth = 0.0
 export var named = ""
 export var planets = false
 var snapped = false
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 
 # Called when the node enters the scene tree for the first time.
@@ -37,6 +33,9 @@ func _ready():
 	# 18 is the height of the star icon
 	get_node("TextureRect3").rect_position = Vector2(0, end+18*depth_s) 
 	
+	# clamp depth to two significant decimal places
+	var depth_str = "%.2f" % depth
+	
 	# now check if icon(s) are out of view
 	var ab_shadow = get_node("TextureRect2").get_position().y + get_position().y
 	var ab_planet = get_node("TextureRect3").get_position().y + get_position().y
@@ -55,13 +54,13 @@ func _ready():
 		# force labels
 		snapped = true
 		get_node("Label2").rect_position = Vector2(-6.5, get_node("TextureRect3").get_position().y+25)
-		get_node("Label2").set_text("Z: " + str(depth) + " ly")
+		get_node("Label2").set_text("Z: " + depth_str + " ly")
 		get_node("Label2").show()
 	
 	var y_pos = get_node("TextureRect3").get_position().y
 	get_node("Line2D").points[0] = Vector2(18, y_pos+20) #*depth_s)
 	
-	# name label
+	# name label		
 	# above the plane (place next to star icon)
 	if depth_s < 0 or snapped:
 		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
@@ -77,7 +76,15 @@ func _ready():
 		else:
 			# place next to shadow icon for below the plane
 			get_node("Label2").rect_position = Vector2(0, 25)
-		get_node("Label2").set_text("Z: " + str(depth) + " ly")
+		get_node("Label2").set_text("Z: " + depth_str + " ly")
+		get_node("Label2").show()
+
+	# shadow in bounds but planet is not (place name & Z-label next to shadow icon)
+	if ab_planet < -250:
+		get_node("Label").rect_position = Vector2(0, 0)
+		# Z axis label
+		get_node("Label2").rect_position = Vector2(0, 25)
+		get_node("Label2").set_text("Z: " + depth_str + " ly")
 		get_node("Label2").show()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
