@@ -10,7 +10,12 @@ var icon = preload("res://hud/star map icon.tscn")
 
 # data
 var data = []
+# map
+var map_graph = []
+var map_astar = null
 
+func save_graph_data(x,y,z, nam):
+	map_graph.append([x,y,z, nam])
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,7 +26,7 @@ func _ready():
 		if line[0] != "Sol" and line[0] != "Tau Ceti":
 			var ic = icon.instance()
 			ic.named = str(line[0])
-			if line[1] != "-":
+			if line[1] != " -":
 				# strip units
 				ic.x = strip_units(str(line[1]))
 				#ic.x = float(line[1])
@@ -31,9 +36,10 @@ func _ready():
 				ic.planets = false
 				if "yes" in line[5]:
 					ic.planets = true
+				save_graph_data(ic.x, ic.y, ic.depth, ic.named)
 			
 			# test ra-dec conversion
-			if line.size() > 7:
+			if line.size() > 7 and line[1] == " -":
 				var ra = line[7]
 				var de = line[8] 
 				if ra != "" and de != "" and line[9] != "":
@@ -61,6 +67,7 @@ func _ready():
 					ic.x = data[0]
 					ic.y = data[1]
 					ic.depth = data[2]
+					save_graph_data(ic.x, ic.y, ic.depth, ic.named)
 			get_node("Control").add_child(ic)
 	
 	
@@ -162,8 +169,34 @@ func update_marker(marker):
 			$"Control/alphacen/Label".set_self_modulate(Color(0,1,1))
 		if system == "luyten726-8":
 			$"Control/tau ceti/Label".set_self_modulate(Color(0,1,1))
+	
+	# TODO: show distances, too
+	# create a graph of stars we can route on
+	create_map_graph()
 
+func create_map_graph():
+	map_astar = AStar.new()
+	# hardcoded stars
+	map_astar.add_point(0, Vector3(0,0,0)) # Sol
+	map_astar.add_point(1, Vector3(-3.4, 0.4, -11.4)) # Tau Ceti
+	
+	# graph is made out of nodes
+	for i in map_graph.size():
+		var n = map_graph[i]
+		map_astar.add_point(i+2, Vector3(n[0], n[1], n[2]))
+	
+	# connect stars
+	map_astar.connect_points(0,1) # Sol to Tau Ceti
+	map_astar.connect_points(0,2) # Sol to Barnard's
+	map_astar.connect_points(0,3) # Sol to Wolf359
+	map_astar.connect_points(0,4) # Sol to Luyten 726-8/UV Ceti
+	# debug
+	for p in map_astar.get_points():
+		print(p, ": ", map_astar.get_point_position(p))
+		
+	return map_astar
 
+# --------------------------------------------------
 func _on_ButtonConfirm_pressed():
 	game.player.w_hole.jump()
 
