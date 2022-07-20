@@ -182,7 +182,15 @@ func _process(_delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 
+	# paranoia
+	if star_main == null or !is_instance_valid(star_main):
+		return
+
 	for i in range(stars.size()):
+		# paranoia
+		if stars[i] == null:
+			continue
+		
 		# skip main star
 		if stars[i] == star_main:
 			continue
