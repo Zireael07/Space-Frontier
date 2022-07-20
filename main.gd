@@ -116,7 +116,7 @@ func _ready():
 	for i in range(3):
 		spawn_enemy(pos, i, p_ind, mmap)
 	
-	# wormhole
+	# wormholes
 	if curr_system == "Sol":
 		spawn_wormhole(p_ind, 11, mmap)
 		# second wormhole to Barnard's
@@ -132,6 +132,9 @@ func _ready():
 	if curr_system == "wolf359":
 		spawn_wormhole(p_ind, 1, mmap)
 	
+	if curr_system == "tauceti":
+		spawn_wormhole(p_ind, 1, mmap)
+		
 	# systems w/o planets have a wormhole already in the scene
 	
 	# other interesting things
@@ -413,7 +416,7 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 	var wh = wormhole.instance()
 	
 	# fix for smaller systems
-	if planet_id > get_tree().get_nodes_in_group("planets").size():
+	if planet_id >= get_tree().get_nodes_in_group("planets").size():
 		return
 	
 	var p = get_tree().get_nodes_in_group("planets")[planet_id]
@@ -578,6 +581,18 @@ func change_system(system="proxima", time=0.0):
 	if system == "proxima":
 		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
 		spawn_wormhole(p_ind, 0, mmap, "Sol", Vector2(0,0), false)
+	
+	# UV Ceti has a manually added wormhole...
+	
+	if system == "wolf359":
+		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
+	
+	if system == "tauceti":
+		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
+	if system == "gliese1265":
+		spawn_wormhole(p_ind, 0, mmap, null, Vector2(0,0), false)
+		
+	# systems w/o planets have a wormhole already in the scene
 	
 	# timer
 	get_node("Timer").start()

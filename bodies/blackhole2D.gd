@@ -46,6 +46,42 @@ func jump():
 		time = time * 12 # because one month is 1/12 of a year
 		print("Distance: ", ly, " light years")
 		get_tree().get_nodes_in_group("main")[0].change_system("tauceti", time)
+	if system == "tauceti":
+		ly = 6.8 # between Tau Ceti and Gliese 1002
+		var time = ly/game.WORMHOLE_SPEED
+		time = time * 12 # because one month is 1/12 of a year
+		print("Distance: ", ly, " light years")
+		get_tree().get_nodes_in_group("main")[0].change_system("gliese1002", time)
+	if system == "gliese1002":
+		ly = 8.78 # between Gliese 1002 and Gliese 1286
+		var time = ly/game.WORMHOLE_SPEED
+		time = time * 12 # because one month is 1/12 of a year
+		print("Distance: ", ly, " light years")
+		get_tree().get_nodes_in_group("main")[0].change_system("gliese1286", time)
+	if system == "gliese1286":
+		ly = 11.31 # between Gliese 1286 and Gliese 867
+		var time = ly/game.WORMHOLE_SPEED
+		time = time * 12 # because one month is 1/12 of a year
+		print("Distance: ", ly, " light years")
+		get_tree().get_nodes_in_group("main")[0].change_system("gliese867", time)
+	if system == "gliese867":
+		ly = 6.7 # between Gliese 867 and Gliese 1265
+		var time = ly/game.WORMHOLE_SPEED
+		time = time * 12 # because one month is 1/12 of a year
+		print("Distance: ", ly, " light years")
+		get_tree().get_nodes_in_group("main")[0].change_system("gliese1265", time)
+	if system == "gliese1265":
+		ly = 3.7 # between Gliese 1265 to Gliese 4281
+		var time = ly/game.WORMHOLE_SPEED
+		time = time * 12 # because one month is 1/12 of a year
+		print("Distance: ", ly, " light years")
+		get_tree().get_nodes_in_group("main")[0].change_system("gliese4281", time)
+	if system == "gliese4281":
+		ly = 9.7
+		var time = ly/game.WORMHOLE_SPEED
+		time = time * 12 # because one month is 1/12 of a year
+		print("Distance: ", ly, " light years")
+		get_tree().get_nodes_in_group("main")[0].change_system("trappist", time)
 
 
 func _on_Area2D_area_entered(_area):
