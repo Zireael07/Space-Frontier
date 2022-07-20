@@ -16,8 +16,9 @@ var cycler = preload("res://ships/cycler.tscn")
 var wormhole = preload("res://bodies/wormhole2D.tscn")
 
 # star systems
-var handmade_system = preload("res://systems/star system.tscn")
-var proc_system = preload("res://systems//proc star system.tscn")
+#var handmade_system = preload("res://systems/star system.tscn")
+#var proc_system = preload("res://systems//proc star system.tscn")
+var system_no_planets = preload("res://systems/star system no planets.tscn")
 var sol = preload("res://systems/Sol system.tscn")
 var trappist = preload("res://systems/Trappist system.tscn")
 var proxima = preload("res://systems/Proxima Centauri system.tscn")
@@ -26,7 +27,7 @@ var barnards = preload("res://systems/Barnard's star system.tscn")
 var uvceti = preload("res://systems/Luyten 726-8 system.tscn")
 var tauceti = preload("res://systems/Tau Ceti system.tscn")
 var wolf = preload("res://systems/Wolf 359 system.tscn")
-
+var gliese1265 = preload("res://systems/Gliese 1265 system.tscn")
 
 # game core
 var core = preload("res://game_core.tscn")
@@ -38,7 +39,8 @@ var curr_system = null
 var mmap
 
 func spawn_system(system="proc"):
-	var sys = proc_system
+	var sys = system_no_planets
+	# named/defined systems
 	if system == "Sol":
 		sys = sol
 	elif system == "trappist":
@@ -55,8 +57,15 @@ func spawn_system(system="proc"):
 		sys = uvceti
 	elif system == "tauceti":
 		sys = tauceti
-		
+	elif system == "gliese1265":
+		sys = gliese1265
+			
 	var system_inst = sys.instance()
+	# make names match for systems w/o planets
+	if sys == system_no_planets:
+		system_inst.set_name(system)
+		system_inst.get_child(0).set_name(system)
+		system_inst.get_child(0).get_child(1).set_text(system)
 	add_child(system_inst)
 	
 	return [system, system_inst]
@@ -123,6 +132,9 @@ func _ready():
 	if curr_system == "wolf359":
 		spawn_wormhole(p_ind, 1, mmap)
 	
+	# systems w/o planets have a wormhole already in the scene
+	
+	# other interesting things
 	pos = spawn_asteroid_processor(p_ind, curr_system, mmap)
 	if pos != null:
 		for i in range(2):
@@ -442,6 +454,10 @@ func move_player(system, travel=0.0):
 		place = get_tree().get_nodes_in_group("star")[0]
 	if system == "alphacen":
 		place = get_tree().get_nodes_in_group("star")[1]
+	
+	# paranoia
+	if place == null:
+		place = get_tree().get_nodes_in_group("star")[0]
 	print("Place: " + str(place.get_global_position()))
 	game.player.get_parent().set_global_position(place.get_global_position())
 	game.player.set_position(Vector2(0,0))
