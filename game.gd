@@ -50,10 +50,22 @@ func _ready():
 
 func increment_date(days, months):
 	# add them to date
-	game.date = [game.date[0]+int(floor(days)), game.date[1]+months, game.date[2]]
-	var month = game.date[1]
-	if month > 12:
-		game.date[1] = month-12
+	#game.date = [game.date[0]+int(floor(days)), game.date[1]+months, game.date[2]]
+	# rollover for days
+	var new_days = game.date[0]+int(floor(days))
+	# sometimes we can roll over multiple times, same deal as with months
+	while game.date[0] > 30:
+		game.date[0] = game.date[0]-30
+		game.date[1] = game.date[1] + 1 # increment month
+	#else:
+	#	game.date[0] = new_days
+	
+	# rollover for months
+	var new_months = game.date[1]+months
+	game.date[1] = new_months
+	# while because some trips can take over 12 months
+	while game.date[1] > 12:
+		game.date[1] = game.date[1]-12
 		game.date[2] += 1 # increment year
 
 #func _process(delta):
