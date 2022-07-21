@@ -51,8 +51,8 @@ __meta__ = {
 [node name="Control2" type="Control" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -204.0
-margin_right = -164.0
+margin_left = -202.0
+margin_right = -162.0
 margin_bottom = 40.0
 script = ExtResource( 14 )
 __meta__ = {

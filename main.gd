@@ -63,9 +63,10 @@ func spawn_system(system="proc"):
 	var system_inst = sys.instance()
 	# make names match for systems w/o planets
 	if sys == system_no_planets:
-		system_inst.set_name(system)
-		system_inst.get_child(0).set_name(system)
-		system_inst.get_child(0).get_child(1).set_text(system)
+		var nam = system.capitalize()
+		system_inst.set_name(nam)
+		system_inst.get_child(0).set_name(nam)
+		system_inst.get_child(0).get_child(1).set_text(nam)
 	add_child(system_inst)
 	
 	return [system, system_inst]
@@ -525,9 +526,8 @@ func change_system(system="proxima", time=0.0):
 	mmap.cleanup()
 	
 	# clean direction labels
-	# 0 and 1 are used for officer messages
-	for i in range(2, game.player.HUD.get_node("Control3").get_child_count()):
-		game.player.HUD.get_node("Control3").get_child(i).queue_free()
+	for i in range(game.player.HUD.get_node("Control").get_child_count()):
+		game.player.HUD.get_node("Control").get_child(i).queue_free()
 	game.player.HUD.dir_labels = []
 	
 	# despawn all ships and starbases
