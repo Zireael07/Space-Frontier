@@ -19,15 +19,21 @@ var wormhole = preload("res://bodies/wormhole2D.tscn")
 #var handmade_system = preload("res://systems/star system.tscn")
 #var proc_system = preload("res://systems//proc star system.tscn")
 var system_no_planets = preload("res://systems/star system no planets.tscn")
-var sol = preload("res://systems/Sol system.tscn")
-var trappist = preload("res://systems/Trappist system.tscn")
-var proxima = preload("res://systems/Proxima Centauri system.tscn")
-var alpha = preload("res://systems/Alpha Centauri system.tscn")
-var barnards = preload("res://systems/Barnard's star system.tscn")
-var uvceti = preload("res://systems/Luyten 726-8 system.tscn")
-var tauceti = preload("res://systems/Tau Ceti system.tscn")
-var wolf = preload("res://systems/Wolf 359 system.tscn")
-var gliese1265 = preload("res://systems/Gliese 1265 system.tscn")
+
+# we can't preload from a dictionary because preload wants const,
+# so we need to store entire preload("xxx")
+var defined_systems = {
+	"Sol": preload("res://systems/Sol system.tscn"),
+	"Trappist": preload("res://systems/Trappist system.tscn"),
+	"Proxima": preload("res://systems/Proxima Centauri system.tscn"),
+	"Alpha Centauri": preload("res://systems/Alpha Centauri system.tscn"),
+	"Barnards": preload("res://systems/Barnard's star system.tscn"),
+	"UV Ceti": preload("res://systems/Luyten 726-8 system.tscn"), # outlier: data file uses scientific name
+	"Luyten 726-8": preload("res://systems/Luyten 726-8 system.tscn"), # dupe of the above 
+	"Tau Ceti": preload("res://systems/Tau Ceti system.tscn"),
+	"Wolf 359": preload("res://systems/Wolf 359 system.tscn"),
+	"Gliese 1265": preload("res://systems/Gliese 1265 system.tscn")
+}
 
 # game core
 var core = preload("res://game_core.tscn")
@@ -38,27 +44,19 @@ var rank_list = [1,1]
 var curr_system = null
 var mmap
 
+func system_name_to_id(nam):
+	nam.replace("'", "") # nix any apostrophes if present
+	nam.replace("Star", "") # nix any "Star" (e.g. Barnard's Star, Teegarden's Star...)
+	print("ID for name: ", nam)
+	return nam
+
 func spawn_system(system="proc"):
 	var sys = system_no_planets
 	# named/defined systems
-	if system == "Sol":
-		sys = sol
-	elif system == "trappist":
-		sys = trappist
-	elif system == "proxima":
-		sys = proxima
-	elif system == "alphacen":
-		sys = alpha
-	elif system == "barnards":
-		sys = barnards
-	elif system == "wolf359":
-		sys = wolf
-	elif system == "luyten726-8":
-		sys = uvceti
-	elif system == "tauceti":
-		sys = tauceti
-	elif system == "gliese1265":
-		sys = gliese1265
+	if system in defined_systems: #alternate to dict.has()
+		sys = defined_systems[system]
+	#else:
+	#	print("System not found: ", system)
 			
 	var system_inst = sys.instance()
 	# make names match for systems w/o planets
@@ -89,7 +87,7 @@ func _ready():
 	var syst = "Sol"
 	
 	if game.start != null:
-		var lookup_system = {1: "Sol", 2: "trappist"}
+		var lookup_system = {1: "Sol", 2: "Trappist"}
 		syst = lookup_system[game.start]
 		
 	var data = spawn_system(syst)
@@ -121,19 +119,19 @@ func _ready():
 	if curr_system == "Sol":
 		spawn_wormhole(p_ind, 11, mmap)
 		# second wormhole to Barnard's
-		spawn_wormhole(p_ind, 11, mmap, "barnards", Vector2(-1500,0))
+		spawn_wormhole(p_ind, 11, mmap, "Barnards", Vector2(-1500,0))
 		# some more...
-		spawn_wormhole(p_ind, 11, mmap, "luyten726-8", Vector2(-1500, -750))
-		spawn_wormhole(p_ind, 11, mmap, "wolf359", Vector2(-1500, 500))
-	if curr_system == "proxima":
+		spawn_wormhole(p_ind, 11, mmap, "Luyten 726-8", Vector2(-1500, -750))
+		spawn_wormhole(p_ind, 11, mmap, "Wolf 359", Vector2(-1500, 500))
+	if curr_system == "Proxima":
 		spawn_wormhole(p_ind, 1, mmap)
 		
 	# UV Ceti has a manually added wormhole...
 	
-	if curr_system == "wolf359":
+	if curr_system == "Wolf 359":
 		spawn_wormhole(p_ind, 1, mmap)
 	
-	if curr_system == "tauceti":
+	if curr_system == "Tau Ceti":
 		spawn_wormhole(p_ind, 1, mmap)
 		
 	# systems w/o planets have a wormhole already in the scene
@@ -287,9 +285,9 @@ func spawn_enemy_starbase(system, p_ind, m_map):
 	
 	if system == "Sol":
 		p = get_tree().get_nodes_in_group("planets")[1] # Venus # TODO: should be Saturn instead
-	elif system == "proxima":
+	elif system == "Proxima":
 		p = get_tree().get_nodes_in_group("planets")[2]
-	elif system == "trappist":
+	elif system == "Trappist":
 		p = get_tree().get_nodes_in_group("planets")[3]	
 	else:
 		p = get_tree().get_nodes_in_group("planets")[0]
@@ -451,12 +449,12 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 func move_player(system, travel=0.0):
 	var place = null
 	# move player
-	var first_star = ["proxima", "Sol", "barnards", "wolf359", "luyten726-8", "tauceti"]
+	var first_star = ["Proxima", "Sol", "Barnards", "Wolf 359", "Luyten 726-8", "Tau Ceti"]
 	# FIXME: doesn't really place correctly?
 	if system in first_star:
 	#var place = get_tree().get_nodes_in_group("planets")[1] 
 		place = get_tree().get_nodes_in_group("star")[0]
-	if system == "alphacen":
+	if system == "Alpha Centauri":
 		place = get_tree().get_nodes_in_group("star")[1]
 	
 	# paranoia
@@ -481,7 +479,7 @@ func move_player(system, travel=0.0):
 	#game.date = [game.date[0]+int(floor(days)), game.date[1]+travel_months, game.date[2]]
 	var format_date = "%02d-%02d-%d" % [game.date[0], game.date[1], game.date[2]]
 	var msg = str("Welcome to ", system_name, " we arrived: ", format_travel, " after departure. The current date is: ", format_date);
-	print(str(travel) + " months, " + str(days) + " days ")
+	print(str(travel) + " months: " + str(travel_months) + ", " + str(days) + " days ")
 	game.player.emit_signal("officer_message", msg)
 	
 func update_HUD():
@@ -577,19 +575,21 @@ func change_system(system="proxima", time=0.0):
 	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
 	print("Player index: " + str(p_ind))
 	
+	# TODO: this should pull from some source of truth
+	# TODO: deduplicate with ready() above
 	# wormhole
-	if system == "proxima":
+	if system == "Proxima":
 		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
 		spawn_wormhole(p_ind, 0, mmap, "Sol", Vector2(0,0), false)
 	
 	# UV Ceti has a manually added wormhole...
 	
-	if system == "wolf359":
+	if system == "Wolf 359":
 		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
 	
-	if system == "tauceti":
+	if system == "Tau Ceti":
 		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
-	if system == "gliese1265":
+	if system == "Gliese 1265":
 		spawn_wormhole(p_ind, 0, mmap, null, Vector2(0,0), false)
 		
 	# systems w/o planets have a wormhole already in the scene
