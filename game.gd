@@ -14,8 +14,10 @@ const ZEROC_IN_K = 273.15
 const MOON_MASS = 0.0123 #Earth masses
 const WORMHOLE_SPEED = 5.00 # in c
 
+# calendar
 const start_date = [05, 05, 2155]
 var date = start_date
+var captain_log = []
 
 # ship name lists here for consistency
 # highly US themed names and some mythological animals
@@ -67,6 +69,9 @@ func increment_date(days, months):
 	while game.date[1] > 12:
 		game.date[1] = game.date[1]-12
 		game.date[2] += 1 # increment year
+
+func add_event_to_log(event):
+	captain_log.append(event)
 
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.

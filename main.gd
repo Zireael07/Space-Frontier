@@ -481,6 +481,8 @@ func move_player(system, travel=0.0):
 	var msg = str("Welcome to ", system_name, " we arrived: ", format_travel, " after departure. The current date is: ", format_date);
 	print(str(travel) + " months: " + str(travel_months) + ", " + str(days) + " days ")
 	game.player.emit_signal("officer_message", msg)
+	# add to captain's log (using formatted date to ensure we save the correct one)
+	game.add_event_to_log([system_name, format_date])
 	
 func update_HUD():
 	# force update orrery

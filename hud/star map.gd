@@ -209,7 +209,24 @@ func create_map_graph():
 # --------------------------------------------------
 func _on_ButtonConfirm_pressed():
 	game.player.w_hole.jump()
-
+	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
 
 func _on_ButtonAbort_pressed():
 	game.player.HUD.hide_starmap()
+	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
+
+func display_captain_log():
+	#$"PopupPanel/VBoxContainer/ButtonLog/PanelLog/RichTextLabel".set_text(str(game.captain_log))
+	
+	# same trick as in update_cargo_listing()
+	var listing = str(game.captain_log).lstrip("[").rstrip("]").replace("], ", "\n").replace("[", "")	
+	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog/RichTextLabel".set_text(listing)
+
+func _on_ButtonLog_pressed():
+	if !$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".is_visible():
+		display_captain_log()
+		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".show()
+	else:
+		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
+	
+	
