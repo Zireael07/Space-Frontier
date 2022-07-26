@@ -50,9 +50,19 @@ func _ready():
 	print("Stellar luminosity: " + str(luminosity))
 	
 	# names
+	# 4 random letters plus hyphen plus 4 digits make "scientific-sounding names"
+	# see: https://web.archive.org/web/20200201191722/http://www.jongware.com/galaxy6.html
+	# 'A' is 65 in ASCII
+	var chr = 65+randi() % 26  # random character
+	var arr = [65 + randi() % 26, 65 + randi() % 26, 65 + randi() % 26, 65 + randi() % 26]
+	var star_name = PoolByteArray(arr).get_string_from_ascii()
+	star_name = star_name + "-"
+	var nm = [randi() % 10, randi() % 10, randi() % 10, randi() % 10]
 	# sufficiently big number
-	var num = 1000 + randi() % 1000
-	var star_name = "Kepler " + str(num)
+	#var num = 1000 + randi() % 1000
+	#var star_name = "Kepler " + str(num)
+	
+	star_name = star_name + str(nm[0]) + str(nm[1]) + str(nm[2]) + str(nm[3])
 	
 	$"Label".set_text(star_name)
 	

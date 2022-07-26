@@ -14,6 +14,8 @@ var weights = { "H": 1.0, "H2": 2.0, "He": 4.0, "N":14.0, "O": 16.0, "CH4":16.0,
 # https://github.com/zakski/accrete-starform-stargen/blob/master/originals/keris/src/main/c/propert.c
 # 2008 version of Starform, from the same repo, tweaks molecule abundance a bit to not be uniform 0.001
 # looks like magic values because they don't gel with any source on elemental abundances I can find
+# https://github.com/Sphinkie/StarGen-II/blob/master/sources/lib/SG_Gas.h and their doxygen documentation
+# confirms this is supposed to be solar abundances
 var abunds = {"H": 27925.4, "H2":27925.4, "He": 2722.4, "N":3.1333, "O":23.8232, "O2":23.8232, "Ne":3.4435e-5,
 "NH3": 0.0001, "H2O":0.001, "CO2": 0.0005, "O3":0.000001, "CH4":0.0001}
 
