@@ -69,6 +69,11 @@ func _ready():
 	# modern naming, from b onwards (instead of Roman numerals)
 	var numerals = {0:"b", 1:"c", 2:"d", 3:"e"}
 	
+	# test periods
+	# https://academic.oup.com/mnras/article/490/4/4575/5613397 section 2.1.2.
+	# they calculate periods in days, I prefer AUs
+	var periods = draw_power_law_rep(2, 0.04, 1, 4)
+	
 	# planets
 	var planets = get_tree().get_nodes_in_group("planets")
 	for i in planets.size():
@@ -118,6 +123,31 @@ func get_star_type(sel):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
 #	pass
+
+
+# we split into two functions to achieve the same
+func draw_power_law_rep(n:float, mn, mx, r: int):
+	var results = []
+	for i in r:
+		# more random
+		randomize()
+		results.append(draw_power_law(n, mn, mx))
+	
+	print("Power law drawn results: ", results)
+	return results
+
+# https://github.com/ExoJulia/ExoplanetsSysSim.jl/blob/3150dc64437909be15270aca4101e68c0a7a0dc2/src/planetary_system.jl#L271
+# based on code by the authors of https://academic.oup.com/mnras/article/490/4/4575/5613397
+# Julia has tricks here to do rng and calculations for several things at once 
+# '.' is the Julia vectorized op that does thing for all elements of an array, and passing the size to rand() draws a random value x times
+func draw_power_law(n:float, mn, mx):
+	if n != -1:
+		var ind = (1/(n+1))
+		return pow(((pow(mx, n+1) - pow(mn, n+1)) * randf() + pow(mn, n-1)), ind)
+		#return ((mx^(n+1) - mn^(n+1)).*rand(r) .+ mn^(n+1)).^(1/(n+1))
+	else: #if n == -1
+		return pow(mn*(mx/mn), randf())
+		#return mn*(mx/mn).^rand(r)
 
 func get_chance_roll_table(chances, pad=false):
 	var num = -1
