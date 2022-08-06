@@ -8,6 +8,11 @@ extends Control
 
 var icon = preload("res://hud/star map icon.tscn")
 
+const LY_TO_PX = 50;
+var offset = Vector2(0,0)
+var center = Vector2(382.5, 242.5) # experimentally determined
+var grid = Vector2(0, -138) # experimentally determined
+
 # data
 var data = []
 # map
@@ -230,3 +235,38 @@ func _on_ButtonLog_pressed():
 		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
 	
 	
+func _on_ButtonL_pressed():
+	offset += Vector2(LY_TO_PX,0)
+	$Control.set_position(center+offset)
+	if offset != Vector2(0,0):
+		$Grid.origin = false
+	else:
+		$Grid.origin = true
+	$Grid.update_grid()
+
+func _on_ButtonR_pressed():
+	offset += Vector2(-LY_TO_PX,0)
+	$Control.set_position(center+offset)
+	if offset != Vector2(0,0):
+		$Grid.origin = false
+	else:
+		$Grid.origin = true
+	$Grid.update_grid()
+
+func _on_ButtonUp_pressed():
+	offset += Vector2(0, LY_TO_PX)
+	$Control.set_position(center+offset)
+	if offset != Vector2(0,0):
+		$Grid.origin = false
+	else:
+		$Grid.origin = true
+	$Grid.update_grid()
+
+func _on_ButtonDown_pressed():
+	offset += Vector2(0, -LY_TO_PX)
+	$Control.set_position(center+offset)
+	if offset != Vector2(0,0):
+		$Grid.origin = false
+	else:
+		$Grid.origin = true
+	$Grid.update_grid()

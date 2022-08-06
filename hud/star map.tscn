@@ -407,6 +407,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Control2" type="Control" parent="."]
+margin_left = 20.0
+margin_top = 40.0
+margin_right = 60.0
+margin_bottom = 80.0
+
+[node name="ButtonL" type="Button" parent="Control2"]
+margin_right = 20.0
+margin_bottom = 20.0
+text = "<"
+
+[node name="ButtonR" type="Button" parent="Control2"]
+margin_left = 20.0
+margin_right = 40.0
+margin_bottom = 20.0
+text = ">"
+
+[node name="ButtonUp" type="Button" parent="Control2"]
+margin_left = 10.0
+margin_top = -20.0
+margin_right = 30.0
+text = "^"
+
+[node name="ButtonDown" type="Button" parent="Control2"]
+margin_left = 10.0
+margin_top = 20.0
+margin_right = 30.0
+margin_bottom = 40.0
+text = "V"
+
 [node name="PopupPanel" type="Panel" parent="."]
 visible = false
 anchor_left = 0.5
@@ -464,6 +494,10 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[connection signal="pressed" from="Control2/ButtonL" to="." method="_on_ButtonL_pressed"]
+[connection signal="pressed" from="Control2/ButtonR" to="." method="_on_ButtonR_pressed"]
+[connection signal="pressed" from="Control2/ButtonUp" to="." method="_on_ButtonUp_pressed"]
+[connection signal="pressed" from="Control2/ButtonDown" to="." method="_on_ButtonDown_pressed"]
 [connection signal="pressed" from="PopupPanel/VBoxContainer/ButtonConfirm" to="." method="_on_ButtonConfirm_pressed"]
 [connection signal="pressed" from="PopupPanel/VBoxContainer/ButtonAbort" to="." method="_on_ButtonAbort_pressed"]
 [connection signal="pressed" from="PopupPanel/VBoxContainer/ButtonLog" to="." method="_on_ButtonLog_pressed"]
