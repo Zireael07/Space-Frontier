@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://systems/star system.gd" type="Script" id=1]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
+[ext_resource path="res://bodies/planet_rotating_procedural.tscn" type="PackedScene" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+[sub_resource type="Animation" id=2]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite_shadow:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
+
+[node name="Teegarden\'s Star" type="Node2D" groups=["star"]]
+position = Vector2( 500, 500 )
+script = ExtResource( 1 )
+orbit_rate = 0.004
+star_radius_factor = 0.8
+luminosity = 0.003
+zoom_scale = 6
+
+[node name="Sprite" type="Sprite" parent="."]
+rotation = 9.92185
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_top = 100.0
+margin_right = 72.0
+margin_bottom = 116.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Teegarden's Star"
+
+[node name="planet_holder" type="Node2D" parent="."]
+
+[node name="planet" parent="planet_holder" groups=["planets"] instance=ExtResource( 3 )]
+position = Vector2( 0, 3000 )
+planet_rad_factor = 0.2
+mass = 1.05
+hydro = 0.0
+atm = 1.2204
+
+[node name="Label" parent="planet_holder/planet" index="3"]
+text = "Teegarden's Star b"
+
+[node name="planet2" parent="planet_holder" groups=["planets"] instance=ExtResource( 3 )]
+position = Vector2( 0, 5280 )
+planet_rad_factor = 0.2
+mass = 1.11
+hydro = 0.0
+atm = 0.0196063
+
+[node name="Label" parent="planet_holder/planet2" index="3"]
+text = "Teegarden's Star c"
+
+[node name="AnimationPlayer" parent="planet_holder/planet2" index="7"]
+anims/scanning = SubResource( 2 )
+
+[editable path="planet_holder/planet"]
+[editable path="planet_holder/planet2"]
