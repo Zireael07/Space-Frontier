@@ -1,17 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/hud/red_circle.png" type="Texture" id=1]
 [ext_resource path="res://assets/hud/grey_circle.png" type="Texture" id=2]
 [ext_resource path="res://hud/star map icon.gd" type="Script" id=3]
+[ext_resource path="res://assets/hud/line_gradient.tres" type="Gradient" id=4]
 
 [node name="icon" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
 rect_pivot_offset = Vector2( 20, 20 )
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 self_modulate = Color( 1, 1, 1, 0.501961 )
@@ -26,13 +24,11 @@ margin_bottom = 20.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 20, 20 )
 texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PoolVector2Array( 18, -75, 18, 18 )
 width = 5.0
+gradient = ExtResource( 4 )
 
 [node name="TextureRect3" type="TextureRect" parent="."]
 anchor_left = 0.5
@@ -46,9 +42,6 @@ margin_bottom = -73.0
 rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 20, 20 )
 texture = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="."]
 anchor_left = 0.5
