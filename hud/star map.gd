@@ -43,11 +43,15 @@ func _ready():
 					ic.planets = true
 				save_graph_data(ic.x, ic.y, ic.depth, ic.named)
 			
-			# test ra-dec conversion
+			# line[6] is for comments
+			
+			# ra-dec conversion
 			if line.size() > 7 and line[1] == " -":
+				#print("RA/DEC candidate...")
 				var ra = line[7]
 				var de = line[8] 
 				if ra != "" and de != "" and line[9] != "":
+					#print("RA/DEC convert for ", str(line[0]))
 					var ra_deg = 0
 					var dec = 0
 					if "h" in ra and not "m" in ra:
@@ -66,8 +70,15 @@ func _ready():
 						var parts = de.split("d")
 						dec = float(parts[0].rstrip("d"))
 						dec += float(parts[1].rstrip("m"))/60
+					if not "h" in ra:
+						ra_deg = float(ra)
+					if not "d" in de and not "m" in de:
+						dec = float(de)
 					
-					var data = galactic_from_ra_dec(ra_deg, dec, float(line[9]))
+					var dist = float(line[9])
+					if "pc" in line[9]:
+						dist = strip_units(line[9])
+					var data = galactic_from_ra_dec(ra_deg, dec, dist)
 					# assign calculated values - no need to strip units as it's always
 					ic.x = data[0]
 					ic.y = data[1]
@@ -83,7 +94,7 @@ func strip_units(entry):
 	if "ly" in entry:
 		num = float(entry.rstrip("ly"))
 	elif "pc" in entry:
-		num = float(entry.rstrip("pc"))
+		num = float(entry.rstrip("pc"))*3.26
 	return num
 
 # based on Winchell Chung's Star3D spreadsheet and 
