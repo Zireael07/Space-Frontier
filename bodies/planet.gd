@@ -14,7 +14,7 @@ var radius = 1.0 # in Earth radius
 var gravity = 1.0 # in Earth gravity
 export(float) var hydro = 0.3 # water/land ratio (surface, not volume = 30% for Earth)
 export(float) var ice = 0.0 # how much of the surface is covered by ice (eyeballed for most planets)
-var albedo = 0.3 # test value Bond albedo, ranges from 0 to 1
+var albedo = 0.3 # test value Bond albedo (matches Earth), ranges from 0 to 1
 var temp = 0 # in Kelvin
 export(float) var atm = 0.0 # in Earth atmospheres
 export(float) var greenhouse = 0.0 # greenhouse coefficient from 0 to 1, see: http://phl.upr.edu/library/notes/surfacetemperatureofplanets
@@ -200,7 +200,7 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 		else:
 			# send temp in Celsius to the shader
 			get_node("Sprite").get_material().set_shader_param("temperature", (temp-game.ZEROC_IN_K))
-			print("Sending temp ", (temp-game.ZEROC_IN_K), " to shader")
+			print("Sending temp %.2f" % (temp-game.ZEROC_IN_K), " C to shader")
 	
 	# set population for planets that start colonized
 	# if we set population from editor, don't change it
@@ -296,6 +296,7 @@ func greenhouse_diff():
 	return real_temp - equilibrium_temp
 
 # Radiative equilibrium tempetature + greenhouse effect
+# this is in Kelvin
 func calculate_temperature(inc_greenhouse=true):
 	if self.dist == 0 and not is_in_group("moon"):
 		print("Bad distance! " + get_name())
@@ -314,6 +315,7 @@ func calculate_temperature(inc_greenhouse=true):
 		return 273 #dummy
 		
 	var axis = (dist_t/game.LIGHT_SEC)/game.LS_TO_AU
+	#print("Axis: ", axis, "AU")
 	
 	# https://spacemath.gsfc.nasa.gov/astrob/6Page61.pdf
 	# T = 273*((L(1-a) / D2)^0.25)
@@ -322,10 +324,22 @@ func calculate_temperature(inc_greenhouse=true):
 	if inc_greenhouse == false:
 		green = 0
 	
-	# http://phl.upr.edu/library/notes/surfacetemperatureofplanets
-	# T = 273*((L(1-a)) / D2*(1-g))
-	var t = star.luminosity*(1-albedo) / (pow(axis,2) * (1-green))
-	var T = 273 * pow(t, 0.25)
+	# http://web.archive.org/web/20211018072330/http://phl.upr.edu/library/notes/surfacetemperatureofplanets
+	# T = 278*((L(1-a)) / D2*(1-g))
+	var t = star.luminosity*(1.0-albedo) / (pow(axis,2) * (1.0-green))
+	var T = 278.0 * pow(t, 0.25)
+#	print("Temp in K: ", T)
+
+	# another version of the calculation
+	# http://home.ustc.edu.cn/~baishuxu/planettempcalc.html
+	# https://ui.adsabs.harvard.edu/abs/2012PASP..124..323K/abstract (arxiv:1202.2377) equation 3
+#	var sigma = 5.670367e-8 # Stefan-Boltzmann constant
+#	var sol_flux = 3.828e26 # in Watts?
+#	var AU = 1.4959789e11 #meters
+#	# per https://www.tfeb.org/fragments/2015/09/30/black-body-planet/ the upper part equals S?
+#	var t = star.luminosity*sol_flux*(1.0-albedo) / (16 * PI * axis * axis * AU * AU * sigma);
+#	var T = pow(t, 0.25)
+	#print("Temp in K: ", T)
 	return T
 
 # https://arxiv.org/pdf/1603.08614v2.pdf (Jingjing, Kipping 2016)
@@ -471,7 +485,7 @@ func atmosphere_gases():
 			#print("Considering gas...", g)
 			# if we're not a gas, skip
 			if g in chem.boil and exo_temp < chem.boil[g]:
-				print("Skipping ", g, " because it's not a gas @ ", str(exo_temp) + "K")
+				print("Skipping ", g, " because it's not a gas @ ", str(exo_temp) + "K (exospheric temp)")
 				continue
 				
 			# no idea what exactly this is, except it is connected to rms
