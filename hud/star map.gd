@@ -28,7 +28,7 @@ func _ready():
 	for line in data:
 		# name, x, y, z, color
 		#print(line)
-		if line[0] != "Sol" and line[0] != "Tau Ceti":
+		if line[0] != "Sol":
 			var ic = icon.instance()
 			ic.named = str(line[0])
 			if line[1] != " -":
@@ -154,7 +154,7 @@ func update_marker(marker):
 
 	if system == "tauceti":
 		marker.get_parent().remove_child(marker)
-		$"Control/tau ceti".add_child(marker)
+		$"Control/Tau Ceti".add_child(marker)
 	if system == "barnards":
 		marker.get_parent().remove_child(marker)
 		$"Control/Barnard's Star".add_child(marker)
@@ -179,7 +179,7 @@ func update_marker(marker):
 		if system == "Proxima":
 			$"Control/alphacen/Label".set_self_modulate(Color(0,1,1))
 		if system == "Luyten 726-8":
-			$"Control/tau ceti/Label".set_self_modulate(Color(0,1,1))
+			$"Control/Tau Ceti/Label".set_self_modulate(Color(0,1,1))
 	
 	# TODO: show distances, too
 
@@ -187,12 +187,12 @@ func create_map_graph():
 	map_astar = AStar.new()
 	# hardcoded stars
 	map_astar.add_point(0, Vector3(0,0,0)) # Sol
-	map_astar.add_point(1, Vector3(-3.4, 0.4, -11.4)) # Tau Ceti
+	#map_astar.add_point(1, Vector3(-3.4, 0.4, -11.4)) # Tau Ceti
 	
 	# graph is made out of nodes
 	for i in map_graph.size():
 		var n = map_graph[i]
-		map_astar.add_point(i+2, Vector3(n[0], n[1], n[2]))
+		map_astar.add_point(i+1, Vector3(n[0], n[1], n[2]))
 	
 	# connect stars
 	map_astar.connect_points(0,1) # Sol to Tau Ceti
