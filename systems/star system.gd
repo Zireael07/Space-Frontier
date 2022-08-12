@@ -34,16 +34,22 @@ func _ready():
 	#print("Star system is sol: ", sol)
 	var atm = sol != 0
 	#print("Atm is:", atm);
+	var star_type = null
 	
 	if data != null:
 		for line in data:
 			# line is [name, angle, dist, (mass), (radius), type]
 			#print(str(line))
 			
-			if line.size() > 4 and line[4] == "star":
+			if line.size() > 4 and "star" in line[4]:
 				# reuse column 1 as luminosity
 				luminosity = float(line[1])
 				print("Set luminosity to ", luminosity)
+				# use type column as hint to type
+				star_type = line[4].lstrip("star (").rstrip(")")
+				print("Star type from data: ", star_type)
+				if star_type == "":
+					star_type = "red"
 				continue
 			
 			# match rows to planets
@@ -102,8 +108,11 @@ func _ready():
 				# moons
 				for m in c.get_node("orbit_holder").get_children():
 					m.setup(0,0,0,0,false)
+		# default to red
+		star_type = "red"
 	
-	var hzs = calculate_hz(luminosity)
+	
+	var hzs = calculate_hz(luminosity, star_type)
 	hz_inner = hzs[0]
 	hz_outer = hzs[1]
 
@@ -140,11 +149,13 @@ func _process(delta):
 
 # http://www.solstation.com/habitable.htm
 # Kasting et al, 1993
-func calculate_hz(lum):
-	# "normalized solar flux factor" values for a G-type star
-	var inner = 1 * pow(lum / 1.41, 0.5)
-	var outer = 1 * pow(lum / 0.36, 0.5)
-	
+# d = (1 AU) * [ (L = Lsun) / Seff ] 0.5
+func calculate_hz(lum, type="red"):
+	# "normalized solar flux factor" values for a G-type star and M-type
+	var factors = {"yellow": [1.41, 0.36], "red": [1.05, 0.27]}
+	var inner = 1 * pow(lum / factors[type][0], 0.5)
+	var outer = 1 * pow(lum / factors[type][1], 0.5)
+	print(type, " hz: inner: ", inner, " AU, outer: ", outer, " AU")
 	return [inner, outer]
 
 # based on arc functions that I seem to love :P	

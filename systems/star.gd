@@ -54,10 +54,12 @@ func _process(delta):
 
 # http://www.solstation.com/habitable.htm
 # Kasting et al, 1993
-func calculate_hz(lum):
+# d = (1 AU) * [ (L = Lsun) / Seff ] 0.5
+func calculate_hz(lum,  type="yellow"):
 	# "normalized solar flux factor" values for a G-type star
-	var inner = 1 * pow(lum / 1.41, 0.5)
-	var outer = 1 * pow(lum / 0.36, 0.5)
+	var factors = {"yellow": [1.41, 0.36], "red": [1.05, 0.27]}
+	var inner = 1 * pow(lum / factors[type][0], 0.5)
+	var outer = 1 * pow(lum / factors[type][1], 0.5)
 	
 	return [inner, outer]
 

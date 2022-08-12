@@ -1,4 +1,5 @@
 name,angle,dist,mass,radius, type
+Sol, 1, 0, 0,star (yellow)
 Mercury,0,0.4,0.055,0.38, planet
 Venus,0,0.7,0.815,0.94, planet
 Earth,0,1,1.0,1.0, planet

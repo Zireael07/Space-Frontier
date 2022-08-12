@@ -11,9 +11,7 @@
 
 [sub_resource type="StyleBoxFlat" id=1]
 
-[node name="Tau Ceti" type="Node2D" groups=[
-"star",
-]]
+[node name="Tau Ceti" type="Node2D" groups=["star"]]
 position = Vector2( 500, 500 )
 script = ExtResource( 2 )
 orbit_rate = 0.05
@@ -30,8 +28,8 @@ texture = ExtResource( 6 )
 margin_top = 200.0
 margin_right = 72.0
 margin_bottom = 216.0
-custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
 text = "Tau Ceti"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -43,8 +41,9 @@ __meta__ = {
 position = Vector2( -6.97634e-05, 1596 )
 planet_rad_factor = 0.2
 mass = 1.75
-hydro = 0.418849
-atm = 1.01356
+hydro = 0.357717
+atm = 1.09896
+greenhouse = 0.0107447
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet" index="0"]
@@ -64,8 +63,10 @@ scale = Vector2( 0.2, 0.2 )
 position = Vector2( 3.4773e-05, -2916 )
 planet_rad_factor = 0.2
 mass = 1.83
-hydro = 0.144642
-atm = 0.812722
+hydro = 0.0
+ice = 0.144642
+atm = 0.234134
+greenhouse = 7.8107e-05
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
@@ -86,8 +87,10 @@ scale = Vector2( 0.2, 0.2 )
 position = Vector2( -4565.08, 4565.08 )
 planet_rad_factor = 0.2
 mass = 3.93
-hydro = 0.26302
-atm = 0.0848253
+hydro = 0.0
+ice = 0.26302
+atm = 0.958347
+greenhouse = 2.62627e-05
 tidally_locked = true
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
@@ -110,14 +113,13 @@ position = Vector2( -0.000699732, 16008 )
 planet_rad_factor = 0.3
 mass = 3.94
 hydro = 0.0
-atm = 0.318486
+atm = 0.996146
 population = 0.1
 
 [node name="Sprite" parent="planet_holder/planet4" index="0"]
 scale = Vector2( 0.15, 0.15 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
-rotation = 3.90257e-07
 scale = Vector2( 0.15, 0.15 )
 
 [node name="Label" parent="planet_holder/planet4" index="2"]
@@ -134,9 +136,6 @@ scale = Vector2( 0.3, 0.3 )
 [node name="colony2" parent="planet_holder/planet4" instance=ExtResource( 1 )]
 
 [editable path="planet_holder/planet"]
-
 [editable path="planet_holder/planet2"]
-
 [editable path="planet_holder/planet3"]
-
 [editable path="planet_holder/planet4"]
