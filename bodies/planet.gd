@@ -66,6 +66,12 @@ func _ready():
 	_conn = connect("planet_orbited", self, "_on_planet_orbited")
 	_conn = connect("planet_deorbited", self, "_on_planet_deorbited")
 	
+		
+	# preset the vectors texture if any rotating shader
+	if $Sprite.material != null and $Sprite.material.get_shader().has_param("vectors"):
+		var vecs = load("res://assets/bodies/texture_template.png")
+		$Sprite.material.set_shader_param("vectors", vecs)
+	
 	# FIXME: set Label position on basis of planet scale factor
 	
 	labl_loc = $"Label".get_position()
@@ -188,6 +194,9 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 		
 	# send temperature to shader if procedural planet
 	if $Sprite.texture is NoiseTexture:
+		# automatically duplicate/make unique the material if procedural
+		$Sprite.material.set_local_to_scene(true)
+		
 		#if temp > 400 Celsius then change graphics to lava planet
 		# roughly 670 K iirc?
 		if (temp-game.ZEROC_IN_K) > 400:
@@ -650,8 +659,7 @@ func place(angle,dist):
 	#print("Place : a " + str(angle) + " d: " + str(dist))
 	var pos = Vector2(0, dist).rotated(deg2rad(angle))
 	#print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(angle)))
-	print("Position is " + str(pos))
-	#get_parent().get_global_position() + 
+	#print("Position is " + str(pos))
 	
 	set_position(pos)
 
