@@ -1,0 +1,86 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://systems/star system.gd" type="Script" id=1]
+[ext_resource path="res://systems/star.gd" type="Script" id=2]
+[ext_resource path="res://bodies/planet_rotating_procedural.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=4]
+[ext_resource path="res://assets/planets/biome_gradient.tres" type="Gradient" id=5]
+[ext_resource path="res://assets/bodies/texture_template.png" type="Texture" id=6]
+[ext_resource path="res://assets/planets/seamless_shader_better.tres" type="Shader" id=7]
+[ext_resource path="res://assets/planets/temp_gradient.tres" type="Gradient" id=8]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+[sub_resource type="GradientTexture" id=5]
+gradient = ExtResource( 5 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = ExtResource( 8 )
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = ExtResource( 7 )
+shader_param/fadeWidth = 0.05
+shader_param/temperature = -5.8667
+shader_param/rotate_angle = null
+shader_param/time = 0.714533
+shader_param/waterLevel = 0.45
+shader_param/color_sea = Color( 0, 1, 1, 1 )
+shader_param/temp_gradient = SubResource( 4 )
+shader_param/land_gradient = SubResource( 5 )
+shader_param/vectors = ExtResource( 6 )
+
+[node name="EQ Pegasi" type="Node2D"]
+position = Vector2( 500, 500 )
+
+[node name="A" type="Node2D" parent="." groups=["star"]]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="A"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="A"]
+margin_top = 100.0
+margin_right = 109.0
+margin_bottom = 116.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "EQ Pegasi A"
+
+[node name="planet_holder" type="Node2D" parent="A"]
+position = Vector2( 0, 210840 )
+
+[node name="planet" parent="A/planet_holder" groups=["planets"] instance=ExtResource( 3 )]
+position = Vector2( 0, 7680 )
+mass = 718.0
+hydro = 0.0
+atm = 1.46679
+greenhouse = 3.979e-05
+
+[node name="Sprite" parent="A/planet_holder/planet" index="0"]
+material = SubResource( 6 )
+
+[node name="Label" parent="A/planet_holder/planet" index="3"]
+text = "Ab"
+
+[node name="B" type="Node2D" parent="." groups=["star"]]
+position = Vector2( 0, 100840 )
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": "Distance just randomly entered"
+}
+
+[node name="Sprite" type="Sprite" parent="B"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="B"]
+margin_top = 100.0
+margin_right = 109.0
+margin_bottom = 116.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "EQ Pegasi B"
+
+[editable path="A/planet_holder/planet"]
