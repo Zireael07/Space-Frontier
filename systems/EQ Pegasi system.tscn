@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://systems/star system.gd" type="Script" id=1]
 [ext_resource path="res://systems/star.gd" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://assets/bodies/texture_template.png" type="Texture" id=6]
 [ext_resource path="res://assets/planets/seamless_shader_better.tres" type="Shader" id=7]
 [ext_resource path="res://assets/planets/temp_gradient.tres" type="Gradient" id=8]
+[ext_resource path="res://assets/planets/seamless_shader_gasgiant.tres" type="Shader" id=9]
+[ext_resource path="res://assets/planets/gasgiant_gradient.tres" type="Gradient" id=10]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
@@ -21,14 +23,37 @@ gradient = ExtResource( 8 )
 resource_local_to_scene = true
 shader = ExtResource( 7 )
 shader_param/fadeWidth = 0.05
-shader_param/temperature = -5.8667
+shader_param/temperature = 44.7084
 shader_param/rotate_angle = null
-shader_param/time = 0.714533
+shader_param/time = 1.1676
 shader_param/waterLevel = 0.45
 shader_param/color_sea = Color( 0, 1, 1, 1 )
 shader_param/temp_gradient = SubResource( 4 )
 shader_param/land_gradient = SubResource( 5 )
 shader_param/vectors = ExtResource( 6 )
+
+[sub_resource type="GradientTexture" id=8]
+gradient = ExtResource( 10 )
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = ExtResource( 9 )
+shader_param/fadeWidth = 0.05
+shader_param/size = 10.0
+shader_param/storm_color = Color( 1, 0.1, 0.1, 1 )
+shader_param/rotate_angle = null
+shader_param/time = 1.0
+shader_param/gasgiant_gradient = SubResource( 8 )
+shader_param/vectors = ExtResource( 6 )
+
+[sub_resource type="OpenSimplexNoise" id=10]
+octaves = 6
+period = 8.0
+persistence = 0.8
+
+[sub_resource type="NoiseTexture" id=11]
+width = 256
+height = 256
+noise = SubResource( 10 )
 
 [node name="EQ Pegasi" type="Node2D"]
 position = Vector2( 500, 500 )
@@ -55,13 +80,18 @@ position = Vector2( 0, 210840 )
 position = Vector2( 0, 7680 )
 mass = 718.0
 hydro = 0.0
-atm = 1.46679
-greenhouse = 3.979e-05
+atm = 1.07143
+greenhouse = 5.80567e-05
 
 [node name="Sprite" parent="A/planet_holder/planet" index="0"]
+visible = false
 material = SubResource( 6 )
 
-[node name="Label" parent="A/planet_holder/planet" index="3"]
+[node name="Sprite2" type="Sprite" parent="A/planet_holder/planet"]
+material = SubResource( 9 )
+texture = SubResource( 11 )
+
+[node name="Label" parent="A/planet_holder/planet" index="4"]
 text = "Ab"
 
 [node name="B" type="Node2D" parent="." groups=["star"]]
