@@ -7,9 +7,6 @@
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ParallaxBackground" parent="." instance=ExtResource( 2 )]
 

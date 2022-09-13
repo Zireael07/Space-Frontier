@@ -249,6 +249,7 @@ func _on_ButtonLog_pressed():
 func _on_ButtonL_pressed():
 	offset += Vector2(LY_TO_PX,0)
 	$Control.set_position(center+offset)
+	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
 	if offset != Vector2(0,0):
 		$Grid.origin = false
 	else:
@@ -258,6 +259,7 @@ func _on_ButtonL_pressed():
 func _on_ButtonR_pressed():
 	offset += Vector2(-LY_TO_PX,0)
 	$Control.set_position(center+offset)
+	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
 	if offset != Vector2(0,0):
 		$Grid.origin = false
 	else:
@@ -267,6 +269,7 @@ func _on_ButtonR_pressed():
 func _on_ButtonUp_pressed():
 	offset += Vector2(0, LY_TO_PX)
 	$Control.set_position(center+offset)
+	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
 	if offset != Vector2(0,0):
 		$Grid.origin = false
 	else:
@@ -276,6 +279,7 @@ func _on_ButtonUp_pressed():
 func _on_ButtonDown_pressed():
 	offset += Vector2(0, -LY_TO_PX)
 	$Control.set_position(center+offset)
+	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
 	if offset != Vector2(0,0):
 		$Grid.origin = false
 	else:
