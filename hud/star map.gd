@@ -245,43 +245,43 @@ func _on_ButtonLog_pressed():
 	else:
 		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
 	
+
+func move_map_to_offset(offset):
+	$Control.set_position(center+offset)
+	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
+	if offset != Vector2(0,0):
+		$Grid.origin = false
+	else:
+		$Grid.origin = true
+	$Grid.update_grid()
 	
 func _on_ButtonL_pressed():
 	offset += Vector2(LY_TO_PX,0)
-	$Control.set_position(center+offset)
-	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
-	if offset != Vector2(0,0):
-		$Grid.origin = false
-	else:
-		$Grid.origin = true
-	$Grid.update_grid()
+	move_map_to_offset(offset)
 
 func _on_ButtonR_pressed():
 	offset += Vector2(-LY_TO_PX,0)
-	$Control.set_position(center+offset)
-	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
-	if offset != Vector2(0,0):
-		$Grid.origin = false
-	else:
-		$Grid.origin = true
-	$Grid.update_grid()
+	move_map_to_offset(offset)
 
 func _on_ButtonUp_pressed():
 	offset += Vector2(0, LY_TO_PX)
-	$Control.set_position(center+offset)
-	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
-	if offset != Vector2(0,0):
-		$Grid.origin = false
-	else:
-		$Grid.origin = true
-	$Grid.update_grid()
+	move_map_to_offset(offset)
 
 func _on_ButtonDown_pressed():
 	offset += Vector2(0, -LY_TO_PX)
-	$Control.set_position(center+offset)
-	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
-	if offset != Vector2(0,0):
-		$Grid.origin = false
-	else:
-		$Grid.origin = true
-	$Grid.update_grid()
+	move_map_to_offset(offset)
+
+
+func _on_LineEdit_text_entered(new_text):
+	# search for the star
+	var found = null
+	for c in $Control.get_children():
+		if c.get_node("Label").get_text().find(new_text) != -1:
+			found = c
+			print("Found the star: ", new_text, "!")
+			break
+	
+	# center map on found star
+	if found:
+		offset = -found.rect_position
+		move_map_to_offset(offset)
