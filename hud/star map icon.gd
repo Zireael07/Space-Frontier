@@ -91,41 +91,31 @@ func _ready():
 #func _process(delta):
 #	pass
 
+func on_click():
+	# clear any previous tint
+	for c in get_parent().get_children():
+		# skip wormhole target
+		if c.get_node("Label").get_self_modulate() == Color(0,1,1):
+			continue
+		c.get_node("Label").set_self_modulate(Color(1,1,1))
+		if "selected" in c:
+			c.selected = false
+	print("Clicked on ", get_node("Label").get_text())
+	get_node("Label").set_self_modulate(Color(1,0.5, 0)) # orange-red to match starmap icon and Z line color
+	get_node("../../Grid/VisControl/Label").set("custom_colors/font_color", Color(1,0.5,0))
+	
+	selected = true
+	get_parent().tg = get_parent().get_tg()
+	get_node("../../Grid/VisControl").clicked = true
+	get_node("../../Grid/VisControl").update()
+	
 # we don't want actual buttons, hence this
 func _on_TextureRect2_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			# clear any previous tint
-			for c in get_parent().get_children():
-				# skip wormhole target
-				if c.get_node("Label").get_self_modulate() == Color(0,1,1):
-					continue
-				c.get_node("Label").set_self_modulate(Color(1,1,1))
-				if "selected" in c:
-					c.selected = false
-			print("Clicked on ", get_node("Label").get_text())
-			get_node("Label").set_self_modulate(Color(1,0.5, 0)) # orange
-			selected = true
-			get_parent().tg = get_parent().get_tg()
-			# redraw
-			#get_parent().update()
-			get_node("../../Grid/VisControl").update()
+			on_click()
 
 func _on_TextureRect3_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			# clear any previous tint
-			for c in get_parent().get_children():
-				# skip wormhole target
-				if c.get_node("Label").get_self_modulate() == Color(0,1,1):
-					continue
-				c.get_node("Label").set_self_modulate(Color(1,1,1))
-				if "selected" in c:
-					c.selected = false
-			print("Clicked on ", get_node("Label").get_text())
-			get_node("Label").set_self_modulate(Color(1,0.5, 0)) # orange
-			selected = true
-			get_parent().tg = get_parent().get_tg()
-			# redraw
-			#get_parent().update()
-			get_node("../../Grid/VisControl").update()
+			on_click()
