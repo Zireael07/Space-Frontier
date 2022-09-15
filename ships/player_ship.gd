@@ -424,6 +424,10 @@ func _input(_event):
 	if dead:
 		return
 	
+	# don't listen to individual keybinds if starmap view open
+	if self.HUD.get_node("Control4/star map").is_visible():
+		return
+	
 	if Input.is_action_pressed("closest_target"):
 		get_closest_target()
 	

@@ -62,3 +62,6 @@ margin_top = 25.0
 margin_right = 51.0
 margin_bottom = 39.0
 text = "Z: 1.4 ly"
+
+[connection signal="gui_input" from="TextureRect2" to="." method="_on_TextureRect2_gui_input"]
+[connection signal="gui_input" from="TextureRect3" to="." method="_on_TextureRect3_gui_input"]

@@ -8,7 +8,7 @@ export var depth = 0.0
 export var named = ""
 export var planets = false
 var snapped = false
-
+var selected = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -90,3 +90,42 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+# we don't want actual buttons, hence this
+func _on_TextureRect2_gui_input(event):
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			# clear any previous tint
+			for c in get_parent().get_children():
+				# skip wormhole target
+				if c.get_node("Label").get_self_modulate() == Color(0,1,1):
+					continue
+				c.get_node("Label").set_self_modulate(Color(1,1,1))
+				if "selected" in c:
+					c.selected = false
+			print("Clicked on ", get_node("Label").get_text())
+			get_node("Label").set_self_modulate(Color(1,0.5, 0)) # orange
+			selected = true
+			get_parent().tg = get_parent().get_tg()
+			# redraw
+			#get_parent().update()
+			get_node("../../Grid/VisControl").update()
+
+func _on_TextureRect3_gui_input(event):
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			# clear any previous tint
+			for c in get_parent().get_children():
+				# skip wormhole target
+				if c.get_node("Label").get_self_modulate() == Color(0,1,1):
+					continue
+				c.get_node("Label").set_self_modulate(Color(1,1,1))
+				if "selected" in c:
+					c.selected = false
+			print("Clicked on ", get_node("Label").get_text())
+			get_node("Label").set_self_modulate(Color(1,0.5, 0)) # orange
+			selected = true
+			get_parent().tg = get_parent().get_tg()
+			# redraw
+			#get_parent().update()
+			get_node("../../Grid/VisControl").update()

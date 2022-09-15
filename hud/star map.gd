@@ -151,13 +151,16 @@ func update_marker(marker):
 	if $"Control".has_node(system):
 		marker.get_parent().remove_child(marker)
 		$"Control".get_node(system).add_child(marker)
+		$"Control".src = $"Control".get_node(system)
 
 	if system == "tauceti":
 		marker.get_parent().remove_child(marker)
 		$"Control/Tau Ceti".add_child(marker)
+		$"Control".src = $"Control/Tau Ceti"
 	if system == "barnards":
 		marker.get_parent().remove_child(marker)
 		$"Control/Barnard's Star".add_child(marker)
+		$"Control".src = $"Control/Barnard's Star"
 
 	# clear any previous tint
 	for c in get_node("Control").get_children():
@@ -248,6 +251,7 @@ func _on_ButtonLog_pressed():
 
 func move_map_to_offset(offset):
 	$Control.set_position(center+offset)
+	$"Grid/VisControl".update() # redraw direction lines if any
 	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
 	if offset != Vector2(0,0):
 		$Grid.origin = false
