@@ -119,7 +119,7 @@ func _ready():
 	if curr_system == "Sol":
 		spawn_wormhole(p_ind, 11, mmap)
 		# second wormhole to Barnard's
-		spawn_wormhole(p_ind, 11, mmap, "Barnards", Vector2(-1500,0))
+		spawn_wormhole(p_ind, 11, mmap, "Barnards", Vector2(0,-750))
 		# some more...
 		spawn_wormhole(p_ind, 11, mmap, "Luyten 726-8", Vector2(-1500, -750))
 		spawn_wormhole(p_ind, 11, mmap, "Wolf 359", Vector2(-1500, 500))

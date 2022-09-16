@@ -17,7 +17,7 @@ func _ready():
 func jump():
 	var system = get_tree().get_nodes_in_group("main")[0].curr_system
 	if target_system != null:
-		var time = 0.5
+		var time = 0.5 #default
 		if target_system == "Sol":
 			ly = 4.24
 			print("Distance: ", ly, " light years")

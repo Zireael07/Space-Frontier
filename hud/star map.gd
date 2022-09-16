@@ -263,6 +263,8 @@ func _on_ButtonConfirm_pressed():
 func _on_ButtonAbort_pressed():
 	game.player.HUD.hide_starmap()
 	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
+	game.player.w_hole.entered = false
+	game.player.w_hole = null
 
 func display_captain_log():
 	#$"PopupPanel/VBoxContainer/ButtonLog/PanelLog/RichTextLabel".set_text(str(game.captain_log))
