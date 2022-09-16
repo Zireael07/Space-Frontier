@@ -106,7 +106,11 @@ func on_click():
 	
 	selected = true
 	get_parent().tg = get_parent().get_tg()
+	# line/distance label redrawing
 	get_node("../../Grid/VisControl").clicked = true
+	get_node("../../Grid/VisControl/Label").rect_position = get_parent().rect_position + (get_parent().get_tg_loc() - get_parent().get_src_loc())/2
+	var dist = get_node("../../").get_star_distance(get_parent().src, get_parent().tg)
+	get_node("../../Grid/VisControl/Label").set_text("%.2f ly" % (dist))
 	get_node("../../Grid/VisControl").update()
 	
 # we don't want actual buttons, hence this

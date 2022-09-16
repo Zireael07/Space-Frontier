@@ -166,15 +166,17 @@ func update_marker(marker):
 	for c in get_node("Control").get_children():
 		c.get_node("Label").set_self_modulate(Color(1,1,1))
 	
-	# show target on map (tint cyan)	
+	# show target on map (tint cyan to match marker above)	
 	#var lookup = {"luyten726-8": "Luyten 726-8", "barnards":"Barnard's Star", "wolf359":"Wolf 359"}	
 	var lookup = {"Barnards":"Barnard's Star"}	
 	
 	if game.player.w_hole.target_system:
 		print("Target system: ", game.player.w_hole.target_system)
 		if game.player.w_hole.target_system in lookup:
+			$"Control".tg = get_node("Control").get_node(lookup[game.player.w_hole.target_system])
 			get_node("Control").get_node(lookup[game.player.w_hole.target_system]).get_node("Label").set_self_modulate(Color(0,1,1))
 		else:
+			$"Control".tg = get_node("Control").get_node(game.player.w_hole.target_system)
 			get_node("Control").get_node(game.player.w_hole.target_system).get_node("Label").set_self_modulate(Color(0,1,1))
 	else:
 		if system == "Sol":
@@ -184,7 +186,13 @@ func update_marker(marker):
 		if system == "Luyten 726-8":
 			$"Control/Tau Ceti/Label".set_self_modulate(Color(0,1,1))
 	
-	# TODO: show distances, too
+	# show distance involved along the line
+	get_node("Grid/VisControl/Label").set("custom_colors/font_color", Color(0,1,1))
+	# halfway along
+	#print("tg loc: ", $"Control".get_tg_loc(), "src loc: ", $"Control".get_src_loc())
+	get_node("Grid/VisControl/Label").rect_position = $"Control".rect_position + ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
+	var dist = get_star_distance($"Control".src, $"Control".tg)
+	get_node("Grid/VisControl/Label").set_text("%.2f ly" % (dist))
 
 func create_map_graph():
 	map_astar = AStar.new()
@@ -225,6 +233,28 @@ func create_map_graph():
 		
 	return map_astar
 
+
+# this is why we don't nuke map_graph after creating the Astar graph...
+func find_graph_id(nam):
+	print("Looking up graph id for: ", nam)
+	var id = -1
+	for i in map_graph.size():
+		var n = map_graph[i]
+		if n[3] == nam:
+			id = i+1 # +1 because Sol is hardcoded at #0 (see l.200)
+			break
+	return id
+
+func get_star_distance(a,b):
+	var start_name = a.get_node("Label").get_text().replace("*", "")
+	var end_name = b.get_node("Label").get_text().replace("*", "")
+	var id1 = find_graph_id(start_name)
+	var id2 = find_graph_id(end_name)
+	#print("ID # ", id1, " ID # ", id2, " pos: ", map_astar.get_point_position(id1), " & ", map_astar.get_point_position(id2))
+	# see above - astar graph is created from map_graph so the id's match
+	return map_astar.get_point_position(id1).distance_to(map_astar.get_point_position(id2))
+
+
 # --------------------------------------------------
 func _on_ButtonConfirm_pressed():
 	game.player.w_hole.jump()
@@ -252,6 +282,9 @@ func _on_ButtonLog_pressed():
 func move_map_to_offset(offset):
 	$Control.set_position(center+offset)
 	$"Grid/VisControl".update() # redraw direction lines if any
+	# recalculate distance label position
+	get_node("Grid/VisControl/Label").rect_position = $"Control".rect_position + ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
+	
 	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
 	if offset != Vector2(0,0):
 		$Grid.origin = false

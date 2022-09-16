@@ -44,6 +44,12 @@ __meta__ = {
 "_editor_description_": "This is solely for drawing"
 }
 
+[node name="Label" type="Label" parent="Grid/VisControl"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 0.494118, 0, 1 )
+text = "TEST"
+
 [node name="Label" type="Label" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
