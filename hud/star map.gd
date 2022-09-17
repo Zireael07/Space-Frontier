@@ -168,7 +168,7 @@ func update_marker(marker):
 	
 	# show target on map (tint cyan to match marker above)	
 	#var lookup = {"luyten726-8": "Luyten 726-8", "barnards":"Barnard's Star", "wolf359":"Wolf 359"}	
-	var lookup = {"Barnards":"Barnard's Star"}	
+	var lookup = {"Barnards":"Barnard's Star", "Trappist": "Trappist-1"}	
 	
 	if game.player.w_hole.target_system:
 		print("Target system: ", game.player.w_hole.target_system)
