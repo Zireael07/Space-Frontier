@@ -18,6 +18,12 @@ func jump():
 	var system = get_tree().get_nodes_in_group("main")[0].curr_system
 	if target_system != null:
 		var time = 0.5 #default
+		# calculate distances involved
+		var starmap = game.player.HUD.get_node("Control4/star map")
+		ly = starmap.get_star_distance(starmap.get_node("Control").src, starmap.get_node("Control").tg)
+		print("Calculated ly: ", ly)
+		time = ly/game.WORMHOLE_SPEED # fraction of a year
+		
 		if target_system == "Sol":
 			ly = 4.24
 			print("Distance: ", ly, " light years")
