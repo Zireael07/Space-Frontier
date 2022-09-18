@@ -144,7 +144,7 @@ func load_data():
 #func _process(delta):
 #	pass
 
-func update_marker(marker):
+func update_map(marker):
 	# update marker position
 	var system = get_tree().get_nodes_in_group("main")[0].curr_system
 

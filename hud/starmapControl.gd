@@ -16,20 +16,22 @@ func _ready():
 
 func get_src_loc():
 	var loc = src.rect_position
-	if src.has_node("TextureRect3"):
-		loc = loc + src.get_node("TextureRect3").rect_position
-	elif src.has_node("TextureRect"):
-		loc = loc + src.get_node("TextureRect").rect_position
+	loc = loc + src.get_node("PlanetTexture").rect_position
+	#if src.has_node("TextureRect3"):
+	#	loc = loc + src.get_node("TextureRect3").rect_position
+	#elif src.has_node("TextureRect"):
+	#	loc = loc + src.get_node("TextureRect").rect_position
 	return loc
 	
 func get_tg_loc():
 	#var loc = null
 	var loc = tg.rect_position
-	if tg.has_node("TextureRect3"):
-		loc = loc + tg.get_node("TextureRect3").rect_position
-		#loc = tg.get_node("TextureRect3").rect_global_position
-	elif tg.has_node("TextureRect"):
-		loc = loc + tg.get_node("TextureRect3").rect_position
+	loc = loc + src.get_node("PlanetTexture").rect_position
+#	if tg.has_node("TextureRect3"):
+#		loc = loc + tg.get_node("TextureRect3").rect_position
+#		#loc = tg.get_node("TextureRect3").rect_global_position
+#	elif tg.has_node("TextureRect"):
+#		loc = loc + tg.get_node("TextureRect3").rect_position
 		 #loc = tg.get_node("TextureRect").rect_global_position
 	return loc
 	

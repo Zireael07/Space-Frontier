@@ -11,7 +11,7 @@ margin_bottom = 40.0
 rect_pivot_offset = Vector2( 20, 20 )
 script = ExtResource( 3 )
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="ShadowTexture" type="TextureRect" parent="."]
 self_modulate = Color( 1, 1, 1, 0.501961 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -30,7 +30,7 @@ points = PoolVector2Array( 18, -75, 18, 18 )
 width = 5.0
 gradient = ExtResource( 4 )
 
-[node name="TextureRect3" type="TextureRect" parent="."]
+[node name="PlanetTexture" type="TextureRect" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -63,5 +63,5 @@ margin_right = 51.0
 margin_bottom = 39.0
 text = "Z: 1.4 ly"
 
-[connection signal="gui_input" from="TextureRect2" to="." method="_on_TextureRect2_gui_input"]
-[connection signal="gui_input" from="TextureRect3" to="." method="_on_TextureRect3_gui_input"]
+[connection signal="gui_input" from="ShadowTexture" to="." method="_on_TextureRect2_gui_input"]
+[connection signal="gui_input" from="PlanetTexture" to="." method="_on_TextureRect3_gui_input"]

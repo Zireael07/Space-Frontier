@@ -456,9 +456,9 @@ func remove_orders_controls():
 func show_starmap():
 	$"Control4/star map".show()
 	
-	# update marker position
+	# update map (marker position, lines etc.)
 	var marker = get_tree().get_nodes_in_group("starmap_marker")[0]
-	$"Control4/star map".update_marker(marker)
+	$"Control4/star map".update_map(marker)
 	marker.set_position(Vector2(0,0))
 
 func hide_starmap():
