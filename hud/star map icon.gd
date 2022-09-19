@@ -35,6 +35,11 @@ func _ready():
 	# clamp depth to two significant decimal places
 	var depth_str = "%.2f" % depth
 	
+	var y_pos = get_node("PlanetTexture").get_position().y
+	get_node("Line2D").points[0] = Vector2(18, y_pos+20) #*depth_s)
+	
+	# TODO: those things should be recalculated after the map moved
+		
 	# now check if icon(s) are out of view
 #	var ab_shadow = get_node("ShadowTexture").get_position().y + get_position().y
 	var ab_planet = get_node("PlanetTexture").get_position().y + get_position().y
@@ -55,11 +60,8 @@ func _ready():
 #		get_node("Label2").rect_position = Vector2(-6.5, get_node("TextureRect3").get_position().y+25)
 #		get_node("Label2").set_text("Z: " + depth_str + " ly")
 #		get_node("Label2").show()
-	
-	var y_pos = get_node("PlanetTexture").get_position().y
-	get_node("Line2D").points[0] = Vector2(18, y_pos+20) #*depth_s)
-	
-	# name label		
+
+	# name label
 	# above the plane (place next to star icon)
 	if depth_s < 0:
 		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
@@ -86,14 +88,18 @@ func _ready():
 		get_node("Label2").set_text("Z: " + depth_str + " ly")
 		get_node("Label2").show()
 
-	#if not_in_bounds():
-	#	get_node("Line2D").set_modulate(Color(1,1,1,0.5)) # make semi-transparent
+	if not_in_bounds():
+		get_node("Line2D").set_modulate(Color(1,1,1,0.5)) # make semi-transparent
 
 func not_in_bounds():
 	# rect_global_position doesn't seem to be working correctly?
-	print("planet icon: ", get_node("PlanetTexture").rect_global_position.y, " shadow icon: ", get_node("ShadowTexture").rect_global_position.y)
-	var planet_out = get_node("PlanetTexture").rect_global_position.y < 0 or get_node("PlanetTexture").rect_global_position.y > 525
-	var shadow_out = get_node("ShadowTexture").rect_global_position.y < 0 or get_node("ShadowTexture").rect_global_position.y > 525
+	#print("planet icon: ", get_node("PlanetTexture").rect_global_position.y, " shadow icon: ", get_node("ShadowTexture").rect_global_position.y)
+	var ab_shadow = get_node("ShadowTexture").get_position().y + get_position().y
+	var ab_planet = get_node("PlanetTexture").get_position().y + get_position().y
+	# because the parent control is in the middle of the panel, at 525/2px
+	
+	var planet_out = get_node("PlanetTexture").rect_global_position.y < -250 or get_node("PlanetTexture").rect_global_position.y > 250
+	var shadow_out = get_node("ShadowTexture").rect_global_position.y < -250 or get_node("ShadowTexture").rect_global_position.y > 250
 	print(get_node("Label").get_text(), " planet icon out of bounds: ", planet_out, " shadow out of bounds ", shadow_out) 
 	#print("not in bounds: ", planet_out and shadow_out)
 	return (planet_out and shadow_out)

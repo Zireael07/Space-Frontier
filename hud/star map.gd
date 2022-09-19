@@ -186,6 +186,10 @@ func update_map(marker):
 		if system == "Luyten 726-8":
 			$"Control/Tau Ceti/Label".set_self_modulate(Color(0,1,1))
 	
+	# center on star (needs target to be set because it resets the distance label)
+	offset = -$"Control".src.rect_position
+	move_map_to_offset(offset)
+	
 	# show distance involved along the line
 	get_node("Grid/VisControl/Label").set("custom_colors/font_color", Color(0,1,1))
 	# halfway along
