@@ -38,8 +38,24 @@ func _ready():
 	var y_pos = get_node("PlanetTexture").get_position().y
 	get_node("Line2D").points[0] = Vector2(18, y_pos+20) #*depth_s)
 	
+	# Z axis label if needed
+	if abs(depth) > 8:
+		# above the plane (place next to star icon)
+		if depth_s < 0:
+			get_node("Label2").rect_position = Vector2(-6.5, y_pos+25)	
+		else:
+			# place next to shadow icon for below the plane
+			get_node("Label2").rect_position = Vector2(0, 25)
+		get_node("Label2").set_text("Z: " + depth_str + " ly")
+		get_node("Label2").show()
+	
+	calculate_label_and_sfx()
+	
 	# TODO: those things should be recalculated after the map moved
-		
+func calculate_label_and_sfx():
+	var y_pos = get_node("PlanetTexture").get_position().y
+	var depth_s = sign(-depth)
+	
 	# now check if icon(s) are out of view
 #	var ab_shadow = get_node("ShadowTexture").get_position().y + get_position().y
 	var ab_planet = get_node("PlanetTexture").get_position().y + get_position().y
@@ -68,24 +84,13 @@ func _ready():
 	# below the plane (place next to "shadow" icon)
 	else:
 		get_node("Label").rect_position = Vector2(0, 0)
-	
-	# Z axis label if needed
-	if abs(depth) > 8:
-		# above the plane (place next to star icon)
-		if depth_s < 0:
-			get_node("Label2").rect_position = Vector2(-6.5, y_pos+25)	
-		else:
-			# place next to shadow icon for below the plane
-			get_node("Label2").rect_position = Vector2(0, 25)
-		get_node("Label2").set_text("Z: " + depth_str + " ly")
-		get_node("Label2").show()
 
 	# shadow in bounds but planet is not (place name & Z-label next to shadow icon)
 	if ab_planet < -250:
 		get_node("Label").rect_position = Vector2(0, 0)
 		# Z axis label
 		get_node("Label2").rect_position = Vector2(0, 25)
-		get_node("Label2").set_text("Z: " + depth_str + " ly")
+		#get_node("Label2").set_text("Z: " + depth_str + " ly")
 		get_node("Label2").show()
 
 	if not_in_bounds():
