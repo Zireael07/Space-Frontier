@@ -52,7 +52,7 @@ func _ready():
 	calculate_label_and_sfx()
 	
 	# TODO: those things should be recalculated after the map moved
-func calculate_label_and_sfx():
+func calculate_label_and_sfx(offset=Vector2(0,0)):
 	var y_pos = get_node("PlanetTexture").get_position().y
 	var depth_s = sign(-depth)
 	
@@ -93,18 +93,20 @@ func calculate_label_and_sfx():
 		#get_node("Label2").set_text("Z: " + depth_str + " ly")
 		get_node("Label2").show()
 
-	if not_in_bounds():
+	if not_in_bounds(offset):
 		get_node("Line2D").set_modulate(Color(1,1,1,0.5)) # make semi-transparent
+	else:
+		get_node("Line2D").set_modulate(Color(1,1,1,1)) # restore normal opacity
 
-func not_in_bounds():
+func not_in_bounds(offset):
 	# rect_global_position doesn't seem to be working correctly?
 	#print("planet icon: ", get_node("PlanetTexture").rect_global_position.y, " shadow icon: ", get_node("ShadowTexture").rect_global_position.y)
 	var ab_shadow = get_node("ShadowTexture").get_position().y + get_position().y
 	var ab_planet = get_node("PlanetTexture").get_position().y + get_position().y
 	# because the parent control is in the middle of the panel, at 525/2px
 	
-	var planet_out = get_node("PlanetTexture").rect_global_position.y < -250 or get_node("PlanetTexture").rect_global_position.y > 250
-	var shadow_out = get_node("ShadowTexture").rect_global_position.y < -250 or get_node("ShadowTexture").rect_global_position.y > 250
+	var planet_out = ab_planet < -250 or ab_planet > 250
+	var shadow_out = ab_shadow < -250 or ab_shadow > 250
 	print(get_node("Label").get_text(), " planet icon out of bounds: ", planet_out, " shadow out of bounds ", shadow_out) 
 	#print("not in bounds: ", planet_out and shadow_out)
 	return (planet_out and shadow_out)
