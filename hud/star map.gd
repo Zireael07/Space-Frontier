@@ -297,6 +297,11 @@ func move_map_to_offset(offset):
 	else:
 		$Grid.origin = true
 	$Grid.update_grid()
+	# recalculate starmap icons sfx
+	for c in $"Control".get_children():
+		# because some star icons are hardcoded
+		if c.has_method("calculate_label_and_sfx"):
+			c.calculate_label_and_sfx(offset)
 	
 func _on_ButtonL_pressed():
 	offset += Vector2(LY_TO_PX,0)

@@ -99,16 +99,31 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		get_node("Line2D").set_modulate(Color(1,1,1,1)) # restore normal opacity
 
 func not_in_bounds(offset):
-	# rect_global_position doesn't seem to be working correctly?
-	#print("planet icon: ", get_node("PlanetTexture").rect_global_position.y, " shadow icon: ", get_node("ShadowTexture").rect_global_position.y)
-	var ab_shadow = get_node("ShadowTexture").get_position().y + get_position().y
-	var ab_planet = get_node("PlanetTexture").get_position().y + get_position().y
-	# because the parent control is in the middle of the panel, at 525/2px
+	# reworked to use Rect2
+	# rect2 origin is the top-left corner!!!
+	#var rect = Rect2(get_parent().rect_position.x-(805/2), get_parent().rect_position.y-(525/2), 805, 525)
+	#var ab_shadow = get_node("ShadowTexture").get_position() + get_position() + get_parent().rect_position
+	#var ab_planet = get_node("PlanetTexture").get_position() + get_position() + get_parent().rect_position
 	
-	var planet_out = ab_planet < -250 or ab_planet > 250
-	var shadow_out = ab_shadow < -250 or ab_shadow > 250
-	print(get_node("Label").get_text(), " planet icon out of bounds: ", planet_out, " shadow out of bounds ", shadow_out) 
-	#print("not in bounds: ", planet_out and shadow_out)
+	# use a global (screen) rect and global positions
+	var rect = Rect2(Vector2(0,0), Vector2(805, 525))
+	var ab_shadow = get_node("ShadowTexture").get_global_position()
+	var ab_planet = get_node("PlanetTexture").get_global_position()
+	
+	#print("rect: ", rect, "c: ", rect.get_center(), " ", get_node("Label").get_text(), " shadow: ", ab_shadow, " planet: ", ab_planet)
+	var planet_out = !rect.has_point(ab_planet)
+	var shadow_out = !rect.has_point(ab_shadow)
+	
+#	# rect_global_position doesn't seem to be working correctly?
+#	#print("planet icon: ", get_node("PlanetTexture").rect_global_position.y, " shadow icon: ", get_node("ShadowTexture").rect_global_position.y)
+#	var ab_shadow = get_node("ShadowTexture").get_position().y + get_position().y
+#	var ab_planet = get_node("PlanetTexture").get_position().y + get_position().y
+#	# because the parent control is in the middle of the panel, at 525/2px
+#
+#	var planet_out = ab_planet < -250 or ab_planet > 250
+#	var shadow_out = ab_shadow < -250 or ab_shadow > 250
+#	print(get_node("Label").get_text(), " planet icon out of bounds: ", planet_out, " shadow out of bounds ", shadow_out) 
+#	#print("not in bounds: ", planet_out and shadow_out)
 	return (planet_out and shadow_out)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
