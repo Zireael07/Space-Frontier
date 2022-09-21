@@ -57,25 +57,8 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	var depth_s = sign(-depth)
 	
 	# now check if icon(s) are out of view
-#	var ab_shadow = get_node("ShadowTexture").get_position().y + get_position().y
-	var ab_planet = get_node("PlanetTexture").get_position().y + get_position().y
-#	# because the parent control is in the middle of the panel, at 525/2px
-#	# shadow can legitimately be out of view bounds
-#	if abs(ab_planet) > 250 and ab_shadow < -250:
-#		print("Icon for ", get_name(), " is out of view")
-#		# snap planet and not shadow
-#		# snap to panel top: -270px
-#		# snap to bottom: 230px
-#		# get_position y is negative here because shadow is negative
-#		# so just zero the y and add what we need
-#		get_node("TextureRect3").rect_position = Vector2(0, abs(-get_position().y+230))
-#		# make icon semi-transparent
-#		get_node("TextureRect3").set_modulate(Color(1,1,1,0.75))
-#		# force labels
-#		snapped = true
-#		get_node("Label2").rect_position = Vector2(-6.5, get_node("TextureRect3").get_position().y+25)
-#		get_node("Label2").set_text("Z: " + depth_str + " ly")
-#		get_node("Label2").show()
+	var ab_shadow = get_node("ShadowTexture").get_global_position()
+	var ab_planet = get_node("PlanetTexture").get_global_position()
 
 	# name label
 	# above the plane (place next to star icon)
@@ -86,11 +69,17 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		get_node("Label").rect_position = Vector2(0, 0)
 
 	# shadow in bounds but planet is not (place name & Z-label next to shadow icon)
-	if ab_planet < -250:
+	if ab_planet.y < 0 or ab_planet.y > 525:
 		get_node("Label").rect_position = Vector2(0, 0)
 		# Z axis label
 		get_node("Label2").rect_position = Vector2(0, 25)
 		#get_node("Label2").set_text("Z: " + depth_str + " ly")
+		get_node("Label2").show()
+	# imverse (shadow not in bounds), place labels next to planet icon
+	if ab_shadow.y < 0 or ab_shadow.y > 525:
+		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
+		# Z axis label
+		get_node("Label2").rect_position = Vector2(-6.5, y_pos+29) # 25+4
 		get_node("Label2").show()
 
 	if not_in_bounds(offset):
