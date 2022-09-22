@@ -154,7 +154,7 @@ func _process(delta):
 					emit_signal("target_lost_AI", self)
 
 			shoot_target = null
-			print("AI lost target")
+			#print("AI lost target")
 			# remove effect
 			get_child(0).get_material().set_shader_param("flash_color", Color(1,1,1))
 			# update target HUD panel if open and we're the target 
@@ -341,7 +341,7 @@ func add_to_storage(id):
 		storage[id] += 1
 
 func try_dur_electronics():
-	if storage["CARBORUNDUM"] >= 2 and (storage["SILVER"] > 0 or storage["GOLD"] > 0 or storage["PLATINUM"] > 0):
+	if storage.has("CARBORUNDUM") and storage["CARBORUNDUM"] >= 2 and (storage["SILVER"] > 0 or storage["GOLD"] > 0 or storage["PLATINUM"] > 0):
 		add_to_storage("DURABLE_ELECTRONICS")
 		storage["CARBORUNDUM"] -= 2
 		if storage["SILVER"] > 0:

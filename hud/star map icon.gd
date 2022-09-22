@@ -136,7 +136,9 @@ func on_click():
 	get_parent().tg = get_parent().get_tg()
 	# line/distance label redrawing
 	get_node("../../Grid/VisControl").clicked = true
-	get_node("../../Grid/VisControl/Label").rect_position = get_parent().rect_position + (get_parent().get_tg_loc() - get_parent().get_src_loc())/2
+	var gl_loc = ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
+	get_node("../../Grid/VisControl/Label").set_global_position(gl_loc)
+	#get_node("../../Grid/VisControl/Label").rect_position = get_parent().rect_position + (get_parent().get_tg_loc() - get_parent().get_src_loc())/2
 	var dist = get_node("../../").get_star_distance(get_parent().src, get_parent().tg)
 	get_node("../../Grid/VisControl/Label").set_text("%.2f ly" % (dist))
 	get_node("../../Grid/VisControl").update()

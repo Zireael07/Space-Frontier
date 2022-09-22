@@ -194,7 +194,8 @@ func update_map(marker):
 	get_node("Grid/VisControl/Label").set("custom_colors/font_color", Color(0,1,1))
 	# halfway along
 	#print("tg loc: ", $"Control".get_tg_loc(), "src loc: ", $"Control".get_src_loc())
-	get_node("Grid/VisControl/Label").rect_position = $"Control".rect_position + ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
+	var gl_loc = ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
+	get_node("Grid/VisControl/Label").set_global_position(gl_loc) #$"Control".rect_position + ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
 	var dist = get_star_distance($"Control".src, $"Control".tg)
 	get_node("Grid/VisControl/Label").set_text("%.2f ly" % (dist))
 
