@@ -18,9 +18,16 @@ var data = []
 # map
 var map_graph = []
 var map_astar = null
+# problem: we have coordinates (3 floats) and we need to have a unique identifier per star
+# idenfifier must be an int because AStar uses integer ids
+var mapping = {}
 
 func save_graph_data(x,y,z, nam):
 	map_graph.append([x,y,z, nam])
+	# the global scope function returns an integer hash
+	mapping[Vector3(x,y,z)] = hash(Vector3(x,y,z))
+	# https://godotengine.org/qa/43078/create-an-unique-id
+	#mapping[Vector3(x,y,z)] = Vector3(x,y,z).get_instance_id()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
