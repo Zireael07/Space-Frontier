@@ -56,3 +56,15 @@ func _on_Area2D_area_entered(_area):
 func _on_Timer_timeout():
 	active = true
 	#pass # Replace with function body.
+
+
+
+func _on_Area2D2_area_entered(area):
+	if area.get_parent().get_groups().has("player"):
+		area.disrupted = true
+		area.get_node("shield_indicator").hide()
+
+func _on_Area2D2_area_exited(area):
+	if area.get_parent().get_groups().has("player"):
+		area.disrupted = false
+		area.get_node("shield_indicator").show()

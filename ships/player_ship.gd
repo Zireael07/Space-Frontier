@@ -62,6 +62,7 @@ var conquer_target = null
 
 # player only
 var w_hole = null
+var disrupted = false
 var dead = false
 var god = true
 
@@ -914,7 +915,7 @@ func get_closest_friendly_target():
 		self.HUD._minimap_update_outline(t)
 
 func _draw():
-	if not warping:
+	if not warping and not disrupted:
 		# distance indicator at a distance of 100 from the nosetip
 		draw_line(Vector2(10, -100), Vector2(-10, -100), Color(1,1,0), 4.0, true)
 		

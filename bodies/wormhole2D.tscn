@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/blackhole/blackhole2D.shader" type="Shader" id=1]
 [ext_resource path="res://bodies/blackhole2D.gd" type="Script" id=2]
@@ -176,18 +176,21 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
 shader = SubResource( 6 )
-shader_param/offset = [ 15.5263, 13.5694 ]
-shader_param/scale = 0.0205683
-shader_param/density = 0.0859543
-shader_param/falloff = 4.3068
-shader_param/color = Vector3( 0.813923, 0.930906, 0.818049 )
-shader_param/color2 = Vector3( 0.354177, 0.630256, 0.993001 )
+shader_param/offset = [ 62.5559, 67.9612 ]
+shader_param/scale = 0.0389376
+shader_param/density = 0.195294
+shader_param/falloff = 4.5598
+shader_param/color = Vector3( 0.557261, 0.372139, 0.713684 )
+shader_param/color2 = Vector3( 0.852364, 0.607896, 0.689081 )
 
 [sub_resource type="ImageTexture" id=2]
-size = Vector2( 65, 65 )
+size = Vector2( 50, 50 )
 
 [sub_resource type="CircleShape2D" id=5]
 radius = 30.0
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 175, 175 )
 
 [node name="Node2D" type="Node2D" groups=["wormhole"]]
 z_index = 20
@@ -202,7 +205,7 @@ texture = SubResource( 4 )
 material = SubResource( 1 )
 texture = SubResource( 2 )
 script = ExtResource( 3 )
-seede = 957132332
+seede = 524108005
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
@@ -210,9 +213,19 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 5 )
 
+[node name="Area2D2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource( 7 )
+__meta__ = {
+"_editor_description_": "Oversized to disrupt HUD earlier"
+}
+
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 autostart = true
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_entered" from="Area2D2" to="." method="_on_Area2D2_area_entered"]
+[connection signal="area_exited" from="Area2D2" to="." method="_on_Area2D2_area_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
