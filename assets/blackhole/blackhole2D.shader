@@ -22,6 +22,10 @@ void fragment() {
 	// Output pixels from the screen using distorted UVs
 	//vec3 col = texscreen(uv);
 	vec3 col = texture(SCREEN_TEXTURE, uv).rgb;
-	COLOR.rgba = mix(vec4(col, 1), hole_color, smoothstep(black_radius-0.01, black_radius+0.01, f));
+	//add a halo/accretion disk around
+	col = mix(vec3(col.rgb), vec3(1., 0.45, 0.25), smoothstep(black_radius-0.25, black_radius+0.25, f));
+	vec4 col4 = mix(vec4(col, 1), hole_color, smoothstep(black_radius-0.01, black_radius+0.01, f));
+	COLOR.rgba = col4;
+	//COLOR.rgba = vec4(col, 1);
 	//COLOR.rgb = vec3(f, 0, 0);
 }
