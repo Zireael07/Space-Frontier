@@ -7,6 +7,7 @@ export var y = 0.0
 export var depth = 0.0
 export var named = ""
 export var planets = false
+var pos = null #Vector3()
 var selected = false
 
 # Called when the node enters the scene tree for the first time.

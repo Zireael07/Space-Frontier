@@ -22,10 +22,49 @@ var map_astar = null
 # idenfifier must be an int because AStar uses integer ids
 var mapping = {}
 
+# https://stackoverflow.com/questions/65706804/bitwise-packing-unpacking-generalized-solution-for-arbitrary-values
+# for some reason this (just like collapsing 3D to 1D index) only works for positive numbers
+func pack_vector(vec3):
+	# packed = v3 << (size1 + size2) | v2 << size1 | v1;
+	return int(vec3.z) << (10 + 10) | int(vec3.y) << 10 | int(vec3.x)
+	
+func unpack_vector(id):
+	var sample1 = int(pow(2,10+1)-1) #511 (8+1) #1023 (9+1) #2047 (10+1); #pow(2, 10+1)-1;
+	var sample2 = int(pow(2,10+1)-1) #pow(2,10+1)-1;
+	#print(sample1)
+	var v1 = id & sample1;
+	var v2 = (id >> 10) & sample2;
+	var v3 = id >> (10 + 10);
+	return Vector3(v1, v2, v3)
+
+func float_to_int(vec3):
+	#print("original: ", vec3)
+	# TODO: Godot4 - use Vector3i here
+	# integer that represents a float with one decimal place (shave off the last to know the decimals)
+	return Vector3(int(float("%.1f" % vec3.x)*10),int(float("%.1f" % vec3.y)*10), int(float("%.1f" % vec3.z)*10))
+
+func pos_to_positive_pos(vec3):
+	# assume the sector is 100 ly in each direction, extended to closest power of 2
+	# a digit added to represent a decimal place (see l.29 above)
+	var sector_start = Vector3(-1024,-1024,-1024)
+	var pos = Vector3(vec3.x-sector_start.x, vec3.y-sector_start.y, vec3.z-sector_start.z)
+	#print("original: ", vec3, " positive: ", pos)
+	return pos
+
 func save_graph_data(x,y,z, nam):
 	map_graph.append([x,y,z, nam])
+	
+	# as of Godot 3.5, AStar's key cannot be larger than 2^32-1 (hashes will overflow)
+	
+	var id = pack_vector(pos_to_positive_pos(float_to_int(Vector3(x,y,z))))
+	#print("ID: ", id, "; unpacked: ", unpack_vector(id))
+	#print("Nearest po2: ", nearest_po2(id)) # 2^30 for storing 3*2^10 max
+	#print("AStar overflow: ", id > (pow(2,31)-1)) # 2^31-1
+	
+	mapping[float_to_int(Vector3(x,y,z))] = id
+	
 	# the global scope function returns an integer hash
-	mapping[Vector3(x,y,z)] = hash(Vector3(x,y,z))
+	#mapping[Vector3(x,y,z)] = hash(Vector3(x,y,z))
 	# https://godotengine.org/qa/43078/create-an-unique-id
 	#mapping[Vector3(x,y,z)] = Vector3(x,y,z).get_instance_id()
 
@@ -44,6 +83,7 @@ func _ready():
 				#ic.x = float(line[1])
 				ic.y = strip_units(str(line[2]))
 				ic.depth = strip_units(str(line[3]))
+				ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
 				# does the star have planets?
 				ic.planets = false
 				if "yes" in line[5]:
@@ -90,6 +130,7 @@ func _ready():
 					ic.x = data[0]
 					ic.y = data[1]
 					ic.depth = data[2]
+					ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
 					save_graph_data(ic.x, ic.y, ic.depth, ic.named)
 			get_node("Control").add_child(ic)
 	
@@ -209,39 +250,57 @@ func update_map(marker):
 func create_map_graph():
 	map_astar = AStar.new()
 	# hardcoded stars
-	map_astar.add_point(0, Vector3(0,0,0)) # Sol
+	mapping[Vector3(0,0,0)] = pack_vector(pos_to_positive_pos(float_to_int(Vector3(0,0,0))))
+	map_astar.add_point(mapping[Vector3(0,0,0)], Vector3(0,0,0)) # Sol
 	#map_astar.add_point(1, Vector3(-3.4, 0.4, -11.4)) # Tau Ceti
 	
 	# graph is made out of nodes
 	for i in map_graph.size():
 		var n = map_graph[i]
-		map_astar.add_point(i+1, Vector3(n[0], n[1], n[2]))
+		# the reason for doing this is to be independent of any sort of a catalogue ordering...
+		map_astar.add_point(mapping[float_to_int(Vector3(n[0], n[1], n[2]))], Vector3(n[0], n[1], n[2]))
+		#map_astar.add_point(i+1, Vector3(n[0], n[1], n[2]))
+	
+	# debug
+	print("AStar points:")
+	for p in map_astar.get_points():
+		print(p, ": ", map_astar.get_point_position(p))
 	
 	# connect stars
-	map_astar.connect_points(0,1) # Sol to Tau Ceti
-	map_astar.connect_points(0,2) # Sol to Barnard's
-	map_astar.connect_points(0,3) # Sol to Wolf359
-	map_astar.connect_points(0,4) # Sol to Luyten 726-8/UV Ceti
+	#map_astar.connect_points(0,1) # Sol to Tau Ceti
+	#map_astar.connect_points(0,2) # Sol to Barnard's
+	#map_astar.connect_points(0,3) # Sol to Wolf359
+	#map_astar.connect_points(0,4) # Sol to Luyten 726-8/UV Ceti
+	
+	map_astar.connect_points(mapping[Vector3(0,0,0)],mapping[Vector3(-34, 4, -114)]) # Sol to Tau Ceti
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
 	
 #	# check distances to Gliese 1002
 #	for i in range(4):
 #		var dist = map_astar.get_point_position(i).distance_to(map_astar.get_point_position(7))
 #		print(i, ": ", dist)
 	
-	map_astar.connect_points(1,7) # Tau Ceti to Gliese 1002 (6.8ly according to the above)
-	map_astar.connect_points(5,7) # Gliese 1005 to Gliese 1002
-	map_astar.connect_points(7,8) # Gliese 1002 to Gliese 1286
-	map_astar.connect_points(8,9) # Gliese 1286 to Gliese 867 (FK Aquarii)
-	map_astar.connect_points(10,9) # Gliese 1265 to Gliese 867
-	map_astar.connect_points(11,10) # NN 4281 to Gliese 1265
-	map_astar.connect_points(11,12) # NN 4281 to TRAPPIST-1
+#	map_astar.connect_points(1,7) # Tau Ceti to Gliese 1002 (6.8ly according to the above)
+#	map_astar.connect_points(5,7) # Gliese 1005 to Gliese 1002
+#	map_astar.connect_points(7,8) # Gliese 1002 to Gliese 1286
+#	map_astar.connect_points(8,9) # Gliese 1286 to Gliese 867 (FK Aquarii)
+#	map_astar.connect_points(10,9) # Gliese 1265 to Gliese 867
+#	map_astar.connect_points(11,10) # NN 4281 to Gliese 1265
+#	map_astar.connect_points(11,12) # NN 4281 to TRAPPIST-1
+
+	map_astar.connect_points(mapping[Vector3(-34, 4, -114)],mapping[Vector3(-2, 58, -141)]) # Tau Ceti to Gliese 1002
+	map_astar.connect_points(mapping[Vector3(4, 39, -158)],mapping[Vector3(-2, 58, -141)]) # Gliese 1005 to Gliese 1002
+	map_astar.connect_points(mapping[Vector3(-2, 58, -141)],mapping[Vector3(14, 119,-202)]) # Gliese 1002 to Gliese 1286
+	map_astar.connect_points(mapping[Vector3(14, 119,-202)],mapping[Vector3(113, 95, -241)]) # Gliese 1286 to Gliese 867 (FK Aquarii)
+	map_astar.connect_points(mapping[Vector3(160, 130, -270)],mapping[Vector3(113, 95, -241)]) # Gliese 1265 to Gliese 867
+	map_astar.connect_points(mapping[Vector3(139, 155, -287)],mapping[Vector3(160, 130, -270)]) # NN 4281 to Gliese 1265
+	map_astar.connect_points(mapping[Vector3(139, 155, -287)],mapping[Vector3(78, 211, -339)]) # NN 4281 to TRAPPIST-1
 	
-	# debug
-	for p in map_astar.get_points():
-		print(p, ": ", map_astar.get_point_position(p))
 		
 	# check connectedness
-	print("To TRAPPIST: ", map_astar.get_id_path(0,12))
+	print("To TRAPPIST: ", map_astar.get_id_path(mapping[Vector3(0,0,0)],mapping[Vector3(78, 211, -339)])) #12))
 		
 	return map_astar
 
@@ -257,7 +316,7 @@ func find_graph_id(nam):
 			break
 	return id
 
-func get_star_distance(a,b):
+func get_star_distance_old(a,b):
 	var start_name = a.get_node("Label").get_text().replace("*", "")
 	var end_name = b.get_node("Label").get_text().replace("*", "")
 	var id1 = find_graph_id(start_name)
@@ -266,6 +325,13 @@ func get_star_distance(a,b):
 	# see above - astar graph is created from map_graph so the id's match
 	return map_astar.get_point_position(id1).distance_to(map_astar.get_point_position(id2))
 
+func get_star_distance(a,b):
+	var start = a.pos if "pos" in a else Vector3(0,0,0)
+	var end = b.pos if "pos" in b else Vector3(0,0,0)
+	var id1 = mapping.get(start)
+	var id2 = mapping.get(end)
+	print("id1:", id1, " id2: ", id2)
+	return map_astar.get_point_position(id1).distance_to(map_astar.get_point_position(id2))
 
 # --------------------------------------------------
 func _on_ButtonConfirm_pressed():
