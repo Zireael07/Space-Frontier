@@ -316,6 +316,14 @@ func find_graph_id(nam):
 			break
 	return id
 
+func find_coords_for_name(nam):
+	var id = find_graph_id(nam)
+	var coords = Vector3(0,0,0)
+	if id != -1:
+		coords = Vector3(map_graph[id][0], map_graph[id][1], map_graph[id][2])
+	print("For name, ", nam, " id ", id, " coords: ", coords)
+	return coords
+
 func get_star_distance_old(a,b):
 	var start_name = a.get_node("Label").get_text().replace("*", "")
 	var end_name = b.get_node("Label").get_text().replace("*", "")
@@ -332,6 +340,10 @@ func get_star_distance(a,b):
 	var id2 = mapping.get(end)
 	print("id1:", id1, " id2: ", id2)
 	return map_astar.get_point_position(id1).distance_to(map_astar.get_point_position(id2))
+
+func get_neighbors(coords):
+	return map_astar.get_point_connections(mapping[coords])
+	# pack_vector(pos_to_positive_pos(float_to_int(
 
 # --------------------------------------------------
 func _on_ButtonConfirm_pressed():

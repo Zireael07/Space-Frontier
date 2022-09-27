@@ -50,6 +50,7 @@ func system_name_to_id(nam):
 	print("ID for name: ", nam)
 	return nam
 
+# this uses text IDs because that's what the spawning/instancing system uses
 func spawn_system(system="proc"):
 	var sys = system_no_planets
 	# named/defined systems
@@ -98,6 +99,9 @@ func _ready():
 	
 	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
 	print("Player index: " + str(p_ind))
+	
+	#print("Map graph: ", game.player.HUD.get_node("Control4/star map").map_graph)
+	
 	mmap = get_tree().get_nodes_in_group("minimap")[0]
 	
 	for i in range(4):
@@ -116,7 +120,28 @@ func _ready():
 		spawn_enemy(pos, i, p_ind, mmap)
 	
 	# wormholes
-	if curr_system == "Sol":
+	
+	# get coords, neighbors and directions from AStar
+	var coords = game.player.HUD.get_node("Control4/star map").find_coords_for_name(curr_system)
+	var neighbors = game.player.HUD.get_node("Control4/star map").get_neighbors(coords)
+	#print("Neighboring systems: ", neighbors)
+	for n in neighbors:
+		print(n, " @ ", game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n))
+		# relative direction
+		var dir = game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n) - coords
+		# where to place the w-hole?
+		var wh_pos = Vector2(0, 0)
+		if dir.x < 0:
+			wh_pos.x = -1500
+		if dir.y < 0:
+			wh_pos.y = 500
+		elif dir.y > 0:
+			wh_pos.y = -750
+		if dir.z < 0:
+			wh_pos.y = wh_pos.y - 300
+		print("Wormhole pos: ", wh_pos, " for dir: ", dir)
+	
+	if curr_system == "Sol":		
 		spawn_wormhole(p_ind, 11, mmap)
 		# second wormhole to Barnard's
 		spawn_wormhole(p_ind, 11, mmap, "Barnards", Vector2(0,-750))
@@ -576,6 +601,8 @@ func change_system(system="proxima", time=0.0):
 	
 	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
 	print("Player index: " + str(p_ind))
+	
+	print("Map graph: ", game.player.HUD.get_node("Control4/star map").map_graph)
 	
 	# TODO: this should pull from some source of truth
 	# TODO: deduplicate with ready() above
