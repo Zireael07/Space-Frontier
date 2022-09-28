@@ -48,15 +48,27 @@ func float_to_int(vec3):
 	return Vector3(int(float("%.1f" % vec3.x)*10),int(float("%.1f" % vec3.y)*10), int(float("%.1f" % vec3.z)*10))
 
 func pos_to_positive_pos(vec3):
-	# assume the sector is 100 ly in each direction, extended to closest power of 2
-	# a digit added to represent a decimal place (see l.29 above)
-	var sector_start = Vector3(-1024,-1024,-1024)
+	# assume the sector is 50 ly in each direction, extended to closest power of 2
+	# a digit was added to represent a decimal place (see l.29 above)
+	var sector_start = Vector3(-512,-512,-512)
 	var pos = Vector3(vec3.x-sector_start.x, vec3.y-sector_start.y, vec3.z-sector_start.z)
 	#print("original: ", vec3, " positive: ", pos)
+	# test
+	#positive_to_original(pos)
+	return pos
+	
+func positive_to_original(vec3):
+	var sector_start = Vector3(-512,-512,-512)
+	var pos = Vector3(vec3.x+sector_start.x, vec3.y+sector_start.y, vec3.z+sector_start.z)
+	#print("positive: ", vec3, " original: ", pos)
 	return pos
 
 func save_graph_data(x,y,z, nam):
 	map_graph.append([x,y,z, nam])
+	
+	# skip any stars outside the sector
+	if x < -50 or y < -50 or z < -50:
+		return
 	
 	# as of Godot 3.5, AStar's key cannot be larger than 2^32-1 (hashes will overflow)
 	
@@ -196,6 +208,8 @@ func load_data():
 #func _process(delta):
 #	pass
 
+# -------------------------------------------------------------------------
+
 func update_map(marker):
 	# update marker position
 	var system = get_tree().get_nodes_in_group("main")[0].curr_system
@@ -261,6 +275,11 @@ func create_map_graph():
 	# graph is made out of nodes
 	for i in map_graph.size():
 		var n = map_graph[i]
+		
+		# skip any stars outside the sector
+		if n[0] < -50 or n[1] < -50 or n[2] < -50:
+			continue
+		
 		# the reason for doing this is to be independent of any sort of a catalogue ordering...
 		map_astar.add_point(mapping[float_to_int(Vector3(n[0], n[1], n[2]))], Vector3(n[0], n[1], n[2]))
 		#map_astar.add_point(i+1, Vector3(n[0], n[1], n[2]))
