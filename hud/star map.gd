@@ -24,17 +24,21 @@ var mapping = {}
 
 # https://stackoverflow.com/questions/65706804/bitwise-packing-unpacking-generalized-solution-for-arbitrary-values
 # for some reason this (just like collapsing 3D to 1D index) only works for positive numbers
+# https://stackoverflow.com/questions/6556961/use-of-the-bitwise-operators-to-pack-multiple-values-in-one-int/6557022#6557022
+# no component can be bigger then 999 that means we need 10 bits of storage per component (allows numbers up to 1014).
 func pack_vector(vec3):
 	# packed = v3 << (size1 + size2) | v2 << size1 | v1;
-	return int(vec3.z) << (10 + 10) | int(vec3.y) << 10 | int(vec3.x)
+	return (int(vec3.z) << (10 + 10) | int(vec3.y) << 10 | int(vec3.x))
 	
 func unpack_vector(id):
-	var sample1 = int(pow(2,10+1)-1) #511 (8+1) #1023 (9+1) #2047 (10+1); #pow(2, 10+1)-1;
-	var sample2 = int(pow(2,10+1)-1) #pow(2,10+1)-1;
+	#var sample1 = int(pow(2,10+1)-1) #511 (8+1) #1023 (9+1) #2047 (10+1); #pow(2, 10+1)-1;
+	#var sample2 = int(pow(2,10+1)-1) #pow(2,10+1)-1;
 	#print(sample1)
-	var v1 = id & sample1;
-	var v2 = (id >> 10) & sample2;
-	var v3 = id >> (10 + 10);
+	
+	var mask = ((1 << 10) - 1) # mask hides all the bits of the left except the 10 rightmost
+	var v1 = (id >> 0) & mask
+	var v2 = (id >> 10) & mask
+	var v3 = id >> (10 + 10) & mask
 	return Vector3(v1, v2, v3)
 
 func float_to_int(vec3):
