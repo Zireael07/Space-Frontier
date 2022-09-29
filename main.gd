@@ -120,44 +120,25 @@ func _ready():
 		spawn_enemy(pos, i, p_ind, mmap)
 	
 	# wormholes
-	
-	# get coords, neighbors and directions from AStar
-	var coords = game.player.HUD.get_node("Control4/star map").find_coords_for_name(curr_system)
-	var neighbors = game.player.HUD.get_node("Control4/star map").get_neighbors(coords)
-	#print("Neighboring systems: ", neighbors)
-	for n in neighbors:
-		print(n, " @ ", game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n))
-		# relative direction
-		var dir = game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n) - coords
-		# where to place the w-hole?
-		var wh_pos = Vector2(0, 0)
-		if dir.x < 0:
-			wh_pos.x = -1500
-		if dir.y < 0:
-			wh_pos.y = 500
-		elif dir.y > 0:
-			wh_pos.y = -750
-		if dir.z < 0:
-			wh_pos.y = wh_pos.y - 300
-		print("Wormhole pos: ", wh_pos, " for dir: ", dir)
-	
-	if curr_system == "Sol":		
-		spawn_wormhole(p_ind, 11, mmap)
-		# second wormhole to Barnard's
-		spawn_wormhole(p_ind, 11, mmap, "Barnards", Vector2(0,-750))
-		# some more...
-		spawn_wormhole(p_ind, 11, mmap, "Luyten 726-8", Vector2(-1500, -750))
-		spawn_wormhole(p_ind, 11, mmap, "Wolf 359", Vector2(-1500, 500))
-	if curr_system == "Proxima":
-		spawn_wormhole(p_ind, 1, mmap)
+	wormholes_from_graph(p_ind)
 		
-	# UV Ceti has a manually added wormhole...
-	
-	if curr_system == "Wolf 359":
-		spawn_wormhole(p_ind, 1, mmap)
-	
-	if curr_system == "Tau Ceti":
-		spawn_wormhole(p_ind, 1, mmap)
+#	if curr_system == "Sol":		
+#		spawn_wormhole(p_ind, 11, mmap)
+#		# second wormhole to Barnard's
+#		spawn_wormhole(p_ind, 11, mmap, "Barnards", Vector2(0,-750))
+#		# some more...
+#		spawn_wormhole(p_ind, 11, mmap, "Luyten 726-8", Vector2(-1500, -750))
+#		spawn_wormhole(p_ind, 11, mmap, "Wolf 359", Vector2(-1500, 500))
+#	if curr_system == "Proxima":
+#		spawn_wormhole(p_ind, 1, mmap)
+#
+#	# UV Ceti has a manually added wormhole...
+#
+#	if curr_system == "Wolf 359":
+#		spawn_wormhole(p_ind, 1, mmap)
+#
+#	if curr_system == "Tau Ceti":
+#		spawn_wormhole(p_ind, 1, mmap)
 		
 	# systems w/o planets have a wormhole already in the scene
 	
@@ -226,9 +207,9 @@ func spawn_friendly(i, p_ind, m_map):
 		# give higher ranks if any left
 		if rank_list.size() > 0:
 			sp.get_child(0).rank = rank_list.pop_front()
-			print("Friendly " + sp.get_name() + " received rank " + str(sp.get_child(0).rank))
+			#print("Friendly " + sp.get_name() + " received rank " + str(sp.get_child(0).rank))
 		
-		print("Spawned friendly")
+		#print("Spawned friendly")
 		# add to fleet census
 		game.fleet1[1] += 1
 
@@ -338,7 +319,7 @@ func spawn_enemy(pos, i, p_ind, m_map):
 	randomize()
 	var offset = Vector2(rand_range(50, 100), rand_range(50, 100))
 	sp.set_global_position(pos + offset)
-	print("Spawning enemy @ : " + str(pos + offset))
+	#print("Spawning enemy @ : " + str(pos + offset))
 	sp.get_child(0).set_position(Vector2(0,0))
 	sp.set_name("enemy"+str(i))
 	get_child(3).add_child(sp)
@@ -426,7 +407,7 @@ func spawn_pirate(pos, p_ind, m_map):
 	randomize()
 	var offset = Vector2(rand_range(50, 100), rand_range(50, 100))
 	sp.set_global_position(pos + offset)
-	print("Spawning pirate @ : " + str(pos + offset))
+	#print("Spawning pirate @ : " + str(pos + offset))
 	sp.get_child(0).set_position(Vector2(0,0))
 	sp.set_name("pirate") #+str(i))
 	get_child(3).add_child(sp)
@@ -443,13 +424,20 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 	if planet_id >= get_tree().get_nodes_in_group("planets").size():
 		return
 	
-	var p = get_tree().get_nodes_in_group("planets")[planet_id]
+	# handle spawning wormholes not relative to a specific planet
+	# means our system templates for UV Ceti and no planets don't have to contain a wormhole anymore	
+	var gl = null
+	if planet_id == -1:
+		gl = Vector2(0,0)
+	else:
+		var p = get_tree().get_nodes_in_group("planets")[planet_id]
+		gl = p.get_global_position()
 	
 	# random factor
 	randomize()
 	var r_offset = Vector2(rand_range(250, 300), rand_range(250, 300))
 	
-	wh.set_global_position(p.get_global_position() + offset + r_offset)
+	wh.set_global_position(gl + offset + r_offset)
 	
 	wh.set_name("wormhole")
 	if target_system != null:
@@ -469,6 +457,54 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 		print("Spawned a wormhole at " + str(wh.get_global_position()))
 
 	#return wh.get_global_position()
+
+# --------------------------------------------------------------------
+
+func wormholes_from_graph(p_ind):
+	# get coords, neighbors and directions from AStar
+	var coords = game.player.HUD.get_node("Control4/star map").find_coords_for_name(curr_system)
+	var neighbors = game.player.HUD.get_node("Control4/star map").get_neighbors(coords)
+	#print("Neighboring systems: ", neighbors)
+	
+	# Sol
+	if neighbors.size() > 2:
+		for n in neighbors:
+			print(n, " @ ", game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n))
+			# relative direction
+			var dir = game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n) - coords
+			# where to place the w-hole?
+			var wh_pos = Vector2(0, 0)
+			if dir.x < 0:
+				wh_pos.x = -1500
+			if dir.y < 0:
+				wh_pos.y = 500
+			elif dir.y > 0:
+				wh_pos.y = -750
+			if dir.z < 0:
+				wh_pos.y = wh_pos.y - 300
+			print("Wormhole pos: ", wh_pos, " for dir: ", dir)
+			spawn_wormhole(p_ind, 11, mmap, n, wh_pos)
+	elif neighbors.size() > 1:
+		for n in neighbors:
+			print(n, " @ ", game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n))
+			# relative direction
+			var dir = game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n) - coords
+			# where to place the w-hole?
+			var wh_pos = Vector2(0, 2000)
+			if dir.x < 0:
+				wh_pos.x = -200
+			if dir.y < 0:
+				wh_pos.y = wh_pos.y + 500
+			elif dir.y > 0:
+				wh_pos.y = wh_pos.y - 750
+			if dir.z < 0:
+				wh_pos.y = wh_pos.y - 300
+			print("Wormhole pos: ", wh_pos, " for dir: ", dir)
+			spawn_wormhole(p_ind, -1, mmap, n, wh_pos)
+	else:
+		var wh_pos = Vector2(0, 2000)
+		spawn_wormhole(p_ind, -1, mmap, neighbors[0], wh_pos)
+
 
 # -------------------------------------
 func move_player(system, travel=0.0):
@@ -593,6 +629,9 @@ func change_system(system="proxima", time=0.0):
 	# clear hud planet listing
 	game.player.HUD.clear_planet_listing()
 	
+	# convert from input to textual id since instancing still uses textual ids
+	system = system_name_to_id(system.get_name())
+	
 	# spawn new system
 	var data = spawn_system(system)
 	curr_system = data[0]
@@ -600,26 +639,26 @@ func change_system(system="proxima", time=0.0):
 	print("System after change: ", curr_system)
 	
 	var p_ind = get_tree().get_nodes_in_group("player")[0].get_index()
-	print("Player index: " + str(p_ind))
+	#print("Player index: " + str(p_ind))
 	
-	print("Map graph: ", game.player.HUD.get_node("Control4/star map").map_graph)
+	#print("Map graph: ", game.player.HUD.get_node("Control4/star map").map_graph)
 	
-	# TODO: this should pull from some source of truth
-	# TODO: deduplicate with ready() above
 	# wormhole
-	if system == "Proxima":
-		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
-		spawn_wormhole(p_ind, 0, mmap, "Sol", Vector2(0,0), false)
+	wormholes_from_graph(p_ind)
 	
-	# UV Ceti has a manually added wormhole...
-	
-	if system == "Wolf 359":
-		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
-	
-	if system == "Tau Ceti":
-		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
-	if system == "Gliese 1265":
-		spawn_wormhole(p_ind, 0, mmap, null, Vector2(0,0), false)
+#	if system == "Proxima":
+#		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
+#		spawn_wormhole(p_ind, 0, mmap, "Sol", Vector2(0,0), false)
+#
+#	# UV Ceti has a manually added wormhole...
+#
+#	if system == "Wolf 359":
+#		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
+#
+#	if system == "Tau Ceti":
+#		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
+#	if system == "Gliese 1265":
+#		spawn_wormhole(p_ind, 0, mmap, null, Vector2(0,0), false)
 		
 	# systems w/o planets have a wormhole already in the scene
 	

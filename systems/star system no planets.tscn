@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://bodies/wormhole2D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
 [ext_resource path="res://systems/star.gd" type="Script" id=4]
 
@@ -32,6 +31,3 @@ __meta__ = {
 
 [node name="planet_holder" type="Node2D" parent="BL Ceti"]
 position = Vector2( 0, 64800 )
-
-[node name="Node2D" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, 2000 )

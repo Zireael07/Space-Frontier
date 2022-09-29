@@ -238,12 +238,27 @@ func update_map(marker):
 	
 	if game.player.w_hole.target_system:
 		print("Target system: ", game.player.w_hole.target_system)
-		if game.player.w_hole.target_system in lookup:
-			$"Control".tg = get_node("Control").get_node(lookup[game.player.w_hole.target_system])
-			get_node("Control").get_node(lookup[game.player.w_hole.target_system]).get_node("Label").set_self_modulate(Color(0,1,1))
-		else:
-			$"Control".tg = get_node("Control").get_node(game.player.w_hole.target_system)
-			get_node("Control").get_node(game.player.w_hole.target_system).get_node("Label").set_self_modulate(Color(0,1,1))
+		
+		var coords = unpack_vector(game.player.w_hole.target_system)
+		#print("unpacked coords: ", coords)
+		coords = positive_to_original(coords)
+		#print("Coords: ", coords)
+		var icon = find_icon_for_pos(coords)
+		print("Icon: ", icon.get_name(), " @ ", coords if icon != null else "None")
+		$"Control".tg = icon
+		icon.get_node("Label").set_self_modulate(Color(0,1,1))
+		
+		# paranoia
+		if $"Control".src == $"Control".tg:
+			print("Something went wrong, same src and tg!!!")
+		
+		# this relied on string ids
+#		if game.player.w_hole.target_system in lookup:
+#			$"Control".tg = get_node("Control").get_node(lookup[game.player.w_hole.target_system])
+#			get_node("Control").get_node(lookup[game.player.w_hole.target_system]).get_node("Label").set_self_modulate(Color(0,1,1))
+#		else:
+#			$"Control".tg = get_node("Control").get_node(game.player.w_hole.target_system)
+#			get_node("Control").get_node(game.player.w_hole.target_system).get_node("Label").set_self_modulate(Color(0,1,1))
 	else:
 		if system == "Sol":
 			$"Control/proxima/Label".set_self_modulate(Color(0,1,1))
@@ -298,7 +313,7 @@ func create_map_graph():
 	map_astar.connect_points(mapping[Vector3(0,0,0)],mapping[Vector3(-34, 4, -114)]) # Sol to Tau Ceti
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
-	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
+	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
 	
 #	# check distances to Gliese 1002
 #	for i in range(4):
@@ -314,7 +329,7 @@ func create_map_graph():
 #	map_astar.connect_points(11,12) # NN 4281 to TRAPPIST-1
 
 	map_astar.connect_points(mapping[Vector3(-34, 4, -114)],mapping[Vector3(-2, 58, -141)]) # Tau Ceti to Gliese 1002
-	map_astar.connect_points(mapping[Vector3(4, 39, -158)],mapping[Vector3(-2, 58, -141)]) # Gliese 1005 to Gliese 1002
+#	map_astar.connect_points(mapping[Vector3(4, 39, -158)],mapping[Vector3(-2, 58, -141)]) # Gliese 1005 to Gliese 1002
 	map_astar.connect_points(mapping[Vector3(-2, 58, -141)],mapping[Vector3(14, 119,-202)]) # Gliese 1002 to Gliese 1286
 	map_astar.connect_points(mapping[Vector3(14, 119,-202)],mapping[Vector3(113, 95, -241)]) # Gliese 1286 to Gliese 867 (FK Aquarii)
 	map_astar.connect_points(mapping[Vector3(160, 130, -270)],mapping[Vector3(113, 95, -241)]) # Gliese 1265 to Gliese 867
@@ -335,7 +350,7 @@ func find_graph_id(nam):
 	for i in map_graph.size():
 		var n = map_graph[i]
 		if n[3] == nam:
-			id = i+1 # +1 because Sol is hardcoded at #0 (see l.200)
+			id = i #+1 # +1 because Sol is hardcoded at #0 (see l.200)
 			break
 	return id
 
@@ -344,8 +359,16 @@ func find_coords_for_name(nam):
 	var coords = Vector3(0,0,0)
 	if id != -1:
 		coords = Vector3(map_graph[id][0], map_graph[id][1], map_graph[id][2])
-	print("For name, ", nam, " id ", id, " coords: ", coords)
+	print("For name, ", nam, " id ", id, " real float coords: ", coords)
 	return coords
+	
+func find_icon_for_pos(pos):
+	var ret = null
+	for c in $"Control".get_children():
+		if 'pos' in c and c.pos == pos:
+			ret = c
+			break
+	return ret
 
 func get_star_distance_old(a,b):
 	var start_name = a.get_node("Label").get_text().replace("*", "")
@@ -365,8 +388,10 @@ func get_star_distance(a,b):
 	return map_astar.get_point_position(id1).distance_to(map_astar.get_point_position(id2))
 
 func get_neighbors(coords):
-	return map_astar.get_point_connections(mapping[coords])
-	# pack_vector(pos_to_positive_pos(float_to_int(
+	var neighbors = map_astar.get_point_connections(mapping[float_to_int(coords)])
+	print("Neighbors for id: ", mapping[float_to_int(coords)], " ", neighbors)
+	return neighbors
+
 
 # --------------------------------------------------
 func _on_ButtonConfirm_pressed():

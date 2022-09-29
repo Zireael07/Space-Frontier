@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
-[ext_resource path="res://bodies/wormhole2D.tscn" type="PackedScene" id=3]
 [ext_resource path="res://systems/star.gd" type="Script" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -10,9 +9,7 @@
 [node name="Luyten 726-8" type="Node2D"]
 position = Vector2( 500, 500 )
 
-[node name="BL Ceti" type="Node2D" parent="." groups=[
-"star",
-]]
+[node name="BL Ceti" type="Node2D" parent="." groups=["star"]]
 script = ExtResource( 4 )
 orbit_rate = 0.01
 star_radius_factor = 0.14
@@ -26,16 +23,14 @@ texture = ExtResource( 1 )
 margin_top = 100.0
 margin_right = 109.0
 margin_bottom = 116.0
-custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
 text = "BL Ceti"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="UV Ceti" type="Node2D" parent="." groups=[
-"star",
-]]
+[node name="UV Ceti" type="Node2D" parent="." groups=["star"]]
 position = Vector2( 0, 64800 )
 script = ExtResource( 2 )
 star_radius_factor = 0.14
@@ -49,14 +44,11 @@ texture = ExtResource( 1 )
 margin_top = 100.0
 margin_right = 109.0
 margin_bottom = 116.0
-custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
 text = "UV Ceti"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="planet_holder" type="Node2D" parent="UV Ceti"]
-
-[node name="Node2D" parent="." instance=ExtResource( 3 )]
-position = Vector2( 0, 2000 )
