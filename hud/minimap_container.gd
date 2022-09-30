@@ -93,7 +93,7 @@ func _ready():
 	var to_rem = []
 	for i in range(colonies.size()):
 		var col = colonies[i]
-		print(col.get_name())
+		#print(col.get_name())
 		# skip colonies on planets
 		if col.get_child(0).is_on_planet():
 			to_rem.append(col)
@@ -270,6 +270,11 @@ func add_system_bodies():
 		add_child(asteroid_sprite)
 	
 	for w in wormholes:
+		# check if we haven't already spawned it
+		if wormholes.size() == wormhole_sprites.size():
+			print("Wormholes already have icons, skipping...")
+			return 
+			
 		var wormhole_sprite = TextureRect.new()
 		wormhole_sprite.set_texture(planet)
 		wormhole_sprite.set_scale(Vector2(0.5, 0.5))
@@ -286,7 +291,7 @@ func add_system_bodies():
 		# center it
 		wh_arrow.set_pivot_offset(wh_arrow.get_size()/2)
 		wh_arrow.set_visible(false)
-		
+		print("Added wormhole from system bodies")
 		#print(wh_arrow.get_name())
 
 func move_player_sprite():
@@ -298,7 +303,7 @@ func move_player_sprite():
 # ---------------------------
 
 func _on_friendly_ship_spawned(ship):
-	print("On ship spawned")
+	#print("On ship spawned")
 	var friendly_sprite = TextureRect.new()
 	friendly_sprite.set_texture(friendly)
 	friendly_sprites.append(friendly_sprite)
@@ -311,7 +316,7 @@ func _on_friendly_ship_spawned(ship):
 	friendlies.append(ship)
 	
 func _on_enemy_ship_spawned(ship):
-	print("On enemy ship spawned")
+	#print("On enemy ship spawned")
 	var enemy_sprite = TextureRect.new()
 	enemy_sprite.set_texture(hostile)
 	var label = Label.new()
@@ -338,7 +343,7 @@ func _on_pirate_ship_spawned(ship):
 	pirates.append(ship)
 
 func _on_starbase_spawned(sb):
-	print("On starbase spawned")
+	#print("On starbase spawned")
 	var starbase_sprite = TextureRect.new()
 	starbase_sprite.set_texture(starbase)
 	starbase_sprite.set_scale(Vector2(0.5, 0.5))
@@ -371,6 +376,7 @@ func _on_pirate_starbase_spawned(sb):
 	sb_pirates.append(sb)
 
 func _on_wormhole_spawned(wormhole):
+	#print("On wormhole spawned...")
 	var wormhole_sprite = TextureRect.new()
 	wormhole_sprite.set_texture(planet)
 	wormhole_sprite.set_scale(Vector2(0.5, 0.5))
