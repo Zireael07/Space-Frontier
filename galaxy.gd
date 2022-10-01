@@ -151,28 +151,12 @@ func create_map_graph():
 		print(p, ": ", map_astar.get_point_position(p))
 	
 	# connect stars
-	#map_astar.connect_points(0,1) # Sol to Tau Ceti
-	#map_astar.connect_points(0,2) # Sol to Barnard's
-	#map_astar.connect_points(0,3) # Sol to Wolf359
-	#map_astar.connect_points(0,4) # Sol to Luyten 726-8/UV Ceti
 	
 	map_astar.connect_points(mapping[Vector3(0,0,0)],mapping[Vector3(-34, 4, -114)]) # Sol to Tau Ceti
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
 	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
-	
-#	# check distances to Gliese 1002
-#	for i in range(4):
-#		var dist = map_astar.get_point_position(i).distance_to(map_astar.get_point_position(7))
-#		print(i, ": ", dist)
-	
-#	map_astar.connect_points(1,7) # Tau Ceti to Gliese 1002 (6.8ly according to the above)
-#	map_astar.connect_points(5,7) # Gliese 1005 to Gliese 1002
-#	map_astar.connect_points(7,8) # Gliese 1002 to Gliese 1286
-#	map_astar.connect_points(8,9) # Gliese 1286 to Gliese 867 (FK Aquarii)
-#	map_astar.connect_points(10,9) # Gliese 1265 to Gliese 867
-#	map_astar.connect_points(11,10) # NN 4281 to Gliese 1265
-#	map_astar.connect_points(11,12) # NN 4281 to TRAPPIST-1
+
 
 	map_astar.connect_points(mapping[Vector3(-34, 4, -114)],mapping[Vector3(-2, 58, -141)]) # Tau Ceti to Gliese 1002
 #	map_astar.connect_points(mapping[Vector3(4, 39, -158)],mapping[Vector3(-2, 58, -141)]) # Gliese 1005 to Gliese 1002

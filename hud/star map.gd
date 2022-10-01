@@ -114,8 +114,7 @@ func update_map(marker):
 	for c in get_node("Control").get_children():
 		c.get_node("Label").set_self_modulate(Color(1,1,1))
 	
-	# show target on map (tint cyan to match marker above)	
-	#var lookup = {"luyten726-8": "Luyten 726-8", "barnards":"Barnard's Star", "wolf359":"Wolf 359"}	
+	# show target on map (tint cyan to match marker above)
 	var lookup = {"Barnards":"Barnard's Star", "Trappist": "Trappist-1"}	
 	
 	if game.player.w_hole.target_system:
@@ -126,7 +125,8 @@ func update_map(marker):
 		coords = positive_to_original(coords)
 		#print("Coords: ", coords)
 		var icon = find_icon_for_pos(coords)
-		print("Icon: ", icon.get_name(), " @ ", coords if icon != null else "None")
+		if icon != null:
+			print("Icon: ", icon.get_name(), " @ ", coords) 
 		$"Control".tg = icon
 		icon.get_node("Label").set_self_modulate(Color(0,1,1))
 		
@@ -134,13 +134,6 @@ func update_map(marker):
 		if $"Control".src == $"Control".tg:
 			print("Something went wrong, same src and tg!!!")
 		
-		# this relied on string ids
-#		if game.player.w_hole.target_system in lookup:
-#			$"Control".tg = get_node("Control").get_node(lookup[game.player.w_hole.target_system])
-#			get_node("Control").get_node(lookup[game.player.w_hole.target_system]).get_node("Label").set_self_modulate(Color(0,1,1))
-#		else:
-#			$"Control".tg = get_node("Control").get_node(game.player.w_hole.target_system)
-#			get_node("Control").get_node(game.player.w_hole.target_system).get_node("Label").set_self_modulate(Color(0,1,1))
 	else:
 		if system == "Sol":
 			$"Control/proxima/Label".set_self_modulate(Color(0,1,1))

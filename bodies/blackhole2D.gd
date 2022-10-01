@@ -21,30 +21,15 @@ func jump():
 	print("Calculated ly: ", ly)
 	time = ly/game.WORMHOLE_SPEED # fraction of a year
 	
-#		if target_system == "Sol":
-#			ly = 4.24
-#			print("Distance: ", ly, " light years")
-#			time = ly/game.WORMHOLE_SPEED # fraction of a year
-
 	time = time * 12 # because one month is 1/12 of a year
 	get_tree().get_nodes_in_group("main")[0].change_system(starmap.get_node("Control").tg, time) #target_system, time)
 	return 
-
-# TODO: target systems should be drawn from an external source of truth
-# to be in sync with the starmap graph
-#var lookup_target = {"Sol": "Proxima", "Proxima":"Alpha Centauri", "Luyten 726-8":"Tau Ceti", "Tau Ceti":"Gliese 1002",
-#"Gliese 1002": "Gliese 1286", "Gliese 1286":"Gliese 867", "Gliese 867":"Gliese 1265", "Gliese 1265":"Gliese 4281", "Gliese 4281":"Trappist"
-#}
-#func get_target_system(system):
-#	return lookup_target[system]
 
 func _on_Area2D_area_entered(_area):
 	if _area.get_parent().get_groups().has("player"):
 		if active and not entered:
 			var system = get_tree().get_nodes_in_group("main")[0].curr_system
 			print("Wormhole entered in system: ", system)
-			#if target_system == null:
-			#	target_system = get_target_system(system)
 			
 			entered = true
 			

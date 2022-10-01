@@ -121,26 +121,6 @@ func _ready():
 	
 	# wormholes
 	wormholes_from_graph(p_ind)
-		
-#	if curr_system == "Sol":		
-#		spawn_wormhole(p_ind, 11, mmap)
-#		# second wormhole to Barnard's
-#		spawn_wormhole(p_ind, 11, mmap, "Barnards", Vector2(0,-750))
-#		# some more...
-#		spawn_wormhole(p_ind, 11, mmap, "Luyten 726-8", Vector2(-1500, -750))
-#		spawn_wormhole(p_ind, 11, mmap, "Wolf 359", Vector2(-1500, 500))
-#	if curr_system == "Proxima":
-#		spawn_wormhole(p_ind, 1, mmap)
-#
-#	# UV Ceti has a manually added wormhole...
-#
-#	if curr_system == "Wolf 359":
-#		spawn_wormhole(p_ind, 1, mmap)
-#
-#	if curr_system == "Tau Ceti":
-#		spawn_wormhole(p_ind, 1, mmap)
-		
-	# systems w/o planets have a wormhole already in the scene
 	
 	# other interesting things
 	pos = spawn_asteroid_processor(p_ind, curr_system, mmap)
@@ -414,7 +394,6 @@ func spawn_pirate(pos, p_ind, m_map):
 	get_child(3).move_child(sp, p_ind+1)
 	
 	# give minimap icon
-	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
 	m_map._on_pirate_ship_spawned(sp.get_child(0))
 
 func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(0,0), need_icon=true):
@@ -645,22 +624,6 @@ func change_system(system="proxima", time=0.0):
 	
 	# wormhole
 	wormholes_from_graph(p_ind)
-	
-#	if system == "Proxima":
-#		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
-#		spawn_wormhole(p_ind, 0, mmap, "Sol", Vector2(0,0), false)
-#
-#	# UV Ceti has a manually added wormhole...
-#
-#	if system == "Wolf 359":
-#		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
-#
-#	if system == "Tau Ceti":
-#		spawn_wormhole(p_ind, 1, mmap, null, Vector2(0,0), false)
-#	if system == "Gliese 1265":
-#		spawn_wormhole(p_ind, 0, mmap, null, Vector2(0,0), false)
-		
-	# systems w/o planets have a wormhole already in the scene
 	
 	# timer
 	get_node("Timer").start()
