@@ -1,5 +1,7 @@
 name, winchellX, winchellY, winchellZ, color, planets, comments, ra, dec, dist-Sol
 Sol, 0, 0, 0, yellow, yes
+Proxima Centauri, 2.8ly, -3.1ly, 0.1ly, red, yes, //7200 AU or 0.13ly away from Alpha
+Alpha Centauri, 2.9ly, -3.1ly, 0.1ly, yellow, yes,
 Tau Ceti, -3.4ly, 0.4ly, -11.4ly, yellow, yes,
 Barnard's Star, 5.0ly, 3.0ly, 1.4ly, red, yes, , 17.96h, 4.7, 5.95
 Wolf 359, -1.9ly, -3.9ly, 6.5ly, red, yes,

@@ -18,8 +18,17 @@ func _ready():
 	if planets:
 		txt += "*"
 	
-	get_node("Label").set_text(txt)
+	# special case: break Alpha and Proxima Centauri into two lines
+	if txt.find("Centauri") != -1:
+		var txts = txt.split(" ")
+		txt = txts[0] + '\n' + txts[1]
+		
+		if txts[0] == "Proxima":
+			get_node("Label").rect_position = Vector2(0, -25)
+		if txts[0] == "Alpha":
+			get_node("Label").rect_position = Vector2(0, 25)
 	
+	get_node("Label").set_text(txt)
 	
 	# positioning the shadow icon
 	# in Godot, +Y goes down so we need to minus the Y we get from data
@@ -28,6 +37,14 @@ func _ready():
 	# positive depth (above the plane) is negative y
 	var depth_s = sign(-depth)
 	var end = -depth*LY_TO_PX
+
+	# no need to draw planet and line if very small Z
+	if abs(depth) < 0.2:
+		print(get_name(), " has very small Z")
+		get_node("PlanetTexture").rect_position = Vector2(0,0)
+		get_node("ShadowTexture").hide()
+		get_node("Line2D").hide()
+		return
 
 	# star icon positioned according to the depth
 	# 18 is the height of the star icon
@@ -52,7 +69,7 @@ func _ready():
 	
 	calculate_label_and_sfx()
 	
-	# TODO: those things should be recalculated after the map moved
+# TODO: those things should be recalculated after the map moved
 func calculate_label_and_sfx(offset=Vector2(0,0)):
 	var y_pos = get_node("PlanetTexture").get_position().y
 	var depth_s = sign(-depth)
@@ -62,6 +79,11 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	var ab_planet = get_node("PlanetTexture").get_global_position()
 
 	# name label
+	
+	# special case 
+	if named.find("Centauri") != -1:
+		return
+	
 	# above the plane (place next to star icon)
 	if depth_s < 0:
 		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)

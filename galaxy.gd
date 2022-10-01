@@ -130,8 +130,9 @@ func create_map_graph():
 	map_astar = AStar.new()
 	# hardcoded stars
 	mapping[Vector3(0,0,0)] = pack_vector(pos_to_positive_pos(float_to_int(Vector3(0,0,0))))
+	#mapping[Vector3(29, -31, -1)] = pack_vector(pos_to_positive_pos(float_to_int(Vector3(2.9, -3.1, -0.1))))
 	map_astar.add_point(mapping[Vector3(0,0,0)], Vector3(0,0,0)) # Sol
-	#map_astar.add_point(1, Vector3(-3.4, 0.4, -11.4)) # Tau Ceti
+	#map_astar.add_point(mapping[Vector3(-29, -31, -1)], Vector3(2.9, -3.1, -0.1)) # Proxima Centauri
 	
 	# graph is made out of nodes
 	for i in map_graph.size():
@@ -152,6 +153,8 @@ func create_map_graph():
 	
 	# connect stars
 	
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
+	map_astar.connect_points(mapping[Vector3(28,-31,1)], mapping[Vector3(29, -31, 1)]) # Proxima to Alpha Centauri
 	map_astar.connect_points(mapping[Vector3(0,0,0)],mapping[Vector3(-34, 4, -114)]) # Sol to Tau Ceti
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359

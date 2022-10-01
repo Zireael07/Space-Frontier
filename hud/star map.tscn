@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/hud/red_circle.png" type="Texture" id=1]
 [ext_resource path="res://assets/hud/arrow.png" type="Texture" id=2]
 [ext_resource path="res://assets/hud/yellow_circle.png" type="Texture" id=3]
 [ext_resource path="res://hud/star map.gd" type="Script" id=5]
@@ -150,85 +149,6 @@ margin_top = 25.0
 margin_right = 51.0
 margin_bottom = 39.0
 text = "Z: 0.0 ly"
-
-[node name="proxima" type="Control" parent="Control"]
-margin_left = 145.0
-margin_top = 155.0
-margin_right = 185.0
-margin_bottom = 195.0
-rect_pivot_offset = Vector2( 20, 20 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PlanetTexture" type="TextureRect" parent="Control/proxima"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 20, 20 )
-texture = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Control/proxima"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -26.5
-margin_top = -20.0
-margin_right = 26.5
-margin_bottom = 11.0
-text = "Proxima
-Centauri*"
-
-[node name="Label2" type="Label" parent="Control/proxima"]
-margin_left = -40.0
-margin_top = 15.0
-margin_right = 11.0
-margin_bottom = 29.0
-text = "Z: 0.1 ly"
-
-[node name="alphacen" type="Control" parent="Control"]
-margin_left = 150.0
-margin_top = 155.0
-margin_right = 190.0
-margin_bottom = 195.0
-rect_pivot_offset = Vector2( 20, 20 )
-
-[node name="PlanetTexture" type="TextureRect" parent="Control/alphacen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-rect_scale = Vector2( 0.5, 0.5 )
-rect_pivot_offset = Vector2( 20, 20 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Control/alphacen"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -20.0
-margin_top = -11.0
-margin_right = 33.0
-margin_bottom = 20.0
-text = "Alpha
-Centauri*"
-align = 1
 
 [node name="marker" type="TextureRect" parent="Control" groups=["starmap_marker"]]
 margin_right = 40.0
