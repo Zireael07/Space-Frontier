@@ -79,7 +79,7 @@ func _ready():
 	
 	calculate_label_and_sfx()
 	
-# TODO: those things should be recalculated after the map moved
+# recalculated after the map moved
 func calculate_label_and_sfx(offset=Vector2(0,0)):
 	var y_pos = get_node("PlanetTexture").get_position().y
 	var depth_s = sign(-depth)

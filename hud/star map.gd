@@ -146,7 +146,7 @@ func update_map(marker):
 			$"Control/Tau Ceti/Label".set_self_modulate(Color(0,1,1))
 	
 	# center on star (needs target to be set because it resets the distance label)
-	offset = -$"Control".src.rect_position
+	offset = -($"Control".src.rect_position+$"Control".src.get_node("PlanetTexture").rect_position)
 	move_map_to_offset(offset)
 	
 	# show distance involved along the line
@@ -233,5 +233,5 @@ func _on_LineEdit_text_entered(new_text):
 	
 	# center map on found star
 	if found:
-		offset = -found.rect_position
+		offset = -(found.rect_position+found.get_node("PlanetTexture").rect_position)
 		move_map_to_offset(offset)
