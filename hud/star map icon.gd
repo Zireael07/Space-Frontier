@@ -7,6 +7,7 @@ export var y = 0.0
 export var depth = 0.0
 export var named = ""
 export var planets = false
+var star_type = ""
 var pos = null #Vector3()
 var selected = false
 
@@ -29,6 +30,15 @@ func _ready():
 			get_node("Label").rect_position = Vector2(0, 25)
 	
 	get_node("Label").set_text(txt)
+	
+	# select icon based on star type
+	var star_icons = {
+		"red" : preload("res://assets/hud/red_circle.png"),
+		"yellow": preload("res://assets/hud/yellow_circle.png"),
+		"blue": preload("res://assets/hud/blue_circle.png"),
+	}
+	
+	get_node("PlanetTexture").set_texture(star_icons[star_type])
 	
 	# positioning the shadow icon
 	# in Godot, +Y goes down so we need to minus the Y we get from data

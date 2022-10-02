@@ -33,11 +33,14 @@ func parse_data():
 				ic.y = strip_units(str(line[2]))
 				ic.depth = strip_units(str(line[3]))
 				ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
-				# does the star have planets?
-				ic.planets = false
-				if "yes" in line[5]:
-					ic.planets = true
 				save_graph_data(ic.x, ic.y, ic.depth, ic.named)
+			
+			ic.star_type = str(line[4]).strip_edges()
+			# does the star have planets?
+			ic.planets = false
+			if "yes" in line[5]:
+				ic.planets = true
+
 			
 			# line[6] is for comments
 			
