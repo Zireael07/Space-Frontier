@@ -150,11 +150,8 @@ func update_map(marker):
 	move_map_to_offset(offset)
 	
 	# show distance involved along the line
+	# positioning label handled in move_map_to_offset() above
 	get_node("Grid/VisControl/Label").set("custom_colors/font_color", Color(0,1,1))
-	# halfway along
-	#print("tg loc: ", $"Control".get_tg_loc(), "src loc: ", $"Control".get_src_loc())
-	var gl_loc = ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
-	get_node("Grid/VisControl/Label").set_global_position(gl_loc) #$"Control".rect_position + ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
 	var dist = get_star_distance($"Control".src, $"Control".tg)
 	get_node("Grid/VisControl/Label").set_text("%.2f ly" % (dist))
 
@@ -191,7 +188,11 @@ func move_map_to_offset(offset):
 	$Control.set_position(center+offset)
 	$"Grid/VisControl".update() # redraw direction lines if any
 	# recalculate distance label position
-	get_node("Grid/VisControl/Label").rect_position = $"Control".rect_position + ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
+	# halfway along
+	var gl_loc = $"Control".get_src_loc() + ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
+	#print($"Control".get_tg_loc(),  " ", $"Control".get_src_loc(), " gl: ", gl_loc)
+	get_node("Grid/VisControl/Label").set_global_position(gl_loc) 
+	#get_node("Grid/VisControl/Label").rect_position = $"Control".rect_position + ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
 	
 	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
 	if offset != Vector2(0,0):
