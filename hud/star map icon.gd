@@ -34,6 +34,7 @@ func _ready():
 	# select icon based on star type
 	var star_icons = {
 		"red" : preload("res://assets/hud/red_circle.png"),
+		"orange": preload("res://assets/hud/red_circle.png"), ##temporary 
 		"yellow": preload("res://assets/hud/yellow_circle.png"),
 		"blue": preload("res://assets/hud/blue_circle.png"),
 	}

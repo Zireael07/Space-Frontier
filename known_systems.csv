@@ -6,6 +6,7 @@ Tau Ceti, -3.4ly, 0.4ly, -11.4ly, yellow, yes,
 Barnard's Star, 5.0ly, 3.0ly, 1.4ly, red, yes, , 17.96h, 4.7, 5.95
 Wolf 359, -1.9ly, -3.9ly, 6.5ly, red, yes,
 Luyten 726-8, -2.1ly, 0.2ly, -8.5ly, red, no, //aka UV/BL Ceti
+Ross 154, 9.3ly, 1.9ly,-1.7ly, red, no,
 Gliese 1005, 0.4ly, 3.9ly, -15.8ly, red, no, //HYGMap
 Lacaille 9352, 4.33ly, 0.38ly, -9.75ly, red, yes, //HYGMap
 Gliese 1002, -0.25ly, 5.8ly, -14.1ly, red, no, //HYGMap
@@ -17,4 +18,5 @@ Trappist-1, -,-,-, red, yes, //ra and dec from Wikipedia, 23h06m, -05d02m, 40.7
 Fomalhaut, 9.97ly, 3.72ly, -22.7ly, blue, , //HYGMap
 Teegarden's Star, -9.4ly, 3.4ly, -7.5ly, red, yes,
 Ross 508, -,-,-, red, yes, //SIMBAD, 231, 17.46, 11.18pc
+Altair, 11.1ly, 12.2ly, -2.6ly, blue, no,
 EQ Pegasi, -,-,-, red, yes, //aka GJ896 353deg ra, 23h31m, 19d56m, 20.48
