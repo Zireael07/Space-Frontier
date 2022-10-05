@@ -7,6 +7,7 @@ const GRID_SIZE = 20
 var origin = true
 
 func _draw():
+	# regular grid
 	for i in range(GRID_SIZE):
 		var col = Color("#aaaaaa")
 		var width = 1.0
