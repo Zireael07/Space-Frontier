@@ -8,6 +8,7 @@ export var depth = 0.0
 export var named = ""
 export var planets = false
 var star_type = ""
+var multiple = false
 var pos = null #Vector3()
 var selected = false
 

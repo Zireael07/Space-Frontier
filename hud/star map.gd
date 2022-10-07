@@ -41,15 +41,17 @@ func parse_data():
 			if "yes" in line[5]:
 				ic.planets = true
 
+			if line.size() > 6:
+				ic.multiple = line[6]
 			
-			# line[6] is for comments
+			# line[7] is for comments
 			
 			# ra-dec conversion
-			if line.size() > 7 and line[1] == " -":
+			if line.size() > 8 and line[1] == " -":
 				#print("RA/DEC candidate...")
-				var ra = line[7]
-				var de = line[8] 
-				if ra != "" and de != "" and line[9] != "":
+				var ra = line[8]
+				var de = line[9] 
+				if ra != "" and de != "" and line[10] != "":
 					#print("RA/DEC convert for ", str(line[0]))
 					var ra_deg = 0
 					var dec = 0
@@ -58,7 +60,7 @@ func parse_data():
 						# 15 degrees in an hour (360/24) 
 						ra_deg = float(15*float(ra.rstrip("h")))
 						# for now, assume degrees are given in decimal degrees
-						dec = float(line[7])
+						dec = float(line[8])
 					elif "h" in ra and "m" in ra:
 						# http://voyages.sdss.org/preflight/locating-objects/ra-dec/
 						# 0,25 (1/4) degree in a minute since it takes 4 minutes for a degree (60/15)
@@ -74,9 +76,9 @@ func parse_data():
 					if not "d" in de and not "m" in de:
 						dec = float(de)
 					
-					var dist = float(line[9])
-					if "pc" in line[9]:
-						dist = strip_units(line[9])
+					var dist = float(line[10])
+					if "pc" in line[10]:
+						dist = strip_units(line[10])
 					var data = galactic_from_ra_dec(ra_deg, dec, dist)
 					# assign calculated values - no need to strip units as it's always
 					ic.x = data[0]
@@ -94,6 +96,13 @@ func parse_data():
 #	pass
 
 # -------------------------------------------------------------------------
+func find_icon_for_pos(pos):
+	var ret = null
+	for c in $"Control".get_children():
+		if 'pos' in c and c.pos == pos:
+			ret = c
+			break
+	return ret
 
 func update_map(marker):
 	# update marker position

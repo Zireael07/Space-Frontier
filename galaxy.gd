@@ -159,6 +159,8 @@ func create_map_graph():
 
 	map_astar.connect_points(mapping[Vector3(50, 30,14)], mapping[Vector3(93, 19, -17)]) # Barnard's to Ross 154
 	map_astar.connect_points(mapping[Vector3(93, 19, -17)], mapping[Vector3(92,6,-90)]) # Ross 154 to AX Microscopii
+	map_astar.connect_points(mapping[Vector3(-19, -39, 65)], mapping[Vector3(15, -43, 136)]) # Wolf 369 to FL Virginis 
+	map_astar.connect_points(mapping[Vector3(53, 8, 169)], mapping[Vector3(15, -43, 136)]) # Wolf 498 to FL Virginis 
 
 	map_astar.connect_points(mapping[Vector3(-34, 4, -114)],mapping[Vector3(-2, 58, -141)]) # Tau Ceti to Gliese 1002
 #	map_astar.connect_points(mapping[Vector3(4, 39, -158)],mapping[Vector3(-2, 58, -141)]) # Gliese 1005 to Gliese 1002
@@ -194,13 +196,6 @@ func find_coords_for_name(nam):
 	print("For name, ", nam, " id ", id, " real float coords: ", coords)
 	return coords
 	
-func find_icon_for_pos(pos):
-	var ret = null
-	for c in $"Control".get_children():
-		if 'pos' in c and c.pos == pos:
-			ret = c
-			break
-	return ret
 
 func get_star_distance_old(a,b):
 	var start_name = a.get_node("Label").get_text().replace("*", "")

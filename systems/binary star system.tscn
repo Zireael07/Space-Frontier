@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://systems/star system.gd" type="Script" id=1]
+[ext_resource path="res://systems/star.gd" type="Script" id=2]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+
+[node name="Alpha Centauri" type="Node2D"]
+position = Vector2( 500, 500 )
+
+[node name="A" type="Node2D" parent="." groups=["star"]]
+script = ExtResource( 2 )
+star_radius_factor = 1.2
+luminosity = 1.5
+
+[node name="Sprite" type="Sprite" parent="A"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="A"]
+margin_top = 100.0
+margin_right = 109.0
+margin_bottom = 116.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Alpha Centauri A"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="B" type="Node2D" parent="." groups=["star"]]
+position = Vector2( 0, 210840 )
+script = ExtResource( 1 )
+star_radius_factor = 0.8
+luminosity = 0.5
+custom_orrery_scale = 30
+custom_map_scale = 768
+
+[node name="Sprite" type="Sprite" parent="B"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="B"]
+margin_top = 100.0
+margin_right = 109.0
+margin_bottom = 116.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Alpha Centauri B"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="planet_holder" type="Node2D" parent="B"]

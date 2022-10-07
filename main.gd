@@ -15,10 +15,11 @@ var cycler = preload("res://ships/cycler.tscn")
 
 var wormhole = preload("res://bodies/wormhole2D.tscn")
 
-# star systems
+# star system templates
 #var handmade_system = preload("res://systems/star system.tscn")
 #var proc_system = preload("res://systems//proc star system.tscn")
 var system_no_planets = preload("res://systems/star system no planets.tscn")
+var system_multiple = preload("res://systems/binary star system.tscn")
 
 # we can't preload from a dictionary because preload wants const,
 # so we need to store entire preload("xxx")
@@ -51,8 +52,12 @@ func system_name_to_id(nam):
 	return nam
 
 # this uses text IDs because that's what the spawning/instancing system uses
-func spawn_system(system="proc"):
+func spawn_system(system="proc", multiple=false):
 	var sys = system_no_planets
+	
+	if multiple:
+		sys = system_multiple
+	
 	# named/defined systems
 	if system in defined_systems: #alternate to dict.has()
 		sys = defined_systems[system]
@@ -61,11 +66,17 @@ func spawn_system(system="proc"):
 			
 	var system_inst = sys.instance()
 	# make names match for systems w/o planets
-	if sys == system_no_planets:
+	if sys == system_no_planets or sys == system_multiple:
 		var nam = system.capitalize()
 		system_inst.set_name(nam)
-		system_inst.get_child(0).set_name(nam)
+		if sys != system_multiple:
+			system_inst.get_child(0).set_name(nam)
 		system_inst.get_child(0).get_child(1).set_text(nam)
+		
+		if sys == system_multiple:
+			#system_inst.get_child(1).set_name(nam + "B")
+			system_inst.get_child(1).get_child(1).set_text(nam + " B")
+		
 	add_child(system_inst)
 	
 	return [system, system_inst]
@@ -549,7 +560,7 @@ func update_HUD():
 	# connect planet signals
 	game.player.HUD.connect_planet_signals(get_tree().get_nodes_in_group("planets"))
 	
-
+# this function is passed the starmap icon, which doubles as a data store
 func change_system(system="proxima", time=0.0):
 	# despawn current system
 	get_child(2).queue_free()
@@ -608,11 +619,12 @@ func change_system(system="proxima", time=0.0):
 	# clear hud planet listing
 	game.player.HUD.clear_planet_listing()
 	
+	var multiple = system.multiple
 	# convert from input to textual id since instancing still uses textual ids
 	system = system_name_to_id(system.get_name())
 	
 	# spawn new system
-	var data = spawn_system(system)
+	var data = spawn_system(system, multiple)
 	curr_system = data[0]
 	move_child(data[1], 2)
 	print("System after change: ", curr_system)
