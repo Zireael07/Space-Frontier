@@ -42,7 +42,8 @@ func parse_data():
 				ic.planets = true
 
 			if line.size() > 6:
-				ic.multiple = line[6]
+				if str(line[6]).strip_edges() == "double":
+					ic.multiple = line[6]
 			
 			# line[7] is for comments
 			
