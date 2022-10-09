@@ -142,6 +142,9 @@ func update_map(marker):
 			print("Icon: ", icon.get_name(), " @ ", coords) 
 		$"Control".tg = icon
 		icon.get_node("Label").set_self_modulate(Color(0,1,1))
+		# reveal Z line and planet icon for target
+		icon.get_node("Line2D").show()
+		icon.get_node("PlanetTexture").show()
 		
 		# paranoia
 		if $"Control".src == $"Control".tg:

@@ -53,8 +53,10 @@ func _ready():
 	# no need to draw planet and line if very small Z
 	if abs(depth) < 0.2:
 		print(get_name(), " has very small Z")
+		get_node("PlanetTexture").show()
 		get_node("PlanetTexture").rect_position = Vector2(0,0)
 		get_node("ShadowTexture").hide()
+		get_node("Line2D").points[0] = Vector2(18,18)
 		get_node("Line2D").hide()
 		return
 
@@ -112,6 +114,8 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		get_node("Label2").show()
 	# imverse (shadow not in bounds), place labels next to planet icon
 	if ab_shadow.y < 0 or ab_shadow.y > 525:
+		# force show planet
+		get_node("PlanetTexture").show()
 		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
 		# Z axis label
 		get_node("Label2").rect_position = Vector2(-6.5, y_pos+29) # 25+4
@@ -167,6 +171,10 @@ func on_click():
 	get_node("Label").set_self_modulate(Color(1,0.5, 0)) # orange-red to match starmap icon and Z line color
 	get_node("../../Grid/VisControl/Label").set("custom_colors/font_color", Color(1,0.5,0))
 	
+	# force reveal
+	$Line2D.show()
+	$PlanetTexture.show()
+	
 	selected = true
 	get_parent().tg = get_parent().get_tg()
 	# line/distance label redrawing
@@ -180,11 +188,37 @@ func on_click():
 	
 # we don't want actual buttons, hence this
 func _on_TextureRect2_gui_input(event):
+	#if $"ShadowTexture".visible:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			on_click()
 
 func _on_TextureRect3_gui_input(event):
-	if event is InputEventMouseButton:
-		if event.is_pressed():
-			on_click()
+	if $"PlanetTexture".visible:
+		if event is InputEventMouseButton:
+			if event.is_pressed():
+				on_click()
+
+# reveal Z line and planet icon on mouse over
+func _on_ShadowTexture_mouse_entered():
+	$Line2D.show()
+	$PlanetTexture.show()
+
+
+func _on_ShadowTexture_mouse_exited():
+	# don't hide if we're the target
+	if get_parent().tg == self:
+		return
+		
+	$Line2D.hide()
+	$PlanetTexture.hide()
+
+
+func _on_PlanetTexture_mouse_entered():
+	if $"PlanetTexture".visible:
+		$Line2D.show()
+
+
+func _on_PlanetTexture_mouse_exited():
+	if $"PlanetTexture".visible:
+		$Line2D.hide()

@@ -10,6 +10,9 @@ margin_right = 40.0
 margin_bottom = 40.0
 rect_pivot_offset = Vector2( 20, 20 )
 script = ExtResource( 3 )
+__meta__ = {
+"_editor_description_": "Line and planet hidden by default to make map less crowded"
+}
 
 [node name="ShadowTexture" type="TextureRect" parent="."]
 self_modulate = Color( 1, 1, 1, 0.501961 )
@@ -26,11 +29,13 @@ rect_pivot_offset = Vector2( 20, 20 )
 texture = ExtResource( 2 )
 
 [node name="Line2D" type="Line2D" parent="."]
+visible = false
 points = PoolVector2Array( 18, -75, 18, 18 )
 width = 5.0
 gradient = ExtResource( 4 )
 
 [node name="PlanetTexture" type="TextureRect" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -64,4 +69,8 @@ margin_bottom = 39.0
 text = "Z: 1.4 ly"
 
 [connection signal="gui_input" from="ShadowTexture" to="." method="_on_TextureRect2_gui_input"]
+[connection signal="mouse_entered" from="ShadowTexture" to="." method="_on_ShadowTexture_mouse_entered"]
+[connection signal="mouse_exited" from="ShadowTexture" to="." method="_on_ShadowTexture_mouse_exited"]
 [connection signal="gui_input" from="PlanetTexture" to="." method="_on_TextureRect3_gui_input"]
+[connection signal="mouse_entered" from="PlanetTexture" to="." method="_on_PlanetTexture_mouse_entered"]
+[connection signal="mouse_exited" from="PlanetTexture" to="." method="_on_PlanetTexture_mouse_exited"]
