@@ -25,10 +25,20 @@ func _ready():
 		var txts = txt.split(" ")
 		txt = txts[0] + '\n' + txts[1]
 		
+		# special case - labels
 		if txts[0] == "Proxima":
 			get_node("Label").rect_position = Vector2(0, -25)
 		if txts[0] == "Alpha":
 			get_node("Label").rect_position = Vector2(0, 25)
+	
+	#print(txt, " len: ", txt.length())
+	# if long name that has a space and doesn't have a line break already
+	if txt.length() > 13 and txt.find(" ") != -1 and txt.find("\n") == -1:
+		var txts = txt.split(" ")
+		# don't split things like "AX Microscopii"
+		if txts[0].length() > 4:
+			txt = txts[0] + '\n' + txts[1]
+	
 	
 	get_node("Label").set_text(txt)
 	
@@ -101,6 +111,9 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	# above the plane (place next to star icon)
 	if depth_s < 0:
 		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
+		# if multi-line label
+		if get_node("Label").get_text().find("\n") != -1:
+			get_node("Label").rect_position = Vector2(-6.5, y_pos-20)
 	# below the plane (place next to "shadow" icon)
 	else:
 		get_node("Label").rect_position = Vector2(0, 0)
@@ -108,6 +121,9 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	# shadow in bounds but planet is not (place name & Z-label next to shadow icon)
 	if ab_planet.y < 0 or ab_planet.y > 525:
 		get_node("Label").rect_position = Vector2(0, 0)
+		# if multi-line label
+		if get_node("Label").get_text().find("\n") != -1:
+			get_node("Label").rect_position = Vector2(0, -20)
 		# Z axis label
 		get_node("Label2").rect_position = Vector2(0, 25)
 		#get_node("Label2").set_text("Z: " + depth_str + " ly")
@@ -117,6 +133,9 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		# force show planet
 		get_node("PlanetTexture").show()
 		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
+		# if multi-line label
+		if get_node("Label").get_text().find("\n") != -1:
+			get_node("Label").rect_position = Vector2(-6.5, y_pos-20)
 		# Z axis label
 		get_node("Label2").rect_position = Vector2(-6.5, y_pos+29) # 25+4
 		get_node("Label2").show()
