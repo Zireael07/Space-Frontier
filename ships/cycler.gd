@@ -96,7 +96,7 @@ func add_to_storage(id):
 		storage[id] += 1
 
 func try_dur_electronics():
-	if storage["CARBORUNDUM"] >= 2 and (storage["SILVER"] > 0 or storage["GOLD"] > 0 or storage["PLATINUM"] > 0):
+	if storage.has("CARBORUNDUM") and storage["CARBORUNDUM"] >= 2 and (storage["SILVER"] > 0 or storage["GOLD"] > 0 or storage["PLATINUM"] > 0):
 		add_to_storage("DURABLE_ELECTRONICS")
 		storage["CARBORUNDUM"] -= 2
 		if storage["SILVER"] > 0:

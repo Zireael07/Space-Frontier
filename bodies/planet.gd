@@ -12,7 +12,7 @@ export(Vector2) var data #setget setData
 export(float) var mass = 1 # in Earth masses
 var radius = 1.0 # in Earth radius
 var gravity = 1.0 # in Earth gravity
-export(float) var hydro = 0.3 # water/land ratio (surface, not volume = 30% for Earth)
+export(float) var hydro = 0.3 # land/water ratio (surface, not volume = 30% for Earth which is known to be 70% water 30% land)
 export(float) var ice = 0.0 # how much of the surface is covered by ice (eyeballed for most planets)
 var albedo = 0.3 # test value Bond albedo (matches Earth), ranges from 0 to 1
 var temp = 0 # in Kelvin

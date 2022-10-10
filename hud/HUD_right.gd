@@ -447,7 +447,8 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# this is new
 	text = text + "Greenhouse effect: " + str(format_greenhouse) + "\n"
 	# this was present in the original game
-	text = text + "Hydro: " + str(format_hydro) + "%\n"
+	# renamed to be clearer
+	text = text + "Land/water ratio: " + str(format_hydro) + "%\n"
 	# this is new
 	text = text + "Ice cover: " + str(format_ices) + "%" + "\n"
 	
