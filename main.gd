@@ -450,7 +450,7 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 
 # --------------------------------------------------------------------
 
-func wormholes_from_graph(p_ind):
+func wormholes_from_graph(p_ind, ref_pos=null):
 	# get coords, neighbors and directions from AStar
 	var coords = game.player.HUD.get_node("Control4/star map").find_coords_for_name(curr_system)
 	var neighbors = game.player.HUD.get_node("Control4/star map").get_neighbors(coords)
@@ -481,8 +481,12 @@ func wormholes_from_graph(p_ind):
 			var dir = game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n) - coords
 			# where to place the w-hole?
 			var wh_pos = Vector2(0, 2000)
+			
+			if ref_pos:
+				wh_pos = ref_pos
+			
 			if dir.x < 0:
-				wh_pos.x = -100*abs(dir.x)
+				wh_pos.x = wh_pos.x - (100*abs(dir.x))
 			if dir.y < 0:
 				wh_pos.y = wh_pos.y + 100*abs(dir.y)
 			elif dir.y > 0:
@@ -637,7 +641,23 @@ func change_system(system="proxima", time=0.0):
 	#print("Map graph: ", game.player.HUD.get_node("Control4/star map").map_graph)
 	
 	# wormhole
-	wormholes_from_graph(p_ind)
+	# is it a multi-star system?
+	# doesn't work because previous system isn't removed yet	
+	#print(get_tree().get_nodes_in_group("star"))
+	
+	# no point in passing some sort of a flag since we need the star's position anyway
+	
+	var ref_pos = null
+	# the system is always child #2
+	if get_child(2).get_child_count() > 1:
+		# wormholes are children of system too
+		if get_child(2).get_child(1).is_in_group("star"):
+			# the 2nd star's position
+			ref_pos = get_child(2).get_child(1).get_global_position()
+			print("Star pos: ", ref_pos)
+			ref_pos = ref_pos + Vector2(500, 1000)
+	
+	wormholes_from_graph(p_ind, ref_pos)
 	
 	# timer
 	get_node("Timer").start()
