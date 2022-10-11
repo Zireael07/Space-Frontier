@@ -99,6 +99,12 @@ func parse_data():
 # -------------------------------------------------------------------------
 func find_icon_for_pos(pos):
 	var ret = null
+	
+	# special case
+	if pos == Vector3(0,0,0):
+		ret = $"Control".get_node("Sol")
+		return ret
+	
 	for c in $"Control".get_children():
 		if 'pos' in c and c.pos == pos:
 			ret = c
@@ -143,7 +149,8 @@ func update_map(marker):
 		$"Control".tg = icon
 		icon.get_node("Label").set_self_modulate(Color(0,1,1))
 		# reveal Z line and planet icon for target
-		icon.get_node("Line2D").show()
+		if icon.has_node("Line2D"):
+			icon.get_node("Line2D").show()
 		icon.get_node("PlanetTexture").show()
 		
 		# paranoia

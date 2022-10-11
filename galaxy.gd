@@ -157,6 +157,9 @@ func create_map_graph():
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
 	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
 
+	map_astar.connect_points(mapping[Vector3(50, 30, 14)], mapping[Vector3(29, -31, 1)]) # both Centauri connect to Barnard's
+	#map_astar.connect_points(mapping[Vector3(50, 30, 14)], mapping[Vector3(28, -31, 1)])
+	
 	map_astar.connect_points(mapping[Vector3(50, 30,14)], mapping[Vector3(93, 19, -17)]) # Barnard's to Ross 154
 	map_astar.connect_points(mapping[Vector3(93, 19, -17)], mapping[Vector3(92,6,-90)]) # Ross 154 to AX Microscopii
 	map_astar.connect_points(mapping[Vector3(-19, -39, 65)], mapping[Vector3(15, -43, 136)]) # Wolf 369 to FL Virginis 

@@ -457,7 +457,7 @@ func wormholes_from_graph(p_ind):
 	#print("Neighboring systems: ", neighbors)
 	
 	# Sol
-	if neighbors.size() > 2:
+	if neighbors.size() > 3:
 		for n in neighbors:
 			print(n, " @ ", game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n))
 			# relative direction
@@ -482,9 +482,9 @@ func wormholes_from_graph(p_ind):
 			# where to place the w-hole?
 			var wh_pos = Vector2(0, 2000)
 			if dir.x < 0:
-				wh_pos.x = -200
+				wh_pos.x = -100*abs(dir.x)
 			if dir.y < 0:
-				wh_pos.y = wh_pos.y + 500
+				wh_pos.y = wh_pos.y + 100*abs(dir.y)
 			elif dir.y > 0:
 				wh_pos.y = wh_pos.y - 750
 			if dir.z < 0:
@@ -619,7 +619,9 @@ func change_system(system="proxima", time=0.0):
 	# clear hud planet listing
 	game.player.HUD.clear_planet_listing()
 	
-	var multiple = system.multiple
+	var multiple = false
+	if "multiple" in system:
+		multiple = system.multiple
 	# convert from input to textual id since instancing still uses textual ids
 	system = system_name_to_id(system.get_name())
 	
