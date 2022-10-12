@@ -455,6 +455,8 @@ func remove_orders_controls():
 # --------------------
 func show_starmap():
 	$"Control4/star map".show()
+	# hide minimap
+	$"Control2/Panel_rightHUD/minimap".hide()
 	
 	# update map (marker position, lines etc.)
 	var marker = get_tree().get_nodes_in_group("starmap_marker")[0]
@@ -463,6 +465,8 @@ func show_starmap():
 
 func hide_starmap():
 	$"Control4/star map".hide() 
+	# unhide minimap
+	$"Control2/Panel_rightHUD/minimap".show()
 	
 func starmap_menu_show():
 	$"Control4/star map/PopupPanel".show()
