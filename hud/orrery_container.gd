@@ -10,11 +10,13 @@ onready var ship = preload("res://assets/hud/arrow.png")
 var stars
 var planets
 var asteroids
+var wormholes
 var star_main = null # main star of the system
 
 var star_sprites = []
 var planet_sprites = []
 var asteroid_sprites = []
+var wormhole_sprites = []
 var ship_sprite = null
 
 var center = Vector2(get_size().x/2, get_size().y/2)
@@ -47,6 +49,8 @@ func setup():
 	planets = get_tree().get_nodes_in_group("planets")
 	# given the scale, it doesn't make sense to show moons
 	asteroids = get_tree().get_nodes_in_group("asteroid")
+	
+	wormholes = get_tree().get_nodes_in_group("wormhole")
 	
 	# adjust center offset based on central star scale
 	var adj = 1
@@ -143,6 +147,13 @@ func setup():
 		asteroid_sprites.append(asteroid_sprite)
 		add_child(asteroid_sprite)
 	
+	for w in wormholes:
+		var wormhole_sprite = TextureRect.new()
+		wormhole_sprite.set_texture(planet)
+		wormhole_sprite.set_scale(Vector2(0.5, 0.5))
+		wormhole_sprite.set_modulate(Color(0.2, 0.2, 0.2)) # gray-ish instead of black for a black hole
+		wormhole_sprites.append(wormhole_sprite)
+		add_child(wormhole_sprite)
 	
 	set_clip_contents(true)
 	
@@ -224,12 +235,19 @@ func _process(_delta):
 		var rel_loc = asteroids[i].get_global_position() - star_main.get_global_position()
 		asteroid_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 
+	for i in range(wormholes.size()):
+		# the minimap doesn't rotate
+		var rel_loc = wormholes[i].get_global_position() - star_main.get_global_position()
+		wormhole_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+
+
 # called when leaving a system
 func cleanup():
 	print("Orrery cleanup...")
 	star_sprites = []
 	planet_sprites = []
 	asteroid_sprites = []
+	wormhole_sprites = []
 
 
 func _on_ButtonPlus_pressed():
