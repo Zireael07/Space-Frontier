@@ -204,6 +204,8 @@ func on_click():
 	var dist = get_node("../../").get_star_distance(get_parent().src, get_parent().tg)
 	get_node("../../Grid/VisControl/Label").set_text("%.2f ly" % (dist))
 	get_node("../../Grid/VisControl").update()
+	# update displayed starmap info
+	get_node("../../").display_star_map_info(get_parent().tg)
 	
 # we don't want actual buttons, hence this
 func _on_TextureRect2_gui_input(event):

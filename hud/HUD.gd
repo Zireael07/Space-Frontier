@@ -457,6 +457,7 @@ func show_starmap():
 	$"Control4/star map".show()
 	# hide minimap
 	$"Control2/Panel_rightHUD/minimap".hide()
+	$"Control2/Panel_rightHUD/PanelInfo/StarSystemInfo".show()
 	
 	# update map (marker position, lines etc.)
 	var marker = get_tree().get_nodes_in_group("starmap_marker")[0]
@@ -467,6 +468,7 @@ func hide_starmap():
 	$"Control4/star map".hide() 
 	# unhide minimap
 	$"Control2/Panel_rightHUD/minimap".show()
+	$"Control2/Panel_rightHUD/PanelInfo/StarSystemInfo".hide()
 	
 func starmap_menu_show():
 	$"Control4/star map/PopupPanel".show()

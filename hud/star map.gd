@@ -174,9 +174,39 @@ func update_map(marker):
 	get_node("Grid/VisControl/Label").set("custom_colors/font_color", Color(0,1,1))
 	var dist = get_star_distance($"Control".src, $"Control".tg)
 	get_node("Grid/VisControl/Label").set_text("%.2f ly" % (dist))
+	# update displayed starmap info
+	display_star_map_info($"Control".tg)
 
-
-
+func display_star_map_info(star_icon):
+	var text = ""
+	# actual text begins here
+	text = text + star_icon.named + "\n" + "\n"
+	# basics
+	text = text + "Star type/color: " + str(star_icon.star_type) + "\n"
+	var fmt_multiple = "no" if not star_icon.multiple else str(star_icon.multiple)
+	text = text + "Multiple system: " + fmt_multiple + "\n"
+	var fmt_planets = "yes" if star_icon.planets else "no"
+	text = text + "Planets: " + fmt_planets + "\n"
+	
+	# wormhole connections
+	#var n = get_neighbors(star_icon.pos)
+	# this one uses preconverted values unlike the function above
+	var neighbors = map_astar.get_point_connections(mapping[star_icon.pos])
+	
+	var neighbors_text = ""
+	for n in neighbors:
+		var coords = unpack_vector(n)
+		#print("unpacked coords: ", coords)
+		coords = positive_to_original(coords)
+		#print("Coords: ", coords)
+		var icon = find_icon_for_pos(coords)
+		
+		neighbors_text += str(icon.get_name()) + ", " #str(n) would display the internal ID
+	text = text + "Wormholes to: " + neighbors_text
+	
+	# need to go up the tree and back down :/
+	var rtl = $"../../Control2/Panel_rightHUD/PanelInfo/StarSystemInfo/RichTextLabel"
+	rtl.set_text(text)
 
 # --------------------------------------------------
 func _on_ButtonConfirm_pressed():

@@ -602,6 +602,15 @@ G - go to a selected planet
 < and > - move cursor up/down or select previous/next entry
 PgUp and PgDown - move cursor up/down a page in long list"
 
+[node name="StarSystemInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control2/Panel_rightHUD/PanelInfo/StarSystemInfo"]
+margin_right = 191.0
+margin_bottom = 177.0
+
 [node name="orrery" type="Control" parent="Control2/Panel_rightHUD"]
 margin_left = 20.0
 margin_top = 240.0

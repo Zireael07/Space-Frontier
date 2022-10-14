@@ -217,11 +217,11 @@ func get_star_distance(a,b):
 	print("id1:", id1, " id2: ", id2)
 	return map_astar.get_point_position(id1).distance_to(map_astar.get_point_position(id2))
 
+# converts float to int
 func get_neighbors(coords):
 	var neighbors = map_astar.get_point_connections(mapping[float_to_int(coords)])
 	print("Neighbors for id: ", mapping[float_to_int(coords)], " ", neighbors)
 	return neighbors
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
