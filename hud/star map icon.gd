@@ -63,6 +63,7 @@ func _ready():
 	# no need to draw planet and line if very small Z
 	if abs(depth) < 0.2:
 		print(get_name(), " has very small Z")
+		get_node("Label2").set_text("Z: " + "%.2f" % depth + " ly")
 		get_node("StarTexture").show()
 		get_node("StarTexture").rect_position = Vector2(0,0)
 		get_node("ShadowTexture").hide()
@@ -88,8 +89,16 @@ func _ready():
 		else:
 			# place next to shadow icon for below the plane
 			get_node("Label2").rect_position = Vector2(0, 25)
-		get_node("Label2").set_text("Z: " + depth_str + " ly")
+		get_node("Label2").set_text("Z: "+ str(depth_str) + " ly")
 		get_node("Label2").show()
+		
+	else:
+		get_node("Label2").set_text("Z: "+ str(depth_str) + " ly")
+		get_node("Label2").hide()
+	
+	# color-code the Z direction
+	var clr = Color(0,1,1) if depth_s < 0 else Color(1,0,0) # cyan if positive, red if neg
+	get_node("Label2").set_self_modulate(clr)
 	
 	calculate_label_and_sfx()
 	
