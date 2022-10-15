@@ -119,7 +119,9 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	
 	# above the plane (place next to star icon)
 	if depth_s < 0:
-		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
+		# only do this if star icon visible
+		if get_node("StarTexture").visible:
+			get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
 		# if multi-line label
 		if get_node("Label").get_text().find("\n") != -1:
 			get_node("Label").rect_position = Vector2(-6.5, y_pos-20)
