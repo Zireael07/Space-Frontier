@@ -34,7 +34,7 @@ points = PoolVector2Array( 18, -75, 18, 18 )
 width = 5.0
 gradient = ExtResource( 4 )
 
-[node name="PlanetTexture" type="TextureRect" parent="."]
+[node name="StarTexture" type="TextureRect" parent="."]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -57,9 +57,6 @@ margin_right = 36.5
 margin_bottom = -44.0
 text = "Name"
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label2" type="Label" parent="."]
 visible = false
@@ -71,6 +68,6 @@ text = "Z: 1.4 ly"
 [connection signal="gui_input" from="ShadowTexture" to="." method="_on_TextureRect2_gui_input"]
 [connection signal="mouse_entered" from="ShadowTexture" to="." method="_on_ShadowTexture_mouse_entered"]
 [connection signal="mouse_exited" from="ShadowTexture" to="." method="_on_ShadowTexture_mouse_exited"]
-[connection signal="gui_input" from="PlanetTexture" to="." method="_on_TextureRect3_gui_input"]
-[connection signal="mouse_entered" from="PlanetTexture" to="." method="_on_PlanetTexture_mouse_entered"]
-[connection signal="mouse_exited" from="PlanetTexture" to="." method="_on_PlanetTexture_mouse_exited"]
+[connection signal="gui_input" from="StarTexture" to="." method="_on_TextureRect3_gui_input"]
+[connection signal="mouse_entered" from="StarTexture" to="." method="_on_PlanetTexture_mouse_entered"]
+[connection signal="mouse_exited" from="StarTexture" to="." method="_on_PlanetTexture_mouse_exited"]

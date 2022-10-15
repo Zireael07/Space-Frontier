@@ -15,16 +15,16 @@ func _ready():
 #	pass
 
 func get_src_loc():
-	return src.get_node("PlanetTexture").get_global_position()
+	return src.get_node("StarTexture").get_global_position()
 	
 	#var loc = src.rect_position
-	#loc = loc + src.get_node("PlanetTexture").rect_position
+	#loc = loc + src.get_node("StarTexture").rect_position
 	#return loc
 	
 func get_tg_loc():
-	return tg.get_node("PlanetTexture").get_global_position()
+	return tg.get_node("StarTexture").get_global_position()
 	#var loc = tg.rect_position
-	#loc = loc + tg.get_node("PlanetTexture").rect_position
+	#loc = loc + tg.get_node("StarTexture").rect_position
 	#return loc
 	
 func get_tg():

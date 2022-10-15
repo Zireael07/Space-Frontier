@@ -50,7 +50,7 @@ func _ready():
 		"blue": preload("res://assets/hud/blue_circle.png"),
 	}
 	
-	get_node("PlanetTexture").set_texture(star_icons[star_type])
+	get_node("StarTexture").set_texture(star_icons[star_type])
 	
 	# positioning the shadow icon
 	# in Godot, +Y goes down so we need to minus the Y we get from data
@@ -63,8 +63,8 @@ func _ready():
 	# no need to draw planet and line if very small Z
 	if abs(depth) < 0.2:
 		print(get_name(), " has very small Z")
-		get_node("PlanetTexture").show()
-		get_node("PlanetTexture").rect_position = Vector2(0,0)
+		get_node("StarTexture").show()
+		get_node("StarTexture").rect_position = Vector2(0,0)
 		get_node("ShadowTexture").hide()
 		get_node("Line2D").points[0] = Vector2(18,18)
 		get_node("Line2D").hide()
@@ -72,12 +72,12 @@ func _ready():
 
 	# star icon positioned according to the depth
 	# 18 is the height of the star icon
-	get_node("PlanetTexture").rect_position = Vector2(0, end+18*depth_s) 
+	get_node("StarTexture").rect_position = Vector2(0, end+18*depth_s) 
 	
 	# clamp depth to two significant decimal places
 	var depth_str = "%.2f" % depth
 	
-	var y_pos = get_node("PlanetTexture").get_position().y
+	var y_pos = get_node("StarTexture").get_position().y
 	get_node("Line2D").points[0] = Vector2(18, y_pos+20) #*depth_s)
 	
 	# Z axis label if needed
@@ -95,12 +95,12 @@ func _ready():
 	
 # recalculated after the map moved
 func calculate_label_and_sfx(offset=Vector2(0,0)):
-	var y_pos = get_node("PlanetTexture").get_position().y
+	var y_pos = get_node("StarTexture").get_position().y
 	var depth_s = sign(-depth)
 	
 	# now check if icon(s) are out of view
 	var ab_shadow = get_node("ShadowTexture").get_global_position()
-	var ab_planet = get_node("PlanetTexture").get_global_position()
+	var ab_planet = get_node("StarTexture").get_global_position()
 
 	# name label
 	
@@ -118,7 +118,7 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	else:
 		get_node("Label").rect_position = Vector2(0, 0)
 
-	# shadow in bounds but planet is not (place name & Z-label next to shadow icon)
+	# shadow in bounds but star is not (place name & Z-label next to shadow icon)
 	if ab_planet.y < 0 or ab_planet.y > 525:
 		get_node("Label").rect_position = Vector2(0, 0)
 		# if multi-line label
@@ -128,10 +128,11 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		get_node("Label2").rect_position = Vector2(0, 25)
 		#get_node("Label2").set_text("Z: " + depth_str + " ly")
 		get_node("Label2").show()
-	# imverse (shadow not in bounds), place labels next to planet icon
-	if ab_shadow.y < 0 or ab_shadow.y > 525:
-		# force show planet
-		get_node("PlanetTexture").show()
+	
+	# inverse (shadow not in bounds), place labels next to star icon
+	if (ab_shadow.y < 0 or ab_shadow.y > 525):
+		# force show star
+		get_node("StarTexture").show()
 		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
 		# if multi-line label
 		if get_node("Label").get_text().find("\n") != -1:
@@ -155,7 +156,7 @@ func not_in_bounds(offset):
 	# use a global (screen) rect and global positions
 	var rect = Rect2(Vector2(0,0), Vector2(805, 525))
 	var ab_shadow = get_node("ShadowTexture").get_global_position()
-	var ab_planet = get_node("PlanetTexture").get_global_position()
+	var ab_planet = get_node("StarTexture").get_global_position()
 	
 	#print("rect: ", rect, "c: ", rect.get_center(), " ", get_node("Label").get_text(), " shadow: ", ab_shadow, " planet: ", ab_planet)
 	var planet_out = !rect.has_point(ab_planet)
@@ -192,7 +193,7 @@ func on_click():
 	
 	# force reveal
 	$Line2D.show()
-	$PlanetTexture.show()
+	$StarTexture.show()
 	
 	selected = true
 	get_parent().tg = get_parent().get_tg()
@@ -215,15 +216,15 @@ func _on_TextureRect2_gui_input(event):
 			on_click()
 
 func _on_TextureRect3_gui_input(event):
-	if $"PlanetTexture".visible:
+	if $"StarTexture".visible:
 		if event is InputEventMouseButton:
 			if event.is_pressed():
 				on_click()
 
-# reveal Z line and planet icon on mouse over
+# reveal Z line and star icon on mouse over
 func _on_ShadowTexture_mouse_entered():
 	$Line2D.show()
-	$PlanetTexture.show()
+	$StarTexture.show()
 
 
 func _on_ShadowTexture_mouse_exited():
@@ -232,14 +233,14 @@ func _on_ShadowTexture_mouse_exited():
 		return
 		
 	$Line2D.hide()
-	$PlanetTexture.hide()
+	$StarTexture.hide()
 
 
 func _on_PlanetTexture_mouse_entered():
-	if $"PlanetTexture".visible:
+	if $"StarTexture".visible:
 		$Line2D.show()
 
 
 func _on_PlanetTexture_mouse_exited():
-	if $"PlanetTexture".visible:
+	if $"StarTexture".visible:
 		$Line2D.hide()

@@ -151,7 +151,7 @@ func update_map(marker):
 		# reveal Z line and planet icon for target
 		if icon.has_node("Line2D"):
 			icon.get_node("Line2D").show()
-		icon.get_node("PlanetTexture").show()
+		icon.get_node("StarTexture").show()
 		
 		# paranoia
 		if $"Control".src == $"Control".tg:
@@ -166,7 +166,7 @@ func update_map(marker):
 			$"Control/Tau Ceti/Label".set_self_modulate(Color(0,1,1))
 	
 	# center on star (needs target to be set because it resets the distance label)
-	offset = -($"Control".src.rect_position+$"Control".src.get_node("PlanetTexture").rect_position)
+	offset = -($"Control".src.rect_position+$"Control".src.get_node("StarTexture").rect_position)
 	move_map_to_offset(offset)
 	
 	# show distance involved along the line
