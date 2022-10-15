@@ -209,16 +209,6 @@ func display_star_map_info(star_icon):
 	rtl.set_text(text)
 
 # --------------------------------------------------
-func _on_ButtonConfirm_pressed():
-	game.player.w_hole.jump()
-	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
-
-func _on_ButtonAbort_pressed():
-	game.player.HUD.hide_starmap()
-	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
-	game.player.w_hole.entered = false
-	game.player.w_hole = null
-
 func display_captain_log():
 	#$"PopupPanel/VBoxContainer/ButtonLog/PanelLog/RichTextLabel".set_text(str(game.captain_log))
 	
@@ -255,6 +245,19 @@ func move_map_to_offset(offset):
 		# because some star icons are hardcoded
 		if c.has_method("calculate_label_and_sfx"):
 			c.calculate_label_and_sfx(offset)
+			
+
+
+# ----------------------------------------------------	
+func _on_ButtonConfirm_pressed():
+	game.player.w_hole.jump()
+	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
+
+func _on_ButtonAbort_pressed():
+	game.player.HUD.hide_starmap()
+	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
+	game.player.w_hole.entered = false
+	game.player.w_hole = null
 	
 func _on_ButtonL_pressed():
 	offset += Vector2(LY_TO_PX,0)
