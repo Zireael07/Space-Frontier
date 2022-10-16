@@ -25,7 +25,7 @@ var system_multiple = preload("res://systems/binary star system.tscn")
 # so we need to store entire preload("xxx")
 var defined_systems = {
 	"Sol": preload("res://systems/Sol system.tscn"),
-	"Trappist": preload("res://systems/Trappist system.tscn"),
+	"Trappist-1": preload("res://systems/Trappist system.tscn"),
 	"Proxima": preload("res://systems/Proxima Centauri system.tscn"),
 	"Alpha Centauri": preload("res://systems/Alpha Centauri system.tscn"),
 	"Barnards": preload("res://systems/Barnard's star system.tscn"),
@@ -503,19 +503,27 @@ func wormholes_from_graph(p_ind, ref_pos=null):
 # -------------------------------------
 func move_player(system, travel=0.0):
 	var place = null
-	# move player
-	var first_star = ["Proxima", "Sol", "Barnards", "Wolf 359", "Luyten 726-8", "Tau Ceti"]
-	# FIXME: doesn't really place correctly?
-	if system in first_star:
-	#var place = get_tree().get_nodes_in_group("planets")[1] 
-		place = get_tree().get_nodes_in_group("star")[0]
-	if system == "Alpha Centauri":
+
+	place = get_tree().get_nodes_in_group("star")[0]
+	
+	# unlike placing wormholes, we can now rely on star group
+	if get_tree().get_nodes_in_group("star").size() > 1:
 		place = get_tree().get_nodes_in_group("star")[1]
+		print("Place by the 2nd star")
+
+#	var first_star = ["Proxima", "Sol", "Barnards", "Wolf 359", "Tau Ceti"]
+#	# FIXME: doesn't really place correctly?
+#	if system in first_star:
+#	#var place = get_tree().get_nodes_in_group("planets")[1] 
+#		place = get_tree().get_nodes_in_group("star")[0]
+#	if system == "Alpha Centauri" or system == "Luyten 726-8":
+#		place = get_tree().get_nodes_in_group("star")[1]
 	
 	# paranoia
 	if place == null:
 		place = get_tree().get_nodes_in_group("star")[0]
 	print("Place: " + str(place.get_global_position()))
+	# move player
 	game.player.get_parent().set_global_position(place.get_global_position())
 	game.player.set_position(Vector2(0,0))
 
