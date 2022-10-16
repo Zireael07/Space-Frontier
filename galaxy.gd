@@ -152,10 +152,11 @@ func create_map_graph():
 	
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
 	map_astar.connect_points(mapping[Vector3(28,-31,1)], mapping[Vector3(29, -31, 1)]) # Proxima to Alpha Centauri
-	map_astar.connect_points(mapping[Vector3(0,0,0)],mapping[Vector3(-34, 4, -114)]) # Sol to Tau Ceti
+	#map_astar.connect_points(mapping[Vector3(0,0,0)],mapping[Vector3(-34, 4, -114)]) # Sol to Tau Ceti
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
-	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
+	map_astar.connect_points(mapping[Vector3(-34, 4, -114)], mapping[Vector3(-21, 2, -85)]) # Tau Ceti to Luyten 726-8
 
 	map_astar.connect_points(mapping[Vector3(50, 30, 14)], mapping[Vector3(29, -31, 1)]) # both Centauri connect to Barnard's
 	#map_astar.connect_points(mapping[Vector3(50, 30, 14)], mapping[Vector3(28, -31, 1)])
@@ -166,7 +167,7 @@ func create_map_graph():
 	map_astar.connect_points(mapping[Vector3(53, 8, 169)], mapping[Vector3(15, -43, 136)]) # Wolf 498 to FL Virginis 
 
 	map_astar.connect_points(mapping[Vector3(-34, 4, -114)],mapping[Vector3(-2, 58, -141)]) # Tau Ceti to Gliese 1002
-#	map_astar.connect_points(mapping[Vector3(4, 39, -158)],mapping[Vector3(-2, 58, -141)]) # Gliese 1005 to Gliese 1002
+	map_astar.connect_points(mapping[Vector3(4, 39, -158)],mapping[Vector3(-2, 58, -141)]) # Gliese 1005 to Gliese 1002
 	map_astar.connect_points(mapping[Vector3(-2, 58, -141)],mapping[Vector3(14, 119,-202)]) # Gliese 1002 to Gliese 1286
 	map_astar.connect_points(mapping[Vector3(14, 119,-202)],mapping[Vector3(113, 95, -241)]) # Gliese 1286 to Gliese 867 (FK Aquarii)
 	map_astar.connect_points(mapping[Vector3(160, 130, -270)],mapping[Vector3(113, 95, -241)]) # Gliese 1265 to Gliese 867
