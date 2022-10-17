@@ -110,6 +110,25 @@ func find_icon_for_pos(pos):
 			ret = c
 			break
 	return ret
+	
+func get_neighbors_for_icon(star_icon):	
+	var res = []
+	var neighbors = null
+	# paranoia
+	if not "pos" in star_icon:
+		neighbors = map_astar.get_point_connections(mapping[Vector3(0,0,0)])
+	else:
+		neighbors = map_astar.get_point_connections(mapping[star_icon.pos])
+	
+	for n in neighbors:
+		var coords = unpack_vector(n)
+		#print("unpacked coords: ", coords)
+		coords = positive_to_original(coords)
+		#print("Coords: ", coords)
+		var icon = find_icon_for_pos(coords)	
+		res.append(icon)
+
+	return res
 
 func update_map(marker):
 	# update marker position
@@ -180,7 +199,7 @@ func update_map(marker):
 func display_star_map_info(star_icon):
 	var text = ""
 	# actual text begins here
-	text = text + star_icon.named + "\n" + "\n"
+	text = text + star_icon.get_name() + "\n" + "\n"
 	# basics
 	text = text + "Star type/color: " + str(star_icon.star_type) + "\n"
 	var fmt_multiple = "no" if not star_icon.multiple else str(star_icon.multiple)
