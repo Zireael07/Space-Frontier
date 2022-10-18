@@ -215,11 +215,13 @@ func on_click():
 	#get_node("../../Grid/VisControl/Label").rect_position = get_parent().rect_position + (get_parent().get_tg_loc() - get_parent().get_src_loc())/2
 	var dist = get_node("../../").get_star_distance(get_parent().src, get_parent().tg)
 	get_node("../../Grid/VisControl/Label").set_text("%.2f ly" % (dist))
-	get_node("../../Grid/VisControl").update()
+	#get_node("../../Grid/VisControl").update()
 	# update displayed starmap info
 	get_node("../../").display_star_map_info(get_parent().tg)
 	# try to route
-	get_node("../..").get_route(get_parent().src, get_parent().tg)
+	var r = get_node("../..").get_route_icons(get_parent().src, get_parent().tg)
+	get_node("../../Grid/VisControl").route = r
+	get_node("../../Grid/VisControl").update()
 	
 # we don't want actual buttons, hence this
 func _on_TextureRect2_gui_input(event):

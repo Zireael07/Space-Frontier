@@ -143,7 +143,36 @@ func get_route(src_icon, tg_icon):
 	else: 
 		tg = mapping[tg_icon.pos]	 
 	
-	print("Route: " , route(src, tg))
+	#print("Route: " , route(src, tg))
+	return route(src, tg)
+	
+func get_route_icons(src_icon, tg_icon):
+	var r = get_route(src_icon, tg_icon)
+	
+	var icons = []
+#	for s in r:
+#		var coords = unpack_vector(s)
+#		#print("unpacked coords: ", coords)
+#		coords = positive_to_original(coords)
+#		#print("Coords: ", coords)
+#		var icon = find_icon_for_pos(coords)	
+#		#icons.append(icon)
+	
+	# arrange in pairs (for easier drawing later)
+	for index in range(r.size()-1):
+		var coords = unpack_vector(r[index])
+		#print("unpacked coords: ", coords)
+		coords = positive_to_original(coords)
+		#print("Coords: ", coords)
+		var icon = find_icon_for_pos(coords)
+		coords = unpack_vector(r[index+1])
+		coords = positive_to_original(coords)
+		var icon2 = find_icon_for_pos(coords)
+		icons.append([icon, icon2])
+	
+	#print(icons)
+	return icons
+
 
 func update_map(marker):
 	# update marker position
