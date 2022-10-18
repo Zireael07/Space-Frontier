@@ -224,6 +224,13 @@ func get_neighbors(coords):
 	print("Neighbors for id: ", mapping[float_to_int(coords)], " ", neighbors)
 	return neighbors
 
+# wants internal ids
+func route(src, tg):
+	if tg in map_astar.get_point_connections(src):
+		return
+		
+	return map_astar.get_id_path(src, tg)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

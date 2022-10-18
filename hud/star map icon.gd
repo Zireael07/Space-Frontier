@@ -218,6 +218,8 @@ func on_click():
 	get_node("../../Grid/VisControl").update()
 	# update displayed starmap info
 	get_node("../../").display_star_map_info(get_parent().tg)
+	# try to route
+	get_node("../..").get_route(get_parent().src, get_parent().tg)
 	
 # we don't want actual buttons, hence this
 func _on_TextureRect2_gui_input(event):

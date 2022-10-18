@@ -130,6 +130,21 @@ func get_neighbors_for_icon(star_icon):
 
 	return res
 
+func get_route(src_icon, tg_icon):
+	var src = null
+	if not "pos" in src_icon: 
+		src = mapping[Vector3(0,0,0)]
+	else: 
+		src = mapping[src_icon.pos]
+	
+	var tg = null
+	if not "pos" in tg_icon: 
+		tg = mapping[Vector3(0,0,0)]
+	else: 
+		tg = mapping[tg_icon.pos]	 
+	
+	print("Route: " , route(src, tg))
+
 func update_map(marker):
 	# update marker position
 	var system = get_tree().get_nodes_in_group("main")[0].curr_system
