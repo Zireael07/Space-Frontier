@@ -173,6 +173,11 @@ func get_route_icons(src_icon, tg_icon):
 	#print(icons)
 	return icons
 
+func pretty_print_stars(stars):
+	for s in stars:
+		var coords = float_to_int(s[1])
+		var icon = find_icon_for_pos(coords)
+		print(s[0], " @ ", s[1], " : ", icon.get_name())
 
 func update_map(marker):
 	# update marker position

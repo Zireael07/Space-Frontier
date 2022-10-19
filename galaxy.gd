@@ -224,6 +224,36 @@ func get_neighbors(coords):
 	print("Neighbors for id: ", mapping[float_to_int(coords)], " ", neighbors)
 	return neighbors
 
+# sort
+class MyCustomSorter:
+	static func sort_stars(a, b):
+		if a[0] < b[0]:
+			return true
+		return false
+
+func get_closest_stars_to(icon_src):
+	var src = map_astar.get_point_position(mapping[icon_src.pos])
+	
+	print("Getting closest stars to ", src)
+	# sort by dist
+	var dists = []
+	var stars = []
+
+	for p in map_astar.get_points():
+		var dist = map_astar.get_point_position(p).distance_to(src)
+		dists.append(dist)
+		stars.append([dist, map_astar.get_point_position(p)])
+
+	#dists.sort()
+	#print("Dists sorted: " + str(dists))
+
+	# custom sort
+	stars.sort_custom(MyCustomSorter, "sort_stars")
+
+	#print(stars)
+	
+	return stars
+
 # wants internal ids
 func route(src, tg):
 	if tg in map_astar.get_point_connections(src):
