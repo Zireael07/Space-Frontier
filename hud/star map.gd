@@ -149,6 +149,9 @@ func get_route(src_icon, tg_icon):
 func get_route_icons(src_icon, tg_icon):
 	var r = get_route(src_icon, tg_icon)
 	
+	if r == null:
+		return []
+	
 	var icons = []
 #	for s in r:
 #		var coords = unpack_vector(s)

@@ -259,6 +259,9 @@ func route(src, tg):
 	if tg in map_astar.get_point_connections(src):
 		return
 		
+	if map_astar.get_point_connections(tg).size() < 1:
+		return
+		
 	return map_astar.get_id_path(src, tg)
 
 # Called when the node enters the scene tree for the first time.
