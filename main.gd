@@ -33,7 +33,8 @@ var defined_systems = {
 	"Luyten 726-8": preload("res://systems/Luyten 726-8 system.tscn"), # dupe of the above 
 	"Tau Ceti": preload("res://systems/Tau Ceti system.tscn"),
 	"Wolf 359": preload("res://systems/Wolf 359 system.tscn"),
-	"Gliese 1265": preload("res://systems/Gliese 1265 system.tscn")
+	"Gliese 1265": preload("res://systems/Gliese 1265 system.tscn"),
+	"Teegardens": preload("res://systems/Teegarden's star system.tscn"),
 }
 
 # game core
@@ -46,28 +47,31 @@ var curr_system = null
 var mmap
 
 func system_name_to_id(nam):
-	nam.replace("'", "") # nix any apostrophes if present
-	nam.replace("Star", "") # nix any "Star" (e.g. Barnard's Star, Teegarden's Star...)
-	print("ID for name: ", nam)
-	return nam
+	var _name = str(nam)
+	_name = _name.replace("'", "") # nix any apostrophes if present
+	_name = _name.trim_suffix("Star") # nix any "Star" (e.g. Barnard's Star, Teegarden's Star...)
+	_name = _name.strip_edges()
+	print("ID for name: ", _name)
+	return _name
 
 # this uses text IDs because that's what the spawning/instancing system uses
-func spawn_system(system="proc", multiple=false):
+func spawn_system(system_id, system, multiple=false):
 	var sys = system_no_planets
 	
 	if multiple:
 		sys = system_multiple
 	
 	# named/defined systems
-	if system in defined_systems: #alternate to dict.has()
-		sys = defined_systems[system]
+	if system_id in defined_systems: #alternate to dict.has()
+		print("System found: ", system_id)
+		sys = defined_systems[system_id]
 	#else:
 	#	print("System not found: ", system)
 			
 	var system_inst = sys.instance()
 	# make names match for systems w/o planets
 	if sys == system_no_planets or sys == system_multiple:
-		var nam = system.capitalize()
+		var nam = system_id.capitalize()
 		system_inst.set_name(nam)
 		if sys != system_multiple:
 			system_inst.get_child(0).set_name(nam)
@@ -79,7 +83,7 @@ func spawn_system(system="proc", multiple=false):
 		
 	add_child(system_inst)
 	
-	return [system, system_inst]
+	return [system_inst.get_name(), system_inst]
 	
 func spawn_core():
 	var cor = core.instance()
@@ -102,7 +106,7 @@ func _ready():
 		var lookup_system = {1: "Sol", 2: "Trappist"}
 		syst = lookup_system[game.start]
 		
-	var data = spawn_system(syst)
+	var data = spawn_system(syst, null)
 	
 	# the system is always child #2 (#0 is parallax bg and #1 is a timer)
 	curr_system = data[0]
@@ -635,10 +639,10 @@ func change_system(system="proxima", time=0.0):
 	if "multiple" in system:
 		multiple = system.multiple
 	# convert from input to textual id since instancing still uses textual ids
-	system = system_name_to_id(system.get_name())
+	var system_id = system_name_to_id(system.get_name())
 	
 	# spawn new system
-	var data = spawn_system(system, multiple)
+	var data = spawn_system(system_id, system, multiple)
 	curr_system = data[0]
 	move_child(data[1], 2)
 	print("System after change: ", curr_system)
