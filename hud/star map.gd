@@ -18,41 +18,43 @@ var grid = Vector2(0, -138) # experimentally determined
 func _ready():
 	parse_data()
 
+# enum so we no longer have to remember the order the columns are in...
+enum col {NAME, WINCHELLX, WINCHELLY, WINCHELLZ, COLOR, PLANETS, MULTIPLE, COMMENTS, RA, DEC, DIST_SOL }
+# it's here because we're saving data to our icons
 func parse_data():
 	data = load_data()
 	for line in data:
-		# name, x, y, z, color
 		#print(line)
-		if line[0] != "Sol":
+		if line[col.NAME] != "Sol":
 			var ic = icon.instance()
 			ic.named = str(line[0])
-			if line[1] != " -":
+			if line[col.WINCHELLX] != " -":
 				# strip units
-				ic.x = strip_units(str(line[1]))
+				ic.x = strip_units(str(line[col.WINCHELLX]))
 				#ic.x = float(line[1])
-				ic.y = strip_units(str(line[2]))
-				ic.depth = strip_units(str(line[3]))
+				ic.y = strip_units(str(line[col.WINCHELLY]))
+				ic.depth = strip_units(str(line[col.WINCHELLZ]))
 				ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
 				save_graph_data(ic.x, ic.y, ic.depth, ic.named)
 			
-			ic.star_type = str(line[4]).strip_edges()
+			ic.star_type = str(line[col.COLOR]).strip_edges()
 			# does the star have planets?
 			ic.planets = false
-			if "yes" in line[5]:
+			if "yes" in line[col.PLANETS]:
 				ic.planets = true
 
 			if line.size() > 6:
-				if str(line[6]).strip_edges() == "double":
-					ic.multiple = line[6]
+				if str(line[col.MULTIPLE]).strip_edges() == "double":
+					ic.multiple = line[col.MULTIPLE]
 			
-			# line[7] is for comments
+			# line[7] is for comments (col.COMMENTS)
 			
 			# ra-dec conversion
-			if line.size() > 8 and line[1] == " -":
+			if line.size() > 8 and line[col.WINCHELLX] == " -":
 				#print("RA/DEC candidate...")
-				var ra = line[8]
-				var de = line[9] 
-				if ra != "" and de != "" and line[10] != "":
+				var ra = line[col.RA]
+				var de = line[col.DEC] 
+				if ra != "" and de != "" and line[col.DIST_SOL] != "":
 					#print("RA/DEC convert for ", str(line[0]))
 					var ra_deg = 0
 					var dec = 0
@@ -61,7 +63,7 @@ func parse_data():
 						# 15 degrees in an hour (360/24) 
 						ra_deg = float(15*float(ra.rstrip("h")))
 						# for now, assume degrees are given in decimal degrees
-						dec = float(line[8])
+						dec = float(line[col.DEC])
 					elif "h" in ra and "m" in ra:
 						# http://voyages.sdss.org/preflight/locating-objects/ra-dec/
 						# 0,25 (1/4) degree in a minute since it takes 4 minutes for a degree (60/15)
@@ -77,9 +79,9 @@ func parse_data():
 					if not "d" in de and not "m" in de:
 						dec = float(de)
 					
-					var dist = float(line[10])
-					if "pc" in line[10]:
-						dist = strip_units(line[10])
+					var dist = float(line[col.DIST_SOL])
+					if "pc" in line[col.DIST_SOL]:
+						dist = strip_units(line[col.DIST_SOL])
 					var data = galactic_from_ra_dec(ra_deg, dec, dist)
 					# assign calculated values - no need to strip units as it's always
 					ic.x = data[0]
