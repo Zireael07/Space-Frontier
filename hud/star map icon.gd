@@ -50,7 +50,10 @@ func _ready():
 		"blue": preload("res://assets/hud/blue_circle.png"),
 	}
 	
-	get_node("StarTexture").set_texture(star_icons[star_type])
+	if star_type != "":
+		get_node("StarTexture").set_texture(star_icons[star_type])
+	else:
+		get_node("StarTexture").set_texture(star_icons["red"])
 	
 	# positioning the shadow icon
 	# in Godot, +Y goes down so we need to minus the Y we get from data
