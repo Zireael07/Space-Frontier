@@ -14,11 +14,12 @@ gradient = ExtResource( 1 )
 gradient = ExtResource( 5 )
 
 [sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
 shader = ExtResource( 6 )
 shader_param/fadeWidth = 0.05
-shader_param/temperature = 10.0
+shader_param/temperature = -179.054
 shader_param/rotate_angle = null
-shader_param/time = 0.153785
+shader_param/time = 1.51563
 shader_param/waterLevel = 0.45
 shader_param/color_sea = Color( 0, 1, 1, 1 )
 shader_param/temp_gradient = SubResource( 4 )
@@ -77,9 +78,10 @@ tracks/0/keys = {
 "values": [ true, false, false, false, true ]
 }
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" groups=["planets"]]
 z_index = 2
 script = ExtResource( 2 )
+mass = 1
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 6 )

@@ -1,6 +1,8 @@
 tool
 extends Node2D
 
+# this is for systems that are generated based on csv
+
 # class member variables go here, for example:
 export var rotation_rate = 0.15
 export var orbit_rate = 0.00002
