@@ -109,7 +109,7 @@ func galactic_from_ra_dec(ra, dec, dist):
 # parsing it happens in star_map.gd because it's creating the icons as it's being parsed
 func load_data():
 	var file = File.new()
-	var opened = file.open("res://known_systems.csv", file.READ)
+	var opened = file.open("res://known_stars.csv", file.READ)
 	if opened == OK:
 		while !file.eof_reached():
 			var csv = file.get_csv_line()
