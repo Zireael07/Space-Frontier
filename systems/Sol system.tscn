@@ -406,8 +406,8 @@ shape = SubResource( 9 )
 [node name="Node2D" type="Node2D" parent="planet_holder" groups=["aster_belt"]]
 script = ExtResource( 11 )
 radius = 2.5
-num = 80
-angle_inc = 3
+outer_radius = 3.3
+num = 100
 
 [node name="planet6" parent="planet_holder" groups=["aster_named"] instance=ExtResource( 3 )]
 position = Vector2( -0.00145297, 33240 )

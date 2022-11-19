@@ -35,9 +35,7 @@ void fragment()
 shader = SubResource( 2 )
 shader_param/aura_color = Color( 0.00392157, 0.831373, 0.992157, 1 )
 
-[node name="star" type="Node2D" groups=[
-"star",
-]]
+[node name="star" type="Node2D" groups=["star"]]
 position = Vector2( 500, 500 )
 script = ExtResource( 3 )
 orbit_rate = 0.02
@@ -54,14 +52,15 @@ margin_left = -400.0
 margin_top = 350.0
 margin_right = -328.0
 margin_bottom = 366.0
-custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 1 )
 text = "Kepler-99"
 
 [node name="planet_holder" type="Node2D" parent="."]
 
 [node name="planet" parent="planet_holder" instance=ExtResource( 4 )]
 position = Vector2( -2.62268e-05, -600 )
+mass = 1
 hydro = 0.2
 
 [node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
@@ -72,10 +71,17 @@ text = "Jungle"
 
 [node name="planet4" parent="planet_holder" instance=ExtResource( 4 )]
 position = Vector2( -6.85395e-05, 1568 )
+mass = 1
+atm = 0.78056
+greenhouse = 0.00688895
 
 [node name="planet2" parent="planet_holder" instance=ExtResource( 4 )]
 position = Vector2( 1852.92, 200 )
-atm = 1.0
+mass = 1
+hydro = 0.0
+atm = 0.840618
+greenhouse = 0.000376237
+population = 0.1
 
 [node name="Sprite" parent="planet_holder/planet2" index="0"]
 texture = ExtResource( 5 )
@@ -85,6 +91,7 @@ material = SubResource( 3 )
 rotation = 4.81991
 
 [node name="Label" parent="planet_holder/planet2" index="2"]
+self_modulate = Color( 0, 1, 1, 1 )
 margin_right = 204.0
 text = "Paradise"
 
@@ -92,7 +99,10 @@ text = "Paradise"
 
 [node name="planet3" parent="planet_holder" instance=ExtResource( 4 )]
 position = Vector2( -1540, 400 )
+mass = 1
 hydro = 0.0
+atm = 0.883466
+greenhouse = 0.00700822
 
 [node name="Sprite" parent="planet_holder/planet3" index="0"]
 texture = ExtResource( 6 )
@@ -135,9 +145,9 @@ position = Vector2( -644, 388 )
 [node name="asteroid_belt" type="Node2D" parent="planet_holder"]
 script = ExtResource( 8 )
 radius = 0.075
+outer_radius = 0.125
+num = 60
 
 [editable path="planet_holder/planet"]
-
 [editable path="planet_holder/planet2"]
-
 [editable path="planet_holder/planet3"]
