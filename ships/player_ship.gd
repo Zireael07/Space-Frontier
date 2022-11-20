@@ -403,9 +403,12 @@ func _process(delta):
 	
 	# overheat damage
 	if is_overheating():
+		$playerShip3_overlay.show()
 		#print("distance to star: " + str(dist))
 		if get_node("heat_timer").get_time_left() == 0:
 			heat_damage()
+	else:
+		$playerShip3_overlay.hide()
 
 	# target direction indicator
 	if HUD.target != null and HUD.target != self:

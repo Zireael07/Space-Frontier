@@ -1,0 +1,10 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+uniform sampler2D sprite;
+
+void fragment() {
+	vec4 clr = texture(sprite, UV);
+	COLOR = clr.agba;
+}"

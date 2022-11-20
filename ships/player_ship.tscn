@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://guns/bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture" id=2]
@@ -8,7 +8,11 @@
 [ext_resource path="res://assets/crosshair123.png" type="Texture" id=6]
 [ext_resource path="res://assets/hud/yellow_dir_arrow.png" type="Texture" id=7]
 [ext_resource path="res://ships/debug_vis.gd" type="Script" id=8]
+[ext_resource path="res://assets/swizzle_shader.tres" type="Shader" id=9]
 
+[sub_resource type="ShaderMaterial" id=4]
+shader = ExtResource( 9 )
+shader_param/sprite = ExtResource( 2 )
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 23.0021
@@ -119,7 +123,14 @@ bullet = ExtResource( 1 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 
+[node name="playerShip3_overlay" type="Sprite" parent="Area2D"]
+visible = false
+material = SubResource( 4 )
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 2 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="Area2D"]
@@ -127,9 +138,7 @@ current = true
 
 [node name="bullet_container" type="Node" parent="Area2D"]
 
-[node name="muzzle" type="Position2D" parent="Area2D" groups=[
-"muzzle",
-]]
+[node name="muzzle" type="Position2D" parent="Area2D" groups=["muzzle"]]
 position = Vector2( 0, -30 )
 
 [node name="gun_timer" type="Timer" parent="Area2D"]
@@ -188,6 +197,7 @@ wait_time = 5.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/landing = SubResource( 3 )
+
 [connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D/shield_timer" to="Area2D" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D/recharge_timer" to="Area2D" method="_on_recharge_timer_timeout"]
