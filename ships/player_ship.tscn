@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://guns/bullet.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture" id=2]
@@ -9,10 +9,21 @@
 [ext_resource path="res://assets/hud/yellow_dir_arrow.png" type="Texture" id=7]
 [ext_resource path="res://ships/debug_vis.gd" type="Script" id=8]
 [ext_resource path="res://assets/swizzle_shader.tres" type="Shader" id=9]
+[ext_resource path="res://assets/outline_ship.shader" type="Shader" id=10]
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=6]
 shader = ExtResource( 9 )
-shader_param/sprite = ExtResource( 2 )
+shader_param/swizzle_type = null
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = ExtResource( 10 )
+shader_param/intensity = 200
+shader_param/precision = 0.02
+shader_param/flipColors = false
+shader_param/outline_color = Color( 0, 0.298039, 1, 1 )
+shader_param/outline_color_2 = Color( 0.0588235, 0.278431, 0.509804, 1 )
+shader_param/use_outline_uv = false
+shader_param/useTexture = false
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 23.0021
@@ -120,12 +131,13 @@ script = ExtResource( 3 )
 bullet = ExtResource( 1 )
 
 [node name="playerShip3_blue" type="Sprite" parent="Area2D"]
+material = SubResource( 6 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 
 [node name="playerShip3_overlay" type="Sprite" parent="Area2D"]
 visible = false
-material = SubResource( 4 )
+material = SubResource( 5 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 

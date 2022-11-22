@@ -403,12 +403,12 @@ func _process(delta):
 	
 	# overheat damage
 	if is_overheating():
-		$playerShip3_overlay.show()
+		get_child(0).get_material().set_shader_param("swizzle_type", 1)
 		#print("distance to star: " + str(dist))
 		if get_node("heat_timer").get_time_left() == 0:
 			heat_damage()
 	else:
-		$playerShip3_overlay.hide()
+		get_child(0).get_material().set_shader_param("swizzle_type", 0)
 
 	# target direction indicator
 	if HUD.target != null and HUD.target != self:
@@ -626,9 +626,11 @@ func _input(_event):
 			cloaked = not cloaked
 			if cloaked:
 				# sprite only!
-				get_child(0).set_modulate(Color(0.3, 0.3, 0.3))
+				get_child(1).set_modulate(Color(0.3, 0.3, 0.3))
+				$playerShip3_overlay.show()
 			else:
-				get_child(0).set_modulate(Color(1,1,1))	
+				get_child(1).set_modulate(Color(1,1,1))
+				$playerShip3_overlay.hide()
 
 	if Input.is_action_pressed("scan"):
 		if HUD.target != null and HUD.target != self:

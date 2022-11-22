@@ -3,8 +3,21 @@
 [resource]
 code = "shader_type canvas_item;
 uniform sampler2D sprite;
+uniform int swizzle_type;
 
 void fragment() {
-	vec4 clr = texture(sprite, UV);
-	COLOR = clr.agba;
+	vec4 clr = texture(TEXTURE, UV);
+	//swizzle
+	switch (swizzle_type){
+		case 0:  //default 
+			COLOR = clr;
+			break;
+		case 1: //heat
+			COLOR = clr.agba;
+			break;
+		case 2: //cloak
+			COLOR = vec4(clr.r, clr.a, clr.a, clr.a); //clr.bbba; //vec4(0,0,0, clr.a);
+			break;
+	}
+
 }"
