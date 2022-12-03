@@ -16,6 +16,7 @@ var orbit_rot = 0
 onready var sprite = $"Sprite"
 #onready var planets = $"planet_holder"
 var planets = null
+#var star_type = ""
 
 # for minimap
 export var zoom_scale = 12
