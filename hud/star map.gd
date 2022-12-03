@@ -12,22 +12,36 @@ var offset = Vector2(0,0)
 var center = Vector2(382.5, 242.5) # experimentally determined
 var grid = Vector2(0, -138) # experimentally determined
 
-
+var systems = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	parse_data()
 
 # enum so we no longer have to remember the order the columns are in...
-enum col {NAME, WINCHELLX, WINCHELLY, WINCHELLZ, COLOR, PLANETS, MULTIPLE, COMMENTS, RA, DEC, DIST_SOL }
+#enum col {NAME, WINCHELLX, WINCHELLY, WINCHELLZ, COLOR, PLANETS, MULTIPLE, COMMENTS, RA, DEC, DIST_SOL }
+enum col {NAME, TYPE, RA, DEC, DIST_SOL, WINCHELLX, WINCHELLY, WINCHELLZ, MASS, RADIUS, ORBIT, LUMINOSITY, COLOR}
 # it's here because we're saving data to our icons
 func parse_data():
 	data = load_data()
-	for line in data:
+	
+	systems = {}
+
+	#for line in data:
+	for i in data.size():
+		var line = data[i]
 		#print(line)
-		if line[col.NAME] != "Sol":
+		if line[col.NAME] != "Sol" and \
+		line[col.TYPE].strip_edges() == "star" \
+			and line[col.NAME].find(" B") == -1: # ignore B, C, etc. stars
+			
 			var ic = icon.instance()
-			ic.named = str(line[0])
+			# strip "A" etc.
+			var _name = str(line[col.NAME])
+			_name = _name.trim_suffix(" A")
+			ic.named = _name
+			
+			#ic.named = str(line[0])
 			if line[col.WINCHELLX] != " -":
 				# strip units
 				ic.x = strip_units(str(line[col.WINCHELLX]))
@@ -36,21 +50,24 @@ func parse_data():
 				ic.depth = strip_units(str(line[col.WINCHELLZ]))
 				ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
 				save_graph_data(ic.x, ic.y, ic.depth, ic.named)
-			
-			ic.star_type = str(line[col.COLOR]).strip_edges()
-			# does the star have planets?
-			ic.planets = false
-			if "yes" in line[col.PLANETS]:
-				ic.planets = true
 
-			if line.size() > 6:
-				if str(line[col.MULTIPLE]).strip_edges() == "double":
-					ic.multiple = line[col.MULTIPLE]
+
+
+			ic.star_type = str(line[col.COLOR]).strip_edges()
+			# this only applies to known_systems_stars.csv
+#			# does the star have planets?
+#			ic.planets = false
+#			if "yes" in line[col.PLANETS]:
+#				ic.planets = true
+#
+#			if line.size() > 6:
+#				if str(line[col.MULTIPLE]).strip_edges() == "double":
+#					ic.multiple = line[col.MULTIPLE]
 			
 			# line[7] is for comments (col.COMMENTS)
 			
 			# ra-dec conversion
-			if line.size() > 8 and line[col.WINCHELLX] == " -":
+			if line[col.WINCHELLX] == " -": # and line.size() > 8 for old known_systems_stars.csv
 				#print("RA/DEC candidate...")
 				var ra = line[col.RA]
 				var de = line[col.DEC] 
@@ -58,6 +75,8 @@ func parse_data():
 					#print("RA/DEC convert for ", str(line[0]))
 					var ra_deg = 0
 					var dec = 0
+					if "d" in ra:
+						ra_deg = float(ra.rstrip("d"))
 					if "h" in ra and not "m" in ra:
 						# if no minutes specified, we assume decimal hours
 						# 15 degrees in an hour (360/24) 
@@ -90,6 +109,43 @@ func parse_data():
 					ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
 					save_graph_data(ic.x, ic.y, ic.depth, ic.named)
 			get_node("Control").add_child(ic)
+			
+			# ------------------------------------
+			# merged data only!
+			#var star = line
+			systems[_name] = []
+			# append data necessary to create the system
+			systems[_name].append([line[col.NAME], line[col.RADIUS], line[col.LUMINOSITY], ic.star_type])
+			#print(systems, " after parsing the line ", line)
+
+		# merged data files only!	
+		# if a star but not A
+		elif (line[col.TYPE].strip_edges() == "star" \
+			#and line[col.NAME].find(" A") == -1) 
+			and line[col.NAME].find(" B") != -1) \
+			or line[col.TYPE].strip_edges() == "planet":
+				#print("Not A star of a system: ", line)
+				# because we ignore some systems (*cough cough* Sol)
+				if systems.keys().size() > 0:
+					var id = systems.keys().size()-1
+					var _nam = systems.keys()[id]
+					# append data necessary to create the system in main.gd
+					var data = [line[col.NAME], line[col.TYPE], line[col.ORBIT], line[col.RADIUS]]
+					if line[col.TYPE].strip_edges() == "star":
+						data.append(line[col.LUMINOSITY])
+						data.append(str(line[col.COLOR]).strip_edges())
+					
+					systems[_nam].append(data)
+	
+					# merged data only - new way of handling planets and multiple booleans
+					if line[col.TYPE].strip_edges() == "star":
+						# +1 because of ship /position marker
+						get_node("Control").get_child(get_node("Control").get_child_count()-1).multiple = true
+					else:
+						get_node("Control").get_child(get_node("Control").get_child_count()-1).planets = true
+	
+	# test
+	print(systems)
 	
 	# create a graph of stars we can route on
 	create_map_graph()

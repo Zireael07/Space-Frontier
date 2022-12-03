@@ -20,19 +20,21 @@ var wormhole = preload("res://bodies/wormhole2D.tscn")
 #var proc_system = preload("res://systems//proc star system.tscn")
 var system_no_planets = preload("res://systems/star system no planets.tscn")
 var system_multiple = preload("res://systems/binary star system.tscn")
+var data_system = preload("res://systems/data star system.tscn")
 
 # we can't preload from a dictionary because preload wants const,
 # so we need to store entire preload("xxx")
 var defined_systems = {
+	# Sol will need to remain separate even after data is merged, due to sheer size & complexity
 	"Sol": preload("res://systems/Sol system.tscn"),
 	"Trappist-1": preload("res://systems/Trappist system.tscn"),
-	"Proxima": preload("res://systems/Proxima Centauri system.tscn"),
-	"Alpha Centauri": preload("res://systems/Alpha Centauri system.tscn"),
-	"Barnards": preload("res://systems/Barnard's star system.tscn"),
+	#"Proxima": preload("res://systems/Proxima Centauri system.tscn"),
+	#"Alpha Centauri": preload("res://systems/Alpha Centauri system.tscn"),
+	#"Barnards": preload("res://systems/Barnard's star system.tscn"),
 	"UV Ceti": preload("res://systems/Luyten 726-8 system.tscn"), # outlier: data file uses scientific name
-	"Luyten 726-8": preload("res://systems/Luyten 726-8 system.tscn"), # dupe of the above 
+	"Luyten 726-8": preload("res://systems/Luyten 726-8 system.tscn"), # special case: atypical naming 
 	"Tau Ceti": preload("res://systems/Tau Ceti system.tscn"),
-	"Wolf 359": preload("res://systems/Wolf 359 system.tscn"),
+	#"Wolf 359": preload("res://systems/Wolf 359 system.tscn"),
 	"Gliese 1265": preload("res://systems/Gliese 1265 system.tscn"),
 	"Teegardens": preload("res://systems/Teegarden's star system.tscn"),
 }
@@ -63,13 +65,27 @@ func spawn_system(system_id, system, multiple=false):
 	
 	# named/defined systems
 	if system_id in defined_systems: #alternate to dict.has()
-		print("System found: ", system_id)
+		print("Defined system found: ", system_id)
 		sys = defined_systems[system_id]
-	#else:
+	else:
+		var systems = game.player.HUD.get_node("Control4/star map").systems
+		print("System data: ", systems[system_id])
+		sys = data_system
+		#print("Systems:", systems)
+	
 	#	print("System not found: ", system)
 			
 	var system_inst = sys.instance()
-	# make names match for systems w/o planets
+	
+	# data-driven systems
+	if sys == data_system:
+		var systems = game.player.HUD.get_node("Control4/star map").systems
+		system_inst.data = systems[system_id]
+		# set name
+		var nam = system_id #.capitalize()
+		system_inst.set_name(nam)
+	
+	# make names match for (template) systems w/o planets
 	if sys == system_no_planets or sys == system_multiple:
 		var nam = system_id.capitalize()
 		system_inst.set_name(nam)
@@ -513,7 +529,7 @@ func move_player(system, travel=0.0):
 	# unlike placing wormholes, we can now rely on star group
 	if get_tree().get_nodes_in_group("star").size() > 1:
 		place = get_tree().get_nodes_in_group("star")[1]
-		print("Place by the 2nd star")
+		print("Place player by the 2nd star")
 
 #	var first_star = ["Proxima", "Sol", "Barnards", "Wolf 359", "Tau Ceti"]
 #	# FIXME: doesn't really place correctly?
@@ -639,9 +655,11 @@ func change_system(system="proxima", time=0.0):
 	if "multiple" in system:
 		multiple = system.multiple
 	# convert from input to textual id since instancing still uses textual ids
-	var system_id = system_name_to_id(system.get_name())
+	#var system_id = system_name_to_id(system.get_name())
 	
 	# spawn new system
+	# no need to convert using single/merged data file
+	var system_id = system.get_name()
 	var data = spawn_system(system_id, system, multiple)
 	curr_system = data[0]
 	move_child(data[1], 2)
