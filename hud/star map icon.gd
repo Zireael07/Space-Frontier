@@ -48,6 +48,7 @@ func _ready():
 		"orange": preload("res://assets/hud/red_circle.png"), ##temporary 
 		"yellow": preload("res://assets/hud/yellow_circle.png"),
 		"blue": preload("res://assets/hud/blue_circle.png"),
+		"white": preload("res://assets/hud/grey_circle.png"),
 	}
 	
 	if star_type != "":

@@ -168,6 +168,13 @@ func create_map_graph():
 	map_astar.connect_points(mapping[Vector3(-19, -39, 65)], mapping[Vector3(15, -43, 136)]) # Wolf 359 to FL Virginis 
 #	map_astar.connect_points(mapping[Vector3(53, 8, 169)], mapping[Vector3(15, -43, 136)]) # Wolf 498 to FL Virginis 
 
+	map_astar.connect_points(mapping[Vector3(-34, -3, 75)], mapping[Vector3(1, -56, 93)]) # Lalande 21185 to Ross 128
+	map_astar.connect_points(mapping[Vector3(-34, -3, 75)], mapping[Vector3(-19, -39, 65)]) # Lalande 21185 to Wolf 359
+
+	map_astar.connect_points(mapping[Vector3(-58, -62, -13)], mapping[Vector3(-92, -62, 26)]) # Sirius to Procyon
+	map_astar.connect_points(mapping[Vector3(-92, -62, 26)], mapping[Vector3(-95, -29, 63)]) # Procyon to DX Cancri
+	map_astar.connect_points(mapping[Vector3(-92, -62, 26)], mapping[Vector3(-103, -65, 22)]) # Procyon to Luyten's star
+
 	map_astar.connect_points(mapping[Vector3(-34, 4, -114)],mapping[Vector3(-2, 58, -141)]) # Tau Ceti to Gliese 1002
 #	map_astar.connect_points(mapping[Vector3(4, 39, -158)],mapping[Vector3(-2, 58, -141)]) # Gliese 1005 to Gliese 1002
 #	map_astar.connect_points(mapping[Vector3(-2, 58, -141)],mapping[Vector3(14, 119,-202)]) # Gliese 1002 to Gliese 1286

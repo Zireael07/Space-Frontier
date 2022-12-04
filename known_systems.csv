@@ -15,9 +15,11 @@ Barnard's star, star, 269.45deg, 4.69deg, 5.96, 5.0ly, 3.0ly, 1.4ly, 0.16S, 0.17
 Wolf 359, star, 164.12deg, 7.01deg, 7.85, -1.9ly, -3.9ly, 6.5ly, 0.09S, 0.16S, -, 0.009, red
 Wolf 359 b, planet, -, -, -, -, -, -, 50E, 8E, 1.84, -, -
 Wolf 359 c, planet, -, -, -, -, -, -, 4.4E, 1.6E, 0.018, -, -
-Lalande 21185, star, 165.83deg, 35.96deg, 8.30, -1.1pc, -0.1pc, 2.3pc, 0.46S, 0.49S, -, 0.031, red,
+Lalande 21185, star, 165.83deg, 35.96deg, 8.30, -3.4ly, -0.3ly, 7.5ly, 0.46S, 0.49S, -, 0.031, red,
 Lalande 21185 b, planet, -, -, -, -, -, -, 3.1E, 1.4E, 0.079, -, -
 Lalande 21185 c, planet, -, -, -, -, -, -, 20E, 5E, 3.1, -, -
+Sirius A, star, 101.28deg, -16.17deg, 8.65, -5.8ly, -6.2ly, -1.3ly, 1.99S, 2.09S, -, 24.3, white 
+Sirius B, star, -, -, -, -, -, -, 0.98S, 0.8E, 20.1, 0.056, white
 Luyten 726-8 A, star, 24.75deg, -17.95deg, 8.81, -2.1ly, 0.2ly, -8.5ly, 0.11S, 0.17S, -, 0.002, red, //aka UV/BL Ceti
 Luyten 726-8 B, star, -, -, -, 0, 0, 0, 0.1S, 0.31S, 5.22, 0.003, red
 Ross 154, star, 282.45deg, -23.83deg, 9.70, 9.3ly, 1.9ly, -1.7ly, 0.17S, 0.15S, -, 0.002, red
@@ -27,12 +29,22 @@ Lacaille 9352 b, planet, -, -, -, -, -, -, 4.8E, 1.6E, 0.068, -, -
 Lacaille 9352 c, planet, -, -, -, -, -, -, 9E, 3E, 0.12, -, -
 Ross 128, star, 176.93deg, 0.80deg, 11.00, 0.1ly, -5.6ly, 9.3ly, 0.16S, 0.28S, -, 0.005, red, //aka FI Virginis
 Ross 128 b, planet, -, -, -, -, -, -, 1.6E, 1.15E, 0.05, -
+Procyon A, star, 114.82deg, 5.22deg, 11.43, -9.2ly, -6.2ly, 2.6ly, 1.48S, 1.9S, -, 6.94, white
+Procyon B, star, -, -, -, -, -, -, 0.59S, 0.12J, 15.14, 0.0004, white
+DX Cancri, star, 127.45deg, 26.77deg, 11.68, -9.5ly, -2.9ly, 6.3ly, 0.09S, 0.11S, -, 0.0002, red
 Tau Ceti, star, 26.01deg, -15.93deg, 11.90,  -3.4ly, 0.4ly, -11.4ly, 0.92S, 0.81S, -, 0.5, yellow
 Tau Ceti g, planet, -, -, -, -, -, -, 2.0E, 1.2E, 0.10, -
 Tau Ceti h, planet, -, -, -, -, -, -, 2.1E, 1.25E, 0.24, -
 Tau Ceti e, planet, -, -, -, -, -, -, 4.5E, 1.6E, 0.54, -
 Tau Ceti f, planet, -, -, -, -, -, -, 4.5E, 1.6E, 1.33, -
+Luyten's star, star, 111.85deg, 5.22deg, 12.34, -10.3ly, -6.5ly, 2.2ly, 0.26S, 0.3S, -, 0.0006, red
+Luyten's star c, planet, -, -, -, -, -, -, 1.2E, 1.05E, 0.036, -, -
+Luyten's star b, planet, -, -, -, -, -, -, 2.9E, 1.4E, 0.091, -, -
+Luyten's star d, planet, -, -, -, -, -, -, 11E, 3.5E, 0.71, -, -
+Luyten's star e, planet, -, -, -, -, -, -, 9E, 3E, 0.85, -, -
 Teegarden's star, star, 43.25deg, 16.88deg, 12.49, -9.4ly, 3.4ly, -7.5ly, 0.08S, 0.12S, -, 0.0006, red
+Teegarden's star b, planet, -, -, -, -, -, -, 1.2E, 1.05E, 0.025. -, -
+Teegarden's star c, planet, -, -, -, -, -, -, 1.3E, 1.1E, 0.044, -, -
 AX Microscopii, star, 319.31deg, -38.86deg, 12.94, 9.2ly, 0.6ly, -9.0ly, 0.6S, 0.8S, -, 0.11, red, //aka Lacaille 8760
 FL Virginis A, star, 188.32deg, 9.02deg, 14.11, 1.5ly, -4.3ly, +13.6ly, 0.12S, 0.17S, -, 0.001, red, //aka Wolf 424, Gliese 473
 FL Virginis B, star, -, -, -, -, -, -, 0.12S, 0.14S, 0.001, 4, red, //luminosity is just a guess
