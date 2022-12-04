@@ -77,6 +77,10 @@ func parse_data():
 					var dec = 0
 					if "d" in ra:
 						ra_deg = float(ra.rstrip("d"))
+					if "deg" in ra:
+						ra_deg = float(ra.rstrip("deg"))
+					if "deg" in de:
+						dec = float(de.rstrip("deg"))
 					if "h" in ra and not "m" in ra:
 						# if no minutes specified, we assume decimal hours
 						# 15 degrees in an hour (360/24) 

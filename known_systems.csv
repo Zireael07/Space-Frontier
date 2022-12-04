@@ -15,7 +15,7 @@ Barnard's star, star, 269.45deg, 4.69deg, 5.96, 5.0ly, 3.0ly, 1.4ly, 0.16S, 0.17
 Wolf 359, star, 164.12deg, 7.01deg, 7.85, -1.9ly, -3.9ly, 6.5ly, 0.09S, 0.16S, -, 0.009, red
 Wolf 359 b, planet, -, -, -, -, -, -, 50E, 8E, 1.84, -, -
 Wolf 359 c, planet, -, -, -, -, -, -, 4.4E, 1.6E, 0.018, -, -
-Lalande 21185, star, 165.83deg, 35.96deg, 8.30, -, -, -, 0.46S, 0.49S, -, 0.031, red
+Lalande 21185, star, 165.83deg, 35.96deg, 8.30, -1.1pc, -0.1pc, 2.3pc, 0.46S, 0.49S, -, 0.031, red,
 Lalande 21185 b, planet, -, -, -, -, -, -, 3.1E, 1.4E, 0.079, -, -
 Lalande 21185 c, planet, -, -, -, -, -, -, 20E, 5E, 3.1, -, -
 Luyten 726-8 A, star, 24.75deg, -17.95deg, 8.81, -2.1ly, 0.2ly, -8.5ly, 0.11S, 0.17S, -, 0.002, red, //aka UV/BL Ceti
