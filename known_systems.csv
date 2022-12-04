@@ -28,11 +28,19 @@ Lacaille 9352 c, planet, -, -, -, -, -, -, 9E, 3E, 0.12, -, -
 Ross 128, star, 176.93deg, 0.80deg, 11.00, 0.1ly, -5.6ly, 9.3ly, 0.16S, 0.28S, -, 0.005, red, //aka FI Virginis
 Ross 128 b, planet, -, -, -, -, -, -, 1.6E, 1.15E, 0.05, -
 Tau Ceti, star, 26.01deg, -15.93deg, 11.90,  -3.4ly, 0.4ly, -11.4ly, 0.92S, 0.81S, -, 0.5, yellow
+Tau Ceti g, planet, -, -, -, -, -, -, 2.0E, 1.2E, 0.10, -
+Tau Ceti h, planet, -, -, -, -, -, -, 2.1E, 1.25E, 0.24, -
+Tau Ceti e, planet, -, -, -, -, -, -, 4.5E, 1.6E, 0.54, -
+Tau Ceti f, planet, -, -, -, -, -, -, 4.5E, 1.6E, 1.33, -
 Teegarden's star, star, 43.25deg, 16.88deg, 12.49, -9.4ly, 3.4ly, -7.5ly, 0.08S, 0.12S, -, 0.0006, red
 AX Microscopii, star, 319.31deg, -38.86deg, 12.94, 9.2ly, 0.6ly, -9.0ly, 0.6S, 0.8S, -, 0.11, red, //aka Lacaille 8760
 FL Virginis A, star, 188.32deg, 9.02deg, 14.11, 1.5ly, -4.3ly, +13.6ly, 0.12S, 0.17S, -, 0.001, red, //aka Wolf 424, Gliese 473
 FL Virginis B, star, -, -, -, -, -, -, 0.12S, 0.14S, 0.001, 4, red, //luminosity is just a guess
-Ross 780, star, 343.31deg, -14.26deg, 15.23, 4.8ly, 6.1ly, -13.2ly, 0.33S, 0.36S, -, 0.01, red
+Ross 780, star, 343.31deg, -14.26deg, 15.23, 4.8ly, 6.1ly, -13.2ly, 0.33S, 0.36S, -, 0.01, red, //aka Gliese 876
+Ross 780 d, planet, -, -, -, -, -, -, 6.91E, 2.5E, 0.021, -
+Ross 780 c, planet, -, -, -, -, -, -, 0.7J, 1J, 0.134, -
+Ross 780 b, planet, -, -, -, -, -, -, 3.6J, 1J, 0.214, -
+Ross 780 e, planet, -, -, -, -, -, -, 15E, 4E, 0.345, -
 Gliese 1002, star, 1.67deg, -7.54deg, 15.8, -0.25ly, 5.8ly, -14.1ly, 0.12S, 0.14S, -, 0.001, red, //aka G 158-27
 Gliese 867, star, 22h38m, -20d37m, 15.28, -, -, -, 0.33S, 0.37S, -, 0.011, red,  //aka FK Aquarii (https://gruze.org/10pc/)
 Altair, star, 297.69deg, 8.86deg, 16.73, 11.1ly, 12.2ly, -2.6ly, 1.71S, 1.81S, -, 10.7, blue
