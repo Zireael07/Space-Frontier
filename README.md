@@ -20,4 +20,11 @@ Those projects allowed me to implement procedural stars and planets, citing astr
 * [Stellar Dream](https://github.com/irskep/stellardream)
 * [Accrete](https://github.com/zakski/accrete-starform-stargen)
 
+
+Actual astronomy data comes from:
+
+* [Johnston Archive](https://www.johnstonsarchive.net/astro/nearstar.html) - which itself cites many sources, among them RECONS and Gaia data release 1
+* [Gruze](https://gruze.org/10pc/) which relies mostly on Gaia data (lots of stuff but distances seem to be missing)
+* [Extrasolar Planets Encyclopedia](http://exoplanet.eu) and [Open Exoplanet Catalogue](http://openexoplanetcatalogue.com) which seem to be aggregates, mostly based on SIMBAD and Gaia
+
 License: MIT
