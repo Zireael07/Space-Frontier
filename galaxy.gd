@@ -162,6 +162,7 @@ func create_map_graph():
 	#map_astar.connect_points(mapping[Vector3(50, 30, 14)], mapping[Vector3(28, -31, 1)])
 	
 	map_astar.connect_points(mapping[Vector3(-94, 34, -75)], mapping[Vector3(-34, 4, -114)]) # Tau Ceti to Teegarden's
+	map_astar.connect_points(mapping[Vector3(-21, 2, -85)], mapping[Vector3(-68, -19, -78)]) # UV Ceti to Epsilon Eridani
 
 	map_astar.connect_points(mapping[Vector3(50, 30,14)], mapping[Vector3(93, 19, -17)]) # Barnard's to Ross 154
 	map_astar.connect_points(mapping[Vector3(93, 19, -17)], mapping[Vector3(92,6,-90)]) # Ross 154 to AX Microscopii
