@@ -12,6 +12,8 @@ var holder = null
 
 var yellow = preload("res://assets/bodies/star_yellow04.png")
 var red = preload("res://assets/bodies/star_red01.png")
+var orange = preload("res://assets/bodies/star_orange04.png")
+var white = preload("res://assets/bodies/star_white01.png")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -70,6 +72,10 @@ func setup_star(star, lum, star_type, radius):
 		star.get_node("Sprite").set_texture(red)
 	elif star_type == "yellow":
 		star.get_node("Sprite").set_texture(yellow)
+	elif star_type == "orange":
+		star.get_node("Sprite").set_texture(orange)
+	elif star_type == "white":
+		star.get_node("Sprite").set_texture(white)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
