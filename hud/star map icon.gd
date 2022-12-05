@@ -45,7 +45,7 @@ func _ready():
 	# select icon based on star type
 	var star_icons = {
 		"red" : preload("res://assets/hud/red_circle.png"),
-		"orange": preload("res://assets/hud/red_circle.png"), ##temporary 
+		"orange": preload("res://assets/hud/red_circle.png"), ##bit of a misnomer, it's more orange than red 
 		"yellow": preload("res://assets/hud/yellow_circle.png"),
 		"blue": preload("res://assets/hud/blue_circle.png"),
 		"white": preload("res://assets/hud/grey_circle.png"),
@@ -53,8 +53,12 @@ func _ready():
 	
 	if star_type != "":
 		get_node("StarTexture").set_texture(star_icons[star_type])
+		
+		if star_type == "red":
+			get_node("StarTexture").set_self_modulate(Color(1,0.5,0.5)) # darken to actual red
 	else:
 		get_node("StarTexture").set_texture(star_icons["red"])
+		get_node("StarTexture").set_self_modulate(Color(1,0.5,0.5)) # darken to actual red
 	
 	# positioning the shadow icon
 	# in Godot, +Y goes down so we need to minus the Y we get from data

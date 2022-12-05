@@ -118,9 +118,6 @@ script = ExtResource( 7 )
 margin_right = 40.0
 margin_bottom = 40.0
 rect_pivot_offset = Vector2( 20, 20 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="StarTexture" type="TextureRect" parent="Control/Sol"]
 anchor_left = 0.5

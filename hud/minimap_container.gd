@@ -1,6 +1,8 @@
 extends Control
 
 # class member variables go here, for example:
+# those colors are a holdover from the original Stellar Frontier
+# and do not necessarily reflect the actual star/planet color
 onready var star = preload("res://assets/hud/yellow_circle.png")
 onready var planet = preload("res://assets/hud/red_circle.png")
 onready var asteroid = preload("res://assets/hud/grey_circle.png")
