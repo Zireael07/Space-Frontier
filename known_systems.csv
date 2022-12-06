@@ -57,6 +57,8 @@ Ross 780 c, planet, -, -, -, -, -, -, 0.7J, 1J, 0.134, -
 Ross 780 b, planet, -, -, -, -, -, -, 3.6J, 1J, 0.214, -
 Ross 780 e, planet, -, -, -, -, -, -, 15E, 4E, 0.345, -
 Gliese 1002, star, 1.67deg, -7.54deg, 15.8, -0.25ly, 5.8ly, -14.1ly, 0.12S, 0.14S, -, 0.001, red, //aka G 158-27
+Gliese 1002 b, planet, -, -, -, -, -, -, 1.08E, ?, 0.045, -
+Gliese 1002 c, planet, -, -, -, -, -, -, 1.36E, ?, 0.0738, -
 Gliese 867, star, 22h38m, -20d37m, 15.28, -, -, -, 0.33S, 0.37S, -, 0.011, red,  //aka FK Aquarii (https://gruze.org/10pc/)
 Altair, star, 297.69deg, 8.86deg, 16.73, 11.1ly, 12.2ly, -2.6ly, 1.71S, 1.81S, -, 10.7, blue
 Fomalhaut, star, 344.41deg, -29.62deg, 25.12, 9.97ly, 3.72ly, -22.7ly, 1.92S, 1.84S, -, 16.6, blue
