@@ -278,7 +278,8 @@ func update_map(marker):
 		#print("Coords: ", coords)
 		var icon = find_icon_for_pos(coords)
 		if icon != null:
-			print("Icon: ", icon.get_name(), " @ ", coords) 
+			print("Icon: ", icon.get_name(), " @ ", coords)
+		$"Control".w_hole_tg = icon
 		$"Control".tg = icon
 		icon.get_node("Label").set_self_modulate(Color(0,1,1))
 		# reveal Z line and planet icon for target

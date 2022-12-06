@@ -4,6 +4,7 @@ extends Control
 # Declare member variables here. Examples:
 var src = null
 var tg = null
+var w_hole_tg = null # because tg above is NOT necessarily the wormhole target!
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

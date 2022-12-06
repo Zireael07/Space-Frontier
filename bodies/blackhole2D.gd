@@ -17,12 +17,12 @@ func jump():
 	var time = 0.5 #default
 	# calculate distances involved
 	var starmap = game.player.HUD.get_node("Control4/star map")
-	ly = starmap.get_star_distance(starmap.get_node("Control").src, starmap.get_node("Control").tg)
+	ly = starmap.get_star_distance(starmap.get_node("Control").src, starmap.get_node("Control").w_hole_tg)
 	print("Calculated ly: ", ly)
 	time = ly/game.WORMHOLE_SPEED # fraction of a year
 	
 	time = time * 12 # because one month is 1/12 of a year
-	get_tree().get_nodes_in_group("main")[0].change_system(starmap.get_node("Control").tg, time) #target_system, time)
+	get_tree().get_nodes_in_group("main")[0].change_system(starmap.get_node("Control").w_hole_tg, time) #target_system, time)
 	return 
 
 func _on_Area2D_area_entered(_area):
