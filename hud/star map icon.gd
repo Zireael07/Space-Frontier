@@ -10,6 +10,7 @@ export var planets = false
 var star_type = ""
 var multiple = false
 var pos = null #Vector3()
+
 var selected = false
 
 # Called when the node enters the scene tree for the first time.
@@ -150,6 +151,7 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	
 	# inverse (shadow not in bounds), place labels next to star icon
 	if (ab_shadow.y < 0 or ab_shadow.y > 525):
+		#print("Force show star for: ", self.get_name())
 		# force show star
 		get_node("StarTexture").show()
 		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
@@ -159,11 +161,26 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		# Z axis label
 		get_node("Label2").rect_position = Vector2(-6.5, y_pos+29) # 25+4
 		get_node("Label2").show()
+	# force update if situation changes (map is panned)
+	else:
+		get_node("StarTexture").hide()
+		get_node("Label").rect_position = Vector2(0, 0)
+		# if multi-line label
+		if get_node("Label").get_text().find("\n") != -1:
+			get_node("Label").rect_position = Vector2(0, -20)
+		# Z axis label
+		get_node("Label2").rect_position = Vector2(0, 25)
+		get_node("Label2").show()
 
 	if not_in_bounds(offset):
 		get_node("Line2D").set_modulate(Color(1,1,1,0.5)) # make semi-transparent
 	else:
 		get_node("Line2D").set_modulate(Color(1,1,1,1)) # restore normal opacity
+		
+	# don't hide if we're the target
+	if get_parent().tg == self:
+		# force show star
+		get_node("StarTexture").show()
 
 func not_in_bounds(offset):
 	# reworked to use Rect2
