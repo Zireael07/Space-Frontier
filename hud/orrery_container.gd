@@ -76,6 +76,9 @@ func setup():
 			# fix scale for very small radius stars
 			if s.star_radius_factor < 0.25:
 				sc = Vector2(s.star_radius_factor*2, s.star_radius_factor*2)
+			# fix for white dwarf
+			if s.star_radius_factor < 0.01:
+				sc = Vector2(0.25, 0.25)
 		star_sprite.set_scale(sc)
 		star_sprites.append(con)
 		con.add_child(star_sprite)
