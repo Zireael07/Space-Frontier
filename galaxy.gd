@@ -149,7 +149,46 @@ func create_map_graph():
 		print(p, ": ", map_astar.get_point_position(p))
 	
 	# connect stars
+	# Prim's algorithm: start with one vertex
+	# 1. Find the edges that connect to other vertices. Find the edge with minimum weight and add it to the spanning tree.
+	# Repeat step 1 until the spanning tree is obtained.
+	# i.e. step 1 is: get closest stars[1]... since [0] is ourselves
+	var V = map_astar.get_points().size()
+	var in_mst = [] # unlike most Prim exmaples, we store positions here, not just bools
+	# preallocate for speedup
+	in_mst.resize(V)
+	in_mst.fill(0)
+	var edge_count = 0
+	in_mst[0] = Vector3(0,0,0)
 	
+	while edge_count < V-1:
+		# Find closest star to each star
+		var pos = in_mst[edge_count]
+		var stars = get_closest_stars_to(pos)
+		# sometimes the closest star is already in mst
+		for c in range(1,stars.size()-1):
+			if !in_mst.has(float_to_int(stars[c][1])):
+				#print("Star, ", stars[c], " not in mst...")
+				edge_count += 1
+				in_mst[edge_count] = float_to_int(stars[c][1])
+				break # no need to keep looking through closest stars if we already found one
+	
+	#print(in_mst)
+	# convert mst to connections
+	for i in range(1,in_mst.size()-1):
+		map_astar.connect_points(mapping[in_mst[i-1]], mapping[in_mst[i]])
+
+
+	# manually add Sol's connections (for now) since that's what the wormhole setup script expects...
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
+	
+
+	return map_astar
+
+func manual_connect():
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
@@ -188,7 +227,6 @@ func create_map_graph():
 	# check connectedness
 #	print("To TRAPPIST: ", map_astar.get_id_path(mapping[Vector3(0,0,0)],mapping[Vector3(78, 211, -339)])) #12))
 		
-	return map_astar
 
 
 # this is why we don't nuke map_graph after creating the Astar graph...
@@ -241,8 +279,8 @@ class MyCustomSorter:
 			return true
 		return false
 
-func get_closest_stars_to(icon_src):
-	var src = map_astar.get_point_position(mapping[icon_src.pos])
+func get_closest_stars_to(pos):
+	var src = map_astar.get_point_position(mapping[pos])
 	
 	print("Getting closest stars to ", src)
 	# sort by dist
