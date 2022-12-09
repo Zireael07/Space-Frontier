@@ -477,7 +477,8 @@ func wormholes_from_graph(p_ind, ref_pos=null):
 	#print("Neighboring systems: ", neighbors)
 	
 	# Sol
-	if neighbors.size() > 3:
+	print("Planets: ", get_tree().get_nodes_in_group("planets").size())
+	if get_tree().get_nodes_in_group("planets").size() > 10 and !"rotation_rate" in get_child(3):
 		for n in neighbors:
 			print(n, " @ ", game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n))
 			# relative direction
