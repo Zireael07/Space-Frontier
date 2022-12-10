@@ -149,6 +149,7 @@ func create_map_graph():
 		print(p, ": ", map_astar.get_point_position(p))
 	
 	# connect stars
+	# we're not using Kruskal as we don't have edges
 	# Prim's algorithm: start with one vertex
 	# 1. Find the edges that connect to other vertices. Find the edge with minimum weight and add it to the spanning tree.
 	# Repeat step 1 until the spanning tree is obtained.
@@ -161,6 +162,10 @@ func create_map_graph():
 	var edge_count = 0
 	in_mst[0] = Vector3(0,0,0)
 	
+	var tree = [] # separate struct for other connections
+	tree.resize(V)
+	tree.fill(0)
+	
 	while edge_count < V-1:
 		# Find closest star to each star
 		var pos = in_mst[edge_count]
@@ -171,13 +176,24 @@ func create_map_graph():
 				#print("Star, ", stars[c], " not in mst...")
 				edge_count += 1
 				in_mst[edge_count] = float_to_int(stars[c][1])
-				break # no need to keep looking through closest stars if we already found one
-	
+			# add the next closest star to a separate listing
+			if !tree.has(float_to_int(stars[c+1][1])) and !in_mst.has(float_to_int(stars[c+1][1])):
+				#print("Star, ", stars[c+1][1], " to be added to tree")
+				tree[edge_count] = float_to_int(stars[c+1][1])
+				break # no need to keep looking through closest stars if we already found
+			#else:
+				
+			
 	#print(in_mst)
 	# convert mst to connections
 	for i in range(1,in_mst.size()-1):
 		map_astar.connect_points(mapping[in_mst[i-1]], mapping[in_mst[i]])
+	for i in range(1, tree.size()-1):
+		if !typeof(tree[i]) == TYPE_VECTOR3:
+			continue # paranoia skip
+		map_astar.connect_points(mapping[in_mst[i-1]], mapping[tree[i]])
 
+		#print("Connecting: ", in_mst[i-1], " and ", tree[i])
 
 	# manually add Sol's connections (for now) since that's what the wormhole setup script expects...
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
