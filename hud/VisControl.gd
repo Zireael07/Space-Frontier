@@ -35,7 +35,10 @@ func _draw():
 	# draw route
 	if route:
 		for p in route:
-			draw_line(p[0].get_node("StarTexture").rect_position+p[0].rect_position+cntr.rect_position, p[1].get_node("StarTexture").rect_position+p[1].rect_position+cntr.rect_position, Color(1, 0.8, 0), 3.0)
+			# this draws next to shadow icons
+			draw_line(p[0].rect_position+cntr.rect_position, p[1].rect_position+cntr.rect_position, Color(1, 0.8, 0), 3.0)
+			# this draws next to stars themselves
+			#draw_line(p[0].get_node("StarTexture").rect_position+p[0].rect_position+cntr.rect_position, p[1].get_node("StarTexture").rect_position+p[1].rect_position+cntr.rect_position, Color(1, 0.8, 0), 3.0)
 	
 	# draw sectors
 	# 50 px to ly, sector is -50,-50 to 50,50ly means it's -2500,-2500, 5000,5000 in absolute coords
