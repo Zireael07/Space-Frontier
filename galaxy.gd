@@ -202,7 +202,7 @@ func create_map_graph():
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
 	
 
-	return map_astar
+	return [map_astar, in_mst, tree]
 
 func manual_connect():
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri

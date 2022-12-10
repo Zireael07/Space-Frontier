@@ -152,7 +152,24 @@ func parse_data():
 	print(systems)
 	
 	# create a graph of stars we can route on
-	create_map_graph()
+	var data = create_map_graph()
+	# clearer debugging stuff
+	var mst = data[1]
+	var tree = data[2]
+
+	for i in range(1, tree.size()-1):
+		if !typeof(tree[i]) == TYPE_VECTOR3:
+			continue # paranoia skip
+		
+		# for debugging
+		var connect = [find_icon_for_pos(mst[i-1]), find_icon_for_pos(tree[i])]
+		get_node("Grid/VisControl").secondary.append(connect)
+		#get_node("Grid/VisControl").secondary.append()
+		
+#		map_astar.connect_points(mapping[mst[i-1]], mapping[tree[i]])
+#
+#		# we can use find_icon_for_pos here but we can't in the parent script
+		print("Connecting: ", find_icon_for_pos(mst[i-1]), " and ", find_icon_for_pos(tree[i]))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -172,7 +189,8 @@ func find_icon_for_pos(pos):
 			ret = c
 			break
 	return ret
-	
+
+# returns icons!	
 func get_neighbors_for_icon(star_icon):	
 	var res = []
 	var neighbors = null

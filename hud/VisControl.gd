@@ -6,6 +6,7 @@ var cntr = null
 var clicked = false
 var font = null
 var route = null # should contain pairs of starmap icons (i.e. Controls)
+var secondary = [] # for visual debugging
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,10 +28,16 @@ func _draw():
 	# draw starmap connections
 	if not clicked:
 		for n in cntr.get_parent().get_neighbors_for_icon(cntr.src):
-			draw_line(cntr.src.get_node("StarTexture").rect_position+cntr.src.rect_position+cntr.rect_position, n.rect_position+cntr.rect_position, Color(1, 0.8, 0)) # yellow
+			var connect_clr = Color(1, 0.8, 0) #if not second else Color(1,0.0,0)
+			if [cntr.src, n] in secondary: #or [n, cntr.src] in secondary:
+				connect_clr = Color(1,0,0)
+			draw_line(cntr.src.get_node("StarTexture").rect_position+cntr.src.rect_position+cntr.rect_position, n.rect_position+cntr.rect_position, connect_clr) #Color(1, 0.8, 0)) # yellow
 	else:
 		for n in cntr.get_parent().get_neighbors_for_icon(cntr.tg):
-			draw_line(cntr.tg.get_node("StarTexture").rect_position+cntr.tg.rect_position+cntr.rect_position, n.rect_position+cntr.rect_position, Color(1, 0.8, 0)) # yellow
+			var connect_clr = Color(1, 0.8, 0) #if not second else Color(1,0.0,0)
+			if [cntr.tg, n] in secondary: #or [n, cntr.tg] in secondary:
+				connect_clr = Color(1,0,0)
+			draw_line(cntr.tg.get_node("StarTexture").rect_position+cntr.tg.rect_position+cntr.rect_position, n.rect_position+cntr.rect_position, connect_clr) #Color(1, 0.8, 0)) # yellow
 	
 	# draw route
 	if route:
