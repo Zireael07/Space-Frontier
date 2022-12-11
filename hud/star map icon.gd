@@ -106,8 +106,19 @@ func _ready():
 		get_node("Label2").hide()
 	
 	# color-code the Z direction
-	var clr = Color(0,1,1) if depth_s < 0 else Color(1,0,0) # cyan if positive, red if neg
-	get_node("Label2").set_self_modulate(clr)
+	var clr_dir = Color(0,1,1) if depth_s < 0 else Color(1,0,0) # cyan if positive, red if neg
+	var clr = clr_dir.darkened(abs(depth)/30) # 20 is max Z distance away from the plane
+	#print(get_name() + "calculated Clr: ", clr)
+	if clr.r < 0.5 and clr.b < 0.1:
+		get_node("Label2").set("custom_colors/font_color", Color(1,1,1))
+	
+	# test
+	var styl = get_node("Label2").get_stylebox("normal").duplicate()
+	styl.bg_color = clr
+	get_node("Label2").add_stylebox_override("normal", styl)
+	
+	# this tints the font too which we don't want
+	#get_node("Label2").set_self_modulate(clr)
 	
 	calculate_label_and_sfx()
 	
