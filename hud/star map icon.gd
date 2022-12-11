@@ -78,6 +78,7 @@ func _ready():
 		get_node("ShadowTexture").hide()
 		get_node("Line2D").points[0] = Vector2(18,18)
 		get_node("Line2D").hide()
+		get_node("ZTexture").hide()
 		return
 
 	# star icon positioned according to the depth
@@ -109,13 +110,19 @@ func _ready():
 	var clr_dir = Color(0,1,1) if depth_s < 0 else Color(1,0,0) # cyan if positive, red if neg
 	var clr = clr_dir.darkened(abs(depth)/30) # 20 is max Z distance away from the plane
 	#print(get_name() + "calculated Clr: ", clr)
-	if clr.r < 0.5 and clr.b < 0.1:
-		get_node("Label2").set("custom_colors/font_color", Color(1,1,1))
+
+	get_node("ShadowTexture").self_modulate = Color(0.75,0.75,0.75).darkened(abs(depth)/30)
+
+	get_node("ZTexture").flip_v = true if depth_s > 0 else false
+	get_node("ZTexture").set_self_modulate(clr)
 	
-	# test
-	var styl = get_node("Label2").get_stylebox("normal").duplicate()
-	styl.bg_color = clr
-	get_node("Label2").add_stylebox_override("normal", styl)
+#	if clr.r < 0.5 and clr.b < 0.1:
+#		get_node("Label2").set("custom_colors/font_color", Color(1,1,1))
+#
+#	# test
+#	var styl = get_node("Label2").get_stylebox("normal").duplicate()
+#	styl.bg_color = clr
+#	get_node("Label2").add_stylebox_override("normal", styl)
 	
 	# this tints the font too which we don't want
 	#get_node("Label2").set_self_modulate(clr)
@@ -159,6 +166,8 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		get_node("Label2").rect_position = Vector2(0, 25)
 		#get_node("Label2").set_text("Z: " + depth_str + " ly")
 		get_node("Label2").show()
+		# add direction arrow
+		#get_node("Label2").set_text("Z: "+ "%.2f" % depth + " ly " + "↓")
 	
 	# inverse (shadow not in bounds), place labels next to star icon
 	if (ab_shadow.y < 0 or ab_shadow.y > 525):
@@ -172,6 +181,7 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		# Z axis label
 		get_node("Label2").rect_position = Vector2(-6.5, y_pos+29) # 25+4
 		get_node("Label2").show()
+		#get_node("Label2").set_text("Z: "+ "%.2f" % depth + " ly " + "↑")
 	# force update if situation changes (map is panned)
 	else:
 		get_node("StarTexture").hide()
@@ -187,6 +197,8 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		get_node("Line2D").set_modulate(Color(1,1,1,0.5)) # make semi-transparent
 	else:
 		get_node("Line2D").set_modulate(Color(1,1,1,1)) # restore normal opacity
+	
+	get_node("Label2").hide()
 		
 	# don't hide if we're the target
 	if get_parent().tg == self:
@@ -259,8 +271,8 @@ func on_click():
 	get_node("../../Grid/VisControl").route = r
 	get_node("../../Grid/VisControl").update()
 	# test
-	var stars = get_node("../..").get_closest_stars_to(get_parent().tg.pos)
-	get_node("../..").pretty_print_stars(stars)
+	#var stars = get_node("../..").get_closest_stars_to(get_parent().tg.pos)
+	#get_node("../..").pretty_print_stars(stars)
 	
 # we don't want actual buttons, hence this
 func _on_TextureRect2_gui_input(event):
