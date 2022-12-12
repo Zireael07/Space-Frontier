@@ -270,6 +270,10 @@ func on_click():
 	var r = get_node("../..").get_route_icons(get_parent().src, get_parent().tg)
 	get_node("../../Grid/VisControl").route = r
 	get_node("../../Grid/VisControl").update()
+	var r_heights = get_node("../..").get_route_distance_height(get_parent().src, get_parent().tg)
+	get_node("../../RouteHeightPanel").route_data = r_heights
+	get_node("../../RouteHeightPanel").update()
+	get_node("../../RouteHeightPanel").show()
 	# test
 	#var stars = get_node("../..").get_closest_stars_to(get_parent().tg.pos)
 	#get_node("../..").pretty_print_stars(stars)

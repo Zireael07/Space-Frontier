@@ -256,6 +256,50 @@ func get_route_icons(src_icon, tg_icon):
 	#print(icons)
 	return icons
 
+func get_route_distance_height(src_icon, tg_icon):
+	var dist = 0
+	var data = []
+	
+	var r = get_route(src_icon, tg_icon)
+	
+	if r == null:
+		return []
+	
+	for i in range(r.size()-1):
+		var p = r[i]
+		var coords = unpack_vector(p)
+#		#print("unpacked coords: ", coords)
+		coords = positive_to_original(coords)
+		#print("Coords: ", coords)
+		
+#		we'll need icons for names
+#		var icon = find_icon_for_pos(coords)
+		
+		if i > 0:
+			var prev = unpack_vector(r[i-1])
+			prev = positive_to_original(prev)
+			
+			dist = dist + (coords-prev).length()
+			#print("Appending data for i: ", i)
+			data.append([dist, coords[2]]) # these are all fake integers, i.e. real value times 10
+		else:
+			dist = 0
+			data.append([dist, coords[2]])
+
+	var p = r[r.size()-1]
+	var coords = unpack_vector(p)
+	#print("unpacked coords: ", coords)
+	coords = positive_to_original(coords)
+	#print("Final coords: ", coords)
+	var prev = unpack_vector(r[r.size()-2])
+	prev = positive_to_original(prev)
+	dist = dist + (coords-prev).length()
+	data.append([dist, coords[2]])
+
+	print("Route distances and heights: ", data)	
+	return data
+
+
 func pretty_print_stars(stars):
 	for s in stars:
 		var coords = float_to_int(s[1])
