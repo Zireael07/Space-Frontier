@@ -263,7 +263,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="RouteHeightPanel" type="Panel" parent="."]
-visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
