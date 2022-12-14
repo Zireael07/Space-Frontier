@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=1]
 [ext_resource path="res://hud/minimap_container.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture" id=15]
 [ext_resource path="res://assets/hud/grey_arrowUpWhite.png" type="Texture" id=16]
 [ext_resource path="res://hud/RouteHeightPanel.gd" type="Script" id=17]
+[ext_resource path="res://hud/route map.tscn" type="PackedScene" id=18]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 13 )
@@ -46,7 +47,6 @@ mouse_filter = 2
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 262.046 ],
-"_edit_use_anchors_": false,
 "_edit_vertical_guides_": [ 403.457 ]
 }
 
@@ -1057,6 +1057,9 @@ __meta__ = {
 }
 
 [node name="star map" parent="Control4" instance=ExtResource( 6 )]
+visible = false
+
+[node name="route map" parent="Control4" instance=ExtResource( 18 )]
 visible = false
 
 [node name="pause_panel" type="Control" parent="."]

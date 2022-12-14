@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://poisson2D.tscn" type="PackedScene" id=1]
+[ext_resource path="res://hud/route map.gd" type="Script" id=2]
+
+[node name="Control" type="Control"]
+margin_right = 805.0
+margin_bottom = 525.0
+rect_clip_content = true
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 805.0
+margin_bottom = 525.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Node2D" parent="." instance=ExtResource( 1 )]

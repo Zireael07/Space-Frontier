@@ -7,6 +7,7 @@ extends Node2D
 # Christian Hill, March 2017.
 
 # class member variables go here, for example:
+var total = 30
 # Choose up to k points around each reference point as candidates for a new
 # sample point
 var k = 20
@@ -15,8 +16,8 @@ var k = 20
 var r = 40
 
 # shouldn't be an exact multiplier of r
-var width = 300
-var height = 300
+var width = 800
+var height = 500
 
 # Cell side length
 var a = r / sqrt(2)
@@ -50,7 +51,7 @@ func _ready():
 	#seed(seede)
 	#run()
 	
-	set_seed(seede)
+	#set_seed(seede)
 	pass
 
 func set_seed(value):
@@ -216,6 +217,10 @@ func run():
 			#add indices to edges
 			# because the new point is always appended at the end
 			#edges.append([idx, samples.size()-1])
+			
+			# cap number of points
+			if nsamples == total:
+				active = []
 			
 		else:
 			# We had to give up looking for valid points near refpt, so remove it
