@@ -17,6 +17,7 @@ var systems = {}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	parse_data()
+	get_node("../../Control2/Panel_rightHUD/Control/RouteHeightPanel").vis = get_node("Grid/VisControl")
 
 # enum so we no longer have to remember the order the columns are in...
 #enum col {NAME, WINCHELLX, WINCHELLY, WINCHELLZ, COLOR, PLANETS, MULTIPLE, COMMENTS, RA, DEC, DIST_SOL }
@@ -372,6 +373,9 @@ func update_map(marker):
 	get_node("Grid/VisControl/Label").set_text("%.2f ly" % (dist))
 	# update displayed starmap info
 	display_star_map_info($"Control".tg)
+	# force redraw side panel
+	get_node("../../Control2/Panel_rightHUD/Control/RouteHeightPanel").show()
+	get_node("../../Control2/Panel_rightHUD/Control/RouteHeightPanel").update()
 
 func display_star_map_info(star_icon):
 	var text = ""
@@ -448,12 +452,14 @@ func move_map_to_offset(offset):
 func _on_ButtonConfirm_pressed():
 	game.player.w_hole.jump()
 	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
+	get_node("../../Control2/Panel_rightHUD/Control/RouteHeightPanel").hide()
 
 func _on_ButtonAbort_pressed():
 	game.player.HUD.hide_starmap()
 	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
 	game.player.w_hole.entered = false
 	game.player.w_hole = null
+	get_node("../../Control2/Panel_rightHUD/Control/RouteHeightPanel").hide()
 	
 func _on_ButtonL_pressed():
 	offset += Vector2(LY_TO_PX,0)

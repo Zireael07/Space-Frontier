@@ -8,8 +8,9 @@ var vis = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	vis = get_node("../Grid/VisControl")
-	pass # Replace with function body.
+	# this is for being under the starmap itself
+	#vis = get_node("../Grid/VisControl")
+	pass
 
 func _draw():
 	# draw a white line at height 0

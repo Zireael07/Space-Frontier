@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=1]
 [ext_resource path="res://hud/minimap_container.gd" type="Script" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://assets/hud/grey_panel.png" type="Texture" id=13]
 [ext_resource path="res://hud/HUD_right.gd" type="Script" id=14]
 [ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture" id=15]
+[ext_resource path="res://assets/hud/grey_arrowUpWhite.png" type="Texture" id=16]
+[ext_resource path="res://hud/RouteHeightPanel.gd" type="Script" id=17]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 13 )
@@ -651,6 +653,73 @@ margin_right = 110.0
 margin_bottom = 109.0
 rect_pivot_offset = Vector2( 8, 9 )
 texture = ExtResource( 10 )
+
+[node name="Control" type="Control" parent="Control2/Panel_rightHUD"]
+margin_top = 230.0
+margin_right = 40.0
+margin_bottom = 270.0
+__meta__ = {
+"_editor_description_": "Unfortunately it has to be rotated unintuitively to fit in the panel"
+}
+
+[node name="RouteHeightPanel" type="Panel" parent="Control2/Panel_rightHUD/Control"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 160.0
+margin_right = 460.0
+margin_bottom = 200.0
+grow_horizontal = 0
+rect_rotation = 90.0
+script = ExtResource( 17 )
+
+[node name="Label" type="Label" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Route height profile 1 ly = 10 px"
+
+[node name="LabelX" type="Label" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -14.0
+margin_right = 40.0
+text = "Dist along route"
+
+[node name="LabelY" type="Label" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -7.0
+margin_right = 52.0
+margin_bottom = 7.0
+rect_rotation = -90.0
+text = "Z height"
+
+[node name="Control" type="Control" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel"]
+margin_left = 270.0
+margin_top = 88.0
+margin_right = 310.0
+margin_bottom = 128.0
+
+[node name="Label" type="Label" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel/Control"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "0"
+
+[node name="TextureRect" type="TextureRect" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel/Control"]
+self_modulate = Color( 0, 1, 1, 1 )
+margin_left = 10.0
+margin_right = 50.0
+margin_bottom = 40.0
+texture = ExtResource( 16 )
+
+[node name="TextureRect2" type="TextureRect" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel/Control"]
+self_modulate = Color( 1, 0, 0, 1 )
+margin_left = 10.0
+margin_top = 17.0
+margin_right = 50.0
+margin_bottom = 57.0
+texture = ExtResource( 16 )
+flip_v = true
 
 [node name="status_light" type="ColorRect" parent="Control2"]
 modulate = Color( 0, 1, 0, 1 )
