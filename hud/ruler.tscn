@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ruler.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+pts = [ Vector2( 100, 200 ), Vector2( 250, 100 ) ]
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 100, 200, 250, 100 )
+width = 2.0
+
+[node name="Label" type="Label" parent="."]
+margin_left = 175.0
+margin_top = 150.0
+margin_right = 215.0
+margin_bottom = 164.0
