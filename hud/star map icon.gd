@@ -286,8 +286,9 @@ func on_click():
 	get_node("../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").show()
 	
 	# test
-	#var stars = get_node("../..").get_closest_stars_to(get_parent().tg.pos)
-	#get_node("../..").pretty_print_stars(stars)
+	var stars = get_node("../..").get_closest_stars_to(get_parent().tg.pos)
+	stars = get_node("../..").closest_stars_postprocess(stars)
+	get_node("../..").pretty_print_stars(stars)
 	
 # we don't want actual buttons, hence this
 func _on_TextureRect2_gui_input(event):

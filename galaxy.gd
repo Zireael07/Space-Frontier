@@ -170,6 +170,8 @@ func create_map_graph():
 		# Find closest star to each star
 		var pos = in_mst[edge_count]
 		var stars = get_closest_stars_to(pos)
+		# some postprocessing to remove one of a pair of very close stars
+		stars = closest_stars_postprocess(stars)
 		# sometimes the closest star is already in mst
 		for c in range(1,stars.size()-1):
 			if !in_mst.has(float_to_int(stars[c][1])):
@@ -298,7 +300,7 @@ class MyCustomSorter:
 func get_closest_stars_to(pos):
 	var src = map_astar.get_point_position(mapping[pos])
 	
-	print("Getting closest stars to ", src)
+	#print("Getting closest stars to ", src)
 	# sort by dist
 	var dists = []
 	var stars = []
@@ -315,6 +317,22 @@ func get_closest_stars_to(pos):
 	stars.sort_custom(MyCustomSorter, "sort_stars")
 
 	#print(stars)
+	
+	return stars
+
+func closest_stars_postprocess(stars):
+	var to_rem = []
+	for i in range(1, stars.size()-1):
+		var s = stars[i]
+		var s_next = stars[i+1]
+		#print("Comparing ", (s[1]-s_next[1]).length())
+		if (s[1]-s_next[1]).length() < 0.15:
+		#if abs(s[0]-s_next[0]) < 0.1:
+			print("Detected two close stars in the list! ", s[1], s_next[1])
+			to_rem.append(i+1)
+	
+	for r in to_rem:
+		stars.remove(r)
 	
 	return stars
 
