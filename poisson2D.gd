@@ -13,11 +13,11 @@ var total = 30
 var k = 20
 
 # Minimum distance between samples
-var r = 40
+var r = 100
 
 # shouldn't be an exact multiplier of r
-var width = 800
-var height = 500
+var width = 950
+var height = 650
 
 # Cell side length
 var a = r / sqrt(2)
