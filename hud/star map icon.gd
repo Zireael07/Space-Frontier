@@ -128,7 +128,14 @@ func _ready():
 	#get_node("Label2").set_self_modulate(clr)
 	
 	calculate_label_and_sfx()
-	
+
+func add_planets_mark():
+	var txt = get_node("Label").get_text()
+	# if we don't have a marker already
+	if planets and not "*" in txt:
+		txt += "*"
+		get_node("Label").set_text(txt)
+		
 # recalculated after the map moved
 func calculate_label_and_sfx(offset=Vector2(0,0)):
 	var y_pos = get_node("StarTexture").get_position().y

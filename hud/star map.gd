@@ -148,6 +148,8 @@ func parse_data():
 						get_node("Control").get_child(get_node("Control").get_child_count()-1).multiple = true
 					else:
 						get_node("Control").get_child(get_node("Control").get_child_count()-1).planets = true
+						# force update label text
+						get_node("Control").get_child(get_node("Control").get_child_count()-1).add_planets_mark()
 	
 	# test
 	print(systems)
