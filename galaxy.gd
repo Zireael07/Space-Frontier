@@ -178,6 +178,11 @@ func auto_connect_stars():
 		stars = closest_stars_postprocess(stars)
 		# sometimes the closest star is already in mst
 		for c in range(1,stars.size()-1):
+			# paranoia
+			if c == stars.size()-2 and in_mst.has(float_to_int(stars[c][1])):
+				edge_count += 1
+				break
+			#print("Star at #, ", c, " ", stars[c], ": ", in_mst.has(float_to_int(stars[c][1])))
 			if !in_mst.has(float_to_int(stars[c][1])):
 				#print("Star, ", stars[c], " not in mst...")
 				edge_count += 1
