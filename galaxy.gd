@@ -149,6 +149,10 @@ func create_map_graph():
 		print(p, ": ", map_astar.get_point_position(p))
 	
 	# connect stars
+	var data = auto_connect_stars()
+	return data # for debugging
+	
+func auto_connect_stars():
 	# we're not using Kruskal as we don't have edges
 	# Prim's algorithm: start with one vertex
 	# 1. Find the edges that connect to other vertices. Find the edge with minimum weight and add it to the spanning tree.
