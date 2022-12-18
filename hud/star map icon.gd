@@ -21,6 +21,16 @@ func _ready():
 	if planets:
 		txt += "*"
 	
+	# layers
+	var Z_level_down = preload("res://assets/hud/grey_sliderDown.png")
+	var Z_level_up = preload("res://assets/hud/grey_sliderUp.png")
+	if get_parent().get_name().find("Z+") != -1:
+		get_node("ZTexture").set_texture(Z_level_up)
+		get_node("ZTexture").rect_scale = Vector2(0.35, 0.35)
+	if get_parent().get_name().find("Z-") != -1:
+		get_node("ZTexture").set_texture(Z_level_down)
+		get_node("ZTexture").rect_scale = Vector2(0.35, 0.35)
+	
 	# special case: break Alpha and Proxima Centauri into two lines
 	if txt.find("Centauri") != -1:
 		var txts = txt.split(" ")
