@@ -276,8 +276,10 @@ func on_click():
 	vis.get_node("Label").set("custom_colors/font_color", Color(1,0.5,0))
 	
 	# force reveal
-	$Line2D.show()
-	$StarTexture.show()
+	# unless we're on a different Z layer
+	if get_parent().get_name().find("Z+") == -1 and get_parent().get_name().find("Z-") == -1:
+		$Line2D.show()
+		$StarTexture.show()
 	
 	selected = true
 	get_parent().get_parent().tg = get_parent().get_parent().get_tg()
@@ -323,6 +325,10 @@ func _on_TextureRect3_gui_input(event):
 
 # reveal Z line and star icon on mouse over
 func _on_ShadowTexture_mouse_entered():
+	# don't show lines if we're on a different Z layer
+	if get_parent().get_name().find("Z+") != -1 or get_parent().get_name().find("Z-") != -1:
+		return
+	
 	$Line2D.show()
 	$StarTexture.show()
 
@@ -337,6 +343,10 @@ func _on_ShadowTexture_mouse_exited():
 
 
 func _on_PlanetTexture_mouse_entered():
+	# don't show lines if we're on a different Z layer
+	if get_parent().get_name().find("Z+") != -1 or get_parent().get_name().find("Z-") != -1:
+		return
+		
 	if $"StarTexture".visible:
 		$Line2D.show()
 
