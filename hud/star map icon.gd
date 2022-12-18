@@ -144,7 +144,7 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	# now check if icon(s) are out of view
 	var ab_shadow = get_node("ShadowTexture").get_global_position()
 	var ab_planet = get_node("StarTexture").get_global_position()
-
+	#print(get_name(), " shadow: ", ab_shadow, " star: ", ab_planet)
 	# name label
 	
 	# special case 
@@ -165,6 +165,7 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 
 	# shadow in bounds but star is not (place name & Z-label next to shadow icon)
 	if ab_planet.y < 0 or ab_planet.y > 525:
+		#print(get_name(), " shadow in bounds but star not...")
 		get_node("Label").rect_position = Vector2(0, 0)
 		# if multi-line label
 		if get_node("Label").get_text().find("\n") != -1:
@@ -186,19 +187,20 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		if get_node("Label").get_text().find("\n") != -1:
 			get_node("Label").rect_position = Vector2(-6.5, y_pos-20)
 		# Z axis label
-		get_node("Label2").rect_position = Vector2(-6.5, y_pos+29) # 25+4
-		get_node("Label2").show()
+		#get_node("Label2").rect_position = Vector2(-6.5, y_pos+29) # 25+4
+		#get_node("Label2").show()
 		#get_node("Label2").set_text("Z: "+ "%.2f" % depth + " ly " + "↑")
 	# force update if situation changes (map is panned)
 	else:
+		#print(get_name(), " shadow in bounds...")
 		get_node("StarTexture").hide()
 		get_node("Label").rect_position = Vector2(0, 0)
 		# if multi-line label
 		if get_node("Label").get_text().find("\n") != -1:
 			get_node("Label").rect_position = Vector2(0, -20)
 		# Z axis label
-		get_node("Label2").rect_position = Vector2(0, 25)
-		get_node("Label2").show()
+		#get_node("Label2").rect_position = Vector2(0, 25)
+		#get_node("Label2").show()
 
 	if not_in_bounds(offset):
 		get_node("Line2D").set_modulate(Color(1,1,1,0.5)) # make semi-transparent
@@ -208,7 +210,7 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	get_node("Label2").hide()
 		
 	# don't hide if we're the target
-	if get_parent().tg == self:
+	if get_parent().get_parent().tg == self:
 		# force show star
 		get_node("StarTexture").show()
 
@@ -245,6 +247,7 @@ func not_in_bounds(offset):
 #	pass
 
 func on_click():
+	var vis = get_node("../../../Grid/VisControl")
 	# clear any previous tint
 	for c in get_parent().get_children():
 		# skip wormhole target
@@ -254,41 +257,46 @@ func on_click():
 		if "selected" in c:
 			c.selected = false
 	print("Clicked on ", get_node("Label").get_text())
+	# debug
+	var ab_shadow = get_node("ShadowTexture").get_global_position()
+	var ab_planet = get_node("StarTexture").get_global_position()
+	#print("Shadow: ", ab_shadow, ", planet: ", ab_planet)
+	
 	get_node("Label").set_self_modulate(Color(1,0.5, 0)) # orange-red to match starmap icon and Z line color
-	get_node("../../Grid/VisControl/Label").set("custom_colors/font_color", Color(1,0.5,0))
+	vis.get_node("Label").set("custom_colors/font_color", Color(1,0.5,0))
 	
 	# force reveal
 	$Line2D.show()
 	$StarTexture.show()
 	
 	selected = true
-	get_parent().tg = get_parent().get_tg()
+	get_parent().get_parent().tg = get_parent().get_parent().get_tg()
 	# line/distance label redrawing
-	get_node("../../Grid/VisControl").clicked = true
-	var gl_loc = (get_parent().get_tg_loc() - get_parent().get_src_loc())/2
-	get_node("../../Grid/VisControl/Label").set_global_position(gl_loc)
+	vis.clicked = true
+	var gl_loc = (get_node("../..").get_tg_loc() - get_node("../..").get_src_loc())/2
+	vis.get_node("Label").set_global_position(gl_loc)
 	#get_node("../../Grid/VisControl/Label").rect_position = get_parent().rect_position + (get_parent().get_tg_loc() - get_parent().get_src_loc())/2
-	var dist = get_node("../../").get_star_distance(get_parent().src, get_parent().tg)
-	get_node("../../Grid/VisControl/Label").set_text("%.2f ly" % (dist))
+	var dist = get_node("../../..").get_star_distance(get_node("../..").src, get_node("../..").tg)
+	vis.get_node("Label").set_text("%.2f ly" % (dist))
 	#get_node("../../Grid/VisControl").update()
 	# update displayed starmap info
-	get_node("../../").display_star_map_info(get_parent().tg)
+	get_node("../../../").display_star_map_info(get_node("../..").tg)
 	# try to route
-	var r = get_node("../..").get_route_icons(get_parent().src, get_parent().tg)
-	get_node("../../Grid/VisControl").route = r
-	get_node("../../Grid/VisControl").update()
-	var r_heights = get_node("../..").get_route_distance_height(get_parent().src, get_parent().tg)
+	var r = get_node("../../..").get_route_icons(get_node("../..").src, get_node("../..").tg)
+	vis.route = r
+	vis.update()
+	var r_heights = get_node("../../..").get_route_distance_height(get_node("../..").src, get_node("../..").tg)
 	#get_node("../../RouteHeightPanel").route_data = r_heights
 	#get_node("../../RouteHeightPanel").update()
 	#get_node("../../RouteHeightPanel").show()
-	get_node("../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").route_data = r_heights
-	get_node("../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").update()
-	get_node("../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").show()
+	get_node("../../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").route_data = r_heights
+	get_node("../../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").update()
+	get_node("../../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").show()
 	
 	# test
-	var stars = get_node("../..").get_closest_stars_to(get_parent().tg.pos)
-	stars = get_node("../..").closest_stars_postprocess(stars)
-	get_node("../..").pretty_print_stars(stars)
+	var stars = get_node("../../..").get_closest_stars_to(get_node("../..").tg.pos)
+	stars = get_node("../../..").closest_stars_postprocess(stars)
+	#get_node("../../..").pretty_print_stars(stars)
 	
 # we don't want actual buttons, hence this
 func _on_TextureRect2_gui_input(event):
@@ -311,7 +319,7 @@ func _on_ShadowTexture_mouse_entered():
 
 func _on_ShadowTexture_mouse_exited():
 	# don't hide if we're the target
-	if get_parent().tg == self:
+	if get_parent().get_parent().tg == self:
 		return
 		
 	$Line2D.hide()

@@ -27,6 +27,7 @@ func parse_data():
 	data = load_data()
 	
 	systems = {}
+	var ic = null
 
 	#for line in data:
 	for i in data.size():
@@ -36,7 +37,7 @@ func parse_data():
 		line[col.TYPE].strip_edges() == "star" \
 			and line[col.NAME].find(" B") == -1: # ignore B, C, etc. stars
 			
-			var ic = icon.instance()
+			ic = icon.instance()
 			# strip "A" etc.
 			var _name = str(line[col.NAME])
 			_name = _name.trim_suffix(" A")
@@ -113,7 +114,15 @@ func parse_data():
 					ic.depth = data[2]
 					ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
 					save_graph_data(ic.x, ic.y, ic.depth, ic.named)
-			get_node("Control").add_child(ic)
+			
+			if abs(ic.depth) < 12:
+				get_node("Control/Layer").add_child(ic)
+			elif ic.depth > 12:
+				get_node("Control/LayerZ+").add_child(ic)
+			elif ic.depth < 12:
+				get_node("Control/LayerZ-").add_child(ic)
+			
+			#get_node("Control").add_child(ic)
 			
 			# ------------------------------------
 			# merged data only!
@@ -144,15 +153,18 @@ func parse_data():
 	
 					# merged data only - new way of handling planets and multiple booleans
 					if line[col.TYPE].strip_edges() == "star":
+						ic.multiple = true
 						# +1 because of ship /position marker
-						get_node("Control").get_child(get_node("Control").get_child_count()-1).multiple = true
+						#get_node("Control").get_child(get_node("Control").get_child_count()-1).multiple = true
 					else:
-						get_node("Control").get_child(get_node("Control").get_child_count()-1).planets = true
+						ic.planets = true
+						#get_node("Control").get_child(get_node("Control").get_child_count()-1).planets = true
 						# force update label text
-						get_node("Control").get_child(get_node("Control").get_child_count()-1).add_planets_mark()
-	
+						ic.add_planets_mark()
+						#get_node("Control").get_child(get_node("Control").get_child_count()-1).add_planets_mark()
+
 	# test
-	print(systems)
+	#print(systems)
 	
 	# create a graph of stars we can route on
 	var data = create_map_graph()
@@ -172,7 +184,7 @@ func parse_data():
 #		map_astar.connect_points(mapping[mst[i-1]], mapping[tree[i]])
 #
 #		# we can use find_icon_for_pos here but we can't in the parent script
-		print("Connecting: ", find_icon_for_pos(mst[i-1]), " and ", find_icon_for_pos(tree[i]))
+		#print("Connecting: ", find_icon_for_pos(mst[i-1]), " and ", find_icon_for_pos(tree[i]))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -184,10 +196,18 @@ func find_icon_for_pos(pos):
 	
 	# special case
 	if pos == Vector3(0,0,0):
-		ret = $"Control".get_node("Sol")
+		ret = $"Control/Layer".get_node("Sol")
 		return ret
 	
-	for c in $"Control".get_children():
+	var p
+	if abs(pos.z) < 120:
+		p = $"Control/Layer"
+	elif pos.z > 120:
+		p = $"Control/LayerZ+"
+	elif pos.z < 120:
+		p = $"Control/LayerZ-"
+	
+	for c in p.get_children():
 		if 'pos' in c and c.pos == pos:
 			ret = c
 			break
@@ -313,10 +333,18 @@ func update_map(marker):
 	# update marker position
 	var system = get_tree().get_nodes_in_group("main")[0].curr_system
 
-	if $"Control".has_node(system):
+	if $"Control/Layer".has_node(system):
 		marker.get_parent().remove_child(marker)
-		$"Control".get_node(system).add_child(marker)
-		$"Control".src = $"Control".get_node(system)
+		$"Control/Layer".get_node(system).add_child(marker)
+		$"Control".src = $"Control/Layer".get_node(system)
+	if $"Control/LayerZ+".has_node(system):
+		marker.get_parent().remove_child(marker)
+		$"Control/LayerZ+".get_node(system).add_child(marker)
+		$"Control".src = $"Control/LayerZ+".get_node(system)
+	if $"Control/LayerZ-".has_node(system):
+		marker.get_parent().remove_child(marker)
+		$"Control/LayerZ-".get_node(system).add_child(marker)
+		$"Control".src = $"Control/LayerZ-".get_node(system)
 
 	if system == "tauceti":
 		marker.get_parent().remove_child(marker)
@@ -328,8 +356,8 @@ func update_map(marker):
 		$"Control".src = $"Control/Barnard's Star"
 
 	# clear any previous tint
-	for c in get_node("Control").get_children():
-		c.get_node("Label").set_self_modulate(Color(1,1,1))
+	#for c in get_node("Control").get_children():
+	#	c.get_node("Label").set_self_modulate(Color(1,1,1))
 	
 	# show target on map (tint cyan to match marker above)
 	var lookup = {"Barnards":"Barnard's Star", "Trappist": "Trappist-1"}	
@@ -383,8 +411,12 @@ func display_star_map_info(star_icon):
 	var text = ""
 	# actual text begins here
 	text = text + star_icon.get_name() + "\n" + "\n"
-	# basics
-	text = text + "Star type/color: " + str(star_icon.star_type) + "\n"
+	if not "star_type" in star_icon:
+		text = text + "Star type/color: yellow \n"
+	else:	 
+		# basics
+		text = text + "Star type/color: " + str(star_icon.star_type) + "\n"
+
 	var fmt_multiple = "no" if not star_icon.multiple else str(star_icon.multiple)
 	text = text + "Multiple system: " + fmt_multiple + "\n"
 	var fmt_planets = "yes" if star_icon.planets else "no"
@@ -444,10 +476,11 @@ func move_map_to_offset(offset):
 		$Grid.origin = true
 	$Grid.update_grid()
 	# recalculate starmap icons sfx
-	for c in $"Control".get_children():
-		# because some star icons are hardcoded
-		if c.has_method("calculate_label_and_sfx"):
-			c.calculate_label_and_sfx(offset)
+	for l in $"Control".get_children():
+		for c in l.get_children():
+			# because some star icons are hardcoded
+			if c.has_method("calculate_label_and_sfx"):
+				c.calculate_label_and_sfx(offset)
 			
 
 
@@ -491,6 +524,8 @@ func _on_LineEdit_text_entered(new_text):
 			break
 	
 	# center map on found star
+	# TODO: center on midpoint between star and shadow ONCE we're assured all stars fit in screen
+	# i.e. layers are implemented
 	if found:
 		offset = -(found.rect_position+found.get_node("PlanetTexture").rect_position)
 		move_map_to_offset(offset)

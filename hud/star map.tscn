@@ -119,17 +119,21 @@ margin_right = 422.5
 margin_bottom = 282.5
 script = ExtResource( 7 )
 
-[node name="marker" type="TextureRect" parent="Control" groups=["starmap_marker"]]
+[node name="Layer" type="Control" parent="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="marker" type="TextureRect" parent="Control/Layer" groups=["starmap_marker"]]
 margin_right = 40.0
 margin_bottom = 40.0
 texture = ExtResource( 2 )
 
-[node name="Sol" type="Control" parent="Control"]
+[node name="Sol" type="Control" parent="Control/Layer"]
 margin_right = 40.0
 margin_bottom = 40.0
 rect_pivot_offset = Vector2( 20, 20 )
 
-[node name="StarTexture" type="TextureRect" parent="Control/Sol"]
+[node name="StarTexture" type="TextureRect" parent="Control/Layer/Sol"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -142,7 +146,7 @@ rect_scale = Vector2( 0.5, 0.5 )
 rect_pivot_offset = Vector2( 20, 20 )
 texture = ExtResource( 3 )
 
-[node name="Label" type="Label" parent="Control/Sol"]
+[node name="Label" type="Label" parent="Control/Layer/Sol"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -20.0
@@ -151,12 +155,22 @@ margin_bottom = 14.0
 text = "Sol*"
 align = 1
 
-[node name="Label2" type="Label" parent="Control/Sol"]
+[node name="Label2" type="Label" parent="Control/Layer/Sol"]
 visible = false
 margin_top = 25.0
 margin_right = 51.0
 margin_bottom = 39.0
 text = "Z: 0.0 ly"
+
+[node name="LayerZ+" type="Control" parent="Control"]
+modulate = Color( 0.137255, 0.878431, 1, 1 )
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="LayerZ-" type="Control" parent="Control"]
+modulate = Color( 0.384314, 0.384314, 0.384314, 1 )
+margin_right = 40.0
+margin_bottom = 40.0
 
 [node name="Control2" type="Control" parent="."]
 margin_left = 20.0

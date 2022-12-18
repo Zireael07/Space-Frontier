@@ -30,8 +30,9 @@ func get_tg_loc():
 	
 func get_tg():
 	var tg = null
-	for c in get_children():
-		if "selected" in c and c.selected:
-			tg = c
-			break
+	for l in get_children():
+		for c in l.get_children():
+			if "selected" in c and c.selected:
+				tg = c
+				break
 	return tg
