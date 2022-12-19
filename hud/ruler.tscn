@@ -9,7 +9,6 @@ script = ExtResource( 1 )
 pts = [ Vector2( 100, 200 ), Vector2( 250, 100 ) ]
 
 [node name="Line2D" type="Line2D" parent="."]
-points = PoolVector2Array( 100, 200, 250, 100 )
 width = 2.0
 
 [node name="Label" type="Label" parent="."]
@@ -17,3 +16,4 @@ margin_left = 175.0
 margin_top = 150.0
 margin_right = 215.0
 margin_bottom = 164.0
+text = "180"

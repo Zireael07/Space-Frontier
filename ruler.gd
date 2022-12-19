@@ -9,6 +9,11 @@ var text = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if pts.empty():
+		return
+	set_ruler()
+
+func set_ruler():
 	var mid = pts[0]+(pts[1]-pts[0])/2
 	
 	$Label.set_position(mid)

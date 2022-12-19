@@ -273,7 +273,8 @@ func on_click():
 	#print("Shadow: ", ab_shadow, ", planet: ", ab_planet)
 	
 	get_node("Label").set_self_modulate(Color(1,0.5, 0)) # orange-red to match starmap icon and Z line color
-	vis.get_node("Label").set("custom_colors/font_color", Color(1,0.5,0))
+	get_node("../../ruler").set("custom_colors/font_color", Color(1,0.5, 0))
+	#vis.get_node("Label").set("custom_colors/font_color", Color(1,0.5,0))
 	
 	# force reveal
 	# unless we're on a different Z layer
@@ -285,12 +286,19 @@ func on_click():
 	get_parent().get_parent().tg = get_parent().get_parent().get_tg()
 	# line/distance label redrawing
 	vis.clicked = true
-	var gl_loc = (get_node("../..").get_tg_loc() - get_node("../..").get_src_loc())/2
-	vis.get_node("Label").set_global_position(gl_loc)
+	#var gl_loc = (get_node("../..").get_tg_loc() - get_node("../..").get_src_loc())/2
+	#vis.get_node("Label").set_global_position(gl_loc)
 	#get_node("../../Grid/VisControl/Label").rect_position = get_parent().rect_position + (get_parent().get_tg_loc() - get_parent().get_src_loc())/2
 	var dist = get_node("../../..").get_star_distance(get_node("../..").src, get_node("../..").tg)
-	vis.get_node("Label").set_text("%.2f ly" % (dist))
+	#vis.get_node("Label").set_text("%.2f ly" % (dist))
 	#get_node("../../Grid/VisControl").update()
+	var tg_pos = get_node("../..").tg.rect_position
+	if get_node("../..").tg.get_node("StarTexture").visible:
+		tg_pos += get_node("../..").tg.get_node("StarTexture").rect_position
+	get_node("../../ruler").pts = [get_node("../..").src.rect_position, tg_pos]
+	get_node("../../ruler").set_ruler()
+	get_node("../../ruler/Label").set_text("%.2f ly" % (dist))
+	
 	# update displayed starmap info
 	get_node("../../../").display_star_map_info(get_node("../..").tg)
 	# try to route
