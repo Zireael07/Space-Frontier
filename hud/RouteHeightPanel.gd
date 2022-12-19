@@ -16,12 +16,16 @@ func _draw():
 	# draw a white line at height 0
 	draw_line(Vector2(0,self.rect_size.y/2), Vector2(self.rect_size.x, self.rect_size.y/2), Color(1,1,1))
 	if route_data:
-		var clr = Color(0,1,0)
+		var clr = Color(0,1,0) 
 		#draw_data.clear()
 		for pt in route_data:
+			# if planet is on different Z-level, fade it out
+			if abs(pt[1]) > 120: clr = Color(0.5, 0.5, 0.5)
 			# we want to draw from the bottom of graph
 			draw_line(Vector2(pt[0], self.rect_size.y/2), Vector2(pt[0], self.rect_size.y/2-pt[1]), clr)
-			draw_circle(Vector2(pt[0], self.rect_size.y/2-pt[1]), 4, Color(0,1,0))
+			# ... and don't draw a circle for planets on different Z-levels
+			if abs(pt[1]) < 120:
+				draw_circle(Vector2(pt[0], self.rect_size.y/2-pt[1]), 4, Color(0,1,0))
 			
 		# width param has no effect :(
 		#draw_multiline(draw_data, Color(0,1,0), 5)
@@ -39,7 +43,11 @@ func _draw():
 			if 'pos' in vis.cntr.src:
 				dist = (vis.cntr.tg.pos-vis.cntr.src.pos).length()
 			# icon's depth is the original float so we use pos[2] to get the int 
-			# (which is multiplied by 10, hence this panel's scale)	
+			# (which is multiplied by 10, hence this panel's scale)
+			# if planet is on different Z-level, fade it out
+			if abs(vis.cntr.tg.pos[2]) > 120: clr = Color(0.5, 0.5, 0.5)
 			draw_line(Vector2(dist, self.rect_size.y/2), Vector2(dist, self.rect_size.y/2-vis.cntr.tg.pos[2]), clr)
-			draw_circle(Vector2(dist, self.rect_size.y/2-vis.cntr.tg.pos[2]), 4, clr)
+			# ... and don't draw a circle for planets on different Z-levels
+			if abs(vis.cntr.tg.pos[2]) < 120:
+				draw_circle(Vector2(dist, self.rect_size.y/2-vis.cntr.tg.pos[2]), 4, clr)
 
