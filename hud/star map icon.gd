@@ -101,20 +101,20 @@ func _ready():
 	var y_pos = get_node("StarTexture").get_position().y
 	get_node("Line2D").points[0] = Vector2(18, y_pos+20) #*depth_s)
 	
-	# Z axis label if needed
-	if abs(depth) > 8:
-		# above the plane (place next to star icon)
-		if depth_s < 0:
-			get_node("Label2").rect_position = Vector2(-6.5, y_pos+25)	
-		else:
-			# place next to shadow icon for below the plane
-			get_node("Label2").rect_position = Vector2(0, 25)
-		get_node("Label2").set_text("Z: "+ str(depth_str) + " ly")
-		get_node("Label2").show()
-		
-	else:
-		get_node("Label2").set_text("Z: "+ str(depth_str) + " ly")
-		get_node("Label2").hide()
+#	# Z axis label if needed
+#	if abs(depth) > 8:
+#		# above the plane (place next to star icon)
+#		if depth_s < 0:
+#			get_node("Label2").rect_position = Vector2(-6.5, y_pos+25)	
+#		else:
+#			# place next to shadow icon for below the plane
+#			get_node("Label2").rect_position = Vector2(0, 25)
+#		get_node("Label2").set_text("Z: "+ str(depth_str) + " ly")
+#		get_node("Label2").show()
+#
+#	else:
+#		get_node("Label2").set_text("Z: "+ str(depth_str) + " ly")
+#		get_node("Label2").hide()
 	
 	# color-code the Z direction
 	var clr_dir = Color(0,1,1) if depth_s < 0 else Color(1,0,0) # cyan if positive, red if neg
