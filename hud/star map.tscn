@@ -164,9 +164,12 @@ margin_bottom = 39.0
 text = "Z: 0.0 ly"
 
 [node name="LayerZ+" type="Control" parent="Control"]
-modulate = Color( 0.137255, 0.878431, 1, 1 )
+modulate = Color( 0.380392, 0.839216, 1, 1 )
 margin_right = 40.0
 margin_bottom = 40.0
+__meta__ = {
+"_editor_description_": "Blueish-cyan color selected to evoke the Z axis coloring BUT not collide with the pure cyan which is a fleet color"
+}
 
 [node name="LayerZ-" type="Control" parent="Control"]
 modulate = Color( 0.384314, 0.384314, 0.384314, 1 )

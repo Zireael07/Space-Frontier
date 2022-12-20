@@ -16,7 +16,7 @@ func _draw():
 	# draw a white line at height 0
 	draw_line(Vector2(0,self.rect_size.y/2), Vector2(self.rect_size.x, self.rect_size.y/2), Color(1,1,1))
 	if route_data:
-		var clr = Color(0,1,0) 
+		var clr = Color(1,0.8,0) # yellow like the route itself 
 		#draw_data.clear()
 		for pt in route_data:
 			# if planet is on different Z-level, fade it out
@@ -25,12 +25,12 @@ func _draw():
 			draw_line(Vector2(pt[0], self.rect_size.y/2), Vector2(pt[0], self.rect_size.y/2-pt[1]), clr)
 			# ... and don't draw a circle for planets on different Z-levels
 			if abs(pt[1]) < 120:
-				draw_circle(Vector2(pt[0], self.rect_size.y/2-pt[1]), 4, Color(0,1,0))
+				draw_circle(Vector2(pt[0], self.rect_size.y/2-pt[1]), 4, clr)
 			
 		# width param has no effect :(
 		#draw_multiline(draw_data, Color(0,1,0), 5)
 	else:
-		var clr = Color(0,1,1) if not vis.clicked else Color(1,0.5,0) # orange-red to match map icons and Z lines	
+		var clr = Color(1,0,1) if not vis.clicked else Color(1,0.5,0) # orange-red to match map icons and Z lines	
 		
 		if vis.cntr.tg:
 			var z = 0

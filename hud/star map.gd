@@ -363,7 +363,10 @@ func update_map(marker):
 		for c in l.get_children():
 			c.get_node("Label").set_self_modulate(Color(1,1,1))
 	
-	# show target on map (tint cyan to match marker above)
+	# cyan is now used to indicate Z levels (see star map icon.gd)
+	# cyan is also one of the 4 original Stellar Frontier fleet colors (cyan, red, green and yellow)
+	# this is why the marker icon (handled above) is cyan - the player belongs to the cyan fleet
+	# show target on map (tint hot purple to pop out)
 	var lookup = {"Barnards":"Barnard's Star", "Trappist": "Trappist-1"}	
 	
 	if game.player.w_hole.target_system:
@@ -378,7 +381,7 @@ func update_map(marker):
 			print("Icon: ", icon.get_name(), " @ ", coords)
 		$"Control".w_hole_tg = icon
 		$"Control".tg = icon
-		icon.get_node("Label").set_self_modulate(Color(0,1,1))
+		icon.get_node("Label").set_self_modulate(Color(1,0,1)) #hot pink purple
 		# reveal Z line and planet icon for target
 		if icon.has_node("Line2D"):
 			icon.get_node("Line2D").show()
@@ -390,11 +393,11 @@ func update_map(marker):
 		
 	else:
 		if system == "Sol":
-			$"Control/proxima/Label".set_self_modulate(Color(0,1,1))
+			$"Control/proxima/Label".set_self_modulate(Color(1,0,1))
 		if system == "Proxima":
-			$"Control/alphacen/Label".set_self_modulate(Color(0,1,1))
+			$"Control/alphacen/Label".set_self_modulate(Color(1,0,1))
 		if system == "Luyten 726-8":
-			$"Control/Tau Ceti/Label".set_self_modulate(Color(0,1,1))
+			$"Control/Tau Ceti/Label".set_self_modulate(Color(1,0,1))
 	
 	# center on star (needs target to be set because it resets the distance label)
 	offset = -($"Control".src.rect_position+$"Control".src.get_node("StarTexture").rect_position)
@@ -405,7 +408,7 @@ func update_map(marker):
 	if get_node("Control").tg.get_node("StarTexture").visible:
 		tg_pos += get_node("Control").tg.get_node("StarTexture").rect_position
 	get_node("Control/ruler").pts = [get_node("Control").src.rect_position, tg_pos]
-	get_node("Control/ruler/Label").set("custom_colors/font_color", Color(0,1,1))
+	get_node("Control/ruler/Label").set("custom_colors/font_color", Color(1,0,1))
 	get_node("Control/ruler").set_ruler()
 	# positioning label handled in move_map_to_offset() above
 	#get_node("Grid/VisControl/Label").set("custom_colors/font_color", Color(0,1,1))

@@ -117,6 +117,7 @@ func _ready():
 #		get_node("Label2").hide()
 	
 	# color-code the Z direction
+	# this is a variation of blue-red diverging color scale
 	var clr_dir = Color(0,1,1) if depth_s < 0 else Color(1,0,0) # cyan if positive, red if neg
 	var clr = clr_dir.darkened(abs(depth)/30) # 20 is max Z distance away from the plane
 	#print(get_name() + "calculated Clr: ", clr)
@@ -268,7 +269,7 @@ func on_click():
 	# clear any previous tint
 	for c in get_parent().get_children():
 		# skip wormhole target
-		if c.get_node("Label").get_self_modulate() == Color(0,1,1):
+		if c.get_node("Label").get_self_modulate() == Color(1,0,1):
 			continue
 		c.get_node("Label").set_self_modulate(Color(1,1,1))
 		if "selected" in c:

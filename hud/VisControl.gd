@@ -25,6 +25,7 @@ func _draw():
 	#if cntr.tg:
 	#	draw_line(cntr.src.get_node("StarTexture").rect_position+cntr.src.rect_position+cntr.rect_position, cntr.tg.rect_position+cntr.tg.get_node("StarTexture").rect_position+cntr.rect_position, clr, 3.0)
 	
+	# those use yellow because it's the most eye catching color and shouldn't be mistaken for fleet color here
 	# draw starmap connections
 	if not clicked:
 		for n in cntr.get_parent().get_neighbors_for_icon(cntr.src):
