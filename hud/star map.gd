@@ -356,8 +356,12 @@ func update_map(marker):
 		$"Control".src = $"Control/Barnard's Star"
 
 	# clear any previous tint
-	#for c in get_node("Control").get_children():
-	#	c.get_node("Label").set_self_modulate(Color(1,1,1))
+	for l in get_node("Control").get_children():
+		if l.get_name() == "ruler": # skip the ruler
+			continue
+			
+		for c in l.get_children():
+			c.get_node("Label").set_self_modulate(Color(1,1,1))
 	
 	# show target on map (tint cyan to match marker above)
 	var lookup = {"Barnards":"Barnard's Star", "Trappist": "Trappist-1"}	

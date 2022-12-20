@@ -126,6 +126,9 @@ func _ready():
 	get_node("ZTexture").flip_v = true if depth_s > 0 else false
 	get_node("ZTexture").set_self_modulate(clr)
 	
+	if get_parent().get_name().find("Z-") != -1:
+		get_node("ZTexture").flip_v = false
+	
 #	if clr.r < 0.5 and clr.b < 0.1:
 #		get_node("Label2").set("custom_colors/font_color", Color(1,1,1))
 #
@@ -148,6 +151,10 @@ func add_planets_mark():
 		
 # recalculated after the map moved
 func calculate_label_and_sfx(offset=Vector2(0,0)):
+	# do nothing if we're on a different Z layer
+	if get_parent().get_name().find("Z+") != -1 or get_parent().get_name().find("Z-") != -1:
+		return
+	
 	var y_pos = get_node("StarTexture").get_position().y
 	var depth_s = sign(-depth)
 	
