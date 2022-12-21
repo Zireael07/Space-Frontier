@@ -281,7 +281,8 @@ func on_click():
 	#print("Shadow: ", ab_shadow, ", planet: ", ab_planet)
 	
 	get_node("Label").set_self_modulate(Color(1,0.5, 0)) # orange-red to match starmap icon and Z line color
-	get_node("../../ruler").set("custom_colors/font_color", Color(1,0.5, 0))
+	get_node("../../ruler/Label").set("custom_colors/font_color", Color(1,0.5, 0))
+	get_node("../../ruler/Line2D").default_color = Color(1,0.5,0)
 	#vis.get_node("Label").set("custom_colors/font_color", Color(1,0.5,0))
 	
 	# force reveal

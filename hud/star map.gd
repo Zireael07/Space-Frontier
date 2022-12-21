@@ -409,6 +409,7 @@ func update_map(marker):
 		tg_pos += get_node("Control").tg.get_node("StarTexture").rect_position
 	get_node("Control/ruler").pts = [get_node("Control").src.rect_position, tg_pos]
 	get_node("Control/ruler/Label").set("custom_colors/font_color", Color(1,0,1))
+	get_node("Control/ruler/Line2D").default_color = Color(1,0,1)
 	get_node("Control/ruler").set_ruler()
 	# positioning label handled in move_map_to_offset() above
 	#get_node("Grid/VisControl/Label").set("custom_colors/font_color", Color(0,1,1))
