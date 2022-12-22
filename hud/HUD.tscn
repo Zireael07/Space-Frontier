@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://assets/hud/HUD_panel style.tres" type="StyleBox" id=1]
 [ext_resource path="res://hud/minimap_container.gd" type="Script" id=2]
@@ -17,7 +17,6 @@
 [ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture" id=15]
 [ext_resource path="res://assets/hud/grey_arrowUpWhite.png" type="Texture" id=16]
 [ext_resource path="res://hud/RouteHeightPanel.gd" type="Script" id=17]
-[ext_resource path="res://hud/route map.tscn" type="PackedScene" id=18]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 13 )
@@ -38,6 +37,38 @@ scancode = 71
 
 [sub_resource type="ShortCut" id=5]
 shortcut = SubResource( 4 )
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Control_bottom/Panel/ProgressBar_en:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.56, 0.98, 0.02, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "scooping"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Control_bottom/Panel/ProgressBar_en:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Color( 0.56, 0.98, 0.02, 1 ), Color( 0.596078, 0.831373, 1, 1 ), Color( 0.56, 0.98, 0.02, 1 ) ]
+}
 
 [node name="Control" type="Control"]
 pause_mode = 2
@@ -1059,9 +1090,6 @@ __meta__ = {
 [node name="star map" parent="Control4" instance=ExtResource( 6 )]
 visible = false
 
-[node name="route map" parent="Control4" instance=ExtResource( 18 )]
-visible = false
-
 [node name="pause_panel" type="Control" parent="."]
 visible = false
 modulate = Color( 1, 1, 1, 0.624314 )
@@ -1095,6 +1123,10 @@ margin_top = -27.0
 margin_right = 44.0
 margin_bottom = -13.0
 text = "Press Z to toggle orders mode"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 6 )
+anims/scooping = SubResource( 7 )
 
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonCensus" to="." method="_on_ButtonCensus_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer/ButtonPlanet" to="." method="_on_ButtonPlanet_pressed"]

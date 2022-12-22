@@ -118,7 +118,7 @@ func randomize_storage():
 	
 
 func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
-	print("Setup: " + str(angle) + ", " + str(dis) + ", m: " + str(mas) + ", R:" +str(rad))
+	#print("Setup: " + str(angle) + ", " + str(dis) + ", m: " + str(mas) + ", R:" +str(rad))
 	if angle != 0 or dis !=0:
 		# place
 		place(angle, dis)
@@ -188,7 +188,7 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 	
 	# water freezes
 	if temp < game.ZEROC_IN_K-1:
-		print("Water freezes on ", get_node("Label").get_text())
+		#print("Water freezes on ", get_node("Label").get_text())
 		ice = hydro
 		hydro = 0.0
 		
@@ -888,6 +888,7 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 func _on_Area2D_area_exited(area):
 	if area == game.player and not has_solid_surface():
 		game.player.scooping = false
+		game.player.HUD.get_node("AnimationPlayer").stop()
 		print("No longer scooping")
 
 

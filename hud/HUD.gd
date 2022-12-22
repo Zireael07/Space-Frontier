@@ -455,6 +455,7 @@ func remove_orders_controls():
 # --------------------
 func show_starmap():
 	$"Control4/star map".show()
+	#$"Control4/route map".show()
 	# hide minimap
 	$"Control2/Panel_rightHUD/minimap".hide()
 	$"Control2/Panel_rightHUD/PanelInfo/StarSystemInfo".show()

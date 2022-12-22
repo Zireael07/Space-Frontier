@@ -1076,12 +1076,15 @@ func _on_engine_timer_timeout():
 	if engine < 1000:
 		if can_scoop():
 			print("Scooping...")
+			self.HUD.get_node("AnimationPlayer").play("scooping")
 			engine += 20
 		if scooping:
 			print("Scooping from gas giant...")
+			self.HUD.get_node("AnimationPlayer").play("scooping")
 			engine += 30 # because gas giant is more dense than a star's corona
 		else:
 			engine += 5
+			
 		emit_signal("engine_changed", engine)
 
 	
