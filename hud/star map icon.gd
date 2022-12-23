@@ -293,14 +293,11 @@ func on_click():
 	
 	selected = true
 	get_parent().get_parent().tg = get_parent().get_parent().get_tg()
-	# line/distance label redrawing
+	# line/distance ruler redrawing
 	vis.clicked = true
-	#var gl_loc = (get_node("../..").get_tg_loc() - get_node("../..").get_src_loc())/2
-	#vis.get_node("Label").set_global_position(gl_loc)
-	#get_node("../../Grid/VisControl/Label").rect_position = get_parent().rect_position + (get_parent().get_tg_loc() - get_parent().get_src_loc())/2
+
 	var dist = get_node("../../..").get_star_distance(get_node("../..").src, get_node("../..").tg)
-	#vis.get_node("Label").set_text("%.2f ly" % (dist))
-	#get_node("../../Grid/VisControl").update()
+
 	var tg_pos = get_node("../..").tg.rect_position
 	if get_node("../..").tg.get_node("StarTexture").visible:
 		tg_pos += get_node("../..").tg.get_node("StarTexture").rect_position

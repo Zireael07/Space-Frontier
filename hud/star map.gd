@@ -407,14 +407,13 @@ func update_map(marker):
 	var tg_pos = get_node("Control").tg.rect_position
 	if get_node("Control").tg.get_node("StarTexture").visible:
 		tg_pos += get_node("Control").tg.get_node("StarTexture").rect_position
+	
 	get_node("Control/ruler").pts = [get_node("Control").src.rect_position, tg_pos]
 	get_node("Control/ruler/Label").set("custom_colors/font_color", Color(1,0,1))
 	get_node("Control/ruler/Line2D").default_color = Color(1,0,1)
 	get_node("Control/ruler").set_ruler()
-	# positioning label handled in move_map_to_offset() above
-	#get_node("Grid/VisControl/Label").set("custom_colors/font_color", Color(0,1,1))
+
 	var dist = get_star_distance($"Control".src, $"Control".tg)
-	#get_node("Grid/VisControl/Label").set_text("%.2f ly" % (dist))
 	get_node("Control/ruler/Label").set_text("%.2f ly" % (dist))
 	# update displayed starmap info
 	display_star_map_info($"Control".tg)
@@ -477,13 +476,6 @@ func _on_ButtonLog_pressed():
 func move_map_to_offset(offset):
 	$Control.set_position(center+offset)
 	$"Grid/VisControl".update() # redraw map lines if any
-	
-	# recalculate distance label position
-	# halfway along
-	#var gl_loc = $"Control".get_src_loc() + ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
-	#print($"Control".get_tg_loc(),  " ", $"Control".get_src_loc(), " gl: ", gl_loc)
-	#get_node("Grid/VisControl/Label").set_global_position(gl_loc) 
-	#get_node("Grid/VisControl/Label").rect_position = $"Control".rect_position + ($"Control".get_tg_loc() - $"Control".get_src_loc())/2
 	
 	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset))
 	if offset != Vector2(0,0):
