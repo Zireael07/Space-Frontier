@@ -288,7 +288,8 @@ func make_star_view(star, _select_id):
 	# paranoia
 	if 'luminosity' in star:
 		var fmt_AU = "%.3f AU"
-		text = "Luminosity: " + str(star.luminosity) + "\n" + \
+		var fmt_lum = "%.3f"
+		text = "Luminosity: " + str(fmt_lum % star.luminosity) + "\n" + \
 	"Habitable zone: " + "\n" + str(fmt_AU % star.hz_inner) + "-" + str(fmt_AU % star.hz_outer)
 
 	var rtl = $"Panel_rightHUD/PanelInfo/PlanetInfo".get_child(1)
@@ -412,7 +413,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		format_atm = "%.3f atm" % planet.atm
 	var format_greenhouse = "%d " % planet.greenhouse_diff() if planet.scanned else " ?? "
 	# format mass depending on what body we're looking at
-	# FIXME: this would really benefit from special symbols
+	# TODO: this would really benefit from special symbols
 	var format_mass = "%.3f M Earth" % (planet.mass)
 	if planet.is_in_group("moon") or planet.get_node("Label").get_text() == "Ceres":
 		format_mass = "%.4f M Moon" % (planet.mass/game.MOON_MASS)
