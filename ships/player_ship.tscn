@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture" id=2]
 [ext_resource path="res://ships/player_ship.gd" type="Script" id=3]
 [ext_resource path="res://assets/shieldGreen_Edit.png" type="Texture" id=4]
-[ext_resource path="res://assets/fire11.png" type="Texture" id=5]
+[ext_resource path="res://assets/fire11_grayscale_edit.png" type="Texture" id=5]
 [ext_resource path="res://assets/crosshair123.png" type="Texture" id=6]
 [ext_resource path="res://assets/hud/yellow_dir_arrow.png" type="Texture" id=7]
 [ext_resource path="res://ships/debug_vis.gd" type="Script" id=8]
@@ -35,7 +35,7 @@ initial_velocity = 0.13
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale_random = 0.3
-color = Color( 0.0117647, 0.996078, 0.972549, 1 )
+color = Color( 0, 1, 1, 1 )
 
 [sub_resource type="Animation" id=3]
 tracks/0/type = "value"

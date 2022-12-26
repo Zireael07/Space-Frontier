@@ -133,8 +133,11 @@ func _process(delta):
 	# redraw 
 	update()
 
+	# measured in fractions of light speed (x.xx c)
 	spd = vel.length() / LIGHT_SPEED
 	boost = false
+	
+	$engine_flare.process_material.color = get_engine_exhaust_color()
 
 
 	# shoot

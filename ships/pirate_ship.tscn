@@ -3,11 +3,10 @@
 [ext_resource path="res://ships/brain.gd" type="Script" id=1]
 [ext_resource path="res://ships/NPC_ship.gd" type="Script" id=2]
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=3]
-[ext_resource path="res://assets/fire11.png" type="Texture" id=4]
+[ext_resource path="res://assets/fire11_grayscale_edit.png" type="Texture" id=4]
 [ext_resource path="res://assets/shield_Edit.png" type="Texture" id=5]
 [ext_resource path="res://guns/bullet_enemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/ships/enemyGreen1.png" type="Texture" id=7]
-
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 23.0021
@@ -87,6 +86,7 @@ autostart = true
 
 [node name="dock" type="Position2D" parent="Area2D_ship_e"]
 position = Vector2( 0, 23 )
+
 [connection signal="input_event" from="Area2D_ship_e" to="Area2D_ship_e" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D_ship_e/shield_timer" to="Area2D_ship_e" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D_ship_e/task_timer" to="Area2D_ship_e" method="_on_task_timer_timeout"]

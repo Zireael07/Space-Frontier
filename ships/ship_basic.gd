@@ -227,6 +227,15 @@ func can_scoop():
 	else:
 		return false	
 
+# this is the color of plasma our engine emits
+# as a nod to realism, low speed engines are ion (xenon) - the typical blue
+# and high speed engines are fusion/plasma (hydrogen) - i.e. pink
+func get_engine_exhaust_color():
+	if spd < 0.1:
+		return Color(0,1,1) # cyan
+	else:
+		return Color(1,0.35,1) # light pink
+
 # ----------------------
 func get_friendly_bases():
 	var bases = get_tree().get_nodes_in_group("starbase")

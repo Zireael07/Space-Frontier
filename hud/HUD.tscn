@@ -67,7 +67,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.25, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Color( 0.56, 0.98, 0.02, 1 ), Color( 0.596078, 0.831373, 1, 1 ), Color( 0.56, 0.98, 0.02, 1 ) ]
+"values": [ Color( 0.56, 0.98, 0.02, 1 ), Color( 1, 0.776471, 0.988235, 1 ), Color( 0.56, 0.98, 0.02, 1 ) ]
 }
 
 [node name="Control" type="Control"]
