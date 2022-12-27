@@ -470,6 +470,20 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		
 		text = text + "Atmosphere: \n" + atm_text #str(planet.atmosphere_gases())
 	
+	if planet.scanned:
+		# pretty formatting for composition
+		var composition_text = ""
+		var composition = planet.composition
+		for i in range(composition.size()):
+			var e = composition[i]
+			var format_e = "%s %.2f" % [e[0], e[1]]
+			if i == 0:
+				composition_text = str(format_e)+"%"
+			else:
+				composition_text = composition_text + ", " + str(format_e)+"%"
+			
+		text = text + "\nComposition: \n" + composition_text
+	
 	# planet storage (only if ours)
 	if col and col == "colony":
 		var store = str(planet.storage).replace("{", "").replace("}", "")

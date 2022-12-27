@@ -42,6 +42,7 @@ onready var module = preload("res://debris_friendly.tscn")
 
 var scanned = false
 var atm_gases
+var composition = []
 
 var labl_loc = Vector2()
 var no_shadow = false # for HUD display
@@ -185,6 +186,13 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 				# hence 93,3 atm is 1.0 effect
 				greenhouse = lerp(0.0, 1.0, atm_gases[0]["CO2"]/93.3)
 				print("Greenhouse from ", atm_gases[0]["CO2"], " atm CO2 is ", greenhouse)
+	
+	# planetary composition
+	if not is_in_group("moon") and not is_in_group("aster_named"):
+		# so far I only have numbers for rocky/terrestrial planets
+		if mass < 5:
+			composition = planetary_composition()
+			print("Composition: ", composition)
 	
 	# water freezes
 	if temp < game.ZEROC_IN_K-1:
@@ -623,6 +631,42 @@ func molecule_limit():
 	#return ((3.0 * 8314.41 * get_exospheric_temp()) /
 	#		(pow((escape_vel*1118.6 / 6.0) / 100.0, 2)))
 
+# -----------------------------------------------------
+
+# planetary composition
+
+# mantle: SiO2, CaO, Na2O, MgO, Al2O3, FeO, NiO (in order of ease of oxidation)
+# very minor amounts: SO3, CO2, graphite, metals
+# core: Fe, Ni, S 
+# all of the above based on https://doi.org/10.1093/mnras/sty2749
+
+# shortcut: instead of using https://github.com/astro-seanwhy/ExoInt and doing a Monte Carlo
+# this is based on sample compositions and correlations by Spaarengen https://arxiv.org/abs/2211.01800
+func planetary_composition():
+	randomize()
+	# core sizes range from 18-35%
+	var core_mass = rand_range(0.18,0.35)
+	# FeO correlates linearly with the above. Earth has 6% FeO and 32.5% core mass
+	# 6/32.5 = x/core_mass -> x = 6*core_mass/32.5
+	var feo = 0.06*core_mass/0.325
+	# Mg/Si ratio can vary between 1.0 and 2.0 
+	var mgsi_ratio = rand_range(1.0, 2.0)
+	# varies between 28% and 46% (see table 4)
+	var sio = rand_range(0.28, 0.46)
+	var mgo = sio*mgsi_ratio;
+	# varies between 6 and 13%; Earth's is 6%
+	# this is Ca+Al+Na/Ca+Al+Na+Fe+Mg+Si but note the divisor (after the slash) sums up to 100%
+	# (those six are all the elements under consideration)
+	var minor_fraction = rand_range(0.06, 0.13)
+	# varies between 1.3% and 3.5% (table 4)
+	var alo = rand_range(0.013, 0.035)
+	# varies between ~1.0 and 3.0 (basic calculations on table 4)
+	var caal_ratio = rand_range(1.0, 3.0)
+	var cao = caal_ratio*alo
+	# simple maths; in practice is a very small fraction (~0.3%)
+	var nao = clamp(minor_fraction-(cao+alo), 0.02, 0.03)
+	
+	return [ ["Core mass", core_mass*100], ["SiO", sio*100], ["CaO", cao*100], ["Na2O", nao*100], ["MgO", mgo*100], ["Al2O3", alo*100], ["FeO", feo*100]]
 
 # for now, this is just the ESI (Earth Similarity Index)
 # http://www.extrasolar.de/en/cosmopedia/planets.0011.esi
