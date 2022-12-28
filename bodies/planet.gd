@@ -193,6 +193,32 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 		if mass < 5:
 			composition = planetary_composition()
 			print("Composition: ", composition)
+	elif is_in_group("aster_named"):
+		# asteroid composition (assuming carbonaceous because they're by far the most common)
+		# see asteroid.gd for details (based on https://www.permanent.com/meteorite-compositions.html )
+		var sio = 0.33
+		var cao = 0.00 # not listed in the source
+		var nao = 0.005
+		var mgo = 0.24
+		var alo = 0.025
+		var feo = 0.15
+		
+		if get_node("Label").get_text() == "Vesta":
+			# Vesta is the only asteroid to have a differentiated interior (i.e. core, mantle and crust)
+			# Vesta composition based on https://www.researchgate.net/figure/Bulk-silicate-Vesta-compositions-wt_tbl1_282940471
+			
+			sio = 0.45
+			cao = 0.03
+			nao = 0.001
+			mgo = 0.31
+			alo = 0.035
+			feo = 0.15
+			# https://www.researchgate.net/publication/234393401_On_the_Core_Mass_of_the_Asteroid_Vesta
+			# estimates vary from 2 to 50%
+			var core_mass = 0.20
+		
+		composition = [["SiO", sio*100], ["CaO", cao*100], ["Na2O", nao*100], ["MgO", mgo*100], ["Al2O3", alo*100], ["FeO", feo*100]]
+
 	
 	# water freezes
 	if temp < game.ZEROC_IN_K-1:
