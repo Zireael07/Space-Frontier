@@ -193,6 +193,30 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 		if mass < 5:
 			composition = planetary_composition()
 			print("Composition: ", composition)
+		if mass > 5:
+			# since hydrogen and helium are both so light (but helium is twice as heavy) 
+			# it makes more sense to use volume measurements and not mass
+			
+			if get_node("Label").get_text() == "Jupiter":
+				# Jupiter is 90% hydrogen 10% helium by volume, but 24% helium by mass due to the above
+				#  trace amounts of methane, water vapour, ammonia, and silicon-based compounds
+				# fractional amounts of carbon, ethane, hydrogen sulfide, neon, oxygen, phosphine, and sulfur. 
+				composition = [["H", 90], ["He", 10]]
+			if get_node("Label").get_text() == "Saturn":
+				# Saturn is very similar to Jupiter
+				# The proportion of helium is significantly deficient compared to the abundance of this element in the Sun.
+				# The quantity of elements heavier than helium (metallicity) is not known precisely, 
+				# but the proportions are assumed to match the primordial abundances from the formation of the Solar System. 
+				# The total mass of these heavier elements is estimated to be 19–31 times the mass of the Earth, with a significant fraction located in Saturn's core region.
+				# Trace amounts of ammonia, acetylene, ethane, propane, phosphine, and methane have been detected in Saturn's atmosphere
+				composition = [["H", 96], ["He", 3]]
+			if get_node("Label").get_text() == "Uranus":
+				# source: Wikipedia infobox
+				composition = [["H", 83], ["He", 15], ["CH4", 2.3]]
+			if get_node("Label").get_text() == "Neptune":
+				# source: Wikipedia infobox
+				composition = [["H", 80], ["He", 19], ["CH4", 1.5]]
+			
 	elif is_in_group("aster_named"):
 		# asteroid composition (assuming carbonaceous because they're by far the most common)
 		# see asteroid.gd for details (based on https://www.permanent.com/meteorite-compositions.html )
