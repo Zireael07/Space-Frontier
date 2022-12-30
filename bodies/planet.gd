@@ -216,6 +216,82 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 			if get_node("Label").get_text() == "Neptune":
 				# source: Wikipedia infobox
 				composition = [["H", 80], ["He", 19], ["CH4", 1.5]]
+	elif is_in_group("moon"):
+		
+		if get_node("Label").get_text() == "Moon":
+			# The average composition of the lunar surface by weight is roughly 
+			# 43% oxygen, 20% silicon, 19% magnesium, 10% iron, 3% calcium, 3% aluminum, 0.42% chromium, 0.18% titanium and 0.12% manganese.
+			
+			# most of the material that eventually forms the Moon comes from the impactor, Theia
+			#  analysis of samples brought from the Moon by the Apollo missions showed otherwise—in terms of composition, the Earth and Moon are almost twins
+			# their compositions are almost the same, differing by at most few parts in a million.
+			# https://phys.org/news/2015-04-moon-composition.html
+			
+			# Earth's composition according to Spaarengen https://arxiv.org/abs/2211.01800
+			# core mass 32,5% SiO 39.85 CaO 3.25 Na2O 0.3 MgO 48.24  Al2O3 2.23 FeO 5.96
+			composition = [["core mass", 32.5], ["SiO2", 39.85], ["CaO", 3.25], ["Na2O", 0.3], ["MgO", 48.24], ["Al2O3", 2.23], ["FeO", 5.96] ]
+		
+		if get_node("Label").get_text() == "Phobos" or get_node("Label").get_text() == "Deimos":
+			# those two are captured asteroids, see below
+			composition = [["SiO", 33], ["CaO", 0], ["Na2O", 0.5], ["MgO", 24], ["Al2O3", 2.5], ["FeO", 15]]
+		
+		# Galilean moons
+		if get_node("Label").get_text() == "Io":
+			# Io and Europa are closer in bulk composition to the terrestrial planets than to other satellites in the outer Solar System
+			# Io's metallic core makes up approximately 20% of its mass.
+			# the mantle is composed of at least 75% of the magnesium-rich mineral forsterite, and has a bulk composition similar to that of L-chondrite and LL-chondrite meteorites
+			# with higher iron content (compared to silicon) than the Moon or Earth, but lower than Mars
+			
+			# Keszthelyi et al. 2007 assumed a refractory composition of 36% SiO2/30% FeO/25% MgO bulk composition
+			# publicly accessible abstract https://www.sciencedirect.com/science/article/abs/pii/S0019103507003132?via%3Dihub 
+			# "In general, it has been assumed that Io, like the rest of the Solar System, is broadly chondritic. 
+			# Io's bulk density is consistent with such a bulk composition, though lower density chondrites are somewhat preferred (Kuskov and Kronrod, 2001).
+			# the rest of bulk composition was additional oxides with potassium, calcium, sodium, and aluminum."
+			# http://www.gishbartimes.org/2010/01/chemical-composition-of-io.html
+			
+			# CaO, Na2O and Al2O3 are just my guesses since I can't find them in the accessible data
+			composition = [["core mass", 20], ["SiO2", 36], ["CaO", 0], ["Na2O", 0.5], ["MgO", 25], ["Al2O3", 3], ["FeO", 30]]
+			
+		if get_node("Label").get_text() == "Europa":
+			# https://www.researchgate.net/publication/257687446_The_internal_structure_models_of_Europa
+			# we pick model II which is roughly midway between the two, giving a core mass of 22%
+			# A Europa model with a water ice-liquid shell about 170 km thick has a bulk Fe/Si ratio about equal to the CI carbonaceous chondrite value of 1.7 ± 0.1.
+			# https://lasp.colorado.edu/home/mop/files/2015/08/jupiter_ch13-1.pdf
+			
+			# in absence of any better data, let's just go with the "broadly chondritic" guesses (see Io and Callisto)
+			composition = [["core mass", 22], ["SiO2", 36], ["CaO", 0], ["Na2O", 0.5], ["MgO", 25], ["Al2O3", 3], ["FeO", 30]]
+		
+		if get_node("Label").get_text() == "Callisto":
+			# The mass fraction of ices is 49–55%
+			# The exact composition of Callisto's rock component is not known, but is probably close to the composition of L/LL type ordinary chondrites
+			#  The weight ratio of iron to silicon is 0.9–1.3 in Callisto, whereas the solar ratio is around 1:8.
+			
+			# L/LL chondritic composition:
+			# https://bibliotekanauki.pl/api/full-texts/2020/12/12/bb78fdfd-83e5-4f39-a6ea-6bb92046339c.pdf
+			# (Table 2: Mg/Si 0.93 Al/Si 0.65 to 0.68 Ca/Si 0.48-0.49 Fe/Si 0.49 to 0.58 Ca/Al 0.72-0.74 Ni/Si 0.25-0.31
+			
+			# mash-up between the composition given for Io, which is also "broadly chondritic", and ratios given above
+			var feo = 0.36*0.5
+			var mgo = 0.36*0.93
+			var cao = 0.36*0.48
+			var alo = cao*0.72
+			# Na2O is a guess since it's not in the data
+			composition = [["SiO2", 36], ["CaO", cao*100], ["Na2O", 0.5], ["MgO", mgo*100], ["Al2O3", alo*100], ["FeO", feo*100]]
+			print("Composition: ", composition)
+
+		
+		if get_node("Label").get_text() == "Ganymede":
+			# The mass fraction of ices is between 46 and 50 percent, which is slightly lower than that in Callisto
+			# same observations apply as Callisto; iron/silicon ratio ranges between 1.05 and 1.27
+			
+			# The most compelling evidence for the existence of a liquid, iron-nickel-rich core is Ganymede's intrinsic magnetic field
+			
+			# https://presentations.copernicus.org/EPSC2022/EPSC2022-11_presentation-h643675.pdf
+			# core mass is a guess because it's not in the data
+			composition = [["core mass", 20], ["SiO2", 41], ["CaO", 2.37], ["Na2O", 1.19], ["MgO", 30], ["Al2O3", 3], ["FeO", 22]]
+			
+		
+		# TODO: moons of Saturn/Uranus/Neptune
 			
 	elif is_in_group("aster_named"):
 		# asteroid composition (assuming carbonaceous because they're by far the most common)
