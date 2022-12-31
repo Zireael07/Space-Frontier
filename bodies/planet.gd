@@ -189,13 +189,48 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 	
 	# planetary composition
 	if not is_in_group("moon") and not is_in_group("aster_named"):
-		# so far I only have numbers for rocky/terrestrial planets
+		
 		if mass < 5:
-			composition = planetary_composition()
-			print("Composition: ", composition)
+			if get_node("Label").get_text() == "Earth":
+				# Earth's composition according to Spaarengen https://arxiv.org/abs/2211.01800
+				composition = [["core mass", 32.5], ["SiO2", 39.85], ["CaO", 3.25], ["Na2O", 0.3], ["MgO", 48.24], ["Al2O3", 2.23], ["FeO", 5.96] ]
+			elif get_node("Label").get_text() == "Mars":
+				#https://www.researchgate.net/publication/348949548_Earth_and_Mars_-_Distinct_inner_solar_system_products
+				# page 26 (note they have higher values for Earth than Spaarengen or Donough)
+				# https://progearthplanetsci.springeropen.com/articles/10.1186/s40645-017-0139-4
+				# Mars’ core mass is about 0.24 of the planetary mass (Table 1), and Earth’s core mass fraction is 0.32 (Stacey 1992)
+				composition = [["core mass", 24], ["SiO2", 45.5],  ["CaO", 2.88], ["Na2O", 0.59], ["MgO", 31.0], ["Al2O3", 3.5], ["FeO", 14.7]]
+			elif get_node("Label").get_text() == "Venus":
+				# Like that of Earth, the Venusian core is most likely at least partially liquid because the two planets have been cooling at about the same rate
+				
+				# https://arxiv.org/pdf/1410.3509.pdf Table 6 page 59 gives core mass, SiO2 and FeO
+				# various sources assume Venus has the same composition as Earth, so we fill in the gaps with Earth-like values
+				# 39.85/45.7 = 48.24/x => x*39.85 = 45.7*48.24 => x = (45.7*48.24)/39.85
+				var mgo = (45.7*48.24)/39.85
+				composition = [["core mass", 30], ["SiO2", 45.7], ["CaO", 3.2], ["Na2O",0.2], ["MgO", mgo], ["Al2O3", 2.1], ["FeO", 7.38] ] 
+				
+			elif get_node("Label").get_text() == "Mercury":
+				# Mercury appears to have a solid silicate crust and mantle overlying a solid, iron sulfide outer core layer, a deeper liquid core layer, and a solid inner core
+				# The radius of Mercury's core is estimated to be 2,020 ± 30 km (1,255 ± 19 mi), based on interior models constrained to be consistent with the value of the moment of inertia factor.
+				# Hence, Mercury's core occupies about 57% of its volume; for Earth this proportion is 17%. 
+				# Mercury's core has a higher iron content than that of any other major planet in the Solar System, and several theories have been proposed to explain this.
+				# The most widely accepted theory is that Mercury originally had a metal–silicate ratio similar to common chondrite meteorites, thought to be typical of the Solar System's rocky matter, and a mass approximately 2.25 times its current mass
+				
+				# composition from https://arxiv.org/pdf/1712.02187.pdf page 32 (averaged)
+				# Given our input parameters and assumptions, Mercury's core mass fraction is significantly larger than the other terrestrial planets and has a broad range of plausible values (53–78% of the total planet mass)
+				# https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2007JE002993
+				composition = [["core mass", 60], ["SiO2", 52], ["CaO", 2.5], ["Na2O", 2], ["MgO", 38], ["Al2O3", 3], ["FeO", 0.02] ]
+
+			else:
+				# so far I only have numbers for rocky/terrestrial planets
+				composition = planetary_composition()
+			
+			#print("Composition: ", composition)
 		if mass > 5:
 			# since hydrogen and helium are both so light (but helium is twice as heavy) 
 			# it makes more sense to use volume measurements and not mass
+			
+			# TODO: come up with vaguely sensible looking numbers for other gas giants
 			
 			if get_node("Label").get_text() == "Jupiter":
 				# Jupiter is 90% hydrogen 10% helium by volume, but 24% helium by mass due to the above
@@ -267,8 +302,13 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 			#  The weight ratio of iron to silicon is 0.9–1.3 in Callisto, whereas the solar ratio is around 1:8.
 			
 			# L/LL chondritic composition:
+			
+			# FIXME: this gives too high CaO!
 			# https://bibliotekanauki.pl/api/full-texts/2020/12/12/bb78fdfd-83e5-4f39-a6ea-6bb92046339c.pdf
 			# (Table 2: Mg/Si 0.93 Al/Si 0.65 to 0.68 Ca/Si 0.48-0.49 Fe/Si 0.49 to 0.58 Ca/Al 0.72-0.74 Ni/Si 0.25-0.31
+			
+			#https://www.researchgate.net/publication/348949548_Earth_and_Mars_-_Distinct_inner_solar_system_products
+			# page 26 gives compositions for chondrites
 			
 			# mash-up between the composition given for Io, which is also "broadly chondritic", and ratios given above
 			var feo = 0.36*0.5
