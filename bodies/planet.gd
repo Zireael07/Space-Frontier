@@ -309,14 +309,18 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 			
 			#https://www.researchgate.net/publication/348949548_Earth_and_Mars_-_Distinct_inner_solar_system_products
 			# page 26 gives compositions for chondrites
+			# O 35.8% Fe 22.7% Mg 15.7% Si 19.5% Ca 1.38 Al 1.29 Mg/Si 0.81 Al/Si 0.07 Fe/Si 1.2
+			# for comparison, Earth is O 29.7% Fe 32% Mg 15.4% Si 16% Ca 1.71 Al 1.59 Mg/Si 0.96 Al/Si 0.10 Fe/Si 2.0
+			# and Mars is O 36.3% Fe 23.7 Mg 15.3% Si 17.4% Ca 1.69 Al 1.56  Mg/Si 0.88 Al/Si 0.09 Fe/Si 1.4
+			# judging by high Fe% that's "bulk" w/o differentiating core vs mantle
 			
 			# mash-up between the composition given for Io, which is also "broadly chondritic", and ratios given above
 			var feo = 0.36*0.5
-			var mgo = 0.36*0.93
-			var cao = 0.36*0.48
-			var alo = cao*0.72
-			# Na2O is a guess since it's not in the data
-			composition = [["SiO2", 36], ["CaO", cao*100], ["Na2O", 0.5], ["MgO", mgo*100], ["Al2O3", alo*100], ["FeO", feo*100]]
+			var mgo = 0.36*0.81
+#			var mgo = 0.36*0.93
+			var alo = 0.36*0.10
+			# Na2O and CaO are a guess (CaO is usually similar to Al2O3), since they're not in the data
+			composition = [["SiO2", 36], ["CaO", 3], ["Na2O", 0.5], ["MgO", mgo*100], ["Al2O3", alo*100], ["FeO", feo*100]]
 			print("Composition: ", composition)
 
 		
@@ -335,7 +339,7 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 			
 	elif is_in_group("aster_named"):
 		# asteroid composition (assuming carbonaceous because they're by far the most common)
-		# see asteroid.gd for details (based on https://www.permanent.com/meteorite-compositions.html )
+		# see asteroid.gd for details (based on http://web.archive.org/web/20220210052125/https://www.permanent.com/meteorite-compositions.html )
 		var sio = 0.33
 		var cao = 0.00 # not listed in the source
 		var nao = 0.005

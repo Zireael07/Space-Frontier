@@ -15,7 +15,7 @@ func _ready():
 	set_z_index(game.ASTEROID_Z)
 	
 	if type == types.C:
-		# adapted from carbonacerous meteorite compositions from https://www.permanent.com/meteorite-compositions.html
+		# adapted from carbonacerous meteorite compositions from http://web.archive.org/web/20220210052125/https://www.permanent.com/meteorite-compositions.html
 		contains.append([elements.CARBON, 10]) # boosted to be noticeable to the player
 		contains.append([elements.SILICON, 33])
 		contains.append([elements.IRON, 25])
