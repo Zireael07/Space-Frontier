@@ -335,7 +335,72 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 			composition = [["core mass", 20], ["SiO2", 41], ["CaO", 2.37], ["Na2O", 1.19], ["MgO", 30], ["Al2O3", 3], ["FeO", 22]]
 			
 		
-		# TODO: moons of Saturn/Uranus/Neptune
+		# TODO: moons of Uranus/Neptune
+		if get_node("Label").get_text() == "Titan":
+			# https://www.sciencedirect.com/science/article/pii/S0032063311001401
+			#  Given that smaller rock (or rock+ice) densities are indicative of core temperatures too low to allow partial melting and segregation of metal into an inner core, 
+			# then the balance of probability must be that MoI=0.34 means that Titan has no metallic core
+			# such small (metallic) cores (would) represent a very small fraction of Titan’s total mass (<0.5 wt%).
+			
+			# core radius of 2054; moon radius of 2574
+			# 'core' is rock (as is the case with most moons hereon)
+			var core_mass = pow(0.79, 1.0/0.5)
+			# composition is a guess
+			composition = [["core mass", core_mass*100], ["SiO2",45], ["CaO",2.5], ["Na2O", 1.5], ["MgO", 30 ], ["Al2O3", 2.5], ["FeO",5]]
+			
+		
+		if get_node("Label").get_text() == "Mimas":
+			# https://www.sciencedirect.com/science/article/abs/pii/001910358890084X
+			# We conclude that Mimas is probably differentiated. The satellite may have a rocky core of radius (0.44 ± 0.09) 〈R〉, 
+			# in which case the material outside the core probably has a mean density of 0.96 ± 0.08 g/cm3, consistent with that of uncompressed, but moderately contaminated, water-ice
+			# If the matrix of the mantle material is water-ice, then the silicate mass fraction of Mimas is 0.27 ± 0.04; Mimas is markedly deficient in rock.
+			
+			# The empirical scaling relation of CRF ≈ CMF^0.5 proposed in Zeng and Jacobsen (2017)
+			# CMF = CRF*root(0.5) since square root = inverse of ^2
+			# nth root of x is x^(1/n), so you can do 9**(1/2) to find the 2nd (square) root of 9
+			
+			var core_mass = pow(0.44, 1.0/0.5)
+			# no data that I can find on the rest, so just guess
+			composition = [ ["core mass", core_mass*100], ["SiO2", 40], ["CaO", 2], ["Na2O", 1.5], ["MgO", 30], ["Al2O3", 2.5], ["FeO", 8] ]
+			#print("Core mass: ", core_mass)
+
+		if get_node("Label").get_text() == "Rhea":
+			# https://solarsystem.nasa.gov/moons/saturn-moons/rhea/in-depth/
+			# Thus, it is thought that Rhea is composed of a homogenous mixture of ice and rock — a frozen dirty snowball.
+			
+			# just a guess based on asteroid/chondritic composition
+			composition = [["SiO2", 0.33], ["CaO", 1], ["Na2O", 0.5], ["MgO", 0.3], ["Al2O3", 2.5], ["FeO", 15]]
+			pass
+		if get_node("Label").get_text() == "Tethys":
+			# The density of Tethys is 0.98 g/cm3, indicating that it is composed almost entirely of water-ice.
+			#  It is not known whether Tethys is differentiated into a rocky core and ice mantle. 
+			# However, if it is differentiated, the radius of the core does not exceed 145 km, and its mass is below 6% of the total mass. 
+			
+			# no data I can find, so a guess
+			composition = [["core mass", 5], ["SiO2", 35], ["CaO",2], ["Na2O",1], ["MgO", 48], ["Al2O3", 3], ["FeO",5]]
+			
+		if get_node("Label").get_text() == "Dione":
+			# Shape and gravity observations collected by Cassini suggest a roughly 400 km radius rocky core surrounded by a roughly 160 km envelope of H2O
+			# radius of 560km per Wikipedia gives a core radius fraction of 0.71
+			var core_mass = pow(0.71, 1.0/0.5)
+			# again, all of the composition data is a guess
+			composition = [["core mass", core_mass*100], ["SiO2", 30], ["CaO",2.5], ["Na2O",1.5], ["MgO", 42], ["Al2O3", 3], ["FeO",8]]
+
+		if get_node("Label").get_text() == "Enceladus":
+			# Since the ocean in Enceladus supplies the jets, and the jets produce Saturn’s E ring, to study material in the E ring is to study Enceladus’ ocean
+			# https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4639802/
+			# Enceladus' seawater is suggested to be mildly alkaline (pH∼8.5–10.5)
+			
+			# https://www.academia.edu/59711602/The_Interior_of_Enceladus
+			# core radius of ~190 km (table 3, page 68)
+			# Enceladus has a radius of 252km per Wiki, so a radius factor of 0.75
+			# note that this core is likely porous rock, not so much metal
+			
+			var core_mass = pow(0.75, 1.0/0.5)
+			# no data for the bulk composition, so just guessing again
+			composition = [["core mass", core_mass*100], ["SiO2", 40], ["CaO",2], ["Na2O",1.5], ["MgO",35], ["Al2O3", 2], ["FeO", 5]]
+		
+		# The low density of Iapetus indicates that it is mostly composed of ice, with only a small (~20%) amount of rocky materials
 			
 	elif is_in_group("aster_named"):
 		# asteroid composition (assuming carbonaceous because they're by far the most common)
