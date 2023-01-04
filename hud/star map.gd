@@ -435,7 +435,10 @@ func display_star_map_info(star_icon):
 	text = text + "Multiple system: " + fmt_multiple + "\n"
 	var fmt_planets = "yes" if star_icon.planets else "no"
 	text = text + "Planets: " + fmt_planets + "\n"
-	text = text + "X: " + str(star_icon.x) + " Y: " + str(star_icon.y) + " Z: " + str(star_icon.depth) + "\n"
+	var fmt_coord_x = "%.2f" % star_icon.x
+	var fmt_coord_y = "%.2f" % star_icon.y 
+	var fmt_coord_z = "%.2f" % star_icon.depth
+	text = text + "X: " + str(fmt_coord_x) + " Y: " + str(fmt_coord_y) + " Z: " + str(fmt_coord_z) + "\n"
 	
 	# wormhole connections
 	#var n = get_neighbors(star_icon.pos)
