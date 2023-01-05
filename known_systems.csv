@@ -62,3 +62,12 @@ Gliese 1002 c, planet, -, -, -, -, -, -, 1.36E, ?, 0.0738, -
 Gliese 867, star, 22h38m, -20d37m, 15.28, -, -, -, 0.33S, 0.37S, -, 0.011, red,  //aka FK Aquarii (https://gruze.org/10pc/)
 Altair, star, 297.69deg, 8.86deg, 16.73, 11.1ly, 12.2ly, -2.6ly, 1.71S, 1.81S, -, 10.7, blue
 Fomalhaut, star, 344.41deg, -29.62deg, 25.12, 9.97ly, 3.72ly, -22.7ly, 1.92S, 1.84S, -, 16.6, blue
+Gliese 884, star, 345.06deg, -22.52deg, 26.85, 2.8pc, 2.1pc, -7.3pc, 0.63S, 0.67S, -, 0.1, orange, //aka HD 217357
+Gliese 1265, star, -, -, -, 16.0ly, 13.0ly, -27ly, 0.18S , 0.19S, -, ?, red
+Gliese 1265 b, planet, -, -, -, -, -,-, 7.3E, ?, 0.03, -, -
+Gliese 4281, star, -, -, -, 13.9ly, 15.5ly, -28.72ly, ?, ?, -, ?, red, //aka NN 4281  
+Trappist-1, star, 23h06m, -05d02m, 40.7, -, -, -, 0.09S, 0.11, -, 0.0005, red,
+TRAPPIST-1b, planet, -, -, -, -, -, -, 1.017E, ?, 0.01166, -
+TRAPPIST-1c, planet, -, -, -, -, -, -, 1.156E, ?, 0.015, -
+TRAPPIST-1d, planet, -, -, -, -, -, -, 0.297E, ?, 0.02233, -
+TRAPPIST-1e, planet, -, -, -, -, -, -, 0.772E, ?, 0.0291, -
