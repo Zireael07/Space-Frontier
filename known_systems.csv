@@ -71,3 +71,8 @@ TRAPPIST-1b, planet, -, -, -, -, -, -, 1.017E, ?, 0.01166, -
 TRAPPIST-1c, planet, -, -, -, -, -, -, 1.156E, ?, 0.015, -
 TRAPPIST-1d, planet, -, -, -, -, -, -, 0.297E, ?, 0.02233, -
 TRAPPIST-1e, planet, -, -, -, -, -, -, 0.772E, ?, 0.0291, -
+EQ Pegasi, star, 23h31m, 19d56m, 20.48, -, -, -, 0.43S, ?, -, 0.019, red, //aka GJ896 353deg ra
+EQ Pegasi b, planet,  -, -, -, -, -, -, 2.26J, ?, 0.642, -
+LP 890-9, star, 04h16m, -28d18m, 105.4, -, -, -, 0.118S, 0.153S, -, 0.001, red, //aka SPECULOOS-2,
+LP 890-9 b, planet, -, -, -, -, -, -, 13E, 1.32E, 0.018, -
+LP 890-9 c, planet, -, -, -, -, -, -, 25E, 1.36E, 0.039, -
