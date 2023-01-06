@@ -48,6 +48,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Grid/VisControl"]
+visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 1, 0.494118, 0, 1 )

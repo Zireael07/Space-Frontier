@@ -528,15 +528,17 @@ func _on_ButtonDown_pressed():
 func _on_LineEdit_text_entered(new_text):
 	# search for the star
 	var found = null
-	for c in $Control.get_children():
-		if c.get_node("Label").get_text().find(new_text) != -1:
-			found = c
-			print("Found the star: ", new_text, "!")
-			break
+	#for c in $Control.get_children():
+	for l in $"Control".get_children():
+		for c in l.get_children():
+			if c.has_node("Label") and c.get_node("Label").get_text().find(new_text) != -1:
+				found = c
+				print("Found the star: ", new_text, "!")
+				break
 	
 	# center map on found star
 	# TODO: center on midpoint between star and shadow ONCE we're assured all stars fit in screen
 	# i.e. layers are implemented
 	if found:
-		offset = -(found.rect_position+found.get_node("PlanetTexture").rect_position)
+		offset = -(found.rect_position) #+found.get_node("StarTexture").rect_position)
 		move_map_to_offset(offset)
