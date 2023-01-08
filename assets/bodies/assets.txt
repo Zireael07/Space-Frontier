@@ -1,3 +1,5 @@
  Planets (from / created by ) Planet Collection & Builder by RSL Labs. http://opengameart.org/users/rsl-labs
  Asteroids by phaelax, OGA https://opengameart.org/content/asteroids
  3_special_effect_blurred is an edit of <a href="https://www.vecteezy.com/free-vector/sun-flare">Sun Flare Vectors by Vecteezy</a> (Creative Commons)
+ Stars are by Viktor Hahn, OGA (see license.txt)
+ Brown dwarf by Varkalandar, OGA https://opengameart.org/content/some-suns-whitebrown-dwarf-pulsar-and-black-hole
