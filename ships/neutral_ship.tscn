@@ -26,7 +26,7 @@ z_as_relative = false
 [node name="Area2D_ship_f" type="Area2D" parent="."]
 script = ExtResource( 5 )
 bullet = ExtResource( 2 )
-kind_id = 1
+kind_id = 3
 
 [node name="playerShip3_blue" type="Sprite" parent="Area2D_ship_f"]
 scale = Vector2( 0.3, 0.3 )

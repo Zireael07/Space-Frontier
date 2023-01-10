@@ -24,7 +24,7 @@ signal ship_killed
 
 export(int) var kind_id = 0
 
-enum kind { enemy, friendly, pirate }
+enum kind { enemy, friendly, pirate, neutral }
 
 var ship_name = ""
 var labl_loc = Vector2()
@@ -69,6 +69,8 @@ func _ready():
 		# tint cyan
 		$"Label".set_self_modulate(Color(0, 1, 1))
 		add_to_group("friendly")
+	elif kind_id == kind.neutral:
+		$"Label".set_self_modulate(Color(1,0.8, 0))
 		
 #	print("Groups: " + str(get_groups()))
 	var _conn

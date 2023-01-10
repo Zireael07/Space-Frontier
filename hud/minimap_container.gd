@@ -12,6 +12,7 @@ onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
 onready var friendly = preload("res://assets/hud/arrow.png")
 onready var hostile = preload("res://assets/hud/red_arrow.png")
 onready var pirate = preload("res://assets/hud/green_arrow.png")
+onready var neutral = preload("res://assets/hud/yellow_arrow.png")
 
 onready var colony_tex = preload("res://assets/hud/blue_button06.png")
 
@@ -29,6 +30,7 @@ var wormholes = []
 var friendlies
 var hostiles
 var pirates = []
+var neutrals = []
 var starbases
 var sb_enemies = []
 var sb_pirates = []
@@ -44,6 +46,7 @@ var wormhole_sprites = []
 var friendly_sprites = []
 var hostile_sprites = []
 var pirate_sprites = []
+var neutral_sprites = []
 var starbase_sprites = []
 var sb_enemy_sprites = []
 var sb_pirate_sprites = []
@@ -346,6 +349,16 @@ func _on_pirate_ship_spawned(ship):
 	pirate_sprites.append(pirate_sprite)
 	add_child(pirate_sprite)
 	pirates.append(ship)
+	
+func _on_neutral_ship_spawned(ship):
+	var neutral_sprite = TextureRect.new()
+	neutral_sprite.set_texture(neutral)
+	# enable red outlines
+	neutral_sprite.set_script(sprite_script)
+	neutral_sprite.type_id = 0
+	neutral_sprites.append(neutral_sprite)
+	add_child(neutral_sprite)
+	neutrals.append(ship)
 
 func _on_starbase_spawned(sb):
 	#print("On starbase spawned")
@@ -418,9 +431,10 @@ func _on_colony_colonized(colony, planet):
 	# paranoia
 	if colony in colony_map:
 		var spr = colony_map[colony]
-		remove_child(spr)
 		colonies.remove(colonies.find(colony))
 		colony_sprites.remove(colony_sprites.find(spr))
+		remove_child(spr)
+
 	
 	var id = planets.find(planet)
 	var spr = planet_sprites[id]
@@ -615,6 +629,19 @@ func _process(_delta):
 			remove_child(pirate_sprites[i])
 			pirates.remove(i)
 			pirate_sprites.remove(i)
+			
+	for n in neutrals:
+		var i = neutrals.find(n)
+		if is_instance_valid(n):
+			# the minimap doesn't rotate
+			var rel_loc = n.get_global_position() - player.get_child(0).get_global_position()
+			neutral_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
+		else:
+			#print("Removing i: " + str(i))
+			# remove all references to the killed ship and its minimap icon
+			remove_child(neutral_sprites[i])
+			neutrals.remove(i)
+			neutral_sprites.remove(i)
 
 # called when leaving a system
 func cleanup():
@@ -628,6 +655,7 @@ func cleanup():
 	friendly_sprites = []
 	hostile_sprites = []
 	pirate_sprites = []
+	neutral_sprites = []
 	starbase_sprites = []
 	sb_enemy_sprites = []
 	sb_pirate_sprites = []

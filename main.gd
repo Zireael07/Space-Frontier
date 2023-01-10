@@ -9,6 +9,7 @@ var enemy = preload("res://ships/enemy_ship.tscn")
 var enemy_starbase = preload("res://ships/enemy_starbase.tscn")
 var pirate_starbase = preload("res://ships/pirate_starbase.tscn")
 var pirate_ship = preload("res://ships/pirate_ship.tscn")
+var neutral = preload("res://ships/neutral_ship.tscn")
 
 var asteroid_processor = preload("res://ships/asteroid_processor.tscn")
 var cycler = preload("res://ships/cycler.tscn")
@@ -149,6 +150,10 @@ func _ready():
 	# spawn related to enemy starbase
 	for i in range(3):
 		spawn_enemy(pos, i, p_ind, mmap)
+	
+	pos = get_tree().get_nodes_in_group("planets")[1] # TODO: should be one of the Jovian/Saturnian moons
+	pos = pos.get_global_position()
+	spawn_neutral(pos, 0, p_ind, mmap)
 	
 	# wormholes
 	wormholes_from_graph(p_ind)
@@ -342,6 +347,25 @@ func spawn_enemy(pos, i, p_ind, m_map):
 	
 	# add to fleet census
 	game.fleet2[1] += 1
+
+func spawn_neutral(pos, i, p_ind, m_map):
+	var sp = neutral.instance()
+	# random factor
+	randomize()
+	var offset = Vector2(rand_range(50, 100), rand_range(50, 100))
+	sp.set_global_position(pos + offset)
+	#print("Spawning enemy @ : " + str(pos + offset))
+	sp.get_child(0).set_position(Vector2(0,0))
+	sp.set_name("enemy"+str(i))
+	get_child(3).add_child(sp)
+	get_child(3).move_child(sp, p_ind+1)
+	
+	# give minimap icon
+	#var mmap = get_tree().get_nodes_in_group("minimap")[0]
+	m_map._on_neutral_ship_spawned(sp.get_child(0))
+	
+	# add to fleet census
+	#game.fleet2[1] += 1
 
 func spawn_cycler(p_ind, system, m_map):
 	if system != "Sol":
