@@ -70,6 +70,11 @@ func _ready():
 		$"Label".set_self_modulate(Color(0, 1, 1))
 		add_to_group("friendly")
 	elif kind_id == kind.neutral:
+		var id = randi() % game.neutral_names.size() # return between 0 and size -1
+		ship_name = game.neutral_names[id]
+		# remove name that was already used
+		game.neutral_names.remove(id)
+		$"Label".set_text(ship_name)
 		$"Label".set_self_modulate(Color(1,0.8, 0))
 		
 #	print("Groups: " + str(get_groups()))

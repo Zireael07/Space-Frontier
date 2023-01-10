@@ -37,7 +37,7 @@ var move_timer
 
 export(int) var kind_id = 0
 
-enum kind { enemy, friendly, pirate }
+enum kind { enemy, friendly, pirate, neutral }
 
 # note: any changes made here need to be copied to cycler.gd, too
 # see asteroid.gd and debris_resource.gd

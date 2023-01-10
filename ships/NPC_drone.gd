@@ -9,7 +9,7 @@ var timer_count = 0
 
 export(int) var kind_id = 0
 
-enum kind { enemy, friendly}
+enum kind { enemy, friendly, pirate, neutral }
 
 
 # Called when the node enters the scene tree for the first time.

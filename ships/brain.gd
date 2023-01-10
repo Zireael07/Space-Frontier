@@ -86,6 +86,9 @@ func move_generic(delta):
 	ship.move_AI(vel, delta)
 
 func handle_enemy(max_dist=150):
+	if ship.kind_id == ship.kind.neutral:
+		return
+	
 	# paranoia
 	if not ship.has_method("get_closest_enemy"):
 		return
