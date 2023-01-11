@@ -572,7 +572,7 @@ func _on_kill_gained(num):
 func _on_points_gained(num):
 	$"Control_bottom/Panel/Label_points".set_text("Points: " + str(num))
 
-# called when a player target an AI ship
+# called when a player targets an AI ship
 func _on_AI_targeted(AI):
 	var prev_target = null
 	if target != null:
@@ -732,7 +732,8 @@ func _minimap_update_outline(pl_target):
 	# pass to correct node
 	$"Control2/Panel_rightHUD/minimap".update_outline(pl_target)
 
-# those signals fire only for player and are only for the status light
+# those signals fire only for player
+# for the status light (and auto pause on attack)
 func _on_target_acquired_by_AI(_AI):
 	$"Control2/status_light".set_modulate(Color(1,0,0))
 	print("On target_acquired, pausing...")

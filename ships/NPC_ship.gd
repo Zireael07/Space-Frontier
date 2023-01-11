@@ -491,9 +491,12 @@ func _on_AI_hit(attacker):
 	
 	# signal player being attacked if it's the case
 	if attacker.is_in_group("player"):
-		attacker.targeted_by.append(self)
-		emit_signal("target_acquired_AI", self)
-		print("AI ship acquired target")
+		if self in attacker.targeted_by:
+			pass
+		else:
+			attacker.targeted_by.append(self)
+			emit_signal("target_acquired_AI", self)
+			print("AI ship acquired target")
 
 func refit_tractor(refit_target):
 	# reparent			

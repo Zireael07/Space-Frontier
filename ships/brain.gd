@@ -102,9 +102,12 @@ func handle_enemy(max_dist=150):
 			set_state(STATE_ATTACK, enemy)
 			# signal player being attacked if it's the case
 			if enemy.get_parent().is_in_group("player"):
-				enemy.targeted_by.append(ship)
-				ship.emit_signal("target_acquired_AI", ship)
-				print("AI ship acquired target")
+				if ship in enemy.targeted_by:
+					pass
+				else:
+					enemy.targeted_by.append(ship)
+					ship.emit_signal("target_acquired_AI", ship)
+					print("AI ship acquired target")
 
 
 # using this because we don't need physics
