@@ -159,6 +159,14 @@ func calculate_hz(lum, type="red"):
 	var outer = 1 * pow(lum / factors[type][1], 0.5)
 	print(type, " hz: inner: ", inner, " AU, outer: ", outer, " AU")
 	return [inner, outer]
+	
+# Venus Zone; inner border = cosmic shoreline; outer = recent Venus CHZ
+# recent Venus solar flux factor (Seff) is 1.776 per https://arxiv.org/abs/1301.6674 https://arxiv.org/abs/1404.5292 
+# cosmic shoreline: Solar flux = 5* 10^-16*escape_vel^4 or 25* Earth's solar flux (http://arxiv.org/abs/1409.2886)
+# Earth's solar flux is 1360 Wm^-2
+func calculate_vz(lum):
+	var outer = 1 * pow(lum/1.776, 0.5)
+	return [outer]
 
 # based on arc functions that I seem to love :P	
 func make_circle(center, segments, radius):

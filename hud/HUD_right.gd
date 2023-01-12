@@ -348,6 +348,8 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# first, list things the player is likely to be immediately interested in
 	if planet.is_habitable():
 		text = "Habitable"
+	if planet.in_venus_zone():
+		text = "In Venus Zone"
 	if planet.tidally_locked:
 		text = text + "\n" + "Tidally locked"
 	

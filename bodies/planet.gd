@@ -536,6 +536,14 @@ func is_habitable():
 		return true
 	else:
 		return false
+		
+func in_venus_zone():
+	var star = get_parent().get_parent()
+	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
+	if axis <= star.calculate_vz(star.luminosity)[0]:
+		return true
+	else:
+		return false
 
 func greenhouse_diff():
 	# return early if no greenhouse effect at all
