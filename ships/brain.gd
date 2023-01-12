@@ -944,6 +944,10 @@ class PlanetState:
 			group = ship.get_tree().get_nodes_in_group("moon")
 		#else:
 		
+		# paranoia
+		if group.size() < 1:
+			return
+		
 		ship.target = group[id-1].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
 		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)

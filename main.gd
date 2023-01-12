@@ -651,6 +651,10 @@ func change_system(system="proxima", time=0.0):
 	for s in e:
 		s.get_parent().queue_free()
 	
+	var n = get_tree().get_nodes_in_group("neutral")
+	for s in n:
+		s.get_parent().queue_free()
+	
 	# clean orrery
 	var orr = mmap.get_parent().get_node("orrery")
 	for i in range(1, orr.get_child_count()):

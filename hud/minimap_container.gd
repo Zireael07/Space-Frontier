@@ -353,11 +353,16 @@ func _on_pirate_ship_spawned(ship):
 func _on_neutral_ship_spawned(ship):
 	var neutral_sprite = TextureRect.new()
 	neutral_sprite.set_texture(neutral)
+	var label = Label.new()
+	label.set_text(ship.get_node("Label").get_text())
+	label.set_position(Vector2(10,10))
+	label.set_modulate(Color(1,0.8, 0)) # yellow
 	# enable red outlines
 	neutral_sprite.set_script(sprite_script)
 	neutral_sprite.type_id = 0
 	neutral_sprites.append(neutral_sprite)
 	add_child(neutral_sprite)
+	neutral_sprite.add_child(label)
 	neutrals.append(ship)
 
 func _on_starbase_spawned(sb):
