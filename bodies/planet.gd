@@ -771,9 +771,13 @@ func atmosphere_gases():
 				if temp < 270:
 					react = 0.0
 					print("Too cold! React: ", react)
-				# if planet. check for solar wind, which reaches at least Venus @ 0.70 AU
-				# and is powerful enough to strip it of any oxygen
-				elif axis < 0.72 and not is_in_group("moon"):
+				
+				# https://ui.adsabs.harvard.edu/abs/2006P%26SS...54.1445L/abstract
+				# "Our study indicates that on Venus [..] the most relevant atmospheric escape processes of oxygen involve ions and are caused by the interaction with the solar wind."
+				# the solar wind can reach even Mars https://www.sci.news/space/maven-martian-atmosphere-lost-space-04750.html
+				
+				# if planet. check for solar wind which can strip us of any oxygen
+				elif in_venus_zone() and not is_in_group("moon"):
 					print("Solar wind stripped us of oxygen")
 					react = 0.0
 				else:

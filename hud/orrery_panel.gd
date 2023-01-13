@@ -49,9 +49,16 @@ func _draw():
 			
 		#var fudge = 36*p.planet_rad_factor*0.2
 		#print(str(fudge))
+		#print(p.dist, " ", int(p.dist/zoom_scale))
 		draw_empty_circle(make_circle(center, 24, int(p.dist/zoom_scale) +fudge), Color(1,0,0))
 	
-	# draw star hz
+	# draw star VZ
 	var star = get_parent().star_main
+	draw_empty_circle(make_circle(center, 24, int((star.calculate_vz(star.luminosity)[0]*game.AU)/zoom_scale) + fudge), Color(1,0.5,0))
+	
+	# draw star hz
+	#var star = get_parent().star_main
+	#print("Radius inner: ", int((star.hz_inner*game.AU)))
+	#print("After zoom: ", int((star.hz_inner*game.AU)/zoom_scale))
 	draw_empty_circle(make_circle(center, 24, int((star.hz_inner*game.AU)/zoom_scale) + fudge), Color(0,1,0))
 	draw_empty_circle(make_circle(center, 24, int((star.hz_outer*game.AU)/zoom_scale) + fudge), Color(0,1,0))
