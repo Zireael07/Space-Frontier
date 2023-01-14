@@ -97,8 +97,11 @@ func setup():
 				if txt.ends_with(e):
 					label.set_text(e)
 					break
-					
-		label.set_position(Vector2(36*adj*0.75,36*adj*0.75))
+		
+		if zoom_scale > 200:
+			label.set_position(Vector2(36*adj*0.75, 36*adj*0.5))
+		else:
+			label.set_position(Vector2(36*adj*0.75,36*adj*0.75))
 		con.add_child(label)
 	
 	# center offset based on central star
@@ -139,7 +142,10 @@ func setup():
 		planet_sprites.append(con)
 		con.add_child(planet_sprite)
 		
-		label.set_position(Vector2(36*adj*0.5,36*adj*0.5))
+		if zoom_scale > 200:
+			label.set_position(Vector2(36*adj*0.5, 36*adj*0.25))
+		else:
+			label.set_position(Vector2(36*adj*0.5,36*adj*0.5))
 		con.add_child(label)
 		
 	
