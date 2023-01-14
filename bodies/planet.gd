@@ -591,12 +591,13 @@ func calculate_temperature(inc_greenhouse=true):
 #	print("Temp in K: ", T)
 
 	# another version of the calculation
-	# http://home.ustc.edu.cn/~baishuxu/planettempcalc.html
+	# https://web.archive.org/web/20210605120431/https://scied.ucar.edu/earth-system/planetary-energy-balance-temperature-calculate
+	# http://home.ustc.edu.cn/~baishuxu/planettempcalc.html (see their source)
 	# https://ui.adsabs.harvard.edu/abs/2012PASP..124..323K/abstract (arxiv:1202.2377) equation 3
 #	var sigma = 5.670367e-8 # Stefan-Boltzmann constant
 #	var sol_flux = 3.828e26 # in Watts?
 #	var AU = 1.4959789e11 #meters
-#	# per https://www.tfeb.org/fragments/2015/09/30/black-body-planet/ the upper part equals S?
+#	# per https://www.tfeb.org/fragments/2015/09/30/black-body-planet/ the upper part equals S (insolation, Wm^-2) ?
 #	var t = star.luminosity*sol_flux*(1.0-albedo) / (16 * PI * axis * axis * AU * AU * sigma);
 #	var T = pow(t, 0.25)
 	#print("Temp in K: ", T)
