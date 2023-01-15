@@ -221,20 +221,27 @@ func add_system_bodies():
 		
 		var planet_sprite = TextureRect.new()
 		planet_sprite.set_texture(planet)
+		var sc = null
 		if p.planet_rad_factor < 0.5:
-			planet_sprite.set_scale(Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2))
+			sc = Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2)
+			#planet_sprite.set_scale(Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2))
 		elif p.planet_rad_factor > 1.75:
-			planet_sprite.set_scale(Vector2(p.planet_rad_factor*0.75, p.planet_rad_factor*0.75))
+			sc = Vector2(p.planet_rad_factor*0.75, p.planet_rad_factor*0.75)
+			#planet_sprite.set_scale(sc)
 		else:
-			planet_sprite.set_scale(Vector2(p.planet_rad_factor, p.planet_rad_factor))
+			sc = Vector2(p.planet_rad_factor, p.planet_rad_factor)
+			#planet_sprite.set_scale(Vector2(p.planet_rad_factor, p.planet_rad_factor))
 		
 		# moons
 		if p.is_in_group("moon"):
-			planet_sprite.set_scale(Vector2(0.5, 0.5))
+			sc = Vector2(0.5, 0.5)
+			#planet_sprite.set_scale(Vector2(0.5, 0.5))
 			
 		# center sprite
 		# for some reason, get_size() doesn't work yet
-		var siz = Vector2(36,36)*planet_sprite.get_scale()
+		var siz = Vector2(36,36)*sc #planet_sprite.get_scale()
+		planet_sprite.stretch_mode = TextureRect.STRETCH_SCALE
+		planet_sprite.set_size(siz)
 		planet_sprite.set_pivot_offset(siz/2)
 		
 		# label
@@ -262,10 +269,18 @@ func add_system_bodies():
 		planet_sprites.append(con)
 		con.add_child(planet_sprite)
 		
+		#print(label.get_size(), planet_sprite.get_size(), siz)
+		
 		#hackfix for giant planet's labels
-		if planet_sprite.get_scale().x > 1:
-			label.set_position(siz/2)
+		#if planet_sprite.get_scale().x > 1:
+		if planet_sprite.get_size().x > 36:
+			#print(planet_sprite.get_size(), siz)
+			# we can't get label size yet so we hardcode it 
+			# 40,14 is the size, this would snap to AABB, to snap to (round) sprite move by 1/4 left and 100% up
+			label.set_position(siz-Vector2(10,14))
+			#print(label.get_position())
 		else:
+			# doesn't matter for scale (1,1)
 			label.set_position(siz)
 		con.add_child(label)
 			
