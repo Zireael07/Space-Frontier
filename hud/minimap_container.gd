@@ -237,7 +237,7 @@ func add_system_bodies():
 			sc = Vector2(0.5, 0.5)
 			#planet_sprite.set_scale(Vector2(0.5, 0.5))
 			
-		# center sprite
+		# size the sprite
 		# for some reason, get_size() doesn't work yet
 		var siz = Vector2(36,36)*sc #planet_sprite.get_scale()
 		planet_sprite.stretch_mode = TextureRect.STRETCH_SCALE
@@ -269,6 +269,9 @@ func add_system_bodies():
 		planet_sprites.append(con)
 		con.add_child(planet_sprite)
 		
+		# center the sprite
+		planet_sprite.set_position(-(siz/2))
+		
 		#print(label.get_size(), planet_sprite.get_size(), siz)
 		
 		#hackfix for giant planet's labels
@@ -277,11 +280,11 @@ func add_system_bodies():
 			#print(planet_sprite.get_size(), siz)
 			# we can't get label size yet so we hardcode it 
 			# 40,14 is the size, this would snap to AABB, to snap to (round) sprite move by 1/4 left and 100% up
-			label.set_position(siz-Vector2(10,14))
+			label.set_position(siz/2-Vector2(10,14))
 			#print(label.get_position())
 		else:
-			# doesn't matter for scale (1,1)
-			label.set_position(siz)
+			# slight offset doesn't matter for scale (1,1)
+			label.set_position(siz/2)
 		con.add_child(label)
 			
 	
@@ -300,6 +303,9 @@ func add_system_bodies():
 			
 		var wormhole_sprite = TextureRect.new()
 		wormhole_sprite.set_texture(planet)
+		var siz = Vector2(36,36)*0.25
+		# center the sprite
+		wormhole_sprite.set_position(-siz/2)
 		wormhole_sprite.set_scale(Vector2(0.5, 0.5))
 		wormhole_sprite.set_modulate(Color(0.2, 0.2, 0.2)) # gray-ish instead of black for a black hole
 		wormhole_sprites.append(wormhole_sprite)
@@ -417,6 +423,13 @@ func _on_wormhole_spawned(wormhole):
 	#print("On wormhole spawned...")
 	var wormhole_sprite = TextureRect.new()
 	wormhole_sprite.set_texture(planet)
+	var siz = Vector2(36,36)*0.25
+	# this approach doesn't work for scales less than 0.5
+	#print("Wormhole size:", siz)
+	#wormhole_sprite.set_size(siz)
+	#wormhole_sprite.stretch_mode = TextureRect.STRETCH_SCALE
+	# center the sprite
+	wormhole_sprite.set_position(-siz/2)
 	wormhole_sprite.set_scale(Vector2(0.5, 0.5))
 	wormhole_sprite.set_modulate(Color(0.2, 0.2, 0.2)) # black would be for real black hole, this is gray-ish
 	wormhole_sprites.append(wormhole_sprite)
