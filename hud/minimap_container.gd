@@ -234,8 +234,8 @@ func add_system_bodies():
 		
 		# moons
 		if p.is_in_group("moon"):
-			sc = Vector2(0.5, 0.5)
-			#planet_sprite.set_scale(Vector2(0.5, 0.5))
+			#sc = Vector2(0.5, 0.5)
+			planet_sprite.set_scale(Vector2(0.5, 0.5))
 			
 		# size the sprite
 		# for some reason, get_size() doesn't work yet
@@ -282,6 +282,8 @@ func add_system_bodies():
 			# 40,14 is the size, this would snap to AABB, to snap to (round) sprite move by 1/4 left and 100% up
 			label.set_position(siz/2-Vector2(10,14))
 			#print(label.get_position())
+		elif planet_sprite.get_scale().x < 1:
+			label.set_position(siz/2-Vector2(10,14))
 		else:
 			# slight offset doesn't matter for scale (1,1)
 			label.set_position(siz/2)
