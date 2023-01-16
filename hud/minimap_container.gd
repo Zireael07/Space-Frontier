@@ -5,7 +5,9 @@ extends Control
 # and do not necessarily reflect the actual star/planet color
 onready var star = preload("res://assets/hud/yellow_circle.png")
 onready var planet = preload("res://assets/hud/red_circle.png")
-onready var asteroid = preload("res://assets/hud/grey_circle.png")
+onready var moon = preload("res://assets/hud/grey_circle.png")
+onready var asteroid = preload("res://assets/hud/meteor_small.png")
+onready var giant = preload("res://assets/hud/icon_plusSmall.png")
 
 onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
 
@@ -221,12 +223,14 @@ func add_system_bodies():
 		
 		var planet_sprite = TextureRect.new()
 		planet_sprite.set_texture(planet)
-		var sc = null
+		var sc = Vector2(1,1)
 		if p.planet_rad_factor < 0.5:
-			sc = Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2)
-			#planet_sprite.set_scale(Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2))
+			#sc = Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2)
+			planet_sprite.set_scale(Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2))
 		elif p.planet_rad_factor > 1.75:
-			sc = Vector2(p.planet_rad_factor*0.75, p.planet_rad_factor*0.75)
+			planet_sprite.set_texture(giant)
+			planet_sprite.set_scale(Vector2(0.75, 0.75)) # the icon itself is larger than the planet icon
+		#	sc = Vector2(p.planet_rad_factor*0.75, p.planet_rad_factor*0.75)
 			#planet_sprite.set_scale(sc)
 		else:
 			sc = Vector2(p.planet_rad_factor, p.planet_rad_factor)
@@ -234,6 +238,7 @@ func add_system_bodies():
 		
 		# moons
 		if p.is_in_group("moon"):
+			planet_sprite.set_texture(moon)
 			#sc = Vector2(0.5, 0.5)
 			planet_sprite.set_scale(Vector2(0.5, 0.5))
 			
@@ -280,7 +285,7 @@ func add_system_bodies():
 			#print(planet_sprite.get_size(), siz)
 			# we can't get label size yet so we hardcode it 
 			# 40,14 is the size, this would snap to AABB, to snap to (round) sprite move by 1/4 left and 100% up
-			label.set_position(siz/2-Vector2(10,14))
+			label.set_position(planet_sprite.get_size()/2-Vector2(10,14))
 			#print(label.get_position())
 		elif planet_sprite.get_scale().x < 1:
 			label.set_position(siz/2-Vector2(10,14))
