@@ -7,6 +7,8 @@ onready var star = preload("res://assets/hud/yellow_circle.png")
 onready var planet = preload("res://assets/hud/red_circle.png")
 onready var moon = preload("res://assets/hud/grey_circle.png")
 onready var asteroid = preload("res://assets/hud/meteor_small.png")
+# gas giants had identical icons in the original; the scale up approach didn't work
+# TODO: either make the icon hollow or possibly make the "plus" representative of something
 onready var giant = preload("res://assets/hud/icon_plusSmall.png")
 
 onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
