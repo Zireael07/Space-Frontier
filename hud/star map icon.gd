@@ -308,6 +308,9 @@ func on_click():
 	# update displayed starmap info
 	get_node("../../../").display_star_map_info(get_node("../..").tg)
 	# try to route
+	if not pos in get_node("../../..").mapping:
+		return
+		
 	var r = get_node("../../..").get_route_icons(get_node("../..").src, get_node("../..").tg)
 	vis.route = r
 	vis.update()

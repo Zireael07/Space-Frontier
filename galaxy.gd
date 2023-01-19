@@ -291,6 +291,11 @@ func get_star_distance(a,b):
 	var id1 = mapping.get(start)
 	var id2 = mapping.get(end)
 	print("id1:", id1, " id2: ", id2)
+	# if star is not in mapping (not in sector)
+	if id2 == null:
+		# return placeholder value
+		return 1000
+	
 	return map_astar.get_point_position(id1).distance_to(map_astar.get_point_position(id2))
 
 # converts float to int

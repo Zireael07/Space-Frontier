@@ -244,7 +244,7 @@ func get_route(src_icon, tg_icon):
 	if not "pos" in tg_icon: 
 		tg = mapping[Vector3(0,0,0)]
 	else: 
-		tg = mapping[tg_icon.pos]	 
+		tg = mapping[tg_icon.pos]
 	
 	#print("Route: " , route(src, tg))
 	return route(src, tg)
@@ -440,6 +440,13 @@ func display_star_map_info(star_icon):
 	var fmt_coord_z = "%.2f" % star_icon.depth
 	text = text + "X: " + str(fmt_coord_x) + " Y: " + str(fmt_coord_y) + " Z: " + str(fmt_coord_z) + "\n"
 	
+	# do nothing more if we're not in mapping
+	if not star_icon.pos in mapping:
+		# need to go up the tree and back down :/
+		var rtl = $"../../Control2/Panel_rightHUD/PanelInfo/StarSystemInfo/RichTextLabel"
+		rtl.set_text(text)
+		return
+		
 	# wormhole connections
 	#var n = get_neighbors(star_icon.pos)
 	# this one uses preconverted values unlike the function above
