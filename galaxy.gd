@@ -51,12 +51,26 @@ func positive_to_original(vec3):
 	#print("positive: ", vec3, " original: ", pos)
 	return pos
 
+# "want to determine which face encloses a point in world space, use floor instead of round" - Amit
+func pos_to_sector(pos):
+	print("Determining sector for: ", pos)
+	pos = float_to_int(pos)
+	
+	# doubles as "how is our position offset compared to start of sector 0?"
+	pos = pos_to_positive_pos(pos)
+	print("Pos offset from beginning of sector 0: ", pos)
+	# 1024 is the sector size
+	var sector = [floor((pos.x-512)/1024), floor((pos.y-512)/1024)] ##, floor((pos.z-512)/1024)]
+	print("Sector", sector)
+
 
 func save_graph_data(x,y,z, nam):
 	map_graph.append([x,y,z, nam])
 	
 	# skip any stars outside the sector
 	if x < -50 or y < -50 or z < -50:
+		# test
+		pos_to_sector(Vector3(x,y,z))
 		return
 	
 	# as of Godot 3.5, AStar's key cannot be larger than 2^32-1 (hashes will overflow)
@@ -144,9 +158,9 @@ func create_map_graph():
 		#map_astar.add_point(i+1, Vector3(n[0], n[1], n[2]))
 	
 	# debug
-	print("AStar points:")
-	for p in map_astar.get_points():
-		print(p, ": ", map_astar.get_point_position(p))
+	#print("AStar points:")
+	#for p in map_astar.get_points():
+	#	print(p, ": ", map_astar.get_point_position(p))
 	
 	# connect stars
 	var data = auto_connect_stars()
@@ -342,7 +356,7 @@ func closest_stars_postprocess(stars):
 		#print("Comparing ", (s[1]-s_next[1]).length())
 		if (s[1]-s_next[1]).length() < 0.15:
 		#if abs(s[0]-s_next[0]) < 0.1:
-			print("Detected two close stars in the list! ", s[1], s_next[1])
+			#print("Detected two close stars in the list! ", s[1], s_next[1])
 			to_rem.append(i+1)
 	
 	for r in to_rem:
