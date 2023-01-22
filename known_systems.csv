@@ -9,9 +9,12 @@ Saturn, planet, -, -, -, -, -, -, 95.16E, 9.14E, 9.57, -, -
 Uranus, planet, -, -, -, -, -, -, 14.54E, 3.98E, 19.147, -, -
 Neptune, planet, -, -, -, -, -, -, 17.15E, 3.86E, 30.14, -, -
 Proxima Centauri, star, 217.43deg, -62.67deg, 4.24, 2.8ly, -3.1ly, 0.1ly, 0.12S, 0.14S, -, 0.0015, red, //7200 AU or 0.13ly away from Alpha
+Proxima Centauri b, planet, -, -, -, -, -, -, 1.07E, 1.3E, 0.05, -, -
 Alpha Centauri A, star, 219.90deg, -60.83deg, 4.36, 2.9ly, -3.1ly, 0.1ly, 1.1S, 1.27S, -, 1.56, yellow
 Alpha Centauri B, star, -, -, -, -, -, -, 0.93S, 0.96S, 23.51, 0.55, yellow
+Alpha Centauri Bb, planet, -, -, -, -, -, -, 0.9E, 0.92E, 0.14, -, - 
 Barnard's star, star, 269.45deg, 4.69deg, 5.96, 5.0ly, 3.0ly, 1.4ly, 0.16S, 0.17S, -, 0.004, red
+Barnard's star b, planet, -, -, -, -, -, -, 3.23E, ?, 0.4, -, - 
 Wolf 359, star, 164.12deg, 7.01deg, 7.85, -1.9ly, -3.9ly, 6.5ly, 0.09S, 0.16S, -, 0.009, red
 Wolf 359 b, planet, -, -, -, -, -, -, 50E, 8E, 1.84, -, -
 Wolf 359 c, planet, -, -, -, -, -, -, 4.4E, 1.6E, 0.018, -, -
