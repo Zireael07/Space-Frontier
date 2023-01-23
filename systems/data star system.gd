@@ -46,8 +46,19 @@ func spawn_from_data(data):
 				b.set_name(data[i][0])
 				b.get_node("Label").set_text(data[i][0])
 				holder.add_child(b)
-				# FIXME: placeholder values
-				b.setup(0, float(d[2])*game.AU, 0, 0, false)
+				# actually load planet radius and mass from data
+				var rad = 0
+				if d[3] != "?":
+					rad = float(d[3])
+				var mas = d[4]
+				if mas.find("E") != -1:
+					mas = mas.strip_edges()
+					mas = mas.trim_suffix("E")
+					mas = mas.to_float()
+				else:
+					mas = mas.trim_suffix("J")
+					mas = mas.to_float() * 318 # 1 MJ is 318 ME
+				b.setup(0, float(d[2])*game.AU, mas, rad, false)
 			else:
 				b = star.instance()
 				b.set_name(data[i][0])

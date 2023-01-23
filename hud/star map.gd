@@ -148,6 +148,8 @@ func parse_data():
 					if line[col.TYPE].strip_edges() == "star":
 						data.append(line[col.LUMINOSITY])
 						data.append(str(line[col.COLOR]).strip_edges())
+					else:
+						data.append(line[col.MASS])
 					
 					systems[_nam].append(data)
 	
