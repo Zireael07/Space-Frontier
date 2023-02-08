@@ -442,12 +442,20 @@ func display_star_map_info(star_icon):
 	var fmt_coord_z = "%.2f" % star_icon.depth
 	text = text + "X: " + str(fmt_coord_x) + " Y: " + str(fmt_coord_y) + " Z: " + str(fmt_coord_z) + "\n"
 	
+	text = text + str(pos_to_sector(star_icon.pos, false)) + "\n"
+	
 	# do nothing more if we're not in mapping
-	if not star_icon.pos in mapping:
+	if (star_icon.pos in mapping):
+		pass
+	else:
 		# need to go up the tree and back down :/
 		var rtl = $"../../Control2/Panel_rightHUD/PanelInfo/StarSystemInfo/RichTextLabel"
 		rtl.set_text(text)
+		
+		print(star_icon.pos in mapping)
+		print("Not in mapping! ", star_icon.pos)
 		return
+		
 		
 	# wormhole connections
 	#var n = get_neighbors(star_icon.pos)

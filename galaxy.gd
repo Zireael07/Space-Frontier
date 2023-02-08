@@ -52,17 +52,20 @@ func positive_to_original(vec3):
 	return pos
 
 # "want to determine which face encloses a point in world space, use floor instead of round" - Amit
-func pos_to_sector(pos):
+func pos_to_sector(pos, need_convert=true):
 	print("Determining sector for: ", pos)
-	pos = float_to_int(pos)
+	if need_convert:
+		pos = float_to_int(pos)
 	
 	# doubles as "how is our position offset compared to start of sector 0?"
 	pos = pos_to_positive_pos(pos)
 	print("Pos offset from beginning of sector 0: ", pos)
 	# 1024 is the sector size
-	var sector = [floor((pos.x-512)/1024), floor((pos.y-512)/1024)] ##, floor((pos.z-512)/1024)]
+	# divide by tile size to get grid coordinates
+	#var sector = [floor((pos.x-512)/1024), floor((pos.y-512)/1024)] ##, floor((pos.z-512)/1024)]
+	var sector = [floor(pos.x/1024), floor(pos.y/1024)]
 	print("Sector", sector)
-
+	return sector
 
 func save_graph_data(x,y,z, nam):
 	map_graph.append([x,y,z, nam])
