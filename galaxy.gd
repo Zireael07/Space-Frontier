@@ -67,6 +67,18 @@ func pos_to_sector(pos, need_convert=true):
 	print("Sector", sector)
 	return sector
 
+func sector_to_quadrants(sector_begin):
+	# center of sector is sector_begin + half sector size (half of 1024)
+	var center = Vector2(sector_begin.x+512, sector_begin.y+512)
+	print("Center: ", center)
+	# divide into four quads
+	var nw = Rect2(sector_begin.x, sector_begin.y, 512, 512)
+	var ne = Rect2(sector_begin.x+512, sector_begin.y, 512, 512)
+	var se = Rect2(sector_begin.x+512, sector_begin.y+512, 512, 512)
+	var sw = Rect2(sector_begin.x, sector_begin.y+512, 512, 512)
+	print("Quadrants: ", [nw, ne, se, sw])
+	return [nw, ne, se, sw]
+
 func save_graph_data(x,y,z, nam):
 	map_graph.append([x,y,z, nam])
 	
