@@ -182,12 +182,38 @@ func create_map_graph():
 	return data # for debugging
 	
 func auto_connect_stars():
+	var V = map_astar.get_points().size()
+	print("Points in astar: ", V)
+	var prim_data = auto_connect_prim(V)
+	
+	var in_mst = prim_data[0]
+	var tree = prim_data[1]
+	# convert mst to connections
+	for i in range(1,in_mst.size()-1):
+		map_astar.connect_points(mapping[in_mst[i-1]], mapping[in_mst[i]])
+	for i in range(1, tree.size()-1):
+		if !typeof(tree[i]) == TYPE_VECTOR3:
+			continue # paranoia skip
+		map_astar.connect_points(mapping[in_mst[i-1]], mapping[tree[i]])
+
+		#print("Connecting: ", in_mst[i-1], " and ", tree[i])
+
+	# manually add Sol's connections (for now) since that's what the wormhole setup script expects...
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
+	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
+	
+
+	return [map_astar, in_mst, tree]
+
+func auto_connect_prim(V):
 	# we're not using Kruskal as we don't have edges
 	# Prim's algorithm: start with one vertex
 	# 1. Find the edges that connect to other vertices. Find the edge with minimum weight and add it to the spanning tree.
 	# Repeat step 1 until the spanning tree is obtained.
 	# i.e. step 1 is: get closest stars[1]... since [0] is ourselves
-	var V = map_astar.get_points().size()
+
 	var in_mst = [] # unlike most Prim exmaples, we store positions here, not just bools
 	# preallocate for speedup
 	in_mst.resize(V)
@@ -225,24 +251,7 @@ func auto_connect_stars():
 				
 			
 	#print(in_mst)
-	# convert mst to connections
-	for i in range(1,in_mst.size()-1):
-		map_astar.connect_points(mapping[in_mst[i-1]], mapping[in_mst[i]])
-	for i in range(1, tree.size()-1):
-		if !typeof(tree[i]) == TYPE_VECTOR3:
-			continue # paranoia skip
-		map_astar.connect_points(mapping[in_mst[i-1]], mapping[tree[i]])
-
-		#print("Connecting: ", in_mst[i-1], " and ", tree[i])
-
-	# manually add Sol's connections (for now) since that's what the wormhole setup script expects...
-	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
-	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
-	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
-	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
-	
-
-	return [map_astar, in_mst, tree]
+	return [in_mst, tree]
 
 func manual_connect():
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
