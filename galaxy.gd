@@ -182,10 +182,12 @@ func create_map_graph():
 	return data # for debugging
 	
 func auto_connect_stars():
-	var V = map_astar.get_points().size()
-	print("Points in astar: ", V)
-	var prim_data = auto_connect_prim(V)
 	
+
+	# entire sector at once
+	var V = map_astar.get_points().size()
+	#print("Points in astar: ", V)
+	var prim_data = auto_connect_prim(V, Vector3(0,0,0))
 	var in_mst = prim_data[0]
 	var tree = prim_data[1]
 	# convert mst to connections
@@ -207,7 +209,7 @@ func auto_connect_stars():
 
 	return [map_astar, in_mst, tree]
 
-func auto_connect_prim(V):
+func auto_connect_prim(V, start):
 	# we're not using Kruskal as we don't have edges
 	# Prim's algorithm: start with one vertex
 	# 1. Find the edges that connect to other vertices. Find the edge with minimum weight and add it to the spanning tree.
@@ -219,7 +221,7 @@ func auto_connect_prim(V):
 	in_mst.resize(V)
 	in_mst.fill(0)
 	var edge_count = 0
-	in_mst[0] = Vector3(0,0,0)
+	in_mst[0] = float_to_int(start)
 	
 	var tree = [] # separate struct for other connections
 	tree.resize(V)
