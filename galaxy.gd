@@ -236,22 +236,26 @@ func auto_connect_prim(V, start):
 		# some postprocessing to remove one of a pair of very close stars
 		stars = closest_stars_postprocess(stars)
 		# sometimes the closest star is already in mst
-		for c in range(1,stars.size()-1):
+		for c in range(1,stars.size()): #-1): #-1 because we add next closest, too
 			# paranoia
-			if c == stars.size()-2 and in_mst.has(float_to_int(stars[c][1])):
+			if c == stars.size()-1 and in_mst.has(float_to_int(stars[c][1])):
+				print(find_name_from_pos(pos, false), ": all stars already in mst?! ", stars[c], find_name_from_pos(stars[c][1]), in_mst.has(float_to_int(stars[c][1])))
 				edge_count += 1
 				break
-			#print("Star at #, ", c, " ", stars[c], ": ", in_mst.has(float_to_int(stars[c][1])))
+			#if debug:
+			#	print("Star at #, ", c, " ", stars[c], ": ", in_mst.has(float_to_int(stars[c][1])))
 			if !in_mst.has(float_to_int(stars[c][1])):
 				#print("Star, ", stars[c], " not in mst...")
 				edge_count += 1
 				in_mst[edge_count] = float_to_int(stars[c][1])
-			# add the next closest star to a separate listing
-			if !tree.has(float_to_int(stars[c+1][1])) and !in_mst.has(float_to_int(stars[c+1][1])):
-				#print("Star, ", stars[c+1][1], " to be added to tree")
-				tree[edge_count] = float_to_int(stars[c+1][1])
+				if c < stars.size()-1:
+					# add the next closest star to a separate listing
+					if !tree.has(float_to_int(stars[c+1][1])) and !in_mst.has(float_to_int(stars[c+1][1])):
+						#print("Star, ", stars[c+1][1], " to be added to tree")
+						tree[edge_count] = float_to_int(stars[c+1][1])
+				
 				break # no need to keep looking through closest stars if we already found
-			#else:
+
 				
 	# debugging		
 	#print(start, " : ", in_mst.size(), " ", in_mst)
