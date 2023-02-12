@@ -251,8 +251,15 @@ func auto_connect_prim(V, start):
 				break # no need to keep looking through closest stars if we already found
 			#else:
 				
-			
-	#print(in_mst)
+	# debugging		
+	#print(start, " : ", in_mst.size(), " ", in_mst)
+	
+	for i in in_mst.size():
+		var s = in_mst[i]
+		if !typeof(s) == TYPE_VECTOR3:
+			continue # paranoia skip
+		print(i, ": ", find_name_from_pos(s, false), " @ ", s)
+	
 	return [in_mst, tree]
 
 func manual_connect():
@@ -295,6 +302,25 @@ func manual_connect():
 #	print("To TRAPPIST: ", map_astar.get_id_path(mapping[Vector3(0,0,0)],mapping[Vector3(78, 211, -339)])) #12))
 		
 
+func find_name_from_pos(pos, need_conv=true):
+	#print("Looking up name from graph for pos: ", pos)
+
+	if need_conv:
+		# use ints for comparison to avoid floating point inaccuracies	
+		pos = float_to_int(pos)
+
+	#var id = -1
+	var nam = ""
+	for i in map_graph.size():
+		var n = map_graph[i]
+		var _int = float_to_int(Vector3(n[0], n[1], n[2]))
+		if pos == _int:
+		#if n[0] == pos.x and n[1] == pos.y and n[2] == pos.z:
+			#id = i
+			nam = n[3]
+			break
+	#print("Name: ", nam)
+	return nam
 
 # this is why we don't nuke map_graph after creating the Astar graph...
 func find_graph_id(nam):
