@@ -191,9 +191,11 @@ func auto_connect_stars():
 	var in_mst = prim_data[0]
 	var tree = prim_data[1]
 	# convert mst to connections
-	for i in range(1,in_mst.size()-1):
+	for i in range(1,in_mst.size()):
+		if !typeof(in_mst[i]) == TYPE_VECTOR3:
+			continue # paranoia skip
 		map_astar.connect_points(mapping[in_mst[i-1]], mapping[in_mst[i]])
-	for i in range(1, tree.size()-1):
+	for i in range(1, tree.size()):
 		if !typeof(tree[i]) == TYPE_VECTOR3:
 			continue # paranoia skip
 		map_astar.connect_points(mapping[in_mst[i-1]], mapping[tree[i]])
