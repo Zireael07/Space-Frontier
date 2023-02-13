@@ -211,7 +211,11 @@ func auto_connect_stars():
 
 	return [map_astar, in_mst, tree]
 
-func auto_connect_prim(V, start):
+func auto_connect_prim(V, start, list=null):
+	var debug = false
+	if start == Vector3(0.1,-5.6,9.3):
+		debug = true
+	#print("Prim's: #", V, " ", start)
 	# we're not using Kruskal as we don't have edges
 	# Prim's algorithm: start with one vertex
 	# 1. Find the edges that connect to other vertices. Find the edge with minimum weight and add it to the spanning tree.
@@ -232,9 +236,36 @@ func auto_connect_prim(V, start):
 	while edge_count < V-1:
 		# Find closest star to each star
 		var pos = in_mst[edge_count]
+		if !typeof(pos) == TYPE_VECTOR3 and pos == 0:
+			print("ERR! Pos is 0")
+			edge_count += 1
+			continue
+		
+		if debug:	
+			print("Connecting: ", find_name_from_pos(pos, false))
 		var stars = get_closest_stars_to(pos)
+		#print(stars)
+		
+		# filter
+		var tmp = [] #stars.duplicate()
+		if list:
+			#print(list)
+			for s in stars:
+				if s[1] in list:
+					tmp.append(s)
+					#print("Star not in list: ", s[1], " ", find_name_from_pos(s[1]))
+					#tmp.remove(tmp.find(s))
+		#print("post filter: ", tmp)
+		stars = tmp
+		
 		# some postprocessing to remove one of a pair of very close stars
 		stars = closest_stars_postprocess(stars)
+		
+#		for i in range(1,3): #(stars.size()):
+#			var s = stars[i]
+#			print(find_name_from_pos(s[1]), ": ", s[1])
+#		print("/n")
+		
 		# sometimes the closest star is already in mst
 		for c in range(1,stars.size()): #-1): #-1 because we add next closest, too
 			# paranoia
@@ -260,11 +291,12 @@ func auto_connect_prim(V, start):
 	# debugging		
 	#print(start, " : ", in_mst.size(), " ", in_mst)
 	
-	for i in in_mst.size():
-		var s = in_mst[i]
-		if !typeof(s) == TYPE_VECTOR3:
-			continue # paranoia skip
-		print(i, ": ", find_name_from_pos(s, false), " @ ", s)
+	if debug:
+		for i in in_mst.size():
+			var s = in_mst[i]
+			if !typeof(s) == TYPE_VECTOR3:
+				continue # paranoia skip
+			print(i, ": ", find_name_from_pos(s, false), " @ ", s)
 	
 	return [in_mst, tree]
 
