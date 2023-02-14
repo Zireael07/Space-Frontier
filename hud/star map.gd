@@ -170,17 +170,20 @@ func parse_data():
 	
 	# create a graph of stars we can route on
 	var data = create_map_graph()
+	
 	# clearer debugging stuff
-	var mst = data[1]
-	var tree = data[2]
+	get_node("Grid/VisControl").secondary = data[0]
+	
+	#var mst = data[1]
+	#var tree = data[2]
 
-	for i in range(1, tree.size()-1):
-		if !typeof(tree[i]) == TYPE_VECTOR3:
-			continue # paranoia skip
+	#for i in range(1, tree.size()-1):
+	#	if !typeof(tree[i]) == TYPE_VECTOR3:
+	#		continue # paranoia skip
 		
 		# for debugging
-		var connect = [find_icon_for_pos(mst[i-1]), find_icon_for_pos(tree[i])]
-		get_node("Grid/VisControl").secondary.append(connect)
+		#var connect = [find_icon_for_pos(mst[i-1]), find_icon_for_pos(tree[i])]
+		#get_node("Grid/VisControl").secondary.append(connect)
 		#get_node("Grid/VisControl").secondary.append()
 		
 #		map_astar.connect_points(mapping[mst[i-1]], mapping[tree[i]])

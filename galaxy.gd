@@ -262,15 +262,25 @@ func auto_connect_stars():
 #
 #		#print("Connecting: ", in_mst[i-1], " and ", tree[i])
 
+	var secondary = []
+	for i in range(1, tree.size()-1):
+		if !typeof(tree[i]) == TYPE_VECTOR3:
+			continue # paranoia skip
+
+		# for debugging
+		var connect = [find_name_from_pos(mst_sum[i-1], false), find_name_from_pos(tree[i], false)]
+		secondary.append(connect)
+		#var connect = [find_icon_for_pos(mst_sum[i-1]), find_icon_for_pos(tree[i])]
+		#get_node("Grid/VisControl").secondary.append(connect)
+
 
 	# manually add Sol's connections (for now) since that's what the wormhole setup script expects...
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
-	
 
-	return [map_astar, in_mst, tree]
+	return [secondary]
 
 func auto_connect_prim(V, start, list=null):
 	var debug = false
