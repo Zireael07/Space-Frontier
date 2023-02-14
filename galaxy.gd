@@ -182,25 +182,86 @@ func create_map_graph():
 	return data # for debugging
 	
 func auto_connect_stars():
+	# do it by quadrants
+	var quad_pts = [[],[], [], []]
+	var quads = sector_to_quadrants(Vector2(-512, -512))
+	for i in quads.size():
+		var q = quads[i]
+		for p in map_astar.get_points():
+			var pos = map_astar.get_point_position(p)
+			#print(pos)
+			# we don't care about Z here
+			if q.has_point(Vector2(pos.x, pos.y)):
+				quad_pts[i].append(map_astar.get_point_position(p))
+				continue
+
+	#print("Quad pts: ", quad_pts)
 	
+	# better debugging
+#	print("NW:")
+#	for p in quad_pts[0]:
+#		print(find_name_from_pos(p), ": ", p)
+#	print("NE:")
+#	for p in quad_pts[1]:
+#		print(find_name_from_pos(p), ": ", p)
+#	print("SE:")
+#	for p in quad_pts[2]:
+#		print(find_name_from_pos(p), ": ", p)
+#	print("SW:")
+#	for p in quad_pts[3]:
+#		print(find_name_from_pos(p), ": ", p)		
+#	print("/n")
+	
+	#print("NW: ", quad_pts[0], " ", quad_pts[0].size(), "\n NE: ", quad_pts[1], " ", quad_pts[1].size(), "\n SE: ", quad_pts[2], " ", quad_pts[2].size(), "\n SW: ", quad_pts[3], " ", quad_pts[3].size())
+	#print("NW+NE+SE+SW:", quad_pts[0].size()+quad_pts[1].size()+quad_pts[2].size()+quad_pts[3].size())
+	
+	var mst_sum = []
+	var tree = []
+	for qp in quad_pts:
+		var prim_data = auto_connect_prim(qp.size(), qp[0], qp)
 
-	# entire sector at once
-	var V = map_astar.get_points().size()
-	#print("Points in astar: ", V)
-	var prim_data = auto_connect_prim(V, Vector3(0,0,0))
-	var in_mst = prim_data[0]
-	var tree = prim_data[1]
-	# convert mst to connections
-	for i in range(1,in_mst.size()):
-		if !typeof(in_mst[i]) == TYPE_VECTOR3:
-			continue # paranoia skip
-		map_astar.connect_points(mapping[in_mst[i-1]], mapping[in_mst[i]])
-	for i in range(1, tree.size()):
-		if !typeof(tree[i]) == TYPE_VECTOR3:
-			continue # paranoia skip
-		map_astar.connect_points(mapping[in_mst[i-1]], mapping[tree[i]])
+		var in_mst = prim_data[0]
+		var sub_tree = prim_data[1]
 
-		#print("Connecting: ", in_mst[i-1], " and ", tree[i])
+		# combine into one structure
+		for i in range(0, in_mst.size()):
+			mst_sum.append(in_mst[i])
+		for i in range(0, sub_tree.size()):
+			tree.append(sub_tree[i])
+		#mst_sum.append(in_mst)
+		#tree.append(sub_tree)
+
+
+		# convert mst to connections
+		for i in range(1,in_mst.size()):
+			if !typeof(in_mst[i]) == TYPE_VECTOR3:
+				continue # paranoia skip
+			map_astar.connect_points(mapping[in_mst[i-1]], mapping[in_mst[i]])
+		for i in range(1, sub_tree.size()):
+			if !typeof(sub_tree[i]) == TYPE_VECTOR3:
+				continue # paranoia skip
+			map_astar.connect_points(mapping[in_mst[i-1]], mapping[sub_tree[i]])
+
+			#print("Connecting: ", in_mst[i-1], " and ", sub_tree[i])
+
+	# old: entire sector at once
+#	var V = map_astar.get_points().size()
+#	#print("Points in astar: ", V)
+#	var prim_data = auto_connect_prim(V, Vector3(0,0,0))
+#	var in_mst = prim_data[0]
+#	var tree = prim_data[1]
+#	# convert mst to connections
+#	for i in range(1,in_mst.size()):
+#		if !typeof(in_mst[i]) == TYPE_VECTOR3:
+#			continue # paranoia skip
+#		map_astar.connect_points(mapping[in_mst[i-1]], mapping[in_mst[i]])
+#	for i in range(1, tree.size()):
+#		if !typeof(tree[i]) == TYPE_VECTOR3:
+#			continue # paranoia skip
+#		map_astar.connect_points(mapping[in_mst[i-1]], mapping[tree[i]])
+#
+#		#print("Connecting: ", in_mst[i-1], " and ", tree[i])
+
 
 	# manually add Sol's connections (for now) since that's what the wormhole setup script expects...
 	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
