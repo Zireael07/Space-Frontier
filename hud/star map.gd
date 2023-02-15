@@ -290,7 +290,7 @@ func get_route_distance_height(src_icon, tg_icon):
 	
 	var r = get_route(src_icon, tg_icon)
 	
-	if r == null:
+	if r == null or r.empty():
 		return []
 	
 	for i in range(r.size()-1):

@@ -267,13 +267,17 @@ func not_in_bounds(offset):
 func on_click():
 	var vis = get_node("../../../Grid/VisControl")
 	# clear any previous tint
-	for c in get_parent().get_children():
-		# skip wormhole target
-		if c.get_node("Label").get_self_modulate() == Color(1,0,1):
-			continue
-		c.get_node("Label").set_self_modulate(Color(1,1,1))
-		if "selected" in c:
-			c.selected = false
+	for l in get_parent().get_parent().get_children():
+		for c in l.get_children():
+			if !c.has_node("Label"):
+				continue
+			# skip wormhole target
+			if c.get_node("Label").get_self_modulate() == Color(1,0,1):
+				continue
+			c.get_node("Label").set_self_modulate(Color(1,1,1))
+			# FIXME: this isn't reliable!!! should be tracked elsewhere in one place instead
+			if "selected" in c:
+				c.selected = false
 	print("Clicked on ", get_node("Label").get_text())
 	# debug
 	var ab_shadow = get_node("ShadowTexture").get_global_position()
