@@ -447,9 +447,28 @@ func display_star_map_info(star_icon):
 	
 	text = text + str(pos_to_sector(star_icon.pos, false)) + "\n"
 	
-	# do nothing more if we're not in mapping
+
 	if (star_icon.pos in mapping):
-		pass
+		# wormhole connections
+		#var n = get_neighbors(star_icon.pos)
+		# this one uses preconverted values unlike the function above
+		var neighbors = map_astar.get_point_connections(mapping[star_icon.pos])
+		
+		var neighbors_text = ""
+		for n in neighbors:
+			var coords = unpack_vector(n)
+			#print("unpacked coords: ", coords)
+			coords = positive_to_original(coords)
+			#print("Coords: ", coords)
+			var icon = find_icon_for_pos(coords)
+			
+			neighbors_text += str(icon.get_name()) + ", " #str(n) would display the internal ID
+		text = text + "Wormholes to: " + neighbors_text
+		
+		# need to go up the tree and back down :/
+		var rtl = $"../../Control2/Panel_rightHUD/PanelInfo/StarSystemInfo/RichTextLabel"
+		rtl.set_text(text)
+	# do nothing more if we're not in mapping
 	else:
 		# need to go up the tree and back down :/
 		var rtl = $"../../Control2/Panel_rightHUD/PanelInfo/StarSystemInfo/RichTextLabel"
@@ -457,28 +476,7 @@ func display_star_map_info(star_icon):
 		
 		print(star_icon.pos in mapping)
 		print("Not in mapping! ", star_icon.pos)
-		return
 		
-		
-	# wormhole connections
-	#var n = get_neighbors(star_icon.pos)
-	# this one uses preconverted values unlike the function above
-	var neighbors = map_astar.get_point_connections(mapping[star_icon.pos])
-	
-	var neighbors_text = ""
-	for n in neighbors:
-		var coords = unpack_vector(n)
-		#print("unpacked coords: ", coords)
-		coords = positive_to_original(coords)
-		#print("Coords: ", coords)
-		var icon = find_icon_for_pos(coords)
-		
-		neighbors_text += str(icon.get_name()) + ", " #str(n) would display the internal ID
-	text = text + "Wormholes to: " + neighbors_text
-	
-	# need to go up the tree and back down :/
-	var rtl = $"../../Control2/Panel_rightHUD/PanelInfo/StarSystemInfo/RichTextLabel"
-	rtl.set_text(text)
 
 # --------------------------------------------------
 func display_captain_log():
