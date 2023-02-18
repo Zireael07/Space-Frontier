@@ -601,12 +601,17 @@ func _on_shield_changed(data):
 	if enemies.size() > 2 or is_enemy_a_starbase(enemies):
 		flee_threshold = 60
 		#print("Many enemies or starbase enemy detected!")
+	# if we're carrying a colony, flee earlier (if we get destroyed so does the colony)
+	if get_colony_in_dock() != null:
+		flee_threshold = 60
 	
 	# if shield falls low, go away
 	if data[0] < flee_threshold and effect:
 		#print("Flee because of low shields")
 		if orbiting:
 			deorbit()
+		
+		# TODO: cloak if we have it
 			
 		# TODO: flee first, then head to a base	
 		
