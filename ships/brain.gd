@@ -574,8 +574,13 @@ class IdleState:
 					if base != null:
 						#print(base.get_name())
 						#print("Fleeing to our base")
-						ship.target = base.get_global_position()
-						ship.set_state(STATE_REFIT, base)
+						
+						# don't retreat unnecessarily if already around the base
+#						if ship.get_global_position().distance_to(base.get_global_position()) < 150:
+#							return
+#						else:
+							ship.target = base.get_global_position()
+							ship.set_state(STATE_REFIT, base)
 					
 					# go back to a planet
 					#ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())

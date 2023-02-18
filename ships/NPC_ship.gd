@@ -489,6 +489,17 @@ func _on_AI_hit(attacker):
 	# switch to attack
 	if brain.get_state() != brain.STATE_ATTACK:
 		brain.set_state(brain.STATE_ATTACK, attacker)
+	else:
+		# is current attacker closer than previous one?
+		var cur_att = brain.get_state_obj().target.get_global_position()
+		var att = attacker.get_global_position()
+		var cur_att_dist = get_global_position().distance_to(cur_att)
+		var att_dist = get_global_position().distance_to(att)
+		if att_dist < cur_att_dist:
+			# hack to prevent AI immediately going after previous target upon kill
+			#brain.set_state(brain.STATE_IDLE)
+			brain.set_state(brain.STATE_ATTACK, attacker)
+		#pass
 	
 	# signal player being attacked if it's the case
 	if attacker.is_in_group("player"):
@@ -625,8 +636,13 @@ func _on_shield_changed(data):
 		if base != null:
 			#print(base.get_name())
 			#print("Fleeing to our base")
-			brain.target = base.get_global_position()
-			brain.set_state(brain.STATE_REFIT, base)
+			
+			# don't unnecessarily flee if already close by
+#			if get_global_position().distance_to(base.get_global_position()) < 150:
+#				return
+#			else:
+				brain.target = base.get_global_position()
+				brain.set_state(brain.STATE_REFIT, base)
 		
 		# update player status light if needed
 		if self in game.player.targeted_by:
