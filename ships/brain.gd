@@ -739,7 +739,19 @@ class RefitState:
 	func update(delta):
 		if not ship.ship.docked:
 			#ship.move_generic(delta)
+			
 			# TODO: use q-drive if far enough
+			if ship.get_global_position().distance_to(base.get_global_position()) > 250:
+				if 'warping' in ship.ship and not ship.ship.warping:
+					ship.ship.on_warping()
+					ship.ship.warping = true
+
+			else:
+				if 'warping' in ship.ship:
+					ship.ship.warping = false
+					ship.ship.warp_target = null
+					# remove tint
+					ship.ship.set_modulate(Color(1,1,1))
 			
 			# steering behavior
 			# weighted

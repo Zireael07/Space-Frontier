@@ -85,6 +85,8 @@ margin_right = 38.0
 margin_bottom = 54.0
 text = "Name"
 
+[node name="warp_correct_timer" type="Timer" parent="Area2D_ship_f"]
+
 [connection signal="input_event" from="Area2D_ship_f" to="Area2D_ship_f" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D_ship_f/shield_timer" to="Area2D_ship_f" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D_ship_f/task_timer" to="Area2D_ship_f" method="_on_task_timer_timeout"]

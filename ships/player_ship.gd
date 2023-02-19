@@ -20,8 +20,8 @@ var has_cloak = false
 var cloaked = false
 var has_tractor = true
 
-onready var warp_effect = preload("res://warp_effect.tscn")
-onready var warp_timer = $"warp_correct_timer"
+#onready var warp_effect = preload("res://warp_effect.tscn")
+#onready var warp_timer = $"warp_correct_timer"
 
 onready var recharge_timer = $"recharge_timer"
 
@@ -29,7 +29,7 @@ var target = null
 # warp drive
 var heading = null
 var warp_planet
-var warp_target = null
+#var warp_target = null
 var cruise = false
 
 var auto_orbit = false

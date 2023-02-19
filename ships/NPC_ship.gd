@@ -298,6 +298,36 @@ func move_AI(vel, delta):
 	else:
 		vel = Vector2(0,0)
 	
+	# warp drive!
+	#if not heading and warp_target != null:
+	if warp_target != null:
+		if warping:
+			if get_colony_in_dock() != null:
+				return
+			
+			print(get_parent().get_name(), " warping...")
+			# update target because the planet is orbiting, after all...
+			#warp_target = warp_target.get_global_position()
+			
+			var desired = warp_target - get_global_position()
+			var dist = desired.length()
+			
+			if dist > LIGHT_SPEED:
+				vel = Vector2(0, -LIGHT_SPEED).rotated(rot)
+				pos += vel* delta
+				# prevent accumulating
+				vel = vel.clamped(LIGHT_SPEED)
+				set_position(pos)
+			else:
+				# we've arrived, return to normal space
+				warp_target = null
+				warping = false
+				#cruise = false
+				warp_timer.stop()
+				# remove tint
+				set_modulate(Color(1,1,1))
+	
+	
 	# rotation
 	set_rotation(-a)
 	
@@ -589,6 +619,21 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		# redraw 
 		update()
 
+func on_warping():
+	# no warping if we are hauling a colony
+	if get_colony_in_dock() != null:
+		warping = false
+		return
+	
+	# effect
+	var warp = warp_effect.instance()
+	add_child(warp)
+	warp.set_position(Vector2(0,0))
+	warp.play()
+	
+	# tint a matching orange color
+	set_modulate(Color(1, 0.73, 0))
+
 func _on_shield_changed(data):
 	#print(str(shield))
 	var effect
@@ -637,12 +682,19 @@ func _on_shield_changed(data):
 			#print(base.get_name())
 			#print("Fleeing to our base")
 			
+			brain.steer = brain.set_heading(base.get_global_position())
+			warp_target = base.get_global_position()
+			
+			brain.target = base.get_global_position()
+			brain.set_state(brain.STATE_REFIT, base)
+			
+			
 			# don't unnecessarily flee if already close by
 #			if get_global_position().distance_to(base.get_global_position()) < 150:
 #				return
 #			else:
-				brain.target = base.get_global_position()
-				brain.set_state(brain.STATE_REFIT, base)
+#				brain.target = base.get_global_position()
+#				brain.set_state(brain.STATE_REFIT, base)
 		
 		# update player status light if needed
 		if self in game.player.targeted_by:

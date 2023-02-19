@@ -20,7 +20,11 @@ var acc = Vector2()
 var spd = 0
 
 var orbiting = null
+
+onready var warp_effect = preload("res://warp_effect.tscn")
+onready var warp_timer = $"warp_correct_timer"
 var warping = false
+var warp_target = null
 
 # shields
 var shields = 100
@@ -236,7 +240,7 @@ func get_engine_exhaust_color():
 	else:
 		return Color(1,0.35,1) # light pink
 
-# ----------------------
+# ----------------------------------------------------------
 func get_friendly_bases():
 	var bases = get_tree().get_nodes_in_group("starbase")
 	

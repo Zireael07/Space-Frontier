@@ -86,6 +86,8 @@ autostart = true
 [node name="dock" type="Position2D" parent="Area2D_ship_e"]
 position = Vector2( 0, 23 )
 
+[node name="warp_correct_timer" type="Timer" parent="Area2D_ship_e"]
+
 [connection signal="input_event" from="Area2D_ship_e" to="Area2D_ship_e" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D_ship_e/shield_timer" to="Area2D_ship_e" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D_ship_e/task_timer" to="Area2D_ship_e" method="_on_task_timer_timeout"]
