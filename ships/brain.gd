@@ -735,16 +735,20 @@ class RefitState:
 		ship = shp
 		param = sb
 		base = sb
+		
+		# initiate q-drive
+		if ship.get_global_position().distance_to(base.get_global_position()) > ship.ship.LIGHT_SPEED:
+			if 'warping' in ship.ship and not ship.ship.warping:
+				ship.ship.on_warping()
+				ship.ship.warping = true
 	
 	func update(delta):
 		if not ship.ship.docked:
 			#ship.move_generic(delta)
 			
-			# TODO: use q-drive if far enough
-			if ship.get_global_position().distance_to(base.get_global_position()) > 250:
-				if 'warping' in ship.ship and not ship.ship.warping:
-					ship.ship.on_warping()
-					ship.ship.warping = true
+			# use q-drive if far enough
+			if ship.get_global_position().distance_to(base.get_global_position()) > ship.ship.LIGHT_SPEED:
+				pass
 
 			else:
 				if 'warping' in ship.ship:
