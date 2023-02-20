@@ -31,9 +31,7 @@ radius = 47.0
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Area2D_starbase" type="Area2D" parent="." groups=[
-"starbase",
-]]
+[node name="Area2D_starbase" type="Area2D" parent="." groups=["starbase"]]
 position = Vector2( 0, 1 )
 script = ExtResource( 3 )
 bullet = ExtResource( 1 )
@@ -62,6 +60,7 @@ wait_time = 5.0
 autostart = true
 
 [node name="move_timer" type="Timer" parent="Area2D_starbase"]
+
 [connection signal="input_event" from="Area2D_starbase" to="Area2D_starbase" method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Area2D_starbase/produce_timer" to="Area2D_starbase" method="_on_produce_timer_timeout"]
 [connection signal="timeout" from="Area2D_starbase/move_timer" to="Area2D_starbase" method="_on_move_timer_timeout"]
