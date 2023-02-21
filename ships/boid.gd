@@ -109,3 +109,26 @@ func get_steering_flee(tg):
 	desired = desired.normalized() * max_speed
 	steering = (desired - vel).clamped(max_vel/2)
 	return steering
+
+func get_steering_separation(others):
+	var steering = Vector2(0,0)
+	var min_dist = 40 # roughly half of sprite size
+	
+	var moveX = 0
+	var moveY = 0
+	
+	for s in others:
+		if s != get_parent():
+			#print("Ship: ", s.get_parent().get_name())
+			var dist = get_global_position().distance_to(s.get_global_position())
+			if dist < min_dist:
+				moveX += get_global_position().x - s.get_global_position().x
+				moveY += get_global_position().y - s.get_global_position().y
+				print("Ship in range, move ", moveX, moveY)
+	
+	if moveX != 0 and moveY != 0:
+		print("Separation: ", moveX, " ", moveY)
+		steering = Vector2(moveX, moveY).clamped(max_vel/2)
+		return steering
+	else:
+		return Vector2(0,0)

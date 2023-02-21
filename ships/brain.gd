@@ -688,6 +688,12 @@ class AttackState:
 			else:
 				ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
 			return
+		
+		# add some separation from allied ships
+		var others = ship.ship.get_allies_in_range()
+		var sep = ship.get_steering_separation(others)
+		print("Steer: ", steer, " , ", sep)
+		steer = steer + sep
 			
 		# normal case
 		ship.vel += steer
