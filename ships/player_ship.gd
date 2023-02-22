@@ -31,6 +31,7 @@ var heading = null
 var warp_planet
 #var warp_target = null
 var cruise = false
+var distress_caller = null
 
 var auto_orbit = false
 var planet_to_orbit = null
@@ -304,8 +305,9 @@ func _process(delta):
 	# warp drive!
 	if not heading and warp_target != null:
 		if warping:
-			# update target because the planet is orbiting, after all...
-			warp_target = warp_planet.get_global_position()
+			if warp_planet:
+				# update target because the planet is orbiting, after all...
+				warp_target = warp_planet.get_global_position()
 			
 			var desired = warp_target - get_global_position()
 			var dist = desired.length()
@@ -564,6 +566,14 @@ func _input(_event):
 		#self.HUD.switch_to_cargo()
 		
 	if Input.is_action_pressed("go_planet"):
+		# we hijack the same keybind to work for distress calls
+		# because the caller might've been destroyed in the meantime
+		if distress_caller != null and is_instance_valid(distress_caller):
+			warp_target = distress_caller.get_global_position()
+			heading = warp_target
+			on_warping()
+			return
+		
 		# no warping if we are hauling a colony
 		# the check is in on_warping()
 		# if already warping, abort

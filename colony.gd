@@ -225,6 +225,7 @@ func show_dome():
 	get_child(1).get_node("dome").show()
 
 func _on_distress_called(target):
+	print("Colony distress called: ", target)
 	for n in get_tree().get_nodes_in_group("friendly"):
 		if not n.is_in_group("starbase") and not n.is_in_group("drone"):
 			#if target.cloaked:
@@ -236,7 +237,9 @@ func _on_distress_called(target):
 			
 	# player
 	var player = game.player
-	player.emit_signal("officer_message", "Colony is under attack!") # TODO: original game had a press key to respond functionality
+	player.emit_signal("officer_message", "Colony is under attack! Press G to respond") 
+	# press key to respond functionality
+	player.distress_caller = self
 
 func _on_colony_colonized(_colony, planet):
 	get_node("Label").hide()
