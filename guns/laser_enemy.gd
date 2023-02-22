@@ -38,6 +38,15 @@ func _physics_process(delta):
 			# show a visual effect
 			area.dodge_effect()
 			return
+			
+		# if the target is hauling a colony, it'll issue a distress call
+		# IIRC it wasn't the case in original Stellar Frontier, but colonies are VERY important to us
+		if area.get_colony_in_dock() != null:
+			var col = area.get_colony_in_dock()
+			#print("We hit a ship hauling a colony ", col)
+			col.get_child(0).emit_signal("distress_called", get_parent().get_parent())
+		#else:
+		#	print("No colony")
 
 		# go through armor first
 		if 'armor' in area and area.armor > 0:
