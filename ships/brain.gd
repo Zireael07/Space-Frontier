@@ -668,6 +668,15 @@ class AttackState:
 		
 		# target is a Node here
 		if is_instance_valid(target):
+			if target.warping:
+				if ship.prev_state[0] != STATE_IDLE:
+					# this way, we also pass the parameters
+					ship.set_state(ship.prev_state[0], ship.prev_state[1])
+					#print("Set state to: " + str(ship.get_state()))
+				else:
+					ship.set_state(STATE_GO_PLANET, ship.ship.get_colonized_planet())
+				return
+			
 			#print("Tg pos: " + str(target.get_global_position()))
 			var _rel_pos = ship.get_global_transform().xform_inv(target.get_global_position())
 			#print("Rel pos: " + str(rel_pos))
@@ -701,7 +710,7 @@ class AttackState:
 		ship.ship.move_AI(ship.vel, delta)
 		
 		var enemy = ship.ship.get_closest_enemy()
-		if enemy != null and enemy == target:
+		if enemy != null and not enemy.warping and enemy == target:
 			var dist = ship.get_global_position().distance_to(enemy.get_global_position())
 			#print(str(dist))
 			if dist < 150:

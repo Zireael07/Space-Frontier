@@ -24,6 +24,9 @@ func _on_lifetime_timeout():
 	queue_free()
 	
 func _on_bullet_area_entered( area ):
+	if 'warping' in area and area.warping:
+		return
+	
 	if area.get_groups().has("enemy"):
 		queue_free()
 		#print(area.get_parent().get_name())
