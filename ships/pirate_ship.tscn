@@ -93,3 +93,4 @@ position = Vector2( 0, 23 )
 [connection signal="timeout" from="Area2D_ship_e/shield_timer" to="Area2D_ship_e" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D_ship_e/task_timer" to="Area2D_ship_e" method="_on_task_timer_timeout"]
 [connection signal="timeout" from="Area2D_ship_e/shield_recharge_timer" to="Area2D_ship_e" method="_on_shield_recharge_timer_timeout"]
+[connection signal="timeout" from="Area2D_ship_e/warp_correct_timer" to="Area2D_ship_e" method="_on_warp_correct_timer_timeout"]

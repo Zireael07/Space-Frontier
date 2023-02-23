@@ -91,3 +91,4 @@ text = "Name"
 [connection signal="timeout" from="Area2D_ship_f/shield_timer" to="Area2D_ship_f" method="_on_shield_timer_timeout"]
 [connection signal="timeout" from="Area2D_ship_f/task_timer" to="Area2D_ship_f" method="_on_task_timer_timeout"]
 [connection signal="timeout" from="Area2D_ship_f/shield_recharge_timer" to="Area2D_ship_f" method="_on_shield_recharge_timer_timeout"]
+[connection signal="timeout" from="Area2D_ship_f/warp_correct_timer" to="Area2D_ship_f" method="_on_warp_correct_timer_timeout"]

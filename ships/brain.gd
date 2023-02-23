@@ -754,6 +754,7 @@ class RefitState:
 			
 			# use q-drive if far enough
 			if ship.get_global_position().distance_to(base.get_global_position()) > ship.ship.LIGHT_SPEED:
+				#FIXME: ensure correct heading
 				pass
 
 			else:
@@ -764,14 +765,19 @@ class RefitState:
 					ship.ship.set_modulate(Color(1,1,1))
 			
 			# steering behavior
-			# weighted
-			var d = ship.get_global_position().distance_to(ship.target)
-			var w = range_lerp(d, 50, d, 2, 1)
-			var steer_seek = ship.get_steering_arrive(ship.target)*w #1 
-			var steer = steer_seek
+			var steer = ship.get_steering_seek(ship.target)
+			# weighted if not warping
+			if ('warping' in ship.ship and not ship.ship.warping) or not 'warping' in ship.ship:
+				var d = ship.get_global_position().distance_to(ship.target)
+				var w = range_lerp(d, 50, d, 2, 1)
+				var steer_seek = ship.get_steering_arrive(ship.target)*w #1 
+				steer = steer_seek
+			else:
+				# just seek if warping (other code will take care of slowing down)
+				steer = ship.get_steering_seek(ship.target)
 			
 			# avoid enemy starbase
-			if ship.ship.get_enemy_base() != null:
+			if ship.ship.get_enemy_base() != null and 'warping' in ship.ship and not ship.ship.warping:
 				var e_base = ship.ship.get_enemy_base().get_global_position()
 				var dist = ship.get_global_position().distance_to(e_base) 
 				if dist < 500:

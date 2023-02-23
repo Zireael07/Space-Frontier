@@ -301,8 +301,18 @@ func move_AI(vel, delta):
 	# warp drive!
 	#if not heading and warp_target != null:
 	if warp_target != null:
+		# abort abort!
+		if brain.get_state() != brain.STATE_REFIT:
+			print("Aborting because of wrong state")
+			warping = false
+			warp_target = null
+			return
+		
 		if warping:
+			# paranoia
 			if get_colony_in_dock() != null:
+				warping = false
+				warp_target = null
 				return
 			
 			print(get_parent().get_name(), " warping...")
@@ -710,6 +720,11 @@ func _on_shield_changed(data):
 
 func _on_shield_timer_timeout():
 	$"shield_effect".hide()
+
+func _on_warp_correct_timer_timeout():
+	if warping:
+		# fix heading
+		look_at(warp_target)
 
 func _timer_stuff(forced=false):
 	if forced:
