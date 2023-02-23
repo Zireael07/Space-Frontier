@@ -323,7 +323,7 @@ func move_AI(vel, delta):
 			var dist = desired.length()
 			
 			if dist > LIGHT_SPEED:
-				vel = Vector2(0, -LIGHT_SPEED).rotated(rot)
+				vel = Vector2(0, -LIGHT_SPEED).rotated(-a)
 				pos += vel* delta
 				# prevent accumulating
 				vel = vel.clamped(LIGHT_SPEED)
