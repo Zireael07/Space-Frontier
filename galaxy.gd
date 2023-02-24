@@ -182,12 +182,21 @@ func create_map_graph():
 	return data # for debugging
 	
 func auto_connect_stars():
+	# FIXME: values for sector 0
+	var center = Vector2(-512+512, -512+512)
+	var center_star = map_astar.get_closest_point(Vector3(center.x, 0, center.y))
+	print("Center star: ", map_astar.get_point_position(center_star))
+	
 	# do it by quadrants
 	var quad_pts = [[],[], [], []]
 	var quads = sector_to_quadrants(Vector2(-512, -512))
 	for i in quads.size():
 		var q = quads[i]
 		for p in map_astar.get_points():
+			# skip center star
+			if p == center_star:
+				continue
+			
 			var pos = map_astar.get_point_position(p)
 			#print(pos)
 			# we don't care about Z here
