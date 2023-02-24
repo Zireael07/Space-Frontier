@@ -283,11 +283,31 @@ func auto_connect_stars():
 		#get_node("Grid/VisControl").secondary.append(connect)
 
 
+	# connect the central (hub) star
+	for qp in quad_pts:
+		# find the closest star in each quadrant (they're NOT in distance order by default)
+		var stars = get_closest_stars_to(map_astar.get_point_position(center_star))
+		
+		# filter
+		var tmp = [] #stars.duplicate()
+		for s in stars:
+			if s[1] in qp:
+				tmp.append(s)
+				#print("Star not in list: ", s[1], " ", find_name_from_pos(s[1]))
+				#tmp.remove(tmp.find(s))
+		#print("post filter: ", tmp, " ", quad_pts.find(qp))
+		stars = tmp
+		
+		# if we were using raw stars we'd be using index 1 because 0 is center star itself, but we're filtering first so 0
+		print("Connecting the hub: ", map_astar.get_point_position(center_star), " to: ", find_name_from_pos(stars[0][1]), " @ ", stars[0][1])
+		map_astar.connect_points(center_star, mapping[float_to_int(stars[0][1])])
+
 	# manually add Sol's connections (for now) since that's what the wormhole setup script expects...
-	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
-	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
-	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
-	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
+	# funnily enough, the auto-hub algorithm picks up the EXACT same stars!
+	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
+	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
+	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
+	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
 
 	return [secondary]
 
