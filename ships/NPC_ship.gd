@@ -302,11 +302,11 @@ func move_AI(vel, delta):
 	#if not heading and warp_target != null:
 	if warp_target != null:
 		# abort abort!
-		if brain.get_state() != brain.STATE_REFIT:
-			print("Aborting because of wrong state")
-			warping = false
-			warp_target = null
-			return
+#		if brain.get_state() != brain.STATE_REFIT:
+#			print("Aborting because of wrong state")
+#			warping = false
+#			warp_target = null
+#			return
 		
 		if warping:
 			# paranoia

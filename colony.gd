@@ -228,9 +228,17 @@ func _on_distress_called(target):
 	print("Colony distress called: ", target)
 	for n in get_tree().get_nodes_in_group("friendly"):
 		if not n.is_in_group("starbase") and not n.is_in_group("drone"):
+			if n.get_colony_in_dock() != null:
+				return
+				
+			if n.brain.get_state() in [n.brain.STATE_ATTACK, n.brain.STATE_IDLE]:
+				return
+				
 			#if target.cloaked:
 			#	return
-				
+			
+			# FIXME: properly come and target attackers
+			# idea: warp in on idle and then attack	
 			n.brain.target = target.get_global_position()
 			n.brain.set_state(n.brain.STATE_IDLE)
 			#print("Targeting " + str(target.get_parent().get_name()) + " in response to distress call")

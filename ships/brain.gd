@@ -536,6 +536,12 @@ class IdleState:
 		# reset ship's timer count
 		ship.ship.timer_count = 0
 		
+		# initiate q-drive
+		if ship.get_global_position().distance_to(ship.target) > ship.ship.LIGHT_SPEED:
+			if 'warping' in ship.ship and not ship.ship.warping:
+				ship.ship.on_warping()
+				ship.ship.warping = true
+		
 	func update(delta):
 		# deorbit
 		if ship.ship.orbiting:
@@ -599,6 +605,17 @@ class IdleState:
 				ship.ship.move_AI(ship.vel, delta)
 		# if target isn't a colony...
 		else:
+			# if far away, use q-drive
+			if ship.get_global_position().distance_to(ship.target) > ship.ship.LIGHT_SPEED:
+				pass
+
+			else:
+				if 'warping' in ship.ship:
+					ship.ship.warping = false
+					ship.ship.warp_target = null
+					# remove tint
+					ship.ship.set_modulate(Color(1,1,1))
+			
 			ship.move_generic(delta)
 		
 		# handle enemies
@@ -783,7 +800,7 @@ class RefitState:
 				steer = steer_seek
 			else:
 				# just seek if warping (other code will take care of slowing down)
-				steer = ship.get_steering_seek(ship.target)
+				steer = ship.get_steering_seek(ship.target, 0.5 * ship.ship.LIGHT_SPEED)
 			
 			# avoid enemy starbase
 			if ship.ship.get_enemy_base() != null and 'warping' in ship.ship and not ship.ship.warping:
