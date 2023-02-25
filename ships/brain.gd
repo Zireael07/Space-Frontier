@@ -619,7 +619,7 @@ class IdleState:
 			ship.move_generic(delta)
 		
 		# handle enemies
-		ship.handle_enemy()
+		ship.handle_enemy(300)
 		
 
 class OrbitState:

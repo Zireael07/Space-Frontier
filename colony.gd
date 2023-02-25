@@ -237,11 +237,11 @@ func _on_distress_called(target):
 			#if target.cloaked:
 			#	return
 			
-			# FIXME: properly come and target attackers
-			# idea: warp in on idle and then attack	
+			# warp in on idle and then attack	
 			n.brain.target = target.get_global_position()
+			n.warp_target = n.brain.target
 			n.brain.set_state(n.brain.STATE_IDLE)
-			#print("Targeting " + str(target.get_parent().get_name()) + " in response to distress call")
+			print(n.get_parent().get_name(), " targeting " + str(target.get_parent().get_name()) + " in response to distress call")
 			
 	# player
 	var player = game.player
