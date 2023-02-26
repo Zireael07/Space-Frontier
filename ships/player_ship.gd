@@ -416,7 +416,7 @@ func _process(delta):
 		get_child(0).get_material().set_shader_param("swizzle_type", 0)
 
 	# target direction indicator
-	if HUD.target != null and HUD.target != self:
+	if HUD.target != null and is_instance_valid(HUD.target) and HUD.target != self:
 		get_node("target_dir").show()
 		var tg_rel_pos = get_global_transform().xform_inv(HUD.target.get_global_position())
 		get_node("target_dir").set_position(tg_rel_pos.clamped(60))

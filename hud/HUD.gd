@@ -581,7 +581,7 @@ func _on_AI_targeted(AI):
 	# draw the red outline
 	target = AI
 
-	if prev_target != null:
+	if prev_target != null and is_instance_valid(prev_target):
 		if 'targetted' in prev_target:
 			prev_target.targetted = false
 		prev_target.update()
