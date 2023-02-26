@@ -154,6 +154,7 @@ func load_data():
 		file.close()
 		return data
 
+# ------------------------------------------------------------
 func create_map_graph():
 	map_astar = AStar.new()
 	# hardcoded stars
@@ -182,7 +183,7 @@ func create_map_graph():
 	return data # for debugging
 	
 func auto_connect_stars():
-	# FIXME: values for sector 0
+	# FIXME: hardcoded values for sector 0
 	var center = Vector2(-512+512, -512+512)
 	var center_star = map_astar.get_closest_point(Vector3(center.x, 0, center.y))
 	print("Center star: ", map_astar.get_point_position(center_star))
@@ -282,6 +283,39 @@ func auto_connect_stars():
 		#var connect = [find_icon_for_pos(mst_sum[i-1]), find_icon_for_pos(tree[i])]
 		#get_node("Grid/VisControl").secondary.append(connect)
 
+	# connect stars close by across quadrants (e.g, Barnard's and Alpha Cen)
+	var cross_quad = []
+	for qp in quad_pts:
+		for p in qp:
+			# skip if we're already in the list
+			if p in cross_quad:
+				continue 
+				
+			var stars = get_closest_stars_to(float_to_int(p))
+			
+			# some postprocessing to remove one of a pair of very close stars
+			stars = closest_stars_postprocess(stars)
+			
+			# filter
+			var tmp = []
+			for s in stars:
+				if s[1] in cross_quad:
+					continue
+				# not center star and not in our quadrant
+				if !s[1] in qp and s[1] != map_astar.get_point_position(center_star):
+					# limit by distance (experimental values)
+					if s[0] < 8 and s[0] > 0.15: #10:
+						tmp.append(s)
+			
+			stars = tmp
+			if !stars.empty():
+				#print(stars)
+				map_astar.connect_points(mapping[float_to_int(p)], mapping[float_to_int(stars[0][1])])
+				print("Connecting across quadrants, ", p, " ", find_name_from_pos(p), " and ", find_name_from_pos(stars[0][1]), " @ ", stars[0][1])
+				# prevent multiplying connections
+				cross_quad.append(stars[0][1])
+				cross_quad.append(p)
+
 
 	# connect the central (hub) star
 	for qp in quad_pts:
@@ -299,7 +333,7 @@ func auto_connect_stars():
 		stars = tmp
 		
 		# if we were using raw stars we'd be using index 1 because 0 is center star itself, but we're filtering first so 0
-		print("Connecting the hub: ", map_astar.get_point_position(center_star), " to: ", find_name_from_pos(stars[0][1]), " @ ", stars[0][1])
+		#print("Connecting the hub: ", map_astar.get_point_position(center_star), " to: ", find_name_from_pos(stars[0][1]), " @ ", stars[0][1])
 		map_astar.connect_points(center_star, mapping[float_to_int(stars[0][1])])
 
 	# manually add Sol's connections (for now) since that's what the wormhole setup script expects...
