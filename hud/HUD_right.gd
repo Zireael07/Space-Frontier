@@ -66,7 +66,7 @@ func _onButtonShip_pressed(target):
 			get_parent().starbase_update_status(target)
 
 		else:
-			$"Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout")
+			$"Panel_rightHUD/PanelInfo/ShipInfo/ShipName".set_text("Scout" + "\n" + target.get_parent().get_name())
 		
 			$"Panel_rightHUD/PanelInfo/ShipInfo/Rank".set_text(game.ranks.keys()[target.rank])
 			# stayed in HUD.gd because called from brain.gd

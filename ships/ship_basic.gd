@@ -596,7 +596,7 @@ func is_target_floating_colony(target):
 func get_colony_in_dock():
 	var last = get_child(get_child_count()-1)
 	if last.is_in_group("colony"):
-		#print("We have a colony in dock")
+		#print(get_parent().get_name(), " we have a colony in dock")
 		return last
 	else:
 		return null

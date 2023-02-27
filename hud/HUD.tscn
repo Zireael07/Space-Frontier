@@ -322,9 +322,9 @@ margin_bottom = 14.0
 text = "Scout"
 
 [node name="Rank" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
-margin_top = 15.0
+margin_top = 30.0
 margin_right = 40.0
-margin_bottom = 29.0
+margin_bottom = 44.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
