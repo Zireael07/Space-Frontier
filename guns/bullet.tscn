@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://guns/bullet.gd" type="Script" id=1]
-[ext_resource path="res://assets/laserBlue16.png" type="Texture" id=2]
+[ext_resource path="res://assets/laserBlue16.png" type="Texture2D" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.5
@@ -13,7 +13,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2( 27, 0 )
 rotation = 1.5708
 texture = ExtResource( 2 )

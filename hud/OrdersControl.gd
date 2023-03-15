@@ -11,7 +11,7 @@ func _ready():
 	# fix weird sizing bug
 	# 100x100 times button's scale
 	# button scale informed by friendly sprite's dimensions (roughly 50x75)
-	var size = Vector2(100,100)*get_node("TextureButton").rect_scale
+	var size = Vector2(100,100)*get_node("TextureButton").scale
 	#print("Size: " + str(size))
 	_set_size(size)
 	if game.player.HUD.target != null:

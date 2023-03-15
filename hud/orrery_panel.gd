@@ -18,13 +18,13 @@ func set_cntr(val):
 
 # based on arc functions that I seem to love :P	
 func make_circle(center, segments, radius):
-	var points_arc = PoolVector2Array()
+	var points_arc = PackedVector2Array()
 	var angle_from = 0
 	var angle_to = 360
 
 	for i in range(segments+1):
 		var angle_point = angle_from + i*(angle_to-angle_from)/segments - 90
-		var point = center + Vector2( cos(deg2rad(angle_point)), sin(deg2rad(angle_point)) ) * radius
+		var point = center + Vector2( cos(deg_to_rad(angle_point)), sin(deg_to_rad(angle_point)) ) * radius
 		points_arc.push_back( point )
 	
 	return points_arc	

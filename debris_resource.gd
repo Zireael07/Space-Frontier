@@ -1,7 +1,7 @@
 extends Area2D
 
 # class member variables go here, for example:
-export(int) var resource = 1
+@export var resource: int = 1
 
 enum elements {CARBON, IRON, MAGNESIUM, SILICON, HYDROGEN, NICKEL, SILVER, PLATINUM, GOLD, SULFUR}
 

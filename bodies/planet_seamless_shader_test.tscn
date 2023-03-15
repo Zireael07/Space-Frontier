@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://assets/bodies/texture_template.png" type="Texture" id=1]
+[ext_resource path="res://assets/bodies/texture_template.png" type="Texture2D" id=1]
 [ext_resource path="res://assets/planets/temp_gradient.tres" type="Gradient" id=2]
 [ext_resource path="res://assets/planets/seamless_shader_better.tres" type="Shader" id=3]
 [ext_resource path="res://assets/planets/biome_gradient_dry2.tres" type="Gradient" id=4]
 
-[sub_resource type="GradientTexture" id=4]
+[sub_resource type="GradientTexture2D" id=4]
 gradient = ExtResource( 4 )
 
-[sub_resource type="GradientTexture" id=5]
+[sub_resource type="GradientTexture2D" id=5]
 gradient = ExtResource( 2 )
 
 [sub_resource type="ShaderMaterial" id=1]
@@ -35,6 +35,6 @@ noise = SubResource( 6 )
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource( 1 )
 texture = SubResource( 3 )

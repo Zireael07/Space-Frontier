@@ -2,7 +2,7 @@ extends Area2D
 
 # class member variables go here, for example:
 var vel = Vector2()
-export var speed = 1000
+@export var speed = 1000
 var dmg = 10
 
 func _ready():
@@ -63,11 +63,11 @@ func _on_bullet_area_entered( area ):
 		
 			# explosion hint when starbase is hit
 			if "explosion" in area:
-				var expl = area.explosion.instance()
+				var expl = area.explosion.instantiate()
 				#print(get_parent().get_parent().get_parent().get_name())
 				get_parent().get_parent().get_parent().add_child(expl)
 				# A->B = B-A
-				var h_pos = pos+((get_global_position()-pos).clamped(50))
+				var h_pos = pos+((get_global_position()-pos).limit_length(50))
 				expl.set_global_position(h_pos) # our position, not base's
 				expl.set_scale(Vector2(0.5,0.5))
 				expl.play()
@@ -124,7 +124,7 @@ func _on_bullet_area_entered( area ):
 				# do we get one at all?
 				var chance = randf()
 				if chance > 0.6:
-					var deb = area.debris.instance()
+					var deb = area.debris.instantiate()
 					# randomize
 					var sel = area.select_random_debris()
 					deb.get_child(0).module = deb.get_child(0).match_string(sel)
@@ -134,7 +134,7 @@ func _on_bullet_area_entered( area ):
 			
 			# explosion effect
 			if "explosion" in area:
-				var expl = area.explosion.instance()
+				var expl = area.explosion.instantiate()
 				#print(get_parent().get_parent().get_parent().get_name())
 				get_parent().get_parent().get_parent().add_child(expl)
 				expl.set_global_position(pos)
@@ -157,7 +157,7 @@ func _on_bullet_area_entered( area ):
 		var pos = area.get_global_position()
 		
 		# debris
-		var deb = area.get_parent().resource_debris.instance()
+		var deb = area.get_parent().resource_debris.instantiate()
 		# randomize the resource
 		var res = area.get_parent().select_random()
 		# paranoia
@@ -168,7 +168,7 @@ func _on_bullet_area_entered( area ):
 		
 		# explosion
 		if 'explosion' in get_parent().get_parent():
-			var expl = get_parent().get_parent().explosion.instance()
+			var expl = get_parent().get_parent().explosion.instantiate()
 			get_parent().get_parent().get_parent().add_child(expl)
 			expl.set_global_position(pos)
 			expl.set_scale(Vector2(0.5, 0.5))

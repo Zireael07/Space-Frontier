@@ -24,7 +24,7 @@ func _ready():
 	source = self
 		
 	set_physics_process(true)
-	update()
+	queue_redraw()
 
 
 func _draw():
@@ -55,8 +55,8 @@ func draw_triangle_equilateral(center=Vector2(), direction=Vector2(), radius=50,
 	var point_2 = center + direction.rotated(2*PI/3) * radius
 	var point_3 = center + direction.rotated(4*PI/3) * radius
 
-	var points = PoolVector2Array([point_1, point_2, point_3])
-	draw_polygon(points, PoolColorArray([_color]))
+	var points = PackedVector2Array([point_1, point_2, point_3])
+	draw_polygon(points, PackedColorArray([_color]))
 
 
 func _physics_process(_delta):
@@ -67,7 +67,7 @@ func _physics_process(_delta):
 	
 	# avoid lines rotating
 	set_rotation(-get_parent().get_rotation())
-	update()
+	queue_redraw()
 
 # -------------------------
 func get_steering_avoid(target, _rotat, cap=((0.5*400)/4)):
@@ -78,10 +78,10 @@ func get_steering_avoid(target, _rotat, cap=((0.5*400)/4)):
 	
 	desired = desired.normalized()*2
 	
-	var m = range_lerp(dist, 600, 0, 0, (0.5*400)) # 100 is our max speed?
+	var m = remap(dist, 600, 0, 0, (0.5*400)) # 100 is our max speed?
 	desired = desired * m
 	
 	#steering = Vector2(0,0)
-	steering = (desired - get_parent().vel).clamped(cap)
+	steering = (desired - get_parent().vel).limit_length(cap)
 	
 	return steering

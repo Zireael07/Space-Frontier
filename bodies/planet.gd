@@ -1,27 +1,27 @@
-tool
+@tool
 extends Node2D
 
 # class member variables go here, for example:
-export(float) var planet_rad_factor = 1.0
+@export var planet_rad_factor: float = 1.0
 
-#export(int) var orbit_angle setget setOrbitAngle #, getAngle
-#export(int) var dist = 100 setget setDist #, getDist
+#export var orbit_angle: int setget setOrbitAngle #, getAngle
+#export var dist: int = 100 setget setDist #, getDist
 
-export(Vector2) var data #setget setData
+@export var data: Vector2 #: set = setData
 
-export(float) var mass = 1 # in Earth masses
+@export var mass: float = 1 # in Earth masses
 var radius = 1.0 # in Earth radius
 var gravity = 1.0 # in Earth gravity
-export(float) var hydro = 0.3 # land/water ratio (surface, not volume = 30% for Earth which is known to be 70% water 30% land)
-export(float) var ice = 0.0 # how much of the surface is covered by ice (eyeballed for most planets)
+@export var hydro: float = 0.3 # land/water ratio (surface, not volume = 30% for Earth which is known to be 70% water 30% land)
+@export var ice: float = 0.0 # how much of the surface is covered by ice (eyeballed for most planets)
 var albedo = 0.3 # test value Bond albedo (matches Earth), ranges from 0 to 1
 var temp = 0 # in Kelvin
-export(float) var atm = 0.0 # in Earth atmospheres
-export(float) var greenhouse = 0.0 # greenhouse coefficient from 0 to 1, see: http://phl.upr.edu/library/notes/surfacetemperatureofplanets
+@export var atm: float = 0.0 # in Earth atmospheres
+@export var greenhouse: float = 0.0 # greenhouse coefficient from 0 to 1, see: http://phl.upr.edu/library/notes/surfacetemperatureofplanets
 
 var dist = 0
 
-export(float) var population = 0.0 # in millions
+@export var population: float = 0.0 # in millions
 	
 var targetted = false
 signal planet_targeted
@@ -32,13 +32,13 @@ var orbiters = []
 var orbiter
 var orbit_rot = 0
 var orbit_rate = 0.04
-export(bool) var tidally_locked = false
+@export var tidally_locked: bool = false
 var axis_rot = 0.0
 
 
 signal planet_colonized
 
-onready var module = preload("res://debris_friendly.tscn")
+@onready var module = preload("res://debris_friendly.tscn")
 
 var scanned = false
 var atm_gases
@@ -64,14 +64,14 @@ func _ready():
 	#print("Planet init")
 	set_z_index(game.PLANET_Z)
 	var _conn
-	_conn = connect("planet_orbited", self, "_on_planet_orbited")
-	_conn = connect("planet_deorbited", self, "_on_planet_deorbited")
+	_conn = connect("planet_orbited",Callable(self,"_on_planet_orbited"))
+	_conn = connect("planet_deorbited",Callable(self,"_on_planet_deorbited"))
 	
 		
 	# preset the vectors texture if any rotating shader
-	if $Sprite.material != null and $Sprite.material.get_shader().has_param("vectors"):
+	if $Sprite2D.material != null and $Sprite2D.material.get_shader_parameter("vectors") != null:
 		var vecs = load("res://assets/bodies/texture_template.png")
-		$Sprite.material.set_shader_param("vectors", vecs)
+		$Sprite2D.material.set_shader_parameter("vectors", vecs)
 	
 	# FIXME: set Label position on basis of planet scale factor
 	
@@ -93,11 +93,11 @@ func _ready():
 		if atm > 0.01:
 			# thresholds are completely arbitrary
 			if population > 8000.0:
-				get_node("Sprite").set_modulate(Color(0.75, 0.75, 0.75, 1.0))
+				get_node("Sprite2D").set_modulate(Color(0.75, 0.75, 0.75, 1.0))
 			if population > 3000.0:
-				get_node("Sprite").set_modulate(Color(0.65, 0.65, 0.65, 1.0))
+				get_node("Sprite2D").set_modulate(Color(0.65, 0.65, 0.65, 1.0))
 			if population > 500.0: # 0.5B or 500M
-				get_node("Sprite").set_modulate(Color(0.5, 0.5, 0.5, 1.0)) # tint light gray
+				get_node("Sprite2D").set_modulate(Color(0.5, 0.5, 0.5, 1.0)) # tint light gray
 	
 	# debug old positions
 #	dist = get_position().length()
@@ -109,13 +109,13 @@ func _ready():
 func randomize_storage():
 	randomize()
 	for e in processed:
-		storage[e] = int(rand_range(8.0, 20.0))
+		storage[e] = int(randf_range(8.0, 20.0))
 	for e in elements:
 		if e != "SULFUR":
-			storage[e] = int(rand_range(2.0, 6.0))
+			storage[e] = int(randf_range(2.0, 6.0))
 		# hack to have enough resources for some initial colonies
 		else:
-			storage[e] = int(rand_range(5.0, 15.0))
+			storage[e] = int(randf_range(5.0, 15.0))
 	
 
 func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
@@ -173,10 +173,10 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 		# more stuff
 		# if it can hold to at least CO2
 		if mol <= 44.0:
-			atm = rand_range(0.01, 1.5)
-			#greenhouse = rand_range(0.2, 0.7)
+			atm = randf_range(0.01, 1.5)
+			#greenhouse = randf_range(0.2, 0.7)
 			if mol > 18.0:
-				hydro = rand_range(0.1, 0.45)
+				hydro = randf_range(0.1, 0.45)
 	
 			atm_gases = atmosphere_gases()
 			if atm_gases[0].has("CO2"):
@@ -380,7 +380,7 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 			composition = [["core mass", 5], ["SiO2", 35], ["CaO",2], ["Na2O",1], ["MgO", 48], ["Al2O3", 3], ["FeO",5]]
 			
 		if get_node("Label").get_text() == "Dione":
-			# Shape and gravity observations collected by Cassini suggest a roughly 400 km radius rocky core surrounded by a roughly 160 km envelope of H2O
+			# Shape3D and gravity observations collected by Cassini suggest a roughly 400 km radius rocky core surrounded by a roughly 160 km envelope of H2O
 			# radius of 560km per Wikipedia gives a core radius fraction of 0.71
 			var core_mass = pow(0.71, 1.0/0.5)
 			# again, all of the composition data is a guess
@@ -436,22 +436,22 @@ func setup(angle=0, dis=0, mas=0, rad=0, gen_atm=false):
 		hydro = 0.0
 		
 	# send temperature to shader if procedural planet
-	if $Sprite.texture is NoiseTexture:
+	if $Sprite2D.texture is NoiseTexture2D:
 		# automatically duplicate/make unique the material if procedural
-		$Sprite.material.set_local_to_scene(true)
+		$Sprite2D.material.set_local_to_scene(true)
 		
 		#if temp > 400 Celsius then change graphics to lava planet
 		# roughly 670 K iirc?
 		if (temp-game.ZEROC_IN_K) > 400:
 			print("Hot lava planet")
 			var lava = preload("res://bodies/planet_lava_test.tscn")
-			var tmp = lava.instance()
-			get_node("Sprite").set_material(tmp.get_node("Sprite").material)
+			var tmp = lava.instantiate()
+			get_node("Sprite2D").set_material(tmp.get_node("Sprite2D").material)
 			# prevent mem leak
 			tmp.queue_free()
 		else:
 			# send temp in Celsius to the shader
-			get_node("Sprite").get_material().set_shader_param("temperature", (temp-game.ZEROC_IN_K))
+			get_node("Sprite2D").get_material().set_shader_parameter("temperature", (temp-game.ZEROC_IN_K))
 			print("Sending temp %.2f" % (temp-game.ZEROC_IN_K), " C to shader")
 	
 	# set population for planets that start colonized
@@ -611,7 +611,7 @@ func calculate_radius(type="rocky"):
 		radius = pow(mass, 0.28)
 		# fudge
 		var max_dev = radius*0.04 # 4% max spread
-		radius = rand_range(radius-max_dev, radius+max_dev)
+		radius = randf_range(radius-max_dev, radius+max_dev)
 		return radius
 	# others (not implemented yet)
 	# Neptunian = <= 130 masses of Earth
@@ -623,7 +623,7 @@ func calculate_radius(type="rocky"):
 		radius = pow(mass, -0.04)
 		# fudge
 		var max_dev = radius*0.08 # # max spread 8%
-		radius = rand_range(radius-max_dev, radius+max_dev)
+		radius = randf_range(radius-max_dev, radius+max_dev)
 		return radius
 	
 	# anything above that is a star so needn't apply
@@ -852,7 +852,7 @@ func atmosphere_gases():
 		gases_disp.append([g[0], atm_fraction])
 	
 	# custom sort
-	gases_disp.sort_custom(MyCustomSorter, "sort_atm_fraction")
+	gases_disp.sort_custom(Callable(MyCustomSorter,"sort_atm_fraction"))
 	
 	return [gases_atm, gases_disp]
 
@@ -893,23 +893,23 @@ func molecule_limit():
 func planetary_composition():
 	randomize()
 	# core sizes range from 18-35%
-	var core_mass = rand_range(0.18,0.35)
+	var core_mass = randf_range(0.18,0.35)
 	# FeO correlates linearly with the above. Earth has 6% FeO and 32.5% core mass
 	# 6/32.5 = x/core_mass -> x = 6*core_mass/32.5
 	var feo = 0.06*core_mass/0.325
 	# Mg/Si ratio can vary between 1.0 and 2.0 
-	var mgsi_ratio = rand_range(1.0, 2.0)
+	var mgsi_ratio = randf_range(1.0, 2.0)
 	# varies between 28% and 46% (see table 4)
-	var sio = rand_range(0.28, 0.46)
+	var sio = randf_range(0.28, 0.46)
 	var mgo = sio*mgsi_ratio;
 	# varies between 6 and 13%; Earth's is 6%
 	# this is Ca+Al+Na/Ca+Al+Na+Fe+Mg+Si but note the divisor (after the slash) sums up to 100%
 	# (those six are all the elements under consideration)
-	var minor_fraction = rand_range(0.06, 0.13)
+	var minor_fraction = randf_range(0.06, 0.13)
 	# varies between 1.3% and 3.5% (table 4)
-	var alo = rand_range(0.013, 0.035)
+	var alo = randf_range(0.013, 0.035)
 	# varies between ~1.0 and 3.0 (basic calculations on table 4)
-	var caal_ratio = rand_range(1.0, 3.0)
+	var caal_ratio = randf_range(1.0, 3.0)
 	var cao = caal_ratio*alo
 	# simple maths; in practice is a very small fraction (~0.3%)
 	var nao = clamp(minor_fraction-(cao+alo), 0.02, 0.03)
@@ -949,16 +949,16 @@ func setData(val):
 
 func place(angle,dist):
 	#print("Place : a " + str(angle) + " d: " + str(dist))
-	var pos = Vector2(0, dist).rotated(deg2rad(angle))
-	#print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(angle)))
+	var pos = Vector2(0, dist).rotated(deg_to_rad(angle))
+	#print("vec: 0, " + str(dist) + " rot: " + str(deg_to_rad(angle)))
 	#print("Position is " + str(pos))
 	
 	set_position(pos)
 
 #func setOrbitAngle(val):
 #	print("Set angle to : " + str(val))
-#	var pos = Vector2(0, dist).rotated(deg2rad(val))
-#	print("vec: 0, " + str(dist) + " rot: " + str(deg2rad(val)))
+#	var pos = Vector2(0, dist).rotated(deg_to_rad(val))
+#	print("vec: 0, " + str(dist) + " rot: " + str(deg_to_rad(val)))
 #	print("Position is " + str(pos))
 #
 #	set_position(pos)
@@ -966,8 +966,8 @@ func place(angle,dist):
 
 #func setDist(val):
 #	print("Set dist to: " + str(val))
-#	var pos = Vector2(0, val).rotated(deg2rad(orbit_angle))
-#	print("vec: 0, " + str(val) + " rot: " + str(deg2rad(orbit_angle)))
+#	var pos = Vector2(0, val).rotated(deg_to_rad(orbit_angle))
+#	print("vec: 0, " + str(val) + " rot: " + str(deg_to_rad(orbit_angle)))
 #
 #
 #	print("Position is " + str(pos))
@@ -991,11 +991,11 @@ func _process(delta):
 	if axis_rot + 0.1*delta > 2:
 		axis_rot = 2 - axis_rot + 0.1*delta
 	# paranoia
-	if get_node("Sprite").get_material() != null:
-		get_node("Sprite").get_material().set_shader_param("time", axis_rot)
+	if get_node("Sprite2D").get_material() != null:
+		get_node("Sprite2D").get_material().set_shader_parameter("time", axis_rot)
 	
 	# redraw
-	update()
+	queue_redraw()
 
 	
 	if get_parent().is_class("Node2D"):
@@ -1005,7 +1005,7 @@ func _process(delta):
 			$"Label".set_rotation(-get_parent().get_rotation())
 			
 			# get the label to stay in one place from player POV
-			var angle = -get_parent().get_rotation() + deg2rad(45) # because the label is located at 45 deg angle...
+			var angle = -get_parent().get_rotation() + deg_to_rad(45) # because the label is located at 45 deg angle...
 			# effectively inverse of atan2()
 			var angle_loc = Vector2(cos(angle), sin(angle))
 			#Controls don't have transforms so we have to manually set position
@@ -1149,11 +1149,11 @@ func _draw():
 		# test
 		if orbiters.size() > 0:
 			for o in orbiters:
-				var tg = get_global_transform().xform_inv(o.get_global_position())
+				var tg = o.get_global_position() * get_global_transform()
 				if not o.is_in_group("drone"):
-					draw_line(Vector2(0,0), tg, Color(1,0,0), 6.0, true)
+					draw_line(Vector2(0,0),tg,Color(1,0,0),6.0)
 				else:
-					draw_line(Vector2(0,0), tg, Color(0,0,1), 3.0, true)
+					draw_line(Vector2(0,0),tg,Color(0,0,1),3.0)
 		else:
 			pass
 
@@ -1185,7 +1185,7 @@ func _on_Area2D_area_exited(area):
 
 
 # colonies
-func reparent(area):
+func reparent_helper(area):
 	area.get_parent().get_parent().remove_child(area.get_parent())
 	add_child(area.get_parent())
 
@@ -1193,8 +1193,8 @@ func reposition(area):
 	area.get_parent().set_position(Vector2(0,0))
 	# make them visible
 	area.get_node("blue_colony").set_z_index(1)
-	if area.has_node("Sprite"):
-		area.get_node("Sprite").set_z_index(1)
+	if area.has_node("Sprite2D"):
+		area.get_node("Sprite2D").set_z_index(1)
 
 func _on_Area2D_area_entered(area):
 	if area == game.player:
@@ -1241,7 +1241,7 @@ func oops_gg(area):
 	print("Adding sinking colony to planet")
 	# add colony to planet
 	# prevent crash
-	call_deferred("reparent", area)
+	call_deferred("reparent_helper", area)
 	# must happen after reparenting
 	call_deferred("reposition", area)
 	# set timer and sink (disappear) the colony after a couple seconds
@@ -1250,7 +1250,7 @@ func oops_gg(area):
 	area.add_child(sink_time)
 	sink_time.set_wait_time(2.0)
 	sink_time.start(2.0)
-	sink_time.connect("timeout", self, "_on_sink_timer", [area])
+	sink_time.connect("timeout",Callable(self,"_on_sink_timer").bind(area))
 	
 func _on_sink_timer(area):
 	print("Sink timed out")
@@ -1308,7 +1308,7 @@ func _on_planet_orbited(ship):
 	if not ship.is_in_group("drone"):
 		print("Planet orbited " + str(get_node("Label").get_text()) + "; orbiter: " + str(orbiter.get_parent().get_name()))
 
-	var rel_pos = get_node("orbit_holder").get_global_transform().xform_inv(orbiter.get_global_position())
+	var rel_pos = orbiter.get_global_position() * get_node("orbit_holder").get_global_transform()
 	
 	
 	orbiter.get_parent().set_position(Vector2(0,0))
@@ -1327,17 +1327,17 @@ func _on_planet_orbited(ship):
 	#print("Initial angle " + str(a))
 	
 	# redraw (debugging)
-	update()
+	queue_redraw()
 
 func remove_orbiter(ship):
 	var sh = orbiters.find(ship)
 	if sh != -1:
-		orbiters.remove(sh)
+		orbiters.remove_at(sh)
 
 func _on_planet_deorbited(ship):
 	remove_orbiter(ship)
 	# redraw (debugging)
-	update()
+	queue_redraw()
 	if not ship.is_in_group("drone"):
 		print("Ship " + ship.get_parent().get_name() + " deorbited: " + get_node("Label").get_text())
 	# give (enemy) ship a dummy target so that it doesn't idle towards the planet
@@ -1417,11 +1417,11 @@ func _on_pop_timer_timeout():
 	if atm > 0.01:
 		# thresholds are completely arbitrary
 		if population > 8000.0:
-			get_node("Sprite").set_modulate(Color(0.75, 0.75, 0.75, 1.0))
+			get_node("Sprite2D").set_modulate(Color(0.75, 0.75, 0.75, 1.0))
 		if population > 3000.0:
-			get_node("Sprite").set_modulate(Color(0.65, 0.65, 0.65, 1.0))
+			get_node("Sprite2D").set_modulate(Color(0.65, 0.65, 0.65, 1.0))
 		if population > 500.0: # 0.5B or 500M
-			get_node("Sprite").set_modulate(Color(0.5, 0.5, 0.5, 1.0)) # tint light gray
+			get_node("Sprite2D").set_modulate(Color(0.5, 0.5, 0.5, 1.0)) # tint light gray
 		
 		
 		
@@ -1508,7 +1508,7 @@ func _on_module_timer_timeout():
 		
 		#print("Module timer")
 		var pos = get_global_position()
-		var mo = module.instance()
+		var mo = module.instantiate()
 		
 		# randomize
 		var sel = select_random_module()

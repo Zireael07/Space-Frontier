@@ -3,26 +3,26 @@ extends Control
 # class member variables go here, for example:
 # those colors are a holdover from the original Stellar Frontier
 # and do not necessarily reflect the actual star/planet color
-onready var star = preload("res://assets/hud/yellow_circle.png")
-onready var planet = preload("res://assets/hud/red_circle.png")
-onready var moon = preload("res://assets/hud/grey_circle.png")
-onready var asteroid = preload("res://assets/hud/meteor_small.png")
+@onready var star = preload("res://assets/hud/yellow_circle.png")
+@onready var planet = preload("res://assets/hud/red_circle.png")
+@onready var moon = preload("res://assets/hud/grey_circle.png")
+@onready var asteroid = preload("res://assets/hud/meteor_small.png")
 # gas giants had identical icons in the original; the scale up approach didn't work
 # TODO: either make the icon hollow or possibly make the "plus" representative of something
-onready var giant = preload("res://assets/hud/icon_plusSmall.png")
+@onready var giant = preload("res://assets/hud/icon_plusSmall.png")
 
-onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
+@onready var arrow_star = preload("res://assets/hud/yellow_dir_arrow.png")
 
-onready var friendly = preload("res://assets/hud/arrow.png")
-onready var hostile = preload("res://assets/hud/red_arrow.png")
-onready var pirate = preload("res://assets/hud/green_arrow.png")
-onready var neutral = preload("res://assets/hud/yellow_arrow.png")
+@onready var friendly = preload("res://assets/hud/arrow.png")
+@onready var hostile = preload("res://assets/hud/red_arrow.png")
+@onready var pirate = preload("res://assets/hud/green_arrow.png")
+@onready var neutral = preload("res://assets/hud/yellow_arrow.png")
 
-onready var colony_tex = preload("res://assets/hud/blue_button06.png")
+@onready var colony_tex = preload("res://assets/hud/blue_button06.png")
 
-onready var starbase = preload("res://assets/hud/blue_boxTick.png")
-onready var sb_enemy = preload("res://assets/hud/red_boxTick.png")
-onready var sb_pirate = preload("res://assets/hud/green_boxTick.png")
+@onready var starbase = preload("res://assets/hud/blue_boxTick.png")
+@onready var sb_enemy = preload("res://assets/hud/red_boxTick.png")
+@onready var sb_pirate = preload("res://assets/hud/green_boxTick.png")
 
 var star_main = null
 
@@ -108,7 +108,7 @@ func _ready():
 			to_rem.append(col)
 		
 	for r in to_rem:	
-		colonies.remove(colonies.find(r))
+		colonies.remove_at(colonies.find(r))
 	
 	add_system_bodies()
 	
@@ -519,7 +519,7 @@ func _process(_delta):
 			
 		# the minimap doesn't rotate
 		var rel_loc = stars[i].get_global_position() - player.get_child(0).get_global_position()
-		#var rel_loc = player.get_global_transform().xform_inv(stars[i].get_global_transform().origin)
+		#var rel_loc = player.get_global_transform()stars[i].get_global_transform().origin * 
 		#star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale))
 		star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 		
@@ -532,7 +532,7 @@ func _process(_delta):
 				# indicate distant stars
 				#print("Star out of minimap area")
 				star_arrow.set_visible(true)
-				var pos = Vector2(rel_loc.x, rel_loc.y).clamped((100*zoom_scale)-50) # experimentally determined value
+				var pos = Vector2(rel_loc.x, rel_loc.y).limit_length((100*zoom_scale)-50) # experimentally determined value
 				var a = atan2(rel_loc.x, rel_loc.y)
 				
 				#print("Pos: " + str(pos) + " for rel_pos" + str(rel_loc))
@@ -548,7 +548,7 @@ func _process(_delta):
 	for i in range(planets.size()):
 		# the minimap doesn't rotate
 		var rel_loc = planets[i].get_global_position() - player.get_child(0).get_global_position()
-		#var rel_loc = player.get_global_transform().xform_inv(planets[i].get_global_transform().origin)
+		#var rel_loc = player.get_global_transform()planets[i].get_global_transform().origin * 
 		#planet_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale))
 		planet_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 
@@ -568,7 +568,7 @@ func _process(_delta):
 		if dist < (100*zoom_scale): # experimentally determined value
 			# indicate wormhole
 			wh_arrow.set_visible(true)
-			var pos = Vector2(rel_loc.x/2, rel_loc.y/2)  #.clamped((100*zoom_scale)-75) # experimentally determined value
+			var pos = Vector2(rel_loc.x/2, rel_loc.y/2)  #.limit_length((100*zoom_scale)-75) # experimentally determined value
 			var a = atan2(rel_loc.x, rel_loc.y)
 			
 			#print("Pos: " + str(pos) + " for rel_pos" + str(rel_loc))

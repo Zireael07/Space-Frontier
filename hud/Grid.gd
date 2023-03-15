@@ -1,4 +1,4 @@
-tool
+@tool
 extends Control
 
 const GRID_STEP = 40
@@ -27,4 +27,4 @@ func _draw():
 		draw_line(Vector2(0, j * GRID_STEP), Vector2(GRID_SIZE * GRID_STEP, j * GRID_STEP), col, width)
 
 func update_grid():
-	update() # redraw
+	queue_redraw() # redraw

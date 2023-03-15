@@ -2,11 +2,11 @@ extends Control
 
 # Declare member variables here. Examples:
 const LY_TO_PX = 50;
-export var x = 0.0
-export var y = 0.0
-export var depth = 0.0
-export var named = ""
-export var planets = false
+@export var x = 0.0
+@export var y = 0.0
+@export var depth = 0.0
+@export var named = ""
+@export var planets = false
 var star_type = ""
 var multiple = false
 var pos = null #Vector3()
@@ -26,10 +26,10 @@ func _ready():
 	var Z_level_up = preload("res://assets/hud/grey_sliderUp.png")
 	if get_parent().get_name().find("Z+") != -1:
 		get_node("ZTexture").set_texture(Z_level_up)
-		get_node("ZTexture").rect_scale = Vector2(0.35, 0.35)
+		get_node("ZTexture").scale = Vector2(0.35, 0.35)
 	if get_parent().get_name().find("Z-") != -1:
 		get_node("ZTexture").set_texture(Z_level_down)
-		get_node("ZTexture").rect_scale = Vector2(0.35, 0.35)
+		get_node("ZTexture").scale = Vector2(0.35, 0.35)
 	
 	# special case: break Alpha and Proxima Centauri into two lines
 	if txt.find("Centauri") != -1:
@@ -38,9 +38,9 @@ func _ready():
 		
 		# special case - labels
 		if txts[0] == "Proxima":
-			get_node("Label").rect_position = Vector2(0, -25)
+			get_node("Label").position = Vector2(0, -25)
 		if txts[0] == "Alpha":
-			get_node("Label").rect_position = Vector2(0, 25)
+			get_node("Label").position = Vector2(0, 25)
 	
 	#print(txt, " len: ", txt.length())
 	# if long name that has a space and doesn't have a line break already
@@ -84,7 +84,7 @@ func _ready():
 		print(get_name(), " has very small Z")
 		get_node("Label2").set_text("Z: " + "%.2f" % depth + " ly")
 		get_node("StarTexture").show()
-		get_node("StarTexture").rect_position = Vector2(0,0)
+		get_node("StarTexture").position = Vector2(0,0)
 		get_node("ShadowTexture").hide()
 		get_node("Line2D").points[0] = Vector2(18,18)
 		get_node("Line2D").hide()
@@ -93,7 +93,7 @@ func _ready():
 
 	# star icon positioned according to the depth
 	# 18 is the height of the star icon
-	get_node("StarTexture").rect_position = Vector2(0, end+18*depth_s) 
+	get_node("StarTexture").position = Vector2(0, end+18*depth_s) 
 	
 	# clamp depth to two significant decimal places
 	var depth_str = "%.2f" % depth
@@ -105,10 +105,10 @@ func _ready():
 #	if abs(depth) > 8:
 #		# above the plane (place next to star icon)
 #		if depth_s < 0:
-#			get_node("Label2").rect_position = Vector2(-6.5, y_pos+25)	
+#			get_node("Label2").position = Vector2(-6.5, y_pos+25)	
 #		else:
 #			# place next to shadow icon for below the plane
-#			get_node("Label2").rect_position = Vector2(0, 25)
+#			get_node("Label2").position = Vector2(0, 25)
 #		get_node("Label2").set_text("Z: "+ str(depth_str) + " ly")
 #		get_node("Label2").show()
 #
@@ -136,7 +136,7 @@ func _ready():
 #	# test
 #	var styl = get_node("Label2").get_stylebox("normal").duplicate()
 #	styl.bg_color = clr
-#	get_node("Label2").add_stylebox_override("normal", styl)
+#	get_node("Label2").add_theme_stylebox_override("normal", styl)
 	
 	# this tints the font too which we don't want
 	#get_node("Label2").set_self_modulate(clr)
@@ -173,23 +173,23 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	if depth_s < 0:
 		# only do this if star icon visible
 		if get_node("StarTexture").visible:
-			get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
+			get_node("Label").position = Vector2(-6.5, y_pos+4)
 		# if multi-line label
 		if get_node("Label").get_text().find("\n") != -1:
-			get_node("Label").rect_position = Vector2(-6.5, y_pos-20)
+			get_node("Label").position = Vector2(-6.5, y_pos-20)
 	# below the plane (place next to "shadow" icon)
 	else:
-		get_node("Label").rect_position = Vector2(0, 0)
+		get_node("Label").position = Vector2(0, 0)
 
 	# shadow in bounds but star is not (place name & Z-label next to shadow icon)
 	if ab_planet.y < 0 or ab_planet.y > 525:
 		#print(get_name(), " shadow in bounds but star not...")
-		get_node("Label").rect_position = Vector2(0, 0)
+		get_node("Label").position = Vector2(0, 0)
 		# if multi-line label
 		if get_node("Label").get_text().find("\n") != -1:
-			get_node("Label").rect_position = Vector2(0, -20)
+			get_node("Label").position = Vector2(0, -20)
 		# Z axis label
-		get_node("Label2").rect_position = Vector2(0, 25)
+		get_node("Label2").position = Vector2(0, 25)
 		#get_node("Label2").set_text("Z: " + depth_str + " ly")
 		get_node("Label2").show()
 		# add direction arrow
@@ -200,24 +200,24 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		#print("Force show star for: ", self.get_name())
 		# force show star
 		get_node("StarTexture").show()
-		get_node("Label").rect_position = Vector2(-6.5, y_pos+4)
+		get_node("Label").position = Vector2(-6.5, y_pos+4)
 		# if multi-line label
 		if get_node("Label").get_text().find("\n") != -1:
-			get_node("Label").rect_position = Vector2(-6.5, y_pos-20)
+			get_node("Label").position = Vector2(-6.5, y_pos-20)
 		# Z axis label
-		#get_node("Label2").rect_position = Vector2(-6.5, y_pos+29) # 25+4
+		#get_node("Label2").position = Vector2(-6.5, y_pos+29) # 25+4
 		#get_node("Label2").show()
 		#get_node("Label2").set_text("Z: "+ "%.2f" % depth + " ly " + "↑")
 	# force update if situation changes (map is panned)
 	else:
 		#print(get_name(), " shadow in bounds...")
 		get_node("StarTexture").hide()
-		get_node("Label").rect_position = Vector2(0, 0)
+		get_node("Label").position = Vector2(0, 0)
 		# if multi-line label
 		if get_node("Label").get_text().find("\n") != -1:
-			get_node("Label").rect_position = Vector2(0, -20)
+			get_node("Label").position = Vector2(0, -20)
 		# Z axis label
-		#get_node("Label2").rect_position = Vector2(0, 25)
+		#get_node("Label2").position = Vector2(0, 25)
 		#get_node("Label2").show()
 
 	if not_in_bounds(offset):
@@ -235,9 +235,9 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 func not_in_bounds(offset):
 	# reworked to use Rect2
 	# rect2 origin is the top-left corner!!!
-	#var rect = Rect2(get_parent().rect_position.x-(805/2), get_parent().rect_position.y-(525/2), 805, 525)
-	#var ab_shadow = get_node("ShadowTexture").get_position() + get_position() + get_parent().rect_position
-	#var ab_planet = get_node("PlanetTexture").get_position() + get_position() + get_parent().rect_position
+	#var rect = Rect2(get_parent().position.x-(805/2), get_parent().position.y-(525/2), 805, 525)
+	#var ab_shadow = get_node("ShadowTexture").get_position() + get_position() + get_parent().position
+	#var ab_planet = get_node("PlanetTexture").get_position() + get_position() + get_parent().position
 	
 	# use a global (screen) rect and global positions
 	var rect = Rect2(Vector2(0,0), Vector2(805, 525))
@@ -248,8 +248,8 @@ func not_in_bounds(offset):
 	var planet_out = !rect.has_point(ab_planet)
 	var shadow_out = !rect.has_point(ab_shadow)
 	
-#	# rect_global_position doesn't seem to be working correctly?
-#	#print("planet icon: ", get_node("PlanetTexture").rect_global_position.y, " shadow icon: ", get_node("ShadowTexture").rect_global_position.y)
+#	# global_position doesn't seem to be working correctly?
+#	#print("planet icon: ", get_node("PlanetTexture").global_position.y, " shadow icon: ", get_node("ShadowTexture").global_position.y)
 #	var ab_shadow = get_node("ShadowTexture").get_position().y + get_position().y
 #	var ab_planet = get_node("PlanetTexture").get_position().y + get_position().y
 #	# because the parent control is in the middle of the panel, at 525/2px
@@ -302,10 +302,10 @@ func on_click():
 
 	var dist = get_node("../../..").get_star_distance(get_node("../..").src, get_node("../..").tg)
 
-	var tg_pos = get_node("../..").tg.rect_position
+	var tg_pos = get_node("../..").tg.position
 	if get_node("../..").tg.get_node("StarTexture").visible:
-		tg_pos += get_node("../..").tg.get_node("StarTexture").rect_position
-	get_node("../../ruler").pts = [get_node("../..").src.rect_position, tg_pos]
+		tg_pos += get_node("../..").tg.get_node("StarTexture").position
+	get_node("../../ruler").pts = [get_node("../..").src.position, tg_pos]
 	get_node("../../ruler").set_ruler()
 	get_node("../../ruler/Label").set_text("%.2f ly" % (dist))
 	

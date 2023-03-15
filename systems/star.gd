@@ -1,11 +1,11 @@
-tool
+@tool
 extends Node2D
 
 # class member variables go here, for example:
-export var rotation_rate = 0.15
-export var orbit_rate = 0.00002
-export var star_radius_factor = 1.0
-export var luminosity = 1.00 # 1 is the luminosity of the Sun
+@export var rotation_rate = 0.15
+@export var orbit_rate = 0.00002
+@export var star_radius_factor = 1.0
+@export var luminosity = 1.00 # 1 is the luminosity of the Sun
 
 var hz_inner = 0.9 #dummy, in AU
 var hz_outer = 1.1
@@ -13,15 +13,15 @@ var hz_outer = 1.1
 var rot = 0
 var orbit_rot = 0
 
-onready var sprite = $"Sprite"
+@onready var sprite = $"Sprite2D"
 #onready var planets = $"planet_holder"
 var planets = null
 #var star_type = ""
 
 # for minimap
-export var zoom_scale = 12
-export var custom_orrery_scale = 0
-export var custom_map_scale = 0
+@export var zoom_scale = 12
+@export var custom_orrery_scale = 0
+@export var custom_map_scale = 0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -75,13 +75,13 @@ func calculate_vz(lum):
 
 # based on arc functions that I seem to love :P	
 func make_circle(center, segments, radius):
-	var points_arc = PoolVector2Array()
+	var points_arc = PackedVector2Array()
 	var angle_from = 0
 	var angle_to = 360
 
 	for i in range(segments+1):
 		var angle_point = angle_from + i*(angle_to-angle_from)/segments - 90
-		var point = center + Vector2( cos(deg2rad(angle_point)), sin(deg2rad(angle_point)) ) * radius
+		var point = center + Vector2( cos(deg_to_rad(angle_point)), sin(deg_to_rad(angle_point)) ) * radius
 		points_arc.push_back( point )
 	
 	return points_arc	

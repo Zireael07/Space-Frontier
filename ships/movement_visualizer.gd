@@ -23,7 +23,7 @@ func _ready():
 	source = parent
 		
 	set_physics_process(true)
-	update()
+	queue_redraw()
 
 
 func _draw():
@@ -61,11 +61,11 @@ func draw_triangle_equilateral(center=Vector2(), direction=Vector2(), radius=50,
 	var point_2 = center + direction.rotated(2*PI/3) * radius
 	var point_3 = center + direction.rotated(4*PI/3) * radius
 
-	var points = PoolVector2Array([point_1, point_2, point_3])
-	draw_polygon(points, PoolColorArray([_color]))
+	var points = PackedVector2Array([point_1, point_2, point_3])
+	draw_polygon(points, PackedColorArray([_color]))
 
 
 func _physics_process(_delta):
 	# avoid lines rotating
 	set_rotation(-get_parent().get_rotation())
-	update()
+	queue_redraw()

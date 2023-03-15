@@ -1,11 +1,11 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://b2pfnju7s5j6d"]
 
-[ext_resource path="res://assets/bodies/texture_template.png" type="Texture" id=1]
-[ext_resource path="res://assets/bodies/planet_rotating.shader" type="Shader" id=2]
+[ext_resource type="Texture2D" uid="uid://w6p13lxr264v" path="res://assets/bodies/texture_template.png" id="1"]
+[ext_resource type="Shader" path="res://assets/bodies/planet_rotating.gdshader" id="2"]
 
 [resource]
-shader = ExtResource( 2 )
-shader_param/rotate_angle = 0.0
-shader_param/time = 1.352
-shader_param/has_lights = false
-shader_param/vectors = ExtResource( 1 )
+shader = ExtResource("2")
+shader_parameter/rotate_angle = 0.0
+shader_parameter/time = 0.0850384
+shader_parameter/has_lights = false
+shader_parameter/vectors = ExtResource("1")

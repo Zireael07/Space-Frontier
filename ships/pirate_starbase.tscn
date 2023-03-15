@@ -3,12 +3,12 @@
 [ext_resource path="res://ships/star_base.gd" type="Script" id=1]
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=2]
 [ext_resource path="res://guns/bullet.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/ships/spaceStation_005.png" type="Texture" id=4]
+[ext_resource path="res://assets/ships/spaceStation_005.png" type="Texture2D" id=4]
 
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
-uniform vec4 flash_color : hint_color;
+uniform vec4 flash_color : source_color;
 
 void fragment() {
 	vec4 col = texture(TEXTURE, UV);
@@ -41,7 +41,7 @@ script = ExtResource( 1 )
 bullet = ExtResource( 3 )
 kind_id = 2
 
-[node name="star_base" type="Sprite" parent="Area2D_starbase_pirate"]
+[node name="star_base" type="Sprite2D" parent="Area2D_starbase_pirate"]
 material = SubResource( 2 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
@@ -51,7 +51,7 @@ shape = SubResource( 3 )
 
 [node name="bullet_container" type="Node" parent="Area2D_starbase_pirate"]
 
-[node name="muzzle" type="Position2D" parent="Area2D_starbase_pirate"]
+[node name="muzzle" type="Marker2D" parent="Area2D_starbase_pirate"]
 
 [node name="gun_timer" type="Timer" parent="Area2D_starbase_pirate"]
 wait_time = 0.5

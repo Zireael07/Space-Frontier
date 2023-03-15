@@ -3,7 +3,7 @@
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
-uniform vec4 aura_color : hint_color;
+uniform vec4 aura_color : source_color;
 
 void fragment()
 {

@@ -3,11 +3,11 @@
 [ext_resource path="res://guns/laser.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=2]
 [ext_resource path="res://ships/star_base.gd" type="Script" id=3]
-[ext_resource path="res://assets/ships/ufoBlue.png" type="Texture" id=4]
+[ext_resource path="res://assets/ships/ufoBlue.png" type="Texture2D" id=4]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
-uniform vec4 flash_color : hint_color;
+uniform vec4 flash_color : source_color;
 
 void fragment() {
 	vec4 col = texture(TEXTURE, UV);
@@ -37,7 +37,7 @@ script = ExtResource( 3 )
 bullet = ExtResource( 1 )
 kind_id = 1
 
-[node name="star_base" type="Sprite" parent="Area2D_starbase"]
+[node name="star_base" type="Sprite2D" parent="Area2D_starbase"]
 material = SubResource( 2 )
 texture = ExtResource( 4 )
 
@@ -46,7 +46,7 @@ shape = SubResource( 3 )
 
 [node name="bullet_container" type="Node" parent="Area2D_starbase"]
 
-[node name="muzzle" type="Position2D" parent="Area2D_starbase"]
+[node name="muzzle" type="Marker2D" parent="Area2D_starbase"]
 
 [node name="gun_timer" type="Timer" parent="Area2D_starbase"]
 wait_time = 0.5

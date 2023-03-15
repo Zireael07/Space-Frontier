@@ -3,13 +3,13 @@ extends Area2D
 # Declare member variables here. Examples:
 const LIGHT_SPEED = 400 # original Stellar Frontier seems to have used 200 px/s
 
-export var rot_speed = 2.6 #radians
-export var thrust = 0.25 * LIGHT_SPEED
-export var max_vel = 0.5 * LIGHT_SPEED
+@export var rot_speed = 2.6 #radians
+@export var thrust = 0.25 * LIGHT_SPEED
+@export var max_vel = 0.5 * LIGHT_SPEED
 # IRL there's no friction in space, but
 # it's there mostly to ensure the ship doesn't float too far beyond the system
 # if the AI or the player gets stuck/forgets where he was going
-export var friction = 0.25 
+@export var friction = 0.25 
 
 # motion
 var rot = 0
@@ -21,8 +21,8 @@ var spd = 0
 
 var orbiting = null
 
-onready var warp_effect = preload("res://warp_effect.tscn")
-onready var warp_timer = $"warp_correct_timer"
+@onready var warp_effect = preload("res://warp_effect.tscn")
+@onready var warp_timer = $"warp_correct_timer"
 var warping = false
 var warp_target = null
 
@@ -38,14 +38,14 @@ var shield_power_draw = 5 # none in the original game, but that way it's more re
 signal power_changed
 
 # bullets
-export(PackedScene) var bullet
-onready var bullet_container = $"bullet_container"
+@export var bullet: PackedScene
+@onready var bullet_container = $"bullet_container"
 #onready var bullet = preload("res://bullet.tscn")
-onready var gun_timer = $"gun_timer"
-onready var explosion = preload("res://explosion.tscn")
-onready var debris = preload("res://debris_enemy.tscn")
+@onready var gun_timer = $"gun_timer"
+@onready var explosion = preload("res://explosion.tscn")
+@onready var debris = preload("res://debris_enemy.tscn")
 var deb_chances = []
-onready var colony = preload("res://colony.tscn")
+@onready var colony = preload("res://colony.tscn")
 
 var tractor = null
 
@@ -141,7 +141,7 @@ func orbit_planet(planet):
 	vel = Vector2(0,0)
 	acc = Vector2(0,0)
 
-	var _rel_pos = planet.get_node("orbit_holder").get_global_transform().xform_inv(get_global_position())
+	var _rel_pos = get_global_position() * planet.get_node("orbit_holder").get_global_transform() 
 	var _dist = planet.get_global_position().distance_to(get_global_position())
 #	print("Dist: " + str(dist))
 #	print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
@@ -173,7 +173,7 @@ func deorbit():
 	if not orbiting:
 		return 
 		
-	var _rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
+	var _rel_pos = get_global_position() * orbiting.get_parent().get_global_transform()
 	#print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
 	
 	orbiting.get_parent().emit_signal("planet_deorbited", self)
@@ -375,7 +375,7 @@ func get_friendlies():
 			#nodes.remove(nodes.find(n))
 	
 	for r in to_rem:
-		nodes.remove(nodes.find(r))
+		nodes.remove_at(nodes.find(r))
 		
 	return nodes
 
@@ -470,7 +470,7 @@ func get_enemies_in_range(rad=300):
 			to_rem.append(t[1]) 
 		
 	for r in to_rem:
-		nodes.remove(nodes.find(r))
+		nodes.remove_at(nodes.find(r))
 		
 	return nodes
 	
@@ -642,7 +642,7 @@ func pick_colony():
 	if pop != null:
 		print("Creating colony...")
 		# create colony
-		var co = colony.instance()
+		var co = colony.instantiate()
 		add_child(co)
 		# actual colony node
 		var col = co.get_child(0)
@@ -665,7 +665,7 @@ func pick_colony():
 		emit_signal("colony_picked", co)
 		# connect signals
 		# "colony" is a group of the parent of colony itself
-		co.get_child(0).connect("colony_colonized", game.player.HUD, "_on_colony_colonized")
+		co.get_child(0).connect("colony_colonized",Callable(game.player.HUD,"_on_colony_colonized"))
 		return true
 	else:
 		return false

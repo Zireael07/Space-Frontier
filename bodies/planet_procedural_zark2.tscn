@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/planets/temp_gradient.tres" type="Gradient" id=1]
 [ext_resource path="res://assets/planets/procedural_planet_better_shader.tres" type="Shader" id=2]
 
-[sub_resource type="GradientTexture" id=1]
+[sub_resource type="GradientTexture2D" id=1]
 gradient = ExtResource( 1 )
 
 [sub_resource type="ShaderMaterial" id=2]
@@ -30,6 +30,6 @@ noise = SubResource( 3 )
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource( 2 )
 texture = SubResource( 4 )

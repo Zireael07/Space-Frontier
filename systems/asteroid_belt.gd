@@ -1,10 +1,10 @@
-tool
+@tool
 extends Node2D
 
 # Declare member variables here. Examples:
-export var radius = 0.2 # AU
-export var outer_radius = 0.4 # AU
-export var num = 20
+@export var radius = 0.2 # AU
+@export var outer_radius = 0.4 # AU
+@export var num = 20
 #export var angle_inc = 15 # for small distances < 0.2 AU
 var ast_chances = []
 var types = { S = 0, C = 1, M = 2 }
@@ -23,7 +23,7 @@ func _ready():
 	var angle = randf() 
 	for i in range(0, num):
 		# spawn asteroid
-		var ast = asteroid_s.instance()
+		var ast = asteroid_s.instantiate()
 		# randomize the type
 		var ast_type = select_random()
 		ast.type = ast_type
@@ -55,16 +55,16 @@ func _ready():
 
 # oneliner from GH
 func random_point_on_ring(outer_radius: float, inner_radius := 0.0):
-	return Vector2.RIGHT.rotated(randf() * TAU) * sqrt(rand_range(pow(1 - (outer_radius - inner_radius) / outer_radius, 2), 1)) * outer_radius
+	return Vector2.RIGHT.rotated(randf() * TAU) * sqrt(randf_range(pow(1 - (outer_radius - inner_radius) / outer_radius, 2), 1)) * outer_radius
 
 func place(dist,outer_radius,child):
 	#print("Place : a " + str(angle) + " dist: " + str(dist) + " AU")
 	var d = dist*game.AU
 	outer_radius = outer_radius*game.AU
-	#var pos = Vector2(0, d).rotated(deg2rad(angle))
+	#var pos = Vector2(0, d).rotated(deg_to_rad(angle))
 	var pos = random_point_on_ring(outer_radius, d)
 	
-	#print("vec: 0, " + str(d) + " rot: " + str(deg2rad(angle)))
+	#print("vec: 0, " + str(d) + " rot: " + str(deg_to_rad(angle)))
 	#print("Position is " + str(pos))
 	#get_parent().get_global_position() + 
 	

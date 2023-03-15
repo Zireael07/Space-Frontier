@@ -27,7 +27,7 @@ func spawn_from_data(data):
 	for i in data.size():
 		# the first is always the star
 		if i == 0:
-			var s = star.instance()
+			var s = star.instantiate()
 			s.set_name(data[i][0])
 			s.get_node("Label").set_text(data[i][0])
 			var h = Node2D.new()
@@ -42,7 +42,7 @@ func spawn_from_data(data):
 			print(d)
 			var b = null
 			if d[1].strip_edges() == "planet":
-				b = planet.instance()
+				b = planet.instantiate()
 				b.set_name(data[i][0])
 				b.get_node("Label").set_text(data[i][0])
 				holder.add_child(b)
@@ -60,12 +60,12 @@ func spawn_from_data(data):
 					mas = mas.to_float() * 318 # 1 MJ is 318 ME
 				b.setup(0, float(d[2])*game.AU, mas, rad, false)
 			else:
-				b = star.instance()
+				b = star.instantiate()
 				b.set_name(data[i][0])
 				b.get_node("Label").set_text(data[i][0])
 				b.set_script(star_script)
 				var dist = float(d[2])*game.AU
-				var pos = Vector2(0, dist).rotated(deg2rad(0))
+				var pos = Vector2(0, dist).rotated(deg_to_rad(0))
 				b.set_position(pos)
 				setup_star(b, data[i][4], data[i][5], data[i][3])
 				add_child(b)
@@ -80,13 +80,13 @@ func setup_star(star, lum, star_type, radius):
 	
 	#print("Star type: *", star_type,"*")
 	if star_type == "red":
-		star.get_node("Sprite").set_texture(red)
+		star.get_node("Sprite2D").set_texture(red)
 	elif star_type == "yellow":
-		star.get_node("Sprite").set_texture(yellow)
+		star.get_node("Sprite2D").set_texture(yellow)
 	elif star_type == "orange":
-		star.get_node("Sprite").set_texture(orange)
+		star.get_node("Sprite2D").set_texture(orange)
 	elif star_type == "white":
-		star.get_node("Sprite").set_texture(white)
+		star.get_node("Sprite2D").set_texture(white)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

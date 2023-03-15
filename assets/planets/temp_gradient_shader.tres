@@ -3,7 +3,7 @@
 [resource]
 code = "shader_type canvas_item;
 
-uniform sampler2D gradient: hint_black;
+uniform sampler2D gradient: hint_default_black;
 
 void fragment() {
 	//simple gradient shader from GDQuest: https://www.youtube.com/watch?v=i7VljTl4I3w

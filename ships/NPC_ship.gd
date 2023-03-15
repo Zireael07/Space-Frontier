@@ -4,7 +4,7 @@ extends "ship_basic.gd"
 var landed = false
 # AI specific stuff
 var brain
-onready var task_timer = $"task_timer"
+@onready var task_timer = $"task_timer"
 var timer_count = 0
 var target_type = null
 
@@ -22,7 +22,7 @@ signal target_killed
 
 signal ship_killed
 
-export(int) var kind_id = 0
+@export var kind_id: int = 0
 
 enum kind { enemy, friendly, pirate, neutral }
 
@@ -52,7 +52,7 @@ func _ready():
 		var id = randi() % game.enemy_names.size() # return between 0 and size -1
 		ship_name = game.enemy_names[id]
 		# remove name that was already used
-		game.enemy_names.remove(id)
+		game.enemy_names.remove_at(id)
 		$"Label".set_text(ship_name)
 		# tint red
 		$"Label".set_self_modulate(Color(1, 0, 0))
@@ -64,7 +64,7 @@ func _ready():
 		var id = randi() % game.friendly_names.size() # return between 0 and size-1
 		ship_name = game.friendly_names[id]
 		# remove name that was already used
-		game.friendly_names.remove(id)
+		game.friendly_names.remove_at(id)
 		$"Label".set_text(ship_name)
 		# tint cyan
 		$"Label".set_self_modulate(Color(0, 1, 1))
@@ -73,7 +73,7 @@ func _ready():
 		var id = randi() % game.neutral_names.size() # return between 0 and size -1
 		ship_name = game.neutral_names[id]
 		# remove name that was already used
-		game.neutral_names.remove(id)
+		game.neutral_names.remove_at(id)
 		$"Label".set_text(ship_name)
 		$"Label".set_self_modulate(Color(1,0.8, 0))
 		add_to_group("neutral")
@@ -81,20 +81,20 @@ func _ready():
 #	print("Groups: " + str(get_groups()))
 	var _conn
 	
-	_conn = connect("shield_changed", self, "_on_shield_changed")
-	_conn = connect("AI_hit", self, "_on_AI_hit")
+	_conn = connect("shield_changed",Callable(self,"_on_shield_changed"))
+	_conn = connect("AI_hit",Callable(self,"_on_AI_hit"))
 	
-	_conn = connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
+	_conn = connect("AI_targeted",Callable(game.player.HUD,"_on_AI_targeted"))
 	
-	_conn = connect("target_killed", self, "_on_target_killed")
+	_conn = connect("target_killed",Callable(self,"_on_target_killed"))
 	
-	_conn = connect("ship_killed", game.player.HUD, "_on_ship_killed")
+	_conn = connect("ship_killed",Callable(game.player.HUD,"_on_ship_killed"))
 	
-	_conn = connect("colony_picked", game.player.HUD, "_on_colony_picked")
+	_conn = connect("colony_picked",Callable(game.player.HUD,"_on_colony_picked"))
 	
 	# targeting signals (for status light)
-	_conn = connect("target_acquired_AI", game.player.HUD, "_on_target_acquired_by_AI")
-	_conn = connect("target_lost_AI", game.player.HUD, "_on_target_lost_by_AI")
+	_conn = connect("target_acquired_AI",Callable(game.player.HUD,"_on_target_acquired_by_AI"))
+	_conn = connect("target_lost_AI",Callable(game.player.HUD,"_on_target_lost_by_AI"))
 
 	brain = get_node("brain")
 	# register ourselves with brain
@@ -112,7 +112,7 @@ func _process(_delta):
 	# get the label to stay in one place from player POV
 	# this is the same as in planet.gd line 386
 	# TODO: is there a better solution (less calls)?
-	var angle = -get_global_rotation() + deg2rad(45) # because the label is located at 45 deg angle...
+	var angle = -get_global_rotation() + deg_to_rad(45) # because the label is located at 45 deg angle...
 	# effectively inverse of atan2()
 	var angle_loc = Vector2(cos(angle), sin(angle))
 	#Controls don't have transforms so we have to manually set position
@@ -292,7 +292,7 @@ func move_AI(vel, delta):
 		#acc += vel * -friction
 		#vel += acc *delta
 		# prevent exceeding max speed
-		vel = vel.clamped(max_vel)
+		vel = vel.limit_length(max_vel)
 		pos += vel * delta
 		set_position(pos)
 	else:
@@ -326,7 +326,7 @@ func move_AI(vel, delta):
 				vel = Vector2(0, -LIGHT_SPEED).rotated(-a)
 				pos += vel* delta
 				# prevent accumulating
-				vel = vel.clamped(LIGHT_SPEED)
+				vel = vel.limit_length(LIGHT_SPEED)
 				set_position(pos)
 			else:
 				# we've arrived, return to normal space
@@ -352,7 +352,7 @@ func shoot_wrapper():
 func shoot():
 	# TODO: implement power draw for AI ships
 	gun_timer.start()
-	var b = bullet.instance()
+	var b = bullet.instantiate()
 	bullet_container.add_child(b)
 	b.start_at(get_global_rotation(), $"muzzle".get_global_position())
 
@@ -440,7 +440,7 @@ func move_orbit(delta, planet, system):
 
 
 func orbit_planet(planet):
-	.orbit_planet(planet)
+	super.orbit_planet(planet)
 	
 	# AI specific
 	# reset everything just to be super safe
@@ -453,7 +453,7 @@ func orbit_planet(planet):
 	
 	# we're rotated compared to what look_at uses, so it handily makes the AI face the correct direction...
 	look_at(planet.get_global_position())
-	#vel = brain.set_heading(brain.target).clamped(2)
+	#vel = brain.set_heading(brain.target).limit_length(2)
 	
 	# label rotation
 	$"Label".set_rotation(-get_global_rotation())
@@ -462,7 +462,7 @@ func orbit_planet(planet):
 	task_timer.start()
 
 func deorbit():
-	.deorbit()
+	super.deorbit()
 	
 	if not (brain.get_state() in [brain.STATE_ATTACK]):
 		# force change state
@@ -627,7 +627,7 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		#	targetted = false
 		
 		# redraw 
-		update()
+		queue_redraw()
 
 func on_warping():
 	# no warping if we are hauling a colony
@@ -636,7 +636,7 @@ func on_warping():
 		return
 	
 	# effect
-	var warp = warp_effect.instance()
+	var warp = warp_effect.instantiate()
 	add_child(warp)
 	warp.set_position(Vector2(0,0))
 	warp.play()

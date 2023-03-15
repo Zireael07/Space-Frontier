@@ -3,10 +3,10 @@ extends "ships/boid.gd"
 # class member variables go here, for example:
 
 # bullets
-export(PackedScene) var bullet
-onready var bullet_container = $"bullet_container"
+@export var bullet: PackedScene
+@onready var bullet_container = $"bullet_container"
 #onready var bullet = preload("res://bullet.tscn")
-onready var gun_timer = $"gun_timer"
+@onready var gun_timer = $"gun_timer"
 
 var targetted = false
 var tractor = false
@@ -26,8 +26,8 @@ signal distress_called
 func _ready():
 	var _conn = null
 	get_parent().add_to_group("colony")
-	_conn = connect("colony_colonized", self, "_on_colony_colonized")
-	_conn = connect("distress_called", self, "_on_distress_called")
+	_conn = connect("colony_colonized",Callable(self,"_on_colony_colonized"))
+	_conn = connect("distress_called",Callable(self,"_on_distress_called"))
 
 # using this because we don't need physics
 func _process(delta):
@@ -35,13 +35,13 @@ func _process(delta):
 #	# Update game logic here.
 
 	# redraw 
-	update()
+	queue_redraw()
 	
 	# shoot targets
 	if not tractor and not get_parent().get_parent().is_in_group("friendly"):
 		var enemy = get_closest_enemy()
 		if enemy:
-			shoot_rel_pos = get_global_transform().xform_inv(enemy.get_global_position())
+			shoot_rel_pos = enemy.get_global_position() * get_global_transform()
 			var dist = get_global_position().distance_to(enemy.get_global_position())
 			#print(str(dist))
 			if dist < 350:
@@ -61,7 +61,7 @@ func _process(delta):
 			#print("Parent is " + get_parent().get_parent().get_parent().get_name())
 			target = tractor.get_node("dock").get_global_position()
 		
-			rel_pos = get_global_transform().xform_inv(target)
+			rel_pos = target * get_global_transform()
 			#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
 			
 			# steering behavior
@@ -145,9 +145,9 @@ func shoot():
 	# paranoia
 	if not bullet:
 		return
-		 
+ 
 	gun_timer.start()
-	var b = bullet.instance()
+	var b = bullet.instantiate()
 	# scale until smaller gfx is found
 	b.set_scale(Vector2(0.5, 1))
 	# reduced damage
@@ -213,10 +213,10 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		#	targetted = false
 			
 		# redraw
-		update()
+		queue_redraw()
 
 func show_shadow():
-	get_node("Sprite").show()
+	get_node("Sprite2D").show()
 	# piggyback
 	get_child(1).get_node("dome").show()
 	

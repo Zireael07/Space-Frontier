@@ -12,8 +12,8 @@ pts = [ Vector2( 100, 200 ), Vector2( 250, 100 ) ]
 width = 2.0
 
 [node name="Label" type="Label" parent="."]
-margin_left = 175.0
-margin_top = 150.0
-margin_right = 215.0
-margin_bottom = 164.0
+offset_left = 175.0
+offset_top = 150.0
+offset_right = 215.0
+offset_bottom = 164.0
 text = "180"

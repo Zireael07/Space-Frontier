@@ -2,15 +2,15 @@
 
 [ext_resource path="res://colony.gd" type="Script" id=1]
 [ext_resource path="res://guns/bullet.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/ships/ufoBlue_ed.png" type="Texture" id=3]
-[ext_resource path="res://assets/ships/ufo_shade.png" type="Texture" id=4]
-[ext_resource path="res://assets/dome_edit.png" type="Texture" id=5]
+[ext_resource path="res://assets/ships/ufoBlue_ed.png" type="Texture2D" id=3]
+[ext_resource path="res://assets/ships/ufo_shade.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/dome_edit.png" type="Texture2D" id=5]
 
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 uniform float outline_width = 2.0;
-uniform vec4 outline_color: hint_color;
+uniform vec4 outline_color: source_color;
 
 void fragment(){
 	vec4 tex_col = texture(TEXTURE, UV);
@@ -68,14 +68,14 @@ radius = 23.0021
 script = ExtResource( 1 )
 bullet = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="Area2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
 visible = false
 modulate = Color( 0.32549, 0.32549, 0.32549, 1 )
 show_behind_parent = true
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 4 )
 
-[node name="blue_colony" type="Sprite" parent="Area2D"]
+[node name="blue_colony" type="Sprite2D" parent="Area2D"]
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
 
@@ -83,7 +83,7 @@ texture = ExtResource( 3 )
 visible = false
 scale = Vector2( 1.66667, 1.66667 )
 
-[node name="dome" type="Sprite" parent="Area2D/blue_colony/dome"]
+[node name="dome" type="Sprite2D" parent="Area2D/blue_colony/dome"]
 material = SubResource( 2 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 5 )
@@ -93,16 +93,16 @@ shape = SubResource( 3 )
 
 [node name="bullet_container" type="Node" parent="Area2D"]
 
-[node name="muzzle" type="Position2D" parent="Area2D"]
+[node name="muzzle" type="Marker2D" parent="Area2D"]
 
 [node name="gun_timer" type="Timer" parent="Area2D"]
 wait_time = 1.5
 one_shot = true
 
 [node name="Label" type="Label" parent="Area2D"]
-margin_top = 30.0
-margin_right = 40.0
-margin_bottom = 44.0
+offset_top = 30.0
+offset_right = 40.0
+offset_bottom = 44.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

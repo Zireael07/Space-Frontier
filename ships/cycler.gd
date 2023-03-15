@@ -3,7 +3,7 @@ extends Node2D # cyclers don't move, so no need to extend boid.gd
 # basically starbase.gd minus moving and shooting
 
 # class member variables go here, for example:
-onready var explosion = preload("res://explosion.tscn")
+@onready var explosion = preload("res://explosion.tscn")
 
 var shields = 150
 signal shield_changed
@@ -31,8 +31,8 @@ func _ready():
 	
 	var _conn
 	
-	_conn = connect("distress_called", self, "_on_distress_called")
-	_conn = connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
+	_conn = connect("distress_called",Callable(self,"_on_distress_called"))
+	_conn = connect("AI_targeted",Callable(game.player.HUD,"_on_AI_targeted"))
 	#add_to_group("enemy")
 	
 	randomize_storage()
@@ -40,7 +40,7 @@ func _ready():
 func randomize_storage():
 	randomize()
 	for e in elements:
-		storage[e] = int(rand_range(3.0, 10.0))
+		storage[e] = int(randf_range(3.0, 10.0))
 
 # draw a red rectangle around the target
 func _draw():
@@ -63,7 +63,7 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		#	targetted = false
 			
 		# redraw
-		update()
+		queue_redraw()
 
 func _on_distress_called(target):
 	if is_in_group("enemy"):

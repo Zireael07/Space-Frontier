@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://assets/bodies/texture_template.png" type="Texture" id=1]
+[ext_resource path="res://assets/bodies/texture_template.png" type="Texture2D" id=1]
 [ext_resource path="res://assets/planets/gasgiant_gradient.tres" type="Gradient" id=2]
 [ext_resource path="res://assets/planets/seamless_shader_gasgiant.tres" type="Shader" id=3]
 
-[sub_resource type="GradientTexture" id=8]
+[sub_resource type="GradientTexture2D" id=8]
 gradient = ExtResource( 2 )
 
 [sub_resource type="ShaderMaterial" id=1]
@@ -29,6 +29,6 @@ noise = SubResource( 6 )
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource( 1 )
 texture = SubResource( 3 )

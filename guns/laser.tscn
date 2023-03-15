@@ -1,17 +1,17 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://guns/laser.gd" type="Script" id=1]
-[ext_resource path="res://assets/laserBlue13.png" type="Texture" id=2]
+[ext_resource path="res://assets/laserBlue13.png" type="Texture2D" id=2]
 
 [node name="laser" type="RayCast2D"]
 enabled = true
-cast_to = Vector2( 105, 0 )
+target_position = Vector2( 105, 0 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2( 54, 0 )
 rotation = 1.5708
 scale = Vector2( 1, 2 )

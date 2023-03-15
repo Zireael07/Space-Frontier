@@ -262,20 +262,20 @@ func make_star_view(star, _select_id):
 	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	
-	var view = $"Panel_rightHUD/PanelInfo/PlanetInfo/ViewportContainer"
+	var view = $"Panel_rightHUD/PanelInfo/PlanetInfo/SubViewportContainer"
 	# scale to achieve roughly 110 px size
 	var siz = Vector2(750,750)
 	view.get_child(0).size = siz
 	view.set_scale(Vector2(0.15, 0.15))
 	view._set_position(Vector2(90, 0))
 	# place view in center
-	view.get_node("Viewport/Node2D").position = Vector2(siz.x/2, siz.y/2)
+	view.get_node("SubViewport/Node2D").position = Vector2(siz.x/2, siz.y/2)
 	# add the nodes
-	view.get_node("Viewport/Node2D").add_child(star.get_node("Sprite").duplicate())	
+	view.get_node("SubViewport/Node2D").add_child(star.get_node("Sprite2D").duplicate())	
 
 	#$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
-	#$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(star.get_node("Sprite").get_material())
-	#$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(star.get_node("Sprite").get_texture())
+	#$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_material(star.get_node("Sprite2D").get_material())
+	#$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".set_texture(star.get_node("Sprite2D").get_texture())
 
 	# set label
 	var txt = "Star: " + str(star.get_node("Label").get_text())
@@ -307,12 +307,12 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".show()
 	# reset
-	for c in $"Panel_rightHUD/PanelInfo/PlanetInfo/ViewportContainer/Viewport/Node2D".get_children():
+	for c in $"Panel_rightHUD/PanelInfo/PlanetInfo/SubViewportContainer/SubViewport/Node2D".get_children():
 		c.queue_free()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo/TextureRect2".hide()
 	# use viewport instead of hacking to replicate planet looks
-	var view = $"Panel_rightHUD/PanelInfo/PlanetInfo/ViewportContainer"
+	var view = $"Panel_rightHUD/PanelInfo/PlanetInfo/SubViewportContainer"
 	# 0.35 scale to achieve roughly 110 px size from 300px sized viewport for a planet
 	var siz = Vector2(300,300)
 	view.get_child(0).size = siz
@@ -321,11 +321,11 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	#	view.set_scale(Vector2(1,1))
 	view._set_position(Vector2(80, 0))
 	# place view in center
-	view.get_node("Viewport/Node2D").position = Vector2(siz.x/2, siz.y/2)
+	view.get_node("SubViewport/Node2D").position = Vector2(siz.x/2, siz.y/2)
 	# add the nodes
-	view.get_node("Viewport/Node2D").add_child(planet.get_node("Sprite").duplicate())
+	view.get_node("SubViewport/Node2D").add_child(planet.get_node("Sprite2D").duplicate())
 	if planet.has_node("Sprite_shadow"):
-		view.get_node("Viewport/Node2D").add_child(planet.get_node("Sprite_shadow").duplicate())
+		view.get_node("SubViewport/Node2D").add_child(planet.get_node("Sprite_shadow").duplicate())
 		
 	# set label
 	var txt = "Destination: " + str(planet.get_node("Label").get_text())
@@ -513,32 +513,32 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		$"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".set_tooltip("")
 	
 	# connected from script because the scrollbar of the RichTextLabel is created at runtime
-	rtl.get_child(0).connect("value_changed", self, "_on_view_scroll_changed") #, [value, no_shadow])
+	rtl.get_child(0).connect("value_changed",Callable(self,"_on_view_scroll_changed")) #, [value, no_shadow])
 	
 		
 	# connected from script because they rely on ID of the planet
-	if $"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".is_connected("pressed", player, "_on_goto_pressed"):
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".disconnect("pressed", player, "_on_goto_pressed")
-	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed", [planet])
+	if $"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".is_connected("pressed",Callable(player,"_on_goto_pressed")):
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".disconnect("pressed",Callable(player,"_on_goto_pressed"))
+	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed",Callable(player,"_on_goto_pressed").bind(planet))
 
 	if parent_id != -1:
-		if $"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".is_connected("pressed", player, "_on_conquer_pressed"):
-			$"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".disconnect("pressed", player, "_on_conquer_pressed")
-		get_node("Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton").connect("pressed", player, "_on_conquer_pressed", [select_id])
+		if $"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".is_connected("pressed",Callable(player,"_on_conquer_pressed")):
+			$"Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton".disconnect("pressed",Callable(player,"_on_conquer_pressed"))
+		get_node("Panel_rightHUD/PanelInfo/PlanetInfo/ConquerButton").connect("pressed",Callable(player,"_on_conquer_pressed").bind(select_id))
 
-	if $"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".is_connected("pressed", player, "_on_scan_pressed"):
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".disconnect("pressed", player, "_on_scan_pressed")
-	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton").connect("pressed", player, "_on_scan_pressed", [planet])
-
-	# prev/next button
-	if $"Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton".is_connected("pressed", self, "_on_prev_pressed"):
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton".disconnect("pressed", self, "_on_prev_pressed")
-	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton").connect("pressed", self, "_on_prev_pressed", [select_id, parent_id])
+	if $"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".is_connected("pressed",Callable(player,"_on_scan_pressed")):
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton".disconnect("pressed",Callable(player,"_on_scan_pressed"))
+	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/ScanButton").connect("pressed",Callable(player,"_on_scan_pressed").bind(planet))
 
 	# prev/next button
-	if $"Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".is_connected("pressed", self, "_on_next_pressed"):
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".disconnect("pressed", self, "_on_next_pressed")
-	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/NextButton").connect("pressed", self, "_on_next_pressed", [select_id, parent_id])
+	if $"Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton".is_connected("pressed",Callable(self,"_on_prev_pressed")):
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton".disconnect("pressed",Callable(self,"_on_prev_pressed"))
+	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/PrevButton").connect("pressed",Callable(self,"_on_prev_pressed").bind(select_id, parent_id))
+
+	# prev/next button
+	if $"Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".is_connected("pressed",Callable(self,"_on_next_pressed")):
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/NextButton".disconnect("pressed",Callable(self,"_on_next_pressed"))
+	get_node("Panel_rightHUD/PanelInfo/PlanetInfo/NextButton").connect("pressed",Callable(self,"_on_next_pressed").bind(select_id, parent_id))
 
 func scan_toggle(planet):
 	if planet.scanned:

@@ -4,9 +4,9 @@
 [ext_resource path="res://bodies/asteroid.tscn" type="PackedScene" id=2]
 [ext_resource path="res://systems/star system.gd" type="Script" id=3]
 [ext_resource path="res://bodies/planet_new.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/bodies/Planet-only1.png" type="Texture" id=5]
-[ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture" id=6]
-[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=7]
+[ext_resource path="res://assets/bodies/Planet-only1.png" type="Texture2D" id=5]
+[ext_resource path="res://assets/bodies/Planet-only4.png" type="Texture2D" id=6]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture2D" id=7]
 [ext_resource path="res://systems/asteroid_belt.gd" type="Script" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -14,7 +14,7 @@
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
 
-uniform vec4 aura_color : hint_color;
+uniform vec4 aura_color : source_color;
 
 void fragment()
 {
@@ -42,16 +42,16 @@ orbit_rate = 0.02
 star_radius_factor = 0.45
 luminosity = 0.03
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 9.92185
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 7 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = -400.0
-margin_top = 350.0
-margin_right = -328.0
-margin_bottom = 366.0
+offset_left = -400.0
+offset_top = 350.0
+offset_right = -328.0
+offset_bottom = 366.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_styles/normal = SubResource( 1 )
 text = "Kepler-99"
@@ -83,7 +83,7 @@ atm = 0.840618
 greenhouse = 0.000376237
 population = 0.1
 
-[node name="Sprite" parent="planet_holder/planet2" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet2" index="0"]
 texture = ExtResource( 5 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet2" index="1"]
@@ -92,7 +92,7 @@ rotation = 4.81991
 
 [node name="Label" parent="planet_holder/planet2" index="2"]
 self_modulate = Color( 0, 1, 1, 1 )
-margin_right = 204.0
+offset_right = 204.0
 text = "Paradise"
 
 [node name="colony2" parent="planet_holder/planet2" instance=ExtResource( 1 )]
@@ -104,7 +104,7 @@ hydro = 0.0
 atm = 0.883466
 greenhouse = 0.00700822
 
-[node name="Sprite" parent="planet_holder/planet3" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet3" index="0"]
 texture = ExtResource( 6 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]

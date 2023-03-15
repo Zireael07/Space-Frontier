@@ -5,7 +5,7 @@ code = "shader_type canvas_item;
 
 uniform float fadeWidth;
 
-//uniform vec4 lava_color: hint_color = vec4(1.0,0.4,0.1, 1.0);
+//uniform vec4 lava_color: source_color = vec4(1.0,0.4,0.1, 1.0);
 uniform sampler2D lava_gradient;
 
 //based on https://github.com/meric/renderplanet

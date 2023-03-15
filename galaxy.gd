@@ -7,7 +7,7 @@ var data = []
 var map_graph = []
 var map_astar = null
 # problem: we have coordinates (3 floats) and we need to have a unique identifier per star
-# idenfifier must be an int because AStar uses integer ids
+# idenfifier must be an int because AStar3D uses integer ids
 var mapping = {}
 
 # https://stackoverflow.com/questions/65706804/bitwise-packing-unpacking-generalized-solution-for-arbitrary-values
@@ -88,12 +88,12 @@ func save_graph_data(x,y,z, nam):
 		pos_to_sector(Vector3(x,y,z))
 		return
 	
-	# as of Godot 3.5, AStar's key cannot be larger than 2^32-1 (hashes will overflow)
+	# as of Godot 3.5, AStar3D's key cannot be larger than 2^32-1 (hashes will overflow)
 	
 	var id = pack_vector(pos_to_positive_pos(float_to_int(Vector3(x,y,z))))
 	#print("ID: ", id, "; unpacked: ", unpack_vector(id))
 	#print("Nearest po2: ", nearest_po2(id)) # 2^30 for storing 3*2^10 max
-	#print("AStar overflow: ", id > (pow(2,31)-1)) # 2^31-1
+	#print("AStar3D overflow: ", id > (pow(2,31)-1)) # 2^31-1
 	
 	mapping[float_to_int(Vector3(x,y,z))] = id
 	
@@ -117,8 +117,8 @@ func strip_units(entry):
 # output is in whatever unit dist used (light years in my case)
 func galactic_from_ra_dec(ra, dec, dist):
 	# Find Equatorial cartesian coordinates
-	ra = deg2rad(ra)
-	dec = deg2rad(dec)
+	ra = deg_to_rad(ra)
+	dec = deg_to_rad(dec)
 	# dec and ra in radians from here on
 	var rvect = dist * cos(dec);
 
@@ -137,11 +137,11 @@ func galactic_from_ra_dec(ra, dec, dist):
 
 # parsing it happens in star_map.gd because it's creating the icons as it's being parsed
 func load_data():
-	var file = File.new()
-	var opened = file.open("res://known_systems.csv", file.READ)
-	if opened == OK:
-		while !file.eof_reached():
-			var csv = file.get_csv_line()
+	#var file = File.new()
+	var opened = FileAccess.open("res://known_systems.csv", FileAccess.READ)
+	if opened.get_error() == OK:
+		while !opened.eof_reached():
+			var csv = opened.get_csv_line()
 			if csv != null:
 				# skip header
 				if csv[0] == "name":
@@ -151,12 +151,12 @@ func load_data():
 					data.append(csv)
 					#print(str(csv))
 	
-		file.close()
+		opened.close()
 		return data
 
 # ------------------------------------------------------------
 func create_map_graph():
-	map_astar = AStar.new()
+	map_astar = AStar3D.new()
 	# hardcoded stars
 	mapping[Vector3(0,0,0)] = pack_vector(pos_to_positive_pos(float_to_int(Vector3(0,0,0))))
 	map_astar.add_point(mapping[Vector3(0,0,0)], Vector3(0,0,0)) # Sol
@@ -174,7 +174,7 @@ func create_map_graph():
 		#map_astar.add_point(i+1, Vector3(n[0], n[1], n[2]))
 	
 	# debug
-	#print("AStar points:")
+	#print("AStar3D points:")
 	#for p in map_astar.get_points():
 	#	print(p, ": ", map_astar.get_point_position(p))
 	
@@ -193,7 +193,7 @@ func auto_connect_stars():
 	var quads = sector_to_quadrants(Vector2(-512, -512))
 	for i in quads.size():
 		var q = quads[i]
-		for p in map_astar.get_points():
+		for p in map_astar.get_point_ids():
 			# skip center star
 			if p == center_star:
 				continue
@@ -308,7 +308,7 @@ func auto_connect_stars():
 						tmp.append(s)
 			
 			stars = tmp
-			if !stars.empty():
+			if !stars.is_empty():
 				#print(stars)
 				map_astar.connect_points(mapping[float_to_int(p)], mapping[float_to_int(stars[0][1])])
 				print("Connecting across quadrants, ", p, " ", find_name_from_pos(p), " and ", find_name_from_pos(stars[0][1]), " @ ", stars[0][1])
@@ -557,7 +557,7 @@ func get_closest_stars_to(pos):
 	var dists = []
 	var stars = []
 
-	for p in map_astar.get_points():
+	for p in map_astar.get_point_ids():
 		var dist = map_astar.get_point_position(p).distance_to(src)
 		dists.append(dist)
 		stars.append([dist, map_astar.get_point_position(p)])
@@ -566,7 +566,7 @@ func get_closest_stars_to(pos):
 	#print("Dists sorted: " + str(dists))
 
 	# custom sort
-	stars.sort_custom(MyCustomSorter, "sort_stars")
+	stars.sort_custom(Callable(MyCustomSorter,"sort_stars"))
 
 	#print(stars)
 	
@@ -584,7 +584,7 @@ func closest_stars_postprocess(stars):
 			to_rem.append(i+1)
 	
 	for r in to_rem:
-		stars.remove(r)
+		stars.remove_at(r)
 	
 	return stars
 

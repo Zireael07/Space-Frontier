@@ -3,11 +3,11 @@ extends Node2D
 # class member variables go here, for example:
 const LIGHT_SPEED = 400 # original Stellar Frontier seems to have used 200 px/s	
 
-export var rot_speed = 2.6 #radians
-export var thrust = 500
-export var max_vel = 0.5 * LIGHT_SPEED
-export var friction = 0.65
-export var max_speed = 0.5 * LIGHT_SPEED
+@export var rot_speed = 2.6 #radians
+@export var thrust = 500
+@export var max_vel = 0.5 * LIGHT_SPEED
+@export var friction = 0.65
+@export var max_speed = 0.5 * LIGHT_SPEED
 
 # motion
 var rot = 0
@@ -47,7 +47,7 @@ func get_steering_seek(tg, cap=(max_vel/4)):
 	#	return Vector2(0,0)
 	
 	desired = desired.normalized() * max_speed
-	steering = (desired - vel).clamped(cap)
+	steering = (desired - vel).limit_length(cap)
 	return steering
 	
 	
@@ -59,12 +59,12 @@ func get_steering_arrive(tg):
 	var dist = desired.length()
 	desired = desired.normalized()
 	if dist < 100:
-		var m = range_lerp(dist, 0, 100, 0, max_speed) # 100 is our max speed?
+		var m = remap(dist, 0, 100, 0, max_speed) # 100 is our max speed?
 		desired = desired * m
 	else:
 		desired = desired * max_speed
 		
-	steering = (desired - vel).clamped(max_vel/4)
+	steering = (desired - vel).limit_length(max_vel/4)
 	return steering
 	
 
@@ -76,7 +76,7 @@ func set_heading(tg):
 	desired = desired.normalized() * 0.01
 
 	#return desired
-	steering = (desired - vel).clamped(max_vel/4)
+	steering = (desired - vel).limit_length(max_vel/4)
 
 	return steering
 
@@ -94,11 +94,11 @@ func get_steering_avoid(tg, max_range=600, cap=(max_vel/4)):
 	
 	desired = desired.normalized()*2
 	
-	var m = range_lerp(dist, max_range, 0, 10, max_speed) # 100 is our max speed?
+	var m = remap(dist, max_range, 0, 10, max_speed) # 100 is our max speed?
 	desired = desired * m
 	
 	#steering = Vector2(0,0)
-	steering = (desired - vel).clamped(cap)
+	steering = (desired - vel).limit_length(cap)
 	
 	return steering
 
@@ -107,7 +107,7 @@ func get_steering_flee(tg):
 	desired = get_global_position() - tg
 	
 	desired = desired.normalized() * max_speed
-	steering = (desired - vel).clamped(max_vel/2)
+	steering = (desired - vel).limit_length(max_vel/2)
 	return steering
 
 func get_steering_separation(others):
@@ -128,7 +128,7 @@ func get_steering_separation(others):
 	
 	if moveX != 0 and moveY != 0:
 		print("Separation: ", moveX, " ", moveY)
-		steering = Vector2(moveX, moveY).clamped(max_vel/2)
+		steering = Vector2(moveX, moveY).limit_length(max_vel/2)
 		return steering
 	else:
 		return Vector2(0,0)

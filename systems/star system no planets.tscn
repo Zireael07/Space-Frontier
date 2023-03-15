@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture2D" id=2]
 [ext_resource path="res://systems/star.gd" type="Script" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -14,14 +14,14 @@ orbit_rate = 0.01
 star_radius_factor = 0.14
 luminosity = 0.001
 
-[node name="Sprite" type="Sprite" parent="BL Ceti"]
+[node name="Sprite2D" type="Sprite2D" parent="BL Ceti"]
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="BL Ceti"]
-margin_top = 100.0
-margin_right = 109.0
-margin_bottom = 116.0
+offset_top = 100.0
+offset_right = 109.0
+offset_bottom = 116.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_styles/normal = SubResource( 1 )
 text = "BL Ceti"

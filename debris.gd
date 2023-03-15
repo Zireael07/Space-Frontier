@@ -1,7 +1,7 @@
 extends Area2D
 
 # class member variables go here, for example:
-export var module = 1
+@export var module = 1
 
 enum modules {shields, engine, power, cloak}
 

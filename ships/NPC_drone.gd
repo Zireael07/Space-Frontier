@@ -4,10 +4,10 @@ extends "drone_basic.gd"
 var landed = false
 # AI specific stuff
 var brain
-onready var task_timer = $"task_timer"
+@onready var task_timer = $"task_timer"
 var timer_count = 0
 
-export(int) var kind_id = 0
+@export var kind_id: int = 0
 
 enum kind { enemy, friendly, pirate, neutral }
 
@@ -63,7 +63,7 @@ func move_AI(vel, delta):
 		#acc += vel * -friction
 		#vel += acc *delta
 		# prevent exceeding max speed
-		vel = vel.clamped(max_vel)
+		vel = vel.limit_length(max_vel)
 		pos += vel * delta
 		set_position(pos)
 	else:
@@ -166,7 +166,7 @@ func move_orbit(delta, planet, system):
 
 
 func orbit_planet(planet):
-	.orbit_planet(planet)
+	super.orbit_planet(planet)
 	
 	# AI specific
 	# reset everything just to be super safe
@@ -178,13 +178,13 @@ func orbit_planet(planet):
 	
 	# we're rotated compared to what look_at uses, so it handily makes the AI face the correct direction...
 	look_at(planet.get_global_position())
-	#vel = brain.set_heading(brain.target).clamped(2)
+	#vel = brain.set_heading(brain.target).limit_length(2)
 	
 	# task timer allows the AI to deorbit after some time passed
 	task_timer.start()
 
 func deorbit():
-	.deorbit()
+	super.deorbit()
 	
 	if not (brain.get_state() in [brain.STATE_ATTACK]):
 		# force change state

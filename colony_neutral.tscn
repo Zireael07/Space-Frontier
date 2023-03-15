@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://colony.gd" type="Script" id=1]
-[ext_resource path="res://assets/ships/ufoYellow.png" type="Texture" id=2]
+[ext_resource path="res://assets/ships/ufoYellow.png" type="Texture2D" id=2]
 [ext_resource path="res://guns/bullet_neutral.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -13,7 +13,7 @@ radius = 23.0021
 script = ExtResource( 1 )
 bullet = ExtResource( 3 )
 
-[node name="Sprite" type="Sprite" parent="Area2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 2 )
 
@@ -22,7 +22,7 @@ shape = SubResource( 1 )
 
 [node name="bullet_container" type="Node" parent="Area2D"]
 
-[node name="muzzle" type="Position2D" parent="Area2D"]
+[node name="muzzle" type="Marker2D" parent="Area2D"]
 
 [node name="gun_timer" type="Timer" parent="Area2D"]
 wait_time = 0.5

@@ -6,7 +6,7 @@ var contains = []
 var resource_debris = preload("res://debris_resource.tscn")
 # C = 75%, C+S = 92% (i.e. S = 17%), M = 8%
 var types = { S = 0, C = 1, M = 2 }
-export (int) var type = 1 
+@export var type: int = 1
 
 
 func _ready():

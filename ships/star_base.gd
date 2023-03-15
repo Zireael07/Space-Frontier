@@ -3,11 +3,11 @@ extends "boid.gd"
 # class member variables go here, for example:
 
 # bullets
-export(PackedScene) var bullet
-onready var bullet_container = $"bullet_container"
+@export var bullet: PackedScene
+@onready var bullet_container = $"bullet_container"
 #onready var bullet = preload("res://bullet.tscn")
-onready var gun_timer = $"gun_timer"
-onready var explosion = preload("res://explosion.tscn")
+@onready var gun_timer = $"gun_timer"
+@onready var explosion = preload("res://explosion.tscn")
 
 var shields = 150
 signal shield_changed
@@ -35,7 +35,7 @@ var target_p = Vector2()
 var move_out = false # flag
 var move_timer
 
-export(int) var kind_id = 0
+@export var kind_id: int = 0
 
 enum kind { enemy, friendly, pirate, neutral }
 
@@ -56,9 +56,9 @@ func _ready():
 	
 	var _conn
 	
-	_conn = connect("distress_called", self, "_on_distress_called")
-	_conn = connect("target_killed", self, "_on_target_killed")
-	_conn = connect("AI_targeted", game.player.HUD, "_on_AI_targeted")
+	_conn = connect("distress_called",Callable(self,"_on_distress_called"))
+	_conn = connect("target_killed",Callable(self,"_on_target_killed"))
+	_conn = connect("AI_targeted",Callable(game.player.HUD,"_on_AI_targeted"))
 	#add_to_group("enemy")
 	
 	randomize_storage()
@@ -82,10 +82,10 @@ func randomize_storage():
 	randomize()
 	if is_in_group("processor"):
 		for e in elements:
-			storage[e] = int(rand_range(3.0, 10.0))
+			storage[e] = int(randf_range(3.0, 10.0))
 	else:
 		for e in elements:
-			storage[e] = int(rand_range(8.0, 20.0))
+			storage[e] = int(randf_range(8.0, 20.0))
 
 # using this because we don't need physics
 func _process(delta):
@@ -101,7 +101,7 @@ func _process(delta):
 	# one target case (this avoids the sort by distance)
 	if targetables.size() > 0 and targetables.size() < 2:
 		#print("Get targetables")
-		var dist = get_global_transform().xform_inv(targetables[0].get_global_position()).length()
+		var dist = (targetables[0].get_global_position() * get_global_transform()).length()
 		if shoot_target == null and dist < shoot_range:
 			if 'cloaked' in targetables[0] and targetables[0].cloaked:
 				return
@@ -114,7 +114,7 @@ func _process(delta):
 	else:
 		var closest = get_closest_enemy()
 		if closest != null:
-			var dist = get_global_transform().xform_inv(closest.get_global_position()).length()
+			var dist = (closest.get_global_position() * get_global_transform()).length()
 			if shoot_target == null and dist < shoot_range:
 				if 'cloaked' in closest and closest.cloaked:
 					return
@@ -128,7 +128,7 @@ func _process(delta):
 	if shoot_target == null or !is_instance_valid(shoot_target):
 		return
 	else:
-		shoot_rel_pos = get_global_transform().xform_inv(shoot_target.get_global_position())
+		shoot_rel_pos = shoot_target.get_global_position() * get_global_transform() 
 	
 		# visual effect
 		var color = Color(1,0,0)
@@ -136,8 +136,8 @@ func _process(delta):
 			color = Color(0,0,1)
 			
 		# some starbases don't have material
-		if get_child(0).get_material() != null and get_child(0).get_material().get_shader().has_param("flash_color"):
-			get_child(0).get_material().set_shader_param("flash_color", color)
+		if get_child(0).get_material() != null and get_child(0).get_material().get_shader_parameter("flash_color") != null:
+			get_child(0).get_material().set_shader_parameter("flash_color", color)
 	
 		if shoot_rel_pos.length() < shoot_range:
 			if gun_timer.get_time_left() == 0:
@@ -156,7 +156,7 @@ func _process(delta):
 			shoot_target = null
 			#print("AI lost target")
 			# remove effect
-			get_child(0).get_material().set_shader_param("flash_color", Color(1,1,1))
+			get_child(0).get_material().set_shader_parameter("flash_color", Color(1,1,1))
 			# update target HUD panel if open and we're the target 
 			if game.player.HUD.is_ship_view_open() and game.player.HUD.target == self:
 				game.player.HUD.starbase_update_status(self)
@@ -164,7 +164,7 @@ func _process(delta):
 	
 	#print(shoot_rel_pos)
 
-	rel_pos = get_global_transform().xform_inv(target)
+	rel_pos = target * get_global_transform()
 	#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))
 
 	# steering behavior
@@ -202,7 +202,7 @@ func _process(delta):
 	#set_rotation(-a)
 	
 	# redraw
-	update()
+	queue_redraw()
 
 func shoot():
 	gun_timer.start()
@@ -211,7 +211,7 @@ func shoot():
 #	for c in bullet_container.get_children():
 #		c.queue_free()
 	
-	var b = bullet.instance()
+	var b = bullet.instantiate()
 	# scale (otherwise the laser preview is difficult to view in editor)
 	b.set_scale(Vector2(4, 1))
 	bullet_container.add_child(b)
@@ -241,7 +241,7 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		#	targetted = false
 			
 		# redraw
-		update()
+		queue_redraw()
 
 func _on_distress_called(tgt):
 	# if hit by another starbase
@@ -289,7 +289,7 @@ func get_enemies():
 				#nodes.remove(nodes.find(n))
 		
 		for r in to_rem:
-			nodes.remove(nodes.find(r))
+			nodes.remove_at(nodes.find(r))
 		
 		var player = get_tree().get_nodes_in_group("player")[0].get_child(0)
 		if player and not player.cloaked and not player.warping and not player.dead:

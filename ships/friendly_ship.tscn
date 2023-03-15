@@ -3,15 +3,15 @@
 [ext_resource path="res://ships/brain.gd" type="Script" id=1]
 [ext_resource path="res://guns/bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=3]
-[ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture" id=4]
+[ext_resource path="res://assets/ships/playerShip3_blue.png" type="Texture2D" id=4]
 [ext_resource path="res://ships/NPC_ship.gd" type="Script" id=5]
-[ext_resource path="res://assets/shield_Edit.png" type="Texture" id=6]
-[ext_resource path="res://assets/fire11_grayscale_edit.png" type="Texture" id=7]
+[ext_resource path="res://assets/shield_Edit.png" type="Texture2D" id=6]
+[ext_resource path="res://assets/fire11_grayscale_edit.png" type="Texture2D" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 23.0021
 
-[sub_resource type="ParticlesMaterial" id=2]
+[sub_resource type="ParticleProcessMaterial" id=2]
 flag_disable_z = true
 gravity = Vector3( 0, 98, 0 )
 initial_velocity = 0.13
@@ -28,7 +28,7 @@ script = ExtResource( 5 )
 bullet = ExtResource( 2 )
 kind_id = 1
 
-[node name="playerShip3_blue" type="Sprite" parent="Area2D_ship_f"]
+[node name="playerShip3_blue" type="Sprite2D" parent="Area2D_ship_f"]
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 4 )
 
@@ -37,14 +37,14 @@ shape = SubResource( 1 )
 
 [node name="bullet_container" type="Node" parent="Area2D_ship_f"]
 
-[node name="muzzle" type="Position2D" parent="Area2D_ship_f"]
+[node name="muzzle" type="Marker2D" parent="Area2D_ship_f"]
 position = Vector2( 0, -30 )
 
 [node name="gun_timer" type="Timer" parent="Area2D_ship_f"]
 wait_time = 0.5
 one_shot = true
 
-[node name="shield_effect" type="Sprite" parent="Area2D_ship_f"]
+[node name="shield_effect" type="Sprite2D" parent="Area2D_ship_f"]
 visible = false
 scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 6 )
@@ -68,7 +68,7 @@ process_mode = 0
 process_mode = 0
 autostart = true
 
-[node name="engine_flare" type="Particles2D" parent="Area2D_ship_f"]
+[node name="engine_flare" type="GPUParticles2D" parent="Area2D_ship_f"]
 position = Vector2( 0, 34 )
 scale = Vector2( 0.5, 1 )
 amount = 2
@@ -76,13 +76,13 @@ lifetime = 0.3
 process_material = SubResource( 2 )
 texture = ExtResource( 7 )
 
-[node name="dock" type="Position2D" parent="Area2D_ship_f"]
+[node name="dock" type="Marker2D" parent="Area2D_ship_f"]
 position = Vector2( 0, 23 )
 
 [node name="Label" type="Label" parent="Area2D_ship_f"]
-margin_top = 40.0
-margin_right = 38.0
-margin_bottom = 54.0
+offset_top = 40.0
+offset_right = 38.0
+offset_bottom = 54.0
 text = "Name"
 
 [node name="warp_correct_timer" type="Timer" parent="Area2D_ship_f"]

@@ -1,6 +1,6 @@
 # map emulates the look of http://www.projectrho.com/public_html/rocket/images/spacemaps/RECONSmap.jpg
 # the Z-lines are inspired by the so-called "hockey sticks" in Elite/Oolite
-tool
+@tool
 extends "../galaxy.gd" #Control
 
 # Declare member variables here. Examples:
@@ -37,7 +37,7 @@ func parse_data():
 		line[col.TYPE].strip_edges() == "star" \
 			and line[col.NAME].find(" B") == -1: # ignore B, C, etc. stars
 			
-			ic = icon.instance()
+			ic = icon.instantiate()
 			# strip "A" etc.
 			var _name = str(line[col.NAME])
 			_name = _name.trim_suffix(" A")
@@ -290,7 +290,7 @@ func get_route_distance_height(src_icon, tg_icon):
 	
 	var r = get_route(src_icon, tg_icon)
 	
-	if r == null or r.empty():
+	if r == null or r.is_empty():
 		return []
 	
 	for i in range(r.size()-1):
@@ -405,15 +405,15 @@ func update_map(marker):
 			$"Control/Tau Ceti/Label".set_self_modulate(Color(1,0,1))
 	
 	# center on star (needs target to be set because it resets the distance label)
-	offset = -($"Control".src.rect_position+$"Control".src.get_node("StarTexture").rect_position)
+	offset = -($"Control".src.position+$"Control".src.get_node("StarTexture").position)
 	move_map_to_offset(offset)
 	
 	# show distance involved along the line
-	var tg_pos = get_node("Control").tg.rect_position
+	var tg_pos = get_node("Control").tg.position
 	if get_node("Control").tg.get_node("StarTexture").visible:
-		tg_pos += get_node("Control").tg.get_node("StarTexture").rect_position
+		tg_pos += get_node("Control").tg.get_node("StarTexture").position
 	
-	get_node("Control/ruler").pts = [get_node("Control").src.rect_position, tg_pos]
+	get_node("Control/ruler").pts = [get_node("Control").src.position, tg_pos]
 	get_node("Control/ruler/Label").set("custom_colors/font_color", Color(1,0,1))
 	get_node("Control/ruler/Line2D").default_color = Color(1,0,1)
 	get_node("Control/ruler").set_ruler()
@@ -560,5 +560,5 @@ func _on_LineEdit_text_entered(new_text):
 	# TODO: center on midpoint between star and shadow ONCE we're assured all stars fit in screen
 	# i.e. layers are implemented
 	if found:
-		offset = -(found.rect_position) #+found.get_node("StarTexture").rect_position)
+		offset = -(found.position) #+found.get_node("StarTexture").position)
 		move_map_to_offset(offset)

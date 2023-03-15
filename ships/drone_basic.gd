@@ -3,13 +3,13 @@ extends Area2D
 # Declare member variables here. Examples:
 const LIGHT_SPEED = 400 # original Stellar Frontier seems to have used 200 px/s
 
-export var rot_speed = 2.6 #radians
-export var thrust = 0.25 * LIGHT_SPEED
-export var max_vel = 0.5 * LIGHT_SPEED
+@export var rot_speed = 2.6 #radians
+@export var thrust = 0.25 * LIGHT_SPEED
+@export var max_vel = 0.5 * LIGHT_SPEED
 # IRL there's no friction in space, but
 # it's there mostly to ensure the ship doesn't float too far beyond the system
 # if the AI or the player gets stuck/forgets where he was going
-export var friction = 0.25 
+@export var friction = 0.25 
 
 # motion
 var rot = 0
@@ -35,8 +35,8 @@ func orbit_planet(planet):
 	vel = Vector2(0,0)
 	acc = Vector2(0,0)
 				
-	#var rel_pos = get_global_transform().xform_inv(pl[1].get_global_position())
-	var _rel_pos = planet.get_node("orbit_holder").get_global_transform().xform_inv(get_global_position())
+	#var rel_pos = get_global_transform()pl[1].get_global_position() * 
+	var _rel_pos = get_global_position() * planet.get_node("orbit_holder").get_global_transform()
 	var _dist = planet.get_global_position().distance_to(get_global_position())
 #	print("Dist: " + str(dist))
 #	print("Relative to planet: " + str(rel_pos) + " dist " + str(rel_pos.length()))
@@ -56,7 +56,7 @@ func deorbit():
 	if not orbiting:
 		return 
 		
-	var _rel_pos = orbiting.get_parent().get_global_transform().xform_inv(get_global_position())
+	var _rel_pos = get_global_position() * orbiting.get_parent().get_global_transform()
 	#print("Deorbiting, relative to planet " + str(rel_pos) + " " + str(rel_pos.length()))
 	
 	orbiting.get_parent().emit_signal("planet_deorbited", self)

@@ -6,7 +6,7 @@ code = "shader_type canvas_item;
 uniform float fadeWidth;
 uniform float size = 10.0;
 
-uniform vec4 storm_color: hint_color = vec4(1.0,0.1,0.1, 1.0);
+uniform vec4 storm_color: source_color = vec4(1.0,0.1,0.1, 1.0);
 uniform sampler2D gasgiant_gradient;
 
 //based on https://github.com/meric/renderplanet

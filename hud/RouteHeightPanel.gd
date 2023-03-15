@@ -14,7 +14,7 @@ func _ready():
 
 func _draw():
 	# draw a white line at height 0
-	draw_line(Vector2(0,self.rect_size.y/2), Vector2(self.rect_size.x, self.rect_size.y/2), Color(1,1,1))
+	draw_line(Vector2(0,self.size.y/2), Vector2(self.size.x, self.size.y/2), Color(1,1,1))
 	if route_data:
 		var clr = Color(1,0.8,0) # yellow like the route itself 
 		#draw_data.clear()
@@ -22,10 +22,10 @@ func _draw():
 			# if planet is on different Z-level, fade it out
 			if abs(pt[1]) > 120: clr = Color(0.5, 0.5, 0.5)
 			# we want to draw from the bottom of graph
-			draw_line(Vector2(pt[0], self.rect_size.y/2), Vector2(pt[0], self.rect_size.y/2-pt[1]), clr)
+			draw_line(Vector2(pt[0], self.size.y/2), Vector2(pt[0], self.size.y/2-pt[1]), clr)
 			# ... and don't draw a circle for planets on different Z-levels
 			if abs(pt[1]) < 120:
-				draw_circle(Vector2(pt[0], self.rect_size.y/2-pt[1]), 4, clr)
+				draw_circle(Vector2(pt[0], self.size.y/2-pt[1]), 4, clr)
 			
 		# width param has no effect :(
 		#draw_multiline(draw_data, Color(0,1,0), 5)
@@ -37,8 +37,8 @@ func _draw():
 			if 'depth' in vis.cntr.src:
 				z = vis.cntr.src.depth
 			# we want to draw from the bottom of graph
-			draw_line(Vector2(0, self.rect_size.y/2), Vector2(0, self.rect_size.y/2-z), clr)
-			draw_circle(Vector2(0, self.rect_size.y/2-z), 4, clr)
+			draw_line(Vector2(0, self.size.y/2), Vector2(0, self.size.y/2-z), clr)
+			draw_circle(Vector2(0, self.size.y/2-z), 4, clr)
 			var dist = (vis.cntr.tg.pos-Vector3(0,0,0)).length()
 			if 'pos' in vis.cntr.src:
 				dist = (vis.cntr.tg.pos-vis.cntr.src.pos).length()
@@ -46,8 +46,8 @@ func _draw():
 			# (which is multiplied by 10, hence this panel's scale)
 			# if planet is on different Z-level, fade it out
 			if abs(vis.cntr.tg.pos[2]) > 120: clr = Color(0.5, 0.5, 0.5)
-			draw_line(Vector2(dist, self.rect_size.y/2), Vector2(dist, self.rect_size.y/2-vis.cntr.tg.pos[2]), clr)
+			draw_line(Vector2(dist, self.size.y/2), Vector2(dist, self.size.y/2-vis.cntr.tg.pos[2]), clr)
 			# ... and don't draw a circle for planets on different Z-levels
 			if abs(vis.cntr.tg.pos[2]) < 120:
-				draw_circle(Vector2(dist, self.rect_size.y/2-vis.cntr.tg.pos[2]), 4, clr)
+				draw_circle(Vector2(dist, self.size.y/2-vis.cntr.tg.pos[2]), 4, clr)
 

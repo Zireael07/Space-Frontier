@@ -3,7 +3,7 @@
 [resource]
 code = "shader_type canvas_item;
 
-uniform sampler2D gradient: hint_black;
+uniform sampler2D gradient: hint_default_black;
 
 uniform vec2 NoiseScale1 = vec2(4, 3);
 uniform vec2 NoiseScale2 = vec2(35, 35);
@@ -12,11 +12,11 @@ uniform vec2 NoiseScale3 = vec2(17, 17);
 uniform float uTemperature = 0.0;
 uniform float uWaterLevel = 0.2;
 
-uniform vec4 uCold: hint_color = vec4(0.2, 0.4, 0.39, 1.0);
-uniform vec4 uOcean: hint_color = vec4(0.01, 0.81, 1.0, 1.0);
-uniform vec4 uTemperate: hint_color = vec4(0.3, 0.42, 0.26, 1.0);
-uniform vec4 uWarm: hint_color = vec4(0.46, 0.55, 0.32, 1.0);
-uniform vec4 uHot: hint_color = vec4(0.87, 0.75, 0.58, 1.0);
+uniform vec4 uCold: source_color = vec4(0.2, 0.4, 0.39, 1.0);
+uniform vec4 uOcean: source_color = vec4(0.01, 0.81, 1.0, 1.0);
+uniform vec4 uTemperate: source_color = vec4(0.3, 0.42, 0.26, 1.0);
+uniform vec4 uWarm: source_color = vec4(0.46, 0.55, 0.32, 1.0);
+uniform vec4 uHot: source_color = vec4(0.87, 0.75, 0.58, 1.0);
 
 float map(float value, float inMin, float inMax, float outMin, float outMax) {
   return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);

@@ -2,10 +2,10 @@
 
 [ext_resource path="res://ships/cycler.gd" type="Script" id=1]
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=2]
-[ext_resource path="res://assets/ships/spaceStation_024.png" type="Texture" id=4]
+[ext_resource path="res://assets/ships/spaceStation_024.png" type="Texture2D" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 105, 150 )
+size = Vector2( 105, 150 )
 
 [node name="Node2D" type="Node2D"]
 
@@ -16,7 +16,7 @@ extents = Vector2( 105, 150 )
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
 
-[node name="star_base" type="Sprite" parent="Area2D_cycler"]
+[node name="star_base" type="Sprite2D" parent="Area2D_cycler"]
 scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 4 )
 

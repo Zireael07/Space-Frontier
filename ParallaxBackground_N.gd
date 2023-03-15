@@ -14,4 +14,4 @@ func _process(_delta):
 	#
 	# send parallax offset to shader
 	var parallax = get_scroll_offset()*get_scroll_base_scale()*get_node("ParallaxLayer").get_motion_scale()
-	get_node("ParallaxLayer/Node2D/Sprite").get_material().set_shader_param("offset", parallax)
+	get_node("ParallaxLayer/Node2D/Sprite2D").get_material().set_shader_parameter("offset", parallax)

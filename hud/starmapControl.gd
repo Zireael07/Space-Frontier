@@ -18,14 +18,14 @@ func _ready():
 func get_src_loc():
 	return src.get_node("StarTexture").get_global_position()
 	
-	#var loc = src.rect_position
-	#loc = loc + src.get_node("StarTexture").rect_position
+	#var loc = src.position
+	#loc = loc + src.get_node("StarTexture").position
 	#return loc
 	
 func get_tg_loc():
 	return tg.get_node("StarTexture").get_global_position()
-	#var loc = tg.rect_position
-	#loc = loc + tg.get_node("StarTexture").rect_position
+	#var loc = tg.position
+	#loc = loc + tg.get_node("StarTexture").position
 	#return loc
 	
 func get_tg():

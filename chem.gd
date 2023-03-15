@@ -1,4 +1,4 @@
-tool # because planet.gd is a tool script, and uses this one
+@tool # because planet.gd is a tool script, and uses this one
 extends Node
 
 # class member variables go here, for example:

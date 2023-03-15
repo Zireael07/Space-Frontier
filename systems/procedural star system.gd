@@ -1,11 +1,11 @@
-tool
+@tool
 extends "star system.gd"
 
 # class member variables go here, for example:
 var star_types = { RED_DWARF = 0, YELLOW = 1}
 var star_chances = []
 var star_type
-export var forced_type = -1
+@export var forced_type = -1
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
@@ -33,19 +33,19 @@ func _ready():
 	# luminosities from https://github.com/irskep/stellardream/blob/master/src/stars.ts
 	
 	if star_type == star_types.YELLOW:
-		$Sprite.set_texture(yellow)
+		$Sprite2D.set_texture(yellow)
 		# set luminosity
-		luminosity = rand_range(0.58, 1.54)
+		luminosity = randf_range(0.58, 1.54)
 		
 		
 	elif star_type == star_types.RED_DWARF:
-		$Sprite.set_texture(red)
+		$Sprite2D.set_texture(red)
 		# red dwarf is smaller
-		var star_scale = rand_range(0.25, 0.5) # M0V can go up to 60% Sun's radius but let's ignore them for now
-		$Sprite.set_scale(Vector2(star_scale, star_scale))
+		var star_scale = randf_range(0.25, 0.5) # M0V can go up to 60% Sun's radius but let's ignore them for now
+		$Sprite2D.set_scale(Vector2(star_scale, star_scale))
 		star_radius_factor = star_scale
 		# set luminosity
-		luminosity = rand_range(0.000158, 0.086)
+		luminosity = randf_range(0.000158, 0.086)
 	
 	print("Stellar luminosity: " + str(luminosity))
 	
@@ -55,7 +55,7 @@ func _ready():
 	# 'A' is 65 in ASCII
 	var chr = 65+randi() % 26  # random character
 	var arr = [65 + randi() % 26, 65 + randi() % 26, 65 + randi() % 26, 65 + randi() % 26]
-	var star_name = PoolByteArray(arr).get_string_from_ascii()
+	var star_name = PackedByteArray(arr).get_string_from_ascii()
 	star_name = star_name + "-"
 	var nm = [randi() % 10, randi() % 10, randi() % 10, randi() % 10]
 	# sufficiently big number
@@ -80,7 +80,7 @@ func _ready():
 		var p = planets[i]
 		p.get_node("Label").set_text(star_name + str(numerals[i]))
 		# random mass
-		var m = rand_range(0.5,5) # upper bound of super-Earth is 10 Earth masses, but we don't have art yet
+		var m = randf_range(0.5,5) # upper bound of super-Earth is 10 Earth masses, but we don't have art yet
 		p.mass = m
 		
 		var mol = p.molecule_limit()
@@ -89,10 +89,10 @@ func _ready():
 		# more stuff
 		# if it can hold to at least CO2
 		if mol <= 44.0:
-			p.atm = rand_range(0.01, 1.5)
-			p.greenhouse = rand_range(0.2, 0.7)
+			p.atm = randf_range(0.01, 1.5)
+			p.greenhouse = randf_range(0.2, 0.7)
 			if mol > 18.0:
-				p.hydro = rand_range(0.1, 0.45)
+				p.hydro = randf_range(0.1, 0.45)
 				# water freezes
 				if p.temp < game.ZEROC_IN_K-1:
 					print("Water freezes on ", p.get_node("Label").get_text())
@@ -100,9 +100,9 @@ func _ready():
 					p.hydro = 0.0
 
 #		if p.is_habitable():
-#			p.hydro = rand_range(0.1, 0.45)
-#			p.atm = rand_range(0.01, 1.5)
-#			p.greenhouse = rand_range(0.2, 0.99)
+#			p.hydro = randf_range(0.1, 0.45)
+#			p.atm = randf_range(0.01, 1.5)
+#			p.greenhouse = randf_range(0.2, 0.99)
 
 func get_star_type(sel):
 	# swap the dictionary around

@@ -3,7 +3,7 @@
 [ext_resource path="res://guns/laser_enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=2]
 [ext_resource path="res://ships/star_base.gd" type="Script" id=3]
-[ext_resource path="res://assets/ships/ufoRed.png" type="Texture" id=4]
+[ext_resource path="res://assets/ships/ufoRed.png" type="Texture2D" id=4]
 [ext_resource path="res://assets/starbase_shader.tres" type="Material" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -19,7 +19,7 @@ position = Vector2( 0, 1 )
 script = ExtResource( 3 )
 bullet = ExtResource( 1 )
 
-[node name="enemy_base" type="Sprite" parent="Area2D_starbase_e"]
+[node name="enemy_base" type="Sprite2D" parent="Area2D_starbase_e"]
 material = ExtResource( 5 )
 texture = ExtResource( 4 )
 
@@ -28,7 +28,7 @@ shape = SubResource( 1 )
 
 [node name="bullet_container" type="Node" parent="Area2D_starbase_e"]
 
-[node name="muzzle" type="Position2D" parent="Area2D_starbase_e"]
+[node name="muzzle" type="Marker2D" parent="Area2D_starbase_e"]
 
 [node name="gun_timer" type="Timer" parent="Area2D_starbase_e"]
 wait_time = 0.5

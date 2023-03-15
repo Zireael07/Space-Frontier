@@ -2,11 +2,11 @@
 
 [ext_resource path="res://colony.tscn" type="PackedScene" id=1]
 [ext_resource path="res://systems/star system.gd" type="Script" id=2]
-[ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=3]
+[ext_resource path="res://assets/bodies/Planet4.png" type="Texture2D" id=3]
 [ext_resource path="res://bodies/planet_new.tscn" type="PackedScene" id=4]
 [ext_resource path="res://bodies/planet.tscn" type="PackedScene" id=5]
-[ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture" id=6]
-[ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=7]
+[ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture2D" id=6]
+[ext_resource path="res://assets/bodies/Planet1.png" type="Texture2D" id=7]
 [ext_resource path="res://assets/planets/aura shader.tres" type="Material" id=8]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -19,15 +19,15 @@ star_radius_factor = 0.8
 luminosity = 0.052
 zoom_scale = 6
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 9.92185
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 6 )
 
 [node name="Label" type="Label" parent="."]
-margin_top = 200.0
-margin_right = 72.0
-margin_bottom = 216.0
+offset_top = 200.0
+offset_right = 72.0
+offset_bottom = 216.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_styles/normal = SubResource( 1 )
 text = "Tau Ceti"
@@ -46,14 +46,14 @@ atm = 1.09896
 greenhouse = 0.0107447
 tidally_locked = true
 
-[node name="Sprite" parent="planet_holder/planet" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet" index="0"]
 scale = Vector2( 0.1, 0.1 )
 
 [node name="Label" parent="planet_holder/planet" index="1"]
-margin_left = 30.0
-margin_top = 30.0
-margin_right = 82.0
-margin_bottom = 44.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 82.0
+offset_bottom = 44.0
 text = "Tau Ceti g"
 
 [node name="Area2D" parent="planet_holder/planet" index="2"]
@@ -69,15 +69,15 @@ atm = 0.234134
 greenhouse = 7.8107e-05
 tidally_locked = true
 
-[node name="Sprite" parent="planet_holder/planet2" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet2" index="0"]
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 3 )
 
 [node name="Label" parent="planet_holder/planet2" index="1"]
-margin_left = 30.0
-margin_top = 30.0
-margin_right = 82.0
-margin_bottom = 44.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 82.0
+offset_bottom = 44.0
 text = "Tau Ceti h"
 
 [node name="CollisionShape2D" parent="planet_holder/planet2/Area2D" index="0"]
@@ -93,16 +93,16 @@ atm = 0.958347
 greenhouse = 2.62627e-05
 tidally_locked = true
 
-[node name="Sprite" parent="planet_holder/planet3" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet3" index="0"]
 material = ExtResource( 8 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 7 )
 
 [node name="Label" parent="planet_holder/planet3" index="1"]
-margin_left = 30.0
-margin_top = 30.0
-margin_right = 109.0
-margin_bottom = 44.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 109.0
+offset_bottom = 44.0
 text = "Tau Ceti e"
 
 [node name="CollisionShape2D" parent="planet_holder/planet3/Area2D" index="0"]
@@ -116,7 +116,7 @@ hydro = 0.0
 atm = 0.996146
 population = 0.1
 
-[node name="Sprite" parent="planet_holder/planet4" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet4" index="0"]
 scale = Vector2( 0.15, 0.15 )
 
 [node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
@@ -124,10 +124,10 @@ scale = Vector2( 0.15, 0.15 )
 
 [node name="Label" parent="planet_holder/planet4" index="2"]
 self_modulate = Color( 0, 1, 1, 1 )
-margin_left = 40.0
-margin_top = 40.0
-margin_right = 119.0
-margin_bottom = 54.0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 119.0
+offset_bottom = 54.0
 text = "Tau Ceti f"
 
 [node name="CollisionShape2D" parent="planet_holder/planet4/Area2D" index="0"]

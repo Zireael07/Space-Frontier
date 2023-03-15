@@ -13,13 +13,13 @@ var orders = false
 var ship_to_control = {}
 
 # for orders mode
-onready var orders_control = preload("res://hud/OrdersControl.tscn")
+@onready var orders_control = preload("res://hud/OrdersControl.tscn")
 
 var viewport_factor = Vector2(1,1)
 
 func _ready():
 	# listen to root viewport size changes in case the player resizes the screen
-	get_node("/root").connect("size_changed", self, "_on_view_size_changed")
+	get_node("/root").connect("size_changed",Callable(self,"_on_view_size_changed"))
 	
 	player = game.player
 	#player = get_tree().get_nodes_in_group("player")[0].get_child(0)
@@ -31,9 +31,9 @@ func _ready():
 
 	for c in get_tree().get_nodes_in_group("colony"):
 		# "colony" is a group of the parent of colony itself
-		c.get_child(0).connect("colony_colonized", self, "_on_colony_colonized")
+		c.get_child(0).connect("colony_colonized",Callable(self,"_on_colony_colonized"))
 		# because colonies don't have HUD info yet
-		c.get_child(0).connect("colony_targeted", self, "_on_planet_targeted")
+		c.get_child(0).connect("colony_targeted",Callable(self,"_on_planet_targeted"))
 
 	connect_player_signals(player)
 	
@@ -41,22 +41,22 @@ func _ready():
 	if not player.has_armor:
 		get_node("Control_bottom/Panel/Label_arm").hide()
 
-#	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed", player, "_on_goto_pressed")
+#	get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton").connect("pressed",Callable(player,"_on_goto_pressed"))
 
 	# populate nav menu
 	var nav_list = $"Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
 	
 	# scroll container scrollbar
 	nav_list.scroll_to_line(0)
-	nav_list.get_v_scroll().set_scale(Vector2(2, 1))
+	nav_list.get_v_scroll_bar().set_scale(Vector2(2, 1))
 	#nav_list.set_v_scroll(0)
 	# fix for max being stuck at 100
-	nav_list.get_child(0).max_value = 300
+	nav_list.get_v_scroll_bar().set_max(300.0)
 	# hack fix
-	nav_list.get_child(0).set_allow_greater(true)
+	nav_list.get_v_scroll_bar().set_allow_greater(true)
 	#nav_list.get_node("_v_scroll").set_max(300)
 	# prevent any off values for scrolling
-	nav_list.get_child(0).set_step(15)
+	nav_list.get_v_scroll_bar().set_step(15)
 	#nav_list.get_node("_v_scroll").set_step(15)
 
 
@@ -76,7 +76,7 @@ func _ready():
 	tooltip += " \n" + '" - has ice or water content'
 	
 	# didn't want to show up when attached to header, so it's attached to the whole listing instead
-	nav_list.set_tooltip(tooltip)
+	nav_list.tooltip_text = tooltip
 	
 	create_planet_listing()
 	
@@ -93,23 +93,23 @@ func _ready():
 func connect_planet_signals(planets):
 	# connect the signals
 	for p in planets:
-		p.connect("planet_targeted", self, "_on_planet_targeted")
-		p.connect("planet_colonized", self, "_on_planet_colonized")
+		p.connect("planet_targeted",Callable(self,"_on_planet_targeted"))
+		p.connect("planet_colonized",Callable(self,"_on_planet_colonized"))
 
 func connect_player_signals(player):
-	player.connect("shield_changed", self, "_on_shield_changed")
-	player.connect("module_level_changed", self, "_on_module_level_changed")
-	player.connect("power_changed", self, "_on_power_changed")
-	player.connect("engine_changed", self, "_on_engine_changed")
-	player.connect("armor_changed", self, "_on_armor_changed")
+	player.connect("shield_changed",Callable(self,"_on_shield_changed"))
+	player.connect("module_level_changed",Callable(self,"_on_module_level_changed"))
+	player.connect("power_changed",Callable(self,"_on_power_changed"))
+	player.connect("engine_changed",Callable(self,"_on_engine_changed"))
+	player.connect("armor_changed",Callable(self,"_on_armor_changed"))
 
-	player.connect("officer_message", self, "_on_officer_messaged")
-	player.connect("kill_gained", self, "_on_kill_gained")
-	player.connect("points_gained", self, "_on_points_gained")
+	player.connect("officer_message",Callable(self,"_on_officer_messaged"))
+	player.connect("kill_gained",Callable(self,"_on_kill_gained"))
+	player.connect("points_gained",Callable(self,"_on_points_gained"))
 
-	player.connect("planet_landed", self, "_on_planet_landed")
+	player.connect("planet_landed",Callable(self,"_on_planet_landed"))
 
-	player.connect("colony_picked", self, "_on_colony_picked")
+	player.connect("colony_picked",Callable(self,"_on_colony_picked"))
 
 func toggle_armor_label():
 	# hide armor label if needed
@@ -255,7 +255,7 @@ func handle_direction_labels():
 			# numbers hardcoded for 1024x600 screen
 			if abs(rel_loc.x) > 400*viewport_factor.x or abs(rel_loc.y) > 375*viewport_factor.y:
 	
-				# calculate clamped positions that "stick" labels to screen edges
+				# calculate limit_length positions that "stick" labels to screen edges
 				var clamp_x = rel_loc.x
 				var clamp_y = 575*viewport_factor.y
 				if abs(rel_loc.x) > 400*viewport_factor.x:
@@ -268,9 +268,9 @@ func handle_direction_labels():
 					if rel_loc.y < 0:
 						clamp_y = 0
 	
-				var clamped = Vector2(center.x+clamp_x, clamp_y)
+				var limit_length = Vector2(center.x+clamp_x, clamp_y)
 	
-				dir_labels[i].set_position(clamped)
+				dir_labels[i].set_position(limit_length)
 				if not dir_labels[i].is_visible():
 					dir_labels[i].show()
 			else:
@@ -427,10 +427,10 @@ func _input(_event):
 
 # -----------------------------
 func spawn_orders_control(pos, ship):
-	var clicky = orders_control.instance() #TextureButton.new()
+	var clicky = orders_control.instantiate() #TextureButton.new()
 	clicky.set_position(pos)
 	#clicky.set_normal_texture(load("res://assets/hud/grey_panel.png"))
-	#clicky.set_pause_mode(PAUSE_MODE_PROCESS) # the clou of this whole thing
+	#clicky.set_process_mode(PROCESS_MODE_ALWAYS) # the clou of this whole thing
 	$"pause_panel".add_child(clicky)
 	# map controls to ships
 	ship_to_control[clicky] = ship
@@ -585,9 +585,9 @@ func _on_AI_targeted(AI):
 		if 'targetted' in prev_target:
 			prev_target.targetted = false
 		prev_target.update()
-		prev_target.disconnect("shield_changed", self, "_on_target_shield_changed")
+		prev_target.disconnect("shield_changed",Callable(self,"_on_target_shield_changed"))
 		if 'armor' in prev_target:
-			prev_target.disconnect("armor_changed", self, "_on_target_armor_changed")
+			prev_target.disconnect("armor_changed",Callable(self,"_on_target_armor_changed"))
 
 	# assume sprite is always the first child of the ship
 	$"Control_bottom/Panel2/target_outline".set_texture(AI.get_child(0).get_texture())
@@ -599,11 +599,11 @@ func _on_AI_targeted(AI):
 			$"Control_bottom/Panel2/Label_arm".hide()
 
 
-	target.connect("shield_changed", self, "_on_target_shield_changed")
+	target.connect("shield_changed",Callable(self,"_on_target_shield_changed"))
 	# force update but without showing the effect
 	target.emit_signal("shield_changed", [target.shields, false])
 	if 'armor' in AI:
-		target.connect("armor_changed", self, "_on_target_armor_changed")
+		target.connect("armor_changed",Callable(self,"_on_target_armor_changed"))
 		# force update
 		target.emit_signal("armor_changed", target.armor)
 		
@@ -978,7 +978,7 @@ func _on_star_map_gui_input(event):
 		#game.player.w_hole.jump()
 
 func _on_view_size_changed():
-	print("Viewport size changed to: ", get_node("/root").size)
+	print("SubViewport size changed to: ", get_node("/root").size)
 	viewport_factor = get_node("/root").size/Vector2(1024,600)
 	print("Factor: ", viewport_factor)
 

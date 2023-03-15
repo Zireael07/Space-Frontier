@@ -4,17 +4,17 @@
 [ext_resource path="res://hud/route map.gd" type="Script" id=2]
 
 [node name="Control" type="Control"]
-margin_right = 805.0
-margin_bottom = 525.0
-rect_clip_content = true
+offset_right = 805.0
+offset_bottom = 525.0
+clip_contents = true
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="Panel" type="Panel" parent="."]
-margin_right = 805.0
-margin_bottom = 525.0
+offset_right = 805.0
+offset_bottom = 525.0
 mouse_filter = 1
 __meta__ = {
 "_edit_use_anchors_": false

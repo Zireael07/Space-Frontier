@@ -1,19 +1,19 @@
-[gd_resource type="Shader" format=2]
+[gd_resource type="Shader" format=3 uid="uid://bd21dgr0w5fyj"]
 
 [resource]
 code = "shader_type canvas_item;
 
 uniform float fadeWidth;
 
-uniform sampler2D temp_gradient: hint_black;
+uniform sampler2D temp_gradient: hint_default_black;
 uniform sampler2D land_gradient;
 uniform float temperature = 10.0; //temperature in degrees Celsius; default equals IRL Earth temperature
 
-//uniform vec4 uCold: hint_color = vec4(0.2, 0.4, 0.39, 1.0);
-//uniform vec4 uOcean: hint_color = vec4(0.01, 0.81, 1.0, 1.0);
-//uniform vec4 uTemperate: hint_color = vec4(0.3, 0.42, 0.26, 1.0);
-//uniform vec4 uWarm: hint_color = vec4(0.46, 0.55, 0.32, 1.0);
-//uniform vec4 uHot: hint_color = vec4(0.87, 0.75, 0.58, 1.0);
+//uniform vec4 uCold: source_color = vec4(0.2, 0.4, 0.39, 1.0);
+//uniform vec4 uOcean: source_color = vec4(0.01, 0.81, 1.0, 1.0);
+//uniform vec4 uTemperate: source_color = vec4(0.3, 0.42, 0.26, 1.0);
+//uniform vec4 uWarm: source_color = vec4(0.46, 0.55, 0.32, 1.0);
+//uniform vec4 uHot: source_color = vec4(0.87, 0.75, 0.58, 1.0);
 
 //based on https://github.com/meric/renderplanet
 const float M_PI = 3.1415926535897932384626433832795;
@@ -23,8 +23,8 @@ uniform float rotate_angle;
 uniform float time : hint_range(0,2.0) = 1.0;
 
 uniform float waterLevel : hint_range(0,1) = 0.45;
-//uniform vec4 color_land : hint_color = vec4(0.0, 1.0, 0.0, 1.0);
-uniform vec4 color_sea : hint_color = vec4(0.0, 1.0, 1.0, 1.0);
+//uniform vec4 color_land : source_color = vec4(0.0, 1.0, 0.0, 1.0);
+uniform vec4 color_sea : source_color = vec4(0.0, 1.0, 1.0, 1.0);
 
 float map(float value, float inMin, float inMax, float outMin, float outMax) {
   return outMin + (outMax - outMin) * (value - inMin) / (inMax - inMin);

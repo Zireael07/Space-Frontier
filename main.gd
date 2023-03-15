@@ -76,7 +76,7 @@ func spawn_system(system_id, system, multiple=false):
 	
 	#	print("System not found: ", system)
 			
-	var system_inst = sys.instance()
+	var system_inst = sys.instantiate()
 	
 	# data-driven systems
 	if sys == data_system:
@@ -103,7 +103,7 @@ func spawn_system(system_id, system, multiple=false):
 	return [system_inst.get_name(), system_inst]
 	
 func spawn_core():
-	var cor = core.instance()
+	var cor = core.instantiate()
 	add_child(cor)
 	# spawn player
 	get_tree().get_nodes_in_group("player")[0].get_child(0).spawn()
@@ -203,10 +203,10 @@ func get_colonized_planet():
 func spawn_friendly(i, p_ind, m_map):
 	var p = get_colonized_planet()
 	if p:
-		var sp = friendly.instance()
+		var sp = friendly.instantiate()
 		# random factor
 		randomize()
-		var offset = Vector2(rand_range(50, 150), rand_range(50, 150))
+		var offset = Vector2(randf_range(50, 150), randf_range(50, 150))
 		sp.set_global_position(p.get_global_position() + offset)
 		print("Spawning @ : " + str(p.get_global_position() + offset))
 		sp.get_child(0).set_position(Vector2(0,0))
@@ -214,7 +214,7 @@ func spawn_friendly(i, p_ind, m_map):
 		get_child(3).add_child(sp)
 		get_child(3).move_child(sp, p_ind+1)
 		# doesn't work for some reason
-		#add_child_below_node(get_tree().get_nodes_in_group("player")[0], sp)
+		#add_sibling(get_tree().get_nodes_in_group("player")[0], sp)
 		
 		# give minimap icon
 		#var mmap = get_tree().get_nodes_in_group("minimap")[0]
@@ -233,7 +233,7 @@ func spawn_starbase(system, p_ind, m_map):
 	var p = get_colonized_planet()
 	
 	if p:
-		var sb = starbase.instance()
+		var sb = starbase.instantiate()
 		randomize()
 		
 		# max offset
@@ -243,7 +243,7 @@ func spawn_starbase(system, p_ind, m_map):
 			max_o = 1000
 			
 		# random factor
-		var offset = Vector2(rand_range(500, max_o), rand_range(500, max_o))
+		var offset = Vector2(randf_range(500, max_o), randf_range(500, max_o))
 		
 		# sign
 		if system == "proc":
@@ -268,10 +268,10 @@ func spawn_starbase(system, p_ind, m_map):
 func spawn_friendly_drone(i, p_ind):
 	var p = get_colonized_planet()
 	if p:
-		var sp = drone.instance()
+		var sp = drone.instantiate()
 		# random factor
 		randomize()
-		var offset = Vector2(rand_range(50, 150), rand_range(50, 150))
+		var offset = Vector2(randf_range(50, 150), randf_range(50, 150))
 		sp.set_global_position(p.get_global_position() + offset)
 		#print("Spawning @ : " + str(p.get_global_position() + offset))
 		sp.get_child(0).set_position(Vector2(0,0))
@@ -279,16 +279,16 @@ func spawn_friendly_drone(i, p_ind):
 		get_child(3).add_child(sp)
 		get_child(3).move_child(sp, p_ind+1)
 		# doesn't work for some reason
-		#add_child_below_node(get_tree().get_nodes_in_group("player")[0], sp)
+		#add_sibling(get_tree().get_nodes_in_group("player")[0], sp)
 		
 		# drones don't have minimap icons
 
 # used to spawn at a starbase		
 func spawn_friendly_drone_pos(i, p_ind, pos):
-	var sp = drone.instance()
+	var sp = drone.instantiate()
 	# random factor
 	randomize()
-	var offset = Vector2(rand_range(50, 150), rand_range(50, 150))
+	var offset = Vector2(randf_range(50, 150), randf_range(50, 150))
 	sp.set_global_position(pos + offset)
 	#print("Spawning @ : " + str(p.get_global_position() + offset))
 	sp.get_child(0).set_position(Vector2(0,0))
@@ -303,7 +303,7 @@ func spawn_friendly_drone_pos(i, p_ind, pos):
 func spawn_enemy_starbase(system, p_ind, m_map):
 	var p
 	
-	var sb = enemy_starbase.instance()
+	var sb = enemy_starbase.instantiate()
 	
 	if system == "Sol":
 		p = get_tree().get_nodes_in_group("planets")[1] # Venus # TODO: should be Saturn instead
@@ -316,7 +316,7 @@ func spawn_enemy_starbase(system, p_ind, m_map):
 
 	# random factor
 	randomize()
-	var offset = Vector2(rand_range(200, 400), rand_range(200, 400))
+	var offset = Vector2(randf_range(200, 400), randf_range(200, 400))
 	sb.set_global_position(p.get_global_position() + offset)
 	
 	sb.set_name("enemy_base")
@@ -330,10 +330,10 @@ func spawn_enemy_starbase(system, p_ind, m_map):
 	return sb.get_global_position()
 
 func spawn_enemy(pos, i, p_ind, m_map):
-	var sp = enemy.instance()
+	var sp = enemy.instantiate()
 	# random factor
 	randomize()
-	var offset = Vector2(rand_range(50, 100), rand_range(50, 100))
+	var offset = Vector2(randf_range(50, 100), randf_range(50, 100))
 	sp.set_global_position(pos + offset)
 	#print("Spawning enemy @ : " + str(pos + offset))
 	sp.get_child(0).set_position(Vector2(0,0))
@@ -349,10 +349,10 @@ func spawn_enemy(pos, i, p_ind, m_map):
 	game.fleet2[1] += 1
 
 func spawn_neutral(pos, i, p_ind, m_map):
-	var sp = neutral.instance()
+	var sp = neutral.instantiate()
 	# random factor
 	randomize()
-	var offset = Vector2(rand_range(50, 100), rand_range(50, 100))
+	var offset = Vector2(randf_range(50, 100), randf_range(50, 100))
 	sp.set_global_position(pos + offset)
 	#print("Spawning enemy @ : " + str(pos + offset))
 	sp.get_child(0).set_position(Vector2(0,0))
@@ -377,7 +377,7 @@ func spawn_cycler(p_ind, system, m_map):
 	# B-A = A->B
 	var offset = m.get_global_position()-e.get_global_position()
 	
-	var castle = cycler.instance()
+	var castle = cycler.instantiate()
 	castle.set_global_position(e.get_global_position()+(offset/2))
 	castle.set_name("cycler")
 	get_child(3).add_child(castle)
@@ -395,10 +395,10 @@ func spawn_asteroid_processor(p_ind, system, m_map):
 		
 	var p = get_tree().get_nodes_in_group("aster_belt")[0]
 	
-	var ap = asteroid_processor.instance()
+	var ap = asteroid_processor.instantiate()
 	# random factor
 	randomize()
-	var offset = Vector2(rand_range(200, 400), rand_range(200, 400))
+	var offset = Vector2(randf_range(200, 400), randf_range(200, 400))
 	# asteroid belt's position is 0,0 so we have to add radius
 	ap.set_global_position(p.get_global_position()+Vector2(0,p.radius*game.AU) + offset)
 	
@@ -418,10 +418,10 @@ func spawn_pirate_base(p_ind, system, m_map):
 		
 	var p = get_tree().get_nodes_in_group("aster_belt")[0]
 	
-	var ap = pirate_starbase.instance()
+	var ap = pirate_starbase.instantiate()
 	# random factor
 	randomize()
-	var offset = Vector2(rand_range(800, 1600), rand_range(200, 400))
+	var offset = Vector2(randf_range(800, 1600), randf_range(200, 400))
 	# asteroid belt's position is 0,0 so we have to add radius
 	var pos = p.get_global_position()+Vector2(0,p.radius*game.AU) + offset
 	ap.set_global_position(pos)
@@ -437,10 +437,10 @@ func spawn_pirate_base(p_ind, system, m_map):
 	return pos
 
 func spawn_pirate(pos, p_ind, m_map):
-	var sp = pirate_ship.instance()
+	var sp = pirate_ship.instantiate()
 	# random factor
 	randomize()
-	var offset = Vector2(rand_range(50, 100), rand_range(50, 100))
+	var offset = Vector2(randf_range(50, 100), randf_range(50, 100))
 	sp.set_global_position(pos + offset)
 	#print("Spawning pirate @ : " + str(pos + offset))
 	sp.get_child(0).set_position(Vector2(0,0))
@@ -452,7 +452,7 @@ func spawn_pirate(pos, p_ind, m_map):
 	m_map._on_pirate_ship_spawned(sp.get_child(0))
 
 func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(0,0), need_icon=true):
-	var wh = wormhole.instance()
+	var wh = wormhole.instantiate()
 	
 	# fix for smaller systems
 	if planet_id >= get_tree().get_nodes_in_group("planets").size():
@@ -469,7 +469,7 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 	
 	# random factor
 	randomize()
-	var r_offset = Vector2(rand_range(250, 300), rand_range(250, 300))
+	var r_offset = Vector2(randf_range(250, 300), randf_range(250, 300))
 	
 	wh.set_global_position(gl + offset + r_offset)
 	
@@ -495,7 +495,7 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 # --------------------------------------------------------------------
 
 func wormholes_from_graph(p_ind, ref_pos=null):
-	# get coords, neighbors and directions from AStar
+	# get coords, neighbors and directions from AStar3D
 	var coords = game.player.HUD.get_node("Control4/star map").find_coords_for_name(curr_system)
 	var neighbors = game.player.HUD.get_node("Control4/star map").get_neighbors(coords)
 	#print("Neighboring systems: ", neighbors)

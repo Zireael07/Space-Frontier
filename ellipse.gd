@@ -1,11 +1,11 @@
-tool
+@tool
 extends Path2D
 
 
 # Declare member variables here. Examples:
-export var segments = 32
-export var xAxis = 50
-export var yAxis = 70
+@export var segments = 32
+@export var xAxis = 50
+@export var yAxis = 70
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,7 +22,7 @@ func _ready():
 # based on https://www.youtube.com/watch?v=mQKGRoV_jBc
 func calculateEllipse():
 	for i in range(segments):
-		var angle = (float(i) / segments) * deg2rad(360);
+		var angle = (float(i) / segments) * deg_to_rad(360);
 		var x = sin(angle) * xAxis;
 		var y = cos(angle) * yAxis;
 		

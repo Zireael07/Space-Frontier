@@ -1,26 +1,26 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://systems/star system.gd" type="Script" id=1]
-[ext_resource path="res://assets/bodies/star_red01.png" type="Texture" id=2]
-[ext_resource path="res://assets/bodies/Planet1.png" type="Texture" id=3]
-[ext_resource path="res://assets/bodies/Planet4.png" type="Texture" id=4]
+[ext_resource path="res://assets/bodies/star_red01.png" type="Texture2D" id=2]
+[ext_resource path="res://assets/bodies/Planet1.png" type="Texture2D" id=3]
+[ext_resource path="res://assets/bodies/Planet4.png" type="Texture2D" id=4]
 [ext_resource path="res://assets/planets/aura shader.tres" type="Material" id=5]
 [ext_resource path="res://bodies/planet.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/bodies/Planet9.png" type="Texture" id=7]
+[ext_resource path="res://assets/bodies/Planet9.png" type="Texture2D" id=7]
 
 [sub_resource type="StyleBoxFlat" id=1]
 
 [sub_resource type="Animation" id=2]
 resource_name = "scanning"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/path = NodePath("Sprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.5, 1 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0, 0.623529, 1, 0.729412 ), Color( 1, 1, 1, 1 ) ]
 }
@@ -31,8 +31,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, false, false, true ]
 }
@@ -40,14 +40,14 @@ tracks/1/keys = {
 [sub_resource type="Animation" id=3]
 resource_name = "scanning"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/path = NodePath("Sprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.5, 1 ),
+"transitions": PackedFloat32Array( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0, 0.623529, 1, 0.729412 ), Color( 1, 1, 1, 1 ) ]
 }
@@ -58,8 +58,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.5, 0.7, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array( 0, 0.2, 0.5, 0.7, 1 ),
+"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, false, false, true ]
 }
@@ -73,15 +73,15 @@ star_radius_factor = 0.3
 luminosity = 0.002
 zoom_scale = 24
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 9.92185
 scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
-margin_top = 100.0
-margin_right = 72.0
-margin_bottom = 116.0
+offset_top = 100.0
+offset_right = 72.0
+offset_bottom = 116.0
 custom_styles/normal = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "L 98-59"
@@ -98,15 +98,15 @@ mass = 0.4
 hydro = 0.0
 tidally_locked = true
 
-[node name="Sprite" parent="planet_holder/planet" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet" index="0"]
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 7 )
 
 [node name="Label" parent="planet_holder/planet" index="1"]
-margin_left = 30.0
-margin_top = 30.0
-margin_right = 82.0
-margin_bottom = 44.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 82.0
+offset_bottom = 44.0
 text = "b"
 
 [node name="Area2D" parent="planet_holder/planet" index="2"]
@@ -120,15 +120,15 @@ hydro = 0.395842
 atm = 1.47466
 tidally_locked = true
 
-[node name="Sprite" parent="planet_holder/planet2" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet2" index="0"]
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 4 )
 
 [node name="Label" parent="planet_holder/planet2" index="1"]
-margin_left = 30.0
-margin_top = 30.0
-margin_right = 82.0
-margin_bottom = 44.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 82.0
+offset_bottom = 44.0
 text = "c"
 
 [node name="CollisionShape2D" parent="planet_holder/planet2/Area2D" index="0"]
@@ -142,16 +142,16 @@ hydro = 0.0
 atm = 1.37171
 tidally_locked = true
 
-[node name="Sprite" parent="planet_holder/planet3" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet3" index="0"]
 material = ExtResource( 5 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 3 )
 
 [node name="Label" parent="planet_holder/planet3" index="1"]
-margin_left = 30.0
-margin_top = 30.0
-margin_right = 109.0
-margin_bottom = 44.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 109.0
+offset_bottom = 44.0
 text = "d"
 
 [node name="CollisionShape2D" parent="planet_holder/planet3/Area2D" index="0"]
@@ -165,16 +165,16 @@ hydro = 0.0
 atm = 0.704013
 tidally_locked = true
 
-[node name="Sprite" parent="planet_holder/planet4" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet4" index="0"]
 material = ExtResource( 5 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 3 )
 
 [node name="Label" parent="planet_holder/planet4" index="1"]
-margin_left = 30.0
-margin_top = 30.0
-margin_right = 109.0
-margin_bottom = 44.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 109.0
+offset_bottom = 44.0
 text = "e"
 
 [node name="CollisionShape2D" parent="planet_holder/planet4/Area2D" index="0"]
@@ -191,16 +191,16 @@ hydro = 0.0
 atm = 0.560304
 tidally_locked = true
 
-[node name="Sprite" parent="planet_holder/planet5" index="0"]
+[node name="Sprite2D" parent="planet_holder/planet5" index="0"]
 material = ExtResource( 5 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 3 )
 
 [node name="Label" parent="planet_holder/planet5" index="1"]
-margin_left = 30.0
-margin_top = 30.0
-margin_right = 109.0
-margin_bottom = 44.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 109.0
+offset_bottom = 44.0
 text = "f"
 
 [node name="CollisionShape2D" parent="planet_holder/planet5/Area2D" index="0"]

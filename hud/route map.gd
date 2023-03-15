@@ -76,7 +76,7 @@ func _ready():
 			var dist_f = get_distance(star_icon, icon)
 			
 			# draw a ruler now
-			var r = ruler.instance()
+			var r = ruler.instantiate()
 			r.pts = [get_child(i).get_position()+Vector2(15,20), next_node_pos]
 			r.text = str(dist_f)
 			r.set_name(star_icon.get_name() + " " + icon.get_name())

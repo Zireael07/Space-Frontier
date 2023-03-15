@@ -13,8 +13,8 @@ uniform float rotate_angle;
 uniform float time : hint_range(0,2.0) = 1.0;
 
 uniform float cut_off : hint_range(0,1) = 0.45;
-uniform vec4 color_land : hint_color = vec4(0.0, 1.0, 0.0, 1.0);
-uniform vec4 color_sea : hint_color = vec4(0.0, 1.0, 1.0, 1.0);
+uniform vec4 color_land : source_color = vec4(0.0, 1.0, 0.0, 1.0);
+uniform vec4 color_sea : source_color = vec4(0.0, 1.0, 1.0, 1.0);
 
 mat2 rotate2d(float _angle) {
     return mat2(vec2(cos(_angle), -sin(_angle)), vec2(sin(_angle), cos(_angle)));

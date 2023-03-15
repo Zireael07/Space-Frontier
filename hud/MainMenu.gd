@@ -20,7 +20,7 @@ func _on_Button_pressed():
 	game.start = system
 	
 	# Load the game here
-	get_tree().change_scene("res://main.tscn")
+	get_tree().change_scene_to_file("res://main.tscn")
 
 func _on_OptionButton_item_selected(index):
 	system = index+1 # to avoid 0 and null being the same

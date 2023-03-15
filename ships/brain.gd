@@ -3,8 +3,8 @@ extends "boid.gd"
 # Declare member variables here. Examples:
 var ship
 # FSM
-onready var state = InitialState.new(self)
-onready var curr_state = 0 # debugging helper to see in-editor
+@onready var state = InitialState.new(self)
+@onready var curr_state = 0 # debugging helper to see in-editor
 var prev_state
 
 const STATE_INITIAL = 0
@@ -520,10 +520,10 @@ class InitialState:
 		ship = shp
 		
 	func update(_delta):
-		if not ship.target:
+		if ship.target != null:
 			ship.select_initial_target()
 	
-		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
+		ship.rel_pos = ship.target * ship.get_global_transform()
 		#print("Rel pos: " + str(rel_pos) + " abs y: " + str(abs(rel_pos.y)))	
 		#ship.set_state(STATE_IDLE)
 		
@@ -629,7 +629,7 @@ class OrbitState:
 	var tg_orbit
 	var system
 	
-	func _init(shp, planet):
+	func _init(shp,planet):
 		ship = shp
 		param = planet
 		planet_ = planet
@@ -651,7 +651,7 @@ class OrbitState:
 			
 		# update target location
 		ship.target = planet_.get_global_position()
-		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
+		ship.rel_pos = ship.target * ship.get_global_transform() 
 		
 		ship.ship.move_orbit(delta, planet_, system)
 		
@@ -663,7 +663,7 @@ class AttackState:
 	var param # for previous state
 	var target
 	
-	func _init(shp, tg):
+	func _init(shp,tg):
 		ship = shp
 		param = tg
 		target = tg
@@ -695,7 +695,7 @@ class AttackState:
 				return
 			
 			#print("Tg pos: " + str(target.get_global_position()))
-			var _rel_pos = ship.get_global_transform().xform_inv(target.get_global_position())
+			var _rel_pos = target.get_global_position() * ship.get_global_transform()
 			#print("Rel pos: " + str(rel_pos))
 			var dist = ship.get_global_position().distance_to(target.get_global_position())
 			if dist < 150:
@@ -763,7 +763,7 @@ class RefitState:
 	var param # for previous state
 	var base
 	
-	func _init(shp, sb):
+	func _init(shp,sb):
 		ship = shp
 		param = sb
 		base = sb
@@ -795,7 +795,7 @@ class RefitState:
 			# weighted if not warping
 			if ('warping' in ship.ship and not ship.ship.warping) or not 'warping' in ship.ship:
 				var d = ship.get_global_position().distance_to(ship.target)
-				var w = range_lerp(d, 50, d, 2, 1)
+				var w = remap(d, 50, d, 2, 1)
 				var steer_seek = ship.get_steering_arrive(ship.target)*w #1 
 				steer = steer_seek
 			else:
@@ -808,7 +808,7 @@ class RefitState:
 				var dist = ship.get_global_position().distance_to(e_base) 
 				if dist < 500:
 					#weighted
-					var weight = range_lerp(dist, 50, 600, 2.5, 0.01)
+					var weight = remap(dist, 50, 600, 2.5, 0.01)
 					steer = steer + ship.get_steering_avoid(e_base, 500)*weight #*1.5
 			
 			# normal case
@@ -892,7 +892,7 @@ class ColonizeState:
 	var param # for previous state
 	var planet_
 	
-	func _init(shp, planet):
+	func _init(shp,planet):
 		ship = shp
 		param = planet
 		planet_ = planet
@@ -966,7 +966,7 @@ class PlanetState:
 	var id # store it instead of the whole node, for memory optimization purposes
 	var moon = false
 	
-	func _init(shp, planet):
+	func _init(shp,planet):
 		ship = shp
 		param = planet
 		
@@ -1009,7 +1009,7 @@ class PlanetState:
 		
 		ship.target = group[id-1].get_global_position()
 		#print("ID" + str(id) + " tg: " + str(ship.target))
-		ship.rel_pos = ship.get_global_transform().xform_inv(ship.target)
+		ship.rel_pos = ship.target * ship.get_global_transform() 
 		
 		# TODO: use the q-drive!
 		
@@ -1167,7 +1167,7 @@ class LandState:
 	var param # for previous state
 	var planet_
 	
-	func _init(shp, planet):
+	func _init(shp,planet):
 		ship = shp
 		param = planet
 		planet_ = planet
@@ -1209,7 +1209,7 @@ class LandState:
 		# steering behavior
 		# weighted
 		var d = ship.get_global_position().distance_to(ship.target)
-		var w = range_lerp(d, 50, d, 2, 1)
+		var w = remap(d, 50, d, 2, 1)
 		var steer_seek = ship.get_steering_seek(ship.target)*w #1
 		var steer = steer_seek
 		# avoid the sun
@@ -1225,7 +1225,7 @@ class LandState:
 			var dist = ship.get_global_position().distance_to(e_base) 
 			if dist < 500:
 				#weighted
-				var weight = range_lerp(dist, 50, 600, 2.5, 0.01)
+				var weight = remap(dist, 50, 600, 2.5, 0.01)
 				steer = steer + ship.get_steering_avoid(e_base, 500)*weight #*1.5
 				# keep a minimum velocity
 				#steer = steer + ship.match_velocity_length(steer_seek.length())

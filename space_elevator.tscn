@@ -1,16 +1,16 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/spaceStation_027.png" type="Texture" id=1]
-[ext_resource path="res://assets/spaceStation_031.png" type="Texture" id=2]
+[ext_resource path="res://assets/spaceStation_027.png" type="Texture2D" id=1]
+[ext_resource path="res://assets/spaceStation_031.png" type="Texture2D" id=2]
 
 [node name="Node2D" type="Node2D"]
 z_index = -5
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2( 0, -300 )
 texture = ExtResource( 2 )
 
-[node name="Sprite2" type="Sprite" parent="."]
+[node name="Sprite2" type="Sprite2D" parent="."]
 position = Vector2( 0, -150 )
 rotation = 3.14159
 scale = Vector2( 1, 4 )

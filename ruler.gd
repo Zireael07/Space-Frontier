@@ -1,15 +1,15 @@
-tool
+@tool
 extends Control
 
 
 # Declare member variables here. Examples:
-export var pts = []
+@export var pts = []
 var text = ""
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if pts.empty():
+	if pts.is_empty():
 		return
 	set_ruler()
 

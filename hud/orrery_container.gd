@@ -2,10 +2,10 @@
 extends Control
 
 # class member variables go here, for example:
-onready var star = preload("res://assets/hud/yellow_circle.png")
-onready var planet = preload("res://assets/hud/red_circle.png")
-onready var asteroid = preload("res://assets/hud/grey_circle.png")
-onready var ship = preload("res://assets/hud/arrow.png")
+@onready var star = preload("res://assets/hud/yellow_circle.png")
+@onready var planet = preload("res://assets/hud/red_circle.png")
+@onready var asteroid = preload("res://assets/hud/grey_circle.png")
+@onready var ship = preload("res://assets/hud/arrow.png")
 
 var stars
 var planets
@@ -193,6 +193,9 @@ func update_ship_pos():
 		return
 	if star_main == null:
 		return
+	
+#	if game.player == null:
+#		return
 		
 	var rel_loc = game.player.get_global_position() - star_main.get_global_position()
 	var off = 9
@@ -217,7 +220,7 @@ func _process(_delta):
 			
 		# the minimap doesn't rotate
 		var rel_loc = stars[i].get_global_position() - star_main.get_global_position()
-		#var rel_loc = player.get_global_transform().xform_inv(stars[i].get_global_transform().origin)
+		#var rel_loc = player.get_global_transform()stars[i].get_global_transform().origin * 
 		#star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale))
 		star_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 
@@ -234,7 +237,7 @@ func _process(_delta):
 			
 		# the minimap doesn't rotate
 		var rel_loc = planets[i].get_global_position() - star_main.get_global_position()
-		#var rel_loc = stars[0].get_global_transform().xform_inv(planets[i].get_global_transform().origin)
+		#var rel_loc = stars[0].get_global_transform()planets[i].get_global_transform().origin * 
 		var off = 36*planets[i].planet_rad_factor*0.25
 		var map_pos = Vector2((rel_loc.x/zoom_scale)+center.x-off, (rel_loc.y/zoom_scale)+center.y-off)
 		planet_sprites[i].set_position(map_pos)

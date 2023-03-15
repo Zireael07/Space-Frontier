@@ -3,11 +3,11 @@
 [ext_resource path="res://ships/star_base.gd" type="Script" id=1]
 [ext_resource path="res://guns/bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ships/movement_visualizer.gd" type="Script" id=3]
-[ext_resource path="res://assets/ships/spaceStation_015.png" type="Texture" id=4]
+[ext_resource path="res://assets/ships/spaceStation_015.png" type="Texture2D" id=4]
 
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 60, 20 )
+size = Vector2( 60, 20 )
 
 [node name="Node2D" type="Node2D"]
 
@@ -20,7 +20,7 @@ script = ExtResource( 1 )
 bullet = ExtResource( 2 )
 kind_id = 1
 
-[node name="star_base" type="Sprite" parent="Area2D_aster_processor"]
+[node name="star_base" type="Sprite2D" parent="Area2D_aster_processor"]
 texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_aster_processor"]
@@ -28,7 +28,7 @@ shape = SubResource( 1 )
 
 [node name="bullet_container" type="Node" parent="Area2D_aster_processor"]
 
-[node name="muzzle" type="Position2D" parent="Area2D_aster_processor"]
+[node name="muzzle" type="Marker2D" parent="Area2D_aster_processor"]
 
 [node name="gun_timer" type="Timer" parent="Area2D_aster_processor"]
 wait_time = 0.5

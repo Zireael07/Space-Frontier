@@ -23,7 +23,7 @@ var has_tractor = true
 #onready var warp_effect = preload("res://warp_effect.tscn")
 #onready var warp_timer = $"warp_correct_timer"
 
-onready var recharge_timer = $"recharge_timer"
+@onready var recharge_timer = $"recharge_timer"
 
 var target = null
 # warp drive
@@ -44,7 +44,7 @@ var targeted_by = []
 var HUD = null
 signal officer_message
 
-export var has_armor = false
+@export var has_armor = false
 var armor = 50
 signal armor_changed
 
@@ -69,7 +69,7 @@ var god = true
 
 # better ships
 enum ship_class {SCOUT, FREIGHTER, DESTROYER}
-export(int) var class_id = 0
+@export var class_id: int = 0
 var scout = load("res://ships/player_ship.tscn")
 var freighter = load("res://ships/player_ship_freighter.tscn")
 var destroyer = load("res://ships/player_ship_destroyer.tscn")
@@ -87,7 +87,7 @@ func _ready():
 	set_z_index(game.PLAYER_Z)
 	get_parent().add_to_group("player")
 	
-	var _conn = connect("shield_changed", self, "_on_shield_changed")
+	var _conn = connect("shield_changed",Callable(self,"_on_shield_changed"))
 	
 	if not has_armor:
 		armor = 0
@@ -132,7 +132,7 @@ func _process(delta):
 	var old_boost = boost 
 
 	# redraw 
-	update()
+	queue_redraw()
 
 	# measured in fractions of light speed (x.xx c)
 	spd = vel.length() / LIGHT_SPEED
@@ -297,7 +297,7 @@ func _process(delta):
 		acc += vel * -friction
 		vel += acc *delta
 		# prevent exceeding max speed
-		vel = vel.clamped(max_vel)
+		vel = vel.limit_length(max_vel)
 		pos += vel * delta
 		set_position(pos)
 		#print("Setting position" + str(pos))
@@ -316,7 +316,7 @@ func _process(delta):
 				vel = Vector2(0, -LIGHT_SPEED).rotated(rot)
 				pos += vel* delta
 				# prevent accumulating
-				vel = vel.clamped(LIGHT_SPEED)
+				vel = vel.limit_length(LIGHT_SPEED)
 				set_position(pos)
 			else:
 				# we've arrived, return to normal space
@@ -334,13 +334,13 @@ func _process(delta):
 		
 		desired = desired.normalized()
 		if dist < 100:
-			var m = range_lerp(dist, 0, 100, 0, max_vel) 
+			var m = remap(dist, 0, 100, 0, max_vel) 
 			desired = desired * m
 		else:
 			desired = desired * max_vel
 			tractored = false
 			
-		vel = desired.clamped(max_vel)
+		vel = desired.limit_length(max_vel)
 		pos += vel*delta
 		set_position(pos)
 		
@@ -408,18 +408,18 @@ func _process(delta):
 	
 	# overheat damage
 	if is_overheating():
-		get_child(0).get_material().set_shader_param("swizzle_type", 1)
+		get_child(0).get_material().set_shader_parameter("swizzle_type", 1)
 		#print("distance to star: " + str(dist))
 		if get_node("heat_timer").get_time_left() == 0:
 			heat_damage()
 	else:
-		get_child(0).get_material().set_shader_param("swizzle_type", 0)
+		get_child(0).get_material().set_shader_parameter("swizzle_type", 0)
 
 	# target direction indicator
 	if HUD.target != null and is_instance_valid(HUD.target) and HUD.target != self:
 		get_node("target_dir").show()
-		var tg_rel_pos = get_global_transform().xform_inv(HUD.target.get_global_position())
-		get_node("target_dir").set_position(tg_rel_pos.clamped(60))
+		var tg_rel_pos = HUD.target.get_global_position() * get_global_transform() 
+		get_node("target_dir").set_position(tg_rel_pos.limit_length(60))
 		# point at the target
 		#var a = atan2(tg_rel_pos.x, tg_rel_pos.y)
 		var a = fix_atan(tg_rel_pos.x, tg_rel_pos.y)
@@ -660,13 +660,13 @@ func _input(_event):
 
 # -------------------------
 func enable_cam():
-	game.player.get_node("Camera2D")._set_current(true)
+	game.player.get_node("Camera2D").set_current(true)
 	game.player.get_node("Camera2D").align()
 
 func upgrade_ship():
-	var ship = scout.instance() # the default
+	var ship = scout.instantiate() # the default
 	if class_id < 1:
-		ship = freighter.instance()
+		ship = freighter.instantiate()
 		# set armor
 		has_armor = true
 		armor = 50
@@ -675,7 +675,7 @@ func upgrade_ship():
 		thrust = 0.1 * LIGHT_SPEED
 	
 	if self.rank > game.ranks.SCLT: 
-		ship = destroyer.instance()
+		ship = destroyer.instantiate()
 	
 	var old_HUD = HUD
 	#print(old_HUD.get_name())
@@ -696,7 +696,7 @@ func upgrade_ship():
 	# make the transition less jarring by hiding 
 	# TODO: a flashy effect here
 	get_parent().hide()
-	get_node("Camera2D")._set_current(false)
+	get_node("Camera2D").set_current(false)
 
 	# remove the old ship
 	get_parent().queue_free()
@@ -788,7 +788,7 @@ func _on_landing_timeout_timeout():
 	can_land = true
 
 func player_heading(target, delta):
-	var rel_pos = get_global_transform().xform_inv(target)
+	var rel_pos = target * get_global_transform()
 	
 	var a = atan2(rel_pos.x, rel_pos.y)
 	
@@ -797,7 +797,7 @@ func player_heading(target, delta):
 #		cruise = false
 	
 	# we've turned to face the target
-	if abs(rad2deg(a)) > 179:
+	if abs(rad_to_deg(a)) > 179:
 		#on_heading()
 		#print("Achieved target heading")
 		heading = null
@@ -872,7 +872,7 @@ func shoot():
 	# a single timer for now
 	gun_timer.start()
 	for g in get_guns():
-		var b = bullet.instance()
+		var b = bullet.instantiate()
 		bullet_container.add_child(b)
 		b.start_at(get_global_rotation(), g.get_global_position())
 
@@ -935,11 +935,11 @@ func get_closest_friendly_target():
 func _draw():
 	if not warping and not disrupted:
 		# distance indicator at a distance of 100 from the nosetip
-		draw_line(Vector2(10, -100), Vector2(-10, -100), Color(1,1,0), 4.0, true)
+		draw_line(Vector2(10, -100),Vector2(-10, -100),Color(1,1,0),4.0)
 		
 		# weapon range indicator
 		var rang = 1000 * 0.25 # 1000 is the bullet's speed, 0.25 is the bullet's lifetime
-		draw_line(Vector2(10, -rang) , Vector2(-10, -rang), Color(1,0,0), 4.0, true)
+		draw_line(Vector2(10, -rang),Vector2(-10, -rang),Color(1,0,0),4.0)
 	
 	# draw a red rectangle around the target
 	if target == self:
@@ -957,7 +957,7 @@ func _draw():
 		#draw_rect(rect, Color(1,1,0), false)
 		
 		# better looking effect
-		var rel_pos = get_global_transform().xform_inv(refit_target.get_global_position())
+		var rel_pos = refit_target.get_global_position() * get_global_transform() 
 		draw_line(rel_pos, Vector2(-rc_w/2, -rc_h/2), Color(1,1,0))
 		draw_line(rel_pos, Vector2(rc_w/2, rc_h/2), Color(1,1,0))
 		draw_line(rel_pos, Vector2(rc_w/2, -rc_h/2), Color(1,1,0))
@@ -1006,7 +1006,7 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		#target = self
 		# redraw 
-		update()
+		queue_redraw()
 
 func _on_goto_pressed(planet):
 	print("Want to go to planet " + str(planet.get_name()))
@@ -1056,7 +1056,7 @@ func on_warping():
 	warp_timer.start()
 	
 	# effect
-	var warp = warp_effect.instance()
+	var warp = warp_effect.instantiate()
 	add_child(warp)
 	warp.set_position(Vector2(0,0))
 	warp.play()

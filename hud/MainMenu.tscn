@@ -15,11 +15,11 @@ color = Color( 0.0352941, 0.0352941, 0.0352941, 1 )
 [node name="Label" type="Label" parent="."]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 300.0
-margin_top = -100.0
-margin_right = 406.0
-margin_bottom = -86.0
-rect_scale = Vector2( 5, 8 )
+offset_left = 300.0
+offset_top = -100.0
+offset_right = 406.0
+offset_bottom = -86.0
+scale = Vector2( 5, 8 )
 text = "Space Frontier"
 uppercase = true
 
@@ -28,34 +28,34 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = 50.0
-margin_right = 20.0
-margin_bottom = 90.0
+offset_left = -20.0
+offset_top = 50.0
+offset_right = 20.0
+offset_bottom = 90.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Control1" type="Control" parent="Control"]
-margin_right = 40.0
-margin_bottom = 40.0
+offset_right = 40.0
+offset_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Control/Control1"]
-margin_left = -100.0
-margin_right = -5.0
-margin_bottom = 14.0
+offset_left = -100.0
+offset_right = -5.0
+offset_bottom = 14.0
 text = "Starting system"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="OptionButton" type="OptionButton" parent="Control/Control1"]
-margin_top = -5.0
-margin_right = 69.0
-margin_bottom = 15.0
+offset_top = -5.0
+offset_right = 69.0
+offset_bottom = 15.0
 text = "Sol"
 items = [ "Sol", null, false, 0, null, "TRAPPIST-1", null, false, 1, null ]
 selected = 0
@@ -64,26 +64,26 @@ __meta__ = {
 }
 
 [node name="Control" type="Control" parent="Control"]
-margin_top = 50.0
-margin_right = 40.0
-margin_bottom = 90.0
+offset_top = 50.0
+offset_right = 40.0
+offset_bottom = 90.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Control/Control"]
-margin_left = -100.0
-margin_right = -5.0
-margin_bottom = 14.0
+offset_left = -100.0
+offset_right = -5.0
+offset_bottom = 14.0
 text = "Fleet selection"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="OptionButton" type="OptionButton" parent="Control/Control"]
-margin_top = -5.0
-margin_right = 69.0
-margin_bottom = 15.0
+offset_top = -5.0
+offset_right = 69.0
+offset_bottom = 15.0
 text = "Terran"
 items = [ "Terran", null, false, 0, null, "Enemy", null, true, 1, null, "Pirate", null, true, 2, null ]
 selected = 0
@@ -92,9 +92,9 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="Control"]
-margin_top = 100.0
-margin_right = 50.0
-margin_bottom = 120.0
+offset_top = 100.0
+offset_right = 50.0
+offset_bottom = 120.0
 text = "START"
 
 [connection signal="item_selected" from="Control/Control1/OptionButton" to="." method="_on_OptionButton_item_selected"]
