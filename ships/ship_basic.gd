@@ -494,7 +494,7 @@ func get_friendlies_in_range():
 			to_rem.append(t[1]) 
 		
 	for r in to_rem:
-		nodes.remove(nodes.find(r))
+		nodes.remove_at(nodes.find(r))
 		
 	return nodes
 	
@@ -519,7 +519,7 @@ func get_allies_in_range():
 				to_rem.append(t[1]) 
 			
 		for r in to_rem:
-			nodes.remove(nodes.find(r))
+			nodes.remove_at(nodes.find(r))
 	else:
 		nodes = get_friendlies_in_range()
 		

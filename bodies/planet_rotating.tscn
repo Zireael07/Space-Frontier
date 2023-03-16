@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://gkc6hhmfgvnv" path="res://assets/Planet-shadow_only.png" id="1"]
 [ext_resource type="Script" path="res://bodies/planet.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://ugkq4lrdhkkw" path="res://assets/bodies/Sol textures/texture_earth.png" id="3"]
-[ext_resource type="Material" path="res://assets/bodies/planet_rotating_material.tres" id="4"]
+[ext_resource type="Material" uid="uid://b2pfnju7s5j6d" path="res://assets/bodies/planet_rotating_material.tres" id="4"]
 
 [sub_resource type="Shader" id="1"]
 code = "shader_type canvas_item;

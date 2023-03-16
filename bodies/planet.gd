@@ -1381,7 +1381,7 @@ func update_HUD_colony_pop(planet, add):
 		if l is Label:
 			# because ordering in groups cannot be relied on 100%
 			if l.get_text().find(txt) != -1:
-				node = l.get_name()
+				node = String(l.get_name())
 	
 	if node:
 		var parent = hud.get_node("Control2/Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control")

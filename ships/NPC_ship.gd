@@ -230,7 +230,7 @@ func get_colonize_target():
 		# exclude those with colony
 		var col = p.has_colony()
 		# ignore planets with no solid surface (i.e. we're only interested in rocky ones)
-		if !col and p.has_solid_surface():
+		if !col is StringName and p.has_solid_surface():
 			ps.append(p)
 		#if col and col == "colony":
 		#	ps.append(p)

@@ -19,7 +19,7 @@ func _on_planet_colonized(planet):
 			# because ordering in groups cannot be relied on 100%
 			# find because the nav info text can have additional stuff such as * or ^
 			if l.get_text().find(planet.get_node("Label").get_text().strip_edges()) != -1:
-				node = l.get_name()
+				node = String(l.get_name())
 
 	if node:
 		$"Panel_rightHUD/PanelInfo/NavInfo/PlanetList/Control".get_node(node).set_self_modulate(Color(0, 1, 1))
@@ -230,7 +230,7 @@ func _on_ButtonView_pressed():
 		return
 	# any futher entry is not a star
 	else:
-		var line = cursor.get_position().y + nav_list.get_v_scroll().value
+		var line = cursor.get_position().y + nav_list.get_v_scroll_bar().value
 		var select_id = (line - 15 * (stars.size()+1)) / 15
 		var skips = []
 		#var planets = get_tree().get_nodes_in_group("planets")
@@ -302,7 +302,7 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	rtl.set_name("RichTextLabel#"+str(select_id)+">"+str(parent_id))
 	# richtextlabel scrollbar
 	rtl.scroll_to_line(0)
-	rtl.get_v_scroll().set_scale(Vector2(2, 1))
+	rtl.get_v_scroll_bar().set_scale(Vector2(2, 1))
 	
 	$"Panel_rightHUD/PanelInfo/NavInfo".hide()
 	$"Panel_rightHUD/PanelInfo/PlanetInfo".show()
@@ -508,12 +508,12 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	var travel_time = "Est. travel time @ 1.00c: " + format_time
 
 	if tool_dist > 400: # i.e. LIGHT_SPEED = LIGHT_SEC
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".set_tooltip(travel_time)
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".tooltip_text = travel_time
 	else:
-		$"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".set_tooltip("")
+		$"Panel_rightHUD/PanelInfo/PlanetInfo/GoToButton".tooltip_text = ""
 	
 	# connected from script because the scrollbar of the RichTextLabel is created at runtime
-	rtl.get_child(0).connect("value_changed",Callable(self,"_on_view_scroll_changed")) #, [value, no_shadow])
+	rtl.get_v_scroll_bar().connect("value_changed",Callable(self,"_on_view_scroll_changed")) #, [value, no_shadow])
 	
 		
 	# connected from script because they rely on ID of the planet
@@ -631,21 +631,21 @@ func _onButtonDown2_pressed():
 				
 	# do we scroll?
 	var nav_list = $"Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
-	var line = cursor.get_position().y + nav_list.get_child(0).value #nav_list.get_v_scroll()
+	var line = cursor.get_position().y + nav_list.get_v_scroll_bar().value #nav_list.get_v_scroll()
 	if cursor.get_position().y > 150 and line < max_y:
-		if nav_list.get_child(0).value == 0: #get_v_scroll() == 0:
+		if nav_list.get_v_scroll_bar().value == 0: #get_v_scroll() == 0:
 			# scroll the list
-			nav_list.get_child(0).value = 15
+			nav_list.get_v_scroll_bar().value = 15
 			# manually "scroll"
-			nav_list.get_node("Control")._set_position(Vector2(0,-nav_list.get_child(0).value))
+			nav_list.get_node("Control")._set_position(Vector2(0,-nav_list.get_v_scroll_bar().value))
 			print("Scrolling list down..")
 		else:
 		#elif int(nav_list.get_child(0).value) % 15 == 0: #nav_list.get_v_scroll() % 15 == 0:
-			var curr = nav_list.get_child(0).value #nav_list.get_v_scroll()
-			nav_list.get_child(0).value = curr+15
+			var curr = nav_list.get_v_scroll_bar().value #nav_list.get_v_scroll()
+			nav_list.get_v_scroll_bar().value = curr+15
 			#print("Scroll further ", nav_list.get_child(0).value)
 			# manually "scroll"
-			nav_list.get_node("Control")._set_position(Vector2(0,-nav_list.get_child(0).value))
+			nav_list.get_node("Control")._set_position(Vector2(0,-nav_list.get_v_scroll_bar().value))
 			#nav_list.set_v_scroll(curr+15)
 			#nav_list.scroll_vertical = (curr+15)
 		

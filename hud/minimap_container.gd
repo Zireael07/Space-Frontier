@@ -473,8 +473,8 @@ func _on_colony_colonized(colony, planet):
 	# paranoia
 	if colony in colony_map:
 		var spr = colony_map[colony]
-		colonies.remove(colonies.find(colony))
-		colony_sprites.remove(colony_sprites.find(spr))
+		colonies.remove_at(colonies.find(colony))
+		colony_sprites.remove_at(colony_sprites.find(spr))
 		remove_child(spr)
 
 	
@@ -602,8 +602,8 @@ func _process(_delta):
 		else:
 			# remove all references to killed starbase
 			remove_child(sb_enemy_sprites[i])
-			sb_enemies.remove(i)
-			sb_enemy_sprites.remove(i)
+			sb_enemies.remove_at(i)
+			sb_enemy_sprites.remove_at(i)
 	
 	for sb in sb_pirates:
 		var i = sb_pirates.find(sb)
@@ -614,8 +614,8 @@ func _process(_delta):
 		else:
 			# remove all references to killed starbase
 			remove_child(sb_pirate_sprites[i])
-			sb_pirates.remove(i)
-			sb_pirate_sprites.remove(i)
+			sb_pirates.remove_at(i)
+			sb_pirate_sprites.remove_at(i)
 	
 	
 	# draw colonies before ships
@@ -629,8 +629,8 @@ func _process(_delta):
 		else:
 			# remove all references to the killed ship and its minimap icon
 			remove_child(colony_sprites[i])
-			colonies.remove(i)
-			colony_sprites.remove(i)
+			colonies.remove_at(i)
+			colony_sprites.remove_at(i)
 	
 	
 	# friendlies and hostiles can be removed in-game, so we're not doing it with indices
@@ -643,8 +643,8 @@ func _process(_delta):
 		else:
 			# remove all references to the killed ship and its minimap icon
 			remove_child(friendly_sprites[i])
-			friendlies.remove(i)
-			friendly_sprites.remove(i)
+			friendlies.remove_at(i)
+			friendly_sprites.remove_at(i)
 
 	for h in hostiles:
 		var i = hostiles.find(h)
@@ -656,8 +656,8 @@ func _process(_delta):
 			#print("Removing i: " + str(i))
 			# remove all references to the killed ship and its minimap icon
 			remove_child(hostile_sprites[i])
-			hostiles.remove(i)
-			hostile_sprites.remove(i)
+			hostiles.remove_at(i)
+			hostile_sprites.remove_at(i)
 
 	for p in pirates:
 		var i = pirates.find(p)
@@ -669,8 +669,8 @@ func _process(_delta):
 			#print("Removing i: " + str(i))
 			# remove all references to the killed ship and its minimap icon
 			remove_child(pirate_sprites[i])
-			pirates.remove(i)
-			pirate_sprites.remove(i)
+			pirates.remove_at(i)
+			pirate_sprites.remove_at(i)
 			
 	for n in neutrals:
 		var i = neutrals.find(n)
@@ -682,8 +682,8 @@ func _process(_delta):
 			#print("Removing i: " + str(i))
 			# remove all references to the killed ship and its minimap icon
 			remove_child(neutral_sprites[i])
-			neutrals.remove(i)
-			neutral_sprites.remove(i)
+			neutrals.remove_at(i)
+			neutral_sprites.remove_at(i)
 
 # called when leaving a system
 func cleanup():
