@@ -593,97 +593,102 @@ func _process(_delta):
 		var rel_loc = starbases[i].get_global_position() - player.get_child(0).get_global_position()
 		starbase_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 	
-	for sb in sb_enemies:
-		var i = sb_enemies.find(sb)
-		if is_instance_valid(sb):
+	for i in range(sb_enemies.size()):
+		if is_instance_valid(sb_enemies[i]):
 			# the minimap doesn't rotate
 			var rel_loc = sb_enemies[i].get_global_position() - player.get_child(0).get_global_position()
 			sb_enemy_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))			
 		else:
-			# remove all references to killed starbase
-			remove_child(sb_enemy_sprites[i])
-			sb_enemies.remove_at(i)
-			sb_enemy_sprites.remove_at(i)
+			if sb_enemy_sprites[i] != null:
+				# remove all references to killed starbase
+				remove_child(sb_enemy_sprites[i])
+				sb_enemies[i] = null
+				sb_enemy_sprites[i] = null
 	
-	for sb in sb_pirates:
-		var i = sb_pirates.find(sb)
-		if is_instance_valid(sb):
+	for i in range(sb_pirates.size()):
+		if is_instance_valid(sb_pirates[i]):
 			# the minimap doesn't rotate
 			var rel_loc = sb_pirates[i].get_global_position() - player.get_child(0).get_global_position()
 			sb_pirate_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))			
 		else:
-			# remove all references to killed starbase
-			remove_child(sb_pirate_sprites[i])
-			sb_pirates.remove_at(i)
-			sb_pirate_sprites.remove_at(i)
+			if sb_pirate_sprites[i] != null:
+				# remove all references to killed starbase
+				remove_child(sb_pirate_sprites[i])
+				sb_pirates[i] = null
+				sb_pirate_sprites[i] = null
 	
 	
 	# draw colonies before ships
-	for c in colonies:
-		var i = colonies.find(c)
-		if is_instance_valid(c):
+	for i in range(colonies.size()):
+		if is_instance_valid(colonies[i]):
 			# the minimap doesn't rotate
-			var rel_loc = c.get_global_position() - player.get_child(0).get_global_position()
+			var rel_loc = colonies[i].get_global_position() - player.get_child(0).get_global_position()
 			colony_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 			
 		else:
-			# remove all references to the killed ship and its minimap icon
-			remove_child(colony_sprites[i])
-			colonies.remove_at(i)
-			colony_sprites.remove_at(i)
+			if colony_sprites[i] != null:
+				# remove all references to the killed ship and its minimap icon
+				remove_child(colony_sprites[i])
+				colonies[i] = null
+				#colonies.remove_at(i)
+				colony_sprites[i] = null
 	
 	
 	# friendlies and hostiles can be removed in-game, so we're not doing it with indices
-	for f in friendlies:
-		var i = friendlies.find(f)
-		if is_instance_valid(f):
+	for i in range(friendlies.size()):
+		if is_instance_valid(friendlies[i]) and friendlies[i] != null:
 			# the minimap doesn't rotate
-			var rel_loc = f.get_global_position() - player.get_child(0).get_global_position()
+			var rel_loc = friendlies[i].get_global_position() - player.get_child(0).get_global_position()
 			friendly_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 		else:
-			# remove all references to the killed ship and its minimap icon
-			remove_child(friendly_sprites[i])
-			friendlies.remove_at(i)
-			friendly_sprites.remove_at(i)
+			if friendly_sprites[i] != null:
+				# remove all references to the killed ship and its minimap icon
+				remove_child(friendly_sprites[i])
+				#friendlies.remove_at(i)
+				friendlies[i] = null
+				friendly_sprites[i] = null
 
-	for h in hostiles:
-		var i = hostiles.find(h)
-		if is_instance_valid(h):
+	for i in range(hostiles.size()):
+		if is_instance_valid(hostiles[i]) and hostiles[i] != null:
 			# the minimap doesn't rotate
-			var rel_loc = h.get_global_position() - player.get_child(0).get_global_position()
+			var rel_loc = hostiles[i].get_global_position() - player.get_child(0).get_global_position()
 			hostile_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 		else:
 			#print("Removing i: " + str(i))
-			# remove all references to the killed ship and its minimap icon
-			remove_child(hostile_sprites[i])
-			hostiles.remove_at(i)
-			hostile_sprites.remove_at(i)
+			if hostile_sprites[i] != null:
+				# remove all references to the killed ship and its minimap icon
+				remove_child(hostile_sprites[i])
+				#hostiles.remove_at(i)
+				hostiles[i] = null
+				hostile_sprites[i] = null
 
-	for p in pirates:
-		var i = pirates.find(p)
-		if is_instance_valid(p):
+	for i in range(pirates.size()):
+		if is_instance_valid(pirates[i]) and pirates[i] != null:
 			# the minimap doesn't rotate
-			var rel_loc = p.get_global_position() - player.get_child(0).get_global_position()
+			var rel_loc = pirates[i].get_global_position() - player.get_child(0).get_global_position()
 			pirate_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 		else:
 			#print("Removing i: " + str(i))
-			# remove all references to the killed ship and its minimap icon
-			remove_child(pirate_sprites[i])
-			pirates.remove_at(i)
-			pirate_sprites.remove_at(i)
+			if pirate_sprites[i] != null:
+				# remove all references to the killed ship and its minimap icon
+				remove_child(pirate_sprites[i])
+				#pirates.remove_at(i)
+				pirates[i] = null
+				pirate_sprites[i] = null
 			
-	for n in neutrals:
-		var i = neutrals.find(n)
-		if is_instance_valid(n):
+	for i in range(neutrals.size()):
+		if is_instance_valid(neutrals[i]) and neutrals[i] != null:
 			# the minimap doesn't rotate
-			var rel_loc = n.get_global_position() - player.get_child(0).get_global_position()
+			var rel_loc = neutrals[i].get_global_position() - player.get_child(0).get_global_position()
 			neutral_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
 		else:
 			#print("Removing i: " + str(i))
-			# remove all references to the killed ship and its minimap icon
-			remove_child(neutral_sprites[i])
-			neutrals.remove_at(i)
-			neutral_sprites.remove_at(i)
+			if neutral_sprites[i] != null:
+				# remove all references to the killed ship and its minimap icon
+				remove_child(neutral_sprites[i])
+				#neutrals.remove_at(i)
+				neutrals[i] = null
+				neutral_sprites[i] = null
 
 # called when leaving a system
 func cleanup():
