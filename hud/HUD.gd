@@ -584,7 +584,7 @@ func _on_AI_targeted(AI):
 	if prev_target != null and is_instance_valid(prev_target):
 		if 'targetted' in prev_target:
 			prev_target.targetted = false
-		prev_target.update()
+		prev_target.queue_redraw()
 		prev_target.disconnect("shield_changed",Callable(self,"_on_target_shield_changed"))
 		if 'armor' in prev_target:
 			prev_target.disconnect("armor_changed",Callable(self,"_on_target_armor_changed"))
@@ -609,9 +609,9 @@ func _on_AI_targeted(AI):
 		
 	# ship info
 	if target.is_in_group("enemy"):
-		$"Control_bottom/Panel2/target_outline".flip_v = false #set_rotation_degrees(180)
+		$"Control_bottom/Panel2/target_outline".flip_v = true #set_rotation_degrees(180)
 	else:
-		$"Control_bottom/Panel2/target_outline".flip_v = true #set_rotation_degrees(0)
+		$"Control_bottom/Panel2/target_outline".flip_v = false #set_rotation_degrees(0)
 	
 	# assume sprite is always the first child of the ship
 	$"Control2/Panel_rightHUD/PanelInfo/ShipInfo/TextureRect2".set_texture(AI.get_child(0).get_texture())
@@ -683,11 +683,11 @@ func _on_planet_targeted(planet):
 
 	if prev_target:
 		prev_target.targetted = false
-		prev_target.update()
+		prev_target.queue_redraw()
 
 	# draw the red outline
 	planet.targetted = true
-	planet.update()
+	planet.queue_redraw()
 	target = planet
 	
 	# hide panel info if any

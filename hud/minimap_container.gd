@@ -499,12 +499,12 @@ func update_outline(target):
 	if target in hostiles:
 		i = hostiles.find(target)
 		hostile_sprites[i].targeted = true
-		hostile_sprites[i].update()
+		hostile_sprites[i].queue_redraw()
 		
 	if target in sb_enemies:
 		i = sb_enemies.find(target)
 		sb_enemy_sprites[i].targeted = true
-		sb_enemy_sprites[i].update()
+		sb_enemy_sprites[i].queue_redraw()
 
 func _process(_delta):
 #	# Called every frame. Delta is time since last frame.

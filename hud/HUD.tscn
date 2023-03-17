@@ -866,11 +866,10 @@ size_flags_vertical = 2
 visible = false
 material = ExtResource("12")
 layout_mode = 0
-offset_left = 426.0
-offset_top = 118.0
-offset_right = 523.0
-offset_bottom = 202.0
-rotation = 180.0
+offset_left = 326.0
+offset_top = 38.0
+offset_right = 423.0
+offset_bottom = 122.0
 texture = ExtResource("7")
 stretch_mode = 4
 

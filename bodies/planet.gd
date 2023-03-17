@@ -1169,7 +1169,7 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx):
 		#	targetted = false
 			
 #		# redraw
-#		update()
+#		queue_redraw()
 		
 		# officer message
 		if not self.scanned:
@@ -1258,7 +1258,7 @@ func _on_sink_timer(area):
 
 func do_colonize(area):
 #	print("Colony released")
-	if not has_node("colony") and not has_colony():
+	if not has_node("colony") and not has_colony() is StringName:
 		population = area.population # in millions
 		#population = 50/1000.0 # in milions
 		emit_signal("planet_colonized", self)

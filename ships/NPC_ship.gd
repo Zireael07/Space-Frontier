@@ -710,7 +710,7 @@ func _on_shield_changed(data):
 		if self in game.player.targeted_by:
 			var find = game.player.targeted_by.find(self)
 			if find != -1:
-				game.player.targeted_by.remove(find)
+				game.player.targeted_by.remove_at(find)
 			if game.player.targeted_by.size() < 1:
 				emit_signal("target_lost_AI", self)
 		

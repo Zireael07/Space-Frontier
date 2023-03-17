@@ -82,7 +82,7 @@ func _ready():
 			r.set_name(star_icon.get_name() + " " + icon.get_name())
 			add_child(r)
 
-	update()
+	queue_redraw()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

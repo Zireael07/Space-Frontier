@@ -424,7 +424,7 @@ func update_map(marker):
 	display_star_map_info($"Control".tg)
 	# force redraw side panel
 	get_node("../../Control2/Panel_rightHUD/Control/RouteHeightPanel").show()
-	get_node("../../Control2/Panel_rightHUD/Control/RouteHeightPanel").update()
+	get_node("../../Control2/Panel_rightHUD/Control/RouteHeightPanel").queue_redraw()
 
 func display_star_map_info(star_icon):
 	var text = ""
@@ -496,7 +496,7 @@ func _on_ButtonLog_pressed():
 # NOTE: offset is in px
 func move_map_to_offset(offset):
 	$Control.set_position(center+offset)
-	$"Grid/VisControl".update() # redraw map lines if any
+	$"Grid/VisControl".queue_redraw() # redraw map lines if any
 	
 	var sector = str(pos_to_sector(Vector3(-offset.x/50, -offset.y/50, 0)))
 	

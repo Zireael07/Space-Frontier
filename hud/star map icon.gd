@@ -317,13 +317,13 @@ func on_click():
 		
 	var r = get_node("../../..").get_route_icons(get_node("../..").src, get_node("../..").tg)
 	vis.route = r
-	vis.update()
+	vis.queue_redraw()
 	var r_heights = get_node("../../..").get_route_distance_height(get_node("../..").src, get_node("../..").tg)
 	#get_node("../../RouteHeightPanel").route_data = r_heights
-	#get_node("../../RouteHeightPanel").update()
+	#get_node("../../RouteHeightPanel").queue_redraw()
 	#get_node("../../RouteHeightPanel").show()
 	get_node("../../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").route_data = r_heights
-	get_node("../../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").update()
+	get_node("../../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").queue_redraw()
 	get_node("../../../../../Control2/Panel_rightHUD/Control/RouteHeightPanel").show()
 	
 	# test

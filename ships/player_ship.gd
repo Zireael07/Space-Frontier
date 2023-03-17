@@ -918,7 +918,7 @@ func get_closest_target():
 		#t[1].targetted = true
 		t.emit_signal("AI_targeted", t)
 		# redraw 
-		t.update()
+		t.queue_redraw()
 		# redraw minimap
 		self.HUD._minimap_update_outline(t)
 
@@ -928,7 +928,7 @@ func get_closest_friendly_target():
 	if t != null:
 		t.emit_signal("AI_targeted", t)
 		# redraw 
-		t.update()
+		t.queue_redraw()
 		# redraw minimap
 		self.HUD._minimap_update_outline(t)
 

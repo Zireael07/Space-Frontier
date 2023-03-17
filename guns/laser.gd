@@ -43,7 +43,7 @@ func _physics_process(delta):
 			if game.player.HUD.target != area:
 				area.emit_signal("AI_targeted", area)
 				# redraw 
-				area.update()
+				area.queue_redraw()
 		
 		# go through armor first
 		if 'armor' in area and area.armor > 0:

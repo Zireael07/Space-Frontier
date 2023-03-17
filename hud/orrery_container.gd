@@ -266,10 +266,10 @@ func _on_ButtonPlus_pressed():
 	if zoom_scale > 2:
 		zoom_scale = zoom_scale/2
 		get_child(0).zoom_scale = zoom_scale
-		get_child(0).update()
+		get_child(0).queue_redraw()
 
 
 func _on_ButtonMinus_pressed():
 	zoom_scale = zoom_scale*2
 	get_child(0).zoom_scale = zoom_scale
-	get_child(0).update()
+	get_child(0).queue_redraw()
