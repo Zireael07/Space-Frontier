@@ -1,86 +1,75 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=3 uid="uid://ni03dlxrnpgj"]
 
-[ext_resource path="res://hud/RouteHeightPanel.gd" type="Script" id=1]
-[ext_resource path="res://assets/hud/arrow.png" type="Texture2D" id=2]
-[ext_resource path="res://assets/hud/yellow_circle.png" type="Texture2D" id=3]
-[ext_resource path="res://assets/hud/grey_arrowUpWhite.png" type="Texture2D" id=4]
-[ext_resource path="res://hud/star map.gd" type="Script" id=5]
-[ext_resource path="res://hud/Grid.gd" type="Script" id=6]
-[ext_resource path="res://hud/starmapControl.gd" type="Script" id=7]
-[ext_resource path="res://hud/VisControl.gd" type="Script" id=8]
-[ext_resource path="res://hud/ruler.tscn" type="PackedScene" id=9]
-
-[sub_resource type="StyleBoxFlat" id=1]
+[ext_resource type="Script" path="res://hud/RouteHeightPanel.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://c00s6hy3fvbdy" path="res://assets/hud/arrow.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://c2f8rvbt3dhq4" path="res://assets/hud/yellow_circle.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://yastj0ygv2jj" path="res://assets/hud/grey_arrowUpWhite.png" id="4"]
+[ext_resource type="Script" path="res://hud/star map.gd" id="5"]
+[ext_resource type="Script" path="res://hud/Grid.gd" id="6"]
+[ext_resource type="Script" path="res://hud/starmapControl.gd" id="7"]
+[ext_resource type="Script" path="res://hud/VisControl.gd" id="8"]
+[ext_resource type="PackedScene" path="res://hud/ruler.tscn" id="9"]
 
 [node name="star map" type="Control"]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
 offset_right = 805.0
 offset_bottom = 525.0
-clip_contents = true
-script = ExtResource( 5 )
+script = ExtResource("5")
 
 [node name="Panel" type="Panel" parent="."]
+layout_mode = 0
 offset_right = 805.0
 offset_bottom = 525.0
 mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Grid" type="Control" parent="."]
+clip_contents = true
+anchors_preset = 0
 offset_top = -138.0
 offset_right = 805.0
 offset_bottom = 527.0
-clip_contents = true
 mouse_filter = 2
-script = ExtResource( 6 )
-__meta__ = {
-"_editor_description_": "Grid code from https://github.com/godotengine/godot-proposals/issues/2662"
-}
+script = ExtResource("6")
 
 [node name="VisControl" type="Control" parent="Grid"]
+anchors_preset = 0
 offset_top = 138.0
 offset_right = 805.0
 offset_bottom = 663.0
 mouse_filter = 2
-script = ExtResource( 8 )
-__meta__ = {
-"_editor_description_": "This is solely for drawing"
-}
+script = ExtResource("8")
 
 [node name="Label" type="Label" parent="Grid/VisControl"]
 visible = false
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 14.0
-custom_colors/font_color = Color( 1, 0.494118, 0, 1 )
-custom_styles/normal = SubResource( 1 )
 text = "TEST"
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -20.0
 offset_right = 20.0
 offset_bottom = 14.0
 text = "STAR MAP"
-align = 1
-valign = 1
 
 [node name="Legend" type="Control" parent="."]
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="Legend"]
+layout_mode = 0
 offset_right = 164.0
 offset_bottom = 14.0
 text = "1 ly = 50 px"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label2" type="Label" parent="Legend"]
+layout_mode = 0
 offset_left = 730.0
 offset_right = 838.0
 offset_bottom = 14.0
@@ -89,6 +78,7 @@ text = "^ Spinward
 Cygnus)"
 
 [node name="Label3" type="Label" parent="Legend"]
+layout_mode = 0
 offset_left = 730.0
 offset_top = 500.0
 offset_right = 800.0
@@ -96,46 +86,48 @@ offset_bottom = 514.0
 text = "V Trailing"
 
 [node name="Label4" type="Label" parent="Legend"]
+layout_mode = 0
 offset_top = 250.0
 offset_right = 40.0
 offset_bottom = 264.0
 text = "< Rimward"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label5" type="Label" parent="Legend"]
+layout_mode = 0
 offset_left = 700.0
 offset_top = 250.0
 offset_right = 767.0
 offset_bottom = 264.0
 text = "> Galactic Core"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Control" type="Control" parent="."]
+anchors_preset = 0
 offset_left = 382.5
 offset_top = 242.5
 offset_right = 422.5
 offset_bottom = 282.5
-script = ExtResource( 7 )
+script = ExtResource("7")
 
 [node name="Layer" type="Control" parent="Control"]
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="marker" type="TextureRect" parent="Control/Layer" groups=["starmap_marker"]]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource( 2 )
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2")
 
 [node name="Sol" type="Control" parent="Control/Layer"]
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-pivot_offset = Vector2( 20, 20 )
+pivot_offset = Vector2(20, 20)
 
 [node name="StarTexture" type="TextureRect" parent="Control/Layer/Sol"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -144,66 +136,72 @@ offset_left = -20.0
 offset_top = -20.0
 offset_right = 20.0
 offset_bottom = 20.0
-scale = Vector2( 0.5, 0.5 )
-pivot_offset = Vector2( 20, 20 )
-texture = ExtResource( 3 )
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(20, 20)
+texture = ExtResource("3")
 
 [node name="Label" type="Label" parent="Control/Layer/Sol"]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -20.0
 offset_right = 20.0
 offset_bottom = 14.0
 text = "Sol*"
-align = 1
 
 [node name="Label2" type="Label" parent="Control/Layer/Sol"]
 visible = false
+layout_mode = 0
 offset_top = 25.0
 offset_right = 51.0
 offset_bottom = 39.0
 text = "Z: 0.0 ly"
 
 [node name="LayerZ+" type="Control" parent="Control"]
-modulate = Color( 0.380392, 0.839216, 1, 1 )
+modulate = Color(0.380392, 0.839216, 1, 1)
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-__meta__ = {
-"_editor_description_": "Blueish-cyan color selected to evoke the Z axis coloring BUT not collide with the pure cyan which is a fleet color"
-}
 
 [node name="LayerZ-" type="Control" parent="Control"]
-modulate = Color( 0.384314, 0.384314, 0.384314, 1 )
+modulate = Color(0.384314, 0.384314, 0.384314, 1)
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ruler" parent="Control" instance=ExtResource( 9 )]
-pts = [  ]
+[node name="ruler" parent="Control" instance=ExtResource("9")]
+anchors_preset = 0
+pts = []
 
 [node name="Control2" type="Control" parent="."]
+anchors_preset = 0
 offset_left = 20.0
 offset_top = 40.0
 offset_right = 60.0
 offset_bottom = 80.0
 
 [node name="ButtonL" type="Button" parent="Control2"]
+layout_mode = 0
 offset_right = 20.0
 offset_bottom = 20.0
 text = "<"
 
 [node name="ButtonR" type="Button" parent="Control2"]
+layout_mode = 0
 offset_left = 20.0
 offset_right = 40.0
 offset_bottom = 20.0
 text = ">"
 
 [node name="ButtonUp" type="Button" parent="Control2"]
+layout_mode = 0
 offset_left = 10.0
 offset_top = -20.0
 offset_right = 30.0
 text = "^"
 
 [node name="ButtonDown" type="Button" parent="Control2"]
+layout_mode = 0
 offset_left = 10.0
 offset_top = 20.0
 offset_right = 30.0
@@ -211,12 +209,14 @@ offset_bottom = 40.0
 text = "V"
 
 [node name="Label" type="Label" parent="Control2"]
+layout_mode = 0
 offset_left = 40.0
 offset_right = 80.0
 offset_bottom = 14.0
 text = "Find:"
 
 [node name="LineEdit" type="LineEdit" parent="Control2"]
+layout_mode = 0
 offset_left = 40.0
 offset_top = 15.0
 offset_right = 98.0
@@ -226,6 +226,7 @@ context_menu_enabled = false
 
 [node name="PopupPanel" type="Panel" parent="."]
 visible = false
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -234,55 +235,39 @@ offset_left = -4.0
 offset_top = -4.0
 offset_right = 58.0
 offset_bottom = 46.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PopupPanel"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ButtonConfirm" type="Button" parent="PopupPanel/VBoxContainer"]
-offset_right = 95.0
-offset_bottom = 20.0
+layout_mode = 2
 text = "Confirm"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ButtonAbort" type="Button" parent="PopupPanel/VBoxContainer"]
-offset_top = 24.0
-offset_right = 95.0
-offset_bottom = 44.0
+layout_mode = 2
 text = "Abort"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ButtonLog" type="Button" parent="PopupPanel/VBoxContainer"]
-offset_top = 48.0
-offset_right = 95.0
-offset_bottom = 68.0
+layout_mode = 2
 text = "Captain's Log"
 
 [node name="PanelLog" type="Panel" parent="PopupPanel/VBoxContainer/ButtonLog"]
 visible = false
+layout_mode = 0
 offset_top = 40.0
 offset_right = 200.0
 offset_bottom = 240.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PopupPanel/VBoxContainer/ButtonLog/PanelLog"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="RouteHeightPanel" type="Panel" parent="."]
 visible = false
+layout_mode = 0
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -291,14 +276,16 @@ offset_left = -300.0
 offset_top = -235.0
 offset_bottom = -35.0
 grow_horizontal = 0
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="Label" type="Label" parent="RouteHeightPanel"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 14.0
 text = "Route height profile 1 ly = 10 px"
 
 [node name="LabelX" type="Label" parent="RouteHeightPanel"]
+layout_mode = 0
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -14.0
@@ -306,39 +293,45 @@ offset_right = 40.0
 text = "Dist along route"
 
 [node name="LabelY" type="Label" parent="RouteHeightPanel"]
+layout_mode = 0
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_top = -7.0
 offset_right = 52.0
 offset_bottom = 7.0
-rotation = -90.0
 text = "Z height"
 
 [node name="Control" type="Control" parent="RouteHeightPanel"]
+anchors_preset = 0
 offset_left = 270.0
 offset_top = 88.0
 offset_right = 310.0
 offset_bottom = 128.0
 
 [node name="Label" type="Label" parent="RouteHeightPanel/Control"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 14.0
 text = "0"
 
 [node name="TextureRect" type="TextureRect" parent="RouteHeightPanel/Control"]
-self_modulate = Color( 0, 1, 1, 1 )
+self_modulate = Color(0, 1, 1, 1)
+layout_mode = 0
 offset_left = 10.0
 offset_right = 50.0
 offset_bottom = 40.0
-texture = ExtResource( 4 )
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4")
 
 [node name="TextureRect2" type="TextureRect" parent="RouteHeightPanel/Control"]
-self_modulate = Color( 1, 0, 0, 1 )
+self_modulate = Color(1, 0, 0, 1)
+layout_mode = 0
 offset_left = 10.0
 offset_top = 17.0
 offset_right = 50.0
 offset_bottom = 57.0
-texture = ExtResource( 4 )
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4")
 flip_v = true
 
 [connection signal="pressed" from="Control2/ButtonL" to="." method="_on_ButtonL_pressed"]

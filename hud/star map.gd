@@ -337,6 +337,7 @@ func pretty_print_stars(stars):
 func update_map(marker):
 	# update marker position
 	var system = get_tree().get_nodes_in_group("main")[0].curr_system
+	system = str(system)
 
 	if $"Control/Layer".has_node(system):
 		marker.get_parent().remove_child(marker)
