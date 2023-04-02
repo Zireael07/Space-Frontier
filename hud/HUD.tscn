@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://hud/HUD.gd" id="3"]
 [ext_resource type="Texture2D" uid="uid://gkc6hhmfgvnv" path="res://assets/Planet-shadow_only.png" id="4"]
 [ext_resource type="Script" path="res://hud/orrery_container.gd" id="5"]
-[ext_resource type="PackedScene" path="res://hud/star map.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://ni03dlxrnpgj" path="res://hud/star map.tscn" id="6"]
 [ext_resource type="Texture2D" uid="uid://dqm052sw46afn" path="res://assets/ships/enemyRed5.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://o13tg7h2ob4k" path="res://assets/bodies/Planet1.png" id="9"]
 [ext_resource type="Texture2D" uid="uid://c00s6hy3fvbdy" path="res://assets/hud/arrow.png" id="10"]
@@ -622,6 +622,7 @@ pivot_offset = Vector2(8, 9)
 texture = ExtResource("10")
 
 [node name="Control" type="Control" parent="Control2/Panel_rightHUD"]
+editor_description = "Has to be rotated unintuitively to fit in the panel"
 anchors_preset = 0
 offset_top = 230.0
 offset_right = 40.0
@@ -636,7 +637,7 @@ offset_left = 160.0
 offset_right = 460.0
 offset_bottom = 200.0
 grow_horizontal = 0
-rotation = 90.0
+rotation = 1.5708
 script = ExtResource("17")
 
 [node name="Label" type="Label" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel"]
@@ -660,7 +661,6 @@ anchor_bottom = 0.5
 offset_top = -7.0
 offset_right = 52.0
 offset_bottom = 7.0
-rotation = -90.0
 text = "Z height"
 
 [node name="Control" type="Control" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel"]
@@ -682,6 +682,7 @@ layout_mode = 0
 offset_left = 10.0
 offset_right = 50.0
 offset_bottom = 40.0
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("16")
 
 [node name="TextureRect2" type="TextureRect" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel/Control"]
@@ -691,6 +692,7 @@ offset_left = 10.0
 offset_top = 17.0
 offset_right = 50.0
 offset_bottom = 57.0
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("16")
 flip_v = true
 
@@ -1007,7 +1009,6 @@ text = "-"
 
 [node name="star map" parent="Control4" instance=ExtResource("6")]
 visible = false
-anchors_preset = 0
 
 [node name="pause_panel" type="Control" parent="."]
 visible = false
