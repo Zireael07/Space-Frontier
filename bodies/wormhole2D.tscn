@@ -1,19 +1,18 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=11 format=3 uid="uid://drgokg8asj6mo"]
 
-[ext_resource path="res://assets/blackhole/blackhole2D.gdshader" type="Shader" id=1]
-[ext_resource path="res://bodies/blackhole2D.gd" type="Script" id=2]
-[ext_resource path="res://Nebula.gd" type="Script" id=3]
+[ext_resource type="Shader" path="res://assets/blackhole/blackhole2D.gdshader" id="1"]
+[ext_resource type="Script" path="res://bodies/blackhole2D.gd" id="2"]
+[ext_resource type="Script" path="res://Nebula.gd" id="3"]
 
-[sub_resource type="ShaderMaterial" id=3]
-shader = ExtResource( 1 )
-shader_param/strength = 0.01
-shader_param/black_radius = 0.65
-shader_param/hole_color = Plane( 0, 0, 0, 1 )
+[sub_resource type="ShaderMaterial" id="3"]
+shader = ExtResource("1")
+shader_parameter/strength = 0.01
+shader_parameter/black_radius = 0.65
+shader_parameter/hole_color = Plane(0, 0, 0, 1)
 
-[sub_resource type="ImageTexture" id=4]
-size = Vector2( 200, 200 )
+[sub_resource type="ImageTexture" id="4"]
 
-[sub_resource type="Shader" id=6]
+[sub_resource type="Shader" id="6"]
 code = "shader_type canvas_item;
 
 uniform vec2 offset;
@@ -173,53 +172,48 @@ void fragment() {
     //COLOR.rgb = vec3(or_n);
 }"
 
-[sub_resource type="ShaderMaterial" id=1]
+[sub_resource type="ShaderMaterial" id="1"]
 resource_local_to_scene = true
-shader = SubResource( 6 )
-shader_param/offset = [ 62.5559, 67.9612 ]
-shader_param/scale = 0.0389376
-shader_param/density = 0.195294
-shader_param/falloff = 4.5598
-shader_param/color = Vector3( 0.557261, 0.372139, 0.713684 )
-shader_param/color2 = Vector3( 0.852364, 0.607896, 0.689081 )
+shader = SubResource("6")
+shader_parameter/offset = [38.2885, 51.6411]
+shader_parameter/scale = 0.00108231
+shader_parameter/density = 0.0237715
+shader_parameter/falloff = 4.86349
+shader_parameter/color = Vector3(0.295128, 0.0541246, 0.72836)
+shader_parameter/color2 = Vector3(0.275238, 0.115777, 0.236459)
 
-[sub_resource type="ImageTexture" id=2]
-size = Vector2( 50, 50 )
+[sub_resource type="ImageTexture" id="2"]
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id="5"]
 radius = 30.0
 
-[sub_resource type="RectangleShape2D" id=7]
-size = Vector2( 175, 175 )
+[sub_resource type="RectangleShape2D" id="7"]
+size = Vector2(175, 175)
 
 [node name="Node2D" type="Node2D" groups=["wormhole"]]
 z_index = 20
 z_as_relative = false
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource( 3 )
-texture = SubResource( 4 )
+material = SubResource("3")
+texture = SubResource("4")
 
 [node name="Sprite2" type="Sprite2D" parent="."]
-material = SubResource( 1 )
-texture = SubResource( 2 )
-script = ExtResource( 3 )
-seede = 524108005
+material = SubResource("1")
+texture = SubResource("2")
+script = ExtResource("3")
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 5 )
+shape = SubResource("5")
 
 [node name="Area2D2" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
-shape = SubResource( 7 )
-__meta__ = {
-"_editor_description_": "Oversized to disrupt HUD earlier"
-}
+shape = SubResource("7")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

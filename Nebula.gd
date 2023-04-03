@@ -7,7 +7,7 @@ extends Sprite2D
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
-	
+	# this is for the background nebula
 	texture.set_size_override(Vector2i(1150, 768*2))
 	
 	randomize()
