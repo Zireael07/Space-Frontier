@@ -15,8 +15,9 @@ var selected = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# set name first so that debugging knows what we're dealing with
-	set_name(named)
+	if !named.is_empty():
+		# set name first so that debugging knows what we're dealing with
+		set_name(named)
 	var txt = named
 	if planets:
 		txt += "*"
@@ -162,7 +163,9 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	# now check if icon(s) are out of view
 	var ab_shadow = get_node("ShadowTexture").get_global_position()
 	var ab_planet = get_node("StarTexture").get_global_position()
-	#print(get_name(), " shadow: ", ab_shadow, " star: ", ab_planet)
+	if named.find("TST") != -1:
+		print(get_name(), " shadow: ", ab_shadow, " star: ", ab_planet)
+		
 	# name label
 	
 	# special case 
@@ -182,7 +185,8 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		get_node("Label").position = Vector2(0, 0)
 
 	# shadow in bounds but star is not (place name & Z-label next to shadow icon)
-	if ab_planet.y < 0 or ab_planet.y > 525:
+	if (ab_planet.y < 0 or ab_planet.y > 525) and ab_planet != ab_shadow:
+		#if named.find("TST") != -1:
 		#print(get_name(), " shadow in bounds but star not...")
 		get_node("Label").position = Vector2(0, 0)
 		# if multi-line label
@@ -197,6 +201,7 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	
 	# inverse (shadow not in bounds), place labels next to star icon
 	if (ab_shadow.y < 0 or ab_shadow.y > 525):
+		#if named.find("TST") != -1:
 		#print("Force show star for: ", self.get_name())
 		# force show star
 		get_node("StarTexture").show()
@@ -226,6 +231,14 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		get_node("Line2D").set_modulate(Color(1,1,1,1)) # restore normal opacity
 	
 	get_node("Label2").hide()
+	
+	# special case for low Z icons
+	if ab_planet == ab_shadow:
+		#print("Low Z icon: ", named)
+		if !not_in_bounds(offset):
+			#print("Force show special!")
+			# force show star
+			get_node("StarTexture").show()
 		
 	# don't hide if we're the target
 	if get_parent().get_parent().tg == self:
@@ -257,7 +270,8 @@ func not_in_bounds(offset):
 #	var planet_out = ab_planet < -250 or ab_planet > 250
 #	var shadow_out = ab_shadow < -250 or ab_shadow > 250
 #	print(get_node("Label").get_text(), " planet icon out of bounds: ", planet_out, " shadow out of bounds ", shadow_out) 
-#	#print("not in bounds: ", planet_out and shadow_out)
+
+#	print("not in bounds: ", planet_out and shadow_out)
 	return (planet_out and shadow_out)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

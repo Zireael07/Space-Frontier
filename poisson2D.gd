@@ -226,7 +226,7 @@ func run():
 			# We had to give up looking for valid points near refpt, so remove it
 			# from the list of "active" points.
 			#if active.size() > idx:
-			active.remove(idx)
+			active.remove_at(idx)
 	
 	print(samples.size())
 	return samples

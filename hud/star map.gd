@@ -499,6 +499,29 @@ func move_map_to_offset(offset):
 	$Control.set_position(center+offset)
 	$"Grid/VisControl".queue_redraw() # redraw map lines if any
 	
+	# trigger procedural generation
+	# only do it once when crossing the threshold
+	if abs(offset.x) > 2200 and abs(offset.x) <= 2250: #or abs(offset.y)
+		var new_sector_data = create_procedural_sector(pos_to_sector(Vector3(-2600*sign(offset.x)/50, -offset.y/50, 0)))
+		# draw map icons @ sector_begin+sample position
+		for s in new_sector_data[1]:
+			#print("Generated pos: ", s)
+			var ic = icon.instantiate()
+			ic.star_type = "red"
+			
+			# note: this data is all specified in ints that actually encode floats (see galaxy.gd)
+			var pos = Vector2((new_sector_data[0][0] + s[0])/10, (new_sector_data[0][1]+s[1])/10)
+			# this is in light years
+			ic.x = pos[0]
+			ic.y = pos[1]
+			# clamp to two decimal points
+			ic.named = "TST"+"%.2f" % pos[0]+"-"+"%.2f" % pos[1]
+			#print("pos", pos)
+			
+			# assume middle Z layer for now
+			get_node("Control/Layer").add_child(ic)
+		print("Done generating...")
+	
 	var sector = str(pos_to_sector(Vector3(-offset.x/50, -offset.y/50, 0)))
 	
 	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset) + " Sector: " + sector)
@@ -531,6 +554,10 @@ func _on_ButtonAbort_pressed():
 	
 func _on_ButtonL_pressed():
 	offset += Vector2(LY_TO_PX,0)
+	# jump a sector away if pressing shift
+	if Input.is_physical_key_pressed(KEY_SHIFT):
+		# with a margin to give procgen time to run
+		offset += Vector2(42*LY_TO_PX,0)
 	move_map_to_offset(offset)
 
 func _on_ButtonR_pressed():
@@ -563,3 +590,6 @@ func _on_LineEdit_text_entered(new_text):
 	if found:
 		offset = -(found.position) #+found.get_node("StarTexture").position)
 		move_map_to_offset(offset)
+
+		# force reveal
+		found.get_node("StarTexture").show()

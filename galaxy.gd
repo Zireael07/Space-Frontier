@@ -154,6 +154,26 @@ func load_data():
 		opened.close()
 		return data
 
+# -------------------------------------------------------------
+# called on demand as needed
+func create_procedural_sector(sector):
+	print("Generating sector for sector ", sector)
+	# poisson2D
+	get_node("Grid/VisControl/Node2D").width = 512
+	get_node("Grid/VisControl/Node2D").height = 128 #temporarily reduced, should be 512 to cover all sector
+	get_node("Grid/VisControl/Node2D").r = 50
+	get_node("Grid/VisControl/Node2D").set_seed(1000001)
+	var samples = get_node("Grid/VisControl/Node2D").samples
+	print("Generated points: ", samples)
+	# sector begin, sector center is begin + 512 (half sector size)
+	var sector_zero_start = Vector2(-512,-512)
+	var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+	var sector_center = sector_begin+Vector2(512, 512)
+	print("Sector start: ", sector_begin, " sector center: ", sector_center)
+	return [sector_center, samples]
+	
+	
+
 # ------------------------------------------------------------
 func create_map_graph():
 	map_astar = AStar3D.new()
