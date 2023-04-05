@@ -50,7 +50,10 @@ func _ready():
 		# don't split things like "AX Microscopii"
 		if txts[0].length() > 4:
 			txt = txts[0] + '\n' + txts[1]
-	
+	# if a long name with a dash separator and doesn't have a line break already
+	if txt.length() > 8 and txt.find("--") != -1 and txt.find("\n") == -1:
+		var txts = txt.split("--")
+		txt = txts[0] + '\n' + "--" + txts[1]
 	
 	get_node("Label").set_text(txt)
 	

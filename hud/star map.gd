@@ -515,7 +515,9 @@ func move_map_to_offset(offset):
 			ic.x = pos[0]
 			ic.y = pos[1]
 			# clamp to two decimal points
-			ic.named = "TST"+"%.2f" % pos[0]+"-"+"%.2f" % pos[1]
+			# use two to differentiate from a separator such as in LP (Luyten-Palomar) catalog
+			# in line with IAU guidelines https://cds.unistra.fr/Dic/iau-spec.html
+			ic.named = "TST"+"%.2f" % pos[0]+"--"+"%.2f" % pos[1]
 			#print("pos", pos)
 			
 			# assume middle Z layer for now
