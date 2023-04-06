@@ -121,7 +121,7 @@ func _ready():
 func load_data(name):
 	#var file = FileAccess.new()
 	var opened = FileAccess.open("res://systems/"+str(name)+"_system.csv", FileAccess.READ)
-	if opened.get_error() == OK:
+	if opened != null and opened.get_error() == OK:
 		while !opened.eof_reached():
 			var csv = opened.get_csv_line()
 			if csv != null:

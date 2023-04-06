@@ -685,7 +685,7 @@ class AttackState:
 		
 		# target is a Node here
 		if is_instance_valid(target):
-			if target.warping:
+			if 'warping' in target and target.warping:
 				if ship.prev_state[0] != STATE_IDLE:
 					# this way, we also pass the parameters
 					ship.set_state(ship.prev_state[0], ship.prev_state[1])

@@ -16,7 +16,7 @@ const WORMHOLE_SPEED = 5.00 # in c
 
 # calendar
 const start_date = [05, 05, 2155]
-var date = start_date
+var date = start_date.duplicate() #to un-const it
 var captain_log = []
 
 # ship name lists here for consistency
