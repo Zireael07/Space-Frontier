@@ -43,6 +43,11 @@ Tau Ceti g, planet, -, -, -, -, -, -, 2.0E, 1.2E, 0.10, -
 Tau Ceti h, planet, -, -, -, -, -, -, 2.1E, 1.25E, 0.24, -
 Tau Ceti e, planet, -, -, -, -, -, -, 4.5E, 1.6E, 0.54, -
 Tau Ceti f, planet, -, -, -, -, -, -, 4.5E, 1.6E, 1.33, -
+YZ Ceti, star, 18.12deg, -16.99deg, 12.12, -2.0ly, 1.2ly, -11.9ly, 0.13S, 0.3S, -, 0.005, red
+YZ Ceti e, planet, -, -, -, -, -, -, 0.55E, 0.8E, 0.01, -
+YZ Ceti b, planet, -, -, -, -, -, -, 0.8E, 0.9E, 0.016, -
+YZ Ceti c, planet, -, -, -, -, -, -, 1.3E, 1.1E, 0.022, -
+YZ Ceti d, planet, -, -, -, -, -, -, 1.3E, 1.1E, 0.029, -
 Luyten's star, star, 111.85deg, 5.22deg, 12.34, -10.3ly, -6.5ly, 2.2ly, 0.26S, 0.3S, -, 0.0006, red
 Luyten's star c, planet, -, -, -, -, -, -, 1.2E, 1.05E, 0.036, -, -
 Luyten's star b, planet, -, -, -, -, -, -, 2.9E, 1.4E, 0.091, -, -
