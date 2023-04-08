@@ -24,6 +24,13 @@ func _ready():
 func spawn_from_data(data):
 	print("Spawning system for data: ", data)
 	
+	# are we a small system? (last planet is under 0.03 AU)
+	var small = float(data[data.size()-1][2]) < 0.03
+	print("Is a small system: ", small)
+	
+	# in degrees (see planet.gd l.980)
+	var small_lookup = {1: 0, 2: 180, 3: 70, 4: 0, 5: -70 }
+	
 	for i in data.size():
 		# the first is always the star
 		if i == 0:
@@ -49,7 +56,7 @@ func spawn_from_data(data):
 				# actually load planet radius and mass from data
 				var rad = 0
 				if d[3] != "?":
-					rad = float(d[3])
+					rad = float(d[3].trim_suffix("E"))
 				var mas = d[4]
 				if mas.find("E") != -1:
 					mas = mas.strip_edges()
@@ -58,7 +65,13 @@ func spawn_from_data(data):
 				else:
 					mas = mas.trim_suffix("J")
 					mas = mas.to_float() * 318 # 1 MJ is 318 ME
-				b.setup(0, float(d[2])*game.AU, mas, rad, false)
+				
+				# vary the initial position (angle) for very close by systems (e.g. YZ Ceti, TRAPPIST-1)	
+				var a = 0
+				if small:
+					a = small_lookup[i]
+				b.setup(a, float(d[2])*game.AU, mas, rad, false)
+				
 			else:
 				b = star.instantiate()
 				b.set_name(data[i][0])
