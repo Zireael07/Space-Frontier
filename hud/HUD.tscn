@@ -121,9 +121,9 @@ text = "Cargo"
 [node name="PanelInfo" type="Panel" parent="Control2/Panel_rightHUD"]
 layout_mode = 0
 offset_left = 4.0
-offset_top = 40.0
+offset_top = 45.0
 offset_right = 197.0
-offset_bottom = 220.0
+offset_bottom = 225.0
 
 [node name="PlanetInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 visible = false
@@ -154,9 +154,9 @@ Hydro:
 custom_minimum_size = Vector2(108, 108)
 layout_mode = 0
 offset_left = 83.0
-offset_top = 1.0
-offset_right = 191.0
-offset_bottom = 109.0
+offset_top = 5.0
+offset_right = 383.0
+offset_bottom = 305.0
 scale = Vector2(0.35, 0.35)
 
 [node name="SubViewport" type="SubViewport" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo/SubViewportContainer"]
@@ -192,6 +192,7 @@ mouse_filter = 2
 texture = ExtResource("4")
 
 [node name="PrevButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
+custom_minimum_size = Vector2(25, 0)
 layout_mode = 0
 offset_left = -5.0
 offset_top = 180.0
@@ -201,10 +202,10 @@ text = "<"
 
 [node name="BackButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
 layout_mode = 0
-offset_left = 15.0
+offset_left = 16.0
 offset_top = 180.0
-offset_right = 57.0
-offset_bottom = 200.0
+offset_right = 61.0
+offset_bottom = 211.0
 text = "Back"
 
 [node name="GoToButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/PlanetInfo"]
@@ -587,9 +588,9 @@ offset_bottom = 177.0
 [node name="orrery" type="Control" parent="Control2/Panel_rightHUD"]
 anchors_preset = 0
 offset_left = 20.0
-offset_top = 240.0
+offset_top = 250.0
 offset_right = 180.0
-offset_bottom = 400.0
+offset_bottom = 410.0
 mouse_filter = 2
 script = ExtResource("5")
 
@@ -602,9 +603,9 @@ script = ExtResource("11")
 [node name="minimap" type="Control" parent="Control2/Panel_rightHUD" groups=["minimap"]]
 anchors_preset = 0
 offset_left = 2.0
-offset_top = 400.0
+offset_top = 405.0
 offset_right = 202.0
-offset_bottom = 600.0
+offset_bottom = 605.0
 script = ExtResource("2")
 
 [node name="Panel" type="Panel" parent="Control2/Panel_rightHUD/minimap"]
@@ -624,9 +625,9 @@ texture = ExtResource("10")
 [node name="Control" type="Control" parent="Control2/Panel_rightHUD"]
 editor_description = "Has to be rotated unintuitively to fit in the panel"
 anchors_preset = 0
-offset_top = 230.0
+offset_top = 235.0
 offset_right = 40.0
-offset_bottom = 270.0
+offset_bottom = 275.0
 
 [node name="RouteHeightPanel" type="Panel" parent="Control2/Panel_rightHUD/Control"]
 visible = false

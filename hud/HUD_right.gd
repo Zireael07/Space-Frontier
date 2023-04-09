@@ -220,7 +220,7 @@ func _on_ButtonView_pressed():
 	
 	# if we are pointing at first entry (a star), show star description instead
 	if cursor.get_position().y < 15 * (stars.size()+1):
-		var line = cursor.get_position().y + nav_list.get_v_scroll().value
+		var line = cursor.get_position().y + nav_list.get_v_scroll_bar().value
 		var select_id = (line - 15)/15
 		print("Star select id ", select_id)
 		var star = get_tree().get_nodes_in_group("star")[select_id]
@@ -612,10 +612,10 @@ func _onButtonUp2_pressed():
 	# do we scroll?
 	if cursor.get_position().y < 30:
 		var nav_list = $"Panel_rightHUD/PanelInfo/NavInfo/PlanetList"
-		if nav_list.get_v_scroll().value > 0:
-			nav_list.get_child(0).value = (nav_list.get_v_scroll().value-15)
+		if nav_list.get_v_scroll_bar().value > 0:
+			nav_list.get_v_scroll_bar().value = (nav_list.get_v_scroll_bar().value-15)
 			# manually "scroll"
-			nav_list.get_node("Control")._set_position(Vector2(0,-nav_list.get_child(0).value))
+			nav_list.get_node("Control")._set_position(Vector2(0,-nav_list.get_v_scroll_bar().value))
 			print("Scrolling up...")
 			
 func _onButtonDown2_pressed():

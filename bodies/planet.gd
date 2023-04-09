@@ -539,6 +539,10 @@ func is_habitable():
 		
 func in_venus_zone():
 	var star = get_parent().get_parent()
+	# paranoia
+	if not 'luminosity' in star:
+		return false
+	
 	var axis = (dist/game.LIGHT_SEC)/game.LS_TO_AU
 	if axis <= star.calculate_vz(star.luminosity)[0]:
 		return true
