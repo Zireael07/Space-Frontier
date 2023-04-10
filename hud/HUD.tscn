@@ -628,6 +628,7 @@ anchors_preset = 0
 offset_top = 235.0
 offset_right = 40.0
 offset_bottom = 275.0
+mouse_filter = 2
 
 [node name="RouteHeightPanel" type="Panel" parent="Control2/Panel_rightHUD/Control"]
 visible = false
