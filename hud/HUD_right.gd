@@ -105,6 +105,24 @@ func _onButtonShip_pressed(target):
 	$"Panel_rightHUD/PanelInfo/HelpInfo".hide()
 	$"Panel_rightHUD/PanelInfo/ShipInfo".show()
 
+func _on_ship_prev_button_pressed():
+	if get_parent().target == null:
+		return 
+		
+	if get_parent().target.is_in_group("enemy"):
+		var enemies = get_tree().get_nodes_in_group("enemy")
+		get_parent().target = enemies[enemies.find(get_parent().target)-1]
+	_onButtonShip_pressed(get_parent().target)
+
+func _on_ship_next_button_pressed():
+	if get_parent().target == null:
+		return 
+	if get_parent().target.is_in_group("enemy"):
+		var enemies = get_tree().get_nodes_in_group("enemy")
+		if enemies.size() > enemies.find(get_parent().target)+1:
+			get_parent().target = enemies[enemies.find(get_parent().target)+1]
+	_onButtonShip_pressed(get_parent().target)
+
 func switch_to_refit():
 	# update class line
 	$"Panel_rightHUD/PanelInfo/RefitInfo/ShipName".set_text(player.ship_class.keys()[player.class_id].capitalize())

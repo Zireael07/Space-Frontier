@@ -313,6 +313,21 @@ offset_right = 40.0
 offset_bottom = 124.0
 text = "Task:"
 
+[node name="PrevButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
+layout_mode = 0
+offset_top = 175.0
+offset_right = 18.0
+offset_bottom = 206.0
+text = "<"
+
+[node name="NextButton" type="Button" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 175.0
+offset_right = 68.0
+offset_bottom = 206.0
+text = ">"
+
 [node name="RefitInfo" type="Control" parent="Control2/Panel_rightHUD/PanelInfo"]
 visible = false
 anchors_preset = 0
@@ -1061,6 +1076,8 @@ libraries = {
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer2/ButtonRefit" to="." method="_on_ButtonRefit_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/HBoxContainer2/ButtonCargo" to="." method="_on_ButtonCargo_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/PlanetInfo/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/ShipInfo/PrevButton" to="Control2" method="_on_ship_prev_button_pressed"]
+[connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/ShipInfo/NextButton" to="Control2" method="_on_ship_next_button_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUp" to="." method="_on_ButtonUp_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonUpgrade" to="." method="_on_ButtonUpgrade_pressed"]
 [connection signal="pressed" from="Control2/Panel_rightHUD/PanelInfo/RefitInfo/ButtonSell" to="Control2" method="_on_ButtonSell_pressed"]
