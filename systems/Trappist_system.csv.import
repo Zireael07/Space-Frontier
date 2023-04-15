@@ -1,17 +1,3 @@
 [remap]
 
-importer="csv_translation"
-type="Translation"
-uid="uid://c10p35tc2l76c"
-
-[deps]
-
-files=["res://systems/Trappist_system.angle.translation", "res://systems/Trappist_system.dist.translation", "res://systems/Trappist_system.mass.translation", "res://systems/Trappist_system. type.translation"]
-
-source_file="res://systems/Trappist_system.csv"
-dest_files=["res://systems/Trappist_system.angle.translation", "res://systems/Trappist_system.dist.translation", "res://systems/Trappist_system.mass.translation", "res://systems/Trappist_system. type.translation"]
-
-[params]
-
-compress=true
-delimiter=0
+importer="keep"

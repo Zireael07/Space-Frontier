@@ -1,156 +1,205 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=27 format=3 uid="uid://cp05aob1f18x4"]
 
-[ext_resource path="res://colony.tscn" type="PackedScene" id=1]
-[ext_resource path="res://systems/star system.gd" type="Script" id=2]
-[ext_resource path="res://assets/planets/temp_gradient.tres" type="Gradient" id=3]
-[ext_resource path="res://assets/planets/seamless_shader_better.tres" type="Shader" id=4]
-[ext_resource path="res://assets/bodies/texture_template.png" type="Texture2D" id=5]
-[ext_resource path="res://assets/bodies/star_red01.png" type="Texture2D" id=6]
-[ext_resource path="res://assets/planets/biome_gradient.tres" type="Gradient" id=7]
-[ext_resource path="res://assets/bodies/3_special_effect_blurred.png" type="Texture2D" id=9]
-[ext_resource path="res://assets/bodies/4_special_effect_blurred.png" type="Texture2D" id=10]
-[ext_resource path="res://bodies/planet_rotating_procedural.tscn" type="PackedScene" id=11]
+[ext_resource type="PackedScene" path="res://colony.tscn" id="1"]
+[ext_resource type="Script" path="res://systems/star system.gd" id="2"]
+[ext_resource type="Gradient" path="res://assets/planets/temp_gradient.tres" id="3"]
+[ext_resource type="Shader" uid="uid://bd21dgr0w5fyj" path="res://assets/planets/seamless_shader_better.tres" id="4"]
+[ext_resource type="Texture2D" uid="uid://w6p13lxr264v" path="res://assets/bodies/texture_template.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://b5xabkgm6beqq" path="res://assets/bodies/star_red01.png" id="6"]
+[ext_resource type="Gradient" path="res://assets/planets/biome_gradient.tres" id="7"]
+[ext_resource type="Texture2D" uid="uid://c61jn21n5rwim" path="res://assets/bodies/3_special_effect_blurred.png" id="9"]
+[ext_resource type="Texture2D" uid="uid://bupsk3r4tall5" path="res://assets/bodies/4_special_effect_blurred.png" id="10"]
+[ext_resource type="PackedScene" path="res://bodies/planet_rotating_procedural.tscn" id="11"]
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="GradientTexture2D" id="5"]
+gradient = ExtResource("7")
 
-[sub_resource type="GradientTexture2D" id=5]
-gradient = ExtResource( 7 )
+[sub_resource type="GradientTexture2D" id="4"]
+gradient = ExtResource("3")
 
-[sub_resource type="GradientTexture2D" id=4]
-gradient = ExtResource( 3 )
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nduun"]
+resource_local_to_scene = true
+shader = ExtResource("4")
+shader_parameter/fadeWidth = 0.05
+shader_parameter/temperature = 88.0717
+shader_parameter/rotate_angle = null
+shader_parameter/time = 1.16519
+shader_parameter/waterLevel = 0.45
+shader_parameter/color_sea = Color(0, 1, 1, 1)
+shader_parameter/temp_gradient = SubResource("4")
+shader_parameter/land_gradient = SubResource("5")
+shader_parameter/vectors = ExtResource("5")
 
-[sub_resource type="ShaderMaterial" id=6]
-shader = ExtResource( 4 )
-shader_param/fadeWidth = 0.05
-shader_param/temperature = 81.6404
-shader_param/rotate_angle = null
-shader_param/time = 0.804861
-shader_param/waterLevel = 0.45
-shader_param/color_sea = Color( 0, 1, 1, 1 )
-shader_param/temp_gradient = SubResource( 4 )
-shader_param/land_gradient = SubResource( 5 )
-shader_param/vectors = ExtResource( 5 )
-
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="10"]
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("Sprite_shadow:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0, 0.2, 0.5, 0.7, 1 ),
-"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 0.5, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [ true, false, false, false, true ]
+"values": [true, false, false, false, true]
 }
 
-[sub_resource type="ShaderMaterial" id=7]
-shader = ExtResource( 4 )
-shader_param/fadeWidth = 0.05
-shader_param/temperature = 81.6404
-shader_param/rotate_angle = null
-shader_param/time = 1.90747
-shader_param/waterLevel = 0.45
-shader_param/color_sea = Color( 0, 1, 1, 1 )
-shader_param/temp_gradient = SubResource( 4 )
-shader_param/land_gradient = SubResource( 5 )
-shader_param/vectors = ExtResource( 5 )
-
-[sub_resource type="Animation" id=3]
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite_shadow:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PackedFloat32Array( 0, 0.2, 0.5, 0.7, 1 ),
-"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ true, false, false, false, true ]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nws2k"]
+_data = {
+"scanning": SubResource("10")
 }
 
-[sub_resource type="ShaderMaterial" id=8]
-shader = ExtResource( 4 )
-shader_param/fadeWidth = 0.05
-shader_param/temperature = 81.6404
-shader_param/rotate_angle = null
-shader_param/time = 1.75946
-shader_param/waterLevel = 0.45
-shader_param/color_sea = Color( 0, 1, 1, 1 )
-shader_param/temp_gradient = SubResource( 4 )
-shader_param/land_gradient = SubResource( 5 )
-shader_param/vectors = ExtResource( 5 )
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2xswt"]
+gradient = ExtResource("7")
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lcx47"]
+gradient = ExtResource("3")
+
+[sub_resource type="ShaderMaterial" id="6"]
+resource_local_to_scene = true
+shader = ExtResource("4")
+shader_parameter/fadeWidth = 0.05
+shader_parameter/temperature = 45.3266
+shader_parameter/rotate_angle = null
+shader_parameter/time = 1.16519
+shader_parameter/waterLevel = 0.45
+shader_parameter/color_sea = Color(0, 1, 1, 1)
+shader_parameter/temp_gradient = SubResource("GradientTexture2D_lcx47")
+shader_parameter/land_gradient = SubResource("GradientTexture2D_2xswt")
+shader_parameter/vectors = ExtResource("5")
+
+[sub_resource type="Animation" id="2"]
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("Sprite_shadow:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o335y"]
+_data = {
+"scanning": SubResource("2")
+}
+
+[sub_resource type="ShaderMaterial" id="7"]
+resource_local_to_scene = true
+shader = ExtResource("4")
+shader_parameter/fadeWidth = 0.05
+shader_parameter/temperature = -12.127
+shader_parameter/rotate_angle = null
+shader_parameter/time = 1.16519
+shader_parameter/waterLevel = 0.45
+shader_parameter/color_sea = Color(0, 1, 1, 1)
+shader_parameter/temp_gradient = SubResource("GradientTexture2D_lcx47")
+shader_parameter/land_gradient = SubResource("GradientTexture2D_2xswt")
+shader_parameter/vectors = ExtResource("5")
+
+[sub_resource type="Animation" id="3"]
+tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite_shadow:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0, 0.2, 0.5, 0.7, 1 ),
-"transitions": PackedFloat32Array( 1, 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.2, 0.5, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [ true, false, false, false, true ]
+"values": [true, false, false, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hqv0r"]
+_data = {
+"scanning": SubResource("3")
+}
+
+[sub_resource type="ShaderMaterial" id="8"]
+resource_local_to_scene = true
+shader = ExtResource("4")
+shader_parameter/fadeWidth = 0.05
+shader_parameter/temperature = -44.4971
+shader_parameter/rotate_angle = null
+shader_parameter/time = 1.16519
+shader_parameter/waterLevel = 0.45
+shader_parameter/color_sea = Color(0, 1, 1, 1)
+shader_parameter/temp_gradient = SubResource("GradientTexture2D_lcx47")
+shader_parameter/land_gradient = SubResource("GradientTexture2D_2xswt")
+shader_parameter/vectors = ExtResource("5")
+
+[sub_resource type="Animation" id="9"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite_shadow:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_stjeo"]
+_data = {
+"scanning": SubResource("9")
 }
 
 [node name="Trappist" type="Node2D" groups=["star"]]
-position = Vector2( 500, 500 )
-script = ExtResource( 2 )
+position = Vector2(500, 500)
+script = ExtResource("2")
 orbit_rate = 0.1
 star_radius_factor = 0.25
 luminosity = 0.00055
 zoom_scale = 6
 
 [node name="flare2" type="Sprite2D" parent="."]
-self_modulate = Color( 0.996078, 0.447059, 0.00784314, 1 )
-position = Vector2( -100, 40 )
+self_modulate = Color(0.996078, 0.447059, 0.00784314, 1)
+position = Vector2(-100, 40)
 rotation = -3.14159
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 10 )
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("10")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 9.92185
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 6 )
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("6")
 
 [node name="flare" type="Sprite2D" parent="."]
-self_modulate = Color( 0.996078, 0.447059, 0.00784314, 1 )
-position = Vector2( 105, -55 )
-scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 9 )
+self_modulate = Color(0.996078, 0.447059, 0.00784314, 1)
+position = Vector2(105, -55)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("9")
 
 [node name="Label" type="Label" parent="."]
 offset_top = 100.0
 offset_right = 72.0
 offset_bottom = 116.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_styles/normal = SubResource( 1 )
 text = "TRAPPIST-1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="planet_holder" type="Node2D" parent="."]
 
-[node name="planet" parent="planet_holder" groups=["planets"] instance=ExtResource( 11 )]
-position = Vector2( -6.1161e-06, 139.92 )
+[node name="planet" parent="planet_holder" instance=ExtResource("11")]
+position = Vector2(0, 139.92)
 planet_rad_factor = 0.2
 mass = 1.017
-hydro = 0.300684
-atm = 0.612008
-greenhouse = 0.00654704
+hydro = 0.30085
+atm = 0.44968
+greenhouse = 0.0048111
 tidally_locked = true
 
 [node name="Sprite2D" parent="planet_holder/planet" index="0"]
-scale = Vector2( 0.2, 0.2 )
+material = SubResource("ShaderMaterial_nduun")
+scale = Vector2(0.2, 0.2)
 
 [node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
-rotation = 3.4641e-07
-scale = Vector2( 0.086, 0.086 )
+scale = Vector2(0.086, 0.086)
 
 [node name="Label" parent="planet_holder/planet" index="3"]
 offset_left = 30.0
@@ -159,22 +208,27 @@ offset_right = 110.0
 offset_bottom = 44.0
 text = "TRAPPIST-1b"
 
-[node name="planet2" parent="planet_holder" groups=["planets"] instance=ExtResource( 11 )]
-position = Vector2( 0, -180 )
+[node name="AnimationPlayer" parent="planet_holder/planet" index="7"]
+libraries = {
+"": SubResource("AnimationLibrary_nws2k")
+}
+
+[node name="planet2" parent="planet_holder" instance=ExtResource("11")]
+position = Vector2(1.57361e-05, -180)
 planet_rad_factor = 0.2
 mass = 1.156
-hydro = 0.300684
-atm = 0.612008
-greenhouse = 0.00654704
+hydro = 0.163522
+atm = 0.107819
+greenhouse = 0.00115352
 tidally_locked = true
 
 [node name="Sprite2D" parent="planet_holder/planet2" index="0"]
-material = SubResource( 6 )
-scale = Vector2( 0.25, 0.25 )
+material = SubResource("6")
+scale = Vector2(0.25, 0.25)
 
 [node name="Sprite_shadow" parent="planet_holder/planet2" index="1"]
-rotation = 3.14159
-scale = Vector2( 0.108, 0.108 )
+rotation = -3.14159
+scale = Vector2(0.108, 0.108)
 
 [node name="Label" parent="planet_holder/planet2" index="3"]
 offset_left = 30.0
@@ -184,24 +238,27 @@ offset_bottom = 44.0
 text = "TRAPPIST-1c"
 
 [node name="AnimationPlayer" parent="planet_holder/planet2" index="7"]
-anims/scanning = SubResource( 2 )
+libraries = {
+"": SubResource("AnimationLibrary_o335y")
+}
 
-[node name="planet3" parent="planet_holder" groups=["planets"] instance=ExtResource( 11 )]
-position = Vector2( -189.476, 189.476 )
+[node name="planet3" parent="planet_holder" instance=ExtResource("11")]
+position = Vector2(-189.476, 189.476)
 planet_rad_factor = 0.2
 mass = 0.297
 hydro = 0.0
-atm = 0.612008
-greenhouse = 0.00654704
+ice = 0.393306
+atm = 1.15521
+greenhouse = 0.0123737
 tidally_locked = true
 
 [node name="Sprite2D" parent="planet_holder/planet3" index="0"]
-material = SubResource( 7 )
-scale = Vector2( 0.25, 0.25 )
+material = SubResource("7")
+scale = Vector2(0.25, 0.25)
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
-rotation = 0.785398
-scale = Vector2( 0.108, 0.108 )
+rotation = 0.785399
+scale = Vector2(0.108, 0.108)
 
 [node name="Label" parent="planet_holder/planet3" index="3"]
 offset_left = 30.0
@@ -211,26 +268,29 @@ offset_bottom = 44.0
 text = "TRAPPIST-1d"
 
 [node name="AnimationPlayer" parent="planet_holder/planet3" index="7"]
-anims/scanning = SubResource( 3 )
+libraries = {
+"": SubResource("AnimationLibrary_hqv0r")
+}
 
-[node name="planet4" parent="planet_holder" groups=["planets"] instance=ExtResource( 11 )]
-position = Vector2( 0, 349.2 )
+[node name="planet4" parent="planet_holder" instance=ExtResource("11")]
+position = Vector2(0, 349.2)
 planet_rad_factor = 0.2
-mass = 0.297
+mass = 0.772
 hydro = 0.0
-atm = 0.612008
-greenhouse = 0.00654704
+atm = 0.818669
+greenhouse = 0.000121968
+population = 0.1
 tidally_locked = true
 
 [node name="Sprite2D" parent="planet_holder/planet4" index="0"]
-material = SubResource( 8 )
-scale = Vector2( 0.35, 0.35 )
+material = SubResource("8")
+scale = Vector2(0.35, 0.35)
 
 [node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
-rotation = 3.4641e-07
-scale = Vector2( 0.151, 0.151 )
+scale = Vector2(0.151, 0.151)
 
 [node name="Label" parent="planet_holder/planet4" index="3"]
+self_modulate = Color(0, 1, 1, 1)
 offset_left = 40.0
 offset_top = 40.0
 offset_right = 120.0
@@ -238,10 +298,12 @@ offset_bottom = 54.0
 text = "TRAPPIST-1e"
 
 [node name="AnimationPlayer" parent="planet_holder/planet4" index="7"]
-anims/scanning = SubResource( 9 )
+libraries = {
+"": SubResource("AnimationLibrary_stjeo")
+}
 
-[node name="colony2" parent="planet_holder/planet4" instance=ExtResource( 1 )]
-position = Vector2( -3.05176e-05, 0 )
+[node name="colony2" parent="planet_holder/planet4" instance=ExtResource("1")]
+position = Vector2(-3.05176e-05, 0)
 
 [editable path="planet_holder/planet"]
 [editable path="planet_holder/planet2"]
