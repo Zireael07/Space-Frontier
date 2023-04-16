@@ -83,8 +83,15 @@ EQ Pegasi, star, 23h31m, 19d56m, 20.48, -, -, -, 0.43S, ?, -, 0.019, red, //aka 
 EQ Pegasi b, planet,  -, -, -, -, -, -, 2.26J, ?, 0.642, -
 Wolf 1069, star, 20h26m, 58d34m, 31.2, -, -, -, 0.16S, 0.18S, -, 0.00016, red, //aka Gliese 1253
 Wolf 1069b, planet, -, -, -, -, -, -, 1.26E, 1.08E, 0.07, -
+Zeta Tucanae, star, 0h20m, -64deg52m, 28.0, -, -, -, 0.99S, 1.08S, -, 1.26, yellow
+Gliese 877, star, 22h55m, -75deg27m, 28.0, -, -, -, 0.4S, 0.44S, -, 0.023, red, //aka L 49-19
+Gliese 4154, star, 20h46m, -81deg43m, 34.7, -, -, -, 0.38S, 0.4S, -, 0.0071, red,  
+Zeta Trianguli Australis A, star, 16h28m, -70deg5m, 39.3, -, -, -, 1.12S, 1.3S, -, 1.42, yellow, //aka GI 624
+Zeta Trianguli Australis B, star, -, -, -, -, -, -, 0.4S, 0.4S, ?, 0.004, red, //luminosity is just a guess
 LHS 475, star, 19h20m, -82deg33m, 40.7, -, -, -, 0.274, 0.286, -, 0.0087, red, //aka Gliese 4102
 LHS 475 b, planet, -, -, -, -, -, -, 0.8E, 1.0E, 0.02, - 
+Gliese 865 A, star, 22h38m, -65deg22m, 42.9, -, -, -, 0.4S, 0.4S, -, ?, red, //aka HDS 3215
+Gliese 865 B, star, -, -, -, -, -, -, 0.3S, 0.2S, ?, ?, red
 K2-415, star, 09h08m, 11d51m, 71.1, -, -, -, 0.16S, 0.19S, -, 0.0035, red,
 K2-415 b, planet, -, -, -, -, -, -, 3.0E, 1.0E, 0.03, -
 LP 890-9, star, 04h16m, -28d18m, 105.4, -, -, -, 0.118S, 0.153S, -, 0.001, red, //aka SPECULOOS-2,
