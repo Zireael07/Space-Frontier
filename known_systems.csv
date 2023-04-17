@@ -83,6 +83,9 @@ EQ Pegasi, star, 23h31m, 19d56m, 20.48, -, -, -, 0.43S, ?, -, 0.019, red, //aka 
 EQ Pegasi b, planet,  -, -, -, -, -, -, 2.26J, ?, 0.642, -
 Wolf 1069, star, 20h26m, 58d34m, 31.2, -, -, -, 0.16S, 0.18S, -, 0.00016, red, //aka Gliese 1253
 Wolf 1069b, planet, -, -, -, -, -, -, 1.26E, 1.08E, 0.07, -
+Gliese 1, star, 0h5m, -37deg22m, 14.1, -, -, -, 0.46S, 0.47S, -, 0.0296, red, //aka HD 225213
+Gliese 54 A, star, 1h10m, -67deg26m, 26.8, -, -, -, 0.43S, 0.51S, -, 0.004, red, //luminosity is just a guess
+Gliese 54 B, star,  -, -, -, -, -, -, 0.3S, 0.35S, -, ?, red
 Zeta Tucanae, star, 0h20m, -64deg52m, 28.0, -, -, -, 0.99S, 1.08S, -, 1.26, yellow
 Gliese 877, star, 22h55m, -75deg27m, 28.0, -, -, -, 0.4S, 0.44S, -, 0.023, red, //aka L 49-19
 Gliese 4154, star, 20h46m, -81deg43m, 34.7, -, -, -, 0.38S, 0.4S, -, 0.0071, red,  
