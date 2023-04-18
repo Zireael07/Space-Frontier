@@ -166,8 +166,8 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	# now check if icon(s) are out of view
 	var ab_shadow = get_node("ShadowTexture").get_global_position()
 	var ab_planet = get_node("StarTexture").get_global_position()
-	if named.find("TST") != -1:
-		print(get_name(), " shadow: ", ab_shadow, " star: ", ab_planet)
+	#if named.find("TST") != -1:
+	#	print(get_name(), " shadow: ", ab_shadow, " star: ", ab_planet)
 		
 	# name label
 	

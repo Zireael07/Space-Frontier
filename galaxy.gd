@@ -160,16 +160,30 @@ func create_procedural_sector(sector):
 	print("Generating sector for sector ", sector)
 	# poisson2D
 	get_node("Grid/VisControl/Node2D").width = 512
-	get_node("Grid/VisControl/Node2D").height = 128 #temporarily reduced, should be 512 to cover all sector
+	get_node("Grid/VisControl/Node2D").height = 512 #temporarily reduced, should be 512 to cover all sector
 	get_node("Grid/VisControl/Node2D").r = 50
+	get_node("Grid/VisControl/Node2D").k = 100 # the default of 20 was enough for 128 height
 	get_node("Grid/VisControl/Node2D").set_seed(1000001)
-	var samples = get_node("Grid/VisControl/Node2D").samples
+	var samples = get_node("Grid/VisControl/Node2D").samples.duplicate() # because we'll be generating more samples
 	print("Generated points: ", samples)
 	# sector begin, sector center is begin + 512 (half sector size)
 	var sector_zero_start = Vector2(-512,-512)
 	var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
 	var sector_center = sector_begin+Vector2(512, 512)
 	print("Sector start: ", sector_begin, " sector center: ", sector_center)
+	# now a second set of samples
+	get_node("Grid/VisControl/Node2D").set_seed(1000002)
+	var sampl2 = get_node("Grid/VisControl/Node2D").samples.duplicate()
+	# poisson2d generates points in +X +Y, so for remaining quadrants we need to remap
+	sampl2 = sampl2.map(func(s): return [s[0], -s[1]] )
+	print("Generated points: ", sampl2)
+	get_node("Grid/VisControl/Node2D").set_seed(1000003)
+	var sampl3 = get_node("Grid/VisControl/Node2D").samples.duplicate()
+	sampl3 = sampl3.map(func(s): return [-s[0], -s[1]] )
+	get_node("Grid/VisControl/Node2D").set_seed(1000004)
+	var sampl4 = get_node("Grid/VisControl/Node2D").samples.duplicate()
+	sampl4 = sampl4.map(func(s): return [-s[0], s[1]] )
+	samples = samples + sampl2 + sampl3 + sampl4
 	return [sector_center, samples]
 	
 	
