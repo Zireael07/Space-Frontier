@@ -162,7 +162,8 @@ func create_procedural_sector(sector):
 	get_node("Grid/VisControl/Node2D").width = 512
 	get_node("Grid/VisControl/Node2D").height = 512 #temporarily reduced, should be 512 to cover all sector
 	get_node("Grid/VisControl/Node2D").r = 50
-	get_node("Grid/VisControl/Node2D").k = 100 # the default of 20 was enough for 128 height
+	get_node("Grid/VisControl/Node2D").total = 100 # the default of 20 was enough for 128 height
+	get_node("Grid/VisControl/Node2D").k = 100
 	get_node("Grid/VisControl/Node2D").set_seed(1000001)
 	var samples = get_node("Grid/VisControl/Node2D").samples.duplicate() # because we'll be generating more samples
 	print("Generated points: ", samples)
