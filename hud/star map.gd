@@ -493,6 +493,15 @@ func _on_ButtonLog_pressed():
 		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".show()
 	else:
 		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
+
+func is_sector_generated():
+	var ret = false
+	for c in get_node("Control/Layer").get_children():
+		if c.get_name().find("TST") != -1:
+			ret = true
+			break
+	print("Is sector generated: ", ret)
+	return ret
 	
 # NOTE: offset is in px
 func move_map_to_offset(offset):
@@ -501,7 +510,7 @@ func move_map_to_offset(offset):
 	
 	# trigger procedural generation
 	# only do it once when crossing the threshold
-	if abs(offset.x) > 2200 and abs(offset.x) <= 2250: #or abs(offset.y)
+	if (abs(offset.x) > 2200 and abs(offset.x) <= 2250) and not is_sector_generated(): #or abs(offset.y)
 		var new_sector_data = create_procedural_sector(pos_to_sector(Vector3(-2600*sign(offset.x)/50, -offset.y/50, 0)))
 		# draw map icons @ sector_begin+sample position
 		for s in new_sector_data[1]:
