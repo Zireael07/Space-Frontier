@@ -69,8 +69,11 @@ func parse_data():
 			# line[7] is for comments (col.COMMENTS)
 			
 			# ra-dec conversion
-			if line[col.WINCHELLX] == " -": # and line.size() > 8 for old known_systems_stars.csv
-				#print("RA/DEC candidate...")
+			var stri = line[col.WINCHELLX].trim_suffix("ly").trim_suffix("pc").strip_edges() # for some reason valid_float borks up because of spaces
+			#print("str: ", stri, " is float: ", stri.is_valid_float())
+			#if line[col.WINCHELLX] == " -":
+			if line[col.WINCHELLX].contains(" -") and !stri.is_valid_float(): # and line.size() > 8 for old known_systems_stars.csv
+				#print(_name, " is a RA/DEC candidate...")
 				var ra = line[col.RA]
 				var de = line[col.DEC] 
 				if ra != "" and de != "" and line[col.DIST_SOL] != "":
@@ -108,6 +111,8 @@ func parse_data():
 					if "pc" in line[col.DIST_SOL]:
 						dist = strip_units(line[col.DIST_SOL])
 					var data = galactic_from_ra_dec(ra_deg, dec, dist)
+					if abs(data[0]) < 0.01 and abs(data[1]) < 0.01 and abs(data[2]) < 0.01:
+						print("Error! Calculated 0,0 for ", _name, ": RA: ", ra_deg, " D: ", dec, " dist: ", dist)
 					# assign calculated values - no need to strip units as it's always
 					ic.x = data[0]
 					ic.y = data[1]
