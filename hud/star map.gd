@@ -505,7 +505,7 @@ func is_sector_generated():
 		if c.get_name().find("TST") != -1:
 			ret = true
 			break
-	print("Is sector generated: ", ret)
+	#print("Is sector generated: ", ret)
 	return ret
 	
 # NOTE: offset is in px
@@ -513,11 +513,35 @@ func move_map_to_offset(offset):
 	$Control.set_position(center+offset)
 	$"Grid/VisControl".queue_redraw() # redraw map lines if any
 	
+	var sector = pos_to_sector(Vector3(-offset.x/50, -offset.y/50, 0))
 	# trigger procedural generation
 	# only do it once when crossing the threshold
-	if (abs(offset.x) > 2200 and abs(offset.x) <= 2250) and not is_sector_generated(): #or abs(offset.y)
-		var new_sector_data = create_procedural_sector(pos_to_sector(Vector3(-2600*sign(offset.x)/50, -offset.y/50, 0)))
-		# draw map icons @ sector_begin+sample position
+	# threshold is sector edge-300 to account for view
+	if (abs(offset.x) > 2200 or abs(offset.y) > 2200) and not is_sector_generated():
+		var new_sector_pos = Vector2() # dummy
+		# if offset is positive, we look at sector begin
+		if sign(offset.x) > 0 or sign(offset.y) > 0:
+			# generate sector for position: sector edge-100 (to ensure it's the next sector over)
+			var sector_zero_start = Vector2(-512,-512) #internal data, floats to represent ints (ax off the last digit)
+			var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+			new_sector_pos = (sector_begin/10)*LY_TO_PX-Vector2(100,100)
+			print("Offset: ", offset, " new sector pos: ", new_sector_pos)
+		else:
+			var sector_zero_start = Vector2(-512,-512) #internal data, floats to represent ints (ax off the last digit)
+			var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+			var sector_end = sector_begin+Vector2(1024,1024) # add full sector size to begin
+			new_sector_pos = (sector_end/10)*LY_TO_PX+Vector2(100,100)
+			print("Offset: ", offset, " new sector pos: ", new_sector_pos)
+		
+		var sample_x = new_sector_pos.x if abs(new_sector_pos.x) - abs(offset.x) < 1000 else 0
+		var sample_y = new_sector_pos.y if abs(new_sector_pos.y) - abs(offset.y) < 1000 else 0
+		var sample_pos = Vector2(sample_x/50, sample_y/50)
+
+		#var sample_pos = Vector2(-2600*sign(offset.x)/50, -offset.y/50)
+		print("Sample pos: ", sample_pos)
+		var new_sector_data = create_procedural_sector(pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0)))
+		
+		# draw map icons @ sector_center+sample position
 		for s in new_sector_data[1]:
 			#print("Generated pos: ", s)
 			var ic = icon.instantiate()
@@ -538,9 +562,7 @@ func move_map_to_offset(offset):
 			get_node("Control/Layer").add_child(ic)
 		print("Done generating...")
 	
-	var sector = str(pos_to_sector(Vector3(-offset.x/50, -offset.y/50, 0)))
-	
-	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset) + " Sector: " + sector)
+	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset) + " Sector: " + str(sector))
 	if offset != Vector2(0,0):
 		$Grid.origin = false
 	else:
@@ -578,14 +600,26 @@ func _on_ButtonL_pressed():
 
 func _on_ButtonR_pressed():
 	offset += Vector2(-LY_TO_PX,0)
+	# jump a sector away if pressing shift
+	if Input.is_physical_key_pressed(KEY_SHIFT):
+		# with a margin to give procgen time to run
+		offset += Vector2(-42*LY_TO_PX,0)
 	move_map_to_offset(offset)
 
 func _on_ButtonUp_pressed():
 	offset += Vector2(0, LY_TO_PX)
+	# jump a sector away if pressing shift
+	if Input.is_physical_key_pressed(KEY_SHIFT):
+		# with a margin to give procgen time to run
+		offset += Vector2(0, 42*LY_TO_PX)
 	move_map_to_offset(offset)
 
 func _on_ButtonDown_pressed():
 	offset += Vector2(0, -LY_TO_PX)
+	# jump a sector away if pressing shift
+	if Input.is_physical_key_pressed(KEY_SHIFT):
+		# with a margin to give procgen time to run
+		offset += Vector2(0, -42*LY_TO_PX)
 	move_map_to_offset(offset)
 
 
