@@ -45,9 +45,17 @@ func _draw():
 			# this draws next to stars themselves
 			#draw_line(p[0].get_node("StarTexture").position+p[0].position+cntr.position, p[1].get_node("StarTexture").position+p[1].position+cntr.position, Color(1, 0.8, 0), 3.0)
 	
-	# draw sectors
-	# 50 px to ly, sector is -50,-50 to 50,50ly means it's -2500,-2500, 5000,5000 in absolute coords
-	draw_rect(Rect2(cntr.position+Vector2(-2500,-2500), Vector2(5000,5000)), Color(0,1,0), false, 3.0)
+	# draw sector borders
+	var offs = get_parent().get_parent().offset
+	var sector = get_parent().get_parent().pos_to_sector(Vector3(-offs.x/50, -offs.y/50, 0))
+	var sector_zero_start = Vector2(-512,-512) #internal data, floats to represent ints (ax off the last digit)
+	var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+	var visual_begin = (sector_begin/10)*get_parent().get_parent().LY_TO_PX
+	#print("Sector ", sector, " begin: ", visual_begin)
+	# 50 px to ly, sector 0 is -50,-50 to 50,50ly means it's -2500,-2500, 5000,5000 in absolute coords
+	#visual_begin = Vector2(-2500,-2500)
+	# this draws in ABSOLUTE coords!
+	draw_rect(Rect2(cntr.position+visual_begin, Vector2(5000,5000)), Color(0,1,0), false, 3.0)
 	# draw sector coords
-	draw_string(font, cntr.position+Vector2(-2490, -2480), "0,0", HORIZONTAL_ALIGNMENT_LEFT, -1, 16,
+	draw_string(font, cntr.position+visual_begin+Vector2(10, 20), str(sector), HORIZONTAL_ALIGNMENT_LEFT, -1, 16,
  Color(0,1,0))
