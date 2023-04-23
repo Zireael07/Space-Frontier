@@ -464,6 +464,9 @@ func show_starmap():
 	var marker = get_tree().get_nodes_in_group("starmap_marker")[0]
 	$"Control4/star map".update_map(marker)
 	marker.set_position(Vector2(0,0))
+	
+	$"Control4/star map/PopupPanel".hide()
+	$"Control4/star map/Control2/LineEdit".clear()
 
 func hide_starmap():
 	$"Control4/star map".hide() 
