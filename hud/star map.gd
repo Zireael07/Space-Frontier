@@ -541,6 +541,17 @@ func move_map_to_offset(offset):
 		print("Sample pos: ", sample_pos)
 		var new_sector_data = create_procedural_sector(pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0)))
 		
+		# debug
+#		var cc = icon.instantiate()
+#		cc.star_type = "white"
+#		cc.x = new_sector_data[0][0]/10 # this was originally int that encode floats (see galaxy.gd)
+#		# in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
+#		cc.y = -new_sector_data[0][1]/10
+#		cc.named = "CNTR"+str(new_sector_data[0][0])+" -- "+str(new_sector_data[0][1])
+#		cc.pos = Vector3(cc.x, cc.y, 0)
+#		print("Center pos: ", cc.pos)
+#		get_node("Control/Layer").add_child(cc)
+		
 		# draw map icons @ sector_center+sample position
 		for s in new_sector_data[1]:
 			#print("Generated pos: ", s)
@@ -551,7 +562,8 @@ func move_map_to_offset(offset):
 			var pos = Vector2((new_sector_data[0][0] + s[0])/10, (new_sector_data[0][1]+s[1])/10)
 			# this is in light years
 			ic.x = pos[0]
-			ic.y = pos[1]
+			# in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
+			ic.y = -pos[1]
 			# clamp to two decimal points
 			# use two to differentiate from a separator such as in LP (Luyten-Palomar) catalog
 			# in line with IAU guidelines https://cds.unistra.fr/Dic/iau-spec.html
