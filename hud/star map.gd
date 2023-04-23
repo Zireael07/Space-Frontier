@@ -507,13 +507,8 @@ func is_sector_generated():
 			break
 	#print("Is sector generated: ", ret)
 	return ret
-	
-# NOTE: offset is in px
-func move_map_to_offset(offset):
-	$Control.set_position(center+offset)
-	$"Grid/VisControl".queue_redraw() # redraw map lines if any
-	
-	var sector = pos_to_sector(Vector3(-offset.x/50, -offset.y/50, 0))
+
+func _on_move_to_offset(offset, sector):
 	# trigger procedural generation
 	# only do it once when crossing the threshold
 	# threshold is sector edge-300 to account for view
@@ -573,6 +568,16 @@ func move_map_to_offset(offset):
 			# assume middle Z layer for now
 			get_node("Control/Layer").add_child(ic)
 		print("Done generating...")
+	
+# NOTE: offset is in px
+func move_map_to_offset(offset):
+	$Control.set_position(center+offset)
+	$"Grid/VisControl".queue_redraw() # redraw map lines if any
+	
+	var sector = pos_to_sector(Vector3(-offset.x/50, -offset.y/50, 0))
+	
+	# do additional stuff
+	_on_move_to_offset(offset, sector)
 	
 	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset) + " Sector: " + str(sector))
 	if offset != Vector2(0,0):
