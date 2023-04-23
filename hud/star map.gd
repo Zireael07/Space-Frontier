@@ -390,6 +390,10 @@ func update_map(marker):
 		var icon = find_icon_for_pos(coords)
 		if icon != null:
 			print("Icon: ", icon.get_name(), " @ ", coords)
+		else:
+			print("Error! No icon @ " , coords, "!")
+			return
+			
 		$"Control".w_hole_tg = icon
 		$"Control".tg = icon
 		icon.get_node("Label").set_self_modulate(Color(1,0,1)) #hot pink purple

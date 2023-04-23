@@ -85,7 +85,8 @@ func _ready():
 
 	# no need to draw planet and line if very small Z
 	if abs(depth) < 0.2:
-		print(get_name(), " has very small Z")
+		if abs(depth) != 0.0:
+			print(get_name(), " has very small Z")
 		get_node("Label2").set_text("Z: " + "%.2f" % depth + " ly")
 		get_node("StarTexture").show()
 		get_node("StarTexture").position = Vector2(0,0)
