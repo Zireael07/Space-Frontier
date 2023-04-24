@@ -512,7 +512,34 @@ func is_sector_generated():
 	#print("Is sector generated: ", ret)
 	return ret
 
-func _on_move_to_offset(offset, sector):
+func draw_generated_sector(new_sector_data):
+	# paranoia
+	if new_sector_data == null:
+		return
+	
+	# draw map icons @ sector_center+sample position
+	for s in new_sector_data[1]:
+		#print("Generated pos: ", s)
+		var ic = icon.instantiate()
+		ic.star_type = "red"
+		
+		# note: this data is all specified in ints that actually encode floats (see galaxy.gd)
+		var pos = Vector2((new_sector_data[0][0] + s[0])/10, (new_sector_data[0][1]+s[1])/10)
+		# this is in light years
+		ic.x = pos[0]
+		# in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
+		ic.y = -pos[1]
+		# clamp to two decimal points
+		# use two to differentiate from a separator such as in LP (Luyten-Palomar) catalog
+		# in line with IAU guidelines https://cds.unistra.fr/Dic/iau-spec.html
+		ic.named = "TST"+"%.2f" % pos[0]+"--"+"%.2f" % pos[1]
+		#print("pos", pos)
+		
+		# assume middle Z layer for now
+		get_node("Control/Layer").add_child(ic)
+	print("Done generating...")
+
+func _on_move_to_offset(offset, sector, jump=false):
 	# trigger procedural generation
 	# only do it once when crossing the threshold
 	var sector_zero_start = Vector2(-512,-512) #internal data, floats to represent ints (ax off the last digit)
@@ -521,6 +548,13 @@ func _on_move_to_offset(offset, sector):
 	var sector_center = sector_begin+Vector2(512, 512)
 	sector_center = (sector_center/10)*LY_TO_PX
 	print("Sector center: ", sector_center, " threshold x: ", sector_center.x+2200, " y:", sector_center.y+2200)
+	
+	if jump and not is_sector_generated():
+		var sample_pos = Vector2(-offset.x/50, -offset.y/50)
+		print("Jump sample pos: ", sample_pos)
+		
+		var new_sector_data = create_procedural_sector(pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0)))
+		draw_generated_sector(new_sector_data)
 	
 	# threshold is sector edge-300px (or center+2200) to account for view
 	if (abs(offset.x) > sector_center.x+2200 or abs(offset.y) > sector_center.y+2200) \
@@ -555,41 +589,18 @@ func _on_move_to_offset(offset, sector):
 #		print("Center pos: ", cc.pos)
 #		get_node("Control/Layer").add_child(cc)
 		
-		# paranoia
-		if new_sector_data == null:
-			return
-		
-		# draw map icons @ sector_center+sample position
-		for s in new_sector_data[1]:
-			#print("Generated pos: ", s)
-			var ic = icon.instantiate()
-			ic.star_type = "red"
-			
-			# note: this data is all specified in ints that actually encode floats (see galaxy.gd)
-			var pos = Vector2((new_sector_data[0][0] + s[0])/10, (new_sector_data[0][1]+s[1])/10)
-			# this is in light years
-			ic.x = pos[0]
-			# in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
-			ic.y = -pos[1]
-			# clamp to two decimal points
-			# use two to differentiate from a separator such as in LP (Luyten-Palomar) catalog
-			# in line with IAU guidelines https://cds.unistra.fr/Dic/iau-spec.html
-			ic.named = "TST"+"%.2f" % pos[0]+"--"+"%.2f" % pos[1]
-			#print("pos", pos)
-			
-			# assume middle Z layer for now
-			get_node("Control/Layer").add_child(ic)
-		print("Done generating...")
+		draw_generated_sector(new_sector_data)
+
 	
 # NOTE: offset is in px
-func move_map_to_offset(offset):
+func move_map_to_offset(offset, jump=false):
 	$Control.set_position(center+offset)
 	$"Grid/VisControl".queue_redraw() # redraw map lines if any
 	
 	var sector = pos_to_sector(Vector3(-offset.x/50, -offset.y/50, 0))
 	
 	# do additional stuff
-	_on_move_to_offset(offset, sector)
+	_on_move_to_offset(offset, sector, jump)
 	
 	$Legend/Label.set_text("1 ly = 50 px" + "\n" + "Map pos: " + str(-offset) + " Sector: " + str(sector))
 	if offset != Vector2(0,0):
@@ -668,7 +679,7 @@ func _on_LineEdit_text_entered(new_text):
 	# i.e. layers are implemented
 	if found:
 		offset = -(found.position) #+found.get_node("StarTexture").position)
-		move_map_to_offset(offset)
+		move_map_to_offset(offset, true)
 
 		# force reveal
 		found.get_node("StarTexture").show()
