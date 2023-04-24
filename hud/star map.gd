@@ -515,19 +515,23 @@ func is_sector_generated():
 func _on_move_to_offset(offset, sector):
 	# trigger procedural generation
 	# only do it once when crossing the threshold
-	# threshold is sector edge-300 to account for view
-	if (abs(offset.x) > 2200 or abs(offset.y) > 2200) and not is_sector_generated():
+	var sector_zero_start = Vector2(-512,-512) #internal data, floats to represent ints (ax off the last digit)
+	var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+	# center of sector is sector_begin + half sector size (half of 1024)
+	var sector_center = sector_begin+Vector2(512, 512)
+	sector_center = (sector_center/10)*LY_TO_PX
+	print("Sector center: ", sector_center, " threshold x: ", sector_center.x+2200, " y:", sector_center.y+2200)
+	
+	# threshold is sector edge-300px (or center+2200) to account for view
+	if (abs(offset.x) > sector_center.x+2200 or abs(offset.y) > sector_center.y+2200) \
+	and not is_sector_generated():
 		var new_sector_pos = Vector2() # dummy
 		# if offset is positive, we look at sector begin
 		if sign(offset.x) > 0 or sign(offset.y) > 0:
 			# generate sector for position: sector edge-100 (to ensure it's the next sector over)
-			var sector_zero_start = Vector2(-512,-512) #internal data, floats to represent ints (ax off the last digit)
-			var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
 			new_sector_pos = (sector_begin/10)*LY_TO_PX-Vector2(100,100)
 			print("Offset: ", offset, " new sector pos: ", new_sector_pos)
 		else:
-			var sector_zero_start = Vector2(-512,-512) #internal data, floats to represent ints (ax off the last digit)
-			var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
 			var sector_end = sector_begin+Vector2(1024,1024) # add full sector size to begin
 			new_sector_pos = (sector_end/10)*LY_TO_PX+Vector2(100,100)
 			print("Offset: ", offset, " new sector pos: ", new_sector_pos)
@@ -550,6 +554,10 @@ func _on_move_to_offset(offset, sector):
 #		cc.pos = Vector3(cc.x, cc.y, 0)
 #		print("Center pos: ", cc.pos)
 #		get_node("Control/Layer").add_child(cc)
+		
+		# paranoia
+		if new_sector_data == null:
+			return
 		
 		# draw map icons @ sector_center+sample position
 		for s in new_sector_data[1]:
