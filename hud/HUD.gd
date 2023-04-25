@@ -291,6 +291,14 @@ func _process(_delta):
 	handle_direction_labels()
 
 func _input(_event):
+	# hack because HUD is somehow stealing input from player
+	if Input.is_action_pressed("shoot") or Input.is_action_pressed("space"):
+		print("Space pressed, hud")
+		if player.gun_timer.get_time_left() == 0 and not player.landed:
+			player.shoot()
+		else:
+			player.emit_signal("officer_message", "Guns not ready yet!")
+	
 	# map panel
 	if Input.is_action_pressed("open_map"):
 		# pause, as a kindness to the player

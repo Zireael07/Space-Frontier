@@ -140,6 +140,8 @@ func _process(delta):
 	
 	$engine_flare.process_material.color = get_engine_exhaust_color()
 
+	#if Input.is_action_pressed("space"):
+	#	print("Space pressed")
 
 	# shoot
 	if Input.is_action_pressed("shoot"):
