@@ -503,16 +503,20 @@ func _on_ButtonLog_pressed():
 	else:
 		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
 
-func is_sector_generated():
+func is_sector_generated(sector):
 	var ret = false
-	for c in get_node("Control/Layer").get_children():
-		if c.get_name().find("TST") != -1:
-			ret = true
-			break
-	#print("Is sector generated: ", ret)
+	var icons = get_tree().get_nodes_in_group(str(sector))
+	if icons.size() > 0:
+		ret = true
+	
+#	for c in get_node("Control/Layer").get_children():
+#		if c.get_name().find("TST") != -1:
+#			ret = true
+#			break
+	print("Is sector ", sector, " generated: ", ret)
 	return ret
 
-func draw_generated_sector(new_sector_data):
+func draw_generated_sector(new_sector_data, new_sector):
 	# paranoia
 	if new_sector_data == null:
 		return
@@ -533,6 +537,7 @@ func draw_generated_sector(new_sector_data):
 		# use two to differentiate from a separator such as in LP (Luyten-Palomar) catalog
 		# in line with IAU guidelines https://cds.unistra.fr/Dic/iau-spec.html
 		ic.named = "TST"+"%.2f" % pos[0]+"--"+"%.2f" % pos[1]
+		ic.add_to_group(str(new_sector))
 		#print("pos", pos)
 		
 		# assume middle Z layer for now
@@ -549,16 +554,15 @@ func _on_move_to_offset(offset, sector, jump=false):
 	sector_center = (sector_center/10)*LY_TO_PX
 	print("Sector center: ", sector_center, " threshold x: ", sector_center.x+2200, " y:", sector_center.y+2200)
 	
-	if jump and not is_sector_generated():
+	if jump and not is_sector_generated(sector):
 		var sample_pos = Vector2(-offset.x/50, -offset.y/50)
 		print("Jump sample pos: ", sample_pos)
 		
 		var new_sector_data = create_procedural_sector(pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0)))
-		draw_generated_sector(new_sector_data)
+		draw_generated_sector(new_sector_data, sector)
 	
 	# threshold is sector edge-300px (or center+2200) to account for view
-	if (abs(offset.x) > sector_center.x+2200 or abs(offset.y) > sector_center.y+2200) \
-	and not is_sector_generated():
+	if (abs(offset.x) > sector_center.x+2200 or abs(offset.y) > sector_center.y+2200):
 		var new_sector_pos = Vector2() # dummy
 		# if offset is positive, we look at sector begin
 		if sign(offset.x) > 0 or sign(offset.y) > 0:
@@ -576,7 +580,9 @@ func _on_move_to_offset(offset, sector, jump=false):
 
 		#var sample_pos = Vector2(-2600*sign(offset.x)/50, -offset.y/50)
 		print("Sample pos: ", sample_pos)
-		var new_sector_data = create_procedural_sector(pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0)))
+		var new_sector = pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0))
+		if not is_sector_generated(new_sector):
+			var new_sector_data = create_procedural_sector(new_sector)
 		
 		# debug
 #		var cc = icon.instantiate()
@@ -589,7 +595,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 #		print("Center pos: ", cc.pos)
 #		get_node("Control/Layer").add_child(cc)
 		
-		draw_generated_sector(new_sector_data)
+			draw_generated_sector(new_sector_data, new_sector)
 
 	
 # NOTE: offset is in px
