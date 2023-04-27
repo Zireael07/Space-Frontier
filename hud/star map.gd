@@ -556,7 +556,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 	
 	if jump and not is_sector_generated(sector):
 		var sample_pos = Vector2(-offset.x/50, -offset.y/50)
-		print("Jump sample pos: ", sample_pos)
+		#print("Jump sample pos: ", sample_pos)
 		
 		var new_sector_data = create_procedural_sector(pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0)))
 		draw_generated_sector(new_sector_data, sector)
@@ -564,24 +564,33 @@ func _on_move_to_offset(offset, sector, jump=false):
 	# threshold is sector edge-300px (or center+2200) to account for view
 	if (abs(offset.x) > sector_center.x+2200 or abs(offset.y) > sector_center.y+2200):
 		var new_sector_pos = Vector2() # dummy
+		print("Offset, ", offset, " sector center: ", sector_center, " diff: ", -offset-sector_center)
+		# look at sector begin if close to that side
+		if sector_center.x+2200-offset.x < 300 or sector_center.y+2200-offset.y < 300:
 		# if offset is positive, we look at sector begin
-		if sign(offset.x) > 0 or sign(offset.y) > 0:
+		#if sign(offset.x) > 0 or sign(offset.y) > 0:
 			# generate sector for position: sector edge-100 (to ensure it's the next sector over)
 			new_sector_pos = (sector_begin/10)*LY_TO_PX-Vector2(100,100)
-			print("Offset: ", offset, " new sector pos: ", new_sector_pos)
+			print("Offset: ", offset, " [begin] new sector pos: ", new_sector_pos)
 		else:
 			var sector_end = sector_begin+Vector2(1024,1024) # add full sector size to begin
 			new_sector_pos = (sector_end/10)*LY_TO_PX+Vector2(100,100)
-			print("Offset: ", offset, " new sector pos: ", new_sector_pos)
+			print("Offset: ", offset, " [end] new sector pos: ", new_sector_pos)
 		
-		var sample_x = new_sector_pos.x if abs(new_sector_pos.x) - abs(offset.x) < 1000 else 0
-		var sample_y = new_sector_pos.y if abs(new_sector_pos.y) - abs(offset.y) < 1000 else 0
+		print("Diff: ", -offset-new_sector_pos)
+		var sample_x = new_sector_pos.x if abs(-offset-new_sector_pos).x < 500 else -offset.x #0
+		var sample_y = new_sector_pos.y if abs(-offset-new_sector_pos).y < 500 else -offset.y #0
 		var sample_pos = Vector2(sample_x/50, sample_y/50)
 
+		# paranoia
+		if sample_x == 0 and sample_y == 0:
+			return
+
 		#var sample_pos = Vector2(-2600*sign(offset.x)/50, -offset.y/50)
-		print("Sample pos: ", sample_pos)
+		#print("Sample pos: ", sample_pos)
 		var new_sector = pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0))
-		if not is_sector_generated(new_sector):
+		print("New sector: ", new_sector, " sample pos ", sample_pos)
+		if new_sector != [0,0] and not is_sector_generated(new_sector):
 			var new_sector_data = create_procedural_sector(new_sector)
 		
 		# debug
