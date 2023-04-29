@@ -163,10 +163,16 @@ func create_procedural_sector(sector):
 		return
 	# poisson2D
 	get_node("Grid/VisControl/Node2D").width = 512
-	get_node("Grid/VisControl/Node2D").height = 512 #temporarily reduced, should be 512 to cover all sector
-	get_node("Grid/VisControl/Node2D").r = 50
-	get_node("Grid/VisControl/Node2D").total = 100 # the default of 20 was enough for 128 height
-	get_node("Grid/VisControl/Node2D").k = 100
+	get_node("Grid/VisControl/Node2D").height = 512 # 512 to cover all sector
+	# sector 264,-5 is the center of the galaxy
+	var to_center = Vector2(sector[0]-264, sector[1]+5).length()
+	var factor = inverse_lerp(265*2, 0, to_center)
+	print("Center distance factor: ", factor, " inv: ", 1/factor)
+	# it seems those all need to be casted to int to work properly
+	get_node("Grid/VisControl/Node2D").r = int(40*(1/factor)) # the further from core, the bigger the radius
+	get_node("Grid/VisControl/Node2D").total = int(256*factor) # the default of 20 was enough for 128 height
+	get_node("Grid/VisControl/Node2D").k = int(256*factor)
+	print("[sectorgen] r: ", get_node("Grid/VisControl/Node2D").r, " number: ", get_node("Grid/VisControl/Node2D").k)
 	get_node("Grid/VisControl/Node2D").set_seed(1000001+sector[0]+sector[1])
 	var samples = get_node("Grid/VisControl/Node2D").samples.duplicate() # because we'll be generating more samples
 	#print("Generated points: ", samples)

@@ -533,6 +533,8 @@ func draw_generated_sector(new_sector_data, new_sector):
 		ic.x = pos[0]
 		# in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
 		ic.y = -pos[1]
+		#TODO: vary the Z
+		
 		# clamp to two decimal points
 		# use two to differentiate from a separator such as in LP (Luyten-Palomar) catalog
 		# in line with IAU guidelines https://cds.unistra.fr/Dic/iau-spec.html

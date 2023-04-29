@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c00s6hy3fvbdy" path="res://assets/hud/arrow.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://c2f8rvbt3dhq4" path="res://assets/hud/yellow_circle.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://yastj0ygv2jj" path="res://assets/hud/grey_arrowUpWhite.png" id="4"]
-[ext_resource type="PackedScene" path="res://poisson2D.tscn" id="4_45ins"]
+[ext_resource type="PackedScene" uid="uid://bggreicuto81" path="res://poisson2D.tscn" id="4_45ins"]
 [ext_resource type="Script" path="res://hud/star map.gd" id="5"]
 [ext_resource type="Script" path="res://hud/Grid.gd" id="6"]
 [ext_resource type="Script" path="res://hud/starmapControl.gd" id="7"]
