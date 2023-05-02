@@ -1,4 +1,6 @@
 extends Node
+# remaining stuff is implemented in hud/star map.gd, usually due to use of child nodes/drawing
+
 
 # Declare member variables here. Examples:
 # data
@@ -195,7 +197,8 @@ func create_procedural_sector(sector):
 	sampl4 = sampl4.map(func(s): return [-s[0], s[1]] )
 	samples = samples + sampl2 + sampl3 + sampl4
 	return [sector_center, samples]
-	
+
+# TODO: generate a map graph for the above sector	
 	
 
 # ------------------------------------------------------------

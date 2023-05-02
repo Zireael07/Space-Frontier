@@ -14,6 +14,8 @@ var grid = Vector2(0, -138) # experimentally determined
 
 var systems = {}
 
+var sectors = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	parse_data()
@@ -515,6 +517,13 @@ func is_sector_generated(sector):
 #			break
 	print("Is sector ", sector, " generated: ", ret)
 	return ret
+	
+func should_sector_unload(cur_sector, sector):
+	var ret = false
+	if cur_sector[0]-sector[0] > 2 or cur_sector[1]-sector[1] > 2:
+		ret = true
+	print("Sector ", sector, " should be unloaded, ", ret)
+	return ret
 
 func draw_generated_sector(new_sector_data, new_sector):
 	# paranoia
@@ -547,7 +556,10 @@ func draw_generated_sector(new_sector_data, new_sector):
 	print("Done generating...")
 
 func _on_move_to_offset(offset, sector, jump=false):
-	# trigger procedural generation
+	for sec in sectors:
+		should_sector_unload(sector, sec)
+	
+	# trigger procedural generation (is here because of drawing functions)
 	# only do it once when crossing the threshold
 	var sector_zero_start = Vector2(-512,-512) #internal data, floats to represent ints (ax off the last digit)
 	var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
@@ -560,7 +572,9 @@ func _on_move_to_offset(offset, sector, jump=false):
 		var sample_pos = Vector2(-offset.x/50, -offset.y/50)
 		#print("Jump sample pos: ", sample_pos)
 		
-		var new_sector_data = create_procedural_sector(pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0)))
+		var new_sector = pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0))
+		var new_sector_data = create_procedural_sector(new_sector)
+		sectors.append(new_sector)
 		draw_generated_sector(new_sector_data, sector)
 	
 	# threshold is sector edge-300px (or center+2200) to account for view
@@ -594,6 +608,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 		print("New sector: ", new_sector, " sample pos ", sample_pos)
 		if new_sector != [0,0] and not is_sector_generated(new_sector):
 			var new_sector_data = create_procedural_sector(new_sector)
+			sectors.append(new_sector)
 		
 		# debug
 #		var cc = icon.instantiate()
