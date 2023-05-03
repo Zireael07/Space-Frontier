@@ -524,6 +524,12 @@ func should_sector_unload(cur_sector, sector):
 		ret = true
 	print("Sector ", sector, " should be unloaded, ", ret)
 	return ret
+	
+func unload_sector(sector):
+	print("Unload sector, ", sector)
+	var icons = get_tree().get_nodes_in_group(str(sector))
+	for i in icons:
+		i.queue_free()
 
 func draw_generated_sector(new_sector_data, new_sector):
 	# paranoia
@@ -557,7 +563,8 @@ func draw_generated_sector(new_sector_data, new_sector):
 
 func _on_move_to_offset(offset, sector, jump=false):
 	for sec in sectors:
-		should_sector_unload(sector, sec)
+		if should_sector_unload(sector, sec):
+			unload_sector(sec)
 	
 	# trigger procedural generation (is here because of drawing functions)
 	# only do it once when crossing the threshold
