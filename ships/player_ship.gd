@@ -35,6 +35,7 @@ var distress_caller = null
 
 var auto_orbit = false
 var planet_to_orbit = null
+var auto_cruise_tg = null
 
 var tractored = false
 var refit_target = false
@@ -304,8 +305,11 @@ func _process(delta):
 		set_position(pos)
 		#print("Setting position" + str(pos))
 	
+	if heading == null and auto_cruise_tg != null:
+		player_autocruise(auto_cruise_tg, delta)
+	
 	# warp drive!
-	if not heading and warp_target != null:
+	if heading == null and warp_target != null:
 		if warping:
 			if warp_planet:
 				# update target because the planet is orbiting, after all...
@@ -330,7 +334,7 @@ func _process(delta):
 				set_modulate(Color(1,1,1))
 			
 	# refit
-	if not heading and refit_target:
+	if heading == null and refit_target:
 		var desired = refit_target.get_global_position() - get_global_position()
 		var dist = desired.length()
 		
@@ -377,7 +381,7 @@ func _process(delta):
 	
 	# approach to orbit
 	if auto_orbit and warp_target == null:
-		if not heading: #and cruise:
+		if heading == null: #and cruise:
 			var pl = get_closest_planet()
 			
 			# bug fix
@@ -434,6 +438,23 @@ func _input(_event):
 	# skip iter if dead
 	if dead:
 		return
+	
+	# mouse to steer
+	if _event is InputEventMouseButton:
+		if _event.is_pressed() and _event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
+			print("Clicked @ ", _event.position, " ", _event.global_position)
+			# ignore clicks on sidebar
+			if _event.position.x > 940:
+				return
+				
+			# this is where the player ship is, see comment in HUD.gd line 337
+			var cntr = Vector2(1024*self.HUD.viewport_factor.x/2, 300*self.HUD.viewport_factor.y)	
+			#print("cntr: ", cntr)
+			heading = _event.position-cntr  # heading is global
+			#print("Local heading: ", heading)
+			heading = to_global(heading)
+			print("Global heading: ", heading)
+			auto_cruise_tg = heading
 	
 	# don't listen to individual keybinds if starmap view open
 	if self.HUD.get_node("Control4/star map").is_visible():
@@ -789,8 +810,21 @@ func on_launch():
 func _on_landing_timeout_timeout():
 	can_land = true
 
+func player_autocruise(target, delta):
+	var rel_pos = target * get_global_transform()
+	print("Heading rel_pos", rel_pos)
+
+	# disable cruise if too close, to avoid overshooting close targets
+	if rel_pos.length() < 150 and spd > 0.15:
+		cruise = false
+		auto_cruise_tg = null # and shut ourselves off
+		heading = null
+	else:
+		cruise = true
+
 func player_heading(target, delta):
 	var rel_pos = target * get_global_transform()
+	print("Heading rel_pos", rel_pos)
 	
 	var a = atan2(rel_pos.x, rel_pos.y)
 	
@@ -803,8 +837,9 @@ func player_heading(target, delta):
 		#on_heading()
 		#print("Achieved target heading")
 		heading = null
-		# reset cruise
-		cruise = true
+		if auto_cruise_tg == null:
+			# reset cruise
+			cruise = true
 		# disable cruise if too close, to avoid overshooting close targets
 		if rel_pos.length() < 150 and spd > 0.15:
 			cruise = false
