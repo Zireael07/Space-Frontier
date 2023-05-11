@@ -433,15 +433,14 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 		format_atm = "%.3f atm" % planet.atm
 	var format_greenhouse = "%d " % planet.greenhouse_diff() if planet.scanned else " ?? "
 	# format mass depending on what body we're looking at
-	# TODO: this would really benefit from special symbols
-	var format_mass = "%.3f M Earth" % (planet.mass)
+	var format_mass = "%.3f M⊕" % (planet.mass) # use Earth masses by default
 	if planet.is_in_group("moon") or planet.get_node("Label").get_text() == "Ceres":
-		format_mass = "%.4f M Moon" % (planet.mass/game.MOON_MASS)
+		format_mass = "%.4f M☾" % (planet.mass/game.MOON_MASS)
 	# otherwise the numbers would be vanishingly small
 	if planet.is_in_group("aster_named") and planet.get_node("Label").get_text() != "Ceres":
 		var Ceres = 0.0128*game.MOON_MASS
-		format_mass = "%.4f M Ceres  (1 = 0.0128 M Moon)" % (planet.mass/Ceres) 
-	var format_radius = "%.2f R Earth" % planet.radius
+		format_mass = "%.4f M①  (1 = 0.0128 M☾)" % (planet.mass/Ceres) 
+	var format_radius = "%.2f R⊕" % planet.radius
 
 	# linebreak because of planet graphic on the right
 	#var period_string = str(period/86400) + " days, " + "\n" + str(period/yr) + " year(s)"
