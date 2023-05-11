@@ -439,7 +439,12 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# otherwise the numbers would be vanishingly small
 	if planet.is_in_group("aster_named") and planet.get_node("Label").get_text() != "Ceres":
 		var Ceres = 0.0128*game.MOON_MASS
-		format_mass = "%.4f M①  (1 = 0.0128 M☾)" % (planet.mass/Ceres) 
+		format_mass = "%.4f M① \n (1 = 0.0128 M☾)" % (planet.mass/Ceres)
+	if planet.is_in_group("moon") and planet.get_node("Label").get_text() == "Phobos" or planet.get_node("Label").get_text() == "Deimos":
+		var Ceres = 0.0128*game.MOON_MASS
+		print("Mass: ", planet.mass, ", Ceres: ", planet.mass/Ceres)
+		format_mass = "%.6f M① \n (1 = 0.0128 M☾)" % (planet.mass/Ceres) # they are just THAT small
+	
 	var format_radius = "%.2f R⊕" % planet.radius
 
 	# linebreak because of planet graphic on the right
