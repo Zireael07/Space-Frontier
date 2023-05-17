@@ -233,6 +233,9 @@ func get_neighbors_for_icon(star_icon):
 	if not "pos" in star_icon:
 		neighbors = map_astar.get_point_connections(mapping[Vector3(0,0,0)])
 	else:
+		# paranoia
+		if not star_icon.pos in mapping:
+			return []
 		neighbors = map_astar.get_point_connections(mapping[star_icon.pos])
 	
 	for n in neighbors:
@@ -548,7 +551,10 @@ func draw_generated_sector(new_sector_data, new_sector):
 		ic.x = pos[0]
 		# in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
 		ic.y = -pos[1]
-		#TODO: vary the Z
+		# vary the Z
+		ic.depth = randf_range(-20, +20)
+		
+		ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
 		
 		# clamp to two decimal points
 		# use two to differentiate from a separator such as in LP (Luyten-Palomar) catalog
