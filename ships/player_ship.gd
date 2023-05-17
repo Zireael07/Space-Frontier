@@ -438,6 +438,10 @@ func _input(_event):
 	# skip iter if dead
 	if dead:
 		return
+		
+	# don't listen to individual keybinds if starmap view open
+	if self.HUD.get_node("Control4/star map").is_visible():
+		return
 	
 	# mouse to steer
 	if _event is InputEventMouseButton:
@@ -455,10 +459,6 @@ func _input(_event):
 			heading = to_global(heading)
 			print("Global heading: ", heading)
 			auto_cruise_tg = heading
-	
-	# don't listen to individual keybinds if starmap view open
-	if self.HUD.get_node("Control4/star map").is_visible():
-		return
 	
 	if Input.is_action_pressed("closest_target"):
 		get_closest_target()
