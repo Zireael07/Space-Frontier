@@ -434,7 +434,11 @@ func update_map(marker):
 	get_node("Control/ruler").set_ruler()
 
 	var dist = get_star_distance($"Control".src, $"Control".tg)
-	get_node("Control/ruler/Label").set_text("%.2f ly" % (dist))
+	if typeof(dist) == TYPE_FLOAT: 
+		get_node("Control/ruler/Label").set_text("%.2f ly" % (dist))
+	else:
+		get_node("../../ruler/Label").set_text("Unknown")
+			
 	# update displayed starmap info
 	display_star_map_info($"Control".tg)
 	# force redraw side panel

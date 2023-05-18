@@ -330,7 +330,10 @@ func on_click():
 		tg_pos += get_node("../..").tg.get_node("StarTexture").position
 	get_node("../../ruler").pts = [get_node("../..").src.position, tg_pos]
 	get_node("../../ruler").set_ruler()
-	get_node("../../ruler/Label").set_text("%.2f ly" % (dist))
+	if typeof(dist) == TYPE_FLOAT: 
+		get_node("../../ruler/Label").set_text("%.2f ly" % (dist))
+	else:
+		get_node("../../ruler/Label").set_text("Unknown")
 	
 	# update displayed starmap info
 	get_node("../../../").display_star_map_info(get_node("../..").tg)

@@ -579,7 +579,7 @@ func get_star_distance(a,b):
 	# if star is not in mapping (not in sector)
 	if id2 == null:
 		# return placeholder value
-		return 1000
+		return "Unknown"
 	
 	return map_astar.get_point_position(id1).distance_to(map_astar.get_point_position(id2))
 
