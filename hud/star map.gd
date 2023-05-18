@@ -438,6 +438,12 @@ func update_map(marker):
 		get_node("Control/ruler/Label").set_text("%.2f ly" % (dist))
 	else:
 		get_node("../../ruler/Label").set_text("Unknown")
+		
+	# hide if distance is very large or unknown
+	if typeof(dist) != TYPE_FLOAT or (typeof(dist) == TYPE_FLOAT and dist > 100):
+		get_node("Control/ruler").hide()
+	else:
+		get_node("Control/ruler").show()
 			
 	# update displayed starmap info
 	display_star_map_info($"Control".tg)
@@ -537,6 +543,7 @@ func unload_sector(sector):
 	var icons = get_tree().get_nodes_in_group(str(sector))
 	for i in icons:
 		i.queue_free()
+	# TODO: remove sector's connections map graph here
 
 func draw_generated_sector(new_sector_data, new_sector):
 	# paranoia

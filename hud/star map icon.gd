@@ -325,6 +325,12 @@ func on_click():
 
 	var dist = get_node("../../..").get_star_distance(get_node("../..").src, get_node("../..").tg)
 
+	# no ruler if distances involved are very large
+	if typeof(dist) != TYPE_FLOAT or (typeof(dist) == TYPE_FLOAT and dist > 100):
+		get_node("../../ruler").hide()
+	else:
+		get_node("../../ruler").show()
+
 	var tg_pos = get_node("../..").tg.position
 	if get_node("../..").tg.get_node("StarTexture").visible:
 		tg_pos += get_node("../..").tg.get_node("StarTexture").position
