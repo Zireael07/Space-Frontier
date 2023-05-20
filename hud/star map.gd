@@ -504,20 +504,6 @@ func display_star_map_info(star_icon):
 		
 
 # --------------------------------------------------
-func display_captain_log():
-	#$"PopupPanel/VBoxContainer/ButtonLog/PanelLog/RichTextLabel".set_text(str(game.captain_log))
-	
-	# same trick as in update_cargo_listing()
-	var listing = str(game.captain_log).lstrip("[").rstrip("]").replace("], ", "\n").replace("[", "")	
-	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog/RichTextLabel".set_text(listing)
-
-func _on_ButtonLog_pressed():
-	if !$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".is_visible():
-		display_captain_log()
-		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".show()
-	else:
-		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
-
 func is_sector_generated(sector):
 	var ret = false
 	var icons = get_tree().get_nodes_in_group(str(sector))
@@ -674,6 +660,20 @@ func move_map_to_offset(offset, jump=false):
 
 
 # ----------------------------------------------------	
+func display_captain_log():
+	#$"PopupPanel/VBoxContainer/ButtonLog/PanelLog/RichTextLabel".set_text(str(game.captain_log))
+	
+	# same trick as in update_cargo_listing()
+	var listing = str(game.captain_log).lstrip("[").rstrip("]").replace("], ", "\n").replace("[", "")	
+	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog/RichTextLabel".set_text(listing)
+
+func _on_ButtonLog_pressed():
+	if !$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".is_visible():
+		display_captain_log()
+		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".show()
+	else:
+		$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
+
 func _on_ButtonConfirm_pressed():
 	game.player.w_hole.jump()
 	$"PopupPanel/VBoxContainer/ButtonLog/PanelLog".hide()
