@@ -37,9 +37,14 @@ func float_to_int(vec3):
 	# integer that represents a float with one decimal place (shave off the last to know the decimals)
 	return Vector3(int(float("%.1f" % vec3.x)*10),int(float("%.1f" % vec3.y)*10), int(float("%.1f" % vec3.z)*10))
 
+func float_to_int2(vec2):
+	# integer that represents a float with one decimal place (shave off the last to know the decimals)
+	return Vector2(int(float("%.1f" % vec2.x)*10),int(float("%.1f" % vec2.y)*10))
+
+# FIXME: these two need to account for other sectors!!!
 func pos_to_positive_pos(vec3):
 	# assume the sector is 50 ly in each direction, extended to closest power of 2
-	# a digit was added to represent a decimal place (see l.29 above)
+	# a digit was added to represent a decimal place (see above)
 	var sector_start = Vector3(-512,-512,-512)
 	var pos = Vector3(vec3.x-sector_start.x, vec3.y-sector_start.y, vec3.z-sector_start.z)
 	#print("original: ", vec3, " positive: ", pos)
@@ -203,6 +208,7 @@ func create_procedural_sector(sector):
 
 # ------------------------------------------------------------
 func create_map_graph():
+	# A* stores actual float positions (in light years)
 	map_astar = AStar3D.new()
 	# hardcoded stars
 	mapping[Vector3(0,0,0)] = pack_vector(pos_to_positive_pos(float_to_int(Vector3(0,0,0))))
@@ -222,22 +228,26 @@ func create_map_graph():
 	
 	# debug
 	#print("AStar3D points:")
-	#for p in map_astar.get_points():
+	#for p in map_astar.get_point_ids():
 	#	print(p, ": ", map_astar.get_point_position(p))
 	
 	# connect stars
-	var data = auto_connect_stars()
+	var data = auto_connect_stars([0,0])
 	return data # for debugging
 	
-func auto_connect_stars():
-	# FIXME: hardcoded values for sector 0
-	var center = Vector2(-512+512, -512+512)
-	var center_star = map_astar.get_closest_point(Vector3(center.x, 0, center.y))
-	print("Center star: ", map_astar.get_point_position(center_star))
+func auto_connect_stars(sector):
+	# sector begin, sector center is begin + 512 (half sector size)
+	var sector_zero_start = Vector2(-512,-512)
+	var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+	var sector_center = sector_begin+Vector2(512, 512)
+
+	# sector_center is in ints encoding floats, so we need to shave off the last decimal
+	var center_star = map_astar.get_closest_point(Vector3(sector_center.x/10, 0, sector_center.y/10))
+	print("Center star: ", find_name_from_pos(map_astar.get_point_position(center_star)), " @ ", map_astar.get_point_position(center_star))
 	
 	# do it by quadrants
 	var quad_pts = [[],[], [], []]
-	var quads = sector_to_quadrants(Vector2(-512, -512))
+	var quads = sector_to_quadrants(sector_begin)
 	for i in quads.size():
 		var q = quads[i]
 		for p in map_astar.get_point_ids():
@@ -245,10 +255,13 @@ func auto_connect_stars():
 			if p == center_star:
 				continue
 			
+			# this is the actual star position in light years
 			var pos = map_astar.get_point_position(p)
-			#print(pos)
+			print("Pos from A*: ", pos)
 			# we don't care about Z here
-			if q.has_point(Vector2(pos.x, pos.y)):
+			#if q.has_point(Vector2(pos.x, pos.y)):
+			# need to check coords converted back to int
+			if q.has_point(float_to_int2(Vector2(pos.x, pos.y))):
 				quad_pts[i].append(map_astar.get_point_position(p))
 				continue
 
