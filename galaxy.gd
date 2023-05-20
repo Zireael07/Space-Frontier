@@ -248,6 +248,21 @@ func create_map_graph():
 	# connect stars
 	var data = auto_connect_stars([0,0])
 	return data # for debugging
+
+func pretty_print_quadrants(quad_pts):
+	print("NW:")
+	for p in quad_pts[0]:
+		print(find_name_from_pos(p), ": ", p)
+	print("NE:")
+	for p in quad_pts[1]:
+		print(find_name_from_pos(p), ": ", p)
+	print("SE:")
+	for p in quad_pts[2]:
+		print(find_name_from_pos(p), ": ", p)
+	print("SW:")
+	for p in quad_pts[3]:
+		print(find_name_from_pos(p), ": ", p)		
+	print("/n")
 	
 func auto_connect_stars(sector):
 	# sector begin, sector center is begin + 512 (half sector size)
@@ -282,19 +297,7 @@ func auto_connect_stars(sector):
 	#print("Quad pts: ", quad_pts)
 	
 	# better debugging
-#	print("NW:")
-#	for p in quad_pts[0]:
-#		print(find_name_from_pos(p), ": ", p)
-#	print("NE:")
-#	for p in quad_pts[1]:
-#		print(find_name_from_pos(p), ": ", p)
-#	print("SE:")
-#	for p in quad_pts[2]:
-#		print(find_name_from_pos(p), ": ", p)
-#	print("SW:")
-#	for p in quad_pts[3]:
-#		print(find_name_from_pos(p), ": ", p)		
-#	print("/n")
+	#pretty_print_quadrants(quad_pts)
 	
 	#print("NW: ", quad_pts[0], " ", quad_pts[0].size(), "\n NE: ", quad_pts[1], " ", quad_pts[1].size(), "\n SE: ", quad_pts[2], " ", quad_pts[2].size(), "\n SW: ", quad_pts[3], " ", quad_pts[3].size())
 	#print("NW+NE+SE+SW:", quad_pts[0].size()+quad_pts[1].size()+quad_pts[2].size()+quad_pts[3].size())
