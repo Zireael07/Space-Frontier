@@ -10,6 +10,7 @@ var map_graph = []
 var map_astar = null
 # problem: we have coordinates (3 floats) and we need to have a unique identifier per star
 # idenfifier must be an int because AStar3D uses integer ids
+# as of Godot 4 those ids are int64
 var mapping = {}
 
 # https://stackoverflow.com/questions/65706804/bitwise-packing-unpacking-generalized-solution-for-arbitrary-values
@@ -41,19 +42,32 @@ func float_to_int2(vec2):
 	# integer that represents a float with one decimal place (shave off the last to know the decimals)
 	return Vector2(int(float("%.1f" % vec2.x)*10),int(float("%.1f" % vec2.y)*10))
 
-# FIXME: these two need to account for other sectors!!!
-func pos_to_positive_pos(vec3):
+func pos_offset_from_sector_zero(vec3):
 	# assume the sector is 50 ly in each direction, extended to closest power of 2
 	# a digit was added to represent a decimal place (see above)
 	var sector_start = Vector3(-512,-512,-512)
 	var pos = Vector3(vec3.x-sector_start.x, vec3.y-sector_start.y, vec3.z-sector_start.z)
-	#print("original: ", vec3, " positive: ", pos)
-	# test
-	#positive_to_original(pos)
 	return pos
+
+# NOTE: these two need to account for other sectors!!!
+func pos_to_positive_pos(vec3):
+	var sector = pos_to_sector(vec3, false)
+	var sector_zero_start = Vector2(-512,-512)
+	# unlike other examples we need
+	var sector_start_2d = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+	var sector_start = Vector3(sector_start_2d.x, sector_start_2d.y, -512)
+	#var sector_start = Vector3(-512,-512,-512)
+	var pos = Vector3(vec3.x-sector_start.x, vec3.y-sector_start.y, vec3.z-sector_start.z)
+	#print("original: ", vec3, " positive: ", pos, " sector ", sector)
+	# test
+	#positive_to_original(pos, sector)
+	return [pos, sector]
 	
-func positive_to_original(vec3):
-	var sector_start = Vector3(-512,-512,-512)
+func positive_to_original(vec3, sector=[0,0]):
+	#var sector_start = Vector3(-512,-512,-512)
+	var sector_zero_start = Vector2(-512,-512)
+	var sector_start_2d = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+	var sector_start = Vector3(sector_start_2d.x, sector_start_2d.y, -512)
 	var pos = Vector3(vec3.x+sector_start.x, vec3.y+sector_start.y, vec3.z+sector_start.z)
 	#print("positive: ", vec3, " original: ", pos)
 	return pos
@@ -64,8 +78,8 @@ func pos_to_sector(pos, need_convert=true):
 	if need_convert:
 		pos = float_to_int(pos)
 	
-	# doubles as "how is our position offset compared to start of sector 0?"
-	pos = pos_to_positive_pos(pos)
+	# "how is our position offset compared to start of sector 0?"
+	pos = pos_offset_from_sector_zero(pos)
 	print("Pos offset from beginning of sector 0: ", pos)
 	# 1024 is the sector size
 	# divide by tile size to get grid coordinates
@@ -96,8 +110,8 @@ func save_graph_data(x,y,z, nam):
 		return
 	
 	# as of Godot 3.5, AStar3D's key cannot be larger than 2^32-1 (hashes will overflow)
-	
-	var id = pack_vector(pos_to_positive_pos(float_to_int(Vector3(x,y,z))))
+	# doing some magic to ensure we stay within AStar3D's id bounds (2^64 in Godot 4 now)
+	var id = pack_vector(pos_to_positive_pos(float_to_int(Vector3(x,y,z)))[0])
 	#print("ID: ", id, "; unpacked: ", unpack_vector(id))
 	#print("Nearest po2: ", nearest_po2(id)) # 2^30 for storing 3*2^10 max
 	#print("AStar3D overflow: ", id > (pow(2,31)-1)) # 2^31-1
@@ -211,7 +225,7 @@ func create_map_graph():
 	# A* stores actual float positions (in light years)
 	map_astar = AStar3D.new()
 	# hardcoded stars
-	mapping[Vector3(0,0,0)] = pack_vector(pos_to_positive_pos(float_to_int(Vector3(0,0,0))))
+	mapping[Vector3(0,0,0)] = pack_vector(pos_to_positive_pos(float_to_int(Vector3(0,0,0)))[0])
 	map_astar.add_point(mapping[Vector3(0,0,0)], Vector3(0,0,0)) # Sol
 	
 	# graph is made out of nodes
