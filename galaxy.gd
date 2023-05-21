@@ -217,8 +217,29 @@ func create_procedural_sector(sector):
 	samples = samples + sampl2 + sampl3 + sampl4
 	return [sector_center, samples]
 
-# TODO: generate a map graph for the above sector	
+# generate a map graph for the above sector	
+func generate_map_graph(sector_data, sector):
+	print("points pre addition: ", map_astar.get_point_count())
 	
+	#print(sector_data)
+	for s in sector_data[1]:
+		# s here can be a float
+		#print("[sectorgen] s: ", s)
+		# see star map.gd l. 546
+		var pos2d = Vector2((sector_data[0][0] + s[0])/10, (sector_data[0][1]+s[1])/10)
+		# vary the Z and ensure it matches the others
+		#var z = int(float("%.1f" % randf_range(-20, +20))*10)
+		var pos = Vector3(pos2d.x, pos2d.y, randf_range(-20, +20))
+		#print("[sectorgen]", " pos2d: ", pos2d, " ", pos)
+		mapping[float_to_int(pos)] = pack_vector(pos_to_positive_pos(float_to_int(pos))[0])
+		map_astar.add_point(mapping[float_to_int(pos)], Vector3(pos.x, pos.y, pos.z))
+		#print("[sectorgen] ", sector, " ", pos2d, " added to astar: ", Vector3(pos.x/10, pos.y/10, pos.z))
+	
+	print("Points post addition: ", map_astar.get_point_count())
+	
+	# connect stars
+	var data = auto_connect_stars(sector)
+	return data # for debugging
 
 # ------------------------------------------------------------
 func create_map_graph():
@@ -286,7 +307,7 @@ func auto_connect_stars(sector):
 			
 			# this is the actual star position in light years
 			var pos = map_astar.get_point_position(p)
-			print("Pos from A*: ", pos)
+			#print("Pos from A*: ", pos)
 			# we don't care about Z here
 			#if q.has_point(Vector2(pos.x, pos.y)):
 			# need to check coords converted back to int
@@ -397,7 +418,7 @@ func auto_connect_stars(sector):
 	# connect the central (hub) star
 	for qp in quad_pts:
 		# find the closest star in each quadrant (they're NOT in distance order by default)
-		var stars = get_closest_stars_to(map_astar.get_point_position(center_star))
+		var stars = get_closest_stars_to(float_to_int(map_astar.get_point_position(center_star)))
 		
 		# filter
 		var tmp = [] #stars.duplicate()
@@ -424,7 +445,8 @@ func auto_connect_stars(sector):
 
 func auto_connect_prim(V, start, list=null):
 	var debug = false
-	if start == Vector3(0.1,-5.6,9.3):
+	#if start == Vector3(0.1,-5.6,9.3):
+	if start.x < -100:
 		debug = true
 	#print("Prim's: #", V, " ", start)
 	# we're not using Kruskal as we don't have edges

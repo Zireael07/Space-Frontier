@@ -632,6 +632,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 #		get_node("Control/Layer").add_child(cc)
 		
 			draw_generated_sector(new_sector_data, new_sector)
+			generate_map_graph(new_sector_data, new_sector)
 
 	
 # NOTE: offset is in px
