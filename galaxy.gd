@@ -226,8 +226,9 @@ func get_sector_positions(sector_data):
 		# pos here is sector_center+sample position
 		# shave off that unneeded decimal
 		var pos2d = Vector2((sector_data[0][0] + s[0])/10, (sector_data[0][1]+s[1])/10)
+		# # in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
 		# vary the Z
-		var pos = Vector3(pos2d.x, pos2d.y, randf_range(-20, +20))
+		var pos = Vector3(pos2d.x, -pos2d.y, randf_range(-20, +20))
 		positions.append(pos)
 		
 	return positions
@@ -247,6 +248,9 @@ func generate_map_graph(positions, sector):
 		#print("[sectorgen]", " pos2d: ", pos2d, " ", pos)
 	for pos in positions:
 		mapping[float_to_int(pos)] = pack_vector(pos_to_positive_pos(float_to_int(pos))[0])
+		# see star map.gd line 560
+		var nam = "TST"+"%.2f" % pos[0]+"--"+"%.2f" % pos[1]
+		map_graph.append([pos[0],pos[1],pos[2], nam]) # needed for finding name from pos
 		map_astar.add_point(mapping[float_to_int(pos)], Vector3(pos.x, pos.y, pos.z))
 		#print("[sectorgen] ", sector, " ", pos2d, " added to astar: ", Vector3(pos.x/10, pos.y/10, pos.z))
 	

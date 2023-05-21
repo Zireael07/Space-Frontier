@@ -487,7 +487,12 @@ func display_star_map_info(star_icon):
 			#print("Coords: ", coords)
 			var icon = find_icon_for_pos(coords)
 			
-			neighbors_text += str(icon.get_name()) + ", " #str(n) would display the internal ID
+			if icon != null:
+				neighbors_text += str(icon.get_name()) + ", " #str(n) would display the internal ID
+			else:
+				neighbors_text += str("Not found for coords ", coords)
+				print("Icon not found for ", coords)
+				
 		text = text + "Wormholes to: " + neighbors_text
 		
 		# need to go up the tree and back down :/
@@ -548,7 +553,7 @@ func draw_generated_sector(positions, new_sector):
 		# this is in light years
 		ic.x = pos[0]
 		# in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
-		ic.y = -pos[1]
+		ic.y = pos[1]
 		ic.depth = pos[2]
 		# vary the Z
 		#ic.depth = randf_range(-20, +20)
