@@ -531,25 +531,27 @@ func unload_sector(sector):
 		i.queue_free()
 	# TODO: remove sector's connections map graph here
 
-func draw_generated_sector(new_sector_data, new_sector):
+func draw_generated_sector(positions, new_sector):
 	# paranoia
-	if new_sector_data == null:
+	if positions == null:
 		return
 	
-	# draw map icons @ sector_center+sample position
-	for s in new_sector_data[1]:
+	# draw map icons at specified positions
+	for pos in positions:
+	#for s in new_sector_data[1]:
 		#print("Generated pos: ", s)
 		var ic = icon.instantiate()
 		ic.star_type = "red"
 		
 		# note: this data is all specified in ints that actually encode floats (see galaxy.gd)
-		var pos = Vector2((new_sector_data[0][0] + s[0])/10, (new_sector_data[0][1]+s[1])/10)
+		#var pos = Vector2((new_sector_data[0][0] + s[0])/10, (new_sector_data[0][1]+s[1])/10)
 		# this is in light years
 		ic.x = pos[0]
 		# in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
 		ic.y = -pos[1]
+		ic.depth = pos[2]
 		# vary the Z
-		ic.depth = randf_range(-20, +20)
+		#ic.depth = randf_range(-20, +20)
 		
 		ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
 		
@@ -630,9 +632,11 @@ func _on_move_to_offset(offset, sector, jump=false):
 #		cc.pos = Vector3(cc.x, cc.y, 0)
 #		print("Center pos: ", cc.pos)
 #		get_node("Control/Layer").add_child(cc)
-		
-			draw_generated_sector(new_sector_data, new_sector)
-			generate_map_graph(new_sector_data, new_sector)
+
+			var positions = get_sector_positions(new_sector_data)
+			generate_map_graph(positions, new_sector)		
+			draw_generated_sector(positions, new_sector)
+
 
 	
 # NOTE: offset is in px

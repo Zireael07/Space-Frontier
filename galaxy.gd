@@ -217,20 +217,35 @@ func create_procedural_sector(sector):
 	samples = samples + sampl2 + sampl3 + sampl4
 	return [sector_center, samples]
 
-# generate a map graph for the above sector	
-func generate_map_graph(sector_data, sector):
-	print("points pre addition: ", map_astar.get_point_count())
-	
+func get_sector_positions(sector_data):
+	var positions = []
 	#print(sector_data)
 	for s in sector_data[1]:
 		# s here can be a float
 		#print("[sectorgen] s: ", s)
-		# see star map.gd l. 546
+		# pos here is sector_center+sample position
+		# shave off that unneeded decimal
 		var pos2d = Vector2((sector_data[0][0] + s[0])/10, (sector_data[0][1]+s[1])/10)
-		# vary the Z and ensure it matches the others
-		#var z = int(float("%.1f" % randf_range(-20, +20))*10)
+		# vary the Z
 		var pos = Vector3(pos2d.x, pos2d.y, randf_range(-20, +20))
+		positions.append(pos)
+		
+	return positions
+
+# generate a map graph for the above sector	
+func generate_map_graph(positions, sector):
+	print("points pre addition: ", map_astar.get_point_count())
+	
+	#print(sector_data)
+	#for s in sector_data[1]:
+		# s here can be a float
+		#print("[sectorgen] s: ", s)
+		# shave off that unneeded decimal
+	#	var pos2d = Vector2((sector_data[0][0] + s[0])/10, (sector_data[0][1]+s[1])/10)
+		# vary the Z
+	#	var pos = Vector3(pos2d.x, pos2d.y, randf_range(-20, +20))
 		#print("[sectorgen]", " pos2d: ", pos2d, " ", pos)
+	for pos in positions:
 		mapping[float_to_int(pos)] = pack_vector(pos_to_positive_pos(float_to_int(pos))[0])
 		map_astar.add_point(mapping[float_to_int(pos)], Vector3(pos.x, pos.y, pos.z))
 		#print("[sectorgen] ", sector, " ", pos2d, " added to astar: ", Vector3(pos.x/10, pos.y/10, pos.z))
