@@ -13,13 +13,55 @@ var map_astar = null
 # as of Godot 4 those ids are int64
 var mapping = {}
 
+# helpers
+func sign_to_bit(sign):
+	if sign < 0:
+		return 1
+	else:
+		return 0
+		
+func bit_to_sign(bit):
+	if bit > 0:
+		return -1
+	else:
+		return 0
+
 # https://stackoverflow.com/questions/65706804/bitwise-packing-unpacking-generalized-solution-for-arbitrary-values
 # for some reason this (just like collapsing 3D to 1D index) only works for positive numbers
 # https://stackoverflow.com/questions/6556961/use-of-the-bitwise-operators-to-pack-multiple-values-in-one-int/6557022#6557022
+
+# this applies to storing positions in a sector - which are coded as ints to avoid floating points
+# and stored as positive coords (starting from sector begin) so we need values up to 999 (i.e. up to 99.9ly away from sector begin)
+# storing unsigned positions wouldn't help because we'd save one bit but need a bit for sign
 # no component can be bigger then 999 that means we need 10 bits of storage per component (allows numbers up to 1014).
-func pack_vector(vec3):
-	# packed = v3 << (size1 + size2) | v2 << size1 | v1;
-	return (int(vec3.z) << (10 + 10) | int(vec3.y) << 10 | int(vec3.x))
+
+# pack sector too since we have 32 more bits to play with in Godot 4
+# without that, packing/unpacking won't work properly for other sectors
+# we have enough bits that we can pack signed numbers too since a sign is just a single bit more
+# NOTE: output needs to be positive since Godot AStar only accepts positive ids
+func pack_data(vec3, sector):
+	#print("sign bits: " , int(sign(sector[0])), " ", int(sign(sector[1])))
+	#print("bits: ", int(sign_to_bit(sign(sector[0]))), " ", int(sign_to_bit(sign(sector[1]))) )
+	
+	# sector[1] sign bit << (all the sizes) | sector[1] << ... | sector[0] sign bit << .. | sector[0] << (size1+size2+size3) 
+	# packed vector = v3 << (size1 + size2) | v2 << size1 | v1;
+	return (int(sign_to_bit(sign(sector[1]))) << (10+10+10+10+10+1) | int(abs(sector[1])) << (10+10+10+10+1) | int(sign_to_bit(sign(sector[0]))) << (10+10+10+10) | int(abs(sector[0])) << (10+10+10) | int(vec3.z) << (10 + 10) | int(vec3.y) << 10 | int(vec3.x))
+
+func unpack_sector(id):
+	var mask = ((1 << 10) -1) # this preserves 10 rightmost bits
+	var sign_mask = ((1 << 10) -1)
+	
+	# the last 30 bits are vector coords (10 for x, 10 for y 10 for z)
+	var offset = 30
+	
+	var sec0 = id >> 30 & mask
+	var sign0 = id >> 30+10 & sign_mask
+	var sec1 = id >> 30+(1+10) & mask
+	var sign1 = id >> 30+(1+10+10) & sign_mask
+	
+	print("Decoded sector data: ", " s: ", sign0, " sec0: ", sec0, " s1: ", sign1, " sec2: ", sec1)
+	print("Decoded sector: ", [bit_to_sign(sign0)*sec0, bit_to_sign(sign1)*sec1])
+	return [bit_to_sign(sign0)*sec0, bit_to_sign(sign1)*sec1]
 	
 func unpack_vector(id):
 	#var sample1 = int(pow(2,10+1)-1) #511 (8+1) #1023 (9+1) #2047 (10+1); #pow(2, 10+1)-1;
@@ -109,16 +151,19 @@ func save_graph_data(x,y,z, nam):
 		pos_to_sector(Vector3(x,y,z))
 		return
 	
-	# as of Godot 3.5, AStar3D's key cannot be larger than 2^32-1 (hashes will overflow)
 	# doing some magic to ensure we stay within AStar3D's id bounds (2^64 in Godot 4 now)
-	var id = pack_vector(pos_to_positive_pos(float_to_int(Vector3(x,y,z)))[0])
-	#print("ID: ", id, "; unpacked: ", unpack_vector(id))
+	var pos_data = pos_to_positive_pos(float_to_int(Vector3(x,y,z)))
+	var id = pack_data(pos_data[0], pos_data[1])
+	print("ID: ", id, "; unpacked: ", unpack_sector(id))
+	
+	
 	#print("Nearest po2: ", nearest_po2(id)) # 2^30 for storing 3*2^10 max
 	#print("AStar3D overflow: ", id > (pow(2,31)-1)) # 2^31-1
 	
 	mapping[float_to_int(Vector3(x,y,z))] = id
 	
 	# the global scope function returns an integer hash
+	# hashes can collide so we're not using them (or overflow if data is limited to 2^32-1)
 	#mapping[Vector3(x,y,z)] = hash(Vector3(x,y,z))
 	# https://godotengine.org/qa/43078/create-an-unique-id
 	#mapping[Vector3(x,y,z)] = Vector3(x,y,z).get_instance_id()
@@ -247,10 +292,11 @@ func generate_map_graph(positions, sector):
 	#	var pos = Vector3(pos2d.x, pos2d.y, randf_range(-20, +20))
 		#print("[sectorgen]", " pos2d: ", pos2d, " ", pos)
 	for pos in positions:
-		mapping[float_to_int(pos)] = pack_vector(pos_to_positive_pos(float_to_int(pos))[0])
 		# see star map.gd line 560
 		var nam = "TST"+"%.2f" % pos[0]+"--"+"%.2f" % pos[1]
 		map_graph.append([pos[0],pos[1],pos[2], nam]) # needed for finding name from pos
+		var pos_data = pos_to_positive_pos(float_to_int(pos))
+		mapping[float_to_int(pos)] = pack_data(pos_data[0], pos_data[1])
 		map_astar.add_point(mapping[float_to_int(pos)], Vector3(pos.x, pos.y, pos.z))
 		#print("[sectorgen] ", sector, " ", pos2d, " added to astar: ", Vector3(pos.x/10, pos.y/10, pos.z))
 	
@@ -265,7 +311,8 @@ func create_map_graph():
 	# A* stores actual float positions (in light years)
 	map_astar = AStar3D.new()
 	# hardcoded stars
-	mapping[Vector3(0,0,0)] = pack_vector(pos_to_positive_pos(float_to_int(Vector3(0,0,0)))[0])
+	var pos_data = pos_to_positive_pos(float_to_int(Vector3(0,0,0)))
+	mapping[Vector3(0,0,0)] = pack_data(pos_data[0], pos_data[1])
 	map_astar.add_point(mapping[Vector3(0,0,0)], Vector3(0,0,0)) # Sol
 	
 	# graph is made out of nodes

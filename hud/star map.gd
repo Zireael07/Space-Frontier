@@ -240,8 +240,9 @@ func get_neighbors_for_icon(star_icon):
 	
 	for n in neighbors:
 		var coords = unpack_vector(n)
+		var sector = unpack_sector(n)
 		#print("unpacked coords: ", coords)
-		coords = positive_to_original(coords)
+		coords = positive_to_original(coords, sector)
 		#print("Coords: ", coords)
 		var icon = find_icon_for_pos(coords)	
 		res.append(icon)
@@ -282,12 +283,14 @@ func get_route_icons(src_icon, tg_icon):
 	# arrange in pairs (for easier drawing later)
 	for index in range(r.size()-1):
 		var coords = unpack_vector(r[index])
+		var sector = unpack_sector(r[index])
 		#print("unpacked coords: ", coords)
-		coords = positive_to_original(coords)
+		coords = positive_to_original(coords, sector)
 		#print("Coords: ", coords)
 		var icon = find_icon_for_pos(coords)
 		coords = unpack_vector(r[index+1])
-		coords = positive_to_original(coords)
+		sector = unpack_sector(r[index+1])
+		coords = positive_to_original(coords, sector)
 		var icon2 = find_icon_for_pos(coords)
 		icons.append([icon, icon2])
 	
@@ -306,8 +309,9 @@ func get_route_distance_height(src_icon, tg_icon):
 	for i in range(r.size()-1):
 		var p = r[i]
 		var coords = unpack_vector(p)
+		var sector = unpack_sector(p)
 #		#print("unpacked coords: ", coords)
-		coords = positive_to_original(coords)
+		coords = positive_to_original(coords, sector)
 		#print("Coords: ", coords)
 		
 #		we'll need icons for names
@@ -315,7 +319,8 @@ func get_route_distance_height(src_icon, tg_icon):
 		
 		if i > 0:
 			var prev = unpack_vector(r[i-1])
-			prev = positive_to_original(prev)
+			sector = unpack_sector(r[i-1])
+			prev = positive_to_original(prev, sector)
 			
 			dist = dist + (coords-prev).length()
 			#print("Appending data for i: ", i)
@@ -326,11 +331,13 @@ func get_route_distance_height(src_icon, tg_icon):
 
 	var p = r[r.size()-1]
 	var coords = unpack_vector(p)
+	var sector = unpack_sector(p)
 	#print("unpacked coords: ", coords)
-	coords = positive_to_original(coords)
+	coords = positive_to_original(coords, sector)
 	#print("Final coords: ", coords)
 	var prev = unpack_vector(r[r.size()-2])
-	prev = positive_to_original(prev)
+	sector = unpack_sector(r[r.size()-2])
+	prev = positive_to_original(prev, sector)
 	dist = dist + (coords-prev).length()
 	data.append([dist, coords[2]])
 
@@ -482,8 +489,9 @@ func display_star_map_info(star_icon):
 		var neighbors_text = ""
 		for n in neighbors:
 			var coords = unpack_vector(n)
+			var sector = unpack_sector(n)
 			#print("unpacked coords: ", coords)
-			coords = positive_to_original(coords)
+			coords = positive_to_original(coords, sector)
 			#print("Coords: ", coords)
 			var icon = find_icon_for_pos(coords)
 			
