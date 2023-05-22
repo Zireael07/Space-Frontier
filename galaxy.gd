@@ -24,7 +24,7 @@ func bit_to_sign(bit):
 	if bit > 0:
 		return -1
 	else:
-		return 0
+		return 1
 
 # https://stackoverflow.com/questions/65706804/bitwise-packing-unpacking-generalized-solution-for-arbitrary-values
 # for some reason this (just like collapsing 3D to 1D index) only works for positive numbers
@@ -59,7 +59,7 @@ func unpack_sector(id):
 	var sec1 = id >> 30+(1+10) & mask
 	var sign1 = id >> 30+(1+10+10) & sign_mask
 	
-	print("Decoded sector data: ", " s: ", sign0, " sec0: ", sec0, " s1: ", sign1, " sec2: ", sec1)
+	#print("Decoded sector data: ", " s: ", sign0, " sec0: ", sec0, " s1: ", sign1, " sec2: ", sec1)
 	print("Decoded sector: ", [bit_to_sign(sign0)*sec0, bit_to_sign(sign1)*sec1])
 	return [bit_to_sign(sign0)*sec0, bit_to_sign(sign1)*sec1]
 	
@@ -263,6 +263,9 @@ func create_procedural_sector(sector):
 	return [sector_center, samples]
 
 func get_sector_positions(sector_data):
+	if sector_data == null:
+		return []
+	
 	var positions = []
 	#print(sector_data)
 	for s in sector_data[1]:
@@ -392,6 +395,10 @@ func auto_connect_stars(sector):
 	var mst_sum = []
 	var tree = []
 	for qp in quad_pts:
+		# paranoia
+		if qp.size() == 0:
+			return
+			
 		var prim_data = auto_connect_prim(qp.size(), qp[0], qp)
 
 		var in_mst = prim_data[0]
