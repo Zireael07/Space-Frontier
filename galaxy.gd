@@ -139,7 +139,7 @@ func sector_to_quadrants(sector_begin):
 	var ne = Rect2(sector_begin.x+512, sector_begin.y, 512, 512)
 	var se = Rect2(sector_begin.x+512, sector_begin.y+512, 512, 512)
 	var sw = Rect2(sector_begin.x, sector_begin.y+512, 512, 512)
-	print("Quadrants: ", [nw, ne, se, sw])
+	print("Quadrants: ", [nw, nw.end, ne, ne.end, se, se.end, sw, sw.end] )
 	return [nw, ne, se, sw]
 
 func save_graph_data(x,y,z, nam):
@@ -278,7 +278,8 @@ func get_sector_positions(sector_data):
 		# vary the Z
 		var pos = Vector3(pos2d.x, -pos2d.y, randf_range(-11, +11))
 		positions.append(pos)
-		
+	
+	print("[sectorgen] Done generating...")
 	return positions
 
 # generate a map graph for the above sector	

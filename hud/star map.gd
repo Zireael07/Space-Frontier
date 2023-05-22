@@ -534,7 +534,7 @@ func should_sector_unload(cur_sector, sector):
 	var ret = false
 	if cur_sector[0]-sector[0] > 2 or cur_sector[1]-sector[1] > 2:
 		ret = true
-	print("Sector ", sector, " should be unloaded, ", ret)
+	#print("Sector ", sector, " should be unloaded, ", ret)
 	return ret
 	
 func unload_sector(sector):
@@ -577,7 +577,7 @@ func draw_generated_sector(positions, new_sector):
 		
 		# assume middle Z layer for now
 		get_node("Control/Layer").add_child(ic)
-	print("Done generating...")
+	#print("Done generating...")
 
 func _on_move_to_offset(offset, sector, jump=false):
 	for sec in sectors:
@@ -591,7 +591,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 	# center of sector is sector_begin + half sector size (half of 1024)
 	var sector_center = sector_begin+Vector2(512, 512)
 	sector_center = (sector_center/10)*LY_TO_PX
-	print("Sector center: ", sector_center, " threshold x: ", sector_center.x+2200, " y:", sector_center.y+2200)
+	print("Sector", sector, " sector center px: ", sector_center, " threshold x: ", sector_center.x+2200, " y:", sector_center.y+2200)
 	
 	if jump and not is_sector_generated(sector):
 		var sample_pos = Vector2(-offset.x/50, -offset.y/50)
@@ -605,7 +605,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 	# threshold is sector edge-300px (or center+2200) to account for view
 	if (abs(offset.x) > sector_center.x+2200 or abs(offset.y) > sector_center.y+2200):
 		var new_sector_pos = Vector2() # dummy
-		print("Offset, ", offset, " sector center: ", sector_center, " diff: ", -offset-sector_center)
+		print("Offset, ", offset, " sector center px: ", sector_center, " diff: ", -offset-sector_center)
 		# look at sector begin if close to that side
 		if sector_center.x+2200-offset.x < 300 or sector_center.y+2200-offset.y < 300:
 		# if offset is positive, we look at sector begin
