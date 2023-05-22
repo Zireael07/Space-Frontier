@@ -273,7 +273,7 @@ func get_sector_positions(sector_data):
 		var pos2d = Vector2((sector_data[0][0] + s[0])/10, (sector_data[0][1]+s[1])/10)
 		# # in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
 		# vary the Z
-		var pos = Vector3(pos2d.x, -pos2d.y, randf_range(-20, +20))
+		var pos = Vector3(pos2d.x, -pos2d.y, randf_range(-11, +11))
 		positions.append(pos)
 		
 	return positions
