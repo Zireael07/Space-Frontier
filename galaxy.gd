@@ -115,8 +115,10 @@ func positive_to_original(vec3, sector=[0,0]):
 	return pos
 
 # "want to determine which face encloses a point in world space, use floor instead of round" - Amit
+# NOTE: this assumes "visual"/map coords, i.e. +Y increases as we go down the map
 func pos_to_sector(pos, need_convert=true):
 	print("Determining sector for: ", pos)
+	
 	if need_convert:
 		pos = float_to_int(pos)
 	
@@ -244,9 +246,10 @@ func create_procedural_sector(sector):
 	#print("Generated points: ", samples)
 	# sector begin, sector center is begin + 512 (half sector size)
 	var sector_zero_start = Vector2(-512,-512)
-	var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+	# NOTE: we're generating star DATA here, which has Y opposite to visual/map coords
+	var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
 	var sector_center = sector_begin+Vector2(512, 512)
-	print("Sector start: ", sector_begin, " sector center: ", sector_center)
+	print("[sectorgen] ", sector, " sector start: ", sector_begin, " sector center: ", sector_center)
 	# now a second set of samples
 	get_node("Grid/VisControl/Node2D").set_seed(1000002+sector[0]+sector[1])
 	var sampl2 = get_node("Grid/VisControl/Node2D").samples.duplicate()
@@ -274,9 +277,8 @@ func get_sector_positions(sector_data):
 		# pos here is sector_center+sample position
 		# shave off that unneeded decimal
 		var pos2d = Vector2((sector_data[0][0] + s[0])/10, (sector_data[0][1]+s[1])/10)
-		# # in Godot, +Y goes down so we need to minus the Y (see star map icon.gd l. 80)
-		# vary the Z
-		var pos = Vector3(pos2d.x, -pos2d.y, randf_range(-11, +11))
+		# vary the Z (the visual vs data Y is handled when generating, see l. 252)
+		var pos = Vector3(pos2d.x, pos2d.y, randf_range(-11, +11))
 		positions.append(pos)
 	
 	print("[sectorgen] Done generating...")
@@ -358,8 +360,11 @@ func pretty_print_quadrants(quad_pts):
 func auto_connect_stars(sector):
 	# sector begin, sector center is begin + 512 (half sector size)
 	var sector_zero_start = Vector2(-512,-512)
-	var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+	# this works on star DATA (see l. 387), not visuals, which has the Y axis opposite to visuals
+	# this way we only put the sign in one place, instead of doing it everywhere where we check for positions, rects etc.
+	var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
 	var sector_center = sector_begin+Vector2(512, 512)
+	print("[Auto connect] sector", sector, " sector begin: ", sector_begin, " ", sector_center)
 
 	# sector_center is in ints encoding floats, so we need to shave off the last decimal
 	var center_star = map_astar.get_closest_point(Vector3(sector_center.x/10, 0, sector_center.y/10))

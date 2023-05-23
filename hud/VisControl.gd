@@ -49,6 +49,7 @@ func _draw():
 	var offs = get_parent().get_parent().offset
 	var sector = get_parent().get_parent().pos_to_sector(Vector3(-offs.x/50, -offs.y/50, 0))
 	var sector_zero_start = Vector2(-512,-512) #internal data, floats to represent ints (ax off the last digit)
+	# because in Godot, +Y axis goes down (this is all for visual purposes)
 	var sector_begin = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
 	var visual_begin = (sector_begin/10)*get_parent().get_parent().LY_TO_PX
 	#print("Sector ", sector, " begin: ", visual_begin)
