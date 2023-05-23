@@ -477,7 +477,7 @@ func display_star_map_info(star_icon):
 	var fmt_coord_z = "%.2f" % star_icon.depth
 	text = text + "X: " + str(fmt_coord_x) + " Y: " + str(fmt_coord_y) + " Z: " + str(fmt_coord_z) + "\n"
 	
-	text = text + str(pos_to_sector(star_icon.pos, false)) + "\n"
+	text = text + str(pos_to_sector(Vector3(star_icon.pos.x, -star_icon.pos.y, star_icon.pos.z), false)) + "\n"
 	
 
 	if (star_icon.pos in mapping):
