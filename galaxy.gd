@@ -92,23 +92,28 @@ func pos_offset_from_sector_zero(vec3):
 	return pos
 
 # NOTE: these two need to account for other sectors!!!
+# NOTE: this vec3 is the INTERNAL star data
 func pos_to_positive_pos(vec3):
-	var sector = pos_to_sector(vec3, false)
+	var sector = pos_to_sector(Vector3(vec3.x, -vec3.y, vec3.z), false)
 	var sector_zero_start = Vector2(-512,-512)
 	# unlike other examples we need
-	var sector_start_2d = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+	var sector_start_2d = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
 	var sector_start = Vector3(sector_start_2d.x, sector_start_2d.y, -512)
 	#var sector_start = Vector3(-512,-512,-512)
 	var pos = Vector3(vec3.x-sector_start.x, vec3.y-sector_start.y, vec3.z-sector_start.z)
 	#print("original: ", vec3, " positive: ", pos, " sector ", sector)
 	# test
 	#positive_to_original(pos, sector)
+	
+	if pos.x < 0 or pos.y < 0 or pos.z < 0:
+		print("ERROR! negative coord detected ", pos)
+	
 	return [pos, sector]
 	
 func positive_to_original(vec3, sector=[0,0]):
 	#var sector_start = Vector3(-512,-512,-512)
 	var sector_zero_start = Vector2(-512,-512)
-	var sector_start_2d = Vector2(sector[0]*1024, sector[1]*1024)+sector_zero_start
+	var sector_start_2d = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
 	var sector_start = Vector3(sector_start_2d.x, sector_start_2d.y, -512)
 	var pos = Vector3(vec3.x+sector_start.x, vec3.y+sector_start.y, vec3.z+sector_start.z)
 	#print("positive: ", vec3, " original: ", pos)
@@ -130,6 +135,8 @@ func pos_to_sector(pos, need_convert=true):
 	#var sector = [floor((pos.x-512)/1024), floor((pos.y-512)/1024)] ##, floor((pos.z-512)/1024)]
 	var sector = [floor(pos.x/1024), floor(pos.y/1024)]
 	print("Sector", sector)
+	# NOTE: the way this is calculated implies that those go the same way as Godot visual coords
+	# i.e. +Y goes down
 	return sector
 
 func sector_to_quadrants(sector_begin):
@@ -150,7 +157,7 @@ func save_graph_data(x,y,z, nam):
 	# skip any stars outside the sector
 	if x < -50 or y < -50 or z < -50:
 		# test
-		pos_to_sector(Vector3(x,y,z))
+		#pos_to_sector(Vector3(x,y,z))
 		return
 	
 	# doing some magic to ensure we stay within AStar3D's id bounds (2^64 in Godot 4 now)
