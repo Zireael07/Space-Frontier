@@ -363,23 +363,8 @@ func pretty_print_quadrants(quad_pts):
 	for p in quad_pts[3]:
 		print(find_name_from_pos(p), ": ", p)		
 	print("/n")
-	
-func auto_connect_stars(sector):
-	# sector begin, sector center is begin + 512 (half sector size)
-	var sector_zero_start = Vector2(-512,-512)
-	# this works on star DATA (see l. 387), not visuals, which has the Y axis opposite to visuals
-	# this way we only put the sign in one place, instead of doing it everywhere where we check for positions, rects etc.
-	var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
-	var sector_center = sector_begin+Vector2(512, 512)
-	print("[Auto connect] sector", sector, " sector begin: ", sector_begin, " ", sector_center)
 
-	# sector_center is in ints encoding floats, so we need to shave off the last decimal
-	var center_point = Vector3(sector_center.x/10, sector_center.y/10, 0)
-	print("Center point in ly: ", center_point)
-	var center_star = map_astar.get_closest_point(center_point)
-	print("Center star: ", find_name_from_pos(map_astar.get_point_position(center_star)), " @ ", map_astar.get_point_position(center_star))
-	
-	# do it by quadrants
+func get_quad_points(sector_begin, center_star):
 	var quad_pts = [[],[], [], []]
 	var quads = sector_to_quadrants(sector_begin)
 	for i in quads.size():
@@ -403,9 +388,28 @@ func auto_connect_stars(sector):
 			#	print("Not in quadrant: ", q, " pos: ", float_to_int2(Vector2(pos.x, pos.y)))
 
 	#print("Quad pts: ", quad_pts)
+	return quad_pts
+	
+func auto_connect_stars(sector):
+	# sector begin, sector center is begin + 512 (half sector size)
+	var sector_zero_start = Vector2(-512,-512)
+	# this works on star DATA (see l. 387), not visuals, which has the Y axis opposite to visuals
+	# this way we only put the sign in one place, instead of doing it everywhere where we check for positions, rects etc.
+	var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
+	var sector_center = sector_begin+Vector2(512, 512)
+	print("[Auto connect] sector", sector, " sector begin: ", sector_begin, " ", sector_center)
+
+	# sector_center is in ints encoding floats, so we need to shave off the last decimal
+	var center_point = Vector3(sector_center.x/10, sector_center.y/10, 0)
+	print("Center point in ly: ", center_point)
+	var center_star = map_astar.get_closest_point(center_point)
+	print("Center star: ", find_name_from_pos(map_astar.get_point_position(center_star)), " @ ", map_astar.get_point_position(center_star))
+	
+	# do it by quadrants
+	var quad_pts = get_quad_points(sector_begin, center_star)
 	
 	# better debugging
-	pretty_print_quadrants(quad_pts)
+	#pretty_print_quadrants(quad_pts)
 	
 	#print("NW: ", quad_pts[0], " ", quad_pts[0].size(), "\n NE: ", quad_pts[1], " ", quad_pts[1].size(), "\n SE: ", quad_pts[2], " ", quad_pts[2].size(), "\n SW: ", quad_pts[3], " ", quad_pts[3].size())
 	#print("NW+NE+SE+SW:", quad_pts[0].size()+quad_pts[1].size()+quad_pts[2].size()+quad_pts[3].size())
