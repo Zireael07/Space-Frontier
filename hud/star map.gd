@@ -292,6 +292,13 @@ func get_route_icons(src_icon, tg_icon):
 		sector = unpack_sector(r[index+1])
 		coords = positive_to_original(coords, sector)
 		var icon2 = find_icon_for_pos(coords)
+		
+		# paranoia
+		if icon == null:
+			print("Icon not found @ ", coords)
+		if icon2 == null:
+			print("Icon not found @ ", coords)
+		
 		icons.append([icon, icon2])
 	
 	#print(icons)
@@ -491,7 +498,7 @@ func display_star_map_info(star_icon):
 		for n in neighbors:
 			var coords = unpack_vector(n)
 			var sector = unpack_sector(n)
-			#print("unpacked coords: ", coords)
+			print("id: ", n, " unpacked coords: ", coords, " sector: ", sector)
 			coords = positive_to_original(coords, sector)
 			#print("Coords: ", coords)
 			var icon = find_icon_for_pos(coords)
@@ -601,7 +608,9 @@ func _on_move_to_offset(offset, sector, jump=false):
 		var new_sector = pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0))
 		var new_sector_data = create_procedural_sector(new_sector)
 		sectors.append(new_sector)
-		draw_generated_sector(new_sector_data, sector)
+		var positions = get_sector_positions(new_sector_data)
+		generate_map_graph(positions, new_sector)
+		draw_generated_sector(positions, sector)
 	
 	# threshold is sector edge-300px (or center+2200) to account for view
 	if (abs(offset.x) > sector_center.x+2200 or abs(offset.y) > sector_center.y+2200):

@@ -40,6 +40,9 @@ func _draw():
 	# draw route
 	if route:
 		for p in route:
+			# paranoia skip
+			if p[0] == null or p[1] == null:
+				continue
 			# this draws next to shadow icons
 			draw_line(p[0].position+cntr.position, p[1].position+cntr.position, Color(1, 0.8, 0), 3.0)
 			# this draws next to stars themselves

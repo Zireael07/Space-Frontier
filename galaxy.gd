@@ -367,7 +367,9 @@ func auto_connect_stars(sector):
 	print("[Auto connect] sector", sector, " sector begin: ", sector_begin, " ", sector_center)
 
 	# sector_center is in ints encoding floats, so we need to shave off the last decimal
-	var center_star = map_astar.get_closest_point(Vector3(sector_center.x/10, 0, sector_center.y/10))
+	var center_point = Vector3(sector_center.x/10, sector_center.y/10, 0)
+	print("Center point in ly: ", center_point)
+	var center_star = map_astar.get_closest_point(center_point)
 	print("Center star: ", find_name_from_pos(map_astar.get_point_position(center_star)), " @ ", map_astar.get_point_position(center_star))
 	
 	# do it by quadrants
@@ -388,12 +390,15 @@ func auto_connect_stars(sector):
 			# need to check coords converted back to int
 			if q.has_point(float_to_int2(Vector2(pos.x, pos.y))):
 				quad_pts[i].append(map_astar.get_point_position(p))
+				#print("Appended to quad pts, ", pos)
 				continue
+			#else:
+			#	print("Not in quadrant: ", q, " pos: ", float_to_int2(Vector2(pos.x, pos.y)))
 
 	#print("Quad pts: ", quad_pts)
 	
 	# better debugging
-	#pretty_print_quadrants(quad_pts)
+	pretty_print_quadrants(quad_pts)
 	
 	#print("NW: ", quad_pts[0], " ", quad_pts[0].size(), "\n NE: ", quad_pts[1], " ", quad_pts[1].size(), "\n SE: ", quad_pts[2], " ", quad_pts[2].size(), "\n SW: ", quad_pts[3], " ", quad_pts[3].size())
 	#print("NW+NE+SE+SW:", quad_pts[0].size()+quad_pts[1].size()+quad_pts[2].size()+quad_pts[3].size())
