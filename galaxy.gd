@@ -617,45 +617,6 @@ func auto_connect_prim(V, start, list=null):
 	
 	return [in_mst, tree]
 
-#func manual_connect():
-#	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
-#	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
-#	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
-#	map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
-#
-#	map_astar.connect_points(mapping[Vector3(-34, 4, -114)], mapping[Vector3(-21, 2, -85)]) # Tau Ceti to Luyten 726-8
-#	map_astar.connect_points(mapping[Vector3(28,-31,1)], mapping[Vector3(29, -31, 1)]) # Proxima to Alpha Centauri
-#
-#	map_astar.connect_points(mapping[Vector3(50, 30, 14)], mapping[Vector3(29, -31, 1)]) # both Centauri connect to Barnard's
-#	#map_astar.connect_points(mapping[Vector3(50, 30, 14)], mapping[Vector3(28, -31, 1)])
-#
-#	map_astar.connect_points(mapping[Vector3(-94, 34, -75)], mapping[Vector3(-34, 4, -114)]) # Tau Ceti to Teegarden's
-#	map_astar.connect_points(mapping[Vector3(-21, 2, -85)], mapping[Vector3(-68, -19, -78)]) # UV Ceti to Epsilon Eridani
-#
-#	map_astar.connect_points(mapping[Vector3(50, 30,14)], mapping[Vector3(93, 19, -17)]) # Barnard's to Ross 154
-#	map_astar.connect_points(mapping[Vector3(93, 19, -17)], mapping[Vector3(92,6,-90)]) # Ross 154 to AX Microscopii
-#	map_astar.connect_points(mapping[Vector3(-19, -39, 65)], mapping[Vector3(15, -43, 136)]) # Wolf 359 to FL Virginis 
-##	map_astar.connect_points(mapping[Vector3(53, 8, 169)], mapping[Vector3(15, -43, 136)]) # Wolf 498 to FL Virginis 
-#
-#	map_astar.connect_points(mapping[Vector3(-34, -3, 75)], mapping[Vector3(1, -56, 93)]) # Lalande 21185 to Ross 128
-#	map_astar.connect_points(mapping[Vector3(-34, -3, 75)], mapping[Vector3(-19, -39, 65)]) # Lalande 21185 to Wolf 359
-#
-#	map_astar.connect_points(mapping[Vector3(-58, -62, -13)], mapping[Vector3(-92, -62, 26)]) # Sirius to Procyon
-#	map_astar.connect_points(mapping[Vector3(-92, -62, 26)], mapping[Vector3(-95, -29, 63)]) # Procyon to DX Cancri
-#	map_astar.connect_points(mapping[Vector3(-92, -62, 26)], mapping[Vector3(-103, -65, 22)]) # Procyon to Luyten's star
-#
-#	map_astar.connect_points(mapping[Vector3(-34, 4, -114)],mapping[Vector3(-2, 58, -141)]) # Tau Ceti to Gliese 1002
-##	map_astar.connect_points(mapping[Vector3(4, 39, -158)],mapping[Vector3(-2, 58, -141)]) # Gliese 1005 to Gliese 1002
-##	map_astar.connect_points(mapping[Vector3(-2, 58, -141)],mapping[Vector3(14, 119,-202)]) # Gliese 1002 to Gliese 1286
-##	map_astar.connect_points(mapping[Vector3(14, 119,-202)],mapping[Vector3(113, 95, -241)]) # Gliese 1286 to Gliese 867 (FK Aquarii)
-##	map_astar.connect_points(mapping[Vector3(160, 130, -270)],mapping[Vector3(113, 95, -241)]) # Gliese 1265 to Gliese 867
-##	map_astar.connect_points(mapping[Vector3(139, 155, -287)],mapping[Vector3(160, 130, -270)]) # NN 4281 to Gliese 1265
-##	map_astar.connect_points(mapping[Vector3(139, 155, -287)],mapping[Vector3(78, 211, -339)]) # NN 4281 to TRAPPIST-1
-#
-#
-#	# check connectedness
-##	print("To TRAPPIST: ", map_astar.get_id_path(mapping[Vector3(0,0,0)],mapping[Vector3(78, 211, -339)])) #12))
-#
 
 func find_name_from_pos(pos, need_conv=true):
 	#print("Looking up name from graph for pos: ", pos)
