@@ -482,11 +482,26 @@ func display_star_map_info(star_icon):
 	var fmt_coord_x = "%.2f" % star_icon.x
 	var fmt_coord_y = "%.2f" % star_icon.y 
 	var fmt_coord_z = "%.2f" % star_icon.depth
-	text = text + "X: " + str(fmt_coord_x) + " Y: " + str(fmt_coord_y) + " Z: " + str(fmt_coord_z) + "\n"
+	text = text + "LY coords \n X: " + str(fmt_coord_x) + " Y: " + str(fmt_coord_y) + " Z: " + str(fmt_coord_z) + "\n"
 	
 	# internal coords Y is opposite visual Y, hence the minus sign
+	var sector = pos_to_sector(Vector3(star_icon.pos.x, -star_icon.pos.y, star_icon.pos.z), false)
 	text = text + str(pos_to_sector(Vector3(star_icon.pos.x, -star_icon.pos.y, star_icon.pos.z), false)) + "\n"
 	
+	# star icon: display sector's quadrant it is in
+	var sector_zero_start = Vector2(-512,-512)
+	# these are for internal coords
+	var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
+	var qp = get_quad_points(sector_begin, -1)
+	#print("Quad points for our sector: ", get_quad_points(sector_begin, -1))
+	#print("Check for: ", Vector3(star_icon.x, star_icon.y, star_icon.depth))
+	# this assumes internal coords
+	var pretty_q_i = {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
+	for q_i in qp.size():
+		#print("Quadrant: ", pretty_q_i[q_i], " : ", Vector3(star_icon.x, star_icon.y, star_icon.depth) in qp[q_i])
+		if Vector3(star_icon.x, star_icon.y, star_icon.depth) in qp[q_i]:
+			text = text + "Quadrant: " + str(pretty_q_i[q_i]) + "\n"
+			break 
 
 	if (star_icon.pos in mapping):
 		# wormhole connections
@@ -497,8 +512,8 @@ func display_star_map_info(star_icon):
 		var neighbors_text = ""
 		for n in neighbors:
 			var coords = unpack_vector(n)
-			var sector = unpack_sector(n)
-			print("id: ", n, " unpacked coords: ", coords, " sector: ", sector)
+			var n_sector = unpack_sector(n)
+			print("neighbor id: ", n, " unpacked coords: ", coords, " sector: ", n_sector)
 			coords = positive_to_original(coords, sector)
 			#print("Coords: ", coords)
 			var icon = find_icon_for_pos(coords)

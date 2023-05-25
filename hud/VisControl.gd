@@ -32,6 +32,9 @@ func _draw():
 		# if we're not on a different Z layer
 		if cntr.tg.get_parent().get_name().find("Z+") == -1 and cntr.tg.get_parent().get_name().find("Z-") == -1:
 			for n in cntr.get_parent().get_neighbors_for_icon(cntr.tg):
+				# paranoia
+				if n == null:
+					continue
 				var connect_clr = Color(1, 0.8, 0) #if not second else Color(1,0.0,0)
 				if [cntr.tg.get_name().rstrip("*"), n.get_name().rstrip("*")] in secondary: #or [n, cntr.tg] in secondary:
 					connect_clr = Color(1,0,0)
