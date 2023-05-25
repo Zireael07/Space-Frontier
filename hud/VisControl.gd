@@ -66,3 +66,35 @@ func _draw():
 	# draw sector coords
 	draw_string(font, cntr.position+visual_begin+Vector2(10, 20), str(sector), HORIZONTAL_ALIGNMENT_LEFT, -1, 16,
  Color(0,1,0))
+
+	#draw_circle(cntr.position+visual_begin+Vector2(2500,2500), 2.0, Color(0,1,0))
+
+	# draw quadrants
+	# this assumes visual coords
+	var pretty_q_i = {0: "NW", 1: "NE", 2:"SE", 3:"SW"}
+	var offset = {0: Vector2(-20,-25), 1: Vector2(20, -25), 2: Vector2(20,25), 3: Vector2(-20,25)}
+	var quads = get_parent().get_parent().sector_to_quadrants(sector_begin)
+	for i in quads.size():
+		var q = quads[i]
+		var vis_pos = (q.position/10)*get_parent().get_parent().LY_TO_PX
+		#print("Drawing rect @", q.position/10*get_parent().get_parent().LY_TO_PX)
+		draw_rect(Rect2(cntr.position+(q.position/10)*get_parent().get_parent().LY_TO_PX, Vector2(q.size*get_parent().get_parent().LY_TO_PX)), Color(0,1,0), false, 2.0)
+		# draw them round the center point
+		draw_string(font, cntr.position+visual_begin+(q.size/10)*get_parent().get_parent().LY_TO_PX+offset[i], str(pretty_q_i[i]), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0,1,0))
+		# ... and on the corners
+		draw_string(font, cntr.position+vis_pos+Vector2(15,25), str(pretty_q_i[i]), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0,1,0))
+	
+	# by hand
+#	draw_rect(Rect2(cntr.position+visual_begin, Vector2(2500,2500)), Color(0,1,0), false, 2.0)
+#	draw_string(font, cntr.position+visual_begin+Vector2(15, 25), str("NW"), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0,1,0))
+#	draw_string(font, cntr.position+visual_begin+Vector2(2465, 25), str("NW"), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0,1,0))
+#
+#	draw_rect(Rect2(cntr.position+visual_begin+Vector2(2500, 0), Vector2(2500,2500)), Color(0,1,0), false, 2.0)
+#	draw_string(font, cntr.position+visual_begin+Vector2(2515, 25), str("NE"), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0,1,0))
+#
+#	draw_rect(Rect2(cntr.position+visual_begin+Vector2(0,2500), Vector2(2500,2500)), Color(0,1,0), false, 2.0)
+#	draw_string(font, cntr.position+visual_begin+Vector2(15, 2525), str("SW"), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0,1,0))
+#	draw_string(font, cntr.position+visual_begin+Vector2(2465, 2525), str("SW"), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0,1,0))
+#
+#	draw_rect(Rect2(cntr.position+visual_begin+Vector2(2500,2500), Vector2(2500,2500)), Color(0,1,0), false, 2.0)
+#	draw_string(font, cntr.position+visual_begin+Vector2(2515, 2525), str("SE"), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0,1,0))
