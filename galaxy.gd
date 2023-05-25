@@ -317,6 +317,8 @@ func generate_map_graph(positions, sector):
 	
 	# connect stars
 	var data = auto_connect_stars(sector)
+	
+	connect_sectors(sector, data[1])
 	return data # for debugging
 
 # ------------------------------------------------------------
@@ -536,7 +538,7 @@ func auto_connect_stars(sector):
 	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
 	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
 
-	return [secondary]
+	return [secondary, quad_pts]
 
 func auto_connect_prim(V, start, list=null):
 	var debug = false
@@ -628,7 +630,78 @@ func auto_connect_prim(V, start, list=null):
 	
 	return [in_mst, tree]
 
+func connect_sectors(sector, our_quad_pts):
+	if abs(sector[0]) == 1 or abs(sector[1]) == 1:
+		print(sector, " neighboring sector 0,0")
+		
+		var quad_pts = get_quad_points(Vector2(-512,-512), map_astar.get_closest_point(Vector3(0,0,0))) # sector 0
 
+		# NW = 0, NE = 1, SE = 2, SW = 3		
+		if sector[0] == 1:
+			print("our neighboring quadrants: NW, SW") # for sector 0, they're NE, SE
+			print("NW: ", our_quad_pts[0])
+			print("SW: ", our_quad_pts[3])
+			print("NE: ", quad_pts[1])
+			print("SE: ", quad_pts[2])
+		if sector[0] == -1:
+			print("our neighboring quadrants: NE, SE") # for sector 0, they're NW, SW
+			print("NE: ", our_quad_pts[1])
+			print("SE: ", our_quad_pts[2])
+			print("NW: ", quad_pts[0])
+			print("SW: ", quad_pts[3])
+		if sector[1] == -1:
+			print("our neighboring quadrants: SE, SW") # for sector 0, they're NE, NW
+			print("SE: ", our_quad_pts[2])
+			print("SW: ", our_quad_pts[3])
+			print("NE: ", quad_pts[1])
+			print("NW: ", quad_pts[0])
+		if sector[1] == 1:
+			print("our neighboring quadrants: NE, NW") # for sector 0, they're SE, SW
+			print("NE: ", our_quad_pts[1])
+			print("NW: ", our_quad_pts[0])
+			print("SE: ", quad_pts[2])
+			print("SW: ", quad_pts[3])
+
+			# FIXME: this connects between our own stars again, also need to ignore central stars
+			var all_quad_pts = [our_quad_pts[1], our_quad_pts[0], quad_pts[2], quad_pts[3]]
+			# here the magic happens!
+			var cross_sector = []
+			for qp_i in range(0,3):
+				# first two entries are ours
+				if qp_i < 2:
+					var qp = all_quad_pts[qp_i]
+			#for qp in all_quad_pts:
+					for p in qp:
+						print("Connecting across sectors, ", p, " ", find_name_from_pos(p))
+						# skip if we're already in the list
+						if p in cross_sector:
+							continue 
+			
+						var stars = get_closest_stars_to(float_to_int(p))
+						
+						# filter
+						var tmp = []
+						for s in stars:
+							if s[1] in cross_sector:
+								continue
+							# if it's in one of the other two quadrants
+							if s[1] in all_quad_pts[2] or s[1] in all_quad_pts[3]:
+							# not in our quadrant
+							#if !s[1] in qp: #and s[1] != map_astar.get_point_position(center_star):
+								# limit by distance (experimental values)
+								if s[0] < 110 and s[0] > 0.15: #10:
+									tmp.append(s)
+						
+						stars = tmp
+						if !stars.is_empty():
+							#print("Candidate stars: ", stars)
+							map_astar.connect_points(mapping[float_to_int(p)], mapping[float_to_int(stars[0][1])])
+							print("Connecting across sectors, ", p, " ", find_name_from_pos(p), " and ", find_name_from_pos(stars[0][1]), " @ ", stars[0][1])
+							# prevent multiplying connections
+							cross_sector.append(stars[0][1])
+							cross_sector.append(p)				
+	
+# ------------------------------------------------------
 func find_name_from_pos(pos, need_conv=true):
 	#print("Looking up name from graph for pos: ", pos)
 
@@ -724,6 +797,7 @@ func get_closest_stars_to(pos):
 	stars.sort_custom(Callable(MyCustomSorter,"sort_stars"))
 
 	#print(stars)
+	#print("Closest to ", src, " stars: ", stars)
 	
 	return stars
 
