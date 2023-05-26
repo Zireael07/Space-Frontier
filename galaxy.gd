@@ -139,6 +139,19 @@ func pos_to_sector(pos, need_convert=true):
 	# i.e. +Y goes down
 	return sector
 
+# more generic version of the below function
+func quadrants(begin, size_x, size_y, debug=true):
+	print("Begin: ", begin, " x: ", size_x, " y: ", size_y)
+	# divide into four quads
+	var nw = Rect2(begin.x, begin.y, size_x, size_y).abs()
+	var ne = Rect2(begin.x+size_x, begin.y, size_x, size_y).abs()
+	var se = Rect2(begin.x+size_x, begin.y+size_y, size_x, size_y).abs()
+	var sw = Rect2(begin.x, begin.y+size_y, size_x, size_y).abs()
+	if debug:
+		print("Quadrants: ", [nw, nw.end, ne, ne.end, se, se.end, sw, sw.end])
+	return [nw, ne, se, sw]
+	
+
 func sector_to_quadrants(sector_begin):
 	# center of sector is sector_begin + half sector size (half of 1024)
 	var center = Vector2(sector_begin.x+512, sector_begin.y+512)
@@ -366,6 +379,7 @@ func pretty_print_quadrants(quad_pts):
 		print(find_name_from_pos(p), ": ", p)		
 	print("/n")
 
+# this gets INTERNAL sector begin and seems to work correctly
 func get_quad_points(sector_begin, center_star):
 	var quad_pts = [[],[], [], []]
 	var quads = sector_to_quadrants(sector_begin)
@@ -479,6 +493,7 @@ func auto_connect_stars(sector):
 		#get_node("Grid/VisControl").secondary.append(connect)
 
 	# connect stars close by across quadrants (e.g, Barnard's and Alpha Cen)
+	# gets away with no sorting because of very limited distances (see l. 506)
 	var cross_quad = []
 	for qp in quad_pts:
 		for p in qp:
@@ -631,12 +646,14 @@ func auto_connect_prim(V, start, list=null):
 	return [in_mst, tree]
 
 func connect_sectors(sector, our_quad_pts):
+	var sector_zero_start = Vector2(-512, -512)
 	if abs(sector[0]) == 1 or abs(sector[1]) == 1:
 		print(sector, " neighboring sector 0,0")
 		
 		var quad_pts = get_quad_points(Vector2(-512,-512), map_astar.get_closest_point(Vector3(0,0,0))) # sector 0
 
-		# NW = 0, NE = 1, SE = 2, SW = 3		
+		# visual coords {0: "NW", 1: "NE", 2:"SE", 3:"SW"}
+		# internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}	
 		if sector[0] == 1:
 			print("our neighboring quadrants: NW, SW") # for sector 0, they're NE, SE
 			print("NW: ", our_quad_pts[0])
@@ -657,22 +674,77 @@ func connect_sectors(sector, our_quad_pts):
 			print("NW: ", quad_pts[0])
 		if sector[1] == 1:
 			print("our neighboring quadrants: NE, NW") # for sector 0, they're SE, SW
-			print("NE: ", our_quad_pts[1])
-			print("NW: ", our_quad_pts[0])
+			#print("NE: ", our_quad_pts[1])
+			#print("NW: ", our_quad_pts[0])
 			print("SE: ", quad_pts[2])
 			print("SW: ", quad_pts[3])
+			
+			# this operates on internal values
+			var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
+			#print("Sector, ", sector, " begin: ", sector_begin)
+			# the weird Y offsets are a hack solution to get this to work properly for internal star values
+			var smaller_quads_nw = quadrants(sector_begin-Vector2(0,-512), 256, 256)
+			var smaller_quads_ne = quadrants(sector_begin+Vector2(512,512), 256, 256)
 
-			# FIXME: this connects between our own stars again, also need to ignore central stars
-			var all_quad_pts = [our_quad_pts[1], our_quad_pts[0], quad_pts[2], quad_pts[3]]
+			var sub_quad_pts_ne = [[],[], [], []]
+			for i in smaller_quads_ne.size():
+				var q = smaller_quads_ne[i]
+				for p in map_astar.get_point_ids():
+#					# skip center star
+#					if p == center_star:
+#						continue
+					
+					# this is the actual star position in light years
+					var pos = map_astar.get_point_position(p)
+					#print("Pos from A*: ", pos)
+					# we don't care about Z here
+					#if q.has_point(Vector2(pos.x, pos.y)):
+					# need to check coords converted back to int
+					if q.has_point(float_to_int2(Vector2(pos.x, pos.y))):
+						sub_quad_pts_ne[i].append(map_astar.get_point_position(p))
+						#print("Appended to quad pts, ", pos)
+						continue
+			
+			var sub_quad_pts_nw = [[],[], [], []]
+			for i in smaller_quads_nw.size():
+				var q = smaller_quads_nw[i]
+				for p in map_astar.get_point_ids():
+#					# skip center star
+#					if p == center_star:
+#						continue
+					
+					# this is the actual star position in light years
+					var pos = map_astar.get_point_position(p)
+					#print("Pos from A*: ", pos)
+					# we don't care about Z here
+					#if q.has_point(Vector2(pos.x, pos.y)):
+					# need to check coords converted back to int
+					if q.has_point(float_to_int2(Vector2(pos.x, pos.y))):
+						sub_quad_pts_nw[i].append(map_astar.get_point_position(p))
+						#print("Appended to quad pts, ", pos)
+						continue
+			
+			#print("Sub quads nw: ", sub_quad_pts_nw)
+			#print("Sub quads ne: ", sub_quad_pts_ne[0], sub_quad_pts_ne[1])
+			
+			# visual coords {0: "NW", 1: "NE", 2:"SE", 3:"SW"}
+			# internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
+
+			var all_quad_pts = [sub_quad_pts_ne[2], sub_quad_pts_ne[3], quad_pts[0], quad_pts[1]]
+			
+			# those assumed visual
+			#var all_quad_pts = [sub_quad_pts_ne[0], sub_quad_pts_ne[1], quad_pts[2], quad_pts[3]]
+			#var all_quad_pts = [sub_quad_pts_nw[1], sub_quad_pts_nw[0], sub_quad_pts_ne[1], sub_quad_pts_ne[0], quad_pts[2], quad_pts[3]]
+
 			# here the magic happens!
 			var cross_sector = []
 			for qp_i in range(0,3):
-				# first two entries are ours
+				# first entries are ours
 				if qp_i < 2:
 					var qp = all_quad_pts[qp_i]
 			#for qp in all_quad_pts:
 					for p in qp:
-						print("Connecting across sectors, ", p, " ", find_name_from_pos(p))
+						#print("Connecting across sectors, ", p, " ", find_name_from_pos(p))
 						# skip if we're already in the list
 						if p in cross_sector:
 							continue 
@@ -685,11 +757,11 @@ func connect_sectors(sector, our_quad_pts):
 							if s[1] in cross_sector:
 								continue
 							# if it's in one of the other two quadrants
-							if s[1] in all_quad_pts[2] or s[1] in all_quad_pts[3]:
+							if s[1] in all_quad_pts[all_quad_pts.size()-2] or s[1] in all_quad_pts[all_quad_pts.size()-1]:
 							# not in our quadrant
 							#if !s[1] in qp: #and s[1] != map_astar.get_point_position(center_star):
 								# limit by distance (experimental values)
-								if s[0] < 110 and s[0] > 0.15: #10:
+								#if s[0] < 110 and s[0] > 0.15: #10:
 									tmp.append(s)
 						
 						stars = tmp

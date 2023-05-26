@@ -98,3 +98,24 @@ func _draw():
 #
 #	draw_rect(Rect2(cntr.position+visual_begin+Vector2(2500,2500), Vector2(2500,2500)), Color(0,1,0), false, 2.0)
 #	draw_string(font, cntr.position+visual_begin+Vector2(2515, 2525), str("SE"), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0,1,0))
+
+	# debug
+	if sector[0] == 0 and sector[1] == 1:
+		var smaller_quads_ne = get_parent().get_parent().quadrants(sector_begin+Vector2(512,0), 256, 256, false)
+		for i in smaller_quads_ne.size():
+			var q = smaller_quads_ne[i]
+			var vis_pos = (q.position/10)*get_parent().get_parent().LY_TO_PX
+			#print("Drawing rect @", q.position/10*get_parent().get_parent().LY_TO_PX)
+			draw_rect(Rect2(cntr.position+(q.position/10)*get_parent().get_parent().LY_TO_PX, Vector2(q.size/10*get_parent().get_parent().LY_TO_PX)), Color(0,1,0), false, 1.5)
+			# draw them round the center point
+			draw_string(font, cntr.position+visual_begin+Vector2(51,0)*get_parent().get_parent().LY_TO_PX+(q.size/10)*get_parent().get_parent().LY_TO_PX+offset[i], str(pretty_q_i[i]), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0,1,0))
+		
+		var smaller_quads_nw = get_parent().get_parent().quadrants(sector_begin, 256, 256, false)	
+		for i in smaller_quads_nw.size():
+			var q = smaller_quads_nw[i]
+			var vis_pos = (q.position/10)*get_parent().get_parent().LY_TO_PX
+			#print("Drawing rect @", q.position/10*get_parent().get_parent().LY_TO_PX)
+			draw_rect(Rect2(cntr.position+(q.position/10)*get_parent().get_parent().LY_TO_PX, Vector2((q.size/10)*get_parent().get_parent().LY_TO_PX)), Color(0,1,0), false, 1.5)
+			# draw them round the center point
+			draw_string(font, cntr.position+visual_begin+Vector2(0,0)*get_parent().get_parent().LY_TO_PX+(q.size/10)*get_parent().get_parent().LY_TO_PX+offset[i], str("sub-"+pretty_q_i[i]), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0,1,0))
+		
