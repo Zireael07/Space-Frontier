@@ -702,7 +702,9 @@ func pick_quads_across_sectors(sector, quad_pts):
 	return all_quad_pts
 
 func connect_sectors(sector, our_quad_pts):
+	var all_quad_pts = []
 	var sector_zero_start = Vector2(-512, -512)
+	# special case: sector 0,0 as neighbor
 	if abs(sector[0]) == 1 or abs(sector[1]) == 1:
 		print(sector, " neighboring sector 0,0")
 		
@@ -735,45 +737,44 @@ func connect_sectors(sector, our_quad_pts):
 			print("SE: ", quad_pts[2])
 			print("SW: ", quad_pts[3])
 			
-			var all_quad_pts = pick_quads_across_sectors(sector, quad_pts)
+			all_quad_pts = pick_quads_across_sectors(sector, quad_pts)
 
-			# here the magic happens!
-			var cross_sector = []
-			for qp_i in range(0,3):
-				# first entries are ours
-				if qp_i < 2:
-					var qp = all_quad_pts[qp_i]
-			#for qp in all_quad_pts:
-					for p in qp:
-						#print("Connecting across sectors, ", p, " ", find_name_from_pos(p))
-						# skip if we're already in the list
-						if p in cross_sector:
-							continue 
-			
-						var stars = get_closest_stars_to(float_to_int(p))
-						
-						# filter
-						var tmp = []
-						for s in stars:
-							if s[1] in cross_sector:
-								continue
-							# if it's in one of the other two quadrants
-							if s[1] in all_quad_pts[all_quad_pts.size()-2] or s[1] in all_quad_pts[all_quad_pts.size()-1]:
-							# not in our quadrant
-							#if !s[1] in qp: #and s[1] != map_astar.get_point_position(center_star):
-								# limit by distance (experimental values)
-								#if s[0] < 110 and s[0] > 0.15: #10:
-									tmp.append(s)
-						
-						stars = tmp
-						if !stars.is_empty():
-							#print("Candidate stars: ", stars)
-							map_astar.connect_points(mapping[float_to_int(p)], mapping[float_to_int(stars[0][1])])
-							print("Connecting across sectors, ", p, " ", find_name_from_pos(p), " and ", find_name_from_pos(stars[0][1]), " @ ", stars[0][1])
-							# prevent multiplying connections
-							cross_sector.append(stars[0][1])
-							cross_sector.append(p)				
+	# here the magic happens!
+	var cross_sector = []
+	for qp_i in range(0,3):
+		# first entries are ours
+		if qp_i < 2:
+			var qp = all_quad_pts[qp_i]
+	#for qp in all_quad_pts:
+			for p in qp:
+				#print("Connecting across sectors, ", p, " ", find_name_from_pos(p))
+				# skip if we're already in the list
+				if p in cross_sector:
+					continue 
 	
+				var stars = get_closest_stars_to(float_to_int(p))
+				
+				# filter
+				var tmp = []
+				for s in stars:
+					if s[1] in cross_sector:
+						continue
+					# if it's in one of the other two quadrants
+					if s[1] in all_quad_pts[all_quad_pts.size()-2] or s[1] in all_quad_pts[all_quad_pts.size()-1]:
+					# not in our quadrant
+					#if !s[1] in qp: #and s[1] != map_astar.get_point_position(center_star):
+						# limit by distance (experimental values)
+						#if s[0] < 110 and s[0] > 0.15: #10:
+							tmp.append(s)
+				
+				stars = tmp
+				if !stars.is_empty():
+					#print("Candidate stars: ", stars)
+					map_astar.connect_points(mapping[float_to_int(p)], mapping[float_to_int(stars[0][1])])
+					print("Connecting across sectors, ", p, " ", find_name_from_pos(p), " and ", find_name_from_pos(stars[0][1]), " @ ", stars[0][1])
+					# prevent multiplying connections
+					cross_sector.append(stars[0][1])
+					cross_sector.append(p)				
 # ------------------------------------------------------
 func find_name_from_pos(pos, need_conv=true):
 	#print("Looking up name from graph for pos: ", pos)
