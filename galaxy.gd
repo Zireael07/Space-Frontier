@@ -645,6 +645,62 @@ func auto_connect_prim(V, start, list=null):
 	
 	return [in_mst, tree]
 
+func pick_quads_across_sectors(sector, quad_pts):
+	var sector_zero_start = Vector2(-512, -512)
+	# this operates on internal values
+	var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
+	#print("Sector, ", sector, " begin: ", sector_begin)
+	# the weird Y offsets are a hack solution to get this to work properly for internal star values
+	var smaller_quads_one = quadrants(sector_begin+Vector2(512,512), 256, 256)
+	var smaller_quads_two = quadrants(sector_begin-Vector2(0,-512), 256, 256)
+
+	var sub_quad_pts_one = [[],[], [], []]
+	for i in smaller_quads_one.size():
+		var q = smaller_quads_one[i]
+		for p in map_astar.get_point_ids():
+#					# skip center star
+#					if p == center_star:
+#						continue
+			
+			# this is the actual star position in light years
+			var pos = map_astar.get_point_position(p)
+			#print("Pos from A*: ", pos)
+			# we don't care about Z here
+			#if q.has_point(Vector2(pos.x, pos.y)):
+			# need to check coords converted back to int
+			if q.has_point(float_to_int2(Vector2(pos.x, pos.y))):
+				sub_quad_pts_one[i].append(map_astar.get_point_position(p))
+				#print("Appended to quad pts, ", pos)
+				continue
+	
+	var sub_quad_pts_two = [[],[], [], []]
+	for i in smaller_quads_two.size():
+		var q = smaller_quads_two[i]
+		for p in map_astar.get_point_ids():
+#					# skip center star
+#					if p == center_star:
+#						continue
+			
+			# this is the actual star position in light years
+			var pos = map_astar.get_point_position(p)
+			#print("Pos from A*: ", pos)
+			# we don't care about Z here
+			#if q.has_point(Vector2(pos.x, pos.y)):
+			# need to check coords converted back to int
+			if q.has_point(float_to_int2(Vector2(pos.x, pos.y))):
+				sub_quad_pts_two[i].append(map_astar.get_point_position(p))
+				#print("Appended to quad pts, ", pos)
+				continue
+	
+	#print("Sub quads nw: ", sub_quad_pts_nw)
+	#print("Sub quads ne: ", sub_quad_pts_ne[0], sub_quad_pts_ne[1])
+	
+	# visual coords {0: "NW", 1: "NE", 2:"SE", 3:"SW"}
+	# internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
+
+	var all_quad_pts = [sub_quad_pts_one[2], sub_quad_pts_one[3], quad_pts[0], quad_pts[1]]
+	return all_quad_pts
+
 func connect_sectors(sector, our_quad_pts):
 	var sector_zero_start = Vector2(-512, -512)
 	if abs(sector[0]) == 1 or abs(sector[1]) == 1:
@@ -679,62 +735,7 @@ func connect_sectors(sector, our_quad_pts):
 			print("SE: ", quad_pts[2])
 			print("SW: ", quad_pts[3])
 			
-			# this operates on internal values
-			var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
-			#print("Sector, ", sector, " begin: ", sector_begin)
-			# the weird Y offsets are a hack solution to get this to work properly for internal star values
-			var smaller_quads_nw = quadrants(sector_begin-Vector2(0,-512), 256, 256)
-			var smaller_quads_ne = quadrants(sector_begin+Vector2(512,512), 256, 256)
-
-			var sub_quad_pts_ne = [[],[], [], []]
-			for i in smaller_quads_ne.size():
-				var q = smaller_quads_ne[i]
-				for p in map_astar.get_point_ids():
-#					# skip center star
-#					if p == center_star:
-#						continue
-					
-					# this is the actual star position in light years
-					var pos = map_astar.get_point_position(p)
-					#print("Pos from A*: ", pos)
-					# we don't care about Z here
-					#if q.has_point(Vector2(pos.x, pos.y)):
-					# need to check coords converted back to int
-					if q.has_point(float_to_int2(Vector2(pos.x, pos.y))):
-						sub_quad_pts_ne[i].append(map_astar.get_point_position(p))
-						#print("Appended to quad pts, ", pos)
-						continue
-			
-			var sub_quad_pts_nw = [[],[], [], []]
-			for i in smaller_quads_nw.size():
-				var q = smaller_quads_nw[i]
-				for p in map_astar.get_point_ids():
-#					# skip center star
-#					if p == center_star:
-#						continue
-					
-					# this is the actual star position in light years
-					var pos = map_astar.get_point_position(p)
-					#print("Pos from A*: ", pos)
-					# we don't care about Z here
-					#if q.has_point(Vector2(pos.x, pos.y)):
-					# need to check coords converted back to int
-					if q.has_point(float_to_int2(Vector2(pos.x, pos.y))):
-						sub_quad_pts_nw[i].append(map_astar.get_point_position(p))
-						#print("Appended to quad pts, ", pos)
-						continue
-			
-			#print("Sub quads nw: ", sub_quad_pts_nw)
-			#print("Sub quads ne: ", sub_quad_pts_ne[0], sub_quad_pts_ne[1])
-			
-			# visual coords {0: "NW", 1: "NE", 2:"SE", 3:"SW"}
-			# internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
-
-			var all_quad_pts = [sub_quad_pts_ne[2], sub_quad_pts_ne[3], quad_pts[0], quad_pts[1]]
-			
-			# those assumed visual
-			#var all_quad_pts = [sub_quad_pts_ne[0], sub_quad_pts_ne[1], quad_pts[2], quad_pts[3]]
-			#var all_quad_pts = [sub_quad_pts_nw[1], sub_quad_pts_nw[0], sub_quad_pts_ne[1], sub_quad_pts_ne[0], quad_pts[2], quad_pts[3]]
+			var all_quad_pts = pick_quads_across_sectors(sector, quad_pts)
 
 			# here the magic happens!
 			var cross_sector = []
