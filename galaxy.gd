@@ -645,14 +645,14 @@ func auto_connect_prim(V, start, list=null):
 	
 	return [in_mst, tree]
 
-func pick_quads_across_sectors(sector, quad_pts):
+func pick_quads_across_sectors(sector, quad_pts, y_offset_one, y_offset_two):
 	var sector_zero_start = Vector2(-512, -512)
 	# this operates on internal values
 	var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
 	#print("Sector, ", sector, " begin: ", sector_begin)
 	# the weird Y offsets are a hack solution to get this to work properly for internal star values
-	var smaller_quads_one = quadrants(sector_begin+Vector2(512,512), 256, 256)
-	var smaller_quads_two = quadrants(sector_begin-Vector2(0,-512), 256, 256)
+	var smaller_quads_one = quadrants(sector_begin+y_offset_one, 256, 256)
+	var smaller_quads_two = quadrants(sector_begin+y_offset_two, 256, 256)
 
 	var sub_quad_pts_one = [[],[], [], []]
 	for i in smaller_quads_one.size():
@@ -736,8 +736,8 @@ func connect_sectors(sector, our_quad_pts):
 			#print("NW: ", our_quad_pts[0])
 			print("SE: ", quad_pts[2])
 			print("SW: ", quad_pts[3])
-			
-			all_quad_pts = pick_quads_across_sectors(sector, quad_pts)
+			# (-0, -1024) begin one, (-512, -1024) begin two
+			all_quad_pts = pick_quads_across_sectors(sector, quad_pts, Vector2(512,512), Vector2(0,512))
 
 	# here the magic happens!
 	var cross_sector = []
