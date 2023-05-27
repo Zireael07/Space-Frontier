@@ -645,7 +645,7 @@ func auto_connect_prim(V, start, list=null):
 	
 	return [in_mst, tree]
 
-func pick_quads_across_sectors(sector, quad_pts, y_offset_one, y_offset_two):
+func pick_quads_across_sectors(sector, quad_pts, y_offset_one, y_offset_two, index_one, index_two):
 	var sector_zero_start = Vector2(-512, -512)
 	# this operates on internal values
 	var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
@@ -692,13 +692,13 @@ func pick_quads_across_sectors(sector, quad_pts, y_offset_one, y_offset_two):
 				#print("Appended to quad pts, ", pos)
 				continue
 	
-	#print("Sub quads nw: ", sub_quad_pts_nw)
-	#print("Sub quads ne: ", sub_quad_pts_ne[0], sub_quad_pts_ne[1])
+	#print("Sub quads one: ", sub_quad_pts_one)
+	#print("Sub quads two: ", sub_quad_pts_two)
 	
 	# visual coords {0: "NW", 1: "NE", 2:"SE", 3:"SW"}
 	# internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
 
-	var all_quad_pts = [sub_quad_pts_one[2], sub_quad_pts_one[3], quad_pts[0], quad_pts[1]]
+	var all_quad_pts = [sub_quad_pts_one[index_one], sub_quad_pts_one[index_two]]
 	return all_quad_pts
 
 func connect_sectors(sector, our_quad_pts):
@@ -737,7 +737,9 @@ func connect_sectors(sector, our_quad_pts):
 			print("SE: ", quad_pts[2])
 			print("SW: ", quad_pts[3])
 			# (-0, -1024) begin one, (-512, -1024) begin two
-			all_quad_pts = pick_quads_across_sectors(sector, quad_pts, Vector2(512,512), Vector2(0,512))
+			# indices at the end refer to internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
+			all_quad_pts = pick_quads_across_sectors(sector, quad_pts, Vector2(512,512), Vector2(0,512), 2,3)
+			all_quad_pts = all_quad_pts + [quad_pts[0], quad_pts[1]]
 
 	# here the magic happens!
 	var cross_sector = []
