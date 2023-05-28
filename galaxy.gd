@@ -714,32 +714,45 @@ func connect_sectors(sector, our_quad_pts):
 		# internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}	
 		if sector[0] == 1:
 			print("our neighboring quadrants: NW, SW") # for sector 0, they're NE, SE
-			print("NW: ", our_quad_pts[0])
-			print("SW: ", our_quad_pts[3])
-			print("NE: ", quad_pts[1])
-			print("SE: ", quad_pts[2])
+			#print("NW: ", our_quad_pts[0])
+			#print("SW: ", our_quad_pts[3])
+			#print("NE: ", quad_pts[1])
+			#print("SE: ", quad_pts[2])
+			# indices at the end refer to internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
+			all_quad_pts = pick_quads_across_sectors(sector, quad_pts, Vector2(0,512), Vector2(0,0), 3,0)
+			all_quad_pts = all_quad_pts + [quad_pts[1], quad_pts[2]]
 		if sector[0] == -1:
 			print("our neighboring quadrants: NE, SE") # for sector 0, they're NW, SW
-			print("NE: ", our_quad_pts[1])
-			print("SE: ", our_quad_pts[2])
-			print("NW: ", quad_pts[0])
-			print("SW: ", quad_pts[3])
+			#print("NE: ", our_quad_pts[1])
+			#print("SE: ", our_quad_pts[2])
+			#print("NW: ", quad_pts[0])
+			#print("SW: ", quad_pts[3])
+			# indices at the end refer to internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
+			all_quad_pts = pick_quads_across_sectors(sector, quad_pts, Vector2(512,0), Vector2(512,512), 1,2)
+			all_quad_pts = all_quad_pts + [quad_pts[3], quad_pts[0]]
 		if sector[1] == -1:
 			print("our neighboring quadrants: SE, SW") # for sector 0, they're NE, NW
-			print("SE: ", our_quad_pts[2])
-			print("SW: ", our_quad_pts[3])
-			print("NE: ", quad_pts[1])
-			print("NW: ", quad_pts[0])
+			#print("SE: ", our_quad_pts[2])
+			#print("SW: ", our_quad_pts[3])
+			#print("NE: ", quad_pts[1])
+			#print("NW: ", quad_pts[0])
+			# indices at the end refer to internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
+			all_quad_pts = pick_quads_across_sectors(sector, quad_pts, Vector2(512, 0), Vector2(0,0), 0,1)
+			all_quad_pts = all_quad_pts + [quad_pts[2], quad_pts[3]]
+		
 		if sector[1] == 1:
 			print("our neighboring quadrants: NE, NW") # for sector 0, they're SE, SW
 			#print("NE: ", our_quad_pts[1])
 			#print("NW: ", our_quad_pts[0])
-			print("SE: ", quad_pts[2])
-			print("SW: ", quad_pts[3])
+			#print("SE: ", quad_pts[2])
+			#print("SW: ", quad_pts[3])
 			# (-0, -1024) begin one, (-512, -1024) begin two
 			# indices at the end refer to internal coords {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
 			all_quad_pts = pick_quads_across_sectors(sector, quad_pts, Vector2(512,512), Vector2(0,512), 2,3)
 			all_quad_pts = all_quad_pts + [quad_pts[0], quad_pts[1]]
+
+	if all_quad_pts.size() < 1:
+		return
 
 	# here the magic happens!
 	var cross_sector = []
