@@ -404,7 +404,8 @@ func update_map(marker):
 		
 		var coords = unpack_vector(game.player.w_hole.target_system)
 		#print("unpacked coords: ", coords)
-		coords = positive_to_original(coords)
+		var t_sector = unpack_sector(game.player.w_hole.target_system)
+		coords = positive_to_original(coords, t_sector)
 		#print("Coords: ", coords)
 		var icon = find_icon_for_pos(coords)
 		if icon != null:
@@ -514,7 +515,7 @@ func display_star_map_info(star_icon):
 			var coords = unpack_vector(n)
 			var n_sector = unpack_sector(n)
 			print("neighbor id: ", n, " unpacked coords: ", coords, " sector: ", n_sector)
-			coords = positive_to_original(coords, sector)
+			coords = positive_to_original(coords, n_sector)
 			#print("Coords: ", coords)
 			var icon = find_icon_for_pos(coords)
 			

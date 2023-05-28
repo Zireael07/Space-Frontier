@@ -40,6 +40,7 @@ func bit_to_sign(bit):
 # we have enough bits that we can pack signed numbers too since a sign is just a single bit more
 # NOTE: output needs to be positive since Godot AStar only accepts positive ids
 func pack_data(vec3, sector):
+	#print("Packing data: ", vec3, ", sector", sector)
 	#print("sign bits: " , int(sign(sector[0])), " ", int(sign(sector[1])))
 	#print("bits: ", int(sign_to_bit(sign(sector[0]))), " ", int(sign_to_bit(sign(sector[1]))) )
 	
@@ -60,7 +61,7 @@ func unpack_sector(id):
 	var sign1 = id >> 30+(1+10+10) & sign_mask
 	
 	#print("Decoded sector data: ", " s: ", sign0, " sec0: ", sec0, " s1: ", sign1, " sec2: ", sec1)
-	print("Decoded sector: ", [bit_to_sign(sign0)*sec0, bit_to_sign(sign1)*sec1])
+	#print("Decoded sector: ", [bit_to_sign(sign0)*sec0, bit_to_sign(sign1)*sec1])
 	return [bit_to_sign(sign0)*sec0, bit_to_sign(sign1)*sec1]
 	
 func unpack_vector(id):
@@ -110,38 +111,39 @@ func pos_to_positive_pos(vec3):
 	
 	return [pos, sector]
 	
-func positive_to_original(vec3, sector=[0,0]):
+func positive_to_original(vec3, sector):
 	#var sector_start = Vector3(-512,-512,-512)
 	var sector_zero_start = Vector2(-512,-512)
 	var sector_start_2d = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
 	var sector_start = Vector3(sector_start_2d.x, sector_start_2d.y, -512)
 	var pos = Vector3(vec3.x+sector_start.x, vec3.y+sector_start.y, vec3.z+sector_start.z)
-	#print("positive: ", vec3, " original: ", pos)
+	#print("positive: ", vec3, " sector: ", sector, " original: ", pos)
 	return pos
 
 # "want to determine which face encloses a point in world space, use floor instead of round" - Amit
 # NOTE: this assumes "visual"/map coords, i.e. +Y increases as we go down the map
 func pos_to_sector(pos, need_convert=true):
-	print("Determining sector for: ", pos)
+	#print("Determining sector for: ", pos)
 	
 	if need_convert:
 		pos = float_to_int(pos)
 	
 	# "how is our position offset compared to start of sector 0?"
 	pos = pos_offset_from_sector_zero(pos)
-	print("Pos offset from beginning of sector 0: ", pos)
+	#print("Pos offset from beginning of sector 0: ", pos)
 	# 1024 is the sector size
 	# divide by tile size to get grid coordinates
 	#var sector = [floor((pos.x-512)/1024), floor((pos.y-512)/1024)] ##, floor((pos.z-512)/1024)]
 	var sector = [floor(pos.x/1024), floor(pos.y/1024)]
-	print("Sector", sector)
+	#print("Sector", sector)
 	# NOTE: the way this is calculated implies that those go the same way as Godot visual coords
 	# i.e. +Y goes down
 	return sector
 
 # more generic version of the below function
 func quadrants(begin, size_x, size_y, debug=true):
-	print("Begin: ", begin, " x: ", size_x, " y: ", size_y)
+	if debug:
+		print("Begin: ", begin, " x: ", size_x, " y: ", size_y)
 	# divide into four quads
 	var nw = Rect2(begin.x, begin.y, size_x, size_y).abs()
 	var ne = Rect2(begin.x+size_x, begin.y, size_x, size_y).abs()
