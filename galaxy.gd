@@ -170,15 +170,17 @@ func save_graph_data(x,y,z, nam):
 	map_graph.append([x,y,z, nam])
 	
 	# skip any stars outside the sector
-	if x < -50 or y < -50 or z < -50:
+	if abs(x) > 50 or abs(y) > 50 or abs(z) > 50:
+		return
+	#if x < -50 or y < -50 or z < -50:
 		# test
 		#pos_to_sector(Vector3(x,y,z))
-		return
+	#	return
 	
 	# doing some magic to ensure we stay within AStar3D's id bounds (2^64 in Godot 4 now)
 	var pos_data = pos_to_positive_pos(float_to_int(Vector3(x,y,z)))
 	var id = pack_data(pos_data[0], pos_data[1])
-	print("ID: ", id, "; unpacked: ", unpack_sector(id))
+	print("ID: ", id, "; unpacked: ", unpack_sector(id), " for ", nam)
 	
 	
 	#print("Nearest po2: ", nearest_po2(id)) # 2^30 for storing 3*2^10 max
@@ -350,7 +352,7 @@ func create_map_graph():
 		var n = map_graph[i]
 		
 		# skip any stars outside the sector
-		if n[0] < -50 or n[1] < -50 or n[2] < -50:
+		if abs(n[0]) > 50 or abs(n[1]) > 50 or abs(n[2]) > 50:
 			continue
 		
 		# the reason for doing this is to be independent of any sort of a catalogue ordering...
