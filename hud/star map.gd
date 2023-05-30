@@ -46,6 +46,7 @@ func parse_data():
 			ic.named = _name
 			
 			#ic.named = str(line[0])
+			# FIXME: susceptible to number of spaces
 			if line[col.WINCHELLX] != " -":
 				# strip units
 				ic.x = strip_units(str(line[col.WINCHELLX]))
@@ -522,7 +523,7 @@ func display_star_map_info(star_icon):
 			if icon != null:
 				neighbors_text += str(icon.get_name()) + ", " #str(n) would display the internal ID
 			else:
-				neighbors_text += str("Not found for coords ", coords)
+				neighbors_text += str("Not found for coords ", coords) + ", "
 				print("Icon not found for ", coords)
 				
 		text = text + "Wormholes to: " + neighbors_text
