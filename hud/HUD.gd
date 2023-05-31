@@ -301,6 +301,8 @@ func _input(_event):
 	
 	# map panel
 	if Input.is_action_pressed("open_map"):
+		if get_node("Control4/star map").is_visible():
+			return
 		# pause, as a kindness to the player
 		paused = not paused
 		#print("Pressed pause, paused is " + str(paused))
