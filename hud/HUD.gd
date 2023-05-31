@@ -992,7 +992,7 @@ func _on_star_map_gui_input(event):
 
 func _on_view_size_changed():
 	print("SubViewport size changed to: ", get_node("/root").size)
-	viewport_factor = get_node("/root").size/Vector2(1024,600)
+	viewport_factor = get_node("/root").size/Vector2i(1024,600)
 	print("Factor: ", viewport_factor)
 
 	center = center*viewport_factor
