@@ -95,6 +95,13 @@ LHS 475, star, 19h20m, -82deg33m, 40.7, -, -, -, 0.274, 0.286, -, 0.0087, red, /
 LHS 475 b, planet, -, -, -, -, -, -, 0.8E, 1.0E, 0.02, - 
 Gliese 865 A, star, 22h38m, -65deg22m, 42.9, -, -, -, 0.4S, 0.4S, -, ?, red, //aka HDS 3215
 Gliese 865 B, star, -, -, -, -, -, -, 0.3S, 0.2S, ?, ?, red
+Gliese 1227, star, 18h22m, 62d2m, 27.2, -, -, -,  0.3S, 0.3S, -, 0.004, red, //luminosity is just a guess
+Gliese 806, star, 20h45m, 44d30m, 39.3, -, -, -, 0.44S, 0.41S, -, 0.013, red
+Gliese 806 b, planet, -, -, -, -, -, -, 1.09E, 1.3E, 0.01, -
+Gliese 806 c, planet, -, -, -, -, -, -,  5.8E, ?, 0.05, -
+Alpha Cephei, star, 21h18m, 62d35m, 49.04, -, -, -, 2.0S, ?, -, 17.0, white, //note to self: no known stars between Eta/Alpha Cephei and Wolf 1069
+G 264-12, star, 21h46m, 66d48m, 52.14, -, -, -, 0.3S, 0.4S, -, 0.005, red, //luminosity is just a guess
+G 264-17, star, 22h3m, 67d29m, 67.0, -, -, -, 0.2S, 0.2S, -, 0.005, red, //luminosity is just a guess
 HIP 54373, star, 11h7m, -19d17m, 61.1, -, -, -, 0.57S, 0.60S, -, ?, orange,
 HIP 54373b, planet, -, -, -, -, -, -, 8.6E, ?, 0.06, -
 HIP 54373c, planet, -, -, -, -, -, -, 12.4E, ?, 0.1, -
