@@ -48,6 +48,27 @@ YZ Ceti e, planet, -, -, -, -, -, -, 0.55E, 0.8E, 0.01, -
 YZ Ceti b, planet, -, -, -, -, -, -, 0.8E, 0.9E, 0.016, -
 YZ Ceti c, planet, -, -, -, -, -, -, 1.3E, 1.1E, 0.022, -
 YZ Ceti d, planet, -, -, -, -, -, -, 1.3E, 1.1E, 0.029, -
+Gliese 3622, star, 10h48m, -11d20m, 14.8, -, -, -, 0.08S, 0.11S, -, 0.0006, red, //87MJ and 11RJ aka LHS 292 or NN 3622
+Gliese 393, star, 10h28m, 0d50m, 22.9, -, -, -, 0.41S, 0.41S, -, 0.0235, red, //aka Ross 446
+AN Sextantis, star, 10h12m, -3d44m, 25.1, -, -, -, 0.56S, 0.58S, -, 0.068, red, //aka Gliese 382
+LHS 6167, star, 9h15m, -10d35m, 24.1, -, -, -, 0.13S, 0.20S, -, 0.005, red, //luminosity is a guess
+LHS 6167 B, star, -, -, -, -, -, -, 0.1S, 0.1S, 20, 0.001, red, //luminosity and AU are a guess
+Gliese 300, star, 8h12m, -21d33m, 26.4, -, -, -, 0.17S, 0.20S, -, 0.005, red, //luminosity is a guess
+Gliese 300b, planet, -, -, -, -, -, -, 6.8E, ?, 0.05, -
+Gliese 257 A, star, 6h57m, -44d17m, 26.1, -, -, -, 0.25S, 0.3S, -, 0.005, red, //luminosity is a guess
+Gliese 257 B, star, -, -, -, -, -, -, 0.24S, 0.6S, 20, 0.003, red, //luminosity and AU are a guess
+Gliese 318, star, 8h41m, -32d56m, 27.7, -, -, -, 0.45S, ?, -, 0.0015, white,
+Gliese 357, star, 9h36m, -21d39m, 30.7, -, -, -, 0.36S, 0.33S, -, 0.014, red,
+Gliese 357 b, planet, -, -, -, -, -, -, 1.8E, 1.2E, 0.04, -
+Gliese 357 c, planet, -, -, -, -, -, -, 3.4E, ?, 0.06, -
+Gliese 1068, star, 4h10m, -53d36m, 23.1, -, -, -, 0.2S, 0.2S, -, 0.005, red, //aka L320-188 luminosity is just a guess
+Gliese 358, star, 9h39m, -41d3m, 31.3, -, -, -, 0.32S, 0.09S, -, 0.001, red, //luminosity is just a guess
+Gliese 163, star, 4h9m, -53d22m, 49.5, -, -, -, 0.3S, 0.4S, -, 0.01, red, 
+Gliese 163 b, planet, -, -, -, -, -, -, 10.0E, ?, 0.06, - 
+Gliese 163 c, planet, -, -, -, -, -, -, 8.0E, ?, 0.12, -
+Gliese 163 f, planet, -, -, -, -, -, -, 7.0E, ?, 0.33, -
+Gliese 163 e, planet, -, -, -, -, -, -, 14.0E, ?, 0.7, - 
+Gliese 163 d, planet, -, -, -, -, -, -, 21.0E, ?, 1.02, -
 Luyten's star, star, 111.85deg, 5.22deg, 12.34, -10.3ly, -6.5ly, 2.2ly, 0.26S, 0.3S, -, 0.0006, red
 Luyten's star c, planet, -, -, -, -, -, -, 1.2E, 1.05E, 0.036, -, -
 Luyten's star b, planet, -, -, -, -, -, -, 2.9E, 1.4E, 0.091, -, -
