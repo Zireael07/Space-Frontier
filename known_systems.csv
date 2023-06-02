@@ -81,6 +81,29 @@ Gliese 163 c, planet, -, -, -, -, -, -, 8.0E, ?, 0.12, -
 Gliese 163 f, planet, -, -, -, -, -, -, 7.0E, ?, 0.33, -
 Gliese 163 e, planet, -, -, -, -, -, -, 14.0E, ?, 0.7, - 
 Gliese 163 d, planet, -, -, -, -, -, -, 21.0E, ?, 1.02, -
+L 308-57, star, 6h21m, -49d5m, 37.9, -, -, -, 0.2S, 0.2S, -, 0.003, red, //luminosity is just a guess
+HD 27274, star, 4h15m, -53d18m, 42.5, -, -, -, 0.73S, 0.71S, -, 0.2, orange, //luminosity is just a guess
+L 178-49, star, 4h22m, -57d26m, 53.9, -, -, -, 0.4S, 0.4S, -, 0.005, red, //luminosity is just a guess
+TOI-540, star, 5h5m, -47d56m, 45.6, -, -, -, 0.15S, 0.19S, -, 0.003, red, //luminosity is just a guess far off Z
+TOI-540 b, planet, -, -, -, -, -, -, ?, 0.1E, 0.01, -
+L 374-6, star, 4h24m, -40d2m, 46.5, -, -, -, 0.4S, 0.4S, -, 0.005, red, //luminosity is just a guess
+HD 40307, star, 5h54m, -60d1m, 42.1, -, -, -, 0.75S, 0.72S, -, 0.23, orange, //aka Gliese 2046 HIP 27887
+HD 40307 b, planet, -, -, -, -, -, -, 3.7E, ?, 0.05, -
+HD 40307 c, planet, -, -, -, -, -, -, 5.9E, ?, 0.08, -
+HD 40307 d, planet, -, -, -, -, -, -, 5.6E, ?, 0.13, -
+HD 40307 e, planet, -, -, -, -, -, -, 3.5E, ?, 0.19, -
+HD 40307 f, planet, -, -, -, -, -, -, 5.2E, ?, 0.25, -
+HD 40307 g, planet, -, -, -, -, -, -, 7.1E, ?, 0.6, -
+Gliese 3403, star, 6h39m, -55d36m, 42.9, -, -, -, 0.6S, 0.6S, -, 0.004, red, //luminosity is just a guess
+L 182-44, star, 6h33m, -58d31m, 49.6, -, -, -, 0.4S, 0.4S, -, 0.003, red, //luminosity is just a guess
+Gliese 3403, star, 6h39m, -55d36m, 42.9, -, -, -, 0.6S, 0.6S, -, 0.005, red, //luminosity is just a guess
+Gliese 269A, star, 7h17m, -46d58m, 47.6, -, -, -, 0.83S, 0.82S, -, 0.4, orange, //luminosity is just a guess
+Gliese 269B, star, -, -, -, -, -, -, 0.69S, 0.73S, 100, 0.25, orange, //0.7 arcsecond luminosity is just a guess
+HD 46588, star, 6h46m, 79d33m, 59.3, -, -, -, 1.13S, 1.19S, -, 1.82, yellow, //aka Gliese 240 big mismatch with Winchell's
+LP 870-27, star, 4h26m, -30d48m, 43.5, -, -, -, 0.2S, 0.2S, -, 0.003, red, //luminosity is just a guess
+RR Caeli, star, 4h21m, -48d39m, 69.14, -, -, -, 0.44S, 0.01, -, 0.0007, white, //aka Gliese 2034 big mismatch with Winchell's!
+RR Caeli A b, planet, -, -, -, -, -, -, 3.001J, ?, 5.2, -
+RR Caeli B, star, -, -, -, -, -, -, 0.18S, 0.2S, 0.0067, 0.0038, red, //distance of 1.46 sun radii
 Luyten's star, star, 111.85deg, 5.22deg, 12.34, -10.3ly, -6.5ly, 2.2ly, 0.26S, 0.3S, -, 0.0006, red
 Luyten's star c, planet, -, -, -, -, -, -, 1.2E, 1.05E, 0.036, -, -
 Luyten's star b, planet, -, -, -, -, -, -, 2.9E, 1.4E, 0.091, -, -
