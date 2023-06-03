@@ -22,8 +22,7 @@ func _ready():
 	get_node("../../Control2/Panel_rightHUD/Control/RouteHeightPanel").vis = get_node("Grid/VisControl")
 
 # enum so we no longer have to remember the order the columns are in...
-#enum col {NAME, WINCHELLX, WINCHELLY, WINCHELLZ, COLOR, PLANETS, MULTIPLE, COMMENTS, RA, DEC, DIST_SOL }
-enum col {NAME, TYPE, RA, DEC, DIST_SOL, WINCHELLX, WINCHELLY, WINCHELLZ, MASS, RADIUS, ORBIT, LUMINOSITY, COLOR}
+enum col {NAME, TYPE, RA, DEC, DIST_SOL, MASS, RADIUS, ORBIT, LUMINOSITY, COLOR}
 # it's here because we're saving data to our icons
 func parse_data():
 	data = load_data()
@@ -46,15 +45,15 @@ func parse_data():
 			ic.named = _name
 			
 			#ic.named = str(line[0])
-			# FIXME: susceptible to number of spaces
-			if line[col.WINCHELLX] != " -":
-				# strip units
-				ic.x = strip_units(str(line[col.WINCHELLX]))
-				#ic.x = float(line[1])
-				ic.y = strip_units(str(line[col.WINCHELLY]))
-				ic.depth = strip_units(str(line[col.WINCHELLZ]))
-				ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
-				save_graph_data(ic.x, ic.y, ic.depth, ic.named)
+			# we dropped direct use of Winchell's data because of several outdated/inconsistencies (e.g. RR Caeli, Gliese 240)
+#			if line[col.WINCHELLX] != " -":
+#				# strip units
+#				ic.x = strip_units(str(line[col.WINCHELLX]))
+#				#ic.x = float(line[1])
+#				ic.y = strip_units(str(line[col.WINCHELLY]))
+#				ic.depth = strip_units(str(line[col.WINCHELLZ]))
+#				ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
+#				save_graph_data(ic.x, ic.y, ic.depth, ic.named)
 
 
 
@@ -72,56 +71,56 @@ func parse_data():
 			# line[7] is for comments (col.COMMENTS)
 			
 			# ra-dec conversion
-			var stri = line[col.WINCHELLX].trim_suffix("ly").trim_suffix("pc").strip_edges() # for some reason valid_float borks up because of spaces
+			#var stri = line[col.WINCHELLX].trim_suffix("ly").trim_suffix("pc").strip_edges() # for some reason valid_float borks up because of spaces
 			#print("str: ", stri, " is float: ", stri.is_valid_float())
 			#if line[col.WINCHELLX] == " -":
-			if line[col.WINCHELLX].contains(" -") and !stri.is_valid_float(): # and line.size() > 8 for old known_systems_stars.csv
+			#if line[col.WINCHELLX].contains(" -") and !stri.is_valid_float(): # and line.size() > 8 for old known_systems_stars.csv
 				#print(_name, " is a RA/DEC candidate...")
-				var ra = line[col.RA]
-				var de = line[col.DEC] 
-				if ra != "" and de != "" and line[col.DIST_SOL] != "":
-					#print("RA/DEC convert for ", str(line[0]))
-					var ra_deg = 0
-					var dec = 0
-					if "d" in ra:
-						ra_deg = float(ra.rstrip("d"))
-					if "deg" in ra:
-						ra_deg = float(ra.rstrip("deg"))
-					if "deg" in de:
-						dec = float(de.rstrip("deg"))
-					if "h" in ra and not "m" in ra:
-						# if no minutes specified, we assume decimal hours
-						# 15 degrees in an hour (360/24) 
-						ra_deg = float(15*float(ra.rstrip("h")))
-						# for now, assume degrees are given in decimal degrees
-						dec = float(line[col.DEC])
-					elif "h" in ra and "m" in ra:
-						# http://voyages.sdss.org/preflight/locating-objects/ra-dec/
-						# 0,25 (1/4) degree in a minute since it takes 4 minutes for a degree (60/15)
-						var parts = ra.split("h")
-						ra_deg = float(15*float(parts[0].rstrip("h")))
-						ra_deg += float(0.25*float(parts[1].rstrip("m")))
-					if "d" in de and "m" in de:
-						var parts = de.split("d")
-						dec = float(parts[0].rstrip("d"))
-						dec += float(parts[1].rstrip("m"))/60
-					if not "h" in ra:
-						ra_deg = float(ra)
-					if not "d" in de and not "m" in de:
-						dec = float(de)
-					
-					var dist = float(line[col.DIST_SOL])
-					if "pc" in line[col.DIST_SOL]:
-						dist = strip_units(line[col.DIST_SOL])
-					var data = galactic_from_ra_dec(ra_deg, dec, dist)
-					if abs(data[0]) < 0.01 and abs(data[1]) < 0.01 and abs(data[2]) < 0.01:
-						print("Error! Calculated 0,0 for ", _name, ": RA: ", ra_deg, " D: ", dec, " dist: ", dist)
-					# assign calculated values - no need to strip units as it's always
-					ic.x = data[0]
-					ic.y = data[1]
-					ic.depth = data[2]
-					ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
-					save_graph_data(ic.x, ic.y, ic.depth, ic.named)
+			var ra = line[col.RA]
+			var de = line[col.DEC] 
+			if ra != "" and de != "" and line[col.DIST_SOL] != "":
+				#print("RA/DEC convert for ", str(line[0]))
+				var ra_deg = 0
+				var dec = 0
+				if "d" in ra:
+					ra_deg = float(ra.rstrip("d"))
+				if "deg" in ra:
+					ra_deg = float(ra.rstrip("deg"))
+				if "deg" in de:
+					dec = float(de.rstrip("deg"))
+				if "h" in ra and not "m" in ra:
+					# if no minutes specified, we assume decimal hours
+					# 15 degrees in an hour (360/24) 
+					ra_deg = float(15*float(ra.rstrip("h")))
+					# for now, assume degrees are given in decimal degrees
+					dec = float(line[col.DEC])
+				elif "h" in ra and "m" in ra:
+					# http://voyages.sdss.org/preflight/locating-objects/ra-dec/
+					# 0,25 (1/4) degree in a minute since it takes 4 minutes for a degree (60/15)
+					var parts = ra.split("h")
+					ra_deg = float(15*float(parts[0].rstrip("h")))
+					ra_deg += float(0.25*float(parts[1].rstrip("m")))
+				if "d" in de and "m" in de:
+					var parts = de.split("d")
+					dec = float(parts[0].rstrip("d"))
+					dec += float(parts[1].rstrip("m"))/60
+				if not "h" in ra:
+					ra_deg = float(ra)
+				if not "d" in de and not "m" in de:
+					dec = float(de)
+				
+				var dist = float(line[col.DIST_SOL])
+				if "pc" in line[col.DIST_SOL]:
+					dist = strip_units(line[col.DIST_SOL])
+				var data = galactic_from_ra_dec(ra_deg, dec, dist)
+				if abs(data[0]) < 0.01 and abs(data[1]) < 0.01 and abs(data[2]) < 0.01:
+					print("Error! Calculated 0,0 for ", _name, ": RA: ", ra_deg, " D: ", dec, " dist: ", dist)
+				# assign calculated values - no need to strip units as it's always
+				ic.x = data[0]
+				ic.y = data[1]
+				ic.depth = data[2]
+				ic.pos = float_to_int(Vector3(ic.x,ic.y,ic.depth))
+				save_graph_data(ic.x, ic.y, ic.depth, ic.named)
 			
 			if abs(ic.depth) < 12:
 				get_node("Control/Layer").add_child(ic)
