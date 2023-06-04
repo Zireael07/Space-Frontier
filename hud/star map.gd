@@ -21,6 +21,18 @@ func _ready():
 	parse_data()
 	get_node("../../Control2/Panel_rightHUD/Control/RouteHeightPanel").vis = get_node("Grid/VisControl")
 
+func is_non_primary_star(line):
+	var star = line[col.TYPE].strip_edges() == "star"
+	# checking for " C" returns true for e.g. "Tau Ceti"
+	#var non_prim = line[col.NAME].find(" B") != -1 or line[col.NAME].find(" C") != -1
+	# FIXME: this is susceptible to number of spaces
+	var non_prim = line[col.RA] == " -" and line[col.DEC] == " -" and line[col.DIST_SOL] == " -"
+
+	#print(line[col.NAME], " is non-primary star: ", (star and line[col.NAME].find(" B") != -1))
+	if star:
+		print(line[col.NAME], " is non-primary star: ", (star and non_prim))
+	return (star and non_prim)
+
 # enum so we no longer have to remember the order the columns are in...
 enum col {NAME, TYPE, RA, DEC, DIST_SOL, MASS, RADIUS, ORBIT, LUMINOSITY, COLOR}
 # it's here because we're saving data to our icons
@@ -36,7 +48,8 @@ func parse_data():
 		#print(line)
 		if line[col.NAME] != "Sol" and \
 		line[col.TYPE].strip_edges() == "star" \
-			and line[col.NAME].find(" B") == -1: # ignore B, C, etc. stars
+			and !is_non_primary_star(line) : # ignore B, C, etc. stars
+#			and line[col.NAME].find(" B") == -1: 
 			
 			ic = icon.instantiate()
 			# strip "A" etc.
@@ -141,9 +154,10 @@ func parse_data():
 
 		# merged data files only!	
 		# if a star but not A
-		elif (line[col.TYPE].strip_edges() == "star" \
+		elif is_non_primary_star(line) \
+		#elif (line[col.TYPE].strip_edges() == "star" \
 			#and line[col.NAME].find(" A") == -1) 
-			and line[col.NAME].find(" B") != -1) \
+		#	and line[col.NAME].find(" B") != -1) \
 			or line[col.TYPE].strip_edges() == "planet":
 				#print("Not A star of a system: ", line)
 				# because we ignore some systems (*cough cough* Sol)
