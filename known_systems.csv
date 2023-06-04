@@ -140,6 +140,31 @@ EQ Pegasi b, planet,  -, -, -, 2.26J, ?, 0.642, -
 Wolf 1069, star, 20h26m, 58d34m, 31.2, 0.16S, 0.18S, -, 0.00016, red, //aka Gliese 1253
 Wolf 1069b, planet, -, -, -, 1.26E, 1.08E, 0.07, -
 Gliese 1, star, 0h5m, -37deg22m, 14.1, 0.46S, 0.47S, -, 0.0296, red, //aka HD 225213
+Gliese 105 A, star, 02h36m, 6d54m, 23.5, 0.74S, 0.65S, -, 0.26, orange,
+Gliese 105 B, star, -, -, -, 0.24S, 0.28S, 120.0, 0.005, red, //luminosity is just a guess
+Gliese 105 C, star, -, -, -, 0.08S, 0.10S, 24.0, 0.001, red, //luminosity is just a guess
+CD Ceti, star, 3h13m, 4d46m, 28.0, 0.16S, 0.18S, -, 0.005, red, //luminosity is just a guess
+CD Ceti b, planet, -, -, -, 3.8E, ?, 0.02, -
+Kappa 1 Ceti, star, 3h19m, 3d19m, 30.2, 1.03S, 0.95S, -, 0.85, yellow
+Gliese 3253 A, star, 3h52m, 17d0m, 31.5, 0.3S, 0.2S, -, 0.002, red, //aka Wolf 227 luminosity is just a guess
+Gliese 3253 B, star, -, -, -, 0.2S, 0.2S, 20, 0.001, red, //no data on this can be found so pretty much everything is a guess
+HD 28343, star, 4h29m, 21d55m, 36.6, 0.5S, 0.6S, -, 0.005, red, //luminosity is just a guess
+Gliese 176, star, 4h42m, 18d57m, 30.9, 0.5S, 0.45S, -, 0.337, red
+Gliese 176b, planet, -, -, -, 9.1E, ?, 0.07, -
+Gliese 176c, planet, -, -, -, 7.4E, ?, 0.15, -
+LP 415-302, star, 4h39m, 16d15m, 38.8, 0.1S, 0.2S, -, 0.002, red, //luminosity is just a guess
+Gliese 3250, star, 3h47m, 8d41m, 40.7, 0.2S, 0.2S, -, 0.005, red, //luminosity is just a guess
+Gliese 1072, star, 4h50m, 22d7m, 41.2, 0.2S, 0.2S, -, 0.005, red, //luminosity is just a guess
+HD 29697, star, 4h41m, 20d54m, 43.0, 0.75S, 0.64S, -, 0.15, orange
+G 8-41, star, 4h33m, 20d44m, 44.3, 0.2S, 0.2S, -, 0.005, red, //luminosity is just a guess
+PM J04429+2128, star, 4h42m, 21d28m, 45.36, 0.3S, 0.3S, -, 0.005, red, //luminosity is just a guess
+LSPM J0501+2237, star, 5h1m, 22d36m, 46.6, 0.2S, 0.2S, -, 0.005, red, //luminosity is just a guess
+111 Tauri A, star, 5h24m, 17d23m, 47.5, 1.08S, 1.67S, -, 1.845, yellow,
+111 Tauri B, star, -, -, -, 0.7S, 0.7S, 40, 0.2, orange, //distance and luminosity are just guesses
+G 76-62, star, 3h9m, 10d1m, 41.0, 0.2S, 0.2S, -, 0.005, red, //luminosity is just a guess
+HD 19305, star, 3h6m, 1d57m, 48.0, 0.6S, 0.6S, -, 0.005, red, //luminosity is just a guess
+G 7-34, star, 4h17m, 8d49m, 47.5, 0.2S, 0.2S, -, 0.005, red, //luminosity is just a guess
+10 Tauri, star, 3h36m, 0d23m, 45.4, 1.13S, 1.62, -, 3.042, yellow, //F9 has an asteroid belt
 Gliese 54 A, star, 1h10m, -67deg26m, 26.8, 0.43S, 0.51S, -, 0.004, red, //luminosity is just a guess
 Gliese 54 B, star, -, -, -, 0.3S, 0.35S, -, ?, red
 Zeta Tucanae, star, 0h20m, -64deg52m, 28.0, 0.99S, 1.08S, -, 1.26, yellow
