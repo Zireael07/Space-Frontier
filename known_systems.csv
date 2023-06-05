@@ -104,6 +104,15 @@ LP 870-27, star, 4h26m, -30d48m, 43.5, 0.2S, 0.2S, -, 0.003, red, //luminosity i
 RR Caeli, star, 4h21m, -48d39m, 69.14, 0.44S, 0.01, -, 0.0007, white, //aka Gliese 2034 big mismatch with Winchell's!
 RR Caeli A b, planet, -, -, -, 3.001J, ?, 5.2, -
 RR Caeli B, star, -, -, -, 0.18S, 0.2S, 0.0067, 0.0038, red, //distance of 1.46 sun radii
+Ross 440, star, 9h31m, -13d29m, 32.6, 0.4S, 0.4S, -, 0.005, red, //luminosity is just a guess
+Gliese 1129, star, 9h44m, -18d12m, 35.8, 0.3S, 0.4S, -, 0.004, red, //luminosity is just a guess
+LP 788-1, star, 9h31m, -17d17m, 45.1, 0.1S, 0.1S, -, 0.001, red, //luminosity is just a guess
+L 749-34, star, 9h16m, -18d37m, 43.8, 0.5S, 0.4S, -, 0.005, red, //luminosity is just a guess
+L 750-42, star, 9h43m, -17d47m, 43.7, 0.2S, 0.2S, -, 0.002, red, //luminosity and radius are guesses "cool subdwarf"
+G 161-71, star, 9h44m, -12d20m, 42.8, 0.2S, 0.2S, -, 0.003, red, //luminosity is just a guess
+Gliese 3517, star, 8h53m, -3d29m, 28.2, 0.07S, 0.10S, -, 0.001, red, //luminosity is a guess 78MJ and 1.1RJ
+Gliese 1005 A, star, 0h15m, -16d8m, 16.2, 0.17S, 0.2S, -, 0.005, red, //luminosity is a guess
+Gliese 1005 B, star, -, -, -, 0.11S, 0.1S, 30.0, 0.005, red, //most things are guesses; 0.3 arcsecond between the two
 Luyten's star, star, 111.85deg, 5.22deg, 12.34, 0.26S, 0.3S, -, 0.0006, red
 Luyten's star c, planet, -, -, -, 1.2E, 1.05E, 0.036, -, -
 Luyten's star b, planet, -, -, -, 2.9E, 1.4E, 0.091, -, -
