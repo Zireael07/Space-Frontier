@@ -122,6 +122,9 @@ Teegarden's star, star, 43.25deg, 16.88deg, 12.49, 0.08S, 0.12S, -, 0.0006, red
 Teegarden's star b, planet, -, -, -, 1.2E, 1.05E, 0.025. -, -
 Teegarden's star c, planet, -, -, -, 1.3E, 1.1E, 0.044, -, -
 AX Microscopii, star, 319.31deg, -38.86deg, 12.94, 0.6S, 0.8S, -, 0.11, red, //aka Lacaille 8760
+Gliese 832, star, 21h33m, -49d0m, 16.2, 0.45S, 0.48S, -, 0.07, red
+Gliese 832c, planet, -, -, -, 5.4E, 1.7E, 0.16, -
+Gliese 832b, planet, -, -, -, 0.7E, ?, 3.67, -
 Gliese 674, star, 17h28m, -46d53m, 14.8, 0.35S, 0.42S, -, 0.016, red
 Gliese 674 b, planet, -, -, -, 11.1E, ?, 0.04. - 
 Gliese 682, star, 17h37n, -44d19m, 16.33, 0.2S, 0.32S, -, ?, red
@@ -139,7 +142,7 @@ Gliese 667 C b, planet, -, -, -, 5.7E, ?, 0.05, -
 Gliese 667 C c, planet, -, -, -, 3.7E, 1.5E, 0.18, -
 Gliese 618 A, star, 16h20m, -37d31m, 27.7, 0.4S, 0.4S, -, 0.0036, red,
 Gliese 618 B, star, -, -, -, 0.2S, 0.2S, ?, 0.00014, red, //radius is a guess
-41 G Arae A, star, 17h19m, -46d48m, 28.6, 0.81S, 0.79S, -, 0.42, yellow,
+41 G Arae A, star, 17h19m, -46d48m, 28.6, 0.81S, 0.79S, -, 0.42, yellow, //aka Gliese 666
 41 G Arae B, star, -, -, -, 0.52S, 0.51S, -, 0.005, red, //luminosities are just guesses
 41 G Arae C, star, -, -, -, ?, ?, -, 0.005, red
 Gliese 680 A, star, 17h35m, -48d40m, 31.5, 0.3S, 0.4S, -, 0.003, red, //luminosity is just a guess
@@ -150,6 +153,36 @@ L 489-3, star, 18h29m, -34d57m, 45.4, 0.4S, 0.4S, -, 0.005, red, //luminosity is
 Gliese 2130 A, star, 17h46m, -32d6m, 46.1, 0.3S, ?, -, 0.005, red, //luminosity is just a guess
 Gliese 2130 B, star, -, -, -, 0.19S, 0.2S, ?, 0.003, red, //luminosity is a guess
 Gliese 2130 C, star, -, -, -, 0.15S, 0.15S, ?, 0.003, red, //luminosity and radius are guesses
+279 G. Sagittarii, star, 20h11m, -36d6m, 19.6, 0.65S, 0.66S, -, 0.26, orange, //aka Gliese 783
+279 G Sagittarii B, star, -, -, -, 0.24S, 0.28S, 56.30, 0.005, red, //luminosity is just a guess distance off Wikipedia
+Wolf 1061, star, 16h30m, -12d40m, 14.05, 0.25S, 0.31S, -, 0.0015, red, //aka BD -12°4523
+Wolf 1061 b, planet, -, -, -, 1.9E, 1.2E, 0.04, -
+Wolf 1061 c, planet, -, -, -, 3.4E, 1.5E, 0.09, -
+Wolf 1061 d, planet, -, -, -, 7.7E, 2.2E, 0.47, -
+70 Ophiuchi A, star, 18h5m, 2d29m, 16.6, 0.9S, 0.91S, -, 0.59, orange, //aka Gliese 702
+70 Ophiuchi B, star, -, -, -, 0.7S, 0.8S, 4.55, 0.13, orange, //distance off Wikipedia
+CE Bootis, star, 14h54m, 16d6m, 32.4, 0.35S, 0.5S, -, 0.007, red, //aka Gliese 569 has two brown dwarf companions
+Gliese 752 A, star, 19h16m, 5d9m, 19.2, 0.46S, 0.55S, -, 0.032, red, //has circumbinary planet
+Gliese 752 B, star, -, -, -, 0.07S, 0.10S, ?, 0.001, red, //luminosity is a guess 79MJ and 1RJ
+Gliese 673, star, 17h25m, 2d6m, 25.1, 0.65%, 0.56S, -, 0.02, orange, //luminosity is just a guess
+Gliese 701, star, 18h5m, -3d1m, 25.2, 0.49S, 0.48S, -, 0.032, red
+Gliese 595, star, 16h57m, -4d21m, 28.3, 0.14S, 0.4S, -, 0.003, red, //luminosity is just a guess
+12 Ophiuchi, star, 16h36m, -2d19m, 32.27, 0.91S, 0.84S, -, 0.39, orange
+AU Microscopii, star, 20h45m, -31d20m, 31.6, 0.6S, 0.82S, -, 0.09, red, //planet masses after https://arxiv.org/abs/2304.09642
+AU Microscopii b, planet, -, -, -, 10.2E, 5.1E, 0.08, -
+AU Microscopii c, planet, -, -, -, 12.2E, 3.1E, 0.11, -
+G Capricorni, star, 20h15m, -27d2m, 28.7, 0.78S, 0.79S, -, 0.385, orange, //aka Gliese 785
+G Capricorni b, planet, -, -, -, 16.9E, ?, 0.32, -
+G Capricorni c, planet, -, -, -, 24.0E, ?, 1.18, -
+Gliese 653, star, 17h5m, -5d4m, 34.1, 0.7S, 0.7S, -, 0.11, orange, //luminosity off Wikipedia
+Gliese 654, star, 17h8m, -5d6m, 31.0 , 0.28S, 0.%S, -, 0.004, red, //luminosity is just a guess; aka Wolf 636 grav bound to Gliese 653 at a dist of over 2500 AU https://wwwadd.zah.uni-heidelberg.de/datenbanken/aricns/cnspages/4c01359.htm
+Gliese 660 A, star, 17h11m, -1d51m, 33.2, 0.4S, 0.4S, -, 0.004, red, //luminosity is just a guess
+Gliese 660 B, star, -, -, -, 0.2S, 0.2S, 20, 0.003, red, //everything is just a guess
+LP 625-34, star, 16h40m, 0d42m, 36.7, 0.2S, 0.2S, -, 0.002, red, //luminosity is just a guess
+L 624-54, star, 16h14m, -2d50m, 47.3, 0.2S, 0.2S, -, 0.003, red, //luminosity is just a guess
+Ross 1047, star, 15h9m, 3d10m, 47.6, 0.41S, 0.4S, -, 0.005, red, //luminosity is just a guess aka Gliese 3892
+18 Scorpii, star, 16h15m, -8d22m, 46.1, 1.03S, 1.01S, -, 1.04, yellow, //unconfirmed planet
+L 489-58, star, 18h53m, -38h36m, 40.5, 0.3S, 0.4S, -, 0.003, red, //luminosity is just a guess
 FL Virginis A, star, 188.32deg, 9.02deg, 14.11, 0.12S, 0.17S, -, 0.001, red, //aka Wolf 424 Gliese 473
 FL Virginis B, star, -, -, -, 0.12S, 0.14S, 0.001, 4, red, //luminosity is just a guess
 Ross 780, star, 343.31deg, -14.26deg, 15.23, 0.33S, 0.36S, -, 0.01, red, //aka Gliese 876
