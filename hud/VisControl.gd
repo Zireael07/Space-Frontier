@@ -46,8 +46,17 @@ func _draw():
 			# paranoia skip
 			if p[0] == null or p[1] == null:
 				continue
+			# vary color if connection crosses Z
+			var clr = Color(1, 0.8, 0)
+			if 'depth' in p[0] and 'depth' in p[1] and abs(p[0].depth-p[1].depth) > 12:
+				clr = Color(0.5, 0.5, 0)
+			# tint if all on another layer
+			if 'depth' in p[0] and 'depth' in p[1] and p[0].depth > 12 and p[1].depth > 12:
+				clr = Color(0.5, 0.5, 0.3) # slight blue tint
+			if 'depth' in p[0] and 'depth' in p[1] and p[0].depth < -12 and p[1].depth < -12:
+				clr = Color(0.3, 0.3, 0)
 			# this draws next to shadow icons
-			draw_line(p[0].position+cntr.position, p[1].position+cntr.position, Color(1, 0.8, 0), 3.0)
+			draw_line(p[0].position+cntr.position, p[1].position+cntr.position, clr, 3.0)
 			# this draws next to stars themselves
 			#draw_line(p[0].get_node("StarTexture").position+p[0].position+cntr.position, p[1].get_node("StarTexture").position+p[1].position+cntr.position, Color(1, 0.8, 0), 3.0)
 	
