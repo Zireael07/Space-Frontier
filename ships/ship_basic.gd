@@ -194,6 +194,11 @@ func is_overheating():
 	# paranoia
 	if not 'star_radius_factor' in star:
 		return false
+	
+	# not enough heat from brown dwarfs	
+	if star.star_type == 6:
+		return	
+	
 	var dist = star.get_global_position().distance_to(get_global_position())
 	# star textures are 1024x1024, and the star takes up roughly half of that
 	# so 500-ish means we're on top of the graphic
@@ -208,6 +213,10 @@ func close_to_sun():
 	if not 'star_radius_factor' in star:
 		return false
 		
+	# not enough heat from brown dwarfs	
+	if star.star_type == 6:
+		return false
+		
 	var dist = star.get_global_position().distance_to(get_global_position())
 	# some margin compared to is_overheating to have time to react
 	if dist < 650* star.star_radius_factor and not warping:
@@ -220,6 +229,10 @@ func can_scoop():
 	# paranoia
 	if not 'star_radius_factor' in star:
 		return false
+	
+	# no scooping from brown dwarfs
+	if star.star_type == 6:
+		return
 	
 	var dist = star.get_global_position().distance_to(get_global_position())
 	# some margin compared to is_overheating

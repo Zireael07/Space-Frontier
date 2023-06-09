@@ -2,9 +2,9 @@
 extends "star system.gd"
 
 # class member variables go here, for example:
-var star_types = { RED_DWARF = 0, YELLOW = 1}
+#var star_types = { RED_DWARF = 0, YELLOW = 1}
 var star_chances = []
-var star_type
+#var star_type
 @export var forced_type = -1
 
 func _ready():
@@ -104,19 +104,6 @@ func _ready():
 #			p.atm = randf_range(0.01, 1.5)
 #			p.greenhouse = randf_range(0.2, 0.99)
 
-func get_star_type(sel):
-	# swap the dictionary around
-	var reverse = {}
-	
-	for i in range(star_types.keys().size()):
-#		print(str(i))
-#		print(str(star_type.keys()[i]))
-		reverse[i] = star_types.keys()[i]
-	
-	print(str(reverse))
-
-	if reverse.has(sel):
-		return reverse[reverse.keys().find(sel)]
 
 
 #func _process(delta):

@@ -14,6 +14,7 @@ var yellow = preload("res://assets/bodies/star_yellow04.png")
 var red = preload("res://assets/bodies/star_red01.png")
 var orange = preload("res://assets/bodies/star_orange04.png")
 var white = preload("res://assets/bodies/star_white01.png")
+var brown_dwarf = preload("res://assets/bodies/hjm-brown dwarf.png")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -82,7 +83,8 @@ func spawn_from_data(data):
 				b.set_position(pos)
 				setup_star(b, data[i][4], data[i][5], data[i][3])
 				add_child(b)
-	
+
+var lookup_types = {"red": 0, "orange": 1, "yellow": 2, "blue": 3, "white": 4, "black": 5, "brown":6 }	
 
 func setup_star(star, lum, star_type, radius):
 	star.luminosity = float(lum)
@@ -90,6 +92,9 @@ func setup_star(star, lum, star_type, radius):
 	
 	if star_type == "":
 		star_type = "red"
+	
+	if star_type in lookup_types:
+		star.star_type = lookup_types[star_type]
 	
 	#print("Star type: *", star_type,"*")
 	if star_type == "red":
@@ -100,7 +105,9 @@ func setup_star(star, lum, star_type, radius):
 		star.get_node("Sprite2D").set_texture(orange)
 	elif star_type == "white":
 		star.get_node("Sprite2D").set_texture(white)
-	
+	elif star_type == "brown":
+		star.get_node("Sprite2D").set_texture(brown_dwarf)
+		star.get_node("Sprite2D").scale = Vector2(1.5,1.5)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

@@ -9,6 +9,9 @@ extends Node2D
 @export var star_radius_factor = 1.0
 @export var luminosity = 1.00 # 1 is the luminosity of the Sun
 
+var star_types = { RED_DWARF = 0, ORANGE = 1, YELLOW = 2, BLUE = 3, WHITE = 4, BLACK = 5, BROWN_DWARF = 6 }
+var star_type = 0 # default
+
 var hz_inner = 0.9 #dummy, in AU
 var hz_outer = 1.1
 
@@ -135,6 +138,21 @@ func load_data(name):
 	
 		opened.close()
 		return data
+
+func get_star_type(sel):
+	# swap the dictionary around
+	var reverse = {}
+	
+	for i in range(star_types.keys().size()):
+#		print(str(i))
+#		print(str(star_type.keys()[i]))
+		reverse[i] = star_types.keys()[i]
+	
+	print(str(reverse))
+
+	if reverse.has(sel):
+		return reverse[reverse.keys().find(sel)]
+
 
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
