@@ -65,6 +65,7 @@ func _ready():
 		"blue": preload("res://assets/hud/blue_circle.png"),
 		"white": preload("res://assets/hud/grey_circle.png"),
 		"black": preload("res://assets/hud/grey_circle.png"), # theoretical black dwarf star
+		"brown": preload("res://assets/hud/grey_circle.png"), # short for brown dwarf, which is something between a planet and a star. star catalogs include them though so.. so do we
 		"black hole": preload("res://assets/hud/grey_circle.png"),
 	}
 	
@@ -76,6 +77,9 @@ func _ready():
 		
 		if star_type == "red":
 			get_node("StarTexture").set_self_modulate(Color(1,0.5,0.5)) # darken to actual red
+		
+		if star_type == "brown":
+			get_node("StarTexture").set_self_modulate(Color(0.5, 0.25, 0.2))
 	else:
 		get_node("StarTexture").set_texture(star_icons["red"])
 		get_node("StarTexture").set_self_modulate(Color(1,0.5,0.5)) # darken to actual red
