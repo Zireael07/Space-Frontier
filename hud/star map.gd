@@ -490,10 +490,21 @@ func display_star_map_info(star_icon):
 		# basics
 		text = text + "Star type/color: " + str(star_icon.star_type) + "\n"
 
-	var fmt_multiple = "no" if not star_icon.multiple else str(star_icon.multiple)
-	text = text + "Multiple system: " + fmt_multiple + "\n"
-	var fmt_planets = "yes" if star_icon.planets else "no"
-	text = text + "Planets: " + fmt_planets + "\n"
+	if "multiple" in star_icon:
+		var fmt_multiple = "no" if not star_icon.multiple else str(star_icon.multiple)
+		text = text + "Multiple system: " + fmt_multiple + "\n"
+	if not "planets" in star_icon:
+		# special case: Sol
+		text = text + "Planets: yes" + "\n"
+		# add the rest of data
+		text = text + "LY coords \n X: 0 Y: 0 Z: 0 \n [0,0]"
+		# need to go up the tree and back down :/
+		var rtl = $"../../Control2/Panel_rightHUD/PanelInfo/StarSystemInfo/RichTextLabel"
+		rtl.set_text(text)
+		return
+	else:
+		var fmt_planets = "yes" if star_icon.planets else "no"
+		text = text + "Planets: " + fmt_planets + "\n"
 	var fmt_coord_x = "%.2f" % star_icon.x
 	var fmt_coord_y = "%.2f" % star_icon.y 
 	var fmt_coord_z = "%.2f" % star_icon.depth
@@ -528,7 +539,7 @@ func display_star_map_info(star_icon):
 		for n in neighbors:
 			var coords = unpack_vector(n)
 			var n_sector = unpack_sector(n)
-			print("neighbor id: ", n, " unpacked coords: ", coords, " sector: ", n_sector)
+			#print("neighbor id: ", n, " unpacked coords: ", coords, " sector: ", n_sector)
 			coords = positive_to_original(coords, n_sector)
 			#print("Coords: ", coords)
 			var icon = find_icon_for_pos(coords)
@@ -629,7 +640,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 	# center of sector is sector_begin + half sector size (half of 1024)
 	var sector_center = sector_begin+Vector2(512, 512)
 	sector_center = (sector_center/10)*LY_TO_PX
-	print("Sector", sector, " sector center px: ", sector_center, " threshold x: ", sector_center.x+2200, " y:", sector_center.y+2200)
+	#print("Sector", sector, " sector center px: ", sector_center, " threshold x: ", sector_center.x+2200, " y:", sector_center.y+2200)
 	
 	if jump and not is_sector_generated(sector):
 		var sample_pos = Vector2(-offset.x/50, -offset.y/50)

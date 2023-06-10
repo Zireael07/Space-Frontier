@@ -39,14 +39,18 @@ func _draw():
 			# we want to draw from the bottom of graph
 			draw_line(Vector2(0, self.size.y/2), Vector2(0, self.size.y/2-z), clr)
 			draw_circle(Vector2(0, self.size.y/2-z), 4, clr)
-			var dist = (vis.cntr.tg.pos-Vector3(0,0,0)).length()
+
+			var dist = (vis.cntr.tg.pos if "pos" in vis.cntr.tg else Vector3(0,0,0) - Vector3(0,0,0)).length()
 			if 'pos' in vis.cntr.src:
-				dist = (vis.cntr.tg.pos-vis.cntr.src.pos).length()
+				dist = (vis.cntr.tg.pos if "pos" in vis.cntr.tg else Vector3(0,0,0) -vis.cntr.src.pos).length()
+			
 			# icon's depth is the original float so we use pos[2] to get the int 
 			# (which is multiplied by 10, hence this panel's scale)
 			# if planet is on different Z-level, fade it out
-			if abs(vis.cntr.tg.pos[2]) > 120: clr = Color(0.5, 0.5, 0.5)
-			draw_line(Vector2(dist, self.size.y/2), Vector2(dist, self.size.y/2-vis.cntr.tg.pos[2]), clr)
+			if "pos" in vis.cntr.tg and abs(vis.cntr.tg.pos[2]) > 120: clr = Color(0.5, 0.5, 0.5)
+			draw_line(Vector2(dist, self.size.y/2), Vector2(dist, self.size.y/2-vis.cntr.tg.pos[2] if "pos" in vis.cntr.tg else 0), clr)
+			if not 'pos' in vis.cntr.tg:
+				return
 			# ... and don't draw a circle for planets on different Z-levels
 			if abs(vis.cntr.tg.pos[2]) < 120:
 				draw_circle(Vector2(dist, self.size.y/2-vis.cntr.tg.pos[2]), 4, clr)
