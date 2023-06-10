@@ -180,7 +180,7 @@ func save_graph_data(x,y,z, nam):
 	# doing some magic to ensure we stay within AStar3D's id bounds (2^64 in Godot 4 now)
 	var pos_data = pos_to_positive_pos(float_to_int(Vector3(x,y,z)))
 	var id = pack_data(pos_data[0], pos_data[1])
-	print("ID: ", id, "; unpacked: ", unpack_sector(id), " for ", nam)
+	#print("ID: ", id, "; unpacked: ", unpack_sector(id), " for ", nam)
 	
 	
 	#print("Nearest po2: ", nearest_po2(id)) # 2^30 for storing 3*2^10 max
@@ -358,6 +358,9 @@ func create_map_graph():
 		# the reason for doing this is to be independent of any sort of a catalogue ordering...
 		map_astar.add_point(mapping[float_to_int(Vector3(n[0], n[1], n[2]))], Vector3(n[0], n[1], n[2]))
 		#map_astar.add_point(i+1, Vector3(n[0], n[1], n[2]))
+	
+	
+	# TODO: fill out the remote parts of sector 0,0
 	
 	# debug
 	#print("AStar3D points:")
@@ -540,7 +543,10 @@ func auto_connect_stars(sector):
 		var tmp = [] #stars.duplicate()
 		for s in stars:
 			if s[1] in qp:
-				tmp.append(s)
+				# NOTE: exclude brown dwarfs by name (special for hub star)
+				if find_name_from_pos(s[1]).find("WISE ") == -1:
+					print(find_name_from_pos(s[1]))
+					tmp.append(s)
 				#print("Star not in list: ", s[1], " ", find_name_from_pos(s[1]))
 				#tmp.remove(tmp.find(s))
 		#print("post filter: ", tmp, " ", quad_pts.find(qp))
@@ -549,13 +555,6 @@ func auto_connect_stars(sector):
 		# if we were using raw stars we'd be using index 1 because 0 is center star itself, but we're filtering first so 0
 		#print("Connecting the hub: ", map_astar.get_point_position(center_star), " to: ", find_name_from_pos(stars[0][1]), " @ ", stars[0][1])
 		map_astar.connect_points(center_star, mapping[float_to_int(stars[0][1])])
-
-	# manually add Sol's connections (for now) since that's what the wormhole setup script expects...
-	# funnily enough, the auto-hub algorithm picks up the EXACT same stars!
-	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(28, -31, 1)]) # Sol to Proxima Centauri
-	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(50, 30,14)]) # Sol to Barnard's
-	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-19, -39, 65)]) # Sol to Wolf359
-	#map_astar.connect_points(mapping[Vector3(0,0,0)], mapping[Vector3(-21, 2, -85)]) # Sol to Luyten 726-8/UV Ceti
 
 	return [secondary, quad_pts]
 
@@ -870,6 +869,7 @@ class MyCustomSorter:
 			return true
 		return false
 
+# NOTE: returns distance and position, nothing more
 func get_closest_stars_to(pos):
 	var src = map_astar.get_point_position(mapping[pos])
 	
