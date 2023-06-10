@@ -16,7 +16,9 @@ var orbit_rot = 0
 @onready var sprite = $"Sprite2D"
 #onready var planets = $"planet_holder"
 var planets = null
-#var star_type = ""
+
+var star_types = { RED_DWARF = 0, ORANGE = 1, YELLOW = 2, BLUE = 3, WHITE = 4, BLACK = 5, BROWN_DWARF = 6 }
+var star_type = 0
 
 # for minimap
 @export var zoom_scale = 12
@@ -72,6 +74,19 @@ func calculate_vz(lum):
 	var outer = 1 * pow(lum/1.776, 0.5)
 	return [outer]
 
+func get_star_type(sel):
+	# swap the dictionary around
+	var reverse = {}
+	
+	for i in range(star_types.keys().size()):
+#		print(str(i))
+#		print(str(star_type.keys()[i]))
+		reverse[i] = star_types.keys()[i]
+	
+	print(str(reverse))
+
+	if reverse.has(sel):
+		return reverse[reverse.keys().find(sel)]
 
 # based on arc functions that I seem to love :P	
 func make_circle(center, segments, radius):
