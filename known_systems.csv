@@ -15,7 +15,10 @@ Alpha Centauri B, star, -, -, -, 0.93S, 0.96S, 23.51, 0.55, yellow
 Alpha Centauri Bb, planet, -, -, -, 0.9E, 0.92E, 0.14, -, - 
 Barnard's star, star, 269.45deg, 4.69deg, 5.96, 0.16S, 0.17S, -, 0.004, red
 Barnard's star b, planet, -, -, -, 3.23E, ?, 0.4, -, - 
-Wolf 359, star, 164.12deg, 7.01deg, 7.85, 0.09S, 0.16S, -, 0.009, red, //aka GI 406
+Luhman–WISE 1 A, star, 10h49m, -53d19m, 6.5, 0.03S, 0.08S, -, 0.0001, brown, //L class 34MJ 0.9RJ  luminosity is a guess aka Luhman 16
+Luhman–WISE 1 B, star, -, -, -, 0.02S, 0.1S, 3.55, 0.0001, brown
+WISE 0855−0714, star, 08h55m, -07d14m, 7.43, 10J, 0.9J, -, 0.0001, brown, //Y class luminosity is a guess
+Wolf 359, star, 164.12deg, 7.01deg, 7.85, 0.09S, 0.16S, -, 0.009, red, //aka GI 406 CN Leo
 Wolf 359 b, planet, -, -, -, 50E, 8E, 1.84, -, -
 Wolf 359 c, planet, -, -, -, 4.4E, 1.6E, 0.018, -, -
 Lalande 21185, star, 165.83deg, 35.96deg, 8.30, 0.46S, 0.49S, -, 0.031, red,
