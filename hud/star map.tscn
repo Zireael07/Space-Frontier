@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ni03dlxrnpgj"]
+[gd_scene load_steps=12 format=3 uid="uid://ni03dlxrnpgj"]
 
 [ext_resource type="Script" path="res://hud/RouteHeightPanel.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://c00s6hy3fvbdy" path="res://assets/hud/arrow.png" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://yastj0ygv2jj" path="res://assets/hud/grey_arrowUpWhite.png" id="4"]
 [ext_resource type="PackedScene" uid="uid://bggreicuto81" path="res://poisson2D.tscn" id="4_45ins"]
 [ext_resource type="Script" path="res://hud/star map.gd" id="5"]
+[ext_resource type="LabelSettings" uid="uid://7dmmvp0f7hym" path="res://hud/new_label_settings.tres" id="5_kbiss"]
 [ext_resource type="Script" path="res://hud/Grid.gd" id="6"]
 [ext_resource type="Script" path="res://hud/starmapControl.gd" id="7"]
 [ext_resource type="Script" path="res://hud/VisControl.gd" id="8"]
@@ -71,6 +72,7 @@ layout_mode = 0
 offset_right = 164.0
 offset_bottom = 14.0
 text = "1 ly = 50 px"
+label_settings = ExtResource("5_kbiss")
 
 [node name="Label2" type="Label" parent="Legend"]
 layout_mode = 0
@@ -80,6 +82,7 @@ offset_bottom = 14.0
 text = "^ Spinward
 (towards 
 Cygnus)"
+label_settings = ExtResource("5_kbiss")
 
 [node name="Label3" type="Label" parent="Legend"]
 layout_mode = 0
@@ -88,6 +91,7 @@ offset_top = 500.0
 offset_right = 800.0
 offset_bottom = 514.0
 text = "V Trailing"
+label_settings = ExtResource("5_kbiss")
 
 [node name="Label4" type="Label" parent="Legend"]
 layout_mode = 0
@@ -95,6 +99,7 @@ offset_top = 250.0
 offset_right = 40.0
 offset_bottom = 264.0
 text = "< Rimward"
+label_settings = ExtResource("5_kbiss")
 
 [node name="Label5" type="Label" parent="Legend"]
 layout_mode = 0
@@ -103,6 +108,7 @@ offset_top = 250.0
 offset_right = 767.0
 offset_bottom = 264.0
 text = "> Galactic Core"
+label_settings = ExtResource("5_kbiss")
 
 [node name="Control" type="Control" parent="."]
 anchors_preset = 0
@@ -215,8 +221,9 @@ text = "V"
 [node name="Label" type="Label" parent="Control2"]
 layout_mode = 0
 offset_left = 40.0
+offset_top = -5.0
 offset_right = 80.0
-offset_bottom = 14.0
+offset_bottom = 21.0
 text = "Find:"
 
 [node name="LineEdit" type="LineEdit" parent="Control2"]

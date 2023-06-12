@@ -189,7 +189,7 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	if depth_s < 0:
 		# only do this if star icon visible
 		if get_node("StarTexture").visible:
-			get_node("Label").position = Vector2(-6.5, y_pos+4)
+			get_node("Label").position = Vector2(-6.5, y_pos+2)
 		# if multi-line label
 		if get_node("Label").get_text().find("\n") != -1:
 			get_node("Label").position = Vector2(-6.5, y_pos-20)
@@ -218,7 +218,7 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 		#print("Force show star for: ", self.get_name())
 		# force show star
 		get_node("StarTexture").show()
-		get_node("Label").position = Vector2(-6.5, y_pos+4)
+		get_node("Label").position = Vector2(-6.5, y_pos+2)
 		# if multi-line label
 		if get_node("Label").get_text().find("\n") != -1:
 			get_node("Label").position = Vector2(-6.5, y_pos-20)
