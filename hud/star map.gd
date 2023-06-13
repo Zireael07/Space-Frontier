@@ -29,8 +29,8 @@ func is_non_primary_star(line):
 	var non_prim = line[col.RA] == " -" and line[col.DEC] == " -" and line[col.DIST_SOL] == " -"
 
 	#print(line[col.NAME], " is non-primary star: ", (star and line[col.NAME].find(" B") != -1))
-	if star:
-		print(line[col.NAME], " is non-primary star: ", (star and non_prim))
+	#if star:
+	#	print(line[col.NAME], " is non-primary star: ", (star and non_prim))
 	return (star and non_prim)
 
 # enum so we no longer have to remember the order the columns are in...
@@ -572,10 +572,6 @@ func is_sector_generated(sector):
 	if icons.size() > 0:
 		ret = true
 	
-#	for c in get_node("Control/Layer").get_children():
-#		if c.get_name().find("TST") != -1:
-#			ret = true
-#			break
 	print("Is sector ", sector, " generated: ", ret)
 	return ret
 	
@@ -624,8 +620,16 @@ func draw_generated_sector(positions, new_sector):
 		ic.add_to_group(str(new_sector))
 		#print("pos", pos)
 		
+		if abs(ic.depth) < 12:
+			get_node("Control/Layer").add_child(ic)
+		elif ic.depth > 12:
+			get_node("Control/LayerZ+").add_child(ic)
+		elif ic.depth < 12:
+			get_node("Control/LayerZ-").add_child(ic)
+		
+		
 		# assume middle Z layer for now
-		get_node("Control/Layer").add_child(ic)
+		#get_node("Control/Layer").add_child(ic)
 	#print("Done generating...")
 
 func _on_move_to_offset(offset, sector, jump=false):

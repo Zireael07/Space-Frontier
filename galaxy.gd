@@ -302,7 +302,7 @@ func get_sector_positions(sector_data):
 		# shave off that unneeded decimal
 		var pos2d = Vector2((sector_data[0][0] + s[0])/10, (sector_data[0][1]+s[1])/10)
 		# vary the Z (the visual vs data Y is handled when generating, see l. 252)
-		var pos = Vector3(pos2d.x, pos2d.y, randf_range(-11, +11))
+		var pos = Vector3(pos2d.x, pos2d.y, randf_range(-25, +25)) #-11 to -11 to keep within layer 0
 		positions.append(pos)
 	
 	print("[sectorgen] Done generating...")
