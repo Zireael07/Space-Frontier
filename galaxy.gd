@@ -41,7 +41,7 @@ func bit_to_sign(bit):
 # NOTE: output needs to be positive since Godot AStar only accepts positive ids
 func pack_data(vec3, sector):
 	#print("Packing data: ", vec3, ", sector", sector)
-	#print("sign bits: " , int(sign(sector[0])), " ", int(sign(sector[1])))
+	#print("signs: " , int(sign(sector[0])), " ", int(sign(sector[1])))
 	#print("bits: ", int(sign_to_bit(sign(sector[0]))), " ", int(sign_to_bit(sign(sector[1]))) )
 	
 	# sector[1] sign bit << (all the sizes) | sector[1] << ... | sector[0] sign bit << .. | sector[0] << (size1+size2+size3) 
@@ -50,7 +50,7 @@ func pack_data(vec3, sector):
 
 func unpack_sector(id):
 	var mask = ((1 << 10) -1) # this preserves 10 rightmost bits
-	var sign_mask = ((1 << 10) -1)
+	var sign_mask = ((1 << 1) -1)
 	
 	# the last 30 bits are vector coords (10 for x, 10 for y 10 for z)
 	var offset = 30
@@ -60,7 +60,7 @@ func unpack_sector(id):
 	var sec1 = id >> 30+(1+10) & mask
 	var sign1 = id >> 30+(1+10+10) & sign_mask
 	
-	#print("Decoded sector data: ", " s: ", sign0, " sec0: ", sec0, " s1: ", sign1, " sec2: ", sec1)
+	#print("Decoded sector data: ", " s0: ", sign0, " sec0: ", sec0, " s1: ", sign1, " sec2: ", sec1)
 	#print("Decoded sector: ", [bit_to_sign(sign0)*sec0, bit_to_sign(sign1)*sec1])
 	return [bit_to_sign(sign0)*sec0, bit_to_sign(sign1)*sec1]
 	
@@ -326,6 +326,7 @@ func generate_map_graph(positions, sector):
 		var nam = "TST"+"%.2f" % pos[0]+"--"+"%.2f" % pos[1]
 		map_graph.append([pos[0],pos[1],pos[2], nam]) # needed for finding name from pos
 		var pos_data = pos_to_positive_pos(float_to_int(pos))
+		#print(pos, " ", pos_data)
 		mapping[float_to_int(pos)] = pack_data(pos_data[0], pos_data[1])
 		map_astar.add_point(mapping[float_to_int(pos)], Vector3(pos.x, pos.y, pos.z))
 		#print("[sectorgen] ", sector, " ", pos2d, " added to astar: ", Vector3(pos.x/10, pos.y/10, pos.z))
@@ -545,7 +546,7 @@ func auto_connect_stars(sector):
 			if s[1] in qp:
 				# NOTE: exclude brown dwarfs by name (special for hub star)
 				if find_name_from_pos(s[1]).find("WISE ") == -1:
-					print(find_name_from_pos(s[1]))
+					#print(find_name_from_pos(s[1]))
 					tmp.append(s)
 				#print("Star not in list: ", s[1], " ", find_name_from_pos(s[1]))
 				#tmp.remove(tmp.find(s))
