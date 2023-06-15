@@ -554,7 +554,9 @@ func auto_connect_stars(sector, quad_pts=null):
 					# limit by distance (experimental values)
 					if s[0] < 8 and s[0] > 0.15: #10:
 						tmp.append(s)
+						break # we only need the first star 
 			
+			#print("tmp stars: ", tmp, "size: ", tmp.size())
 			stars = tmp
 			if !stars.is_empty():
 				#print(stars)
@@ -823,6 +825,7 @@ func connect_sectors(sector, our_quad_pts):
 						# limit by distance (experimental values)
 						#if s[0] < 110 and s[0] > 0.15: #10:
 							tmp.append(s)
+							break # we only need the first star
 				
 				stars = tmp
 				if !stars.is_empty():
