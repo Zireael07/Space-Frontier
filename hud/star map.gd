@@ -646,6 +646,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 	sector_center = (sector_center/10)*LY_TO_PX
 	#print("Sector", sector, " sector center px: ", sector_center, " threshold x: ", sector_center.x+2200, " y:", sector_center.y+2200)
 	
+	# TODO: animation/progress bar for this case (it can take quite long e.g. for Sag A*)
 	if jump and not is_sector_generated(sector):
 		var sample_pos = Vector2(-offset.x/50, -offset.y/50)
 		#print("Jump sample pos: ", sample_pos)
@@ -654,7 +655,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 		var new_sector_data = create_procedural_sector(new_sector)
 		sectors.append(new_sector)
 		var positions = get_sector_positions(new_sector_data)
-		generate_map_graph(positions, new_sector)
+		generate_map_graph(positions, new_sector, new_sector_data[2])
 		draw_generated_sector(positions, sector)
 	
 	# threshold is sector edge-300px (or center+2200) to account for view
@@ -702,7 +703,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 #		get_node("Control/Layer").add_child(cc)
 
 			var positions = get_sector_positions(new_sector_data)
-			generate_map_graph(positions, new_sector)		
+			generate_map_graph(positions, new_sector, new_sector_data[2])
 			draw_generated_sector(positions, new_sector)
 
 

@@ -277,17 +277,27 @@ func create_procedural_sector(sector):
 	# now a second set of samples
 	get_node("Grid/VisControl/Node2D").set_seed(1000002+sector[0]+sector[1])
 	var sampl2 = get_node("Grid/VisControl/Node2D").samples.duplicate()
-	# poisson2d generates points in +X +Y, so for remaining quadrants we need to remap
-	sampl2 = sampl2.map(func(s): return [s[0], -s[1]] )
+	# poisson2d generates points in +X +Y (i.e. NE quadrant), so for remaining quadrants we need to remap
+	sampl2 = sampl2.map(func(s): return [s[0], -s[1]] ) # SE
 	#print("Generated points: ", sampl2)
 	get_node("Grid/VisControl/Node2D").set_seed(1000003+sector[0]+sector[1])
 	var sampl3 = get_node("Grid/VisControl/Node2D").samples.duplicate()
-	sampl3 = sampl3.map(func(s): return [-s[0], -s[1]] )
+	sampl3 = sampl3.map(func(s): return [-s[0], -s[1]] ) # NW
 	get_node("Grid/VisControl/Node2D").set_seed(1000004+sector[0]+sector[1])
 	var sampl4 = get_node("Grid/VisControl/Node2D").samples.duplicate()
-	sampl4 = sampl4.map(func(s): return [-s[0], s[1]] )
+	sampl4 = sampl4.map(func(s): return [-s[0], s[1]] ) # SW
+	
+	# use the way we generate to avoid calling get_quad_points
+	var quad1 = samples.map(func(s): return Vector3((sector_center[0]+s[0])/10, (sector_center[1]+s[1])/10, randf_range(-25, +25)))
+	var quad2 = sampl2.map(func(s): return Vector3((sector_center[0]+s[0])/10, (sector_center[1]+s[1])/10, randf_range(-25, +25)))
+	var quad3 = sampl3.map(func(s): return Vector3((sector_center[0]+s[0])/10, (sector_center[1]+s[1])/10, randf_range(-25, +25)))
+	var quad4 = sampl4.map(func(s): return Vector3((sector_center[0]+s[0])/10, (sector_center[1]+s[1])/10, randf_range(-25, +25)))
+	
+	var quads = [quad1, quad2, quad3, quad4]
+	#pretty_print_quadrants(quads)
+	
 	samples = samples + sampl2 + sampl3 + sampl4
-	return [sector_center, samples]
+	return [sector_center, samples, quads]
 
 func get_sector_positions(sector_data):
 	if sector_data == null:
@@ -295,21 +305,26 @@ func get_sector_positions(sector_data):
 	
 	var positions = []
 	#print(sector_data)
-	for s in sector_data[1]:
-		# s here can be a float
-		#print("[sectorgen] s: ", s)
-		# pos here is sector_center+sample position
-		# shave off that unneeded decimal
-		var pos2d = Vector2((sector_data[0][0] + s[0])/10, (sector_data[0][1]+s[1])/10)
-		# vary the Z (the visual vs data Y is handled when generating, see l. 252)
-		var pos = Vector3(pos2d.x, pos2d.y, randf_range(-25, +25)) #-11 to -11 to keep within layer 0
-		positions.append(pos)
+	
+	for q in sector_data[2]:
+		for p in q:
+			positions.append(p)
+	
+#	for s in sector_data[1]:
+#		# s here can be a float
+#		#print("[sectorgen] s: ", s)
+#		# pos here is sector_center+sample position
+#		# shave off that unneeded decimal
+#		var pos2d = Vector2((sector_data[0][0] + s[0])/10, (sector_data[0][1]+s[1])/10)
+#		# vary the Z (the visual vs data Y is handled when generating, see l. 252)
+#		var pos = Vector3(pos2d.x, pos2d.y, randf_range(-25, +25)) #-11 to -11 to keep within layer 0
+#		positions.append(pos)
 	
 	print("[sectorgen] Done generating...")
 	return positions
 
 # generate a map graph for the above sector	
-func generate_map_graph(positions, sector):
+func generate_map_graph(positions, sector, quads):
 	print("points pre addition: ", map_astar.get_point_count())
 	
 	#print(sector_data)
@@ -329,12 +344,12 @@ func generate_map_graph(positions, sector):
 		#print(pos, " ", pos_data)
 		mapping[float_to_int(pos)] = pack_data(pos_data[0], pos_data[1])
 		map_astar.add_point(mapping[float_to_int(pos)], Vector3(pos.x, pos.y, pos.z))
-		#print("[sectorgen] ", sector, " ", pos2d, " added to astar: ", Vector3(pos.x/10, pos.y/10, pos.z))
-	
+		#print("[sectorgen]", sector, " added to astar: ", Vector3(pos.x, pos.y, pos.z))
+		
 	print("Points post addition: ", map_astar.get_point_count())
 	
 	# connect stars
-	var data = auto_connect_stars(sector)
+	var data = auto_connect_stars(sector, quads)
 	
 	connect_sectors(sector, data[1])
 	return data # for debugging
@@ -414,7 +429,7 @@ func get_quad_points(sector_begin, center_star):
 	#print("Quad pts: ", quad_pts)
 	return quad_pts
 	
-func auto_connect_stars(sector):
+func auto_connect_stars(sector, quad_pts=null):
 	# sector begin, sector center is begin + 512 (half sector size)
 	var sector_zero_start = Vector2(-512,-512)
 	# this works on star DATA (see l. 387), not visuals, which has the Y axis opposite to visuals
@@ -430,7 +445,9 @@ func auto_connect_stars(sector):
 	print("Center star: ", find_name_from_pos(map_astar.get_point_position(center_star)), " @ ", map_astar.get_point_position(center_star))
 	
 	# do it by quadrants
-	var quad_pts = get_quad_points(sector_begin, center_star)
+	if quad_pts == null:
+		print("Getting quad points...")
+		quad_pts = get_quad_points(sector_begin, center_star)
 	
 	# better debugging
 	#pretty_print_quadrants(quad_pts)
