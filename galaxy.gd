@@ -454,6 +454,10 @@ func auto_connect_stars(sector, quad_pts=null):
 	if quad_pts == null:
 		print("Getting quad points...")
 		quad_pts = get_quad_points(sector_begin, center_star)
+	else:
+		var cntr = map_astar.get_point_position(center_star)
+		for qp in quad_pts:
+			qp.erase(cntr)
 	
 	# better debugging
 	#pretty_print_quadrants(quad_pts)
@@ -513,6 +517,7 @@ func auto_connect_stars(sector, quad_pts=null):
 #
 #		#print("Connecting: ", in_mst[i-1], " and ", tree[i])
 
+	# TODO: can this be folded into the previous loop?
 	var secondary = []
 	for i in range(1, tree.size()-1):
 		if !typeof(tree[i]) == TYPE_VECTOR3:
@@ -526,6 +531,7 @@ func auto_connect_stars(sector, quad_pts=null):
 
 	# connect stars close by across quadrants (e.g, Barnard's and Alpha Cen)
 	# gets away with no sorting because of very limited distances (see l. 506)
+	# TODO: use subquadrants like connecting sectors does to improve performance for crowded sectors like galaxy core
 	var cross_quad = []
 	for qp in quad_pts:
 		for p in qp:
@@ -579,6 +585,7 @@ func auto_connect_stars(sector, quad_pts=null):
 				#print("Star not in list: ", s[1], " ", find_name_from_pos(s[1]))
 				#tmp.remove(tmp.find(s))
 		#print("post filter: ", tmp, " ", quad_pts.find(qp))
+		#print("post filter: ", tmp)
 		stars = tmp
 		
 		# if we were using raw stars we'd be using index 1 because 0 is center star itself, but we're filtering first so 0
