@@ -325,7 +325,11 @@ func get_sector_positions(sector_data):
 
 # generate a map graph for the above sector	
 func generate_map_graph(positions, sector, quads):
+	print("# points to add: ", positions.size())
 	print("points pre addition: ", map_astar.get_point_count())
+	
+	# tiny speedup?
+	map_astar.reserve_space(map_astar.get_point_count()+positions.size())
 	
 	#print(sector_data)
 	#for s in sector_data[1]:
@@ -355,14 +359,16 @@ func generate_map_graph(positions, sector, quads):
 	return data # for debugging
 
 # ------------------------------------------------------------
+# NOTE: this is for sector 0,0 which is loaded from data
 func create_map_graph():
 	# A* stores actual float positions (in light years)
 	map_astar = AStar3D.new()
-	# hardcoded stars
+	# hardcoded stars (i.e. Sol)
 	var pos_data = pos_to_positive_pos(float_to_int(Vector3(0,0,0)))
 	mapping[Vector3(0,0,0)] = pack_data(pos_data[0], pos_data[1])
 	map_astar.add_point(mapping[Vector3(0,0,0)], Vector3(0,0,0)) # Sol
 	
+	# load stars from data here
 	# graph is made out of nodes
 	for i in map_graph.size():
 		var n = map_graph[i]

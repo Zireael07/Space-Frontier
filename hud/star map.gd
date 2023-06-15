@@ -510,7 +510,7 @@ func display_star_map_info(star_icon):
 	var fmt_coord_z = "%.2f" % star_icon.depth
 	text = text + "LY coords \n X: " + str(fmt_coord_x) + " Y: " + str(fmt_coord_y) + " Z: " + str(fmt_coord_z) + "\n"
 	
-	# internal coords Y is opposite visual Y, hence the minus sign
+	# NOTE: internal coords Y is opposite visual Y, hence the minus sign
 	var sector = pos_to_sector(Vector3(star_icon.pos.x, -star_icon.pos.y, star_icon.pos.z), false)
 	text = text + str(pos_to_sector(Vector3(star_icon.pos.x, -star_icon.pos.y, star_icon.pos.z), false)) + "\n"
 	
