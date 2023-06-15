@@ -577,11 +577,14 @@ func auto_connect_stars(sector, quad_pts=null):
 			if s[1] in qp:
 				if no_brown_check: #nice shortcut for faraway sectors
 					tmp.append(s)
+					break # we only need the first star for each quadrant
 				
 				# NOTE: exclude brown dwarfs by name (special for hub star)
 				if find_name_from_pos(s[1]).find("WISE ") == -1:
 					#print(find_name_from_pos(s[1]))
 					tmp.append(s)
+					break # we only need the first star for each quadrant
+					
 				#print("Star not in list: ", s[1], " ", find_name_from_pos(s[1]))
 				#tmp.remove(tmp.find(s))
 		#print("post filter: ", tmp, " ", quad_pts.find(qp))
