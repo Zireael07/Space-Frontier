@@ -460,6 +460,7 @@ func auto_connect_stars(sector, quad_pts=null):
 	for qp in quad_pts:
 		# paranoia
 		if qp.size() == 0:
+			print("Empty qp!")
 			return
 			
 		var prim_data = auto_connect_prim(qp.size(), qp[0], qp)
@@ -553,6 +554,7 @@ func auto_connect_stars(sector, quad_pts=null):
 
 
 	# connect the central (hub) star
+	var no_brown_check = sector[0] != 0 and sector[1] != 0
 	for qp in quad_pts:
 		# find the closest star in each quadrant (they're NOT in distance order by default)
 		var stars = get_closest_stars_to(float_to_int(map_astar.get_point_position(center_star)))
@@ -561,6 +563,9 @@ func auto_connect_stars(sector, quad_pts=null):
 		var tmp = [] #stars.duplicate()
 		for s in stars:
 			if s[1] in qp:
+				if no_brown_check: #nice shortcut for faraway sectors
+					tmp.append(s)
+				
 				# NOTE: exclude brown dwarfs by name (special for hub star)
 				if find_name_from_pos(s[1]).find("WISE ") == -1:
 					#print(find_name_from_pos(s[1]))
