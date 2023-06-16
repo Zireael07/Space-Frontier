@@ -393,6 +393,18 @@ func create_map_graph():
 	var data = auto_connect_stars([0,0])
 	return data # for debugging
 
+# quadrant points are floats
+func precalc_closest_stars(points):
+	var closest_stars_cache = {}
+	#closest_stars_cache.resize(points.size())
+	for i_pos in points.size():
+		var pos = points[i_pos]
+		var stars = get_closest_stars_to(float_to_int(pos))
+		#closest_stars_cache[i_pos] = stars
+		closest_stars_cache[float_to_int(pos)] = stars
+	
+	return closest_stars_cache
+
 func pretty_print_quadrants(quad_pts):
 	print("NW:")
 	for p in quad_pts[0]:
@@ -465,15 +477,19 @@ func auto_connect_stars(sector, quad_pts=null):
 	#print("NW: ", quad_pts[0], " ", quad_pts[0].size(), "\n NE: ", quad_pts[1], " ", quad_pts[1].size(), "\n SE: ", quad_pts[2], " ", quad_pts[2].size(), "\n SW: ", quad_pts[3], " ", quad_pts[3].size())
 	#print("NW+NE+SE+SW:", quad_pts[0].size()+quad_pts[1].size()+quad_pts[2].size()+quad_pts[3].size())
 	
+	var closest_stars = [[],[],[],[]]
+	
 	var mst_sum = []
 	var tree = []
-	for qp in quad_pts:
+	for i_qp in 4:
+		var qp = quad_pts[i_qp]
 		# paranoia
 		if qp.size() == 0:
 			print("Empty qp!")
 			return
-			
-		var prim_data = auto_connect_prim(qp.size(), qp[0], qp)
+		
+		closest_stars[i_qp] = precalc_closest_stars(qp)
+		var prim_data = auto_connect_prim(qp.size(), qp[0], qp, closest_stars[i_qp])
 
 		var in_mst = prim_data[0]
 		var sub_tree = prim_data[1]
@@ -533,13 +549,15 @@ func auto_connect_stars(sector, quad_pts=null):
 	# gets away with no sorting because of very limited distances (see l. 506)
 	# TODO: use subquadrants like connecting sectors does to improve performance for crowded sectors like galaxy core
 	var cross_quad = []
-	for qp in quad_pts:
+	for i_qp in 4:
+		var qp = quad_pts[i_qp]
 		for p in qp:
 			# skip if we're already in the list
 			if p in cross_quad:
 				continue 
 				
-			var stars = get_closest_stars_to(float_to_int(p))
+			var stars = closest_stars[i_qp][float_to_int(p)]
+			#var stars = get_closest_stars_to(float_to_int(p))
 			
 			# some postprocessing to remove one of a pair of very close stars
 			stars = closest_stars_postprocess(stars)
@@ -599,7 +617,7 @@ func auto_connect_stars(sector, quad_pts=null):
 
 	return [secondary, quad_pts]
 
-func auto_connect_prim(V, start, list=null):
+func auto_connect_prim(V, start, list=null, closest_stars=null):
 	var debug = false
 	#if start == Vector3(0.1,-5.6,9.3):
 	if start.x < -100:
@@ -632,8 +650,17 @@ func auto_connect_prim(V, start, list=null):
 		
 		if debug:	
 			print("Connecting: ", find_name_from_pos(pos, false))
-		var stars = get_closest_stars_to(pos)
+		
+		var stars = []
+		if closest_stars == null:
+			stars = get_closest_stars_to(pos)
+		else:
+			# can't find it because pos is already converted to int
+			#var i = list.find(pos)
+			#print("Index of pos in quadrant: ", i)
+			stars = closest_stars[pos]
 		#print(stars)
+		#print(stars.size())
 		
 		# filter
 		var tmp = [] #stars.duplicate()
