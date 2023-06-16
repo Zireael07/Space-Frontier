@@ -587,33 +587,33 @@ func auto_connect_stars(sector, quad_pts=null):
 
 	# connect the central (hub) star
 	var no_brown_check = sector[0] != 0 and sector[1] != 0
+	# find the closest star in each quadrant (they're NOT in distance order by default)
+	var stars = get_closest_stars_to(float_to_int(map_astar.get_point_position(center_star)))
+	
 	for qp in quad_pts:
-		# find the closest star in each quadrant (they're NOT in distance order by default)
-		var stars = get_closest_stars_to(float_to_int(map_astar.get_point_position(center_star)))
-		
 		# filter
-		var tmp = [] #stars.duplicate()
+		var filtered = [] #stars.duplicate()
 		for s in stars:
 			if s[1] in qp:
 				if no_brown_check: #nice shortcut for faraway sectors
-					tmp.append(s)
+					filtered.append(s)
 					break # we only need the first star for each quadrant
 				
 				# NOTE: exclude brown dwarfs by name (special for hub star)
 				if find_name_from_pos(s[1]).find("WISE ") == -1:
 					#print(find_name_from_pos(s[1]))
-					tmp.append(s)
+					filtered.append(s)
 					break # we only need the first star for each quadrant
 					
 				#print("Star not in list: ", s[1], " ", find_name_from_pos(s[1]))
 				#tmp.remove(tmp.find(s))
 		#print("post filter: ", tmp, " ", quad_pts.find(qp))
-		#print("post filter: ", tmp)
-		stars = tmp
+		#print("post filter: ", filtered)
+		#stars = tmp
 		
 		# if we were using raw stars we'd be using index 1 because 0 is center star itself, but we're filtering first so 0
 		#print("Connecting the hub: ", map_astar.get_point_position(center_star), " to: ", find_name_from_pos(stars[0][1]), " @ ", stars[0][1])
-		map_astar.connect_points(center_star, mapping[float_to_int(stars[0][1])])
+		map_astar.connect_points(center_star, mapping[float_to_int(filtered[0][1])])
 
 	return [secondary, quad_pts]
 
