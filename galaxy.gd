@@ -944,13 +944,19 @@ func get_closest_stars_to(pos):
 	
 	#print("Getting closest stars to ", src)
 	# sort by dist
-	var dists = []
+	#var dists = []
 	var stars = []
 
-	for p in map_astar.get_point_ids():
-		var dist = map_astar.get_point_position(p).distance_to(src)
-		dists.append(dist)
-		stars.append([dist, map_astar.get_point_position(p)])
+	# ~2300 ticks for A* sector
+#	for p in map_astar.get_point_ids():
+#		var dist = map_astar.get_point_position(p).distance_to(src)
+#		#dists.append(dist)
+#		stars.append([dist, map_astar.get_point_position(p)])
+
+	# pretty much the same performance as above?
+	stars = Array(map_astar.get_point_ids()).map(func(p):
+		return [map_astar.get_point_position(p).distance_to(src), map_astar.get_point_position(p)]
+	)
 
 	#dists.sort()
 	#print("Dists sorted: " + str(dists))
