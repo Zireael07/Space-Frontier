@@ -394,12 +394,15 @@ func create_map_graph():
 	return data # for debugging
 
 # quadrant points are floats
-func precalc_closest_stars(points):
+func precalc_closest_stars(points, list):
 	var closest_stars_cache = {}
 	#closest_stars_cache.resize(points.size())
 	for i_pos in points.size():
 		var pos = points[i_pos]
-		var stars = get_closest_stars_to(float_to_int(pos))
+		var stars = get_closest_stars_to_list(float_to_int(pos), list)
+		
+		#var stars = get_closest_stars_to(float_to_int(pos))
+		
 		#closest_stars_cache[i_pos] = stars
 		closest_stars_cache[float_to_int(pos)] = stars
 	
@@ -481,6 +484,10 @@ func auto_connect_stars(sector, quad_pts=null):
 	
 	var mst_sum = []
 	var tree = []
+	
+	# map_astar = all four quadrants ONLY holds for sector 0,0
+	# this ensures we limit the closest stars search to our sector only
+	var list = quad_pts[0]+quad_pts[1]+quad_pts[2]+quad_pts[3]
 	for i_qp in 4:
 		var qp = quad_pts[i_qp]
 		# paranoia
@@ -488,7 +495,7 @@ func auto_connect_stars(sector, quad_pts=null):
 			print("Empty qp!")
 			return
 		
-		closest_stars[i_qp] = precalc_closest_stars(qp)
+		closest_stars[i_qp] = precalc_closest_stars(qp, list)
 		var prim_data = auto_connect_prim(qp.size(), qp[0], qp, closest_stars[i_qp])
 
 		var in_mst = prim_data[0]
@@ -556,9 +563,11 @@ func auto_connect_stars(sector, quad_pts=null):
 			# skip if we're already in the list
 			if p in cross_quad:
 				continue 
-				
+			
+			#var stars = get_closest_stars_to_list(p, quad_pts[0]+quad_pts[1]+quad_pts[2]+quad_pts[3])
 			var stars = closest_stars[i_qp][float_to_int(p)]
 			#var stars = get_closest_stars_to(float_to_int(p))
+			#print("stars #", stars.size())
 			
 			# some postprocessing to remove one of a pair of very close stars
 			stars = closest_stars_postprocess(stars)
@@ -932,12 +941,25 @@ func get_neighbors(coords):
 	print("Neighbors for id: ", mapping[float_to_int(coords)], " ", neighbors)
 	return neighbors
 
+
 # sort
 class MyCustomSorter:
 	static func sort_stars(a, b):
 		if a[0] < b[0]:
 			return true
 		return false
+
+func get_closest_stars_to_list(pos, list):
+	var stars = []
+	
+	stars = list.map(func(p):
+		return [p.distance_squared_to(pos), p]
+	)
+	
+	# custom sort
+	stars.sort_custom(Callable(MyCustomSorter,"sort_stars"))
+	
+	return stars
 
 # NOTE: returns distance and position, nothing more
 func get_closest_stars_to(pos):
