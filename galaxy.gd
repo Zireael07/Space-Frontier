@@ -540,7 +540,8 @@ func auto_connect_stars(sector, quad_pts=null):
 			continue # paranoia skip
 
 		# for debugging
-		var connect = [find_name_from_pos(mst_sum[i-1], false), find_name_from_pos(tree[i], false)]
+		#var connect = [find_name_from_pos(mst_sum[i-1], false), find_name_from_pos(tree[i], false)]
+		var connect = [mst_sum[i-1], tree[i]]
 		secondary.append(connect)
 		#var connect = [find_icon_for_pos(mst_sum[i-1]), find_icon_for_pos(tree[i])]
 		#get_node("Grid/VisControl").secondary.append(connect)

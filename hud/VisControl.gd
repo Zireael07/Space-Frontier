@@ -25,8 +25,9 @@ func _draw():
 	if not clicked:
 		for n in cntr.get_parent().get_neighbors_for_icon(cntr.src):
 			var connect_clr = Color(1, 0.8, 0) #if not second else Color(1,0.0,0)
-			if [cntr.src, n] in secondary: #or [n, cntr.src] in secondary:
-				connect_clr = Color(1,0,0)
+			if 'pos' in cntr.src and 'pos' in n:
+				if [cntr.src.pos, n.pos] in secondary: #or [n, cntr.src] in secondary:
+					connect_clr = Color(1,0,0)
 			draw_line(cntr.src.get_node("StarTexture").position+cntr.src.position+cntr.position, n.position+cntr.position, connect_clr) #Color(1, 0.8, 0)) # yellow
 	else:
 		# if we're not on a different Z layer
@@ -36,8 +37,9 @@ func _draw():
 				if n == null:
 					continue
 				var connect_clr = Color(1, 0.8, 0) #if not second else Color(1,0.0,0)
-				if [cntr.tg.get_name().rstrip("*"), n.get_name().rstrip("*")] in secondary: #or [n, cntr.tg] in secondary:
-					connect_clr = Color(1,0,0)
+				if 'pos' in cntr.tg and 'pos' in n:
+					if [cntr.tg.pos, n.pos] in secondary: #or [n, cntr.tg] in secondary:
+						connect_clr = Color(1,0,0)
 				draw_line(cntr.tg.get_node("StarTexture").position+cntr.tg.position+cntr.position, n.position+cntr.position, connect_clr) #Color(1, 0.8, 0)) # yellow
 		
 	# draw route
