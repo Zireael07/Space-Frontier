@@ -955,7 +955,7 @@ func get_closest_stars_to(pos):
 
 	# pretty much the same performance as above?
 	stars = Array(map_astar.get_point_ids()).map(func(p):
-		return [map_astar.get_point_position(p).distance_to(src), map_astar.get_point_position(p)]
+		return [map_astar.get_point_position(p).distance_squared_to(src), map_astar.get_point_position(p)]
 	)
 
 	#dists.sort()
