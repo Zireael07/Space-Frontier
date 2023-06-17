@@ -495,6 +495,7 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 # --------------------------------------------------------------------
 
 func wormholes_from_graph(p_ind, ref_pos=null):
+	var starmap = game.player.HUD.get_node("Control4/star map")
 	# get coords, neighbors and directions from AStar3D
 	var coords = game.player.HUD.get_node("Control4/star map").find_coords_for_name(curr_system)
 	var neighbors = game.player.HUD.get_node("Control4/star map").get_neighbors(coords)
@@ -521,7 +522,7 @@ func wormholes_from_graph(p_ind, ref_pos=null):
 			spawn_wormhole(p_ind, 11, mmap, n, wh_pos)
 	elif neighbors.size() > 1:
 		for n in neighbors:
-			print(n, " @ ", game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n))
+			print(n, " ", starmap.find_name_from_pos(starmap.map_astar.get_point_position(n)), " @ ", starmap.map_astar.get_point_position(n))
 			# relative direction
 			var dir = game.player.HUD.get_node("Control4/star map").map_astar.get_point_position(n) - coords
 			# where to place the w-hole?

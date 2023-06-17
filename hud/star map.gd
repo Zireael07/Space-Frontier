@@ -253,9 +253,12 @@ func get_neighbors_for_icon(star_icon):
 		neighbors = map_astar.get_point_connections(mapping[star_icon.pos])
 	
 	for n in neighbors:
+		# debug
+		print(find_name_from_pos(map_astar.get_point_position(n)), " @ ", map_astar.get_point_position(n))
+		
 		var coords = unpack_vector(n)
 		var sector = unpack_sector(n)
-		#print("unpacked coords: ", coords)
+		#print("unpacked coords: ", coords, " sector ", sector)
 		coords = positive_to_original(coords, sector)
 		#print("Coords: ", coords)
 		var icon = find_icon_for_pos(coords)	

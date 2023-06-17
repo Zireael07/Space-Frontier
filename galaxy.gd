@@ -519,7 +519,6 @@ func auto_connect_stars(sector, quad_pts=null):
 			if !typeof(sub_tree[i]) == TYPE_VECTOR3:
 				continue # paranoia skip
 			map_astar.connect_points(mapping[in_mst[i-1]], mapping[sub_tree[i]])
-
 			#print("Connecting: ", in_mst[i-1], " and ", sub_tree[i])
 
 	# old: entire sector at once
@@ -651,8 +650,8 @@ func auto_connect_prim(V, start, list=null, closest_stars=null):
 	tree.fill(0)
 	
 	while edge_count < V-1:
-		# Find closest star to each star
 		var pos = in_mst[edge_count]
+		# paranoia
 		if !typeof(pos) == TYPE_VECTOR3 and pos == 0:
 			print("ERR! Pos is 0")
 			edge_count += 1
@@ -661,6 +660,8 @@ func auto_connect_prim(V, start, list=null, closest_stars=null):
 		if debug:	
 			print("Connecting: ", find_name_from_pos(pos, false))
 		
+		# from here until break is step 1: minimum weight edge
+		# Find closest star to each star
 		var stars = []
 		if closest_stars == null:
 			stars = get_closest_stars_to(pos)
