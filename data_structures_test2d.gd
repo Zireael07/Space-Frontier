@@ -1,6 +1,6 @@
 extends Control
 
-var octree_data = []
+var octree_data = {}
 var font
 
 # Called when the node enters the scene tree for the first time.
@@ -10,17 +10,21 @@ func _ready():
 	#octree_data = octree_divide(AABB(Vector3(-512, -512, -512), Vector3(1024, 1024, 1024)))
 	
 	# test purposes: scale down by half
-	octree_data = octree_divide(AABB(Vector3(-256, -256, -256), Vector3(512, 512, 512)))
+	octree_data[-1] = octree_divide(AABB(Vector3(-256, -256, -256), Vector3(512, 512, 512)))
 	
 	# test
-	var o = octree_data[7]
-	octree_data.append_array(octree_divide(AABB(o[0], o[1]-o[0])))
-	#o = octree_data[5]
-	#octree_data.append_array(octree_divide(AABB(o[0], o[1]-o[0])))
-	#for o in octree_data:
-	#	octree_data.append_array(octree_divide(AABB(o[0], o[1]-o[0])))
+	#var o = octree_data[-1][7]
+	#octree_data[7] = octree_divide(AABB(o[0], o[1]-o[0]))
+
+	for o_i in octree_data[-1].size():
+		var o = octree_data[-1][o_i]
+		octree_data[o_i] = octree_divide(AABB(o[0], o[1]-o[0]))
 	
-	queue_redraw()
+	#print(octree_data)
+	
+	print(octree_data[1])
+	
+	#queue_redraw()
 	
 
 func octree_divide(bounds):
@@ -61,19 +65,24 @@ func _draw():
 	
 	# cyan for front, red for back (mirrors cyan for positive Z-axis and red for neg used on map)
 	
-	for o_i in octree_data.size():
-		var o = octree_data[o_i]
-		# 0 is position, 1 is end and we want size so 0-1
-		# XY axis for both front and back
-		var offset = 550 if o[0].z != octree_data[0][0].z else 0
-		draw_rect(Rect2(Vector2(o[0].x+offset, o[0].y), Vector2(o[1].x-o[0].x, o[1].y-o[0].y)), Color(1,0,0) if offset == 0 else Color(0,1,1), false, 3.0)
-		
-		#draw_string(font, Vector2(o[0].x+offset, o[0].y), str(o_i))
+	for n in octree_data:
+		for o_i in octree_data[n].size():
+			var o = octree_data[n][o_i]
 			
-		
-		# XZ axis (offset by 550 to the right AND differently colored)
-		#draw_rect(Rect2(Vector2(o[0].x+550, o[0].z), Vector2(o[1].x-o[0].x, o[1].z-o[0].z)), Color(0,0,1), false, 3.0)
-		#draw_string(font, Vector2(o[0].x+550, o[0].y), str(o_i))
+			# 0 is position, 1 is end and we want size so 0-1
+			# XY axis for both front and back
+			var offset = 550 if o[0].z != octree_data[-1][0][0].z else 0 # if our Z is different than start octant's
+			var color = Color(1,0,0) if offset == 0 else Color(0,1,1)
+			if n == 1:
+				color = Color(0,1,0) # debug
+			draw_rect(Rect2(Vector2(o[0].x+offset, o[0].y), Vector2(o[1].x-o[0].x, o[1].y-o[0].y)), color, false, 3.0)
+			
+			#draw_string(font, Vector2(o[0].x+offset, o[0].y), str(o_i))
+				
+			
+			# XZ axis (offset by 550 to the right AND differently colored)
+			#draw_rect(Rect2(Vector2(o[0].x+550, o[0].z), Vector2(o[1].x-o[0].x, o[1].z-o[0].z)), Color(0,0,1), false, 3.0)
+			#draw_string(font, Vector2(o[0].x+550, o[0].y), str(o_i))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
