@@ -22,7 +22,10 @@ func _ready():
 	
 	#print(octree_data)
 	
-	print(octree_data[1])
+	#print(octree_data[1])
+	
+	# test searching (start node exactly equal to AABB above)
+	nearest(Vector3(10, 10, 2), [512+512+512, null], [Vector3(-256, -256, -256), Vector3(256, 256, 256)], -1)
 	
 	#queue_redraw()
 	
@@ -34,7 +37,7 @@ func octree_divide(bounds):
 	var octants = []
 	# for simplicity, assume positive size (i.e. position is always the smallest)
 	# https://www.gamedev.net/tutorials/programming/general-and-gameplay-programming/introduction-to-octrees-r3529/
-	# for AABB: position and end, i.e. AABB constructor will be position, end-position (i.e. size)
+	# this list is position and end, i.e. AABB constructor will be position, end-position (i.e. size)
 	
 	# "front" means closer to bounds.position
 	# 0 = (F)NW
@@ -57,6 +60,53 @@ func octree_divide(bounds):
 	#print(octants)
 		
 	return octants
+
+# ref: https://chidiwilliams.com/post/quadtrees/
+func nearest(pos, best, node, n_i=-2):
+	print("Looking for nearest to ", pos, " node: ", node, " n_i: ", n_i)
+	# At each node of the quadtree, we check to see if the node has been subdivided.
+	# If it has, we recursively check its child nodes. Importantly, we’ll check the child node that contains the search location first, before checking the other child nodes.3
+	# When we get to a node that has not been subdivided, we’ll loop through all its points and return the point nearest to the search location.
+	# As we recurse back up the tree, when we get to a node that is farther away than the nearest point we’ve found, we can safely discard that quadrant without checking its child quadrants or points.
+
+	# Exclude if node is farther away than best distance
+	if pos.x < node[0].x - best[0] || pos.x > node[1].x + best[0] || pos.y < node[0].y - best[0] || pos.y > node[1].y + best[0] || pos.z < node[0].z - best[0] || pos.z > node[0].z + best[0]:
+		return best
+	
+	# Now test points in the node if doesn't have children
+	if n_i == -2:
+		print("Should test points within node... ", node)
+		# get list of all points within node
+		var aabb = AABB(node[0], node[1]-node[0])
+		var test_data = [Vector3(30, 30, -2), Vector3(0,0,0), Vector3(-50, 20, 5), Vector3(25, -20, 2), Vector3(8, 10, 0), Vector3(18, 15, -3), Vector3(9, 7, 10)]
+		for p in test_data:
+			if aabb.has_point(p):
+				print("Distance check for point within node: ", p)
+				# now check for distance
+				# this only returns one
+				if pos.distance_to(p) < best[0]:
+					best = [pos.distance_to(p), p]
+		
+		print("Best point found: ", best)
+		return best
+	
+	# check each axis for most likely neighbors
+	# ref: https://gist.github.com/patricksurry/6478178
+	var ew = (2*pos.x > node[0].x + node[1].x)
+	var sn = (2*pos.y > node[0].y + node[1].y)
+	var bf = (2*pos.z > node[0].z + node[1].z)
+	
+	print("east or west:", ew, " south or north: ", sn, " front or back: ", bf)
+	
+	# now recurse into octants deemed most likely
+	if !ew and !sn and !bf:
+		nearest(pos, best, octree_data[n_i][0], 0 if n_i == -1 else -2)
+	if ew and !sn and bf:
+		nearest(pos, best, octree_data[n_i][1], 1 if n_i == -1 else -2)
+	if ew and sn and bf:
+		nearest(pos, best, octree_data[n_i][6], 6 if n_i == -1 else -2)
+	if ew and sn and !bf:
+		nearest(pos, best, octree_data[n_i][4], 4 if n_i == -1 else -2)
 
 func _draw():
 	draw_string(font, Vector2(250, 0), "X-Y axis front")
