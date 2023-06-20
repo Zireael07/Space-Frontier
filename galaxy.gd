@@ -393,6 +393,26 @@ func create_map_graph():
 	var data = auto_connect_stars([0,0])
 	return data # for debugging
 
+# points: query points; list: reference points to compare to
+# as below, points are floats
+# ~150 ticks as opposed to sorting the list which takes ~1100 ticks for galaxy core which has N points = 256
+func precalc_distances(points, list):
+	var tm = Time.get_ticks_msec()
+	
+	var distances_cache = {}
+	for src in points:
+		var dists = []
+		dists = list.map(func(p):
+			return [p.distance_squared_to(src), p]
+		)
+		#print(dists)
+		distances_cache[float_to_int(src)] = dists
+	
+	var cur = Time.get_ticks_msec()
+	print("distances cache ticks, ", cur-tm)
+	
+	return distances_cache
+
 # quadrant points are floats
 func precalc_closest_stars(points, list):
 	var closest_stars_cache = {}
@@ -480,7 +500,7 @@ func auto_connect_stars(sector, quad_pts=null):
 	#print("NW: ", quad_pts[0], " ", quad_pts[0].size(), "\n NE: ", quad_pts[1], " ", quad_pts[1].size(), "\n SE: ", quad_pts[2], " ", quad_pts[2].size(), "\n SW: ", quad_pts[3], " ", quad_pts[3].size())
 	#print("NW+NE+SE+SW:", quad_pts[0].size()+quad_pts[1].size()+quad_pts[2].size()+quad_pts[3].size())
 	
-	var closest_stars = [[],[],[],[]]
+	var star_distances = [[],[],[],[]]
 	
 	var mst_sum = []
 	var tree = []
@@ -495,8 +515,11 @@ func auto_connect_stars(sector, quad_pts=null):
 			print("Empty qp!")
 			return
 		
-		closest_stars[i_qp] = precalc_closest_stars(qp, list)
-		var prim_data = auto_connect_prim(qp.size(), qp[0], qp, closest_stars[i_qp])
+		star_distances[i_qp] = precalc_distances(qp, list)
+		#closest_stars[i_qp] = precalc_closest_stars(qp, list)
+		
+		# algorithms start here
+		var prim_data = auto_connect_prim(qp.size(), qp[0], qp, star_distances[i_qp]) #closest_stars[i_qp])
 
 		var in_mst = prim_data[0]
 		var sub_tree = prim_data[1]
@@ -564,12 +587,15 @@ func auto_connect_stars(sector, quad_pts=null):
 				continue 
 			
 			#var stars = get_closest_stars_to_list(p, quad_pts[0]+quad_pts[1]+quad_pts[2]+quad_pts[3])
-			var stars = closest_stars[i_qp][float_to_int(p)]
+			var stars = star_distances[i_qp][float_to_int(p)]
 			#var stars = get_closest_stars_to(float_to_int(p))
 			#print("stars #", stars.size())
 			
 			# some postprocessing to remove one of a pair of very close stars
 			stars = closest_stars_postprocess(stars)
+			
+			# sort now
+			stars.sort_custom(Callable(MyCustomSorter,"sort_stars"))
 			
 			# filter
 			var tmp = []
@@ -626,12 +652,16 @@ func auto_connect_stars(sector, quad_pts=null):
 
 	return [secondary, quad_pts]
 
-func auto_connect_prim(V, start, list=null, closest_stars=null):
+func auto_connect_prim(V, start, list=null, distances=null):
 	var debug = false
 	#if start == Vector3(0.1,-5.6,9.3):
 	if start.x < -100:
 		debug = true
 	#print("Prim's: #", V, " ", start)
+	
+	# Prim's is better for dense graphs (more edges than vertices)
+	# our graph is dense b/c every star could in theory connect to any other (lots of edges)
+	
 	# we're not using Kruskal as we don't have edges
 	# Prim's algorithm: start with one vertex
 	# 1. Find the edges that connect to other vertices. Find the edge with minimum weight and add it to the spanning tree.
@@ -663,13 +693,14 @@ func auto_connect_prim(V, start, list=null, closest_stars=null):
 		# from here until break is step 1: minimum weight edge
 		# Find closest star to each star
 		var stars = []
-		if closest_stars == null:
-			stars = get_closest_stars_to(pos)
+		if distances == null:
+			pass
+			#stars = get_closest_stars_to(pos)
 		else:
 			# can't find it because pos is already converted to int
 			#var i = list.find(pos)
 			#print("Index of pos in quadrant: ", i)
-			stars = closest_stars[pos]
+			stars = distances[pos]
 		#print(stars)
 		#print(stars.size())
 		
@@ -687,6 +718,9 @@ func auto_connect_prim(V, start, list=null, closest_stars=null):
 		
 		# some postprocessing to remove one of a pair of very close stars
 		stars = closest_stars_postprocess(stars)
+		
+		# sort now
+		stars.sort_custom(Callable(MyCustomSorter,"sort_stars"))
 		
 #		for i in range(1,3): #(stars.size()):
 #			var s = stars[i]
