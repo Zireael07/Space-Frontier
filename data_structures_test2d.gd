@@ -1,7 +1,14 @@
 extends Control
 
+# octree is easier to implement and faster to create than kd-tree
 var octree_data = {}
 var font
+
+var test_data = [Vector3(30, 30, -2), Vector3(-50, 20, 5), Vector3(25, -20, 2),
+Vector3(-40, -40, 3), Vector3(-20, -10, -8), #NW
+Vector3(0,0,0), Vector3(15, -2, -3),
+ Vector3(8, 10, 0), Vector3(18, 15, -3), Vector3(9, 7, 10), Vector3(15, 8, -10),
+Vector3(-3, -5, -4), Vector3(-3, -5, 4)]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,6 +33,7 @@ func _ready():
 	
 	# test searching (start node exactly equal to AABB above)
 	nearest(Vector3(10, 10, 2), [512+512+512, null], [Vector3(-256, -256, -256), Vector3(256, 256, 256)], -1)
+	nearest_in_octant(Vector3(10,10,2), [512+512+512, null], -1, 1)
 	
 	#queue_redraw()
 	
@@ -78,8 +86,9 @@ func nearest(pos, best, node, n_i=-2):
 		print("Should test points within node... ", node)
 		# get list of all points within node
 		var aabb = AABB(node[0], node[1]-node[0])
-		var test_data = [Vector3(30, 30, -2), Vector3(0,0,0), Vector3(-50, 20, 5), Vector3(25, -20, 2), Vector3(8, 10, 0), Vector3(18, 15, -3), Vector3(9, 7, 10)]
+
 		for p in test_data:
+			# NOTE: treats 0,0,0 as octant 1
 			if aabb.has_point(p):
 				print("Distance check for point within node: ", p)
 				# now check for distance
@@ -108,6 +117,12 @@ func nearest(pos, best, node, n_i=-2):
 	if ew and sn and !bf:
 		nearest(pos, best, octree_data[n_i][4], 4 if n_i == -1 else -2)
 
+
+func nearest_in_octant(pos, best, parent, oct_i):
+	return nearest(pos, best, octree_data[parent][oct_i])
+	
+
+
 func _draw():
 	draw_string(font, Vector2(250, 0), "X-Y axis front")
 	draw_string(font, Vector2(800,0), "X-Y axis 2nd Z layer (back)")
@@ -133,6 +148,12 @@ func _draw():
 			# XZ axis (offset by 550 to the right AND differently colored)
 			#draw_rect(Rect2(Vector2(o[0].x+550, o[0].z), Vector2(o[1].x-o[0].x, o[1].z-o[0].z)), Color(0,0,1), false, 3.0)
 			#draw_string(font, Vector2(o[0].x+550, o[0].y), str(o_i))
+
+	for pos in test_data:
+		# indicate z
+		var clr = Color(1,0,0) if pos.z < octree_data[-1][0][1].z else Color(0,1,1)
+		# TODO: points with other Z should be drawn on other chart
+		draw_circle(Vector2(pos.x, pos.y), 2.0, clr)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
