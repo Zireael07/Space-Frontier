@@ -56,9 +56,9 @@ func octree_divide(bounds):
 	octants.append([Vector3(center.x, bounds.position.y, center.z), Vector3(bounds.end.x, center.y, bounds.end.z)])
 	# 3 = (B)NW
 	octants.append([Vector3(bounds.position.x, bounds.position.y, center.z), Vector3(center.x, center.y, bounds.end.z)])
-	# 4 = (F)SE
+	# 4 = (F)SW
 	octants.append([Vector3(bounds.position.x, center.y, bounds.position.z), Vector3(center.x, bounds.end.y, center.z)])
-	# 5 = (F)SW
+	# 5 = (F)SE
 	octants.append([Vector3(center.x, center.y, bounds.position.z), Vector3(bounds.end.x, bounds.end.y, center.z)])
 	# 6 = (B)SE
 	octants.append([center, bounds.end])
@@ -138,7 +138,7 @@ func _draw():
 			# XY axis for both front and back
 			var offset = 550 if o[0].z != octree_data[-1][0][0].z else 0 # if our Z is different than start octant's
 			var color = Color(1,0,0) if offset == 0 else Color(0,1,1)
-			if n == 1:
+			if n == 7:
 				color = Color(0,1,0) # debug
 			draw_rect(Rect2(Vector2(o[0].x+offset, o[0].y), Vector2(o[1].x-o[0].x, o[1].y-o[0].y)), color, false, 3.0)
 			

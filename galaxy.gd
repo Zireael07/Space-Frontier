@@ -140,6 +140,7 @@ func pos_to_sector(pos, need_convert=true):
 	# i.e. +Y goes down
 	return sector
 
+# TODO: quadtree version that auto-subdivides?
 # more generic version of the below function
 func quadrants(begin, size_x, size_y, debug=true):
 	if debug:
@@ -153,7 +154,7 @@ func quadrants(begin, size_x, size_y, debug=true):
 		print("Quadrants: ", [nw, nw.end, ne, ne.end, se, se.end, sw, sw.end])
 	return [nw, ne, se, sw]
 	
-
+# needed because we do some things (e.g. MST) per quadrant. Quadrants also used in map display
 func sector_to_quadrants(sector_begin):
 	# center of sector is sector_begin + half sector size (half of 1024)
 	var center = Vector2(sector_begin.x+512, sector_begin.y+512)
@@ -166,10 +167,96 @@ func sector_to_quadrants(sector_begin):
 	#print("Quadrants: ", [nw, nw.end, ne, ne.end, se, se.end, sw, sw.end] )
 	return [nw, ne, se, sw]
 
+# octree is simple to implement and create and speeds up neighbor(s) searches by as much as 60% (10s to 3s for 1000 star sector)
+func octree_divide(bounds):
+	#var half = bounds.size.y/2.0; # assumes x=y i.e. cubic octants
+	var center = bounds.get_center()
+	
+	var octants = []
+	# for simplicity, assume positive size (i.e. position is always the smallest)
+	# https://www.gamedev.net/tutorials/programming/general-and-gameplay-programming/introduction-to-octrees-r3529/
+	# this list is position and end, i.e. AABB constructor will be position, end-position (i.e. size)
+	
+	# "front" means closer to bounds.position
+	# 0 = (F)NW
+	octants.append([bounds.position, center])
+	# 1 = (F)NE
+	octants.append([Vector3(center.x, bounds.position.y, bounds.position.z), Vector3(bounds.end.x, center.y, center.z)])
+	# 2 = (B)NE
+	octants.append([Vector3(center.x, bounds.position.y, center.z), Vector3(bounds.end.x, center.y, bounds.end.z)])
+	# 3 = (B)NW
+	octants.append([Vector3(bounds.position.x, bounds.position.y, center.z), Vector3(center.x, center.y, bounds.end.z)])
+	# 4 = (F)SW
+	octants.append([Vector3(bounds.position.x, center.y, bounds.position.z), Vector3(center.x, bounds.end.y, center.z)])
+	# 5 = (F)SE
+	octants.append([Vector3(center.x, center.y, bounds.position.z), Vector3(bounds.end.x, bounds.end.y, center.z)])
+	# 6 = (B)SE
+	octants.append([center, bounds.end])
+	# 7 = (B)SW
+	octants.append([Vector3(bounds.position.x, center.y, center.z), Vector3(center.x, bounds.end.y, bounds.end.z)])
+	
+	#print(octants)
+		
+	return octants
+	
+# ref: https://chidiwilliams.com/post/quadtrees/
+func nearest(pos, octree_data, best, points, node, n_i=-2):
+	#print("Looking for nearest to ", pos, " node: ", node, " n_i: ", n_i)
+	# At each node of the quadtree, we check to see if the node has been subdivided.
+	# If it has, we recursively check its child nodes. Importantly, we’ll check the child node that contains the search location first, before checking the other child nodes.3
+	# When we get to a node that has not been subdivided, we’ll loop through all its points and return the point nearest to the search location.
+	# As we recurse back up the tree, when we get to a node that is farther away than the nearest point we’ve found, we can safely discard that quadrant without checking its child quadrants or points.
+
+	# Exclude if node is farther away than best distance
+	if pos.x < node[0].x - best[0] || pos.x > node[1].x + best[0] || pos.y < node[0].y - best[0] || pos.y > node[1].y + best[0] || pos.z < node[0].z - best[0] || pos.z > node[0].z + best[0]:
+		return best
+	
+	# Now test points in the node if doesn't have children
+	if n_i == -2:
+		#print("Should test points within node... ", node)
+		# get list of all points within node
+		var aabb = AABB(node[0], node[1]-node[0])
+
+		for p in points:
+			# NOTE: treats 0,0,0 as octant 1
+			if aabb.has_point(p):
+				#print("Distance check for point within node: ", p)
+				# now check for distance
+				# this only returns one
+				if pos.distance_to(p) < best[0]:
+					best = [pos.distance_to(p), p]
+		
+	#	print("Best point found: ", best)
+		return best
+	
+	# check each axis for most likely neighbors
+	# ref: https://gist.github.com/patricksurry/6478178
+	var ew = (2*pos.x > node[0].x + node[1].x)
+	var sn = (2*pos.y > node[0].y + node[1].y)
+	var bf = (2*pos.z > node[0].z + node[1].z)
+	
+	#print("east or west:", ew, " south or north: ", sn, " front or back: ", bf)
+	
+	# now recurse into octants deemed most likely
+	if !ew and !sn and !bf:
+		nearest(pos, best, points, octree_data[n_i][0], 0 if n_i == -1 else -2)
+	if ew and !sn and bf:
+		nearest(pos, best, points, octree_data[n_i][1], 1 if n_i == -1 else -2)
+	if ew and sn and bf:
+		nearest(pos, best, points, octree_data[n_i][6], 6 if n_i == -1 else -2)
+	if ew and sn and !bf:
+		nearest(pos, best, points, octree_data[n_i][4], 4 if n_i == -1 else -2)
+
+
+func nearest_in_octant(pos, octree_data, best, points, parent, oct_i):
+	return nearest(pos, octree_data, best, points, octree_data[parent][oct_i])
+	
+# --------------------------------
+# these functions are used when loading the data
 func save_graph_data(x,y,z, nam):
 	map_graph.append([x,y,z, nam])
 	
-	# skip any stars outside the sector
+	# skip any stars outside the 0,0 sector
 	if abs(x) > 50 or abs(y) > 50 or abs(z) > 50:
 		return
 	#if x < -50 or y < -50 or z < -50:
@@ -577,7 +664,21 @@ func auto_connect_stars(sector, quad_pts=null):
 
 	# connect stars close by across quadrants (e.g, Barnard's and Alpha Cen)
 	# gets away with no sorting because of very limited distances (see l. 506)
-	# TODO: use subquadrants like connecting sectors does to improve performance for crowded sectors like galaxy core
+	
+	# this is a BIG time hog in bigger sectors, such as galaxy core
+	# use octree to speed this up
+	var octree_data = {}
+	# quad points are original floats
+	# shave off the ending of the int encoding
+	var octree_start = Vector3(sector_begin.x/10, sector_begin.y/10, -51)
+	octree_data[-1] = octree_divide(AABB(octree_start, Vector3(102, 102, 102)))
+	var sector_list = quad_pts[0]+quad_pts[1]+quad_pts[2]+quad_pts[3]
+	
+	# quads 0 NW 1 NE 2 SE 3 SW
+	# octants 0 FNW, 1 FNE, 2 BNE 3 BNW 4 FSW 5 FSE 6 BSE 7 BSW
+	var seek_lookup_self = {0:[0,3], 1:[1,2], 2:[5,6], 3:[4,7]}
+	#var seek_lookup = {0:[1,2,4,6,5,7], 1:[0,3,4,5,6,7], 2:[0,1,2,3,5,7], 3:[0,1,2,3,4,6]}
+	
 	var cross_quad = []
 	for i_qp in 4:
 		var qp = quad_pts[i_qp]
@@ -586,25 +687,48 @@ func auto_connect_stars(sector, quad_pts=null):
 			if p in cross_quad:
 				continue 
 			
-			#var stars = get_closest_stars_to_list(p, quad_pts[0]+quad_pts[1]+quad_pts[2]+quad_pts[3])
-			var stars = star_distances[i_qp][float_to_int(p)]
-			#var stars = get_closest_stars_to(float_to_int(p))
-			#print("stars #", stars.size())
-			
-			# some postprocessing to remove one of a pair of very close stars
-			stars = closest_stars_postprocess(stars)
-			
-			# sort now
-			stars.sort_custom(Callable(MyCustomSorter,"sort_stars"))
-			
 			# filter
 			var tmp = []
+			for s in sector_list:
+				if !s in cross_quad:
+					tmp.append(s)
+			
+			sector_list = tmp
+			
+			# test
+			var stars = []
+			#print("Seek lookup for i: ", i_qp, seek_lookup[i_qp])
+			for check_i in range(7):
+				if !check_i in seek_lookup_self[i_qp]: 
+			#for check_i in seek_lookup[i_qp]:
+					var closest = nearest_in_octant(p, octree_data, [51+51+51, null], sector_list, -1, check_i)
+				
+					if closest[1] != null and closest[1] != map_astar.get_point_position(center_star):
+						stars.append(closest)
+			
+			#print(stars)
+			
+			#stars = [closest]
+			
+#			#var stars = get_closest_stars_to_list(p, quad_pts[0]+quad_pts[1]+quad_pts[2]+quad_pts[3])
+#			var stars = star_distances[i_qp][float_to_int(p)]
+#			#var stars = get_closest_stars_to(float_to_int(p))
+#			#print("stars #", stars.size())
+#
+#			# some postprocessing to remove one of a pair of very close stars
+#			stars = closest_stars_postprocess(stars)
+#
+			# sort now
+			stars.sort_custom(Callable(MyCustomSorter,"sort_stars"))
+#
+#			# filter
+			tmp = []
 			for s in stars:
-				if s[1] in cross_quad:
-					continue
-				# not center star and not in our quadrant
-				if !s[1] in qp and s[1] != map_astar.get_point_position(center_star):
-					# limit by distance (experimental values)
+#				if s[1] in cross_quad:
+#					continue
+#				# not center star and not in our quadrant
+#				if !s[1] in qp and s[1] != map_astar.get_point_position(center_star):
+#					# limit by distance (experimental values)
 					if s[0] < 8 and s[0] > 0.15: #10:
 						tmp.append(s)
 						break # we only need the first star 
@@ -679,6 +803,9 @@ func auto_connect_prim(V, start, list=null, distances=null):
 	tree.resize(V)
 	tree.fill(0)
 	
+	# this is done for EVERY v in V, so O(V)
+	# no need for a heap-based impl since the graph is dense (see above) 
+	# https://www.cs.princeton.edu/courses/archive/spr02/cs226/lectures/mst-4up.pdf
 	while edge_count < V-1:
 		var pos = in_mst[edge_count]
 		# paranoia
