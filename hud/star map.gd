@@ -226,7 +226,7 @@ func find_icon_for_pos(pos):
 		return ret
 	
 	var p
-	if abs(pos.z) < 120:
+	if abs(pos.z) <= 120:
 		p = $"Control/Layer"
 	elif pos.z > 120:
 		p = $"Control/LayerZ+"
@@ -636,6 +636,7 @@ func draw_generated_sector(positions, new_sector):
 	#print("Done generating...")
 
 func _on_move_to_offset(offset, sector, jump=false):
+	disable_panning_buttons(true)
 	for sec in sectors:
 		if should_sector_unload(sector, sec):
 			unload_sector(sec)
@@ -709,7 +710,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 			generate_map_graph(positions, new_sector, new_sector_data[2])
 			draw_generated_sector(positions, new_sector)
 
-
+	disable_panning_buttons(false)
 	
 # NOTE: offset is in px
 func move_map_to_offset(offset, jump=false):
@@ -736,7 +737,14 @@ func move_map_to_offset(offset, jump=false):
 			
 
 
-# ----------------------------------------------------	
+# ----------------------------------------------------
+# prevent accidentally panning while sector is generating...
+func disable_panning_buttons(boo):
+	$Control2/ButtonL.disabled = boo
+	$Control2/ButtonR.disabled = boo
+	$Control2/ButtonUp.disabled = boo
+	$Control2/ButtonDown.disabled = boo
+	
 func display_captain_log():
 	#$"PopupPanel/VBoxContainer/ButtonLog/PanelLog/RichTextLabel".set_text(str(game.captain_log))
 	
