@@ -637,6 +637,10 @@ func draw_generated_sector(positions, new_sector):
 
 func _on_move_to_offset(offset, sector, jump=false):
 	disable_panning_buttons(true)
+	$PopupPanel2.exclusive = true
+	$PopupPanel2.show()
+	await get_tree().process_frame # to give popup time to draw
+	
 	for sec in sectors:
 		if should_sector_unload(sector, sec):
 			unload_sector(sec)
@@ -650,7 +654,6 @@ func _on_move_to_offset(offset, sector, jump=false):
 	sector_center = (sector_center/10)*LY_TO_PX
 	#print("Sector", sector, " sector center px: ", sector_center, " threshold x: ", sector_center.x+2200, " y:", sector_center.y+2200)
 	
-	# TODO: animation/progress bar for this case (it can take quite long e.g. for Sag A*)
 	if jump and not is_sector_generated(sector):
 		var sample_pos = Vector2(-offset.x/50, -offset.y/50)
 		#print("Jump sample pos: ", sample_pos)
@@ -711,6 +714,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 			draw_generated_sector(positions, new_sector)
 
 	disable_panning_buttons(false)
+	$PopupPanel2.hide()
 	
 # NOTE: offset is in px
 func move_map_to_offset(offset, jump=false):

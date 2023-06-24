@@ -276,6 +276,17 @@ layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="PopupPanel2" type="PopupPanel" parent="."]
+position = Vector2i(300, 238)
+size = Vector2i(262, 40)
+
+[node name="Label" type="Label" parent="PopupPanel2"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 258.0
+offset_bottom = 36.0
+text = "Updating astronavigation data...."
+
 [node name="RouteHeightPanel" type="Panel" parent="."]
 visible = false
 layout_mode = 0
