@@ -662,9 +662,11 @@ func _on_move_to_offset(offset, sector, jump=false):
 		var new_sector_data = create_procedural_sector(new_sector)
 		sectors.append(new_sector)
 		var positions = get_sector_positions(new_sector_data)
-		generate_map_graph(positions, new_sector, new_sector_data[2])
 		draw_generated_sector(positions, sector)
+		await get_tree().process_frame
+		generate_map_graph(positions, new_sector, new_sector_data[2])
 	
+	await get_tree().process_frame
 	# threshold is sector edge-300px (or center+2200) to account for view
 	if (abs(offset.x) > sector_center.x+2200 or abs(offset.y) > sector_center.y+2200):
 		var new_sector_pos = Vector2() # dummy
@@ -710,8 +712,9 @@ func _on_move_to_offset(offset, sector, jump=false):
 #		get_node("Control/Layer").add_child(cc)
 
 			var positions = get_sector_positions(new_sector_data)
-			generate_map_graph(positions, new_sector, new_sector_data[2])
 			draw_generated_sector(positions, new_sector)
+			await get_tree().process_frame
+			generate_map_graph(positions, new_sector, new_sector_data[2])
 
 	disable_panning_buttons(false)
 	$PopupPanel2.hide()
