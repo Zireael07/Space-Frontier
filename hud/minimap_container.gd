@@ -26,8 +26,8 @@ extends Control
 
 var star_main = null
 
-var stars
-var planets
+var stars = []
+var planets = []
 var asteroids
 var wormholes = []
 
@@ -473,14 +473,16 @@ func _on_colony_colonized(colony, planet):
 	# paranoia
 	if colony in colony_map:
 		var spr = colony_map[colony]
-		colonies.remove_at(colonies.find(colony))
-		colony_sprites.remove_at(colony_sprites.find(spr))
-		remove_child(spr)
+		if colony in colonies:
+			colonies.remove_at(colonies.find(colony))
+		if spr != null:
+			colony_sprites.remove_at(colony_sprites.find(spr))
+			remove_child(spr)
 
 	
 	var id = planets.find(planet)
-	var spr = planet_sprites[id]
-	var label = spr.get_child(1)	
+	var planet_spr = planet_sprites[id]
+	var label = planet_spr.get_child(1)	
 	# tint cyan
 	label.set_self_modulate(Color(0, 1, 1))
 
