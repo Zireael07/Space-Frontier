@@ -636,11 +636,6 @@ func draw_generated_sector(positions, new_sector):
 	#print("Done generating...")
 
 func _on_move_to_offset(offset, sector, jump=false):
-	disable_panning_buttons(true)
-	$PopupPanel2.exclusive = true
-	$PopupPanel2.show()
-	await get_tree().process_frame # to give popup time to draw
-	
 	for sec in sectors:
 		if should_sector_unload(sector, sec):
 			unload_sector(sec)
@@ -653,6 +648,12 @@ func _on_move_to_offset(offset, sector, jump=false):
 	var sector_center = sector_begin+Vector2(512, 512)
 	sector_center = (sector_center/10)*LY_TO_PX
 	#print("Sector", sector, " sector center px: ", sector_center, " threshold x: ", sector_center.x+2200, " y:", sector_center.y+2200)
+	
+	if jump:
+		disable_panning_buttons(true)
+		$PopupPanel2.exclusive = true
+		$PopupPanel2.show()
+		await get_tree().process_frame # to give popup time to draw
 	
 	if jump and not is_sector_generated(sector):
 		var sample_pos = Vector2(-offset.x/50, -offset.y/50)
@@ -697,6 +698,11 @@ func _on_move_to_offset(offset, sector, jump=false):
 		var new_sector = pos_to_sector(Vector3(sample_pos.x, sample_pos.y, 0))
 		print("New sector: ", new_sector, " sample pos ", sample_pos)
 		if new_sector != [0,0] and not is_sector_generated(new_sector):
+			if !$PopupPanel2.visible:
+				disable_panning_buttons(true)
+				$PopupPanel2.exclusive = true
+				$PopupPanel2.show()
+				await get_tree().process_frame # to give popup time to draw
 			var new_sector_data = create_procedural_sector(new_sector)
 			sectors.append(new_sector)
 		
