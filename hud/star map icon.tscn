@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bi2unh3bcmfsy"]
+[gd_scene load_steps=8 format=3 uid="uid://bi2unh3bcmfsy"]
 
 [ext_resource type="Texture2D" uid="uid://d3wyq6idq6p1g" path="res://assets/hud/red_circle.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://qgwa0n80hd5a" path="res://assets/hud/grey_circle.png" id="2"]
 [ext_resource type="Script" path="res://hud/star map icon.gd" id="3"]
 [ext_resource type="Gradient" path="res://assets/hud/line_gradient.tres" id="4"]
 [ext_resource type="Texture2D" uid="uid://yastj0ygv2jj" path="res://assets/hud/grey_arrowUpWhite.png" id="5"]
+[ext_resource type="LabelSettings" uid="uid://7dmmvp0f7hym" path="res://hud/new_label_settings.tres" id="5_c62yk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u3iea"]
 line_spacing = 1.0
@@ -66,15 +67,17 @@ text = "Name"
 label_settings = SubResource("LabelSettings_u3iea")
 
 [node name="Label2" type="Label" parent="."]
-visible = false
 layout_mode = 0
+offset_left = 30.0
 offset_top = 25.0
-offset_right = 51.0
-offset_bottom = 39.0
-text = "Z: 1.4 ly"
+offset_right = 74.0
+offset_bottom = 45.0
+text = "1.4
+"
+label_settings = ExtResource("5_c62yk")
 
 [node name="ZTexture" type="TextureRect" parent="."]
-z_index = -2
+z_index = 1
 layout_mode = 0
 offset_left = 30.0
 offset_top = 15.0

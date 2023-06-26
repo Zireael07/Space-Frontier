@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://ni03dlxrnpgj"]
+[gd_scene load_steps=13 format=3 uid="uid://ni03dlxrnpgj"]
 
 [ext_resource type="Script" path="res://hud/RouteHeightPanel.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://c00s6hy3fvbdy" path="res://assets/hud/arrow.png" id="2"]
+[ext_resource type="StyleBox" uid="uid://bf6avps5276g5" path="res://hud/star map panel bg.tres" id="2_71wxs"]
 [ext_resource type="Texture2D" uid="uid://c2f8rvbt3dhq4" path="res://assets/hud/yellow_circle.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://yastj0ygv2jj" path="res://assets/hud/grey_arrowUpWhite.png" id="4"]
 [ext_resource type="PackedScene" uid="uid://bggreicuto81" path="res://poisson2D.tscn" id="4_45ins"]
@@ -25,6 +26,7 @@ layout_mode = 0
 offset_right = 805.0
 offset_bottom = 525.0
 mouse_filter = 1
+theme_override_styles/panel = ExtResource("2_71wxs")
 
 [node name="Grid" type="Control" parent="."]
 clip_contents = true
@@ -108,6 +110,14 @@ offset_top = 250.0
 offset_right = 767.0
 offset_bottom = 264.0
 text = "> Galactic Core"
+label_settings = ExtResource("5_kbiss")
+
+[node name="Label6" type="Label" parent="Legend"]
+layout_mode = 0
+offset_top = 500.0
+offset_right = 125.0
+offset_bottom = 520.0
+text = "Sizes represent Z axis"
 label_settings = ExtResource("5_kbiss")
 
 [node name="Control" type="Control" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cwokudyyay0p4"]
+[gd_scene load_steps=21 format=3 uid="uid://cwokudyyay0p4"]
 
 [ext_resource type="Script" path="res://hud/minimap_container.gd" id="2"]
 [ext_resource type="Script" path="res://hud/HUD.gd" id="3"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dqm052sw46afn" path="res://assets/ships/enemyRed5.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://o13tg7h2ob4k" path="res://assets/bodies/Planet1.png" id="9"]
 [ext_resource type="Texture2D" uid="uid://c00s6hy3fvbdy" path="res://assets/hud/arrow.png" id="10"]
+[ext_resource type="StyleBox" uid="uid://bf6avps5276g5" path="res://hud/star map panel bg.tres" id="10_vhjx8"]
 [ext_resource type="Script" path="res://hud/orrery_panel.gd" id="11"]
 [ext_resource type="Material" path="res://assets/HUD ship outline.tres" id="12"]
 [ext_resource type="Script" path="res://hud/HUD_right.gd" id="14"]
@@ -656,6 +657,7 @@ offset_right = 460.0
 offset_bottom = 200.0
 grow_horizontal = 0
 rotation = 1.5708
+theme_override_styles/panel = ExtResource("10_vhjx8")
 script = ExtResource("17")
 
 [node name="Label" type="Label" parent="Control2/Panel_rightHUD/Control/RouteHeightPanel"]
