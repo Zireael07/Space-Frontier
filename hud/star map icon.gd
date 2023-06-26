@@ -144,16 +144,11 @@ func _ready():
 	if get_parent().get_name().find("Z-") != -1:
 		get_node("ZTexture").flip_v = false
 	
-#	if clr.r < 0.5 and clr.b < 0.1:
-#		get_node("Label2").set("custom_colors/font_color", Color(1,1,1))
-#
-#	# test
-#	var styl = get_node("Label2").get_stylebox("normal").duplicate()
-#	styl.bg_color = clr
-#	get_node("Label2").add_theme_stylebox_override("normal", styl)
 	
-	# this tints the font too which we don't want
-	#get_node("Label2").set_self_modulate(clr)
+	# test visualizing Z as icon size
+	#var factor = abs(depth)/20 # 20 is max Z distance away from the plane
+	var factor = clamp(inverse_lerp(-20, +20, depth), 0.0, 1.0)
+	get_node("ShadowTexture").set_scale(Vector2(1,1)*factor)
 	
 	calculate_label_and_sfx()
 
