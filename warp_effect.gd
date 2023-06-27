@@ -15,4 +15,4 @@ func _on_explosion_animation_finished():
 	
 	get_parent().warping = true
 	
-	print("animation finished")
+	#print("animation finished")

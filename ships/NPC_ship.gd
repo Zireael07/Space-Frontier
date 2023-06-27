@@ -315,7 +315,7 @@ func move_AI(vel, delta):
 				warp_target = null
 				return
 			
-			print(get_parent().get_name(), " warping...")
+			#print(get_parent().get_name(), " warping...")
 			# update target because the planet is orbiting, after all...
 			#warp_target = warp_target.get_global_position()
 			

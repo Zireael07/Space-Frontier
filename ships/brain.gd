@@ -718,7 +718,7 @@ class AttackState:
 		# add some separation from allied ships
 		var others = ship.ship.get_allies_in_range()
 		var sep = ship.get_steering_separation(others)
-		print("Steer: ", steer, " , ", sep)
+		#print("Steer: ", steer, " , ", sep)
 		steer = steer + sep
 			
 		# normal case
@@ -727,7 +727,7 @@ class AttackState:
 		ship.ship.move_AI(ship.vel, delta)
 		
 		var enemy = ship.ship.get_closest_enemy()
-		if enemy != null and not enemy.warping and enemy == target:
+		if enemy != null and 'warping' in enemy and not enemy.warping and enemy == target:
 			var dist = ship.get_global_position().distance_to(enemy.get_global_position())
 			#print(str(dist))
 			if dist < 150:

@@ -124,10 +124,10 @@ func get_steering_separation(others):
 			if dist < min_dist:
 				moveX += get_global_position().x - s.get_global_position().x
 				moveY += get_global_position().y - s.get_global_position().y
-				print("Ship in range, move ", moveX, moveY)
+				#print("Ship in range, move ", moveX, moveY)
 	
 	if moveX != 0 and moveY != 0:
-		print("Separation: ", moveX, " ", moveY)
+		#print("Separation: ", moveX, " ", moveY)
 		steering = Vector2(moveX, moveY).limit_length(max_vel/2)
 		return steering
 	else:

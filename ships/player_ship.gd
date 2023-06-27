@@ -766,7 +766,7 @@ func dock():
 	#print("Adding player as tractoring ship's child")
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
-	print("Animation finished")
+	#print("Animation finished")
 	# toggle the landing state
 	if not landed:
 		landed = true
