@@ -146,10 +146,12 @@ func _ready():
 	
 	
 	# test visualizing Z as icon size
-	#var factor = abs(depth)/20 # 20 is max Z distance away from the plane
-	var factor = clamp(inverse_lerp(-20, +20, depth), 0.0, 1.0)
+	#var factor = abs(depth)/20 # 20 is max Z distance away from the plane on a single layer
+	var factor = clamp(inverse_lerp(-10, +10, depth), 0.2, 1.0)
 	get_node("ShadowTexture").set_scale(Vector2(1,1)*factor)
 	
+	var grad = preload("res://hud/new_gradient.tres")
+	get_node("ShadowTexture").self_modulate = grad.sample(factor)
 	calculate_label_and_sfx()
 
 func add_planets_mark():
