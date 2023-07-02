@@ -105,15 +105,16 @@ func _ready():
 		get_node("ZTexture").hide()
 		return
 
-	# star icon positioned according to the depth
+	# star icon positioned according to the depth (Z axis)
 	# 18 is the height of the star icon
-	get_node("StarTexture").position = Vector2(0, end+18*depth_s) 
+	#get_node("StarTexture").position = Vector2(0, end+18*depth_s) 
+	get_node("StarTexture").hide()
 	
 	# clamp depth to two significant decimal places
 	var depth_str = "%.2f" % depth
 	
-	var y_pos = get_node("StarTexture").get_position().y
-	get_node("Line2D").points[0] = Vector2(18, y_pos+20) #*depth_s)
+	#var y_pos = get_node("StarTexture").get_position().y
+	#get_node("Line2D").points[0] = Vector2(18, y_pos+20) #*depth_s)
 	
 #	# Z axis label if needed
 #	if abs(depth) > 8:
@@ -136,7 +137,8 @@ func _ready():
 	var clr = clr_dir.darkened(abs(depth)/30) # 20 is max Z distance away from the plane
 	#print(get_name() + "calculated Clr: ", clr)
 
-	get_node("ShadowTexture").self_modulate = Color(0.75,0.75,0.75).darkened(abs(depth)/30)
+	# this doesn't quite work?
+	#get_node("ShadowTexture").self_modulate = Color(0.75,0.75,0.75).darkened(abs(depth)/30)
 
 	get_node("ZTexture").flip_v = true if depth_s > 0 else false
 	get_node("ZTexture").set_self_modulate(clr)
@@ -181,64 +183,67 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 	# special case 
 	if named.find("Centauri") != -1:
 		return
+		
+	#if ab_shadow > 0 and ab_shadow < 525:
+		
 	
-	# above the plane (place next to star icon)
-	if depth_s < 0:
-		# only do this if star icon visible
-		if get_node("StarTexture").visible:
-			get_node("Label").position = Vector2(-6.5, y_pos+2)
-		# if multi-line label
-		if get_node("Label").get_text().find("\n") != -1:
-			get_node("Label").position = Vector2(-6.5, y_pos-20)
-	# below the plane (place next to "shadow" icon)
-	else:
-		get_node("Label").position = Vector2(0, 0)
+#	# above the plane (place next to star icon)
+#	if depth_s < 0:
+#		# only do this if star icon visible
+#		if get_node("StarTexture").visible:
+#			get_node("Label").position = Vector2(-6.5, y_pos+2)
+#		# if multi-line label
+#		if get_node("Label").get_text().find("\n") != -1:
+#			get_node("Label").position = Vector2(-6.5, y_pos-20)
+#	# below the plane (place next to "shadow" icon)
+#	else:
+#		get_node("Label").position = Vector2(0, 0)
 
 	# shadow in bounds but star is not (place name & Z-label next to shadow icon)
-	if (ab_planet.y < 0 or ab_planet.y > 525) and ab_planet != ab_shadow:
-		#if named.find("TST") != -1:
-		#print(get_name(), " shadow in bounds but star not...")
-		get_node("Label").position = Vector2(0, 0)
-		# if multi-line label
-		if get_node("Label").get_text().find("\n") != -1:
-			get_node("Label").position = Vector2(0, -20)
-		# Z axis label
-		get_node("Label2").position = Vector2(0, 25)
-		#get_node("Label2").set_text("Z: " + depth_str + " ly")
-		get_node("Label2").show()
-		# add direction arrow
-		#get_node("Label2").set_text("Z: "+ "%.2f" % depth + " ly " + "↓")
-	
-	# inverse (shadow not in bounds), place labels next to star icon
-	if (ab_shadow.y < 0 or ab_shadow.y > 525):
-		#if named.find("TST") != -1:
-		#print("Force show star for: ", self.get_name())
-		# force show star
-		get_node("StarTexture").show()
-		get_node("Label").position = Vector2(-6.5, y_pos+2)
-		# if multi-line label
-		if get_node("Label").get_text().find("\n") != -1:
-			get_node("Label").position = Vector2(-6.5, y_pos-20)
-		# Z axis label
-		#get_node("Label2").position = Vector2(-6.5, y_pos+29) # 25+4
-		#get_node("Label2").show()
-		#get_node("Label2").set_text("Z: "+ "%.2f" % depth + " ly " + "↑")
-	# force update if situation changes (map is panned)
-	else:
-		#print(get_name(), " shadow in bounds...")
-		get_node("StarTexture").hide()
-		get_node("Label").position = Vector2(0, 0)
-		# if multi-line label
-		if get_node("Label").get_text().find("\n") != -1:
-			get_node("Label").position = Vector2(0, -20)
-		# Z axis label
-		#get_node("Label2").position = Vector2(0, 25)
-		#get_node("Label2").show()
-
-	if not_in_bounds(offset):
-		get_node("Line2D").set_modulate(Color(1,1,1,0.5)) # make semi-transparent
-	else:
-		get_node("Line2D").set_modulate(Color(1,1,1,1)) # restore normal opacity
+#	if (ab_planet.y < 0 or ab_planet.y > 525) and ab_planet != ab_shadow:
+#		#if named.find("TST") != -1:
+#		#print(get_name(), " shadow in bounds but star not...")
+#		get_node("Label").position = Vector2(0, 0)
+#		# if multi-line label
+#		if get_node("Label").get_text().find("\n") != -1:
+#			get_node("Label").position = Vector2(0, -20)
+#		# Z axis label
+#		get_node("Label2").position = Vector2(30, 25)
+#		#get_node("Label2").set_text("Z: " + depth_str + " ly")
+#		get_node("Label2").show()
+#		# add direction arrow
+#		#get_node("Label2").set_text("Z: "+ "%.2f" % depth + " ly " + "↓")
+#
+#	# inverse (shadow not in bounds), place labels next to star icon
+#	if (ab_shadow.y < 0 or ab_shadow.y > 525):
+#		#if named.find("TST") != -1:
+#		#print("Force show star for: ", self.get_name())
+#		# force show star
+#		get_node("StarTexture").show()
+#		get_node("Label").position = Vector2(-6.5, y_pos+2)
+#		# if multi-line label
+#		if get_node("Label").get_text().find("\n") != -1:
+#			get_node("Label").position = Vector2(-6.5, y_pos-20)
+#		# Z axis label
+#		#get_node("Label2").position = Vector2(-6.5, y_pos+29) # 25+4
+#		get_node("Label2").show()
+#		#get_node("Label2").set_text("Z: "+ "%.2f" % depth + " ly " + "↑")
+#	# force update if situation changes (map is panned)
+#	else:
+#		#print(get_name(), " shadow in bounds...")
+#		get_node("StarTexture").hide()
+#		get_node("Label").position = Vector2(0, 0)
+#		# if multi-line label
+#		if get_node("Label").get_text().find("\n") != -1:
+#			get_node("Label").position = Vector2(0, -20)
+#		# Z axis label
+#		#get_node("Label2").position = Vector2(30, 25)
+#		get_node("Label2").show()
+#
+#	if not_in_bounds(offset):
+#		get_node("Line2D").set_modulate(Color(1,1,1,0.5)) # make semi-transparent
+#	else:
+#		get_node("Line2D").set_modulate(Color(1,1,1,1)) # restore normal opacity
 	
 	get_node("Label2").hide()
 	
@@ -251,9 +256,9 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 			get_node("StarTexture").show()
 		
 	# don't hide if we're the target
-	if get_parent().get_parent().tg == self:
-		# force show star
-		get_node("StarTexture").show()
+#	if get_parent().get_parent().tg == self:
+#		# force show star
+#		get_node("StarTexture").show()
 
 func not_in_bounds(offset):
 	# reworked to use Rect2
@@ -315,9 +320,9 @@ func on_click():
 	
 	# force reveal
 	# unless we're on a different Z layer
-	if get_parent().get_name().find("Z+") == -1 and get_parent().get_name().find("Z-") == -1:
-		$Line2D.show()
-		$StarTexture.show()
+#	if get_parent().get_name().find("Z+") == -1 and get_parent().get_name().find("Z-") == -1:
+#		$Line2D.show()
+#		$StarTexture.show()
 	
 	selected = true
 	get_parent().get_parent().tg = get_parent().get_parent().get_tg()
@@ -377,23 +382,25 @@ func _on_TextureRect3_gui_input(event):
 			if event.is_pressed():
 				on_click()
 
+# TODO: those won't be necessary if we display Z in some other way
 # reveal Z line and star icon on mouse over
 func _on_ShadowTexture_mouse_entered():
 	# don't show lines if we're on a different Z layer
 	if get_parent().get_name().find("Z+") != -1 or get_parent().get_name().find("Z-") != -1:
 		return
 	
-	$Line2D.show()
-	$StarTexture.show()
+	#$Line2D.show()
+	#$StarTexture.show()
 
 
 func _on_ShadowTexture_mouse_exited():
+	pass
 	# don't hide if we're the target
-	if get_parent().get_parent().tg == self:
-		return
-		
-	$Line2D.hide()
-	$StarTexture.hide()
+#	if get_parent().get_parent().tg == self:
+#		return
+#
+#	$Line2D.hide()
+#	$StarTexture.hide()
 
 
 func _on_PlanetTexture_mouse_entered():
@@ -401,10 +408,11 @@ func _on_PlanetTexture_mouse_entered():
 	if get_parent().get_name().find("Z+") != -1 or get_parent().get_name().find("Z-") != -1:
 		return
 		
-	if $"StarTexture".visible:
-		$Line2D.show()
+	#if $"StarTexture".visible:
+	#	$Line2D.show()
 
 
 func _on_PlanetTexture_mouse_exited():
-	if $"StarTexture".visible:
-		$Line2D.hide()
+	pass
+	#if $"StarTexture".visible:
+	#	$Line2D.hide()

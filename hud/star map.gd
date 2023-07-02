@@ -435,9 +435,9 @@ func update_map(marker):
 		$"Control".tg = icon
 		icon.get_node("Label").set_self_modulate(Color(1,0,1)) #hot pink purple
 		# reveal Z line and planet icon for target
-		if icon.has_node("Line2D"):
-			icon.get_node("Line2D").show()
-		icon.get_node("StarTexture").show()
+#		if icon.has_node("Line2D"):
+#			icon.get_node("Line2D").show()
+#		icon.get_node("StarTexture").show()
 		
 		# paranoia
 		if $"Control".src == $"Control".tg:
@@ -836,4 +836,4 @@ func _on_LineEdit_text_entered(new_text):
 		move_map_to_offset(offset, true)
 
 		# force reveal
-		found.get_node("StarTexture").show()
+		#found.get_node("StarTexture").show()
