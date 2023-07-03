@@ -96,7 +96,7 @@ func _ready():
 	if abs(depth) < 0.2:
 		if abs(depth) != 0.0:
 			print(get_name(), " has very small Z")
-		get_node("Label2").set_text("Z: " + "%.2f" % depth + " ly")
+		get_node("Label2").set_text("%.2f" % depth) #+ " ly") # all distances, e.g on ruler, are in ly anyway
 		get_node("StarTexture").show()
 		get_node("StarTexture").position = Vector2(0,0)
 		get_node("ShadowTexture").hide()
@@ -146,6 +146,7 @@ func _ready():
 	if get_parent().get_name().find("Z-") != -1:
 		get_node("ZTexture").flip_v = false
 	
+	get_node("Label2").set_text(str(depth_str)) #+ " ly") # all distances, e.g on ruler, are in ly anyway
 	
 	# test visualizing Z as icon size
 	#var factor = abs(depth)/20 # 20 is max Z distance away from the plane on a single layer
@@ -154,6 +155,9 @@ func _ready():
 	
 	var grad = preload("res://hud/new_gradient.tres")
 	get_node("ShadowTexture").self_modulate = grad.sample(factor)
+	
+	# TODO: draw star color if option ticked
+	
 	calculate_label_and_sfx()
 
 func add_planets_mark():
@@ -245,7 +249,7 @@ func calculate_label_and_sfx(offset=Vector2(0,0)):
 #	else:
 #		get_node("Line2D").set_modulate(Color(1,1,1,1)) # restore normal opacity
 	
-	get_node("Label2").hide()
+	#get_node("Label2").hide()
 	
 	# special case for low Z icons
 	if ab_planet == ab_shadow:
