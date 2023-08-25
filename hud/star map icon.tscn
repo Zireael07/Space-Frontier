@@ -10,6 +10,8 @@
 [sub_resource type="LabelSettings" id="LabelSettings_u3iea"]
 line_spacing = 1.0
 font_size = 14
+outline_size = 1
+outline_color = Color(0.0313726, 0.0313726, 0.0313726, 1)
 
 [node name="icon" type="Control"]
 layout_mode = 3
