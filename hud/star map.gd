@@ -571,6 +571,12 @@ func display_star_map_info(star_icon):
 # --------------------------------------------------
 func is_sector_generated(sector):
 	var ret = false
+	
+	# special check early
+	if sector[0] == 0 and sector[1] == 0:
+		ret = true
+		return ret
+	
 	var icons = get_tree().get_nodes_in_group(str(sector))
 	if icons.size() > 0:
 		ret = true
