@@ -80,6 +80,10 @@ Gliese 357, star, 9h36m, -21d39m, 30.7, 0.36S, 0.33S, -, 0.014, red,
 Gliese 357 b, planet, -, -, -, 1.8E, 1.2E, 0.04, -
 Gliese 357 c, planet, -, -, -, 3.4E, ?, 0.06, -
 Gliese 1068, star, 4h10m, -53d36m, 23.1, 0.2S, 0.2S, -, 0.005, red, //aka L320-188 luminosity is just a guess
+Gliese 367, star, 9h44m, -45d46m, 30.7, 0.45S, 0.46S, -, 0.0289, red,
+Gliese 367c, planet, -, -, -, 4.1E, 4.0E, 0.07, -, //orbital period 11.5 days radius is just a guess
+Gliese 367d, planet, -, -, -, 5.9E, 5.0E, 0.15, -, //orbital period 34.4 days radius is a guess
+Gliese 367b, planet, -, -, -, 0.5E, 0.7E, 0.01, -
 Gliese 358, star, 9h39m, -41d3m, 31.3, 0.32S, 0.09S, -, 0.001, red, //luminosity is just a guess
 Gliese 370, star, 9h51m, -43m30m, 36.7, 0.69S, 0.53S, -, 0.126, orange, //aka HD 85512
 Gliese 370 b, planet, -, -, -, 3.6E, ?, 0.26, -
