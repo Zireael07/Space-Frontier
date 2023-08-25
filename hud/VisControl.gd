@@ -28,7 +28,11 @@ func _draw():
 			if 'pos' in cntr.src and 'pos' in n:
 				if [cntr.src.pos, n.pos] in secondary: #or [n, cntr.src] in secondary:
 					connect_clr = Color(1,0,0)
-			draw_line(cntr.src.get_node("StarTexture").position+cntr.src.position+cntr.position, n.position+cntr.position, connect_clr) #Color(1, 0.8, 0)) # yellow
+			var ch = cntr.src.get_node("StarTexture")
+			if cntr.src.has_node("ShadowTexture"):
+				ch = cntr.src.get_node("ShadowTexture")
+			draw_line(ch.position+cntr.src.position+cntr.position, n.position+cntr.position, connect_clr) #Color(1, 0.8, 0)) # yellow
+				
 	else:
 		# if we're not on a different Z layer
 		if cntr.tg.get_parent().get_name().find("Z+") == -1 and cntr.tg.get_parent().get_name().find("Z-") == -1:
@@ -40,7 +44,10 @@ func _draw():
 				if 'pos' in cntr.tg and 'pos' in n:
 					if [cntr.tg.pos, n.pos] in secondary: #or [n, cntr.tg] in secondary:
 						connect_clr = Color(1,0,0)
-				draw_line(cntr.tg.get_node("StarTexture").position+cntr.tg.position+cntr.position, n.position+cntr.position, connect_clr) #Color(1, 0.8, 0)) # yellow
+				var ch = cntr.tg.get_node("StarTexture")
+				if cntr.tg.has_node("ShadowTexture"):
+					ch = cntr.tg.get_node("ShadowTexture")
+				draw_line(ch.position+cntr.tg.position+cntr.position, n.position+cntr.position, connect_clr) #Color(1, 0.8, 0)) # yellow
 		
 	# draw route
 	if route:
