@@ -68,6 +68,7 @@ Denebola, star, 11h49m, 14d34m, 35.8, 1.78S, 1.73S, -, 15.0, white, //aka Beta L
 Beta Virginis, star, 11h50m, 1d45m, 35.8, 1.41S, 1.68S, -, 3.52, yellow,
 Gliese 3622, star, 10h48m, -11d20m, 14.8, 0.08S, 0.11S, -, 0.0006, red, //87MJ and 11RJ aka LHS 292 or NN 3622
 Gliese 393, star, 10h28m, 0d50m, 22.9, 0.41S, 0.41S, -, 0.0235, red, //aka Ross 446
+Gliese 1128, star, 9h42m, -68d52d, 21.2, 0.17S, 0.2S, -, 0.003, red, //luminosity is just a guess 
 AN Sextantis, star, 10h12m, -3d44m, 25.1, 0.56S, 0.58S, -, 0.068, red, //aka Gliese 382
 LHS 6167, star, 9h15m, -10d35m, 24.1, 0.13S, 0.20S, -, 0.005, red, //luminosity is a guess
 LHS 6167 B, star, -, -, -, 0.1S, 0.1S, 20, 0.001, red, //luminosity and AU are a guess
@@ -81,9 +82,9 @@ Gliese 357 b, planet, -, -, -, 1.8E, 1.2E, 0.04, -
 Gliese 357 c, planet, -, -, -, 3.4E, ?, 0.06, -
 Gliese 1068, star, 4h10m, -53d36m, 23.1, 0.2S, 0.2S, -, 0.005, red, //aka L320-188 luminosity is just a guess
 Gliese 367, star, 9h44m, -45d46m, 30.7, 0.45S, 0.46S, -, 0.0289, red,
-Gliese 367c, planet, -, -, -, 4.1E, 4.0E, 0.07, -, //orbital period 11.5 days radius is just a guess
-Gliese 367d, planet, -, -, -, 5.9E, 5.0E, 0.15, -, //orbital period 34.4 days radius is a guess
-Gliese 367b, planet, -, -, -, 0.5E, 0.7E, 0.01, -
+Gliese 367 c, planet, -, -, -, 4.1E, 4.0E, 0.07, -, //orbital period 11.5 days radius is just a guess
+Gliese 367 d, planet, -, -, -, 5.9E, 5.0E, 0.15, -, //orbital period 34.4 days radius is a guess
+Gliese 367 b, planet, -, -, -, 0.5E, 0.7E, 0.01, -
 Gliese 358, star, 9h39m, -41d3m, 31.3, 0.32S, 0.09S, -, 0.001, red, //luminosity is just a guess
 Gliese 370, star, 9h51m, -43m30m, 36.7, 0.69S, 0.53S, -, 0.126, orange, //aka HD 85512
 Gliese 370 b, planet, -, -, -, 3.6E, ?, 0.26, -
