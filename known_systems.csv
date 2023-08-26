@@ -65,6 +65,7 @@ Gliese 1061 c, planet, -, -, -, 1.7E, ?, 0.04, -
 Gliese 1061 d, planet, -, -, -, 1.7E, ?, 0.05, -
 Gliese 440, star, 11h45m, -64d50m, 15.1, 0.56S, 0.01S, -, 0.0005, white, //aka LP 145-141 
 Gliese 3618, star, 10h44m, -61d12m, 15.7, 0.1S, 0.1S, -, 0.003, red, //luminosity is just a guess
+2MASS J08173001-6155158, star, 8h17m, -61d54m, 17.0, 0.014S, 0.094S, -, 0.0001, brown, //T class luminosity is just a guess
 EE Leonis, star, 10h50m, 6d48m, 22.7, 0.25S, 0.26S, -, 0.0009, red, //aka Gliese 402; SW path
 Denebola, star, 11h49m, 14d34m, 35.8, 1.78S, 1.73S, -, 15.0, white, //aka Beta Leonis
 Beta Virginis, star, 11h50m, 1d45m, 35.8, 1.41S, 1.68S, -, 3.52, yellow,

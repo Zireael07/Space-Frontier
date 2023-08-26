@@ -44,6 +44,10 @@ func _ready():
 			get_node("Label").position = Vector2(0, 25)
 	
 	#print(txt, " len: ", txt.length())
+	# deal with names like MASS xxxxx-xxxxxx
+	if txt.length() > 8 and txt.find("-") != -1:
+		var txts = txt.split("-")
+		txt = txts[0] + '\n' + '-' + txts[1]
 	# if long name that has a space and doesn't have a line break already
 	if txt.length() > 13 and txt.find(" ") != -1 and txt.find("\n") == -1:
 		var txts = txt.split(" ")
