@@ -104,9 +104,12 @@ L 98-59 e, planet, -, -, -, 3.1E, ?, 0.07, -
 L 34-26, star, 7h49m, -76d42m, 35.5, 0.3S, 0.3S, -, 0.004, red, //luminosity is just a guess
 L 34-26 b, planet, -, -, -, 6.3J, 1.1J, 7500.0, -, //not a typo! takes a million years to orbit aka COCONUTS-2b
 L 136-37, star, 7h20m, -62d10m, 36.5, 0.4S, 0.4S, -, 0.004, red, //luminosity is just a guess
-Gliese 370, star, 9h51m, -43m30m, 36.7, 0.69S, 0.53S, -, 0.126, orange, //aka HD 85512
+Gliese 370, star, 9h51m, -43m30m, 36.7, 0.69S, 0.53S, -, 0.126, orange, //aka HD 85512 SW side
 Gliese 370 b, planet, -, -, -, 3.6E, ?, 0.26, -
-Zeta Doradus A, star, 5h5m, -57d28m, 38.1, 1.07S, 1.20S, -, 1.549, yellow, //aka GI 189
+HD 74576, star, 8h43m, -38d52m, 36.5, 0.65S, 0.75S, -, 0.2, orange, //luminosity is just a guess
+HD 72673, star, 8h32m, -31d29m, 39.6, 0.75S, 0.85S, -, 0.44, orange, 
+L 601-78, star, 7h54m, -29d21m, 40.5, 0.3S, 0.3S, -, 0.004, red, //luminosity is just a guess
+Zeta Doradus A, star, 5h5m, -57d28m, 38.1, 1.07S, 1.20S, -, 1.549, yellow, //aka GI 189 
 Gliese 145, star, 3h32m, -44d42m, 35.0, ?, ?, -, ?, white, //https://nexsci.caltech.edu/missions/EXEP/EXEPstarlist.html
 Gliese 146, star, 3h35m, -48d25m, 44.3, ?, ?, -, 0.2, orange, //luminosity is just a guess
 Gliese 163, star, 4h9m, -53d22m, 49.5, 0.3S, 0.4S, -, 0.01, red, 
@@ -144,6 +147,8 @@ LP 788-1, star, 9h31m, -17d17m, 45.1, 0.1S, 0.1S, -, 0.001, red, //luminosity is
 L 749-34, star, 9h16m, -18d37m, 43.8, 0.5S, 0.4S, -, 0.005, red, //luminosity is just a guess
 L 750-42, star, 9h43m, -17d47m, 43.7, 0.2S, 0.2S, -, 0.002, red, //luminosity and radius are guesses "cool subdwarf"
 G 161-71, star, 9h44m, -12d20m, 42.8, 0.2S, 0.2S, -, 0.003, red, //luminosity is just a guess
+MCC 753, star, 10h16m, -11d57m, 43.9, 0.4S, 0.4S, -, 0.004, red, //luminosity is just a guess
+LP 791-3, star, 10h44m, -18d38m, 42.1, 0.2S, 0.2S, -, 0.003, red, //luminosity is just a guess
 Gliese 3517, star, 8h53m, -3d29m, 28.2, 0.07S, 0.10S, -, 0.001, red, //luminosity is a guess 78MJ and 1.1RJ
 Gliese 1005 A, star, 0h15m, -16d8m, 16.2, 0.17S, 0.2S, -, 0.005, red, //luminosity is a guess
 Gliese 1005 B, star, -, -, -, 0.11S, 0.1S, 30.0, 0.005, red, //most things are guesses; 0.3 arcsecond between the two
