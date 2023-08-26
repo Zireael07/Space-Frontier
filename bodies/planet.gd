@@ -1257,7 +1257,7 @@ func oops_gg(area):
 	sink_time.connect("timeout",Callable(self,"_on_sink_timer").bind(area))
 	
 func _on_sink_timer(area):
-	print("Sink timed out")
+	print("Sink timed out", area)
 	area.get_parent().queue_free()
 
 func do_colonize(area):
@@ -1288,7 +1288,7 @@ func do_colonize(area):
 		#print("Adding colony to planet")
 		# add colony to planet
 		# prevent crash
-		call_deferred("reparent", area)
+		call_deferred("reparent_helper", area)
 		# must happen after reparenting
 		call_deferred("reposition", area)
 	else:
