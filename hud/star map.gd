@@ -55,6 +55,10 @@ func parse_data():
 			# strip "A" etc.
 			var _name = str(line[col.NAME])
 			_name = _name.trim_suffix(" A")
+			if _name.find("*") != -1:
+				_name = _name.trim_suffix("*")
+				ic.new = true
+			
 			ic.named = _name
 			
 			#ic.named = str(line[0])

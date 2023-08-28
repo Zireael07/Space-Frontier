@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bi2unh3bcmfsy"]
+[gd_scene load_steps=9 format=3 uid="uid://bi2unh3bcmfsy"]
 
 [ext_resource type="Texture2D" uid="uid://d3wyq6idq6p1g" path="res://assets/hud/red_circle.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://qgwa0n80hd5a" path="res://assets/hud/grey_circle.png" id="2"]
@@ -6,6 +6,7 @@
 [ext_resource type="Gradient" path="res://assets/hud/line_gradient.tres" id="4"]
 [ext_resource type="Texture2D" uid="uid://yastj0ygv2jj" path="res://assets/hud/grey_arrowUpWhite.png" id="5"]
 [ext_resource type="LabelSettings" uid="uid://7dmmvp0f7hym" path="res://hud/new_label_settings.tres" id="5_c62yk"]
+[ext_resource type="Texture2D" uid="uid://ccidnf5pfg7ip" path="res://assets/hud/green_checkmark.png" id="7_6ui63"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u3iea"]
 line_spacing = 1.0
@@ -87,6 +88,15 @@ offset_right = 70.0
 offset_bottom = 55.0
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("5")
+
+[node name="NewTexture" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_top = 20.0
+offset_right = 40.0
+offset_bottom = 60.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_6ui63")
 
 [connection signal="gui_input" from="ShadowTexture" to="." method="_on_TextureRect2_gui_input"]
 [connection signal="mouse_entered" from="ShadowTexture" to="." method="_on_ShadowTexture_mouse_entered"]

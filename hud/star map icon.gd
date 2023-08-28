@@ -9,6 +9,7 @@ const LY_TO_PX = 50;
 @export var planets = false
 var star_type = ""
 var multiple = false
+var new = false # for debug purposes
 var pos = null #Vector3()
 
 var selected = false
@@ -21,6 +22,10 @@ func _ready():
 	var txt = named
 	if planets:
 		txt += "*"
+	
+	# mark new additions to catalog
+	if new:
+		get_node("NewTexture").show()
 	
 	# layers
 	var Z_level_down = preload("res://assets/hud/grey_sliderDown.png")
