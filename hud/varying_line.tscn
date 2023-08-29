@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://db2l5r1sqifia"]
+
+[sub_resource type="Curve" id="Curve_ke1im"]
+_data = [Vector2(0.00970873, 0), 0.0, 0.0, 0, 0, Vector2(0.237864, 0.981818), 0.0, 0.0, 0, 0, Vector2(0.932039, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_ot84x"]
+offsets = PackedFloat32Array(0, 0.239264, 0.447853, 0.595092)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0.988235, 0.988235, 0.988235, 1, 0, 0, 0, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(198, 354, 137, 224, 177, 64, 19, 157, 0, 0)
+width = 20.0
+width_curve = SubResource("Curve_ke1im")
+gradient = SubResource("Gradient_ot84x")
