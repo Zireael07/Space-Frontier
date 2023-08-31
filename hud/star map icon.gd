@@ -368,6 +368,7 @@ func on_click():
 		
 	var r = get_node("../../..").get_route_icons(get_node("../..").src, get_node("../..").tg)
 	vis.route = r
+	vis.draw_route()
 	vis.queue_redraw()
 	var r_heights = get_node("../../..").get_route_distance_height(get_node("../..").src, get_node("../..").tg)
 	#get_node("../../RouteHeightPanel").route_data = r_heights

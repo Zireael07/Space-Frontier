@@ -8,6 +8,8 @@ var font = null
 var route = null # should contain pairs of starmap icons (i.e. Controls)
 var secondary = [] # for visual debugging
 
+var line = preload("res://hud/varying_line.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	cntr = $"../../Control"
@@ -18,10 +20,38 @@ func _ready():
 #func _process(delta):
 #	pass
 
+func draw_route():
+	# clear any past lines
+	for i in get_child_count():
+		if i > 1:
+			get_child(i).queue_free()
+	
+	# draw route
+	if route:
+		for p in route:
+			# paranoia skip
+			if p[0] == null or p[1] == null:
+				continue
+	
+	
+			var l = line.instantiate()
+			add_child(l)
+			l.position = p[0].position+cntr.position
+			l.get_node("Line2D").points = PackedVector2Array([Vector2(0,0), p[1].position-p[0].position])
+			# 
+			var grad = Gradient.new()
+			grad.offsets = [0, 1]
+			# test
+			# FIXME: should get colors matching the star's Z
+			grad.colors = [Color(1,0,0), Color(0,0,1)]
+			l.get_node("Line2D").gradient = grad
+
+
 # this is why this script even exists - to draw lines over everything else (e.g. the grid)
 func _draw():
 	# those use yellow because it's the most eye catching color and shouldn't be mistaken for fleet color here
 	# draw starmap connections
+	# NOTE: no known function that would let us draw a multi-colored line, except maybe drawing two lines, stopping in the middle? or Line2D
 	if not clicked:
 		for n in cntr.get_parent().get_neighbors_for_icon(cntr.src):
 			var connect_clr = Color(1, 0.8, 0) #if not second else Color(1,0.0,0)
@@ -50,22 +80,26 @@ func _draw():
 				draw_line(ch.position+cntr.tg.position+cntr.position, n.position+cntr.position, connect_clr) #Color(1, 0.8, 0)) # yellow
 		
 	# draw route
-	if route:
-		for p in route:
-			# paranoia skip
-			if p[0] == null or p[1] == null:
-				continue
+#	if route:
+#		for p in route:
+#			# paranoia skip
+#			if p[0] == null or p[1] == null:
+#				continue
+#
+
+			
 			# vary color if connection crosses Z
-			var clr = Color(1, 0.8, 0)
-			if 'depth' in p[0] and 'depth' in p[1] and abs(p[0].depth-p[1].depth) > 12:
-				clr = Color(0.5, 0.5, 0)
-			# tint if all on another layer
-			if 'depth' in p[0] and 'depth' in p[1] and p[0].depth > 12 and p[1].depth > 12:
-				clr = Color(0.5, 0.5, 0.3) # slight blue tint
-			if 'depth' in p[0] and 'depth' in p[1] and p[0].depth < -12 and p[1].depth < -12:
-				clr = Color(0.3, 0.3, 0)
+#			var clr = Color(1, 0.8, 0)
+#			if 'depth' in p[0] and 'depth' in p[1] and abs(p[0].depth-p[1].depth) > 12:
+#				clr = Color(0.5, 0.5, 0)
+#			# tint if all on another layer
+#			if 'depth' in p[0] and 'depth' in p[1] and p[0].depth > 12 and p[1].depth > 12:
+#				clr = Color(0.5, 0.5, 0.3) # slight blue tint
+#			if 'depth' in p[0] and 'depth' in p[1] and p[0].depth < -12 and p[1].depth < -12:
+#				clr = Color(0.3, 0.3, 0)
 			# this draws next to shadow icons
-			draw_line(p[0].position+cntr.position, p[1].position+cntr.position, clr, 3.0)
+			#draw_line(p[0].position+cntr.position, p[1].position+cntr.position, clr, 3.0)
+			
 			# this draws next to stars themselves
 			#draw_line(p[0].get_node("StarTexture").position+p[0].position+cntr.position, p[1].get_node("StarTexture").position+p[1].position+cntr.position, Color(1, 0.8, 0), 3.0)
 	
@@ -118,8 +152,9 @@ func _draw():
 #	draw_string(font, cntr.position+visual_begin+Vector2(2515, 2525), str("SE"), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0,1,0))
 
 	# debug
-	if sector[0] == 0 and sector[1] == 1:
-		var smaller_quads_ne = get_parent().get_parent().quadrants(sector_begin+Vector2(512,0), 256, 256, false)
+	if sector[0] == 0 and sector[1] == -1:
+		#var smaller_quads_ne = get_parent().get_parent().quadrants(sector_begin+Vector2(512,512), 256, 256, false)
+		var smaller_quads_ne = []
 		for i in smaller_quads_ne.size():
 			var q = smaller_quads_ne[i]
 			var vis_pos = (q.position/10)*get_parent().get_parent().LY_TO_PX
@@ -128,12 +163,12 @@ func _draw():
 			# draw them round the center point
 			draw_string(font, cntr.position+visual_begin+Vector2(51,0)*get_parent().get_parent().LY_TO_PX+(q.size/10)*get_parent().get_parent().LY_TO_PX+offset[i], str(pretty_q_i[i]), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0,1,0))
 		
-		var smaller_quads_nw = get_parent().get_parent().quadrants(sector_begin, 256, 256, false)	
+		var smaller_quads_nw = get_parent().get_parent().quadrants(sector_begin+Vector2(512,512), 256, 256, false)	
 		for i in smaller_quads_nw.size():
 			var q = smaller_quads_nw[i]
 			var vis_pos = (q.position/10)*get_parent().get_parent().LY_TO_PX
 			#print("Drawing rect @", q.position/10*get_parent().get_parent().LY_TO_PX)
 			draw_rect(Rect2(cntr.position+(q.position/10)*get_parent().get_parent().LY_TO_PX, Vector2((q.size/10)*get_parent().get_parent().LY_TO_PX)), Color(0,1,0), false, 1.5)
 			# draw them round the center point
-			draw_string(font, cntr.position+visual_begin+Vector2(0,0)*get_parent().get_parent().LY_TO_PX+(q.size/10)*get_parent().get_parent().LY_TO_PX+offset[i], str("sub-"+pretty_q_i[i]), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0,1,0))
+			draw_string(font, cntr.position+visual_begin+Vector2(51,51)*get_parent().get_parent().LY_TO_PX+(q.size/10)*get_parent().get_parent().LY_TO_PX+offset[i], str("sub-"+pretty_q_i[i]), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0,1,0))
 		
