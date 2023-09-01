@@ -38,12 +38,29 @@ func draw_route():
 			add_child(l)
 			l.position = p[0].position+cntr.position
 			l.get_node("Line2D").points = PackedVector2Array([Vector2(0,0), p[1].position-p[0].position])
-			# 
+			l.get_node("Line2D").width = 10
+			l.get_node("Line2D").width_curve = null # FIXME: assign a calculated curve here
+			# need a gradient to display more than one color
 			var grad = Gradient.new()
 			grad.offsets = [0, 1]
-			# test
-			# FIXME: should get colors matching the star's Z
-			grad.colors = [Color(1,0,0), Color(0,0,1)]
+
+			# can't append to grad.colors itself
+			var tmp_colors = []
+			# get colors matching the star's Z
+			if 'depth' in p[0]:
+				tmp_colors.append(p[0].get_z_color(p[0].depth)[0])
+				#print("Color 0: ", p[0].get_z_color(p[0].depth)[0])
+			else:
+				tmp_colors.append(Color(1,1,1,1))
+			if 'depth' in p[1]:
+				#print("Color 1: ", p[1].get_z_color(p[1].depth)[0])
+				tmp_colors.append(p[1].get_z_color(p[1].depth)[0])
+			else:
+				tmp_colors.append(Color(1,1,1,1))
+			
+			grad.colors = tmp_colors
+			print("Colors: ", grad.colors)
+			#grad.colors = [Color(1,0,0), Color(0,0,1)]
 			l.get_node("Line2D").gradient = grad
 
 
