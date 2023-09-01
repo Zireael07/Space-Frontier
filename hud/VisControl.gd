@@ -20,6 +20,7 @@ func _ready():
 #func _process(delta):
 #	pass
 
+# NOTE: by itself, doesn't offset with the map
 func draw_route():
 	# clear any past lines
 	for i in get_child_count():
@@ -59,7 +60,7 @@ func draw_route():
 				tmp_colors.append(Color(1,1,1,1))
 			
 			grad.colors = tmp_colors
-			print("Colors: ", grad.colors)
+			#print("Colors: ", grad.colors)
 			#grad.colors = [Color(1,0,0), Color(0,0,1)]
 			l.get_node("Line2D").gradient = grad
 

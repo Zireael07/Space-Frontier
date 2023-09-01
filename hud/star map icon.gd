@@ -158,16 +158,23 @@ func _ready():
 	get_node("Label2").set_text(str(depth_str)) #+ " ly") # all distances, e.g on ruler, are in ly anyway
 	
 	# test visualizing Z as icon size
-	#var factor = abs(depth)/20 # 20 is max Z distance away from the plane on a single layer
-	var factor = clamp(inverse_lerp(-10, +10, depth), 0.2, 1.0)
+	var z_data = get_z_color(depth)
+	var factor = z_data[1]
 	get_node("ShadowTexture").set_scale(Vector2(1,1)*factor)
-	
-	var grad = preload("res://hud/new_gradient.tres")
-	get_node("ShadowTexture").self_modulate = grad.sample(factor)
-	
+	var color = z_data[0]
+	get_node("ShadowTexture").self_modulate = color
 	# TODO: draw star color if option ticked
 	
 	calculate_label_and_sfx()
+
+func get_z_color(depth):
+	#var factor = abs(depth)/20 # 20 is max Z distance away from the plane on a single layer
+	var factor = clamp(inverse_lerp(-10, +10, depth), 0.2, 1.0)
+	var grad = preload("res://hud/new_gradient.tres")
+	var color = grad.sample(factor)
+	#print(get_name(), " color: ", color)
+	return [color, factor]
+
 
 func add_planets_mark():
 	var txt = get_node("Label").get_text()
