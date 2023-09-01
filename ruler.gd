@@ -1,7 +1,7 @@
 @tool
 extends Control
 
-
+# TODO: vary colors by Z (see VisControl.gd)
 # Declare member variables here. Examples:
 @export var pts = []
 var text = ""

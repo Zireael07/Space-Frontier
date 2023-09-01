@@ -739,6 +739,7 @@ func _on_move_to_offset(offset, sector, jump=false):
 func move_map_to_offset(offset, jump=false):
 	$Control.set_position(center+offset)
 	$"Grid/VisControl".queue_redraw() # redraw map lines if any
+	$"Grid/VisControl".draw_route() # redraw route
 	
 	var sector = pos_to_sector(Vector3(-offset.x/50, -offset.y/50, 0))
 	
