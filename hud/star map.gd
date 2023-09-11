@@ -829,7 +829,38 @@ func _on_ButtonDown_pressed():
 
 
 func _on_LineEdit_text_entered(new_text):
-	# search for the star
+	# special case:
+	var list = []
+	if new_text.find("remote") != -1:
+		for l in $"Control".get_children():
+			for c in l.get_children():
+				if c.has_node("Label"):
+					# distance in ints encoding floats, so x10 real distance
+					if 'pos' in c and c.pos.distance_to(Vector3(0,0,0)) > 300:
+						var sector = pos_to_sector(c.pos, false)
+						#print(sector)
+						if sector[0] == 0 and sector[1] == 0:
+							var quadrant = ""
+							# star icon: display sector's quadrant it is in
+							var sector_zero_start = Vector2(-512,-512)
+							# these are for internal coords
+							var sector_begin = Vector2(sector[0]*1024, -sector[1]*1024)+sector_zero_start
+							var qp = get_quad_points(sector_begin, -1)
+							#print("Quad points for our sector: ", get_quad_points(sector_begin, -1))
+							#print("Check for: ", Vector3(star_icon.x, star_icon.y, star_icon.depth))
+							# this assumes internal coords
+							var pretty_q_i = {0: "SW", 1: "SE", 2:"NE", 3:"NW"}
+							for q_i in qp.size():
+								#print("Quadrant: ", pretty_q_i[q_i], " : ", Vector3(star_icon.x, star_icon.y, star_icon.depth) in qp[q_i])
+								if Vector3(c.x, c.y, c.depth) in qp[q_i]:
+									#quadrant = "Quadrant: " + str(pretty_q_i[q_i])
+									quadrant = str(pretty_q_i[q_i])
+									break 
+							list.append([c.get_node("Label").get_text(), c.pos, quadrant, c.pos.distance_to(Vector3(0,0,0))])
+	
+	print(list)
+	
+	# default: search for the star
 	var found = null
 	#for c in $Control.get_children():
 	for l in $"Control".get_children():
