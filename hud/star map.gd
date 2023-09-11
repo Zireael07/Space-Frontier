@@ -866,16 +866,28 @@ func _on_LineEdit_text_entered(new_text):
 	for l in $"Control".get_children():
 		for c in l.get_children():
 			if c.has_node("Label") and c.get_node("Label").get_text().find(new_text) != -1:
-				found = c
-				print("Found the star: ", new_text, "!")
-				break
+				found.append(c)
+				#print("Found the star: ", new_text, "!")
+				# because there can be multiple stars with the text
+				#break
+	
+	print("Found: ", found)
 	
 	# center map on found star
 	# TODO: center on midpoint between star and shadow ONCE we're assured all stars fit in screen
 	# i.e. layers are implemented
-	if found:
-		offset = -(found.position) #+found.get_node("StarTexture").position)
+	if found.size() > 0:
+		offset = -(found[0].position) #+found.get_node("StarTexture").position)
 		move_map_to_offset(offset, true)
 
 		# force reveal
 		#found.get_node("StarTexture").show()
+		
+		# TODO: make it more clear which is the found star
+		# a different color or a border?
+
+	# make it clear we're done now
+	# TODO: maybe flash a text color change before this?
+	$Control2/LineEdit.clear()
+	
+	found = []
