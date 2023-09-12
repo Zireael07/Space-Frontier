@@ -299,6 +299,19 @@ func _input(_event):
 		else:
 			player.emit_signal("officer_message", "Guns not ready yet!")
 	
+	# hack for map panel search
+	if get_node("Control4/star map").is_visible():
+		# if LineEdit is focused, stop
+		if get_node("Control4/star map/Control2/LineEdit").has_focus():
+			print("Line edit focused")
+			return
+		#print("Event: ", _event)
+		if _event is InputEventKey and _event.pressed:
+			if _event.keycode == KEY_ENTER:
+				starmap_choose_search()
+			if _event.keycode in [KEY_COMMA, KEY_PERIOD]:
+				starmap_select_search(_event.keycode)
+	
 	# map panel
 	if Input.is_action_pressed("open_map"):
 		if get_node("Control4/star map").is_visible():
@@ -486,6 +499,12 @@ func hide_starmap():
 	
 func starmap_menu_show():
 	$"Control4/star map/PopupPanel".show()
+	
+func starmap_choose_search():
+	$"Control4/star map".choose_search()
+	
+func starmap_select_search(key):
+	$"Control4/star map".select_search(key)
 
 # --------------------------
 # signals

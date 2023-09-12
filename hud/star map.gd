@@ -15,6 +15,7 @@ var grid = Vector2(0, -138) # experimentally determined
 var systems = {}
 
 var sectors = []
+var found = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -762,6 +763,7 @@ func move_map_to_offset(offset, jump=false):
 
 
 # ----------------------------------------------------
+# input is handled in HUD.gd - on_star_map_gui_input()
 # prevent accidentally panning while sector is generating...
 func disable_panning_buttons(boo):
 	$Control2/ButtonL.disabled = boo
@@ -827,8 +829,13 @@ func _on_ButtonDown_pressed():
 		offset += Vector2(0, -42*LY_TO_PX)
 	move_map_to_offset(offset)
 
-
+# emitted upon pressing Enter
 func _on_LineEdit_text_entered(new_text):
+	# check
+	if new_text.length() < 1:
+		print("No text entered!")
+		# Line Edit is stealing input from map itself if focused
+	
 	# special case:
 	var list = []
 	if new_text.find("remote") != -1:
@@ -861,22 +868,36 @@ func _on_LineEdit_text_entered(new_text):
 	print(list)
 	
 	# default: search for the star
-	var found = null
+	found = []
+	var y = 0
 	#for c in $Control.get_children():
 	for l in $"Control".get_children():
 		for c in l.get_children():
 			if c.has_node("Label") and c.get_node("Label").get_text().find(new_text) != -1:
 				found.append(c)
 				#print("Found the star: ", new_text, "!")
+				
+				y = y + 15
+				var f = Label.new()
+				f.set_text(c.get_node("Label").get_text())
+				f.position = Vector2(40, 25+y)
+				$"Control2".add_child(f)
+				
 				# because there can be multiple stars with the text
 				#break
 	
 	print("Found: ", found)
+	if found.size() > 2:
+		# marker
+		var m = Label.new()
+		m.position = Vector2(20, 40)
+		m.text = ">"
+		$"Control2".add_child(m)
 	
 	# center map on found star
 	# TODO: center on midpoint between star and shadow ONCE we're assured all stars fit in screen
 	# i.e. layers are implemented
-	if found.size() > 0:
+	if found.size() > 0 and found.size() < 2:
 		offset = -(found[0].position) #+found.get_node("StarTexture").position)
 		move_map_to_offset(offset, true)
 
@@ -885,9 +906,61 @@ func _on_LineEdit_text_entered(new_text):
 		
 		# TODO: make it more clear which is the found star
 		# a different color or a border?
+		
+		found = []
+		# clear the labels
+		for i in $Control2.get_child_count():
+			if i > 5:
+				$"Control2".get_child(i).queue_free()
 
 	# make it clear we're done now
 	# TODO: maybe flash a text color change before this?
 	$Control2/LineEdit.clear()
 	
-	found = []
+	var foc = $"Control2/LineEdit".find_prev_valid_focus()
+	print("Send focus to:", foc)
+	foc.grab_focus()
+	# we can't grab focus ourselves :(
+	#self.grab_focus()
+	#print(self.has_focus())
+	#Callable(self, "grab_focus").call_deferred()
+	
+	#found = []
+
+func select_search(keycode):
+	var marker = $"Control2".get_child($"Control2".get_child_count()-1)
+	
+	if found.size() < 2:
+		return
+	
+	if keycode == KEY_PERIOD: # >
+		if marker.position.y < found.size()*15 + 25:
+			marker.position.y = marker.position.y + 15 
+	if keycode == KEY_COMMA: # <
+		if marker.position.y > 40:
+			marker.position.y = marker.position.y - 15
+
+func choose_search():
+	if found.size() > 0:
+		print("Choosing search...")
+		
+		var marker = $"Control2".get_child($"Control2".get_child_count()-1)
+		var id = (marker.position.y-40)/15
+		print("ID: ", id)
+		
+		# center map on found star
+		# TODO: center on midpoint between star and shadow ONCE we're assured all stars fit in screen
+		# i.e. layers are implemented
+		#if found.size() > 0:
+		offset = -(found[id].position) #+found.get_node("StarTexture").position)
+		move_map_to_offset(offset, true)
+		
+		# TODO: make it more clear which is the found star
+		# a different color or a border?
+			
+		found = []
+		# clear the labels
+		for i in $Control2.get_child_count():
+			if i > 5:
+				$"Control2".get_child(i).queue_free()
+
