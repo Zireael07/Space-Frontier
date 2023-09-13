@@ -22,17 +22,31 @@ signal armor_changed
 
 signal distress_called
 
+var labl_loc = Vector2()
 
 func _ready():
 	var _conn = null
 	get_parent().add_to_group("colony")
 	_conn = connect("colony_colonized",Callable(self,"_on_colony_colonized"))
 	_conn = connect("distress_called",Callable(self,"_on_distress_called"))
+	
+	labl_loc = $"Label".get_position()
 
 # using this because we don't need physics
 func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
+
+	# straighten out labels
+	#	if not Engine.is_editor_hint():
+	$"Label".set_rotation(-get_parent().get_parent().get_rotation())
+			
+	# get the label to stay in one place from player POV
+	var angle = -get_parent().get_parent().get_rotation() + deg_to_rad(45) # because the label is located at 45 deg angle...
+	# effectively inverse of atan2()
+	var angle_loc = Vector2(cos(angle), sin(angle))
+	#Controls don't have transforms so we have to manually set position
+	$"Label"._set_position(angle_loc*labl_loc.length())
 
 	# redraw 
 	queue_redraw()
