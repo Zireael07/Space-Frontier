@@ -382,10 +382,12 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	else:
 		text = text + "\n" + "Class: ?? \n ?? " + planet.get_planet_class()
 	
-	# formatting
+	# formatting planet population string
 	var format_pop = "%.2fK" % (planet.population * 1000)
 	if planet.population > 1.0:
 		format_pop = "%.2fM" % (planet.population)
+	# NOTE: 1B = 1000M (1B = 10^9) 
+	# as evidenced by Earth's starting pop in the original Stellar Frontier
 	if planet.population > 1000.0:
 		format_pop = "%.2fB" % (planet.population/1000.0)
 		

@@ -629,6 +629,8 @@ func send_pop_from_planet(planet):
 
 	# decrease planet pop
 	# if more than 4B, pick up 1B at a time for ease of playing
+	# NOTE: 1B = 1000M (1B = 10^9) 
+	# as evidenced by Earth's starting pop in the original Stellar Frontier
 	if planet.population > 4000.0:
 		pop = 1000.0
 	elif planet.population > 51/1000.0: # don't bring it to 0K!
@@ -694,13 +696,13 @@ func add_to_colony():
 		#print("Adding " + str(pop) + " to colony of " + str(col.population))
 		# set its pop
 		col.population = col.population + pop
-		# formatting
+		# formatting colony population string - same as planet population, see HUD_right.gd make_planet_view()
 		var format_pop = "%.2fK" % (col.population * 1000)
 		if col.population >= 1.0:
 			format_pop = "%.2fM" % (col.population)
 		if col.population >= 1000.0:
 			format_pop = "%.2fB" % (col.population/1000.0)
-		# show pop label
+		# show population label
 		col.get_node("Label").set_text(str(format_pop))
 		return true
 	else:

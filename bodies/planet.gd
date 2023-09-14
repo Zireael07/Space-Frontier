@@ -89,7 +89,7 @@ func _ready():
 			if planet_rad_factor > 0.2 and not is_in_group("aster_named"):
 				get_colony().get_child(0).show_shadow()
 		
-		# tint us gray to represent pollution
+		# not in original Stellar Frontier: tint us gray to represent pollution
 		if atm > 0.01:
 			# thresholds are completely arbitrary
 			if population > 8000.0:
@@ -1375,6 +1375,7 @@ func has_colony():
 
 	return ret
 
+# add or remove the mark showing that we have colonies available
 func update_HUD_colony_pop(planet, add):
 	var node = null
 	var hud = game.player.HUD
@@ -1411,13 +1412,14 @@ func update_HUD_colony_pop(planet, add):
 func _on_pop_timer_timeout():
 	if has_colony():
 		#print("Pop increase")
+		# TODO: vary increase based on how big we are already
 		population += 1/1000.0 # in milions
 	
 	# does it have enough pop for a colony?
 	if population > 51/1000.0: # in milions
 		update_HUD_colony_pop(self, true)
 
-	# tint us gray to represent pollution
+	# not in original Stellar Frontier: tint us gray to represent pollution
 	if atm > 0.01:
 		# thresholds are completely arbitrary
 		if population > 8000.0:
