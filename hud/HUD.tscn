@@ -69,6 +69,7 @@ mouse_filter = 2
 script = ExtResource("3")
 
 [node name="Control2" type="Control" parent="."]
+editor_description = "Original SF screenshots seem to show panel size of around 300px but it doesn't fit with minimum res back then (640x480)"
 anchors_preset = 0
 anchor_left = 1.0
 anchor_right = 1.0
@@ -277,9 +278,9 @@ text = "Scout"
 
 [node name="Rank" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
 layout_mode = 0
-offset_top = 30.0
+offset_top = 40.0
 offset_right = 40.0
-offset_bottom = 44.0
+offset_bottom = 63.0
 
 [node name="Power" type="Label" parent="Control2/Panel_rightHUD/PanelInfo/ShipInfo"]
 layout_mode = 0
