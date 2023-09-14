@@ -163,7 +163,7 @@ func create_planet_listing():
 			txt = txt + " * "
 		# mark those with water or ice content
 		if p.is_interesting():
-			txt = txt + ' " '
+			txt = txt + ' ! '
 		# does it have enough pop for a colony?
 		if p.population > 51/1000.0: # in milions
 			txt = txt + " ^ "
@@ -1002,7 +1002,7 @@ func _on_officer_timer_timeout():
 
 
 func _on_star_map_gui_input(event):
-	#print("event")
+	#print("star map event")
 	if event is InputEventMouseButton:
 		print("Clicked in starmap")
 		starmap_menu_show()
