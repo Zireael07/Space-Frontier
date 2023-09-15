@@ -1412,8 +1412,15 @@ func update_HUD_colony_pop(planet, add):
 func _on_pop_timer_timeout():
 	if has_colony():
 		#print("Pop increase")
-		# TODO: vary increase based on how big we are already
-		population += 1/1000.0 # in milions
+		# vary increase based on how big we are already
+		var factor = population/8500.0
+		var fact = clampf(factor, 0.01, 1.0) # to ensure no negative natural growth
+		var growth_rate = lerpf(1.25, 0.01, fact) # just by eyeballing historical stats (max is around 2.0)
+		var change = growth_rate*population # in millions
+		# clamp to prevent gaining billions at one tick
+		change = clampf(change, 0.00001, 750.0)
+		print(get_node("Label").get_text(), " factor ", factor, " fact ", fact, " growth rate: ", growth_rate, " growth: %.2f M " % change)
+		population += 1/1000.0 # 1K in milions
 	
 	# does it have enough pop for a colony?
 	if population > 51/1000.0: # in milions
