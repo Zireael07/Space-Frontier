@@ -1415,11 +1415,11 @@ func _on_pop_timer_timeout():
 		# vary increase based on how big we are already
 		var factor = population/8500.0
 		var fact = clampf(factor, 0.01, 1.0) # to ensure no negative natural growth
-		var growth_rate = lerpf(1.25, 0.01, fact) # just by eyeballing historical stats (max is around 2.0)
+		var growth_rate = lerpf(0.0125, 0.0001, fact) # just by eyeballing historical stats (max is around 2.0% i.e. 0.02)
 		var change = growth_rate*population # in millions
 		# clamp to prevent gaining billions at one tick
 		change = clampf(change, 0.00001, 750.0)
-		print(get_node("Label").get_text(), " factor ", factor, " fact ", fact, " growth rate: ", growth_rate, " growth: %.2f M " % change)
+		print(get_node("Label").get_text(), " factor ", factor, " fact ", fact, " growth rate: ", "%.2f" % (growth_rate*100), "%", " growth: %.2f M " % change)
 		population += 1/1000.0 # 1K in milions
 	
 	# does it have enough pop for a colony?

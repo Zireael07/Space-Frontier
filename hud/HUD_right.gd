@@ -390,10 +390,15 @@ func make_planet_view(planet, select_id=-1, parent_id=-1):
 	# as evidenced by Earth's starting pop in the original Stellar Frontier
 	if planet.population > 1000.0:
 		format_pop = "%.2fB" % (planet.population/1000.0)
+	
+	var factor = planet.population/8500.0
+	var fact = clampf(factor, 0.01, 1.0) # to ensure no negative natural growth
+	var growth_rate = lerpf(0.0125, 0.0001, fact) # just by eyeballing historical stats (max is around 2.0% i.e. 0.02)
 		
 	if col:
 		# linebreak because of planet graphic
 		text = text + "\n" + "Population: " + "\n" + str(format_pop)
+		text = text + "\n" + "Growth rate: " + "%.2f" % (growth_rate*100) + "%" # original game had this somewhere at the bottom
 		var allegiance = ""
 		if col == "colony":
 			allegiance = "Terran"
