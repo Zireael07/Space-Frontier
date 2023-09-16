@@ -335,7 +335,8 @@ func move_AI(vel, delta):
 				#cruise = false
 				warp_timer.stop()
 				# remove tint
-				set_modulate(Color(1,1,1))
+				# sprite only
+				get_child(0).set_modulate(Color(1,1,1))
 	
 	
 	# rotation
@@ -642,7 +643,8 @@ func on_warping():
 	warp.play()
 	
 	# tint a matching orange color
-	set_modulate(Color(1, 0.73, 0))
+	# modulate affects child CanvasItems, too
+	get_child(0).set_modulate(Color(1, 0.73, 0))
 
 func _on_shield_changed(data):
 	#print(str(shield))
