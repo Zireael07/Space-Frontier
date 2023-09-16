@@ -1,16 +1,17 @@
-[gd_resource type="Shader" format=2]
+[gd_resource type="Shader" format=3 uid="uid://b83arprp27x3i"]
 
 [resource]
 code = "shader_type canvas_item;
 uniform sampler2D sprite;
 uniform int swizzle_type;
+uniform vec4 modulate : source_color;
 
 void fragment() {
 	vec4 clr = texture(TEXTURE, UV);
 	//swizzle
 	switch (swizzle_type){
 		case 0:  //default 
-			COLOR = clr;
+			COLOR = clr*modulate;
 			break;
 		case 1: //heat
 			COLOR = clr.agba;
@@ -18,6 +19,9 @@ void fragment() {
 		case 2: //cloak
 			COLOR = vec4(clr.r, clr.a, clr.a, clr.a); //clr.bbba; //vec4(0,0,0, clr.a);
 			break;
+//		case 3:
+//			COLOR = clr.rgga;
+//			break;
 	}
 
 }"

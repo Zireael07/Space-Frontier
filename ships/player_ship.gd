@@ -331,7 +331,7 @@ func _process(delta):
 				cruise = false
 				warp_timer.stop()
 				# remove tint
-				set_modulate(Color(1,1,1))
+				get_child(0).get_material().set_shader_parameter("modulate", Color(1,1,1))
 			
 	# refit
 	if heading == null and refit_target:
@@ -607,7 +607,7 @@ func _input(_event):
 			heading = null
 			warp_timer.stop()
 			# remove tint
-			set_modulate(Color(1,1,1))
+			get_child(0).get_material().set_shader_parameter("modulate", Color(1,1,1))
 			return
 		# if we have a planet view open, just act as a hotkey for "Go to"
 		if self.HUD.get_node("Control2/Panel_rightHUD/PanelInfo/PlanetInfo").is_visible():
@@ -661,7 +661,7 @@ func _input(_event):
 			# toggle
 			cloaked = not cloaked
 			if cloaked:
-				# sprite only!
+				# sprite overlay only!
 				get_child(1).set_modulate(Color(0.3, 0.3, 0.3))
 				$playerShip3_overlay.show()
 			else:
@@ -1099,7 +1099,9 @@ func on_warping():
 	warp.play()
 	
 	# tint a matching orange color
-	set_modulate(Color(1, 0.73, 0))
+	# modulate affects child CanvasItems, too
+	# we can't tint the sprite itself, need to pass to a shader
+	get_child(0).get_material().set_shader_parameter("modulate", Color(1, 0.73, 0))
 
 # update target and heading because the planet is orbiting, after all...
 func _on_warp_correct_timer_timeout():
