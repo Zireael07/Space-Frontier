@@ -313,6 +313,9 @@ func move_AI(vel, delta):
 			if get_colony_in_dock() != null:
 				warping = false
 				warp_target = null
+				# remove tint
+				# sprite only
+				get_child(0).set_modulate(Color(1,1,1))
 				return
 			
 			#print(get_parent().get_name(), " warping...")
@@ -337,7 +340,15 @@ func move_AI(vel, delta):
 				# remove tint
 				# sprite only
 				get_child(0).set_modulate(Color(1,1,1))
+		else:
+			# remove tint
+			# sprite only
+			get_child(0).set_modulate(Color(1,1,1))
 	
+	if not warping:
+		# remove tint
+		# sprite only
+		get_child(0).set_modulate(Color(1,1,1))
 	
 	# rotation
 	set_rotation(-a)
@@ -360,6 +371,10 @@ func shoot():
 
 # AI moves to orbit a planet
 func move_orbit(delta, planet, system):
+	# paranoia
+	if warping:
+		warping = false
+		warp_target = null
 	# paranoia
 	if not planet:
 		planet = get_colonized_planet()
@@ -592,6 +607,12 @@ func refit_tractor(refit_target):
 	#print("Adding ship as tractoring ship's child")
 
 	docked = true
+	if warping or warp_target != null:
+		warp_target = null
+		warping = false
+		# remove tint
+		# sprite only
+		get_child(0).set_modulate(Color(1,1,1))
 	
 	#fix visuals
 	var a = brain.fix_atan(vel.x,vel.y)
