@@ -1420,7 +1420,7 @@ func _on_pop_timer_timeout():
 		# clamp to prevent gaining billions at one tick
 		change = clampf(change, 0.00001, 750.0)
 		print(get_node("Label").get_text(), " factor ", factor, " fact ", fact, " growth rate: ", "%.2f" % (growth_rate*100), "%", " growth: %.2f M " % change)
-		population += 1/1000.0 # 1K in milions
+		population += change #1/1000.0 # 1K in milions
 	
 	# does it have enough pop for a colony?
 	if population > 51/1000.0: # in milions
