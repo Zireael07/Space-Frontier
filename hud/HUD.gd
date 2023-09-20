@@ -143,8 +143,8 @@ func create_planet_listing():
 		var label = Label.new()
 		var s_type = ""
 		if "star_type" in s:
-			s_type = str(s.get_star_type(s.star_type))
-		label.set_text(s.get_node("Label").get_text() + " " + s_type)
+			s_type = str(s.get_star_type(s.star_type)).capitalize() #.replace("_", " ")
+		label.set_text(s.get_node("Label").get_text() + "     " + " " + s_type)
 		label.set_position(Vector2(10,y))
 		nav_list.add_child(label)
 		# tint gray
