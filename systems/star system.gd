@@ -29,6 +29,8 @@ var orbit_rot = 0
 # data
 var data = []
 
+var type_lookup = { "yellow" = 2, "red" = 0 }
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -55,6 +57,9 @@ func _ready():
 				print("Star type from data: ", star_type)
 				if star_type == "":
 					star_type = "red"
+				
+				# fix star type reported by HUD	
+				self.star_type = type_lookup[star_type]
 				continue
 			
 			# match rows to planets

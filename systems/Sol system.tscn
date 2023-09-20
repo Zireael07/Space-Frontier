@@ -1,94 +1,98 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=48 format=3 uid="uid://dnamkyf2f5qwu"]
 
-[ext_resource path="res://colony.tscn" type="PackedScene" id=1]
-[ext_resource path="res://systems/star system.gd" type="Script" id=2]
-[ext_resource path="res://bodies/planet.tscn" type="PackedScene" id=3]
-[ext_resource path="res://bodies/planet_rotating.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/bodies/asteroids/a10001.png" type="Texture2D" id=5]
-[ext_resource path="res://assets/bodies/asteroids/a10000.png" type="Texture2D" id=6]
-[ext_resource path="res://assets/bodies/star_yellow04.png" type="Texture2D" id=7]
-[ext_resource path="res://assets/bodies/Sol textures/venusmap.jpg" type="Texture2D" id=8]
-[ext_resource path="res://assets/bodies/Sol textures/mercurymap.jpg" type="Texture2D" id=9]
-[ext_resource path="res://assets/bodies/Sol textures/moonmap.jpg" type="Texture2D" id=10]
-[ext_resource path="res://systems/asteroid_belt.gd" type="Script" id=11]
-[ext_resource path="res://assets/bodies/Sol textures/jupiter2_1k.jpg" type="Texture2D" id=12]
-[ext_resource path="res://assets/bodies/Sol textures/marsmap1k.jpg" type="Texture2D" id=13]
-[ext_resource path="res://assets/bodies/Sol textures/saturnmap.jpg" type="Texture2D" id=14]
-[ext_resource path="res://assets/bodies/Sol textures/io_rgb_cyl.jpg" type="Texture2D" id=15]
-[ext_resource path="res://assets/bodies/Sol textures/callisto-moon-surface-map.jpg" type="Texture2D" id=16]
-[ext_resource path="res://assets/bodies/Sol textures/europa2_out.jpg" type="Texture2D" id=17]
-[ext_resource path="res://assets/bodies/Sol textures/ganymede.jpg" type="Texture2D" id=18]
-[ext_resource path="res://assets/bodies/Sol textures/saturn rings stock.png" type="Texture2D" id=19]
-[ext_resource path="res://assets/bodies/Sol textures/neptunemap.jpg" type="Texture2D" id=20]
-[ext_resource path="res://assets/bodies/Sol textures/uranusmap.jpg" type="Texture2D" id=21]
-[ext_resource path="res://assets/bodies/Sol textures/fargetanik_titan_colored_magentameteorite.jpg" type="Texture2D" id=22]
-[ext_resource path="res://assets/bodies/Sol textures/rhea_a_m.jpg" type="Texture2D" id=23]
-[ext_resource path="res://assets/bodies/Sol textures/enceladus_rgb_cyl_www.jpg" type="Texture2D" id=24]
-[ext_resource path="res://assets/bodies/Sol textures/tethys_rgb_cyl_www.jpg" type="Texture2D" id=25]
-[ext_resource path="res://assets/bodies/Sol textures/dione_rgb_cyl_www.jpg" type="Texture2D" id=26]
-[ext_resource path="res://assets/planets/haze_aura_shader.tres" type="Material" id=27]
-[ext_resource path="res://assets/bodies/planet_rotating.gdshader" type="Shader" id=28]
-[ext_resource path="res://assets/bodies/texture_template.png" type="Texture2D" id=29]
-[ext_resource path="res://assets/bodies/4_special_effect_blurred.png" type="Texture2D" id=30]
-[ext_resource path="res://assets/bodies/3_special_effect_blurred.png" type="Texture2D" id=31]
+[ext_resource type="PackedScene" uid="uid://fhbqs0bjgp2b" path="res://colony.tscn" id="1"]
+[ext_resource type="Script" path="res://systems/star system.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://dd4xkfrbqfskj" path="res://bodies/planet.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://dlb5x7qis4pt4" path="res://bodies/planet_rotating.tscn" id="4"]
+[ext_resource type="Texture2D" uid="uid://bollmjmiii0k5" path="res://assets/bodies/asteroids/a10001.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://cvun1sp787umx" path="res://assets/bodies/asteroids/a10000.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://cdaptalk372vh" path="res://assets/bodies/star_yellow04.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://5vglfs4weq1f" path="res://assets/bodies/Sol textures/venusmap.jpg" id="8"]
+[ext_resource type="Texture2D" uid="uid://dhiukdor7sjlc" path="res://assets/bodies/Sol textures/mercurymap.jpg" id="9"]
+[ext_resource type="Texture2D" uid="uid://bfqsckrnea8a5" path="res://assets/bodies/Sol textures/moonmap.jpg" id="10"]
+[ext_resource type="Script" path="res://systems/asteroid_belt.gd" id="11"]
+[ext_resource type="Texture2D" uid="uid://b0hqnoc72gwk7" path="res://assets/bodies/Sol textures/jupiter2_1k.jpg" id="12"]
+[ext_resource type="Texture2D" uid="uid://8bntlp5ngejy" path="res://assets/bodies/Sol textures/marsmap1k.jpg" id="13"]
+[ext_resource type="Texture2D" uid="uid://b5stafw2i4kyw" path="res://assets/bodies/Sol textures/saturnmap.jpg" id="14"]
+[ext_resource type="Texture2D" uid="uid://b5ygrrs73i3ki" path="res://assets/bodies/Sol textures/io_rgb_cyl.jpg" id="15"]
+[ext_resource type="Texture2D" uid="uid://wom2e1bdsqnb" path="res://assets/bodies/Sol textures/callisto-moon-surface-map.jpg" id="16"]
+[ext_resource type="Texture2D" uid="uid://b3fklka88re2m" path="res://assets/bodies/Sol textures/europa2_out.jpg" id="17"]
+[ext_resource type="Texture2D" uid="uid://crk0e6lye1pao" path="res://assets/bodies/Sol textures/ganymede.jpg" id="18"]
+[ext_resource type="Texture2D" uid="uid://d3bv3e2uq46eo" path="res://assets/bodies/Sol textures/saturn rings stock.png" id="19"]
+[ext_resource type="Texture2D" uid="uid://dmngqwibsmp8h" path="res://assets/bodies/Sol textures/neptunemap.jpg" id="20"]
+[ext_resource type="Texture2D" uid="uid://dbr5l3sji4vbf" path="res://assets/bodies/Sol textures/uranusmap.jpg" id="21"]
+[ext_resource type="Texture2D" uid="uid://dm7fvtuaslo7x" path="res://assets/bodies/Sol textures/fargetanik_titan_colored_magentameteorite.jpg" id="22"]
+[ext_resource type="Texture2D" uid="uid://cep7j7c2f8x34" path="res://assets/bodies/Sol textures/rhea_a_m.jpg" id="23"]
+[ext_resource type="Texture2D" uid="uid://cgil6wrkpxwde" path="res://assets/bodies/Sol textures/enceladus_rgb_cyl_www.jpg" id="24"]
+[ext_resource type="Texture2D" uid="uid://cnilre4oy0amx" path="res://assets/bodies/Sol textures/tethys_rgb_cyl_www.jpg" id="25"]
+[ext_resource type="Texture2D" uid="uid://b5qu23fxu7668" path="res://assets/bodies/Sol textures/dione_rgb_cyl_www.jpg" id="26"]
+[ext_resource type="Material" uid="uid://d1iacoigru8b2" path="res://assets/planets/haze_aura_shader.tres" id="27"]
+[ext_resource type="Shader" path="res://assets/bodies/planet_rotating.gdshader" id="28"]
+[ext_resource type="Texture2D" uid="uid://w6p13lxr264v" path="res://assets/bodies/texture_template.png" id="29"]
+[ext_resource type="Texture2D" uid="uid://bupsk3r4tall5" path="res://assets/bodies/4_special_effect_blurred.png" id="30"]
+[ext_resource type="Texture2D" uid="uid://c61jn21n5rwim" path="res://assets/bodies/3_special_effect_blurred.png" id="31"]
 
-[sub_resource type="StyleBoxFlat" id=1]
-
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id="15"]
 resource_name = "New Anim"
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("flare:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0, 1 ),
-"transitions": PackedFloat32Array( 1, 1 ),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ false, true ]
+"values": [false, true]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("flare2:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PackedFloat32Array( 2.79397e-07, 1 ),
-"transitions": PackedFloat32Array( 1, 1 ),
+"times": PackedFloat32Array(2.79397e-07, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ false, true ]
+"values": [false, true]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id="16"]
 length = 0.001
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("flare2:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0 ),
-"transitions": PackedFloat32Array( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ false ]
+"values": [false]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("flare:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PackedFloat32Array( 0 ),
-"transitions": PackedFloat32Array( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ true ]
+"values": [true]
 }
 
-[sub_resource type="Shader" id=2]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eujil"]
+_data = {
+"New Anim": SubResource("15"),
+"RESET": SubResource("16")
+}
+
+[sub_resource type="Shader" id="2"]
 code = "shader_type canvas_item;
 
 uniform vec4 aura_color : source_color;
@@ -108,18 +112,18 @@ void fragment()
 	//COLOR.rgb = vec3(1,0,0);
 }"
 
-[sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
-shader_param/aura_color = Color( 0, 0, 0, 1 )
+[sub_resource type="ShaderMaterial" id="3"]
+shader = SubResource("2")
+shader_parameter/aura_color = Color(0, 0, 0, 1)
 
-[sub_resource type="ShaderMaterial" id=4]
-shader = ExtResource( 28 )
-shader_param/rotate_angle = 0.0
-shader_param/time = 1.02491
-shader_param/has_lights = true
-shader_param/vectors = ExtResource( 29 )
+[sub_resource type="ShaderMaterial" id="4"]
+shader = ExtResource("28")
+shader_parameter/rotate_angle = 0.0
+shader_parameter/time = 0.295042
+shader_parameter/has_lights = true
+shader_parameter/vectors = ExtResource("29")
 
-[sub_resource type="Shader" id=5]
+[sub_resource type="Shader" id="5"]
 code = "shader_type canvas_item;
 
 uniform vec4 aura_color : source_color;
@@ -139,11 +143,11 @@ void fragment()
 	//COLOR.rgb = vec3(1,0,0);
 }"
 
-[sub_resource type="ShaderMaterial" id=6]
-shader = SubResource( 5 )
-shader_param/aura_color = Color( 0.0117647, 0.952941, 1, 1 )
+[sub_resource type="ShaderMaterial" id="6"]
+shader = SubResource("5")
+shader_parameter/aura_color = Color(0.0117647, 0.952941, 1, 1)
 
-[sub_resource type="Shader" id=7]
+[sub_resource type="Shader" id="7"]
 code = "shader_type canvas_item;
 
 uniform vec4 aura_color : source_color;
@@ -163,17 +167,17 @@ void fragment()
 	//COLOR.rgb = vec3(1,0,0);
 }"
 
-[sub_resource type="ShaderMaterial" id=8]
-shader = SubResource( 7 )
-shader_param/aura_color = Color( 0.184314, 0.180392, 0.176471, 1 )
+[sub_resource type="ShaderMaterial" id="8"]
+shader = SubResource("7")
+shader_parameter/aura_color = Color(0.184314, 0.180392, 0.176471, 1)
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="CircleShape2D" id="9"]
 radius = 20.0
 
-[sub_resource type="CircleShape2D" id=10]
+[sub_resource type="CircleShape2D" id="10"]
 radius = 35.0
 
-[sub_resource type="Shader" id=11]
+[sub_resource type="Shader" id="11"]
 code = "shader_type canvas_item;
 
 uniform vec4 aura_color : source_color;
@@ -193,11 +197,11 @@ void fragment()
 	//COLOR.rgb = vec3(1,0,0);
 }"
 
-[sub_resource type="ShaderMaterial" id=12]
-shader = SubResource( 11 )
-shader_param/aura_color = Color( 0.152941, 0.152941, 0.14902, 1 )
+[sub_resource type="ShaderMaterial" id="12"]
+shader = SubResource("11")
+shader_parameter/aura_color = Color(0.152941, 0.152941, 0.14902, 1)
 
-[sub_resource type="Shader" id=13]
+[sub_resource type="Shader" id="13"]
 code = "shader_type canvas_item;
 
 uniform vec4 aura_color : source_color;
@@ -223,157 +227,148 @@ void fragment()
 
 }"
 
-[sub_resource type="ShaderMaterial" id=14]
-shader = SubResource( 13 )
-shader_param/aura_color = Color( 0.737255, 0.47451, 0.0196078, 1 )
+[sub_resource type="ShaderMaterial" id="14"]
+shader = SubResource("13")
+shader_parameter/aura_color = Color(0.737255, 0.47451, 0.0196078, 1)
 
 [node name="Sol" type="Node2D" groups=["star"]]
-position = Vector2( 500, 500 )
-script = ExtResource( 2 )
+position = Vector2(500, 500)
+script = ExtResource("2")
 zoom_scale = 24
 custom_orrery_scale = 280
 
 [node name="flare2" type="Sprite2D" parent="."]
 visible = false
-self_modulate = Color( 0.996078, 0.447059, 0.00784314, 1 )
-position = Vector2( -400, 40 )
+self_modulate = Color(0.996078, 0.447059, 0.00784314, 1)
+position = Vector2(-400, 40)
 rotation = -3.14159
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 30 )
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("30")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 9.92185
-texture = ExtResource( 7 )
+texture = ExtResource("7")
 
 [node name="flare" type="Sprite2D" parent="."]
-self_modulate = Color( 0.996078, 0.447059, 0.00784314, 1 )
-position = Vector2( 405, -55 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 31 )
+self_modulate = Color(0.996078, 0.447059, 0.00784314, 1)
+position = Vector2(405, -55)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("31")
 
 [node name="Label" type="Label" parent="."]
 offset_left = -400.0
 offset_top = 350.0
 offset_right = -328.0
 offset_bottom = 366.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_styles/normal = SubResource( 1 )
 text = "Sol"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-"anims/New Anim" = SubResource( 15 )
-anims/RESET = SubResource( 16 )
-__meta__ = {
-"_editor_description_": "https://spacemath.gsfc.nasa.gov/news/8Page44.pdf
-1 flare per month, so 12 of them in one orbit of Earth"
+libraries = {
+"": SubResource("AnimationLibrary_eujil")
 }
 
 [node name="planet_holder" type="Node2D" parent="."]
 
-[node name="planet" parent="planet_holder" groups=["planets"] instance=ExtResource( 4 )]
-position = Vector2( -0.000209815, 4800 )
-data = Vector2( 5400, 0 )
+[node name="planet" parent="planet_holder" groups=["planets"] instance=ExtResource("4")]
+position = Vector2(0, 4800)
+data = Vector2(5400, 0)
 mass = 0.055
 hydro = 0.0
 ice = 0.01
 
 [node name="Sprite2D" parent="planet_holder/planet" index="0"]
-texture = ExtResource( 9 )
+texture = ExtResource("9")
 
 [node name="Sprite_shadow" parent="planet_holder/planet" index="1"]
-material = SubResource( 3 )
-rotation = 3.90915e-07
+material = SubResource("3")
 
 [node name="Label" parent="planet_holder/planet" index="3"]
 text = "Mercury"
 
-[node name="planet4" parent="planet_holder" groups=["planets"] instance=ExtResource( 4 )]
-position = Vector2( -0.000367176, 8400 )
+[node name="planet4" parent="planet_holder" groups=["planets"] instance=ExtResource("4")]
+position = Vector2(0, 8400)
 mass = 0.815
 hydro = 0.0
 atm = 91.0
 greenhouse = 0.975
 
 [node name="Sprite2D" parent="planet_holder/planet4" index="0"]
-texture = ExtResource( 8 )
+texture = ExtResource("8")
 
 [node name="Sprite_shadow" parent="planet_holder/planet4" index="1"]
-material = ExtResource( 27 )
-rotation = 3.90007e-07
+material = ExtResource("27")
 
 [node name="Label" parent="planet_holder/planet4" index="3"]
 text = "Venus"
 
-[node name="planet3" parent="planet_holder" groups=["planets"] instance=ExtResource( 4 )]
-position = Vector2( -0.000524537, 12000 )
+[node name="planet3" parent="planet_holder" groups=["planets"] instance=ExtResource("4")]
+position = Vector2(0, 12000)
 ice = 0.1
 atm = 1.0
 greenhouse = 0.397
 population = 11000.0
 
 [node name="Sprite2D" parent="planet_holder/planet3" index="0"]
-material = SubResource( 4 )
+modulate = Color(0.5, 0.5, 0.5, 1)
+material = SubResource("4")
 
 [node name="Sprite_shadow" parent="planet_holder/planet3" index="1"]
-material = SubResource( 6 )
-rotation = 3.89643e-07
+material = SubResource("6")
 
 [node name="Label" parent="planet_holder/planet3" index="3"]
-self_modulate = Color( 0, 1, 1, 1 )
+self_modulate = Color(0, 1, 1, 1)
 text = "Earth"
 
-[node name="Node2D" parent="planet_holder/planet3/orbit_holder" index="0" groups=["moon"] instance=ExtResource( 4 )]
-position = Vector2( -1.31134e-05, 300 )
+[node name="Node2D" parent="planet_holder/planet3/orbit_holder" index="0" groups=["moon"] instance=ExtResource("4")]
+position = Vector2(0, 300)
 mass = 0.0123
 hydro = 0.0
 population = 0.05
 
 [node name="Sprite2D" parent="planet_holder/planet3/orbit_holder/Node2D" index="0"]
-scale = Vector2( 0.062, 0.125 )
-texture = ExtResource( 10 )
+scale = Vector2(0.062, 0.125)
+texture = ExtResource("10")
 
 [node name="Sprite_shadow" parent="planet_holder/planet3/orbit_holder/Node2D" index="1"]
 visible = false
-rotation = 3.88589e-07
 
 [node name="Label" parent="planet_holder/planet3/orbit_holder/Node2D" index="3"]
-self_modulate = Color( 0, 1, 1, 1 )
+self_modulate = Color(0, 1, 1, 1)
 offset_left = 37.0
 offset_top = 37.0
 offset_right = 89.0
 offset_bottom = 51.0
 text = "Moon"
 
-[node name="colony3" parent="planet_holder/planet3/orbit_holder/Node2D" instance=ExtResource( 1 )]
+[node name="colony3" parent="planet_holder/planet3/orbit_holder/Node2D" instance=ExtResource("1")]
 
-[node name="colony2" parent="planet_holder/planet3" instance=ExtResource( 1 )]
-position = Vector2( -0.000518799, 0 )
+[node name="colony2" parent="planet_holder/planet3" instance=ExtResource("1")]
+position = Vector2(-0.000518799, 0)
 
-[node name="planet2" parent="planet_holder" groups=["planets"] instance=ExtResource( 4 )]
-position = Vector2( -0.000786805, 18000 )
-data = Vector2( 18000, 0 )
+[node name="planet2" parent="planet_holder" groups=["planets"] instance=ExtResource("4")]
+position = Vector2(0, 18000)
+data = Vector2(18000, 0)
 mass = 0.107
 hydro = 0.0
 atm = 0.06
 greenhouse = 0.086
 
 [node name="Sprite2D" parent="planet_holder/planet2" index="0"]
-texture = ExtResource( 13 )
+texture = ExtResource("13")
 
 [node name="Sprite_shadow" parent="planet_holder/planet2" index="1"]
-material = SubResource( 8 )
-rotation = 3.90491e-07
+material = SubResource("8")
 
 [node name="Label" parent="planet_holder/planet2" index="3"]
 text = "Mars"
 
-[node name="planet" parent="planet_holder/planet2/orbit_holder" index="0" groups=["moon"] instance=ExtResource( 3 )]
-position = Vector2( -79, 136.832 )
+[node name="planet" parent="planet_holder/planet2/orbit_holder" index="0" groups=["moon"] instance=ExtResource("3")]
+position = Vector2(-79, 136.832)
 mass = 1.7835e-09
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet2/orbit_holder/planet" index="0"]
-texture = ExtResource( 6 )
+texture = ExtResource("6")
 
 [node name="Label" parent="planet_holder/planet2/orbit_holder/planet" index="1"]
 offset_left = 25.0
@@ -383,15 +378,15 @@ offset_bottom = 39.0
 text = "Phobos"
 
 [node name="CollisionShape2D" parent="planet_holder/planet2/orbit_holder/planet/Area2D" index="0"]
-shape = SubResource( 9 )
+shape = SubResource("9")
 
-[node name="planet2" parent="planet_holder/planet2/orbit_holder" index="1" groups=["moon"] instance=ExtResource( 3 )]
-position = Vector2( 84.5, 146.358 )
+[node name="planet2" parent="planet_holder/planet2/orbit_holder" index="1" groups=["moon"] instance=ExtResource("3")]
+position = Vector2(84.5, 146.358)
 mass = 2.4723e-10
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet2/orbit_holder/planet2" index="0"]
-texture = ExtResource( 6 )
+texture = ExtResource("6")
 
 [node name="Label" parent="planet_holder/planet2/orbit_holder/planet2" index="1"]
 offset_left = 25.0
@@ -401,23 +396,23 @@ offset_bottom = 39.0
 text = "Deimos"
 
 [node name="CollisionShape2D" parent="planet_holder/planet2/orbit_holder/planet2/Area2D" index="0"]
-shape = SubResource( 9 )
+shape = SubResource("9")
 
 [node name="Node2D" type="Node2D" parent="planet_holder" groups=["aster_belt"]]
-script = ExtResource( 11 )
+script = ExtResource("11")
 radius = 2.5
 outer_radius = 3.3
 num = 100
 
-[node name="planet6" parent="planet_holder" groups=["aster_named"] instance=ExtResource( 3 )]
-position = Vector2( -0.00145297, 33240 )
+[node name="planet6" parent="planet_holder" groups=["aster_named"] instance=ExtResource("3")]
+position = Vector2(0, 33240)
 planet_rad_factor = 0.25
 mass = 0.00015744
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet6" index="0"]
-scale = Vector2( 1, 1 )
-texture = ExtResource( 5 )
+scale = Vector2(1, 1)
+texture = ExtResource("5")
 
 [node name="Label" parent="planet_holder/planet6" index="1"]
 offset_left = 50.0
@@ -427,18 +422,18 @@ offset_bottom = 64.0
 text = "Ceres"
 
 [node name="CollisionShape2D" parent="planet_holder/planet6/Area2D" index="0"]
-shape = SubResource( 10 )
+shape = SubResource("10")
 
-[node name="planet7" parent="planet_holder" groups=["aster_named"] instance=ExtResource( 3 )]
-position = Vector2( -0.00123791, 28320 )
+[node name="planet7" parent="planet_holder" groups=["aster_named"] instance=ExtResource("3")]
+position = Vector2(0, 28320)
 planet_rad_factor = 0.25
-data = Vector2( 28320, 0 )
+data = Vector2(28320, 0)
 mass = 4.40832e-05
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet7" index="0"]
-scale = Vector2( 1, 1 )
-texture = ExtResource( 5 )
+scale = Vector2(1, 1)
+texture = ExtResource("5")
 
 [node name="Label" parent="planet_holder/planet7" index="1"]
 offset_left = 50.0
@@ -448,18 +443,18 @@ offset_bottom = 64.0
 text = "Vesta"
 
 [node name="CollisionShape2D" parent="planet_holder/planet7/Area2D" index="0"]
-shape = SubResource( 10 )
+shape = SubResource("10")
 
-[node name="planet8" parent="planet_holder" groups=["aster_named"] instance=ExtResource( 3 )]
-position = Vector2( -2322.05, 33206.9 )
+[node name="planet8" parent="planet_holder" groups=["aster_named"] instance=ExtResource("3")]
+position = Vector2(-2322.05, 33206.9)
 planet_rad_factor = 0.25
-data = Vector2( 32808, 0 )
+data = Vector2(32808, 0)
 mass = 3.30624e-05
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet8" index="0"]
-scale = Vector2( 1, 1 )
-texture = ExtResource( 5 )
+scale = Vector2(1, 1)
+texture = ExtResource("5")
 
 [node name="Label" parent="planet_holder/planet8" index="1"]
 offset_left = 50.0
@@ -469,41 +464,39 @@ offset_bottom = 64.0
 text = "Pallas"
 
 [node name="CollisionShape2D" parent="planet_holder/planet8/Area2D" index="0"]
-shape = SubResource( 10 )
+shape = SubResource("10")
 
-[node name="planet5" parent="planet_holder" groups=["planets"] instance=ExtResource( 4 )]
-position = Vector2( -0.00272759, 62400 )
+[node name="planet5" parent="planet_holder" groups=["planets"] instance=ExtResource("4")]
+position = Vector2(0, 62400)
 planet_rad_factor = 2.0
-data = Vector2( 62400, 0 )
+data = Vector2(62400, 0)
 mass = 318.0
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet5" index="0"]
-texture = ExtResource( 12 )
+texture = ExtResource("12")
 
 [node name="Sprite_shadow" parent="planet_holder/planet5" index="1"]
-material = SubResource( 12 )
-rotation = 3.89937e-07
+material = SubResource("12")
 
 [node name="Label" parent="planet_holder/planet5" index="3"]
 text = "Jupiter"
 
-[node name="Node2D2" parent="planet_holder/planet5/orbit_holder" index="0" groups=["moon"] instance=ExtResource( 4 )]
-position = Vector2( -1.44248e-05, 330 )
+[node name="Node2D2" parent="planet_holder/planet5/orbit_holder" index="0" groups=["moon"] instance=ExtResource("4")]
+position = Vector2(0, 330)
 mass = 0.015006
 hydro = 0.0
 atm = 0.003
 population = 0.05
 
 [node name="Sprite2D" parent="planet_holder/planet5/orbit_holder/Node2D2" index="0"]
-scale = Vector2( 0.062, 0.125 )
-texture = ExtResource( 15 )
+scale = Vector2(0.062, 0.125)
+texture = ExtResource("15")
 
 [node name="Sprite_shadow" parent="planet_holder/planet5/orbit_holder/Node2D2" index="1"]
 visible = false
-self_modulate = Color( 1, 1, 1, 0.654902 )
-rotation = 3.89708e-07
-scale = Vector2( 0.107, 0.107 )
+self_modulate = Color(1, 1, 1, 0.654902)
+scale = Vector2(0.107, 0.107)
 
 [node name="Label" parent="planet_holder/planet5/orbit_holder/Node2D2" index="3"]
 offset_left = 37.0
@@ -512,19 +505,18 @@ offset_right = 89.0
 offset_bottom = 52.0
 text = "Io"
 
-[node name="Node2D3" parent="planet_holder/planet5/orbit_holder" index="1" groups=["moon"] instance=ExtResource( 4 )]
-position = Vector2( -2.29485e-05, 525 )
+[node name="Node2D3" parent="planet_holder/planet5/orbit_holder" index="1" groups=["moon"] instance=ExtResource("4")]
+position = Vector2(0, 525)
 mass = 0.007995
 hydro = 0.0
 population = 0.05
 
 [node name="Sprite2D" parent="planet_holder/planet5/orbit_holder/Node2D3" index="0"]
-scale = Vector2( 0.062, 0.125 )
-texture = ExtResource( 17 )
+scale = Vector2(0.062, 0.125)
+texture = ExtResource("17")
 
 [node name="Sprite_shadow" parent="planet_holder/planet5/orbit_holder/Node2D3" index="1"]
 visible = false
-rotation = 3.90059e-07
 
 [node name="Label" parent="planet_holder/planet5/orbit_holder/Node2D3" index="3"]
 offset_left = 37.0
@@ -533,19 +525,18 @@ offset_right = 89.0
 offset_bottom = 52.0
 text = "Europa"
 
-[node name="Node2D4" parent="planet_holder/planet5/orbit_holder" index="2" groups=["moon"] instance=ExtResource( 4 )]
-position = Vector2( -3.6499e-05, 835 )
+[node name="Node2D4" parent="planet_holder/planet5/orbit_holder" index="2" groups=["moon"] instance=ExtResource("4")]
+position = Vector2(0, 835)
 mass = 0.024969
 hydro = 0.0
 population = 0.05
 
 [node name="Sprite2D" parent="planet_holder/planet5/orbit_holder/Node2D4" index="0"]
-scale = Vector2( 0.062, 0.125 )
-texture = ExtResource( 18 )
+scale = Vector2(0.062, 0.125)
+texture = ExtResource("18")
 
 [node name="Sprite_shadow" parent="planet_holder/planet5/orbit_holder/Node2D4" index="1"]
 visible = false
-rotation = 3.89845e-07
 
 [node name="Label" parent="planet_holder/planet5/orbit_holder/Node2D4" index="3"]
 offset_left = 37.0
@@ -554,19 +545,18 @@ offset_right = 89.0
 offset_bottom = 52.0
 text = "Ganymede"
 
-[node name="Node2D5" parent="planet_holder/planet5/orbit_holder" index="3" groups=["moon"] instance=ExtResource( 4 )]
-position = Vector2( -7.60578e-05, 1740 )
+[node name="Node2D5" parent="planet_holder/planet5/orbit_holder" index="3" groups=["moon"] instance=ExtResource("4")]
+position = Vector2(0, 1740)
 mass = 0.017958
 hydro = 0.0
 population = 0.05
 
 [node name="Sprite2D" parent="planet_holder/planet5/orbit_holder/Node2D5" index="0"]
-scale = Vector2( 0.062, 0.125 )
-texture = ExtResource( 16 )
+scale = Vector2(0.062, 0.125)
+texture = ExtResource("16")
 
 [node name="Sprite_shadow" parent="planet_holder/planet5/orbit_holder/Node2D5" index="1"]
 visible = false
-rotation = 3.89708e-07
 
 [node name="Label" parent="planet_holder/planet5/orbit_holder/Node2D5" index="3"]
 offset_left = 37.0
@@ -575,15 +565,15 @@ offset_right = 89.0
 offset_bottom = 52.0
 text = "Callisto"
 
-[node name="planet10" parent="planet_holder" groups=["aster_named"] instance=ExtResource( 3 )]
-position = Vector2( -0.00437464, 100080 )
+[node name="planet10" parent="planet_holder" groups=["aster_named"] instance=ExtResource("3")]
+position = Vector2(0, 100080)
 planet_rad_factor = 0.25
 mass = 2.77325e-07
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet10" index="0"]
-scale = Vector2( 1, 1 )
-texture = ExtResource( 5 )
+scale = Vector2(1, 1)
+texture = ExtResource("5")
 
 [node name="Label" parent="planet_holder/planet10" index="1"]
 offset_left = 50.0
@@ -593,32 +583,31 @@ offset_bottom = 64.0
 text = "Okyrhoe"
 
 [node name="CollisionShape2D" parent="planet_holder/planet10/Area2D" index="0"]
-shape = SubResource( 10 )
+shape = SubResource("10")
 
-[node name="planet9" parent="planet_holder" groups=["planets"] instance=ExtResource( 4 )]
-position = Vector2( -0.0049831, 114000 )
+[node name="planet9" parent="planet_holder" groups=["planets"] instance=ExtResource("4")]
+position = Vector2(0, 114000)
 planet_rad_factor = 2.0
 mass = 95.0
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet9" index="0"]
-scale = Vector2( 0.14, 0.28 )
-texture = ExtResource( 14 )
+scale = Vector2(0.14, 0.28)
+texture = ExtResource("14")
 
 [node name="Sprite_shadow" parent="planet_holder/planet9" index="1"]
-material = SubResource( 12 )
-rotation = 3.90045e-07
+material = SubResource("12")
 
 [node name="Label" parent="planet_holder/planet9" index="3"]
 text = "Saturn"
 
-[node name="planet3" parent="planet_holder/planet9/orbit_holder" index="0" groups=["moon"] instance=ExtResource( 3 )]
-position = Vector2( -6.29444e-06, 144 )
+[node name="planet3" parent="planet_holder/planet9/orbit_holder" index="0" groups=["moon"] instance=ExtResource("3")]
+position = Vector2(0, 144)
 mass = 0.000615
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet9/orbit_holder/planet3" index="0"]
-texture = ExtResource( 6 )
+texture = ExtResource("6")
 
 [node name="Label" parent="planet_holder/planet9/orbit_holder/planet3" index="1"]
 offset_left = 25.0
@@ -628,21 +617,20 @@ offset_bottom = 39.0
 text = "Mimas"
 
 [node name="CollisionShape2D" parent="planet_holder/planet9/orbit_holder/planet3/Area2D" index="0"]
-shape = SubResource( 9 )
+shape = SubResource("9")
 
-[node name="Node2D8" parent="planet_holder/planet9/orbit_holder" index="1" groups=["moon"] instance=ExtResource( 4 )]
-position = Vector2( -8.13032e-06, 186 )
+[node name="Node2D8" parent="planet_holder/planet9/orbit_holder" index="1" groups=["moon"] instance=ExtResource("4")]
+position = Vector2(0, 186)
 mass = 0.00017958
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet9/orbit_holder/Node2D8" index="0"]
-scale = Vector2( 0.062, 0.125 )
-texture = ExtResource( 24 )
+scale = Vector2(0.062, 0.125)
+texture = ExtResource("24")
 
 [node name="Sprite_shadow" parent="planet_holder/planet9/orbit_holder/Node2D8" index="1"]
 visible = false
-rotation = 3.89974e-07
-scale = Vector2( 0.129, 0.129 )
+scale = Vector2(0.129, 0.129)
 
 [node name="Label" parent="planet_holder/planet9/orbit_holder/Node2D8" index="3"]
 offset_left = 37.0
@@ -651,19 +639,19 @@ offset_right = 89.0
 offset_bottom = 52.0
 text = "Enceladus"
 
-[node name="Node2D9" parent="planet_holder/planet9/orbit_holder" index="2" groups=["moon"] instance=ExtResource( 4 )]
-position = Vector2( -79.0067, 217.069 )
+[node name="Node2D9" parent="planet_holder/planet9/orbit_holder" index="2" groups=["moon"] instance=ExtResource("4")]
+position = Vector2(-79.0066, 217.069)
 mass = 0.000984
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet9/orbit_holder/Node2D9" index="0"]
-scale = Vector2( 0.062, 0.125 )
-texture = ExtResource( 25 )
+scale = Vector2(0.062, 0.125)
+texture = ExtResource("25")
 
 [node name="Sprite_shadow" parent="planet_holder/planet9/orbit_holder/Node2D9" index="1"]
 visible = false
-rotation = 0.000692114
-scale = Vector2( 0.129, 0.129 )
+rotation = 0.00069207
+scale = Vector2(0.129, 0.129)
 
 [node name="Label" parent="planet_holder/planet9/orbit_holder/Node2D9" index="3"]
 offset_left = 37.0
@@ -672,19 +660,19 @@ offset_right = 89.0
 offset_bottom = 52.0
 text = "Tethys"
 
-[node name="Node2D10" parent="planet_holder/planet9/orbit_holder" index="3" groups=["moon"] instance=ExtResource( 4 )]
-position = Vector2( 99.1858, 272.511 )
+[node name="Node2D10" parent="planet_holder/planet9/orbit_holder" index="3" groups=["moon"] instance=ExtResource("4")]
+position = Vector2(99.1858, 272.511)
 mass = 0.0001845
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet9/orbit_holder/Node2D10" index="0"]
-scale = Vector2( 0.062, 0.125 )
-texture = ExtResource( 26 )
+scale = Vector2(0.062, 0.125)
+texture = ExtResource("26")
 
 [node name="Sprite_shadow" parent="planet_holder/planet9/orbit_holder/Node2D10" index="1"]
 visible = false
-rotation = 6.28232
-scale = Vector2( 0.129, 0.129 )
+rotation = -0.000867669
+scale = Vector2(0.129, 0.129)
 
 [node name="Label" parent="planet_holder/planet9/orbit_holder/Node2D10" index="3"]
 offset_left = 37.0
@@ -693,19 +681,18 @@ offset_right = 89.0
 offset_bottom = 52.0
 text = "Dione"
 
-[node name="Node2D7" parent="planet_holder/planet9/orbit_holder" index="4" groups=["moon"] instance=ExtResource( 4 )]
-position = Vector2( -0.000135942, 3110 )
+[node name="Node2D7" parent="planet_holder/planet9/orbit_holder" index="4" groups=["moon"] instance=ExtResource("4")]
+position = Vector2(0, 3110)
 mass = 0.0123
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet9/orbit_holder/Node2D7" index="0"]
-scale = Vector2( 0.125, 0.25 )
-texture = ExtResource( 23 )
+scale = Vector2(0.125, 0.25)
+texture = ExtResource("23")
 
 [node name="Sprite_shadow" parent="planet_holder/planet9/orbit_holder/Node2D7" index="1"]
 visible = false
-rotation = 3.89929e-07
-scale = Vector2( 0.129, 0.129 )
+scale = Vector2(0.129, 0.129)
 
 [node name="Label" parent="planet_holder/planet9/orbit_holder/Node2D7" index="3"]
 offset_left = 37.0
@@ -714,21 +701,20 @@ offset_right = 89.0
 offset_bottom = 52.0
 text = "Rhea"
 
-[node name="Node2D6" parent="planet_holder/planet9/orbit_holder" index="5" groups=["moon"] instance=ExtResource( 4 )]
-position = Vector2( -3.93402e-05, 900 )
+[node name="Node2D6" parent="planet_holder/planet9/orbit_holder" index="5" groups=["moon"] instance=ExtResource("4")]
+position = Vector2(0, 900)
 mass = 0.022509
 hydro = 0.0
 atm = 1.45
 
 [node name="Sprite2D" parent="planet_holder/planet9/orbit_holder/Node2D6" index="0"]
-modulate = Color( 0.996078, 0.701961, 0.00784314, 1 )
-scale = Vector2( 0.062, 0.125 )
-texture = ExtResource( 22 )
+modulate = Color(0.996078, 0.701961, 0.00784314, 1)
+scale = Vector2(0.062, 0.125)
+texture = ExtResource("22")
 
 [node name="Sprite_shadow" parent="planet_holder/planet9/orbit_holder/Node2D6" index="1"]
-material = SubResource( 14 )
-rotation = 3.89969e-07
-scale = Vector2( 0.129, 0.129 )
+material = SubResource("14")
+scale = Vector2(0.129, 0.129)
 
 [node name="Label" parent="planet_holder/planet9/orbit_holder/Node2D6" index="3"]
 offset_left = 37.0
@@ -738,43 +724,41 @@ offset_bottom = 52.0
 text = "Titan"
 
 [node name="rings" type="Sprite2D" parent="planet_holder/planet9"]
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 19 )
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("19")
 
-[node name="planet11" parent="planet_holder" groups=["planets"] instance=ExtResource( 4 )]
-position = Vector2( -0.0100711, 230400 )
+[node name="planet11" parent="planet_holder" groups=["planets"] instance=ExtResource("4")]
+position = Vector2(0, 230400)
 planet_rad_factor = 2.0
 mass = 14.5
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet11" index="0"]
 rotation = 1.5708
-texture = ExtResource( 21 )
+texture = ExtResource("21")
 
 [node name="Sprite_shadow" parent="planet_holder/planet11" index="1"]
-material = SubResource( 12 )
-rotation = 3.9012e-07
+material = SubResource("12")
 
 [node name="Label" parent="planet_holder/planet11" index="3"]
 text = "Uranus"
 
 [node name="rings2" type="Sprite2D" parent="planet_holder/planet11"]
-position = Vector2( 0.005, 0 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 19 )
+position = Vector2(0.005, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("19")
 
-[node name="planet12" parent="planet_holder" groups=["planets"] instance=ExtResource( 4 )]
-position = Vector2( -0.0157886, 361200 )
+[node name="planet12" parent="planet_holder" groups=["planets"] instance=ExtResource("4")]
+position = Vector2(0, 361200)
 planet_rad_factor = 2.0
 mass = 17.1
 hydro = 0.0
 
 [node name="Sprite2D" parent="planet_holder/planet12" index="0"]
-texture = ExtResource( 20 )
+texture = ExtResource("20")
 
 [node name="Sprite_shadow" parent="planet_holder/planet12" index="1"]
-material = SubResource( 12 )
-rotation = 3.90091e-07
+material = SubResource("12")
 
 [node name="Label" parent="planet_holder/planet12" index="3"]
 text = "Neptune"
