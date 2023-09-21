@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbjkfb7xesbtg"]
+
+[ext_resource type="Texture2D" uid="uid://cy6cs68rrbbr4" path="res://assets/meteorGrey_tiny2.png" id="1_ev1tl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1syo"]
+
+[node name="mine" type="Area2D"]
+z_index = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ev1tl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_h1syo")
