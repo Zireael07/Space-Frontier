@@ -1,20 +1,19 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://b5anxlj7nqpro"]
 
-[ext_resource path="res://colony.tscn" type="PackedScene" id=4]
-[ext_resource path="res://ships/player_ship.tscn" type="PackedScene" id=6]
-[ext_resource path="res://hud/HUD.tscn" type="PackedScene" id=7]
+[ext_resource type="PackedScene" uid="uid://fhbqs0bjgp2b" path="res://colony.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://dqw3pk2vvcrqq" path="res://ships/player_ship.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://cwokudyyay0p4" path="res://hud/HUD.tscn" id="7"]
 
 [node name="Node2D" type="Node2D"]
+editor_description = "Scene that contains player, HUD, and anything that I want to test without going through the spawning system"
 
-[node name="player" parent="." groups=[
-"player",
-] instance=ExtResource( 6 )]
-position = Vector2( 2014, 676 )
+[node name="player" parent="." groups=["player"] instance=ExtResource("6")]
 z_index = 5
+position = Vector2(2014, 676)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource( 7 )]
+[node name="Control" parent="CanvasLayer" instance=ExtResource("7")]
 
-[node name="float_colony" parent="." instance=ExtResource( 4 )]
-position = Vector2( 600, 1250 )
+[node name="float_colony" parent="." instance=ExtResource("4")]
+position = Vector2(600, 1250)

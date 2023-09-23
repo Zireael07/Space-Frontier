@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://35xyfjixkyfo"]
+
+[ext_resource type="PackedScene" uid="uid://cbjkfb7xesbtg" path="res://guns/mine.tscn" id="1_xh5j4"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="mine" parent="." instance=ExtResource("1_xh5j4")]
+
+[node name="mine3" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(-25, 25)
+
+[node name="mine2" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(-50, 50)
+
+[node name="mine4" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(-75, 75)
+
+[node name="mine5" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(-100, 100)
+
+[node name="mine10" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(-125, 125)
+
+[node name="mine11" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(-150, 150)
+
+[node name="mine6" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(25, 25)
+
+[node name="mine7" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(50, 50)
+
+[node name="mine8" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(75, 75)
+
+[node name="mine9" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(100, 100)
+
+[node name="mine12" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(125, 125)
+
+[node name="mine13" parent="." instance=ExtResource("1_xh5j4")]
+position = Vector2(150, 150)

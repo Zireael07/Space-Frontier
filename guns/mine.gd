@@ -1,6 +1,6 @@
 extends Area2D
 
-var dmg = 15
+var dmg = 25
 var flash = preload("res://mine_flash_friendly.tscn")
 
 # Called when the node enters the scene tree for the first time.

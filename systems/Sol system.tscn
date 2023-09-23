@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dnamkyf2f5qwu"]
+[gd_scene load_steps=49 format=3 uid="uid://dnamkyf2f5qwu"]
 
 [ext_resource type="PackedScene" uid="uid://fhbqs0bjgp2b" path="res://colony.tscn" id="1"]
 [ext_resource type="Script" path="res://systems/star system.gd" id="2"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://systems/asteroid_belt.gd" id="11"]
 [ext_resource type="Texture2D" uid="uid://b0hqnoc72gwk7" path="res://assets/bodies/Sol textures/jupiter2_1k.jpg" id="12"]
 [ext_resource type="Texture2D" uid="uid://8bntlp5ngejy" path="res://assets/bodies/Sol textures/marsmap1k.jpg" id="13"]
+[ext_resource type="PackedScene" uid="uid://35xyfjixkyfo" path="res://mine_layout.tscn" id="13_q6yj3"]
 [ext_resource type="Texture2D" uid="uid://b5stafw2i4kyw" path="res://assets/bodies/Sol textures/saturnmap.jpg" id="14"]
 [ext_resource type="Texture2D" uid="uid://b5ygrrs73i3ki" path="res://assets/bodies/Sol textures/io_rgb_cyl.jpg" id="15"]
 [ext_resource type="Texture2D" uid="uid://wom2e1bdsqnb" path="res://assets/bodies/Sol textures/callisto-moon-surface-map.jpg" id="16"]
@@ -119,7 +120,7 @@ shader_parameter/aura_color = Color(0, 0, 0, 1)
 [sub_resource type="ShaderMaterial" id="4"]
 shader = ExtResource("28")
 shader_parameter/rotate_angle = 0.0
-shader_parameter/time = 0.295042
+shader_parameter/time = 0.319358
 shader_parameter/has_lights = true
 shader_parameter/vectors = ExtResource("29")
 
@@ -344,6 +345,9 @@ text = "Moon"
 
 [node name="colony2" parent="planet_holder/planet3" instance=ExtResource("1")]
 position = Vector2(-0.000518799, 0)
+
+[node name="Node2D" parent="planet_holder/planet3" instance=ExtResource("13_q6yj3")]
+position = Vector2(0, -400)
 
 [node name="planet2" parent="planet_holder" groups=["planets"] instance=ExtResource("4")]
 position = Vector2(0, 18000)
