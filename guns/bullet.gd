@@ -136,7 +136,8 @@ func _on_bullet_area_entered( area ):
 			if "explosion" in area:
 				var expl = area.explosion.instantiate()
 				#print(get_parent().get_parent().get_parent().get_name())
-				get_parent().get_parent().get_parent().add_child(expl)
+				get_tree().get_root().add_child(expl)
+				#get_parent().get_parent().get_parent().add_child(expl)
 				expl.set_global_position(pos)
 				if sb:
 					expl.set_scale(Vector2(2,2))
@@ -169,17 +170,20 @@ func _on_bullet_area_entered( area ):
 		# explosion
 		if 'explosion' in get_parent().get_parent():
 			var expl = get_parent().get_parent().explosion.instantiate()
-			get_parent().get_parent().get_parent().add_child(expl)
+			get_tree().get_root().add_child(expl)
+			#get_parent().get_parent().get_parent().add_child(expl)
 			expl.set_global_position(pos)
 			expl.set_scale(Vector2(0.5, 0.5))
 			expl.play()
 
 func spawn_debris(deb, pos):
-	get_parent().get_parent().get_parent().add_child(deb)
+	#get_parent().get_parent().get_parent().add_child(deb)
+	get_tree().get_root().add_child(deb)
 	deb.set_global_position(pos)
 
 func spawn_debris_asteroid(deb, pos):
-	get_parent().get_parent().get_parent().add_child(deb)
+	#get_parent().get_parent().get_parent().add_child(deb)
+	get_tree().get_root().add_child(deb)
 	#print(get_parent().get_parent().get_parent().get_name())
 	deb.set_global_position(pos)
 	deb.set_scale(Vector2(0.5, 0.5))

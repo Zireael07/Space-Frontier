@@ -95,7 +95,8 @@ func _on_bullet_area_entered( area ):
 			# explosion
 			if "explosion" in area:
 				var expl = area.explosion.instantiate()
-				get_parent().get_parent().get_parent().add_child(expl)
+				#get_parent().get_parent().get_parent().add_child(expl)
+				get_tree().get_root().add_child(expl)
 				expl.set_global_position(pos)
 				expl.play()
 			
@@ -123,7 +124,8 @@ func _on_bullet_area_entered( area ):
 		# explosion
 		if 'explosion' in get_parent().get_parent():
 			var expl = get_parent().get_parent().explosion.instantiate()
-			get_parent().get_parent().get_parent().add_child(expl)
+			#get_parent().get_parent().get_parent().add_child(expl)
+			get_tree().get_root().add_child(expl)
 			expl.set_global_position(pos)
 			expl.set_scale(Vector2(0.5, 0.5))
 			expl.play()
@@ -151,7 +153,8 @@ func _on_bullet_area_entered( area ):
 					var pos = area.get_global_position()
 					# explosion
 					var expl = get_parent().get_parent().explosion.instantiate()
-					get_parent().get_parent().get_parent().add_child(expl)
+					#get_parent().get_parent().get_parent().add_child(expl)
+					get_tree().get_root().add_child(expl)
 					expl.set_global_position(pos)
 					expl.set_scale(Vector2(0.5, 0.5))
 					expl.play()
@@ -159,5 +162,6 @@ func _on_bullet_area_entered( area ):
 		
 		
 func spawn_debris(deb, pos):
-	get_parent().get_parent().get_parent().add_child(deb)
+	#get_parent().get_parent().get_parent().add_child(deb)
+	get_tree().get_root().add_child(deb)
 	deb.set_global_position(pos)
