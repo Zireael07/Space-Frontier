@@ -345,6 +345,12 @@ func _on_task_timer_timeout(timer_count):
 						
 			if get_state() == STATE_REFIT:
 				if not ship.docked:
+					# undock if we regenerated enough shields
+					if ship.shields > 75:
+						#var try_mine = _go_mine()
+						#if not try_mine:		
+						# go to a planet
+						set_state(STATE_GO_PLANET, ship.get_colonized_planet())
 					return
 				# if we're docked
 				else:
