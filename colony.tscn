@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://fhbqs0bjgp2b"]
 
 [ext_resource type="Script" path="res://colony.gd" id="1"]
-[ext_resource type="PackedScene" path="res://guns/bullet.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://dg4ou38wgi5or" path="res://guns/bullet.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://cl2hj441wexsu" path="res://assets/ships/ufoBlue_ed.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://dkp0kb3xcw66g" path="res://assets/ships/ufo_shade.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://bj324rx05fqe1" path="res://assets/dome_edit.png" id="5"]

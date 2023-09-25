@@ -162,6 +162,8 @@ func shoot():
  
 	gun_timer.start()
 	var b = bullet.instantiate()
+	# fix z-ordering over planets
+	b.set_z_index(game.PLANET_Z+2)
 	# scale until smaller gfx is found
 	b.set_scale(Vector2(0.5, 1))
 	# reduced damage
