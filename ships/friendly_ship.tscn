@@ -1,11 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://brnjrmmn5qnmb"]
+[gd_scene load_steps=10 format=3 uid="uid://cyrm3riecxigc"]
 
 [ext_resource type="Script" path="res://ships/brain.gd" id="1"]
-[ext_resource type="PackedScene" path="res://guns/bullet.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://dg4ou38wgi5or" path="res://guns/bullet.tscn" id="2"]
 [ext_resource type="Script" path="res://ships/movement_visualizer.gd" id="3"]
 [ext_resource type="Texture2D" uid="uid://btxfe6lbx6yam" path="res://assets/ships/playerShip3_blue.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://b6upleum40ijc" path="res://assets/shield_Edit grayscale.png" id="4_2fwr1"]
 [ext_resource type="Script" path="res://ships/NPC_ship.gd" id="5"]
-[ext_resource type="Texture2D" uid="uid://bu1corkwpdkol" path="res://assets/shield_Edit.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://d4jxaidmt6k4k" path="res://assets/fire11_grayscale_edit.png" id="7"]
 
 [sub_resource type="CircleShape2D" id="1"]
@@ -42,7 +42,7 @@ one_shot = true
 [node name="shield_effect" type="Sprite2D" parent="Area2D_ship_f"]
 visible = false
 scale = Vector2(0.15, 0.15)
-texture = ExtResource("6")
+texture = ExtResource("4_2fwr1")
 
 [node name="shield_timer" type="Timer" parent="Area2D_ship_f"]
 wait_time = 0.5
