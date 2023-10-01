@@ -147,6 +147,7 @@ position = Vector2(0, 23)
 
 [node name="shield_effect" type="Sprite2D" parent="Area2D"]
 visible = false
+modulate = Color(0, 1, 1, 1)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("5_nwoeq")
 

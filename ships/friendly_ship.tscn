@@ -41,6 +41,7 @@ one_shot = true
 
 [node name="shield_effect" type="Sprite2D" parent="Area2D_ship_f"]
 visible = false
+modulate = Color(0, 1, 1, 1)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("4_2fwr1")
 
