@@ -255,6 +255,9 @@ Ross 780 d, planet, -, -, -, 6.91E, 2.5E, 0.021, -
 Ross 780 c, planet, -, -, -, 0.7J, 1J, 0.134, -
 Ross 780 b, planet, -, -, -, 3.6J, 1J, 0.214, -
 Ross 780 e, planet, -, -, -, 15E, 4E, 0.345, -
+Gliese 1245*, star, 19h53m, 44d24m, 15.2, 0.11S, 0.1S, -, 0.000084, red,
+Gliese 1245 B, star, -, -, -, 0.1S, 0.1S, ?, 0.000048, red,
+Gliese 1245 C, star, -, -, -, 0.07S, 0.1S, ?, 0.00003, red, //luminosity is a guess
 Gliese 1002, star, 1.67deg, -7.54deg, 15.8, 0.12S, 0.14S, -, 0.001, red, //aka G 158-27
 Gliese 1002 b, planet, -, -, -, 1.08E, ?, 0.045, -
 Gliese 1002 c, planet, -, -, -, 1.36E, ?, 0.0738, -
@@ -270,6 +273,12 @@ TRAPPIST-1b, planet, -, -, -, 1.017E, ?, 0.01166, -
 TRAPPIST-1c, planet, -, -, -, 1.156E, ?, 0.015, -
 TRAPPIST-1d, planet, -, -, -, 0.297E, ?, 0.02233, -
 TRAPPIST-1e, planet, -, -, -, 0.772E, ?, 0.0291, -
+Furuhjelm 46, star, 17h12m, 45d39m, 19.4, 0.32S, 0.53S, -, 0.003, red, //luminosity is just a guess //Z+
+Gliese 625*, star, 16h25m, 54d18m, 21.1, 0.37S, 0.4S, -, 0.003, red, //luminosity is just a guess
+Gliese 625 b, planet, -, -, -, 2.8E, ?, 0.08, -
+Gliese 623*, star, 16h24m, 48d21m, 25.5, 0.51S, 0.6S, -, 0.003, red, //luminosity is just a guess has a companion red dwarf
+Gliese 3991*, star, 17h9m, 43d30m, 24.7, 0.2S, 0.1S, -, 0.003, red, //luminosity is a guess
+Gliese 694*, star, 17h43m, 43d22m, 31.0, 0.35S, 0.1S, -, 0.003, red, //luminosity is a guess
 Gliese 3988*, star, 17h3m, 51d24m, 32.3, 0.18S, 0.19S, -, 0.004, red, 
 Gliese 3988b, planet, -, -, -, 3.7E, ?, 0.04, -, -
 EQ Pegasi, star, 23h31m, 19d56m, 20.48, 0.43S, ?, -, 0.019, red, //aka GJ896 353deg ra NW
