@@ -270,7 +270,9 @@ TRAPPIST-1b, planet, -, -, -, 1.017E, ?, 0.01166, -
 TRAPPIST-1c, planet, -, -, -, 1.156E, ?, 0.015, -
 TRAPPIST-1d, planet, -, -, -, 0.297E, ?, 0.02233, -
 TRAPPIST-1e, planet, -, -, -, 0.772E, ?, 0.0291, -
-EQ Pegasi, star, 23h31m, 19d56m, 20.48, 0.43S, ?, -, 0.019, red, //aka GJ896 353deg ra
+Gliese 3988*, star, 17h3m, 51d24m, 32.3, 0.18S, 0.19S, -, 0.004, red, 
+Gliese 3988b, planet, -, -, -, 3.7E, ?, 0.04, -, -
+EQ Pegasi, star, 23h31m, 19d56m, 20.48, 0.43S, ?, -, 0.019, red, //aka GJ896 353deg ra NW
 EQ Pegasi b, planet,  -, -, -, 2.26J, ?, 0.642, -
 Wolf 1069, star, 20h26m, 58d34m, 31.2, 0.16S, 0.18S, -, 0.00016, red, //aka Gliese 1253
 Wolf 1069b, planet, -, -, -, 1.26E, 1.08E, 0.07, -
