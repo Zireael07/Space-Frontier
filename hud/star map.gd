@@ -47,6 +47,11 @@ func parse_data():
 	for i in data.size():
 		var line = data[i]
 		#print(line)
+		# skip commented out
+		if line[col.NAME].find("//") != -1:
+			print("Commented out", line[col.NAME])
+			continue
+			
 		if line[col.NAME] != "Sol" and \
 		line[col.TYPE].strip_edges() == "star" \
 			and !is_non_primary_star(line) : # ignore B, C, etc. stars
@@ -190,7 +195,8 @@ func parse_data():
 						# force update label text
 						ic.add_planets_mark()
 						#get_node("Control").get_child(get_node("Control").get_child_count()-1).add_planets_mark()
-
+		# else
+		
 	# test
 	#print(systems)
 	
