@@ -59,14 +59,26 @@ YZ Ceti e, planet, -, -, -, 0.55E, 0.8E, 0.01, -
 YZ Ceti b, planet, -, -, -, 0.8E, 0.9E, 0.016, -
 YZ Ceti c, planet, -, -, -, 1.3E, 1.1E, 0.022, -
 YZ Ceti d, planet, -, -, -, 1.3E, 1.1E, 0.029, -
-Gliese 1061, star, 3h36m, -44d30m, 11.9, 0.11S, 0.10S, -, 0.001, red,
+Gliese 1061, star, 3h36m, -44d30m, 11.9, 0.11S, 0.10S, -, 0.001, red, //SW
 Gliese 1061 b, planet, -, -, -, 1.5E, ?, 0.02, -
 Gliese 1061 c, planet, -, -, -, 1.7E, ?, 0.04, -
 Gliese 1061 d, planet, -, -, -, 1.7E, ?, 0.05, -
-Gliese 440, star, 11h45m, -64d50m, 15.1, 0.56S, 0.01S, -, 0.0005, white, //aka LP 145-141 
+Gliese 440, star, 11h45m, -64d50m, 15.1, 0.56S, 0.01S, -, 0.0005, white, //aka LP 145-141 SE
 Gliese 3618, star, 10h44m, -61d12m, 15.7, 0.1S, 0.1S, -, 0.003, red, //luminosity is just a guess
 2MASS J08173001-6155158, star, 8h17m, -61d54m, 17.0, 0.014S, 0.094S, -, 0.0001, brown, //T class luminosity is just a guess
-EE Leonis, star, 10h50m, 6d48m, 22.7, 0.25S, 0.26S, -, 0.0009, red, //aka Gliese 402; SW path
+AD Leonis*, star, 10h19m, 19d52m, 16.1, 0.4S, 0.39S, -, 0.024, red, //SW path //no star between AD and EE Leonis
+AD Leonis b, planet, -, -, -, 23.1E, ?, 0.03, -
+40 Eridani*, star, 4h15m, -7d40m, 16.34, 0.84S, 0.81S, -, 0.45, orange
+40 Eridani A b, planet, -, -, -, 8.5E, ?, 0.22, -
+40 Eridani B, star, -, -, -, 0.57S, 0.01S, 400.0, 0.13, white,
+40 Eridani C, star, -, -, -, 0.2S, 0.31S, 400.0, 0.008, red,
+Gliese 3323*, star, 5h1m, -6d56m, 17.5, 0.16S, 0.2S, -, 0.003, red, //luminosity is just a guess
+Gliese 3322 b, planet, -, -, -, 2.0E, 1.3E, 0.03, -
+Gliese 3322 c, planet, -, -, -, 2.3E, 1.5E, 0.13, -, //radius is a guess
+Gliese 205*, star, 5h31m, -3d41m, 18.6, 0.55S, 0.59S, -, 0.0062, red,
+Gliese 205 b, planet, -, -, -, 10.3E, ?, 0.11, -,
+Gliese 205 c, planet, -, -, -, 13.8E, ?, 0.69, -,
+EE Leonis*, star, 10h50m, 6d48m, 22.7, 0.25S, 0.26S, -, 0.0009, red, //aka Gliese 402
 Denebola, star, 11h49m, 14d34m, 35.8, 1.78S, 1.73S, -, 15.0, white, //aka Beta Leonis
 Beta Virginis, star, 11h50m, 1d45m, 35.8, 1.41S, 1.68S, -, 3.52, yellow,
 Gliese 3622, star, 10h48m, -11d20m, 14.8, 0.08S, 0.11S, -, 0.0006, red, //87MJ and 11RJ aka LHS 292 or NN 3622
