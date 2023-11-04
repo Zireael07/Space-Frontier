@@ -264,7 +264,7 @@ Gliese 1002 c, planet, -, -, -, 1.36E, ?, 0.0738, -
 Gliese 867, star, 22h38m, -20d37m, 15.28, 0.33S, 0.37S, -, 0.011, red,  //aka FK Aquarii (https://gruze.org/10pc/)
 Altair, star, 297.69deg, 8.86deg, 16.73, 1.71S, 1.81S, -, 10.7, blue
 Fomalhaut, star, 344.41deg, -29.62deg, 25.12, 1.92S, 1.84S, -, 16.6, blue
-Gliese 884, star, 345.06deg, -22.52deg, 26.85, 0.63S, 0.67S, -, 0.1, orange, //aka HD 217357
+Gliese 884, star, 345.06deg, -22.52deg, 26.85, 0.63S, 0.67S, -, 0.1, orange, //aka HD 217357  Z-
 Gliese 1265, star, 22h13m, -17d41m, 33.3, 0.18S , 0.19S, -, ?, red
 Gliese 1265 b, planet, -, -, -, 7.3E, ?, 0.03, -, -
 Gliese 4281, star, 22h28m, -13d25m, 35.5, 0.1S, 0.1S, -, ?, red, //aka NN 4281  
@@ -274,13 +274,31 @@ TRAPPIST-1c, planet, -, -, -, 1.156E, ?, 0.015, -
 TRAPPIST-1d, planet, -, -, -, 0.297E, ?, 0.02233, -
 TRAPPIST-1e, planet, -, -, -, 0.772E, ?, 0.0291, -
 Furuhjelm 46, star, 17h12m, 45d39m, 19.4, 0.32S, 0.53S, -, 0.003, red, //luminosity is just a guess //Z+
-Gliese 625*, star, 16h25m, 54d18m, 21.1, 0.37S, 0.4S, -, 0.003, red, //luminosity is just a guess
+Gliese 625, star, 16h25m, 54d18m, 21.1, 0.37S, 0.4S, -, 0.003, red, //luminosity is just a guess
 Gliese 625 b, planet, -, -, -, 2.8E, ?, 0.08, -
-Gliese 623*, star, 16h24m, 48d21m, 25.5, 0.51S, 0.6S, -, 0.003, red, //luminosity is just a guess has a companion red dwarf
-Gliese 3991*, star, 17h9m, 43d30m, 24.7, 0.2S, 0.1S, -, 0.003, red, //luminosity is a guess
-Gliese 694*, star, 17h43m, 43d22m, 31.0, 0.35S, 0.1S, -, 0.003, red, //luminosity is a guess
+Gliese 623, star, 16h24m, 48d21m, 25.5, 0.51S, 0.6S, -, 0.003, red, //luminosity is just a guess has a companion red dwarf
+Gliese 3991, star, 17h9m, 43d30m, 24.7, 0.2S, 0.1S, -, 0.003, red, //luminosity is a guess
+Gliese 694, star, 17h43m, 43d22m, 31.0, 0.35S, 0.1S, -, 0.003, red, //luminosity is a guess
 Gliese 3988*, star, 17h3m, 51d24m, 32.3, 0.18S, 0.19S, -, 0.004, red, 
 Gliese 3988b, planet, -, -, -, 3.7E, ?, 0.04, -, -
+Gliese 4063, star, 18h34m, 40d7m, 35.5, 0.2S, 0.3S, -, 0.003, red, //luminosity is just a guess
+HD 166620, star, 18h9m, 38d27m, 36.19, 0.79S, 0.79S, -, 0.35, orange
+Gliese 4048, star, 18h18m, 38d46m, 37.0, 0.32S, 0.4S, -, 0.003, red, //luminosities are just a guess
+Gliese 4048 B, star, -, -, -, 0.3S, 0.3S, ?, 0.003, red,
+G 205-35*, star, 18h41m, 39d42m, 40.7, 0.2S, 0.3S, -, 0.003, red, //luminosity ist just a guess
+G 205-28*, star, 18h31m, 40d41m, 44.25, 0.3S, 0.3S, -, 0.003, red, //luminosity is just a guess
+LP 229-30, star, 18h43m, 40d40m, 46.8, 0.1S, 0.1S, -, 0.001, red, //luminosity is just a guess
+HD 176051*, star, 18h57m, 32d54m, 48.5, 1.07S, 1.06S, -, 1.65, yellow,
+HD 176051 Ab, planet, -, -, -, 1.5J, ?, 1.76, -, //unclear which star is being orbited
+HD 176051 B, star, -, -, -, 0.71S, 0.81S, 19.0, 0.2, orange, //luminosity is just a guess
+Gliese 758, star, 19h23m, 33d13m, 50.9, 0.96S, 0.88S, -, 0.9, yellow, //luminosities are just a guess
+Gliese 758 B, star, -, -, -, 0.03S, 0.1S, 21.0, 0.0001, brown 
+G 204-39, star, 17h57m, 46d35m, 45.6, 0.4S, 0.4S, -, 0.003, red, //luminosity is just a guess
+BD+45 2743, star, 18h35m, 45d44m, 50.7, 0.5S, 0.5S, -, 0.003, red, //luminosities are just a guess
+BD+45 2743 B, star, -, -, -, 0.4S, 0.4S, ?, 0.003, red 
+BY Draconis, star, 18h33m, 51d43m, 54.0, 0.79S, 0.8S, -, 0.2, orange, //luminosity is just a guess
+BY Draconis B, star, -, -, -, 0.69S, 0.7S, ?, 0.2, orange, //radius and luminosity are a guess
+BY Draconis C, star, -, -, -, 0.2S, 0.2S, 260, 0.003, red, //luminosity is a guess
 EQ Pegasi, star, 23h31m, 19d56m, 20.48, 0.43S, ?, -, 0.019, red, //aka GJ896 353deg ra NW
 EQ Pegasi b, planet,  -, -, -, 2.26J, ?, 0.642, -
 Wolf 1069, star, 20h26m, 58d34m, 31.2, 0.16S, 0.18S, -, 0.00016, red, //aka Gliese 1253
