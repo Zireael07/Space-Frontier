@@ -84,13 +84,19 @@ Gliese 229*, star, 6h10m, -21d51m, 18.79, 0.58S, 0.69S, -, 0.0158, red,
 Gliese 229 A c, planet, -, -, -, 7.9E, ?, 0.34, -
 Gliese 229 A b, planet, -, -, -, 10.2E, ?, 0.9, -
 Gliese 229 B, star, -, -, -, 0.02S, 0.04S, -, 0.0001, brown, //class T luminosity is just a guess
-Ross 47*, star, 5h42m, 12d28m, 18.8, 0.35S, 0.17S, -, 0.00069, red,
+Ross 47, star, 5h42m, 12d28m, 18.8, 0.35S, 0.17S, -, 0.00069, red,
 WISE J0521+1025, star, 5h21m, 10d25m, 16.3, 0.03S, 0.1S, -, 0.00001, brown, //T class
 EE Leonis, star, 10h50m, 6d48m, 22.7, 0.25S, 0.26S, -, 0.0009, red, //aka Gliese 402
 LHS 2090*, star, 9h0m, 21d49m, 20.7, 0.09S, 0.18S, -, 0.003, red, //luminosity is just a guess
 LP 658-2, star, 5h55m, -4d10m, 21.01, 0.45S, 0.01S, -, 0.000062, white, //luminosity from Wikipedia aka Gliese 223.2 
-Gliese 1093*, star, 6h59m, 19d20m, 25.2, 0.21S, 0.3S, -, 0.132, red, //SE
+Gliese 1093, star, 6h59m, 19d20m, 25.2, 0.21S, 0.3S, -, 0.132, red, //SE
 Denebola, star, 11h49m, 14d34m, 35.8, 1.78S, 1.73S, -, 15.0, white, //aka Beta Leonis
+//Gliese 3135*, star, 2h5m, -30d10m, 30.5, 0.3S, 0.4S, -, 0.003, red, //luminosity is just a guess //overlaps Sirius on the map
+2MASS J0243−2453*, star, 2h43m, -24d53m, 34.8, 0.03S, 0.1S, -, 0.0001, brown, //luminosity is just a guess T class
+HD 11507*, star, 1h52m, -22d26m, 36.0, 0.6S, 0.6S, -, 0.004, red, //luminosity is just a guess next to Gliese 84 Z-
+Gliese 1050*, star, 2h39m, -34d8m, 35.4, 0.4S, 0.4S, -, 0.004, red, //luminosity is just a guess
+LP 993-115*, star, 2h45m, -43d44m, 36.1, 0.3S, 0.3S, -, 0.003, red, //luminosity is just a guess
+CC Eridani*, star, 2h43m, -43d47m, 37.65, 0.6S, 0.6S, -, 0.07, orange, //aka Gliese 103
 Beta Virginis, star, 11h50m, 1d45m, 35.8, 1.41S, 1.68S, -, 3.52, yellow,
 Gliese 3622, star, 10h48m, -11d20m, 14.8, 0.08S, 0.11S, -, 0.0006, red, //87MJ and 11RJ aka LHS 292 or NN 3622
 Gliese 393, star, 10h28m, 0d50m, 22.9, 0.41S, 0.41S, -, 0.0235, red, //aka Ross 446
@@ -350,7 +356,14 @@ EQ Pegasi, star, 23h31m, 19d56m, 20.48, 0.43S, ?, -, 0.019, red, //aka GJ896 353
 EQ Pegasi b, planet,  -, -, -, 2.26J, ?, 0.642, -
 Wolf 1069, star, 20h26m, 58d34m, 31.2, 0.16S, 0.18S, -, 0.00016, red, //aka Gliese 1253
 Wolf 1069b, planet, -, -, -, 1.26E, 1.08E, 0.07, -
-Gliese 1, star, 0h5m, -37deg22m, 14.1, 0.46S, 0.47S, -, 0.0296, red, //aka HD 225213
+Gliese 1, star, 0h5m, -37deg22m, 14.1, 0.46S, 0.47S, -, 0.0296, red, //aka HD 225213 //SE
+//Gliese 915*, star, 0h2m, -43d10m, 27.1, 0.9S, 0.1S, -, 0.0001, white, //luminosity and radius are guesses //throws off pathing to GJ3049
+Gliese 3049*, star, 0h43m, -41d17m, 33.3, 0.21S, 0.27S, -, 0.001, red, //very far Z- SW no star between this and Gliese 1
+Gliese 3049 b, planet, -, -, -, 4.7E, 2.0E, 0.05, -
+Gliese 86*, star, 2h10m, -50d49m, 35.0, 0.83S, 0.86S, -, 0.05, orange, //luminosities are a guess 
+Gliese 86 A b, planet, -, -, -, 4.2J, ?, 0.12, -
+Gliese 86 B, star, -, -, -, 0.49S, 0.2J, 23.7, 0.00001, white, //distance from Wikipedia
+LP 294-112*, star, 1h52m, -48d5m, 43.6, 0.2S, 0.2S, -, 0.003, red, //luminosity is just a guess
 Gliese 105 A, star, 02h36m, 6d54m, 23.5, 0.74S, 0.65S, -, 0.26, orange, // W path
 Gliese 105 B, star, -, -, -, 0.24S, 0.28S, 120.0, 0.005, red, //luminosity is just a guess
 Gliese 105 C, star, -, -, -, 0.08S, 0.10S, 24.0, 0.001, red, //luminosity is just a guess
