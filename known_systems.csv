@@ -191,10 +191,34 @@ Kruger 60 A, star, 22h27m, 57d41m, 13.0, 0.27S, 0.35S, -, 0.01, red, //aka Glies
 Kruger 60 B, star, -, -, -, 0.17S, 0.24S, 9.5, -, red
 Ross 614 A, star, 6h29m, -2d48m, 13.36, 0.22S, 0.3S, 4.2, 0.001, red, //aka V577 Monocerotis luminosities are just a guess distance from Wikipedia 
 Ross 614 B, star, -, -, -, 0.11S, 0.1S, ?, 0.001, red
-van Maanen's star, star, 0h49m, 5d22m, 14.0, 0.68S, 0.01S, -, 0.00017, white, //aka Gliese 35 Wolf 28 0.1RJ
+van Maanen's star, star, 0h49m, 5d22m, 14.0, 0.68S, 0.01S, -, 0.00017, white, //aka Gliese 35 Wolf 28 0.1RJ no star between it and YZ Ceti
 TZ Arietis, star, 2h0m, 13d2m, 14.5, 0.14S, 0.16S, -, 0.0013, red, //aka Gliese 83.1 Gliese 9066
 TZ Arietis b, planet, -, -, -, 30.9E, ?, 0.4, -
 TZ Arietis c, planet, -, -, -, 73.1E, ?, 0.88, -
+Gliese 687*, star, 17h36m, 68d20m, 14.8, 0.4S, 0.49S, -, 0.003, red, //luminosity is just a guess
+Gliese 687 b, planet, -, -, -, 17.3E, ?, 0.163, -
+Gliese 687 c, planet, -, -, -, 14.5E, ?, 1.17, -
+Gliese 412*, star, 11h5m, 43d31m, 15.9, 0.48S, 0.38S, -, 0.003, red, //luminosity is just a guess aka WX Ursae Majoris NW Z+
+Gliese 412 B, star, -, -, -, 0.1S, 0.13S, 190.0, -, //distance from Wikipedia
+Groombridge 1618*, star, 10h11m, 49d27m, 15.8, 0.67S, 0.61S, -, 0.46, orange, 
+EV Lacertae*, star, 22h46m, 44d16m, 16.4, 0.35S, 0.36S, -, 0.171, orange, //next to EQ Pegasi on map
+2MASS J0254+0223*, star, 2h54m, 2d23m, 17.63, 0.06S, 0.1S, -, 0.0001, brown, //luminosity is just a guess Z-
+2MASS J0136+0933*, star, 1h36m, 9d33m, 19.9, 0.02S, 0.1S, -, 0.0001, brown, //luminosity and radius are guesses
+Gliese 338*, star, 9h14m, 52d41m, 20.6, 0.69S, 0.58S, -, 1.2, orange,
+Gliese 338 B, star, -, -, -, 0.64S, 0.58S, 5.5, 1.2, orange, //17 arcsecond has a similar luminosity to its partner = is more likely to be orange instead of red Z+
+Gliese 338 B b, planet, -, -, -, 10.0E, ?, 0.14, -
+QY Aurigae, star, 7h10m, 38d31m, 19.7, 0.22S, 0.3S, -, 0.05, orange, //aka Gliese 268
+QY Aurigae B, star, -, -, -, 0.19S, 0.2S, 0.01, 0.003, red, //distance from Wikipedia
+2MASS J0937+2931, star, 9h37m, 29d31m, 21.0, 0.03S, 0.01S, -, 0.00001, brown, //luminosity and radius are guesses
+94 G. Piscium, star, 0h48m, 5d16m, 24.25, 0.76S, 0.75S, -, 0.4, orange, //luminosity is just a guess Z-
+107 Piscium, star, 1h42m, 20d15m, 24.9, 0.89S, 0.85S, -, 0.4, orange, //luminosity is just a guess
+Gliese 1221*, star, 17h48m, 70d52m, 20.25, 0.81S, 0.01S, -, 0.000085, white, 
+Gliese 109*, star, 2h44m, 25d31m, 25.0, 0.3S, 0.36S, -, 0.003, red, //luminosity is just a guess
+Gliese 3146*, star, 2h16m, 13d36m, 29.6, 0.05S, 0.1S, -, 0.000032, red, //nearly overlaps 109 above
+Gliese 3128*, star, 2h2m, 10d29m, 30.1, 0.4S, 0.2S, -, 0.002, red, //luminosity is just a guess
+G 3-14*, star, 1h43m, 4d19m, 36.9, 0.4S, 0.4S, -, 0.003, red, //luminosity is just a guess way off Z-
+Gliese 3119*, star, 1h51m, -6d7m, 34.4, 0.2S, 0.2S, -, 0.002, red, //luminosity is just a guess
+LP 647-13*, star, 1h9m, -3d43m, 34.4, 0.15S, 0.1S, -, 0.001, red, //luminosity is just a guess 
 Gliese 832, star, 21h33m, -49d0m, 16.2, 0.45S, 0.48S, -, 0.07, red, //E path NE 
 Gliese 832c, planet, -, -, -, 5.4E, 1.7E, 0.16, -
 Gliese 832b, planet, -, -, -, 0.7E, ?, 3.67, -
