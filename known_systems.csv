@@ -91,12 +91,13 @@ LHS 2090*, star, 9h0m, 21d49m, 20.7, 0.09S, 0.18S, -, 0.003, red, //luminosity i
 LP 658-2, star, 5h55m, -4d10m, 21.01, 0.45S, 0.01S, -, 0.000062, white, //luminosity from Wikipedia aka Gliese 223.2 
 Gliese 1093, star, 6h59m, 19d20m, 25.2, 0.21S, 0.3S, -, 0.132, red, //SE
 Denebola, star, 11h49m, 14d34m, 35.8, 1.78S, 1.73S, -, 15.0, white, //aka Beta Leonis
-//Gliese 3135*, star, 2h5m, -30d10m, 30.5, 0.3S, 0.4S, -, 0.003, red, //luminosity is just a guess //overlaps Sirius on the map
-2MASS J0243−2453*, star, 2h43m, -24d53m, 34.8, 0.03S, 0.1S, -, 0.0001, brown, //luminosity is just a guess T class
-HD 11507*, star, 1h52m, -22d26m, 36.0, 0.6S, 0.6S, -, 0.004, red, //luminosity is just a guess next to Gliese 84 Z-
-Gliese 1050*, star, 2h39m, -34d8m, 35.4, 0.4S, 0.4S, -, 0.004, red, //luminosity is just a guess
-LP 993-115*, star, 2h45m, -43d44m, 36.1, 0.3S, 0.3S, -, 0.003, red, //luminosity is just a guess
-CC Eridani*, star, 2h43m, -43d47m, 37.65, 0.6S, 0.6S, -, 0.07, orange, //aka Gliese 103
+//Gliese 3135, star, 2h5m, -30d10m, 30.5, 0.3S, 0.4S, -, 0.003, red, //luminosity is just a guess //overlaps Sirius on the map
+2MASS J0243−2453, star, 2h43m, -24d53m, 34.8, 0.03S, 0.1S, -, 0.0001, brown, //luminosity is just a guess T class
+HD 11507, star, 1h52m, -22d26m, 36.0, 0.6S, 0.6S, -, 0.004, red, //luminosity is just a guess next to Gliese 84 Z-
+Gliese 1050, star, 2h39m, -34d8m, 35.4, 0.4S, 0.4S, -, 0.004, red, //luminosity is just a guess
+LP 993-115, star, 2h45m, -43d44m, 36.1, 0.3S, 0.3S, -, 0.003, red, //luminosity is just a guess
+CC Eridani, star, 2h43m, -43d47m, 37.65, 0.6S, 0.6S, -, 0.07, orange, //aka Gliese 103
+Gliese 1046*, star, 2h19m, -36d46m, 45.8, ?, ?, -, 0.01, red, //14.07pc aka HIP 10812 L 440-30 color according to Simbad
 Beta Virginis, star, 11h50m, 1d45m, 35.8, 1.41S, 1.68S, -, 3.52, yellow,
 Gliese 3622, star, 10h48m, -11d20m, 14.8, 0.08S, 0.11S, -, 0.0006, red, //87MJ and 11RJ aka LHS 292 or NN 3622
 Gliese 393, star, 10h28m, 0d50m, 22.9, 0.41S, 0.41S, -, 0.0235, red, //aka Ross 446
@@ -372,6 +373,13 @@ CD Ceti b, planet, -, -, -, 3.8E, ?, 0.02, -
 Kappa 1 Ceti, star, 3h19m, 3d19m, 30.2, 1.03S, 0.95S, -, 0.85, yellow
 Gliese 3253 A, star, 3h52m, 17d0m, 31.5, 0.3S, 0.2S, -, 0.002, red, //aka Wolf 227 luminosity is just a guess
 Gliese 3253 B, star, -, -, -, 0.2S, 0.2S, 20, 0.001, red, //no data on this can be found so pretty much everything is a guess
+Gliese 84*, star, 2h5m, -17d36m, 30.3, 0.4S, 0.54S, -, 0.003, red, //luminosity is just a guess SW Z-
+32 G. Eridani*, star, 2h52m, -12d16m, 33.7, 0.88S, 0.85S, -, 0.40, orange, //aka HD 17925
+WISE J0336-0143*, star, 3h36m, -1d43m, 32.3, 0.01S, 0.1J, -, 0.00001, brown, //luminosity is just a guess Y class
+WISE J0336-0143 b, planet, -, -, -, 8.0J, ?, 0.97, -
+Gliese 1065*, star, 3h50m, -6d6m, 32.3, 0.3S, 0.4S, -, 0.005, red, //luminosity is just a guess SW
+Gliese 3306*, star, 4h37m, -8d49m, 30.6, 0.5S, 0.1S, -, 0.0001, white, //pretty much everything is a guess 
+//WISE 1614+1739*, star, 26h54m, 17d39m, 32.6, 0.02S, 0.1S, -, 0.0001, brown, //luminosity is just a guess T class NW
 HD 28343, star, 4h29m, 21d55m, 36.6, 0.5S, 0.6S, -, 0.005, red, //luminosity is just a guess
 Gliese 176, star, 4h42m, 18d57m, 30.9, 0.5S, 0.45S, -, 0.337, red
 Gliese 176b, planet, -, -, -, 9.1E, ?, 0.07, -
