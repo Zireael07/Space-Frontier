@@ -66,6 +66,14 @@ Gliese 1061 d, planet, -, -, -, 1.7E, ?, 0.05, -
 Gliese 440, star, 11h45m, -64d50m, 15.1, 0.56S, 0.01S, -, 0.0005, white, //aka LP 145-141 SE
 Gliese 3618, star, 10h44m, -61d12m, 15.7, 0.1S, 0.1S, -, 0.003, red, //luminosity is just a guess
 2MASS J08173001-6155158, star, 8h17m, -61d54m, 17.0, 0.014S, 0.094S, -, 0.0001, brown, //T class luminosity is just a guess
+Gliese 588*, star, 15h32m, -41d16m, 19.3, 0.46S, 0.48S, -, 0.004, red, //luminosity is a guess
+Gliese 588 b, planet, -, -, -, 2.4E, ?, 0.05, -
+Gliese 588 c, planet, -, -, -, 10.3E, ?, 0.53, -
+Delta Pavonis*, star, 20h8m, -66d11m, 19.8, 0.99S, 1.22S, -, 1.22, yellow, //subgiant SE
+SCR 1845-6357*, star, 18h45m, -63d57m, 13.0, 0.07S, 0.09S, -, 0.003, red, //luminosities is just a guess
+SCR 1845-6357 B, star, -, -, -, 0.03, 0.09, ?, 0.003, red
+WISE 1639-6847*, star, 16h39m, -68d47m, 16.1, 0.01S, 0.1S, -, 0.0001, brown, //luminosity is just a guess Y class
+2MASS J1540-5101*, star, 15h40, -51d1m, 17.3, 0.09S, 0.1S, -, 0.0006, red
 AD Leonis, star, 10h19m, 19d52m, 16.1, 0.4S, 0.39S, -, 0.024, red, //SW path //no star between AD and EE Leonis
 AD Leonis b, planet, -, -, -, 23.1E, ?, 0.03, -
 40 Eridani, star, 4h15m, -7d40m, 16.34, 0.84S, 0.81S, -, 0.45, orange
