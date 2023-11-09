@@ -265,14 +265,20 @@ L 489-3, star, 18h29m, -34d57m, 45.4, 0.4S, 0.4S, -, 0.005, red, //luminosity is
 Gliese 2130 A, star, 17h46m, -32d6m, 46.1, 0.3S, ?, -, 0.005, red, //luminosity is just a guess
 Gliese 2130 B, star, -, -, -, 0.19S, 0.2S, ?, 0.003, red, //luminosity is a guess
 Gliese 2130 C, star, -, -, -, 0.15S, 0.15S, ?, 0.003, red, //luminosity and radius are guesses
-279 G. Sagittarii, star, 20h11m, -36d6m, 19.6, 0.65S, 0.66S, -, 0.26, orange, //aka Gliese 783
+279 G. Sagittarii, star, 20h11m, -36d6m, 19.6, 0.65S, 0.66S, -, 0.26, orange, //aka Gliese 783 HR 7703 E path
 279 G Sagittarii B, star, -, -, -, 0.24S, 0.28S, 56.30, 0.005, red, //luminosity is just a guess distance off Wikipedia
+LP 816-60*, star, 20h52m, -16d58m, 18.33, 0.19S, 0.2S, -, 0.003, red, //luminosity is just a guess NE
+Gliese 784*, star, 20h13m, -45d9m, 20.1, 0.58S, 0.6S, -, 0.005, red, //luminosity is just a guess
+Gliese 784 b, planet, -, -, -, 9.4E, ?, 0.06, -
+Gliese 831*, star, 21h31m, -9d47m, 24.3, 0.22S, 0.3S, -, 0.003, red, //luminosities are just a guess
+Gliese 831 B, star, -, -, -, 0.12S, 0.1S, ?, 0.002, red
 Wolf 1061, star, 16h30m, -12d40m, 14.05, 0.25S, 0.31S, -, 0.0015, red, //aka BD -12°4523
 Wolf 1061 b, planet, -, -, -, 1.9E, 1.2E, 0.04, -
 Wolf 1061 c, planet, -, -, -, 3.4E, 1.5E, 0.09, -
 Wolf 1061 d, planet, -, -, -, 7.7E, 2.2E, 0.47, -
 70 Ophiuchi A, star, 18h5m, 2d29m, 16.6, 0.9S, 0.91S, -, 0.59, orange, //aka Gliese 702
 70 Ophiuchi B, star, -, -, -, 0.7S, 0.8S, 4.55, 0.13, orange, //distance off Wikipedia
+Gliese 4248*, star, 22h2m, -37d4m, 25.0, 0.2S, 0.2S, -, 0.003, red, //luminosity is just a guess next to G. Sagittarii
 CE Bootis, star, 14h54m, 16d6m, 32.4, 0.35S, 0.5S, -, 0.007, red, //aka Gliese 569 has two brown dwarf companions
 Gliese 752 A, star, 19h16m, 5d9m, 19.2, 0.46S, 0.55S, -, 0.032, red, //has circumbinary planet
 Gliese 752 B, star, -, -, -, 0.07S, 0.10S, ?, 0.001, red, //luminosity is a guess 79MJ and 1RJ
