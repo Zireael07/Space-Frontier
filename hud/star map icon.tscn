@@ -91,6 +91,7 @@ texture = ExtResource("5")
 
 [node name="NewTexture" type="TextureRect" parent="."]
 visible = false
+modulate = Color(0.0117647, 0.752941, 0, 1)
 layout_mode = 0
 offset_top = 20.0
 offset_right = 40.0

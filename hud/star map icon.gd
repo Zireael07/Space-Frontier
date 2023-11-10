@@ -141,7 +141,8 @@ func _ready():
 #		get_node("Label2").hide()
 	
 	# color-code the Z direction
-	# this is a variation of blue-red diverging color scale
+	# this is a variation of green-magenta diverging color scale
+	# used to be blue-red but it was easy to mistake for actual star type
 	var clr_dir = Color(0,1,1) if depth_s < 0 else Color(1,0,0) # cyan if positive, red if neg
 	var clr = clr_dir.darkened(abs(depth)/30) # 20 is max Z distance away from the plane
 	#print(get_name() + "calculated Clr: ", clr)
@@ -157,7 +158,7 @@ func _ready():
 	
 	get_node("Label2").set_text(str(depth_str)) #+ " ly") # all distances, e.g on ruler, are in ly anyway
 	
-	# test visualizing Z as icon size
+	# test visualizing Z as icon size and color
 	var z_data = get_z_color(depth)
 	var factor = z_data[1]
 	get_node("ShadowTexture").set_scale(Vector2(1,1)*factor)
