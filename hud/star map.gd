@@ -49,7 +49,7 @@ func parse_data():
 		#print(line)
 		# skip commented out
 		if line[col.NAME].find("//") != -1:
-			print("Commented out", line[col.NAME])
+			#print("Commented out", line[col.NAME])
 			continue
 			
 		if line[col.NAME] != "Sol" and \
@@ -64,6 +64,11 @@ func parse_data():
 			if _name.find("*") != -1:
 				_name = _name.trim_suffix("*")
 				ic.new = true
+				
+			# catch duplicate lines
+			if systems.has(_name):
+				print("duplicate line detected! ", line[col.NAME])
+				continue 
 			
 			ic.named = _name
 			
