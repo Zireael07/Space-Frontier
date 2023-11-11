@@ -1004,7 +1004,10 @@ func _on_officer_timer_timeout():
 func _on_star_map_gui_input(event):
 	#print("star map event")
 	if event is InputEventMouseButton:
-		print("Clicked in starmap")
+		print("Clicked in starmap ", event.position)
+		# ignore clicks around the GUI elements
+		if event.position.y < 90 and event.position.x < 130:
+			return
 		starmap_menu_show()
 		# trigger jump
 		#game.player.w_hole.jump()
@@ -1014,4 +1017,4 @@ func _on_view_size_changed():
 	viewport_factor = get_node("/root").size/Vector2i(1024,600)
 	print("Factor: ", viewport_factor)
 
-	center = center*viewport_factor
+	center = center*Vector2(viewport_factor)
