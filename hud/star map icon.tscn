@@ -22,6 +22,20 @@ offset_bottom = 40.0
 pivot_offset = Vector2(20, 20)
 script = ExtResource("3")
 
+[node name="ClickArea" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(20, 20)
+color = Color(1, 1, 1, 0.0352941)
+
 [node name="ShadowTexture" type="TextureRect" parent="."]
 self_modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 0
@@ -99,9 +113,11 @@ offset_bottom = 60.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("7_6ui63")
 
+[connection signal="gui_input" from="ClickArea" to="." method="_on_TextureRect3_gui_input"]
+[connection signal="gui_input" from="ClickArea" to="." method="_on_TextureRect2_gui_input"]
+[connection signal="mouse_entered" from="ClickArea" to="." method="_on_PlanetTexture_mouse_entered"]
+[connection signal="mouse_exited" from="ClickArea" to="." method="_on_PlanetTexture_mouse_exited"]
 [connection signal="gui_input" from="ShadowTexture" to="." method="_on_TextureRect2_gui_input"]
-[connection signal="mouse_entered" from="ShadowTexture" to="." method="_on_ShadowTexture_mouse_entered"]
-[connection signal="mouse_exited" from="ShadowTexture" to="." method="_on_ShadowTexture_mouse_exited"]
 [connection signal="gui_input" from="StarTexture" to="." method="_on_TextureRect3_gui_input"]
 [connection signal="mouse_entered" from="StarTexture" to="." method="_on_PlanetTexture_mouse_entered"]
 [connection signal="mouse_exited" from="StarTexture" to="." method="_on_PlanetTexture_mouse_exited"]

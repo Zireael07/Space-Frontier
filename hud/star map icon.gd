@@ -64,6 +64,7 @@ func _ready():
 		var txts = txt.split("--")
 		txt = txts[0] + '\n' + "--" + txts[1]
 	
+	
 	get_node("Label").set_text(txt)
 	
 	# select icon based on star type
@@ -162,6 +163,8 @@ func _ready():
 	var z_data = get_z_color(depth)
 	var factor = z_data[1]
 	get_node("ShadowTexture").set_scale(Vector2(1,1)*factor)
+	var click_scale = maxf(factor, 0.5) # max only works on numbers
+	get_node("ClickArea").set_scale(Vector2(click_scale, click_scale))
 	var color = z_data[0]
 	get_node("ShadowTexture").self_modulate = color
 	# TODO: draw star color if option ticked
@@ -392,6 +395,7 @@ func on_click():
 	#get_node("../../..").pretty_print_stars(stars)
 	
 # we don't want actual buttons, hence this
+# ClickArea node is there to increase click area for small icons
 func _on_TextureRect2_gui_input(event):
 	#if $"ShadowTexture".visible:
 	if event is InputEventMouseButton:

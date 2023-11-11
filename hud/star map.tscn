@@ -117,7 +117,7 @@ layout_mode = 0
 offset_top = 500.0
 offset_right = 125.0
 offset_bottom = 520.0
-text = "Sizes represent Z axis"
+text = "** Sizes represent Z axis!"
 label_settings = ExtResource("5_kbiss")
 
 [node name="Control" type="Control" parent="."]
