@@ -1,0 +1,119 @@
+[gd_scene load_steps=12 format=3 uid="uid://dwcp53xvbja4v"]
+
+[ext_resource type="Script" path="res://colony.gd" id="1_ekmy8"]
+[ext_resource type="PackedScene" uid="uid://dg4ou38wgi5or" path="res://guns/bullet.tscn" id="2_rvxg2"]
+[ext_resource type="Texture2D" uid="uid://dkp0kb3xcw66g" path="res://assets/ships/ufo_shade.png" id="3_5tx4k"]
+[ext_resource type="Texture2D" uid="uid://cl2hj441wexsu" path="res://assets/ships/ufoBlue_ed.png" id="4_5fft5"]
+[ext_resource type="Texture2D" uid="uid://bj324rx05fqe1" path="res://assets/dome_edit.png" id="5_x5oxv"]
+[ext_resource type="Shader" path="res://ship_building.gdshader" id="6_23u6o"]
+[ext_resource type="Texture2D" uid="uid://btxfe6lbx6yam" path="res://assets/ships/playerShip3_blue.png" id="7_vcjwx"]
+
+[sub_resource type="Shader" id="1"]
+code = "shader_type canvas_item;
+uniform float outline_width = 2.0;
+uniform vec4 outline_color: source_color;
+
+void fragment(){
+	vec4 tex_col = texture(TEXTURE, UV);
+	vec4 col = vec4(0,0,0,0);
+	vec2 ps = TEXTURE_PIXEL_SIZE;
+	float a;
+	float maxa = col.a;
+	float mina = col.a;
+
+	a = texture(TEXTURE, UV + vec2(0, -outline_width)*ps*0.5).a;
+	maxa = max(a, maxa); 
+	mina = min(a, mina);
+	
+	a = texture(TEXTURE, UV + vec2(0, outline_width)*ps*0.5).a;
+	maxa = max(a, maxa); 
+	mina = min(a, mina);
+	
+	a = texture(TEXTURE, UV + vec2(-outline_width,0)*ps*0.5).a;
+	maxa = max(a, maxa); 
+	mina = min(a, mina);
+	
+	a = texture(TEXTURE, UV + vec2(outline_width, 0)*ps*0.5).a;
+	maxa = max(a, maxa); 
+	mina = min(a, mina);
+	
+	//COLOR = mix(col, outline_color, maxa);
+	float st = step(0.3, tex_col.a);
+	float st2 = step(0.4, tex_col.a);
+	//float fact = st_2;
+	float fact = (st-st2);
+	vec4 lit = mix(col, outline_color, fact);
+	//COLOR = lit;
+	//COLOR = mix(lit, col, a);
+	
+	COLOR = mix(tex_col, lit, a*1.5);
+	//COLOR = mix(lit, tex_col, a*0.75);
+	
+	//COLOR = mix(col, outline_color, -a);
+	}
+"
+
+[sub_resource type="ShaderMaterial" id="2"]
+shader = SubResource("1")
+shader_parameter/outline_width = 2.0
+shader_parameter/outline_color = Color(0, 0.827451, 0.988235, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37ra2"]
+shader = ExtResource("6_23u6o")
+shader_parameter/fill_color = Color(0.945098, 0.956863, 1, 0.521569)
+shader_parameter/min_val = null
+shader_parameter/current_val = 0.5
+shader_parameter/max_val = 1.0
+
+[sub_resource type="CircleShape2D" id="3"]
+radius = 23.0021
+
+[node name="Node2D" type="Node2D" groups=["colony"]]
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("1_ekmy8")
+bullet = ExtResource("2_rvxg2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+visible = false
+modulate = Color(0.32549, 0.32549, 0.32549, 1)
+show_behind_parent = true
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_5tx4k")
+
+[node name="blue_colony" type="Sprite2D" parent="Area2D"]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("4_5fft5")
+
+[node name="dome" type="Node2D" parent="Area2D/blue_colony"]
+visible = false
+scale = Vector2(1.66667, 1.66667)
+
+[node name="dome" type="Sprite2D" parent="Area2D/blue_colony/dome"]
+material = SubResource("2")
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("5_x5oxv")
+
+[node name="playerShip3_blue" type="Sprite2D" parent="Area2D/blue_colony"]
+material = SubResource("ShaderMaterial_37ra2")
+position = Vector2(0, -50)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("7_vcjwx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("3")
+
+[node name="bullet_container" type="Node" parent="Area2D"]
+
+[node name="muzzle" type="Marker2D" parent="Area2D"]
+
+[node name="gun_timer" type="Timer" parent="Area2D"]
+wait_time = 1.5
+one_shot = true
+
+[node name="Label" type="Label" parent="Area2D"]
+offset_top = 30.0
+offset_right = 40.0
+offset_bottom = 44.0
+
+[connection signal="input_event" from="Area2D" to="Area2D" method="_on_Area2D_input_event"]
