@@ -239,9 +239,11 @@ Gliese 1221*, star, 17h48m, 70d52m, 20.25, 0.81S, 0.01S, -, 0.000085, white,
 Gliese 109*, star, 2h44m, 25d31m, 25.0, 0.3S, 0.36S, -, 0.003, red, //luminosity is just a guess
 Gliese 3146*, star, 2h16m, 13d36m, 29.6, 0.05S, 0.1S, -, 0.000032, red, //nearly overlaps 109 above
 Gliese 3128*, star, 2h2m, 10d29m, 30.1, 0.4S, 0.2S, -, 0.002, red, //luminosity is just a guess
-G 3-14*, star, 1h43m, 4d19m, 36.9, 0.4S, 0.4S, -, 0.003, red, //luminosity is just a guess way off Z-
-Gliese 3119*, star, 1h51m, -6d7m, 34.4, 0.2S, 0.2S, -, 0.002, red, //luminosity is just a guess
-LP 647-13*, star, 1h9m, -3d43m, 34.4, 0.15S, 0.1S, -, 0.001, red, //luminosity is just a guess 
+G 3-14, star, 1h43m, 4d19m, 36.9, 0.4S, 0.4S, -, 0.003, red, //luminosity is just a guess way off Z-
+Gliese 3119, star, 1h51m, -6d7m, 34.4, 0.2S, 0.2S, -, 0.002, red, //luminosity is just a guess NW
+LP 647-13, star, 1h9m, -3d43m, 34.4, 0.15S, 0.1S, -, 0.001, red, //luminosity is just a guess
+Gliese 12*, star, 0h15m, 13d33m, 39.6, 0.3S, 0.3S, -, 0.007, red, //aka G-32-5
+Gliese 12 b, planet, -, -, -, 3.5E, ?, 0.0668, -
 Gliese 832, star, 21h33m, -49d0m, 16.2, 0.45S, 0.48S, -, 0.07, red, //E path NE 
 Gliese 832c, planet, -, -, -, 5.4E, 1.7E, 0.16, -
 Gliese 832b, planet, -, -, -, 0.7E, ?, 3.67, -
@@ -253,7 +255,7 @@ Gliese 682 c, planet, -, -, -, 8.7E, ?, 0.18, -
 Gliese 693, star, 17h46m, -57d19m, 19.2, 0.26S, 0.3S, -, 0.0015, red,
 Gliese 754, star, 19h20m, -45d34m, 19.2, 0.16S, 0.24S, -, 0.005, red, //luminosity is just a guess
 Gliese 754 b, planet, -, -, -, 9.8E, ?, 0.28, -
-36 Ophiuchi A, star, 17h15m, -26d36m, 19.3, 0.85S, 0.82S, -, 0.28, orange, //aka HD 155886 or Gunibuu
+36 Ophiuchi A, star, 17h15m, -26d36m, 19.3, 0.85S, 0.82S, -, 0.28, orange, //aka HD 155886 or Guniibuu
 36 Ophiuchi B, star, -, -, -, 0.85S, 0.81S, ?, 0.27, orange
 Gliese 667 A, star, 17h19m, -34d59m, 23.6, 0.73S, 0.76S, -, 0.12, orange, //luminosity for A and B from Wikipedia 
 Gliese 667 B, star, -, -, -, 0.69S, 0.7S, 12.6, 0.05, oramge, //1.81 arcsecond at this distance = 12.6 AU
