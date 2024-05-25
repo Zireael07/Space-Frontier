@@ -444,6 +444,29 @@ func _on_wormhole_spawned(wormhole):
 	# self modulate doesn't affect children
 	wormhole_sprite.set_self_modulate(Color(0.2, 0.2, 0.2)) # black would be for real black hole, this is gray-ish
 	wormhole_sprites.append(wormhole_sprite)
+
+	# if we have a route
+	if game.player.route != null:
+		print("We have a route: ", game.player.route)
+		var mmap = game.player.HUD.get_node("Control4/star map")
+		# figure out target system
+		var coords = mmap.unpack_vector(wormhole.target_system)
+		#print("unpacked coords: ", coords)
+		var t_sector = mmap.unpack_sector(wormhole.target_system)
+		coords = mmap.positive_to_original(coords, t_sector)
+		#print("Coords: ", coords)
+		var icon = mmap.find_icon_for_pos(coords)
+		if icon != null:
+			#print("Icon: ", icon.get_name(), " @ ", coords)
+			# try to find it in route
+			for p in game.player.route:
+				if p[0] == icon or p[1] == icon:
+					print("Icon: ", icon.get_name(), " in route")
+					# drawing a rect like target ship doesn't work, so let's tint instead
+					wormhole_sprite.set_modulate(Color(2, 0.5, 0.5))
+					break
+		else:
+			print("Error! No icon @ " , coords, "!")
 	add_child(wormhole_sprite)
 	wormholes.append(wormhole)
 

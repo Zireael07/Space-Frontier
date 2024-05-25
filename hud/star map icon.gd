@@ -376,8 +376,10 @@ func on_click():
 	# try to route
 	if not pos in get_node("../../..").mapping:
 		return
-		
+	
+	# route stuff	
 	var r = get_node("../../..").get_route_icons(get_node("../..").src, get_node("../..").tg)
+	game.player.route = r #so that we can access it while the map is closed
 	vis.route = r
 	vis.draw_route()
 	vis.queue_redraw()

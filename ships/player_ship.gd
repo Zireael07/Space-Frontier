@@ -64,6 +64,7 @@ var conquer_target = null
 
 # player only
 var w_hole = null
+var route = null
 var disrupted = false
 var dead = false
 var god = true
