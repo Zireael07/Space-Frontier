@@ -296,6 +296,7 @@ func get_route(src_icon, tg_icon):
 		tg = mapping[tg_icon.pos]
 	
 	#print("Route: " , route(src, tg))
+	# see galaxy.gd
 	return route(src, tg)
 	
 func get_route_icons(src_icon, tg_icon):

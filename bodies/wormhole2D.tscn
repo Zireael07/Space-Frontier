@@ -8,7 +8,7 @@
 shader = ExtResource("1")
 shader_parameter/strength = 0.01
 shader_parameter/black_radius = 0.65
-shader_parameter/hole_color = Plane(0, 0, 0, 1)
+shader_parameter/hole_color = Vector4(0, 0, 0, 0.5)
 
 [sub_resource type="ImageTexture" id="4"]
 
@@ -175,12 +175,12 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="1"]
 resource_local_to_scene = true
 shader = SubResource("6")
-shader_parameter/offset = [38.2885, 51.6411]
-shader_parameter/scale = 0.00108231
-shader_parameter/density = 0.0237715
-shader_parameter/falloff = 4.86349
-shader_parameter/color = Vector3(0.295128, 0.0541246, 0.72836)
-shader_parameter/color2 = Vector3(0.275238, 0.115777, 0.236459)
+shader_parameter/offset = null
+shader_parameter/scale = 0.000745455
+shader_parameter/density = 0.181204
+shader_parameter/falloff = 4.52051
+shader_parameter/color = Vector3(0.80804, 0.921951, 0.000509127)
+shader_parameter/color2 = Vector3(0.757147, 0.0863626, 0.878234)
 
 [sub_resource type="ImageTexture" id="2"]
 

@@ -190,7 +190,8 @@ func get_system_bodies():
 	
 	asteroids = get_tree().get_nodes_in_group("asteroid")
 	
-	wormholes = get_tree().get_nodes_in_group("wormhole")
+	# in practice we already populated this list via _on_wormhole_spawned
+	#wormholes = get_tree().get_nodes_in_group("wormhole")
 
 func add_system_bodies():
 	for s in stars:
@@ -316,7 +317,7 @@ func add_system_bodies():
 		# center the sprite
 		wormhole_sprite.set_position(-siz/2)
 		wormhole_sprite.set_scale(Vector2(0.5, 0.5))
-		wormhole_sprite.set_modulate(Color(0.2, 0.2, 0.2)) # gray-ish instead of black for a black hole
+		wormhole_sprite.set_self_modulate(Color(0.2, 0.2, 0.2)) # gray-ish instead of black for a black hole
 		wormhole_sprites.append(wormhole_sprite)
 		add_child(wormhole_sprite)
 		
@@ -440,7 +441,8 @@ func _on_wormhole_spawned(wormhole):
 	# center the sprite
 	wormhole_sprite.set_position(-siz/2)
 	wormhole_sprite.set_scale(Vector2(0.5, 0.5))
-	wormhole_sprite.set_modulate(Color(0.2, 0.2, 0.2)) # black would be for real black hole, this is gray-ish
+	# self modulate doesn't affect children
+	wormhole_sprite.set_self_modulate(Color(0.2, 0.2, 0.2)) # black would be for real black hole, this is gray-ish
 	wormhole_sprites.append(wormhole_sprite)
 	add_child(wormhole_sprite)
 	wormholes.append(wormhole)
@@ -511,6 +513,10 @@ func update_outline(target):
 func _process(_delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
+	# no need to update if not open
+	if !self.visible:
+		return
+
 
 	for i in range(stars.size()):
 		# paranoia

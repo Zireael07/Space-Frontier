@@ -367,6 +367,7 @@ func spawn_neutral(pos, i, p_ind, m_map):
 	# add to fleet census
 	#game.fleet2[1] += 1
 
+# TODO: should move on an actual cycler orbit
 func spawn_cycler(p_ind, system, m_map):
 	if system != "Sol":
 		return
@@ -476,6 +477,7 @@ func spawn_wormhole(p_ind, planet_id, m_map, target_system=null, offset=Vector2(
 	wh.set_name("wormhole")
 	if target_system != null:
 		wh.target_system = target_system
+		wh.set_name("wormhole_"+str(target_system))
 	
 	get_child(2).add_child(wh)
 	get_child(2).move_child(wh, p_ind+1)
@@ -531,14 +533,20 @@ func wormholes_from_graph(p_ind, ref_pos=null):
 			if ref_pos:
 				wh_pos = ref_pos
 			
+			var offset_x = 0
+			var offset_y = 0
+			
 			if dir.x < 0:
-				wh_pos.x = wh_pos.x - (100*abs(dir.x))
+				offset_x = -(100*abs(dir.x))
 			if dir.y < 0:
-				wh_pos.y = wh_pos.y + 100*abs(dir.y)
+				offset_y = -(100*abs(dir.y))
 			elif dir.y > 0:
-				wh_pos.y = wh_pos.y - 750
+				offset_y = 100*abs(dir.y) #-750
 			if dir.z < 0:
-				wh_pos.y = wh_pos.y - 300
+				offset_y = offset_y - 300
+				
+			wh_pos = wh_pos + Vector2(offset_x, offset_y)
+			print("Offset: ", Vector2(offset_x, offset_y), " for dir: ", dir)
 			print("Wormhole pos: ", wh_pos, " for dir: ", dir)
 			spawn_wormhole(p_ind, -1, mmap, n, wh_pos)
 	else:
@@ -652,6 +660,10 @@ func change_system(system="proxima", time=0.0):
 	for s in e:
 		s.get_parent().queue_free()
 	
+	var p = get_tree().get_nodes_in_group("pirate")
+	for s in p:
+		s.get_parent().queue_free()
+	
 	var n = get_tree().get_nodes_in_group("neutral")
 	for s in n:
 		s.get_parent().queue_free()
@@ -717,6 +729,8 @@ func change_system(system="proxima", time=0.0):
 			print("Star pos: ", ref_pos)
 			ref_pos = ref_pos + Vector2(500, 1000)
 	
+	# force cleanup
+	mmap.wormholes = []
 	wormholes_from_graph(p_ind, ref_pos)
 	
 	# timer
