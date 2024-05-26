@@ -63,7 +63,9 @@ func _ready():
 	
 	randomize_storage()
 	
-	move_timer = get_node("move_timer")
+	move_timer = has_node("move_timer")
+	if move_timer:
+		move_timer = get_node("move_timer")
 	
 	#target
 	# it's static so we don't need to do it in process()
