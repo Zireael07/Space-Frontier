@@ -708,10 +708,14 @@ func _on_planet_targeted(planet):
 		print("Early exit")
 		return # exit early because we're the same
 
-	# paranoia
+	# paranoia (free floating colonies are a thing)
 	if planet.get_parent().is_in_group("colony"):
-		print("We're a colony, elevate the signal to actual planet")
-		planet = planet.get_parent().get_parent()
+		if "mass" in planet.get_parent().get_parent():
+			print("We're a colony, elevate the signal to actual planet")
+			planet = planet.get_parent().get_parent()
+		else:
+			print("We're a free floating colony, ignoring...")
+			return
 
 	if prev_target:
 		prev_target.targetted = false
