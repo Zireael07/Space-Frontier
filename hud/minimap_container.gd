@@ -27,15 +27,15 @@ extends Control
 var star_main = null
 
 var stars = []
-var planets = []
-var asteroids
+var bodies = []
+var asteroids = []
 var wormholes = []
 
-var friendlies
-var hostiles
+var friendlies = []
+var hostiles = []
 var pirates = []
 var neutrals = []
-var starbases
+var starbases = []
 var sb_enemies = []
 var sb_pirates = []
 
@@ -182,11 +182,11 @@ func get_system_bodies():
 	else:
 		print("Error! Star main is null!")
 	
-	planets = get_tree().get_nodes_in_group("planets")
+	bodies = get_tree().get_nodes_in_group("planets")
 	# treat moons as planets
 	var moons = get_tree().get_nodes_in_group("moon")
 	for m in moons:
-		planets.append(m)
+		bodies.append(m)
 	
 	asteroids = get_tree().get_nodes_in_group("asteroid")
 	
@@ -219,7 +219,7 @@ func add_system_bodies():
 			star_arrow.set_pivot_offset(star_arrow.get_size()/2)
 			star_arrow.set_visible(false)
 		
-	for p in planets:
+	for b in bodies:
 		# so that the icon and label have a common parent
 		var con = Control.new()
 		add_child(con)
@@ -227,20 +227,20 @@ func add_system_bodies():
 		var planet_sprite = TextureRect.new()
 		planet_sprite.set_texture(planet)
 		var sc = Vector2(1,1)
-		if p.planet_rad_factor < 0.5:
+		if b.planet_rad_factor < 0.5:
 			#sc = Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2)
-			planet_sprite.set_scale(Vector2(p.planet_rad_factor*2, p.planet_rad_factor*2))
-		elif p.planet_rad_factor > 1.75:
+			planet_sprite.set_scale(Vector2(b.planet_rad_factor*2, b.planet_rad_factor*2))
+		elif b.planet_rad_factor > 1.75:
 			planet_sprite.set_texture(giant)
 			planet_sprite.set_scale(Vector2(0.75, 0.75)) # the icon itself is larger than the planet icon
 		#	sc = Vector2(p.planet_rad_factor*0.75, p.planet_rad_factor*0.75)
 			#planet_sprite.set_scale(sc)
 		else:
-			sc = Vector2(p.planet_rad_factor, p.planet_rad_factor)
+			sc = Vector2(b.planet_rad_factor, b.planet_rad_factor)
 			#planet_sprite.set_scale(Vector2(p.planet_rad_factor, p.planet_rad_factor))
 		
 		# moons
-		if p.is_in_group("moon"):
+		if b.is_in_group("moon"):
 			planet_sprite.set_texture(moon)
 			#sc = Vector2(0.5, 0.5)
 			planet_sprite.set_scale(Vector2(0.5, 0.5))
@@ -255,7 +255,7 @@ func add_system_bodies():
 		# label
 		var label = Label.new()
 		
-		var txt = p.get_node("Label").get_text()
+		var txt = b.get_node("Label").get_text()
 		label.set_text(txt) # default
 		
 		# if the names end in star name + a,b,c, etc., show just the letter to save space
@@ -268,7 +268,7 @@ func add_system_bodies():
 					break
 		
 		# tint depending on owning fleet/faction
-		var col = p.has_colony()
+		var col = b.has_colony()
 		#print(p.get_name() + " has colony " + str(col))
 		if col and col == "colony":
 			# tint cyan
@@ -505,7 +505,7 @@ func _on_colony_colonized(colony, planet):
 			remove_child(spr)
 
 	
-	var id = planets.find(planet)
+	var id = bodies.find(planet)
 	var planet_spr = planet_sprites[id]
 	var label = planet_spr.get_child(1)	
 	# tint cyan
@@ -576,9 +576,12 @@ func _process(_delta):
 				star_arrow.set_visible(false)
 		
 
-	for i in range(planets.size()):
+	for i in range(bodies.size()):
+		if bodies[i] == null:
+			print("Error! Celestial body not found: ", i)
+			return
 		# the minimap doesn't rotate
-		var rel_loc = planets[i].get_global_position() - player.get_child(0).get_global_position()
+		var rel_loc = bodies[i].get_global_position() - player.get_child(0).get_global_position()
 		#var rel_loc = player.get_global_transform()planets[i].get_global_transform().origin * 
 		#planet_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale, rel_loc.y/zoom_scale))
 		planet_sprites[i].set_position(Vector2(rel_loc.x/zoom_scale+center.x, rel_loc.y/zoom_scale+center.y))
