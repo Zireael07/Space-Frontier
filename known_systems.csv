@@ -27,6 +27,7 @@ Lalande 21185 c, planet, -, -, -, 20E, 5E, 3.1, -, -
 Sirius A, star, 101.28deg, -16.17deg, 8.65, 1.99S, 2.09S, -, 24.3, white 
 Sirius B, star, -, -, -, 0.98S, 0.0084S, 20.1, 0.056, white, //rad: 0.8E
 Luyten 726-8 A, star, 24.75deg, -17.95deg, 8.81, 0.11S, 0.17S, -, 0.002, red, //aka UV/BL Ceti
+Luyten 726-8 Ab, planet, -, -, -, 40.0E, ?, 0.28, -, -
 Luyten 726-8 B, star, -, -, -, 0.1S, 0.31S, 5.22, 0.003, red
 Ross 154, star, 282.45deg, -23.83deg, 9.70, 0.17S, 0.15S, -, 0.002, red
 Ross 248, star, 355.47deg, 44.17deg, 10.3, 0.12S, 0.24S, -, 0.003, red

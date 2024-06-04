@@ -1,8 +1,51 @@
-[gd_scene load_steps=4 format=3 uid="uid://c375ghqr72nsb"]
+[gd_scene load_steps=14 format=3 uid="uid://c375ghqr72nsb"]
 
 [ext_resource type="Texture2D" uid="uid://b5xabkgm6beqq" path="res://assets/bodies/star_red01.png" id="1"]
 [ext_resource type="Script" path="res://systems/star system.gd" id="2"]
 [ext_resource type="Script" path="res://systems/star.gd" id="4"]
+[ext_resource type="PackedScene" path="res://bodies/planet_rotating_procedural.tscn" id="4_uulsp"]
+[ext_resource type="Shader" uid="uid://bd21dgr0w5fyj" path="res://assets/planets/seamless_shader_better.tres" id="5_hqrx7"]
+[ext_resource type="Gradient" path="res://assets/planets/biome_gradient.tres" id="6_17gmy"]
+[ext_resource type="Gradient" path="res://assets/planets/temp_gradient.tres" id="7_5mymw"]
+[ext_resource type="Texture2D" uid="uid://w6p13lxr264v" path="res://assets/bodies/texture_template.png" id="8_xaam8"]
+
+[sub_resource type="GradientTexture2D" id="5"]
+gradient = ExtResource("6_17gmy")
+
+[sub_resource type="GradientTexture2D" id="4"]
+gradient = ExtResource("7_5mymw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xtcyr"]
+resource_local_to_scene = true
+shader = ExtResource("5_hqrx7")
+shader_parameter/fadeWidth = 0.05
+shader_parameter/temperature = -187.694
+shader_parameter/rotate_angle = null
+shader_parameter/time = 0.138831
+shader_parameter/waterLevel = 0.45
+shader_parameter/color_sea = Color(0, 1, 1, 1)
+shader_parameter/temp_gradient = SubResource("4")
+shader_parameter/land_gradient = SubResource("5")
+shader_parameter/vectors = ExtResource("8_xaam8")
+
+[sub_resource type="Animation" id="10"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite_shadow:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h1dfr"]
+_data = {
+"scanning": SubResource("10")
+}
 
 [node name="Luyten 726-8" type="Node2D"]
 position = Vector2(500, 500)
@@ -40,3 +83,24 @@ offset_bottom = 116.0
 text = "UV Ceti"
 
 [node name="planet_holder" type="Node2D" parent="UV Ceti"]
+
+[node name="Node2D" parent="UV Ceti/planet_holder" instance=ExtResource("4_uulsp")]
+position = Vector2(0, 3360)
+data = Vector2(0, 3360)
+mass = 40.0
+hydro = 0.0
+ice = 0.3
+atm = 0.755821
+
+[node name="Sprite2D" parent="UV Ceti/planet_holder/Node2D" index="0"]
+material = SubResource("ShaderMaterial_xtcyr")
+
+[node name="Label" parent="UV Ceti/planet_holder/Node2D" index="3"]
+text = "Luyten 726-8 Ab"
+
+[node name="AnimationPlayer" parent="UV Ceti/planet_holder/Node2D" index="7"]
+libraries = {
+"": SubResource("AnimationLibrary_h1dfr")
+}
+
+[editable path="UV Ceti/planet_holder/Node2D"]
